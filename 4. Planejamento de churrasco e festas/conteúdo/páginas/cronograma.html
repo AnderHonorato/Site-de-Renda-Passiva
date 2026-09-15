@@ -1,0 +1,78 @@
+<!--página
+{
+  "título": "Cronograma do evento",
+  "descrição": "Informe o horário da festa e as etapas de preparação para descobrir o horário de início de cada uma, encadeadas de trás para frente.",
+  "destaque": "coral",
+  "navegação": "ferramentas",
+  "script": "páginas/cronograma.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Cronograma do evento</h1>
+    <p class="ferramenta-resumo">Informe o horário em que a festa começa e as etapas de preparação, com a duração de cada uma. A ferramenta encadeia as etapas de trás para frente e mostra o horário de início de cada uma.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-cronograma" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Horário da festa</legend>
+        <div class="campo">
+          <label for="horário-da-festa">Horário em que a festa começa</label>
+          <input id="horário-da-festa" name="horário" class="entrada" type="time" value="18:00" aria-describedby="horário-da-festa-erro">
+          <p id="horário-da-festa-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Etapas de preparação, na ordem em que acontecem</legend>
+        <p class="campo-ajuda">A duração é em minutos. A última etapa da lista é a que termina bem quando a festa começa.</p>
+        <div class="linhas-editáveis" data-linhas-de-etapas>
+          <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-etapa>
+            <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+            <span>Adicionar etapa</span>
+          </button>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular cronograma</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calendar-clock"></use></svg>
+        <p class="estado-vazio-título">Seu cronograma aparece aqui</p>
+        <p>Preencha o horário da festa e as etapas, e toque em Calcular cronograma.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="área-de-impressão">
+          <div class="resultado-destaque">
+            <p class="resultado-rótulo">Horário de início da preparação</p>
+            <p class="resultado-valor" data-início></p>
+          </div>
+          <div data-tabela-de-etapas></div>
+        </div>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-copiar><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#copiar"></use></svg>Copiar cronograma</button>
+          <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cronograma">
+    <li>As etapas são encadeadas de trás para frente a partir do horário da festa, sem sobreposição entre elas.</li>
+    <li>Se a preparação ultrapassar a meia-noite, o horário de início aparece marcado como do dia anterior.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-cronograma" class="botão botão-primário">Calcular cronograma</button>
+</div>

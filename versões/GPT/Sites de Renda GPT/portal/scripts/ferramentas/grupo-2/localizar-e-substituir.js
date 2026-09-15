@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("localizar-e-substituir",7,"Localizar e substituir","Substitua ocorrências literais sem expressões regulares.","Substituição sensível a maiúsculas; substituto pode ficar vazio. Nenhum texto é executado.",[T('texto','Texto','Olá Ana. Obrigado, Ana.'),T('busca','Procurar','Ana'),{...T('substituto','Substituir por','Bia'),obrigatorio:false}],async d=>{const s=texto(d,'texto'),b=texto(d,'busca'),r=texto(d,'substituto',true),p=s.split(b);if(p.length*r.length+s.length>1000000)throw Error('Resultado grande demais.');return saidaTexto(p.join(r),[(p.length-1)+' substituições']);});
+

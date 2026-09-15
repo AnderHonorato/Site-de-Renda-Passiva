@@ -1,0 +1,106 @@
+- generic [active] [ref=e1]:
+  - link "Pular para o conteúdo" [ref=e2] [cursor=pointer]:
+    - /url: "#conteudo"
+  - banner [ref=e3]:
+    - link "Doce Ofício, início" [ref=e4] [cursor=pointer]:
+      - /url: "#inicio"
+      - generic [ref=e6]:
+        - strong [ref=e7]: doce ofício
+        - generic [ref=e8]: ferramentas para o dia a dia
+    - navigation "Principal" [ref=e9]:
+      - link "Ferramentas" [ref=e10] [cursor=pointer]:
+        - /url: "#ferramentas"
+      - link "Como funciona" [ref=e11] [cursor=pointer]:
+        - /url: "#como-funciona"
+      - link "Meus salvos" [ref=e12] [cursor=pointer]:
+        - /url: "#salvos"
+      - link "Sobre" [ref=e13] [cursor=pointer]:
+        - /url: "#sobre"
+  - main [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - text: UM POUCO DE AJUDA, TODOS OS DIAS
+          - heading [level=1] [ref=e18]:
+            - text: Pequenas contas.
+            - emphasis [ref=e19]: Grandes planos.
+          - paragraph [ref=e20]: Do bolo que você vende à viagem que você sonha. Encontre um jeito mais simples de calcular, criar e organizar.
+          - generic [ref=e21]:
+            - link "Encontre sua ferramenta" [ref=e22] [cursor=pointer]:
+              - /url: "#ferramentas"
+            - generic [ref=e23]: feito para facilitar.
+          - generic [ref=e24]: Gratuito. Sem cadastro. No seu navegador.
+        - generic [ref=e26]:
+          - img "Ilustração de calculadora, caderno, fita métrica e materiais de papelaria em tons de terracota e verde." [ref=e27]
+          - generic [ref=e28]:
+            - generic [ref=e29]: um lugar, muitas possibilidades
+            - strong [ref=e30]: 150 ferramentas úteis
+      - region "Sobre as ferramentas" [ref=e31]:
+        - generic [ref=e32]:
+          - strong [ref=e33]: 15 categorias
+          - text: para todos os seus planos
+        - generic [ref=e34]:
+          - strong [ref=e35]: Seus arquivos ficam com você
+          - text: processamento local, sem envio
+        - generic [ref=e36]:
+          - strong [ref=e37]: Resultado bem explicado
+          - text: premissas, medidas e próximos passos
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e40]:
+            - text: ESCOLHA SEU CAMINHO
+            - heading "O que vamos resolver hoje?" [level=2] [ref=e41]
+          - generic [ref=e42]: 150 pequenas facilidades
+        - generic [ref=e43]:
+          - generic [ref=e44]:
+            - searchbox "Buscar ferramentas" [ref=e45]
+            - generic [ref=e46]: /
+          - generic [ref=e47]:
+            - generic [ref=e48]: Categoria
+            - combobox "Categoria" [ref=e49]:
+              - option "Todas as categorias" [selected]
+        - generic "Categorias em destaque"
+        - generic [ref=e50]:
+          - status [ref=e51]: Carregando ferramentas...
+          - button "Só favoritos" [ref=e52] [cursor=pointer]
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - text: DO SEU JEITO
+          - heading [level=2] [ref=e56]:
+            - text: Feito para caber
+            - emphasis [ref=e57]: na sua rotina.
+        - generic [ref=e58]:
+          - article [ref=e59]:
+            - text: "01"
+            - heading "Encontre o que precisa" [level=3] [ref=e60]
+            - paragraph [ref=e61]: Explore as categorias ou escreva o que quer resolver.
+          - article [ref=e62]:
+            - text: "02"
+            - heading "Preencha com calma" [level=3] [ref=e63]
+            - paragraph [ref=e64]: Use seus dados e confira as premissas de cada ferramenta.
+          - article [ref=e65]:
+            - text: "03"
+            - heading "Leve o resultado" [level=3] [ref=e66]
+            - paragraph [ref=e67]: Copie, baixe, imprima ou salve para continuar depois.
+      - generic [ref=e70]:
+        - text: UM OFÍCIO DIÁRIO
+        - heading [level=2] [ref=e71]:
+          - text: Menos tempo nas contas.
+          - emphasis [ref=e72]: Mais tempo fazendo acontecer.
+        - paragraph [ref=e73]: Criado por Anderson para transformar tarefas do dia a dia em passos simples. Ferramentas gratuitas, com resultados transparentes e espaço para os seus planos.
+        - link "Ajude este projeto a continuar" [ref=e74] [cursor=pointer]:
+          - /url: "#apoiar"
+  - contentinfo [ref=e75]:
+    - link [ref=e76] [cursor=pointer]:
+      - /url: "#inicio"
+      - strong [ref=e77]: doce ofício
+    - generic [ref=e78]: Criado por Anderson · 2026
+    - navigation "Institucional" [ref=e79]:
+      - link "Privacidade" [ref=e80] [cursor=pointer]:
+        - /url: "#privacidade"
+      - link "Termos" [ref=e81] [cursor=pointer]:
+        - /url: "#termos"
+      - link "Contato" [ref=e82] [cursor=pointer]:
+        - /url: "#contato"
+      - button "Preferências de privacidade" [ref=e83] [cursor=pointer]
+  - status

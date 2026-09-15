@@ -1,0 +1,4 @@
+R$ 114,29 por lote
+Preço matemático: 114,2857
+Por unidade: R$ 2,29
+Para preservar margem: arredonde cada unidade para cima: R$ 2,29

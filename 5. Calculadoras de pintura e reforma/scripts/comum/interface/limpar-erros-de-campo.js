@@ -2,8 +2,11 @@
 // compartilhado/scripts/interface/limpar-erros-de-campo.js
 
 /**
- * Remove todas as mensagens de erro e o `aria-invalid` de um formulário,
- * desfazendo o que mostrar-erro-de-campo.js aplicou.
+ * Desfaz o que mostrar-erro-de-campo.js aplicou num formulário: tira o
+ * `aria-invalid` e esconde as mensagens. Mensagens que já existem no HTML
+ * (`<p id="<campo>-erro" class="campo-erro" hidden>`) são apenas esvaziadas e
+ * escondidas, nunca removidas, porque as páginas as referenciam pelo id.
+ * Somente as mensagens criadas dinamicamente (`data-erro-dinâmico`) são removidas.
  * @param {HTMLFormElement} formulário
  */
 export function limparErrosDeCampo(formulário) {
@@ -11,20 +14,22 @@ export function limparErrosDeCampo(formulário) {
 
   for (const campo of formulário.querySelectorAll('[aria-invalid]')) {
     campo.removeAttribute('aria-invalid');
-    const id = campo.id ? `${campo.id}-erro` : null;
-    if (id) {
-      const descritos = (campo.getAttribute('aria-describedby') || '')
-        .split(/\s+/)
-        .filter((valor) => valor && valor !== id);
-      if (descritos.length > 0) {
-        campo.setAttribute('aria-describedby', descritos.join(' '));
-      } else {
-        campo.removeAttribute('aria-describedby');
-      }
-    }
   }
 
   for (const elementoDeErro of formulário.querySelectorAll('.campo-erro')) {
+    if (elementoDeErro.dataset.erroDinâmico !== 'sim') {
+      elementoDeErro.textContent = '';
+      elementoDeErro.hidden = true;
+      continue;
+    }
+    const id = elementoDeErro.id;
+    if (id) {
+      for (const dono of formulário.querySelectorAll('[aria-describedby]')) {
+        const descritos = dono.getAttribute('aria-describedby').split(/\s+/).filter((valor) => valor && valor !== id);
+        if (descritos.length > 0) dono.setAttribute('aria-describedby', descritos.join(' '));
+        else dono.removeAttribute('aria-describedby');
+      }
+    }
     elementoDeErro.remove();
   }
 }

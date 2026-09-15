@@ -1,0 +1,282 @@
+- generic [active] [ref=f4e1]:
+  - link "Pular para o conteúdo" [ref=f4e2] [cursor=pointer]:
+    - /url: "#conteudo"
+  - banner [ref=f4e3]:
+    - link "Doce Ofício, início" [ref=f4e4] [cursor=pointer]:
+      - /url: "#inicio"
+      - generic [ref=f4e6]:
+        - strong [ref=f4e7]: doce ofício
+        - generic [ref=f4e8]: ferramentas para o dia a dia
+    - navigation "Principal" [ref=f4e9]:
+      - link "Ferramentas" [ref=f4e10] [cursor=pointer]:
+        - /url: "#ferramentas"
+      - link "Como funciona" [ref=f4e11] [cursor=pointer]:
+        - /url: "#como-funciona"
+      - link "Meus salvos" [ref=f4e12] [cursor=pointer]:
+        - /url: "#salvos"
+      - link "Sobre" [ref=f4e13] [cursor=pointer]:
+        - /url: "#sobre"
+  - main [ref=f4e14]:
+    - generic [ref=f4e15]:
+      - generic [ref=f4e16]:
+        - generic [ref=f4e17]:
+          - text: UM POUCO DE AJUDA, TODOS OS DIAS
+          - heading [level=1] [ref=f4e18]:
+            - text: Pequenas contas.
+            - emphasis [ref=f4e19]: Grandes planos.
+          - paragraph [ref=f4e20]: Do bolo que você vende à viagem que você sonha. Encontre um jeito mais simples de calcular, criar e organizar.
+          - generic [ref=f4e21]:
+            - link "Encontre sua ferramenta" [ref=f4e22] [cursor=pointer]:
+              - /url: "#ferramentas"
+            - generic [ref=f4e23]: feito para facilitar.
+          - generic [ref=f4e24]: Gratuito. Sem cadastro. No seu navegador.
+        - generic [ref=f4e26]:
+          - img "Ilustração de calculadora, caderno, fita métrica e materiais de papelaria em tons de terracota e verde." [ref=f4e27]
+          - generic [ref=f4e28]:
+            - generic [ref=f4e29]: um lugar, muitas possibilidades
+            - strong [ref=f4e30]: 150 ferramentas úteis
+      - region "Sobre as ferramentas" [ref=f4e31]:
+        - generic [ref=f4e32]:
+          - strong [ref=f4e33]: 15 categorias
+          - text: para todos os seus planos
+        - generic [ref=f4e34]:
+          - strong [ref=f4e35]: Seus arquivos ficam com você
+          - text: processamento local, sem envio
+        - generic [ref=f4e36]:
+          - strong [ref=f4e37]: Resultado bem explicado
+          - text: premissas, medidas e próximos passos
+      - generic [ref=f4e38]:
+        - generic [ref=f4e39]:
+          - generic [ref=f4e40]:
+            - text: ESCOLHA SEU CAMINHO
+            - heading "O que vamos resolver hoje?" [level=2] [ref=f4e41]
+          - generic [ref=f4e42]: 150 pequenas facilidades
+        - generic [ref=f4e43]:
+          - generic [ref=f4e44]:
+            - searchbox "Buscar ferramentas" [ref=f4e45]
+            - generic [ref=f4e46]: /
+          - generic [ref=f4e47]:
+            - generic [ref=f4e48]: Categoria
+            - combobox "Categoria" [ref=f4e49]:
+              - option "Todas as categorias" [selected]
+              - option "Confeitaria"
+              - option "Educação"
+              - option "Artesanato"
+              - option "Festas"
+              - option "Reforma"
+              - option "Embalagens"
+              - option "Texto e escrita"
+              - option "Imagens"
+              - option "PDF e documentos"
+              - option "Datas e tempo"
+              - option "Matemática e medidas"
+              - option "Vendas e negócios"
+              - option "Ferramentas digitais"
+              - option "Casa e economia"
+              - option "Viagens e deslocamentos"
+        - generic "Categorias em destaque" [ref=f4e50]:
+          - button "Todas" [pressed] [ref=f4e51] [cursor=pointer]
+          - button "Confeitaria" [ref=f4e52] [cursor=pointer]
+          - button "Educação" [ref=f4e53] [cursor=pointer]
+          - button "Reforma" [ref=f4e54] [cursor=pointer]
+          - button "Imagens" [ref=f4e55] [cursor=pointer]
+          - button "PDF e documentos" [ref=f4e56] [cursor=pointer]
+          - button "Casa e economia" [ref=f4e57] [cursor=pointer]
+        - generic [ref=f4e58]:
+          - status [ref=f4e59]: 150 ferramentas encontradas
+          - button "Só favoritos" [ref=f4e60] [cursor=pointer]
+        - generic [ref=f4e61]:
+          - article [ref=f4e62]:
+            - generic [ref=f4e63]: Confeitaria
+            - 'button "Adicionar aos favoritos: Custo da receita" [ref=f4e66] [cursor=pointer]'
+            - heading "Custo da receita" [level=3] [ref=f4e67]
+            - paragraph [ref=f4e68]: Some ingredientes, embalagem e despesas por lote.
+            - button "Abrir Custo da receita" [ref=f4e69] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e70]:
+            - generic [ref=f4e71]: Confeitaria
+            - 'button "Adicionar aos favoritos: Preço de venda" [ref=f4e74] [cursor=pointer]'
+            - heading "Preço de venda" [level=3] [ref=f4e75]
+            - paragraph [ref=f4e76]: Inclua margem sobre venda e taxas no preço do lote.
+            - button "Abrir Preço de venda" [ref=f4e77] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e78]:
+            - generic [ref=f4e79]: Confeitaria
+            - 'button "Adicionar aos favoritos: Ajuste de receitas" [ref=f4e82] [cursor=pointer]'
+            - heading "Ajuste de receitas" [level=3] [ref=f4e83]
+            - paragraph [ref=f4e84]: Redimensione cada ingrediente para outro rendimento.
+            - button "Abrir Ajuste de receitas" [ref=f4e85] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e86]:
+            - generic [ref=f4e87]: Confeitaria
+            - 'button "Adicionar aos favoritos: Lista de compras da produção" [ref=f4e90] [cursor=pointer]'
+            - heading "Lista de compras da produção" [level=3] [ref=f4e91]
+            - paragraph [ref=f4e92]: Consolide ingredientes repetidos e compre pacotes inteiros.
+            - button "Abrir Lista de compras da produção" [ref=f4e93] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e94]:
+            - generic [ref=f4e95]: Confeitaria
+            - 'button "Adicionar aos favoritos: Orçamento de doces" [ref=f4e98] [cursor=pointer]'
+            - heading "Orçamento de doces" [level=3] [ref=f4e99]
+            - paragraph [ref=f4e100]: Monte proposta com produtos, entrega e validade.
+            - button "Abrir Orçamento de doces" [ref=f4e101] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e102]:
+            - generic [ref=f4e103]: Confeitaria
+            - 'button "Adicionar aos favoritos: Conversor de formas" [ref=f4e106] [cursor=pointer]'
+            - heading "Conversor de formas" [level=3] [ref=f4e107]
+            - paragraph [ref=f4e108]: Compare volumes de formas redondas ou retangulares.
+            - button "Abrir Conversor de formas" [ref=f4e109] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e110]:
+            - generic [ref=f4e111]: Confeitaria
+            - 'button "Adicionar aos favoritos: Rendimento com perdas" [ref=f4e114] [cursor=pointer]'
+            - heading "Rendimento com perdas" [level=3] [ref=f4e115]
+            - paragraph [ref=f4e116]: Estime aproveitamento e custo após perdas.
+            - button "Abrir Rendimento com perdas" [ref=f4e117] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e118]:
+            - generic [ref=f4e119]: Confeitaria
+            - 'button "Adicionar aos favoritos: Ficha técnica de receita" [ref=f4e122] [cursor=pointer]'
+            - heading "Ficha técnica de receita" [level=3] [ref=f4e123]
+            - paragraph [ref=f4e124]: Gere uma ficha imprimível com ingredientes e preparo.
+            - button "Abrir Ficha técnica de receita" [ref=f4e125] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e126]:
+            - generic [ref=f4e127]: Confeitaria
+            - 'button "Adicionar aos favoritos: Cronograma de fornadas" [ref=f4e130] [cursor=pointer]'
+            - heading "Cronograma de fornadas" [level=3] [ref=f4e131]
+            - paragraph [ref=f4e132]: Calcule quantas fornadas serão necessárias e o tempo total.
+            - button "Abrir Cronograma de fornadas" [ref=f4e133] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e134]:
+            - generic [ref=f4e135]: Confeitaria
+            - 'button "Adicionar aos favoritos: Quantidade de cobertura" [ref=f4e138] [cursor=pointer]'
+            - heading "Quantidade de cobertura" [level=3] [ref=f4e139]
+            - paragraph [ref=f4e140]: Estime cobertura por área e consumo medido.
+            - button "Abrir Quantidade de cobertura" [ref=f4e141] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e142]:
+            - generic [ref=f4e143]: Educação
+            - 'button "Adicionar aos favoritos: Atividades matemáticas" [ref=f4e146] [cursor=pointer]'
+            - heading "Atividades matemáticas" [level=3] [ref=f4e147]
+            - paragraph [ref=f4e148]: Gere exercícios e folha separada de gabarito.
+            - button "Abrir Atividades matemáticas" [ref=f4e149] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e150]:
+            - generic [ref=f4e151]: Educação
+            - 'button "Adicionar aos favoritos: Tabuada para imprimir" [ref=f4e154] [cursor=pointer]'
+            - heading "Tabuada para imprimir" [level=3] [ref=f4e155]
+            - paragraph [ref=f4e156]: Prepare treino de multiplicação com gabarito separado.
+            - button "Abrir Tabuada para imprimir" [ref=f4e157] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e158]:
+            - generic [ref=f4e159]: Educação
+            - 'button "Adicionar aos favoritos: Caça-palavras" [ref=f4e162] [cursor=pointer]'
+            - heading "Caça-palavras" [level=3] [ref=f4e163]
+            - paragraph [ref=f4e164]: Gere uma grade com todas as palavras e gabarito.
+            - button "Abrir Caça-palavras" [ref=f4e165] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e166]:
+            - generic [ref=f4e167]: Educação
+            - 'button "Adicionar aos favoritos: Folhas de caligrafia" [ref=f4e170] [cursor=pointer]'
+            - heading "Folhas de caligrafia" [level=3] [ref=f4e171]
+            - paragraph [ref=f4e172]: Gere linhas de escrita com texto em português.
+            - button "Abrir Folhas de caligrafia" [ref=f4e173] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e174]:
+            - generic [ref=f4e175]: Educação
+            - 'button "Adicionar aos favoritos: Bingo de números" [ref=f4e178] [cursor=pointer]'
+            - heading "Bingo de números" [level=3] [ref=f4e179]
+            - paragraph [ref=f4e180]: Gere cartelas distintas e uma sequência de sorteio.
+            - button "Abrir Bingo de números" [ref=f4e181] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e182]:
+            - generic [ref=f4e183]: Educação
+            - 'button "Adicionar aos favoritos: Papel quadriculado" [ref=f4e186] [cursor=pointer]'
+            - heading "Papel quadriculado" [level=3] [ref=f4e187]
+            - paragraph [ref=f4e188]: Crie quadrículas em milímetros para impressão.
+            - button "Abrir Papel quadriculado" [ref=f4e189] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e190]:
+            - generic [ref=f4e191]: Educação
+            - 'button "Adicionar aos favoritos: Flashcards imprimíveis" [ref=f4e194] [cursor=pointer]'
+            - heading "Flashcards imprimíveis" [level=3] [ref=f4e195]
+            - paragraph [ref=f4e196]: Monte cartões de estudo com frente e verso alinhados.
+            - button "Abrir Flashcards imprimíveis" [ref=f4e197] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e198]:
+            - generic [ref=f4e199]: Educação
+            - 'button "Adicionar aos favoritos: Planejador de estudos" [ref=f4e202] [cursor=pointer]'
+            - heading "Planejador de estudos" [level=3] [ref=f4e203]
+            - paragraph [ref=f4e204]: Distribua disciplinas em blocos com pausas.
+            - button "Abrir Planejador de estudos" [ref=f4e205] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e206]:
+            - generic [ref=f4e207]: Educação
+            - 'button "Adicionar aos favoritos: Gerador de ditado" [ref=f4e210] [cursor=pointer]'
+            - heading "Gerador de ditado" [level=3] [ref=f4e211]
+            - paragraph [ref=f4e212]: Prepare folha do aluno e lista separada do professor.
+            - button "Abrir Gerador de ditado" [ref=f4e213] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e214]:
+            - generic [ref=f4e215]: Educação
+            - 'button "Adicionar aos favoritos: Frações para colorir" [ref=f4e218] [cursor=pointer]'
+            - heading "Frações para colorir" [level=3] [ref=f4e219]
+            - paragraph [ref=f4e220]: Crie círculos divididos em partes iguais para atividades.
+            - button "Abrir Frações para colorir" [ref=f4e221] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e222]:
+            - generic [ref=f4e223]: Artesanato
+            - 'button "Adicionar aos favoritos: Preço de peça artesanal" [ref=f4e226] [cursor=pointer]'
+            - heading "Preço de peça artesanal" [level=3] [ref=f4e227]
+            - paragraph [ref=f4e228]: Inclua materiais e horas de trabalho no preço.
+            - button "Abrir Preço de peça artesanal" [ref=f4e229] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e230]:
+            - generic [ref=f4e231]: Artesanato
+            - 'button "Adicionar aos favoritos: Valor da hora artesanal" [ref=f4e234] [cursor=pointer]'
+            - heading "Valor da hora artesanal" [level=3] [ref=f4e235]
+            - paragraph [ref=f4e236]: Calcule valor por hora efetivamente produtiva.
+            - button "Abrir Valor da hora artesanal" [ref=f4e237] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e238]:
+            - generic [ref=f4e239]: Artesanato
+            - 'button "Adicionar aos favoritos: Custo do fio consumido" [ref=f4e242] [cursor=pointer]'
+            - heading "Custo do fio consumido" [level=3] [ref=f4e243]
+            - paragraph [ref=f4e244]: Calcule a parcela do novelo utilizada.
+            - button "Abrir Custo do fio consumido" [ref=f4e245] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f4e246]:
+            - generic [ref=f4e247]: Artesanato
+            - 'button "Adicionar aos favoritos: Planejador de encomendas" [ref=f4e250] [cursor=pointer]'
+            - heading "Planejador de encomendas" [level=3] [ref=f4e251]
+            - paragraph [ref=f4e252]: Organize peças pela capacidade diária de trabalho.
+            - button "Abrir Planejador de encomendas" [ref=f4e253] [cursor=pointer]: Abrir ferramenta
+        - button "Mostrar mais (126 restantes)" [ref=f4e255] [cursor=pointer]
+      - generic [ref=f4e257]:
+        - generic [ref=f4e258]:
+          - text: DO SEU JEITO
+          - heading [level=2] [ref=f4e259]:
+            - text: Feito para caber
+            - emphasis [ref=f4e260]: na sua rotina.
+        - generic [ref=f4e261]:
+          - article [ref=f4e262]:
+            - text: "01"
+            - heading "Encontre o que precisa" [level=3] [ref=f4e263]
+            - paragraph [ref=f4e264]: Explore as categorias ou escreva o que quer resolver.
+          - article [ref=f4e265]:
+            - text: "02"
+            - heading "Preencha com calma" [level=3] [ref=f4e266]
+            - paragraph [ref=f4e267]: Use seus dados e confira as premissas de cada ferramenta.
+          - article [ref=f4e268]:
+            - text: "03"
+            - heading "Leve o resultado" [level=3] [ref=f4e269]
+            - paragraph [ref=f4e270]: Copie, baixe, imprima ou salve para continuar depois.
+      - generic [ref=f4e273]:
+        - text: UM OFÍCIO DIÁRIO
+        - heading [level=2] [ref=f4e274]:
+          - text: Menos tempo nas contas.
+          - emphasis [ref=f4e275]: Mais tempo fazendo acontecer.
+        - paragraph [ref=f4e276]: Criado por Anderson para transformar tarefas do dia a dia em passos simples. Ferramentas gratuitas, com resultados transparentes e espaço para os seus planos.
+        - link "Ajude este projeto a continuar" [ref=f4e277] [cursor=pointer]:
+          - /url: "#apoiar"
+  - contentinfo [ref=f4e278]:
+    - link [ref=f4e279] [cursor=pointer]:
+      - /url: "#inicio"
+      - strong [ref=f4e280]: doce ofício
+    - generic [ref=f4e281]: Criado por Anderson · 2026
+    - navigation "Institucional" [ref=f4e282]:
+      - link "Privacidade" [ref=f4e283] [cursor=pointer]:
+        - /url: "#privacidade"
+      - link "Termos" [ref=f4e284] [cursor=pointer]:
+        - /url: "#termos"
+      - link "Contato" [ref=f4e285] [cursor=pointer]:
+        - /url: "#contato"
+      - button "Preferências de privacidade" [ref=f4e286] [cursor=pointer]
+  - region "Preferências de privacidade" [ref=f4e287]:
+    - generic [ref=f4e288]:
+      - strong [ref=f4e289]: Um espaço que respeita você.
+      - paragraph [ref=f4e290]: Salvos e favoritos ficam neste navegador. Não carregamos anúncios ou medição nas ferramentas. Você escolhe suas preferências opcionais.
+    - generic [ref=f4e291]:
+      - button "Rejeitar opcionais" [ref=f4e292] [cursor=pointer]
+      - button "Aceitar opcionais" [ref=f4e293] [cursor=pointer]
+      - button "Personalizar" [ref=f4e294] [cursor=pointer]
+  - status

@@ -1,0 +1,4 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,file} from './comum.js';
+import {canvas,carregarImagem,codificar,cor,tipo,resultadoImagem,comImagem,temExif} from './imagem-base.js';
+export default definir("imagem-em-tons-de-cinza",8,"Imagem em tons de cinza","Converta uma foto para tons de cinza mantendo transparência.","Luminância aproximada sRGB: 0,2126 R + 0,7152 G + 0,0722 B aplicada aos canais codificados.",[F()],async d=>{return comImagem(d,async(im,f)=>{const c=canvas(im.width,im.height),ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(im,0,0);const pixels=ctx.getImageData(0,0,c.width,c.height);for(let i=0;i<pixels.data.length;i+=4){const v=Math.round(.2126*pixels.data[i]+.7152*pixels.data[i+1]+.0722*pixels.data[i+2]);pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=v;}ctx.putImageData(pixels,0,0);return resultadoImagem(c,'image/png',1,f.size);});});
+

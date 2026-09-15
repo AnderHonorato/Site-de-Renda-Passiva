@@ -6,12 +6,13 @@ import { formatarNúmero } from '../formatação/formatar-número.js';
 import { criarElemento } from '../interface/criar-elemento.js';
 import { calcularTotaisDoOrçamento } from './calcular-totais-do-orçamento.js';
 import { formatarDataDoOrçamento } from './formatar-data-do-orçamento.js';
+import { obterIdentidadeDaPágina } from './obter-identidade-da-página.js';
 
 function informação(rótulo, valor) {
   return valor ? criarElemento('div', { classe: 'orçamento-informação' }, [criarElemento('dt', { texto: rótulo }), criarElemento('dd', { texto: valor })]) : null;
 }
 
-export function renderizarOrçamento(orçamento, { marca = orçamento.marca || '' } = {}) {
+export function renderizarOrçamento(orçamento, { marca = orçamento.marca || obterIdentidadeDaPágina().marca } = {}) {
   const totais = calcularTotaisDoOrçamento(orçamento);
   const datas = formatarDataDoOrçamento(orçamento);
   const linhas = totais.itens.map((item) =>

@@ -1,8 +1,10 @@
 // Sincronizado de compartilhado/scripts/orçamento/compartilhar-orçamento.js — edite a origem e rode "npm run sincronizar" na raiz.
 // Compartilha o link do orçamento pelo menu nativo do aparelho (celular) ou copia o link.
-// Retorna 'compartilhado', 'copiado', 'cancelado' ou 'falhou'.
+// Se nada disso for possível, mostra o link selecionado numa janela para cópia manual.
+// Retorna 'compartilhado', 'copiado', 'manual' (janela exibida), 'cancelado' ou 'falhou'.
 import { copiarTexto } from '../apoio/copiar-texto.js';
 import { criarLinkDoOrçamento } from './criar-link-do-orçamento.js';
+import { mostrarLinkDoOrçamento } from './mostrar-link-do-orçamento.js';
 
 export async function compartilharOrçamento(orçamento) {
   let link;
@@ -20,5 +22,7 @@ export async function compartilharOrçamento(orçamento) {
       if (erro?.name === 'AbortError') return 'cancelado';
     }
   }
-  return (await copiarTexto(link)) ? 'copiado' : 'falhou';
+  if (await copiarTexto(link)) return 'copiado';
+  await mostrarLinkDoOrçamento(link);
+  return 'manual';
 }

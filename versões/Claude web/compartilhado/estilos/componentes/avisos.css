@@ -1,0 +1,40 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/avisos.css */
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaço-3);
+  padding: var(--espaço-4);
+  border-radius: var(--raio-m);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.aviso .ícone {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+.aviso p { margin: 0; }
+.aviso p + p { margin-top: var(--espaço-1); }
+
+.aviso-informação {
+  background: var(--cor-secundária-100);
+  color: var(--cor-secundária-800);
+}
+
+.aviso-sucesso {
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+}
+
+.aviso-erro {
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+}
+
+.aviso-alerta {
+  background: var(--cor-aviso-fundo);
+  color: var(--cor-aviso);
+}

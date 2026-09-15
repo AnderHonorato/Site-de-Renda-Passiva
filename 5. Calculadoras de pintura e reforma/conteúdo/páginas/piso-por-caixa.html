@@ -1,0 +1,93 @@
+<!--página
+{
+  "título": "Piso por caixa",
+  "descrição": "Calcule quantas caixas de piso ou revestimento comprar a partir da área, da margem de recorte e da cobertura de cada caixa.",
+  "destaque": "azulejo",
+  "navegação": "ferramentas",
+  "script": "páginas/piso-por-caixa.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Piso por caixa</h1>
+    <p class="ferramenta-resumo">Informe a área do ambiente, uma margem para recorte e perdas, e a cobertura declarada em cada caixa. O resultado é a quantidade de caixas a comprar, sempre arredondada para cima.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-piso" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Área e margem</legend>
+        <div class="campo">
+          <label for="área-piso">Área do ambiente</label>
+          <div class="campo-com-unidade">
+            <input id="área-piso" name="área" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 20" aria-describedby="área-piso-erro">
+            <span class="unidade">m²</span>
+          </div>
+          <p id="área-piso-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="margem">Margem de recorte e perdas</label>
+          <div class="campo-com-unidade">
+            <input id="margem" name="margem" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="10" aria-describedby="margem-ajuda margem-erro">
+            <span class="unidade">%</span>
+          </div>
+          <p id="margem-ajuda" class="campo-ajuda">Cobre recortes, quebras e peças de reserva. 10% é um ponto de partida comum, mas ajuste conforme o formato do ambiente.</p>
+          <p id="margem-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <fieldset class="grupo-de-campos">
+        <legend>Embalagem</legend>
+        <div class="campo">
+          <label for="cobertura">Cobertura de cada caixa</label>
+          <div class="campo-com-unidade">
+            <input id="cobertura" name="cobertura" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 2,2" aria-describedby="cobertura-ajuda cobertura-erro">
+            <span class="unidade">m²/caixa</span>
+          </div>
+          <p id="cobertura-ajuda" class="campo-ajuda">Esse número vem escrito na caixa do piso ou revestimento escolhido.</p>
+          <p id="cobertura-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular caixas</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#grid-2x2"></use></svg>
+        <p class="estado-vazio-título">A quantidade de caixas aparece aqui</p>
+        <p>Preencha a área, a margem e a cobertura por caixa e toque em Calcular caixas.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Caixas a comprar</p>
+          <p class="resultado-valor" data-caixas></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <form id="formulário-salvar-piso" class="campo" novalidate>
+          <label for="nome-do-cálculo-de-piso">Nome para salvar este cálculo</label>
+          <input id="nome-do-cálculo-de-piso" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Sala — porcelanato" aria-describedby="nome-do-cálculo-de-piso-erro">
+          <p id="nome-do-cálculo-de-piso-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Área ajustada = área × (1 + margem). Caixas = arredondar para cima (área ajustada ÷ cobertura por caixa).</li>
+    <li>O arredondamento tem tolerância contra erro de ponto flutuante: uma divisão exata não vira uma caixa a mais.</li>
+    <li>A área calculada aqui não é a paginação exata das peças no chão — para isso, siga o projeto de assentamento.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-piso" class="botão botão-primário">Calcular caixas</button>
+</div>

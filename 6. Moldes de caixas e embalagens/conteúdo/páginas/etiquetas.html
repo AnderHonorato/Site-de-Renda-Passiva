@@ -1,0 +1,117 @@
+<!--página
+{
+  "título": "Etiquetas e tags",
+  "descrição": "Calcule quantas etiquetas de um tamanho fixo cabem numa folha A4 e gere o PDF de corte com texto opcional em cada uma.",
+  "destaque": "menta",
+  "navegação": "ferramentas",
+  "script": "páginas/etiquetas.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador de molde</p>
+    <h1 id="título-ferramenta">Etiquetas e tags</h1>
+    <p class="ferramenta-resumo">Informe o tamanho de uma etiqueta e a ferramenta calcula quantas cabem na área útil de uma folha A4, distribuídas numa grade centralizada, e gera o PDF pronto para recortar.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-etiquetas" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Unidade das medidas</legend>
+        <div class="segmentado" role="radiogroup" aria-label="Unidade">
+          <label class="opção"><input type="radio" name="unidade" value="mm" checked> Milímetros</label>
+          <label class="opção"><input type="radio" name="unidade" value="cm"> Centímetros</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Etiqueta e folha</legend>
+        <div class="campo">
+          <label for="largura">Largura da etiqueta</label>
+          <input id="largura" name="largura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="50" aria-describedby="largura-erro">
+          <p id="largura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="altura">Altura da etiqueta</label>
+          <input id="altura" name="altura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="30" aria-describedby="altura-erro">
+          <p id="altura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="espaçamento">Espaçamento entre etiquetas (mm)</label>
+          <input id="espaçamento" name="espaçamento" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="3" aria-describedby="espaçamento-erro">
+          <p id="espaçamento-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="margem">Margem imprimível da folha (mm)</label>
+          <input id="margem" name="margem" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="10" aria-describedby="margem-erro">
+          <p id="margem-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Texto opcional</legend>
+        <div class="campo">
+          <label for="texto-opcional">Texto em cada etiqueta (opcional)</label>
+          <input id="texto-opcional" name="texto-opcional" class="entrada" type="text" maxlength="200" autocomplete="off" placeholder="Ex.: Feito à mão por Ana">
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular grade</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#tag"></use></svg>
+        <p class="estado-vazio-título">Sua grade aparece aqui</p>
+        <p>Informe o tamanho da etiqueta e toque em Calcular grade.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-valor" data-total-de-etiquetas></p>
+          <p class="resultado-rótulo">etiquetas por folha A4</p>
+        </div>
+
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="baixar-svg"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#file-down"></use></svg>Baixar SVG</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="prévia-de-molde não-imprimir">
+          <div data-prévia-do-molde></div>
+          <p class="prévia-de-molde-escala" data-escala-da-prévia></p>
+        </div>
+
+        <dl class="lista-de-resultado" data-resumo-de-medidas></dl>
+
+        <div class="área-de-impressão">
+          <p>A prévia acima já mostra a grade na escala indicada. Para imprimir em tamanho real, use o botão “Baixar PDF”.</p>
+        </div>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta grade</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Etiquetas 5×3 cm" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>A quantidade considera a área útil da folha A4 (210×297 mm) descontando a margem imprimível informada; impressoras variam um pouco na margem mínima real.</li>
+    <li>Etiquetas não têm linha de dobra: só corte ao redor de cada uma.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-etiquetas" class="botão botão-primário">Calcular grade</button>
+</div>

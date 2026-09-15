@@ -1,0 +1,142 @@
+<!--página
+{
+  "título": "Caixa retangular",
+  "descrição": "Gere o molde de uma caixa retangular simples pelas medidas internas: base, paredes e abas de emenda, com PDF em tamanho real e SVG.",
+  "destaque": "petróleo",
+  "navegação": "ferramentas",
+  "script": "páginas/caixa-retangular.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador de molde</p>
+    <h1 id="título-ferramenta">Caixa retangular</h1>
+    <p class="ferramenta-resumo">Uma caixa simples de base, quatro paredes e abas de emenda nos cantos — sem tampa. Informe as medidas <strong>internas</strong> (o espaço útil depois de montada); a espessura do papel é somada à base do molde.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-caixa" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Unidade das medidas</legend>
+        <div class="segmentado" role="radiogroup" aria-label="Unidade">
+          <label class="opção"><input type="radio" name="unidade" value="mm" checked> Milímetros</label>
+          <label class="opção"><input type="radio" name="unidade" value="cm"> Centímetros</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Medidas internas</legend>
+        <div class="campo">
+          <label for="comprimento">Comprimento interno</label>
+          <input id="comprimento" name="comprimento" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="10" aria-describedby="comprimento-erro">
+          <p id="comprimento-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="largura">Largura interna</label>
+          <input id="largura" name="largura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="6" aria-describedby="largura-erro">
+          <p id="largura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="altura">Altura interna</label>
+          <input id="altura" name="altura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="4" aria-describedby="altura-erro">
+          <p id="altura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="tamanho-da-aba">Tamanho da aba (mm)</label>
+          <input id="tamanho-da-aba" name="tamanho-da-aba" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="15" aria-describedby="tamanho-da-aba-erro">
+          <p id="tamanho-da-aba-erro" class="campo-erro" hidden></p>
+          <p class="campo-ajuda">Não pode ser maior que a altura: a aba dobra a partir das paredes de topo e de baixo.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Papel</legend>
+        <div class="campo">
+          <label for="espessura">Espessura do papel (mm)</label>
+          <input id="espessura" name="espessura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0,3" aria-describedby="espessura-erro">
+          <p id="espessura-erro" class="campo-erro" hidden></p>
+          <p class="campo-ajuda">Somada à base do molde para compensar a dobra. Deixe 0 se não souber.</p>
+        </div>
+        <div class="campo">
+          <label for="tipo-de-papel">Tipo de papel (opcional, informativo)</label>
+          <select id="tipo-de-papel" name="tipo-de-papel" class="seleção">
+            <option value="">Não informado</option>
+            <option value="Papel sulfite/offset">Papel sulfite/offset</option>
+            <option value="Papel-cartão (cartolina)">Papel-cartão (cartolina)</option>
+            <option value="Papel kraft">Papel kraft</option>
+            <option value="Cartão duplex/triplex">Cartão duplex/triplex</option>
+            <option value="Papelão micro-ondulado">Papelão micro-ondulado</option>
+          </select>
+          <p class="campo-ajuda">Só aparece no resumo do molde; não muda a fórmula além da espessura informada acima.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Texto opcional</legend>
+        <div class="campo">
+          <label for="texto-opcional">Texto no molde (opcional)</label>
+          <input id="texto-opcional" name="texto-opcional" class="entrada" type="text" maxlength="200" autocomplete="off" placeholder="Ex.: Loja da Ana">
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar molde</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#box"></use></svg>
+        <p class="estado-vazio-título">Seu molde aparece aqui</p>
+        <p>Informe as medidas e toque em Gerar molde.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="baixar-svg"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#file-down"></use></svg>Baixar SVG</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="não-imprimir" data-resumo-de-folhas></div>
+
+        <div class="prévia-de-molde não-imprimir">
+          <div data-prévia-do-molde></div>
+          <p class="prévia-de-molde-escala" data-escala-da-prévia></p>
+          <div class="legenda-do-molde">
+            <span class="legenda-do-molde-item"><span class="legenda-do-molde-amostra"></span>Corte</span>
+            <span class="legenda-do-molde-item"><span class="legenda-do-molde-amostra legenda-do-molde-amostra--dobra"></span>Dobra</span>
+          </div>
+        </div>
+
+        <dl class="lista-de-resultado" data-resumo-de-medidas></dl>
+
+        <div class="área-de-impressão">
+          <p>A prévia acima já mostra o molde na escala indicada. Para imprimir em tamanho real, use o botão “Baixar PDF”: ele imprime uma peça por folha, com o quadrado de calibração de 50 mm.</p>
+        </div>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar este molde</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Caixa de brigadeiro 10×6×4" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>As medidas informadas são internas; a medida externa aproximada aparece no resumo, já somando a espessura do papel.</li>
+    <li>Este molde não foi montado fisicamente em papel para conferência: a validação foi geométrica e da renderização do PDF. Monte um exemplar antes de produzir em quantidade.</li>
+    <li>Não é indicado como embalagem segura para alimento nem para carga estrutural: a escolha do material é sua.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-caixa" class="botão botão-primário">Gerar molde</button>
+</div>

@@ -1,0 +1,9 @@
+@charset "UTF-8";
+/* compartilhado/demonstração/vitrine-de-componentes.css
+   Ajustes específicos desta página de desenvolvimento — não faz parte do
+   sistema compartilhado publicado nos produtos. Tudo o que é reutilizável
+   mora em estilos/utilitários.css ou nos componentes. */
+
+.cartão-demonstração {
+  max-width: 260px;
+}

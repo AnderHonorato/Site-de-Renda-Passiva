@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR" data-raiz="../" data-prefixo="demão-certa" data-destaque="azulejo" data-tipo="ferramenta" data-anúncios="sim" data-página="comparador-de-tinta">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Comparador de embalagens de tinta — Demão Certa</title>
+  <meta name="description" content="Compare embalagens de tinta pelo custo por litro e pelo custo por m² a partir do rendimento declarado, antes de escolher qual comprar.">
+  <meta name="author" content="Anderson">
+  <meta name="theme-color" content="#f3ece0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" href="../recursos/ícones/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../recursos/fontes/figtree-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../estilos/site.css">
+  <script type="module" src="../scripts/iniciar-aplicação.js"></script>
+  <script type="module" src="../scripts/páginas/comparador-de-tinta.js"></script>
+</head>
+<body>
+  <a class="pular-para-conteúdo" href="#conteúdo">Pular para o conteúdo</a>
+  <header class="cabeçalho não-imprimir">
+    <a class="cabeçalho-marca logotipo" href="../index.html" aria-label="Demão Certa — página inicial"><svg class="marca-símbolo" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#marca"></use></svg><span>Demão <em>Certa</em></span></a>
+    <nav class="cabeçalho-navegação" aria-label="Navegação principal">
+      <a class="cabeçalho-link" href="../páginas/ferramentas.html" aria-current="page">Ferramentas</a>
+      <a class="cabeçalho-link" href="../páginas/salvos.html">Salvos</a>
+      <a class="cabeçalho-link" href="../páginas/metodologia.html">Metodologia</a>
+      <a class="cabeçalho-link" href="../páginas/sobre.html">Sobre</a>
+      <a class="botão botão-primário cabeçalho-apoiar" href="../páginas/apoiar.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#apoiar"></use></svg><span>Apoiar por Pix</span></a>
+    </nav>
+  </header>
+  <main id="conteúdo" class="conteúdo" tabindex="-1">
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Comparador de embalagens de tinta</h1>
+    <p class="ferramenta-resumo">Adicione duas ou mais embalagens com preço, litros e a cobertura declarada na lata. A ferramenta calcula o custo por litro e o custo por m², e aponta a mais barata em cada critério.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-comparador" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Embalagens</legend>
+        <div class="linhas-editáveis" data-linhas-de-embalagens></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-embalagem>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar embalagem</span>
+        </button>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#calcular"></use></svg>Comparar embalagens</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#paint-roller"></use></svg>
+        <p class="estado-vazio-título">A comparação aparece aqui</p>
+        <p>Adicione ao menos duas embalagens com preço, litros e cobertura declarada e toque em Comparar embalagens.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="tabela-rolável">
+          <table class="tabela" data-tabela-comparação>
+            <caption>Custo por litro e por m²</caption>
+            <thead>
+              <tr><th scope="col">Embalagem</th><th scope="col" data-numérico>Custo por litro</th><th scope="col" data-numérico>Custo por m²</th></tr>
+            </thead>
+            <tbody data-corpo-comparação></tbody>
+          </table>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Custo por litro = preço ÷ litros. Custo por m² = preço ÷ cobertura declarada na embalagem.</li>
+    <li>A cobertura declarada é a do rótulo do fabricante — rendimentos reais variam com a superfície e a técnica de aplicação.</li>
+    <li>O preço mais baixo por litro nem sempre é o mais baixo por m²: confira os dois antes de decidir.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-comparador" class="botão botão-primário">Comparar embalagens</button>
+</div>
+  </main>
+
+  <footer class="rodapé-institucional">
+    <div class="rodapé-conteúdo">
+      <div class="rodapé-autoria">
+        <p class="rodapé-marca logotipo"><svg class="marca-símbolo" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#marca"></use></svg><span>Demão <em>Certa</em></span></p>
+        <p class="rodapé-criador">Criado por <strong>Anderson</strong></p>
+      </div>
+      <nav class="rodapé-links não-imprimir" aria-label="Institucional">
+        <ul>
+          <li><a href="../páginas/sobre.html">Sobre</a></li>
+          <li><a href="../páginas/metodologia.html">Metodologia</a></li>
+          <li><a href="../páginas/contato.html">Contato</a></li>
+          <li><a href="../páginas/política-de-privacidade.html">Política de privacidade</a></li>
+          <li><a href="../páginas/termos-de-uso.html">Termos de uso</a></li>
+          <li><button type="button" class="botão-link" data-abrir-preferências-de-privacidade>Preferências de privacidade</button></li>
+        </ul>
+      </nav>
+      <p class="rodapé-direitos">© 2026 Demão Certa · versão 1.0.0 · Ferramentas gratuitas. Resultados são estimativas baseadas nos dados informados.</p>
+    </div>
+  </footer>
+
+  <nav class="navegação-inferior não-imprimir" aria-label="Navegação do aplicativo">
+    <a class="navegação-inferior-item" href="../index.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#início"></use></svg><span>Início</span></a>
+    <a class="navegação-inferior-item" href="../páginas/ferramentas.html" aria-current="page"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#ferramentas"></use></svg><span>Ferramentas</span></a>
+    <a class="navegação-inferior-item" href="../páginas/salvos.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#salvos"></use></svg><span>Salvos</span></a>
+    <a class="navegação-inferior-item" href="../páginas/apoiar.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#apoiar"></use></svg><span>Apoiar</span></a>
+    <button type="button" class="navegação-inferior-item" data-abrir-menu-mais aria-haspopup="dialog" aria-controls="menu-mais"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#mais"></use></svg><span>Mais</span></button>
+  </nav>
+
+  <dialog id="menu-mais" class="diálogo menu-mais" aria-labelledby="menu-mais-título">
+    <div class="diálogo-cabeçalho">
+      <h2 id="menu-mais-título" class="diálogo-título">Mais opções</h2>
+      <button type="button" class="botão botão-ícone botão-fantasma" data-fechar-diálogo aria-label="Fechar menu"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#fechar"></use></svg></button>
+    </div>
+    <nav aria-label="Mais opções">
+      <ul class="menu-mais-lista">
+        <li><a class="menu-mais-link" href="../páginas/sobre.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#informação"></use></svg><span>Sobre</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/metodologia.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#lista"></use></svg><span>Metodologia</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/contato.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#contato"></use></svg><span>Contato</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/política-de-privacidade.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#privacidade"></use></svg><span>Política de privacidade</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/termos-de-uso.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#documento"></use></svg><span>Termos de uso</span></a></li>
+        <li><button type="button" class="menu-mais-link" data-abrir-preferências-de-privacidade><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#privacidade"></use></svg><span>Preferências de privacidade</span></button></li>
+      </ul>
+    </nav>
+  </dialog>
+
+  <section id="consentimento" class="consentimento não-imprimir" aria-labelledby="consentimento-título" hidden>
+    <div class="consentimento-texto">
+      <h2 id="consentimento-título" class="consentimento-título">Sua privacidade</h2>
+      <p>Guardamos no seu aparelho apenas o necessário para lembrar suas escolhas e os dados que você decidir salvar. Recursos opcionais, como publicidade, só são carregados se você permitir. Rejeitar não limita nenhuma ferramenta. <a href="../páginas/política-de-privacidade.html">Política de privacidade</a>.</p>
+    </div>
+    <div class="consentimento-ações">
+      <button type="button" class="botão botão-secundário" data-consentimento="rejeitar">Rejeitar opcionais</button>
+      <button type="button" class="botão botão-secundário" data-consentimento="personalizar">Personalizar</button>
+      <button type="button" class="botão botão-primário" data-consentimento="aceitar">Aceitar opcionais</button>
+    </div>
+  </section>
+  <dialog id="preferências-de-privacidade" class="diálogo" aria-labelledby="preferências-título">
+    <form method="dialog" class="diálogo-formulário" data-formulário-de-privacidade>
+      <div class="diálogo-cabeçalho">
+        <h2 id="preferências-título" class="diálogo-título">Preferências de privacidade</h2>
+        <button type="button" class="botão botão-ícone botão-fantasma" data-fechar-diálogo aria-label="Fechar preferências"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#fechar"></use></svg></button>
+      </div>
+      <div class="diálogo-corpo">
+        <div class="opção-de-privacidade">
+          <p class="opção-de-privacidade-título">Necessário <span class="etiqueta etiqueta-secundária">Sempre ativo</span></p>
+          <p class="campo-ajuda">Armazenamento local para guardar esta escolha e os itens que você salvar. Não é enviado a servidores.</p>
+        </div>
+        <div class="opção-de-privacidade">
+          <label class="interruptor">
+            <input type="checkbox" name="publicidade" role="switch" data-preferência="publicidade">
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            <span class="opção-de-privacidade-título">Publicidade</span>
+          </label>
+          <p class="campo-ajuda" data-estado-da-publicidade>Permite carregar anúncios do Google AdSense, que podem usar cookies e identificadores. Enquanto a publicidade não estiver ativa neste site, nada é carregado.</p>
+        </div>
+        <p class="campo-ajuda">Este site não usa ferramentas de medição de audiência. Você pode mudar sua escolha a qualquer momento em “Preferências de privacidade”, no rodapé ou no menu Mais.</p>
+      </div>
+      <div class="diálogo-ações">
+        <button type="submit" value="rejeitar" class="botão botão-secundário">Rejeitar opcionais</button>
+        <button type="submit" value="salvar" class="botão botão-primário">Salvar escolhas</button>
+      </div>
+    </form>
+  </dialog>
+  <div class="região-de-mensagens não-imprimir" role="status" aria-live="polite" data-região-de-mensagens></div>
+</body>
+</html>

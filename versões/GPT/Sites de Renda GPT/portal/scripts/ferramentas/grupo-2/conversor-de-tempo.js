@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("conversor-de-tempo",10,"Conversor de tempo","Converta horas, minutos e segundos.","Conversão exata: 1 hora = 60 minutos = 3.600 segundos.",[N('valor','Quantidade',1.5,0,100000000),S('unidade','Unidade','h',[['h','Horas'],['min','Minutos'],['s','Segundos']])],async d=>{const u=opcao(d,'unidade',['h','min','s']),s=n(d,'valor',0,100000000)*({h:3600,min:60,s:1}[u]);return {resumo:fmt(s/60)+' minutos',linhas:[fmt(s/3600)+' horas',fmt(s)+' segundos']};});
+

@@ -1,0 +1,88 @@
+<!--página
+{
+  "título": "Flashcards",
+  "descrição": "Crie flashcards com seus próprios pares de pergunta e resposta, com PDF de frente e verso alinhados para cortar e estudar.",
+  "destaque": "girassol",
+  "navegação": "ferramentas",
+  "script": "páginas/flashcards.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador para imprimir</p>
+    <h1 id="título-ferramenta">Flashcards</h1>
+    <p class="ferramenta-resumo">Digite até 40 pares de pergunta e resposta. O PDF sai com as frentes numa folha e os versos na folha seguinte, espelhados horizontalmente para que, ao imprimir dos dois lados do papel, cada verso caia atrás da pergunta certa.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-flashcards" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Pares de pergunta e resposta (até 40)</legend>
+        <div class="lista-de-pares" data-lista-de-pares tabindex="-1"></div>
+        <div class="ações-do-formulário">
+          <button type="button" id="botão-adicionar-par" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>Adicionar par</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Impressão e cabeçalho</legend>
+        <div class="campo">
+          <label for="título-da-atividade">Nome do jogo (opcional)</label>
+          <input id="título-da-atividade" name="título-da-atividade" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Flashcards — capitais">
+        </div>
+        <div class="campo">
+          <label class="interruptor">
+            <input type="checkbox" id="espelhar-verso" name="espelhar-verso" checked>
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            Espelhar o verso para impressão frente e verso
+          </label>
+          <p class="campo-ajuda">Desative se for imprimir cada lado em papéis separados, sem virar a folha.</p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Montar flashcards</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#layers"></use></svg>
+        <p class="estado-vazio-título">Seus flashcards aparecem aqui</p>
+        <p>Preencha os pares e toque em Montar flashcards.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="área-de-impressão" data-folhas></div>
+
+        <p class="campo-ajuda" data-resumo></p>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta configuração</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Flashcards — capitais" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>Cada folha tem até 8 cartões (2 colunas × 4 linhas); com mais pares, o PDF gera folhas extras de frente e verso.</li>
+    <li>O espelhamento do verso funciona para impressão duplex virando a folha pela borda longa; se sua impressora virar pela borda curta, desative o espelhamento e ajuste manualmente.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-flashcards" class="botão botão-primário">Montar flashcards</button>
+</div>

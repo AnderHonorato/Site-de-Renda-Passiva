@@ -1,0 +1,13 @@
+{
+  "fundo": "#f5f0e7",
+  "neutra": "#827a70",
+  "destaque": "#1f6f7a",
+  "secundária": "#e08e55",
+  "destaques": {
+    "petróleo": "#1f6f7a",
+    "damasco": "#d9803f",
+    "kraft": "#9a6f45",
+    "menta": "#3f9480",
+    "ameixa": "#8a4a6e"
+  }
+}

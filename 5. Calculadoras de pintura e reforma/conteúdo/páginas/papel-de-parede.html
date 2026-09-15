@@ -1,0 +1,111 @@
+<!--página
+{
+  "título": "Papel de parede",
+  "descrição": "Calcule faixas e rolos de papel de parede considerando a altura do ambiente e a repetição da estampa.",
+  "destaque": "sálvia",
+  "navegação": "ferramentas",
+  "script": "páginas/papel-de-parede.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Papel de parede</h1>
+    <p class="ferramenta-resumo">Informe a largura total da parede, a altura do ambiente e as medidas do rolo escolhido. Se a estampa tiver repetição (rapport), informe também — cada faixa é ajustada para a repetição continuar entre uma faixa e outra.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-papel-de-parede" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Parede</legend>
+        <div class="campo">
+          <label for="largura-da-parede">Largura total a cobrir</label>
+          <div class="campo-com-unidade">
+            <input id="largura-da-parede" name="largura-da-parede" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 4" aria-describedby="largura-da-parede-erro">
+            <span class="unidade">m</span>
+          </div>
+          <p id="largura-da-parede-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="altura-do-ambiente">Altura do ambiente (pé-direito)</label>
+          <div class="campo-com-unidade">
+            <input id="altura-do-ambiente" name="altura-do-ambiente" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 2,6" aria-describedby="altura-do-ambiente-erro">
+            <span class="unidade">m</span>
+          </div>
+          <p id="altura-do-ambiente-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Rolo escolhido</legend>
+        <div class="campo">
+          <label for="largura-do-rolo">Largura do rolo</label>
+          <div class="campo-com-unidade">
+            <input id="largura-do-rolo" name="largura-do-rolo" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 0,53" aria-describedby="largura-do-rolo-erro">
+            <span class="unidade">m</span>
+          </div>
+          <p id="largura-do-rolo-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="comprimento-do-rolo">Comprimento do rolo</label>
+          <div class="campo-com-unidade">
+            <input id="comprimento-do-rolo" name="comprimento-do-rolo" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 10" aria-describedby="comprimento-do-rolo-erro">
+            <span class="unidade">m</span>
+          </div>
+          <p id="comprimento-do-rolo-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Ajustes (opcionais)</legend>
+        <div class="campo">
+          <label for="repetição">Repetição da estampa (rapport)</label>
+          <div class="campo-com-unidade">
+            <input id="repetição" name="repetição" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="repetição-ajuda repetição-erro">
+            <span class="unidade">m</span>
+          </div>
+          <p id="repetição-ajuda" class="campo-ajuda">Deixe 0 se a estampa não tiver repetição a combinar entre as faixas.</p>
+          <p id="repetição-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="folga">Folga de corte por faixa</label>
+          <div class="campo-com-unidade">
+            <input id="folga" name="folga" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="folga-erro">
+            <span class="unidade">m</span>
+          </div>
+          <p id="folga-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular faixas e rolos</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#layers"></use></svg>
+        <p class="estado-vazio-título">As faixas e rolos aparecem aqui</p>
+        <p>Preencha as medidas da parede e do rolo e toque em Calcular faixas e rolos.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Rolos a comprar</p>
+          <p class="resultado-valor" data-rolos></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Faixas = arredondar para cima (largura da parede ÷ largura do rolo). A altura de cada faixa soma a folga e é ajustada para o próximo múltiplo da repetição da estampa.</li>
+    <li>Rolos = arredondar para cima (faixas ÷ faixas que cabem em cada rolo).</li>
+    <li>Aberturas (portas, janelas) não são descontadas aqui — desconte a largura delas na largura total informada, se for o caso.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-papel-de-parede" class="botão botão-primário">Calcular faixas e rolos</button>
+</div>

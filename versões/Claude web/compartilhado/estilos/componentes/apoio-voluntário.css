@@ -1,0 +1,135 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/apoio-voluntário.css
+   Faixa de apoio (antes do rodapé, em todas as páginas) e a página de apoio
+   por Pix (valores rápidos, revisão, QR e copia-e-cola). */
+
+/* — faixa de apoio: discreta, em linha, nunca flutuante — */
+.faixa-de-apoio {
+  position: relative;
+  max-width: 1180px;
+  margin: var(--espaço-6) auto;
+  padding: var(--espaço-5) var(--espaço-6);
+  background: var(--cor-secundária-100);
+  border-radius: var(--raio-g);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaço-4);
+}
+@media (max-width: 767.98px) {
+  .faixa-de-apoio {
+    margin: var(--espaço-5) var(--espaço-4);
+    padding: var(--espaço-4);
+    flex-direction: column;
+    align-items: flex-start;
+    padding-right: var(--espaço-7);
+  }
+}
+
+.faixa-de-apoio-texto {
+  flex: 1 1 260px;
+}
+.faixa-de-apoio-título {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+.faixa-de-apoio-texto p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--cor-texto-suave);
+}
+
+.faixa-de-apoio-valores {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaço-2);
+}
+
+.faixa-de-apoio-dispensar {
+  position: absolute;
+  top: var(--espaço-3);
+  right: var(--espaço-3);
+  background: color-mix(in srgb, var(--cor-secundária-100) 40%, var(--cor-superfície-elevada) 60%);
+}
+
+/* — página de apoio — */
+.apoio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-6);
+  max-width: 640px;
+}
+
+.valores-rápidos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaço-2);
+}
+
+.opção-de-valor {
+  min-width: 88px;
+  justify-content: center;
+  font-family: var(--fonte-título);
+  font-size: 16px;
+}
+
+.apoio-revisão {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espaço-3);
+  padding: var(--espaço-5);
+  background: var(--cor-destaque-100);
+  border-radius: var(--raio-m);
+}
+.apoio-revisão dt {
+  font-size: 13px;
+  color: var(--cor-destaque-800);
+}
+.apoio-revisão dd {
+  margin: 0;
+  font-family: var(--fonte-título);
+  font-size: 30px;
+  color: var(--cor-destaque-800);
+}
+
+.apoio-qr {
+  align-self: flex-start;
+  padding: var(--espaço-4);
+  background: var(--cor-superfície-qr);
+  border-radius: var(--raio-m);
+  box-shadow: var(--sombra-p);
+  line-height: 0;
+}
+.apoio-qr img,
+.apoio-qr svg,
+.apoio-qr canvas {
+  width: min(240px, 60vw);
+  height: min(240px, 60vw);
+}
+
+.apoio-copia-e-cola {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+}
+
+.apoio-código {
+  display: block;
+  width: 100%;
+  min-height: 90px;
+  padding: var(--espaço-3) var(--espaço-4);
+  font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+  font-size: 12.5px;
+  line-height: 1.5;
+  word-break: break-all;
+  color: var(--cor-texto);
+  background: var(--cor-superfície);
+  border: 1.5px solid var(--cor-divisória);
+  border-radius: var(--raio-m);
+  resize: none;
+}
+.apoio-código:focus-visible {
+  border-color: var(--cor-foco);
+}

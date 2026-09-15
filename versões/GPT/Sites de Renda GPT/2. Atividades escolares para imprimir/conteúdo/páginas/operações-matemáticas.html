@@ -1,0 +1,183 @@
+<!--página
+{
+  "título": "Operações matemáticas",
+  "descrição": "Gere folhas de adição, subtração, multiplicação e divisão com gabarito separado, semente reprodutível e PDF para imprimir.",
+  "destaque": "céu",
+  "navegação": "ferramentas",
+  "script": "páginas/operações-matemáticas.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador para imprimir</p>
+    <h1 id="título-ferramenta">Operações matemáticas</h1>
+    <p class="ferramenta-resumo">Escolha as operações, o intervalo dos números e a quantidade de exercícios. A semente numérica fica visível e pode ser reaproveitada para gerar sempre a mesma folha, com o gabarito em página separada.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-operações" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Operações</legend>
+        <div class="opções" role="group" aria-label="Operações incluídas">
+          <label class="opção"><input type="checkbox" name="operador" value="+" checked> Adição (+)</label>
+          <label class="opção"><input type="checkbox" name="operador" value="−" checked> Subtração (−)</label>
+          <label class="opção"><input type="checkbox" name="operador" value="×"> Multiplicação (×)</label>
+          <label class="opção"><input type="checkbox" name="operador" value="÷"> Divisão (÷)</label>
+        </div>
+        <p id="operadores-erro" class="campo-erro" hidden></p>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Quantidade e intervalo dos números</legend>
+        <div class="campo">
+          <label for="quantidade">Quantidade de exercícios</label>
+          <input id="quantidade" name="quantidade" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="10" aria-describedby="quantidade-ajuda quantidade-erro">
+          <p id="quantidade-ajuda" class="campo-ajuda">De 1 a 200 por folha.</p>
+          <p id="quantidade-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="dificuldade">Dificuldade</label>
+          <select id="dificuldade" name="dificuldade" class="entrada seleção">
+            <option value="fácil">Fácil (0 a 20)</option>
+            <option value="médio" selected>Médio (0 a 100)</option>
+            <option value="difícil">Difícil (0 a 1.000)</option>
+            <option value="personalizado">Personalizado (defino abaixo)</option>
+          </select>
+          <p class="campo-ajuda">Escolher um nível preenche o intervalo abaixo; você pode ajustá-lo depois.</p>
+        </div>
+        <div class="campo">
+          <label for="mínimo">Menor número</label>
+          <input id="mínimo" name="mínimo" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="0" aria-describedby="mínimo-erro">
+          <p id="mínimo-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="máximo">Maior número</label>
+          <input id="máximo" name="máximo" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="100" aria-describedby="máximo-erro">
+          <p id="máximo-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Apresentação</legend>
+        <div class="segmentado" role="radiogroup" aria-label="Apresentação dos exercícios">
+          <label class="opção"><input type="radio" name="apresentação" value="linha" checked> Em linha (7 + 5 = )</label>
+          <label class="opção"><input type="radio" name="apresentação" value="armada"> Na vertical (armada)</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Regras da soma, da subtração e da divisão</legend>
+        <div class="campo">
+          <label for="reserva">Reserva (soma) / empréstimo (subtração)</label>
+          <select id="reserva" name="reserva" class="entrada seleção">
+            <option value="indiferente" selected>Tanto faz</option>
+            <option value="exigir">Exigir reserva/empréstimo</option>
+            <option value="evitar">Evitar reserva/empréstimo</option>
+          </select>
+          <p class="campo-ajuda">Vale para adição e subtração; ignorado nas demais operações.</p>
+        </div>
+        <div class="campo">
+          <label for="divisão">Tipo de divisão</label>
+          <select id="divisão" name="divisão" class="entrada seleção">
+            <option value="exata" selected>Exata (sem resto)</option>
+            <option value="comResto">Pode sobrar resto</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label class="interruptor">
+            <input type="checkbox" id="permitir-negativos" name="permitir-negativos">
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            Permitir resultado negativo na subtração
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Cabeçalho e semente</legend>
+        <div class="campo">
+          <label for="título-da-atividade">Nome da atividade (opcional)</label>
+          <input id="título-da-atividade" name="título-da-atividade" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Lição de casa — semana 3">
+        </div>
+        <div class="campo">
+          <label class="interruptor">
+            <input type="checkbox" id="com-cabeçalho" name="com-cabeçalho" checked>
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            Incluir campos de Nome e Data
+          </label>
+        </div>
+        <div class="campo">
+          <label for="semente">Semente (reproduz a mesma folha)</label>
+          <div class="campo-semente">
+            <input id="semente" name="semente" class="entrada" type="text" inputmode="numeric" autocomplete="off" aria-describedby="semente-erro">
+            <button type="button" id="botão-nova-semente" class="botão botão-secundário botão-ícone" aria-label="Sortear nova semente"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#refresh-cw"></use></svg></button>
+          </div>
+          <p class="campo-ajuda">Guarde este número para gerar de novo exatamente a mesma folha.</p>
+          <p id="semente-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar atividade</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#sigma"></use></svg>
+        <p class="estado-vazio-título">Sua folha aparece aqui</p>
+        <p>Escolha as operações e toque em Gerar atividade.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="área-de-impressão">
+          <article class="folha-de-atividade" data-folha-atividade>
+            <header class="cabeçalho-da-atividade" data-cabeçalho-da-atividade>
+              <h3 class="cabeçalho-da-atividade-título" data-título-impresso></h3>
+              <div class="cabeçalho-da-atividade-campos" data-campos-impressos hidden>
+                <span>Nome:</span>
+                <span>Data:</span>
+              </div>
+            </header>
+            <div data-conteúdo-da-atividade></div>
+          </article>
+
+          <article class="folha-de-atividade quebra-de-página" data-folha-gabarito>
+            <header class="cabeçalho-da-atividade">
+              <h3 class="cabeçalho-da-atividade-título" data-título-gabarito></h3>
+            </header>
+            <div data-conteúdo-do-gabarito></div>
+          </article>
+        </div>
+
+        <p class="campo-ajuda" data-resumo-da-semente></p>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta configuração</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Soma até 100 — turma A" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>A divisão exata monta o dividendo a partir do quociente vezes o divisor: nunca arredonda a resposta.</li>
+    <li>Reserva/empréstimo compara os números coluna a coluna; é uma aproximação didática, não uma regra oficial de currículo.</li>
+    <li>Este gerador não afirma alinhamento com a BNCC nem garante eficácia pedagógica: é uma ferramenta de apoio à preparação de material.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-operações" class="botão botão-primário">Gerar atividade</button>
+</div>

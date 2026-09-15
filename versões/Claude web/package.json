@@ -1,0 +1,28 @@
+{
+  "name": "sites-de-renda-passiva",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Seis sites estáticos de ferramentas gratuitas, criados por Anderson.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "preparar": "node compartilhado/ferramentas-da-raiz/preparar-recursos.mjs",
+    "sincronizar": "node compartilhado/ferramentas-da-raiz/sincronizar-compartilhado.mjs",
+    "gerar": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs gerar",
+    "testar": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs testar",
+    "construir": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs construir",
+    "verificar": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs verificar",
+    "test": "npm run testar"
+  },
+  "devDependencies": {
+    "@fontsource/caprasimo": "5.3.0",
+    "@fontsource/caveat": "5.3.0",
+    "@fontsource/figtree": "5.3.0",
+    "jsqr": "1.4.0",
+    "lucide-static": "1.46.0",
+    "qrcode-generator": "2.0.4"
+  }
+}

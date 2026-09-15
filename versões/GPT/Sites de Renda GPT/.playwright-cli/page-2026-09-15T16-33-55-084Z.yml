@@ -1,0 +1,146 @@
+- generic [ref=f3e1]:
+  - link "Pular para o conteúdo" [ref=f3e2] [cursor=pointer]:
+    - /url: "#conteudo"
+  - banner [ref=f3e3]:
+    - link "Doce Ofício, início" [ref=f3e4] [cursor=pointer]:
+      - /url: "#inicio"
+      - generic [ref=f3e6]:
+        - strong [ref=f3e7]: doce ofício
+        - generic [ref=f3e8]: ferramentas para o dia a dia
+    - link "Apoiar o projeto" [ref=f3e9] [cursor=pointer]:
+      - /url: "#apoiar"
+  - main [ref=f3e10]:
+    - generic [ref=f3e11]:
+      - generic [ref=f3e12]:
+        - generic [ref=f3e13]:
+          - text: UM POUCO DE AJUDA, TODOS OS DIAS
+          - heading [level=1] [ref=f3e14]:
+            - text: Pequenas contas.
+            - emphasis [ref=f3e15]: Grandes planos.
+          - paragraph [ref=f3e16]: Do bolo que você vende à viagem que você sonha. Encontre um jeito mais simples de calcular, criar e organizar.
+          - generic [ref=f3e17]:
+            - link "Encontre sua ferramenta" [ref=f3e18] [cursor=pointer]:
+              - /url: "#ferramentas"
+            - generic [ref=f3e19]: feito para facilitar.
+          - generic [ref=f3e20]: Gratuito. Sem cadastro. No seu navegador.
+        - generic [ref=f3e22]:
+          - img "Ilustração de calculadora, caderno, fita métrica e materiais de papelaria em tons de terracota e verde." [ref=f3e23]
+          - generic [ref=f3e24]:
+            - generic [ref=f3e25]: um lugar, muitas possibilidades
+            - strong [ref=f3e26]: 150 ferramentas úteis
+      - region "Sobre as ferramentas" [ref=f3e27]:
+        - generic [ref=f3e28]:
+          - strong [ref=f3e29]: 15 categorias
+          - generic [ref=f3e30]: para todos os seus planos
+        - generic [ref=f3e31]:
+          - strong [ref=f3e32]: Seus arquivos ficam com você
+          - generic [ref=f3e33]: processamento local, sem envio
+        - generic [ref=f3e34]:
+          - strong [ref=f3e35]: Resultado bem explicado
+          - generic [ref=f3e36]: premissas, medidas e próximos passos
+      - generic [ref=f3e37]:
+        - generic [ref=f3e39]:
+          - text: ESCOLHA SEU CAMINHO
+          - heading "O que vamos resolver hoje?" [level=2] [ref=f3e40]
+        - generic [ref=f3e41]:
+          - searchbox "Buscar ferramentas" [ref=f3e43]: preco venda
+          - generic [ref=f3e44]:
+            - generic [ref=f3e45]: Categoria
+            - combobox "Categoria" [ref=f3e46]:
+              - option "Todas as categorias" [selected]
+              - option "Confeitaria"
+              - option "Educação"
+              - option "Artesanato"
+              - option "Festas"
+              - option "Reforma"
+              - option "Embalagens"
+              - option "Texto e escrita"
+              - option "Imagens"
+              - option "PDF e documentos"
+              - option "Datas e tempo"
+              - option "Matemática e medidas"
+              - option "Vendas e negócios"
+              - option "Ferramentas digitais"
+              - option "Casa e economia"
+              - option "Viagens e deslocamentos"
+        - generic "Categorias em destaque" [ref=f3e47]:
+          - button "Todas" [pressed] [ref=f3e48] [cursor=pointer]
+          - button "Confeitaria" [ref=f3e49] [cursor=pointer]
+          - button "Educação" [ref=f3e50] [cursor=pointer]
+          - button "Reforma" [ref=f3e51] [cursor=pointer]
+          - button "Imagens" [ref=f3e52] [cursor=pointer]
+          - button "PDF e documentos" [ref=f3e53] [cursor=pointer]
+          - button "Casa e economia" [ref=f3e54] [cursor=pointer]
+        - generic [ref=f3e55]:
+          - status [ref=f3e56]: 3 ferramentas encontradas
+          - button "Só favoritos" [ref=f3e57] [cursor=pointer]
+        - generic [ref=f3e58]:
+          - article [ref=f3e293]:
+            - generic [ref=f3e294]: Confeitaria
+            - 'button "Adicionar aos favoritos: Preço de venda" [ref=f3e297] [cursor=pointer]'
+            - heading "Preço de venda" [level=3] [ref=f3e298]
+            - paragraph [ref=f3e299]: Inclua margem sobre venda e taxas no preço do lote.
+            - button "Abrir Preço de venda" [active] [ref=f3e300] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f3e301]:
+            - generic [ref=f3e302]: Vendas e negócios
+            - 'button "Adicionar aos favoritos: Preço com taxas de venda" [ref=f3e305] [cursor=pointer]'
+            - heading "Preço com taxas de venda" [level=3] [ref=f3e306]
+            - paragraph [ref=f3e307]: Inclua comissão, tarifa fixa e margem no preço.
+            - button "Abrir Preço com taxas de venda" [ref=f3e308] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f3e309]:
+            - generic [ref=f3e310]: Vendas e negócios
+            - 'button "Adicionar aos favoritos: Comparador de preço unitário" [ref=f3e313] [cursor=pointer]'
+            - heading "Comparador de preço unitário" [level=3] [ref=f3e314]
+            - paragraph [ref=f3e315]: Compare embalagens em uma mesma unidade-base.
+            - button "Abrir Comparador de preço unitário" [ref=f3e316] [cursor=pointer]: Abrir ferramenta
+      - generic [ref=f3e254]:
+        - generic [ref=f3e255]:
+          - text: DO SEU JEITO
+          - heading [level=2] [ref=f3e256]:
+            - text: Feito para caber
+            - emphasis [ref=f3e257]: na sua rotina.
+        - generic [ref=f3e258]:
+          - article [ref=f3e259]:
+            - generic [ref=f3e260]: "01"
+            - heading "Encontre o que precisa" [level=3] [ref=f3e261]
+            - paragraph [ref=f3e262]: Explore as categorias ou escreva o que quer resolver.
+          - article [ref=f3e263]:
+            - generic [ref=f3e264]: "02"
+            - heading "Preencha com calma" [level=3] [ref=f3e265]
+            - paragraph [ref=f3e266]: Use seus dados e confira as premissas de cada ferramenta.
+          - article [ref=f3e267]:
+            - generic [ref=f3e268]: "03"
+            - heading "Leve o resultado" [level=3] [ref=f3e269]
+            - paragraph [ref=f3e270]: Copie, baixe, imprima ou salve para continuar depois.
+      - generic [ref=f3e273]:
+        - text: UM OFÍCIO DIÁRIO
+        - heading [level=2] [ref=f3e274]:
+          - text: Menos tempo nas contas.
+          - emphasis [ref=f3e275]: Mais tempo fazendo acontecer.
+        - paragraph [ref=f3e276]: Criado por Anderson para transformar tarefas do dia a dia em passos simples. Ferramentas gratuitas, com resultados transparentes e espaço para os seus planos.
+        - link "Ajude este projeto a continuar" [ref=f3e277] [cursor=pointer]:
+          - /url: "#apoiar"
+  - contentinfo [ref=f3e278]:
+    - link [ref=f3e279] [cursor=pointer]:
+      - /url: "#inicio"
+      - strong [ref=f3e280]: doce ofício
+    - generic [ref=f3e281]: Criado por Anderson · 2026
+    - navigation "Institucional" [ref=f3e282]:
+      - link "Privacidade" [ref=f3e283] [cursor=pointer]:
+        - /url: "#privacidade"
+      - link "Termos" [ref=f3e284] [cursor=pointer]:
+        - /url: "#termos"
+      - link "Contato" [ref=f3e285] [cursor=pointer]:
+        - /url: "#contato"
+      - button "Preferências de privacidade" [ref=f3e286] [cursor=pointer]
+  - navigation "Navegação no celular" [ref=f3e287]:
+    - link "Início" [ref=f3e288] [cursor=pointer]:
+      - /url: "#inicio"
+    - link "Ferramentas" [ref=f3e289] [cursor=pointer]:
+      - /url: "#ferramentas"
+    - link "Salvos" [ref=f3e290] [cursor=pointer]:
+      - /url: "#salvos"
+    - link "Apoiar" [ref=f3e291] [cursor=pointer]:
+      - /url: "#apoiar"
+    - button "Mais" [ref=f3e292] [cursor=pointer]
+  - status: Registro salvo neste navegador.

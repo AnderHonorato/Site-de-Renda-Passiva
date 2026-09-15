@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("ponto-de-equilibrio",12,"Ponto de equilíbrio","Encontre o volume que cobre os custos fixos.","Contribuição = preço − custo variável unitário. Equilíbrio em unidades = teto(fixos/contribuição). Preço precisa superar custo variável; custos informados pelo usuário.",[h.numero('fixos','Custos fixos (R$)',2000),h.numero('preco','Preço por unidade (R$)',50),h.numero('variavel','Custo variável unitário (R$)',30)],async d=>{const f=h.n(d.fixos),p=h.n(d.preco),v=h.n(d.variavel),c=p-v;if(c<=0)throw new Error('O preço precisa superar o custo variável para cobrir os custos fixos.');const q=Math.ceil(f/c);return h.resultado(h.f(q)+' unidades','Contribuição unitária: '+h.reais(c),'Receita no volume calculado: '+h.reais(q*p),'Saldo após custos informados: '+h.reais(q*c-f));});
+

@@ -1,0 +1,115 @@
+<!--página
+{
+  "título": "Papel quadriculado",
+  "descrição": "Gere papel quadriculado em tamanho real, com quadrícula em milímetros, cor de linha clara, margens e quadrado de calibração de 10 mm para conferir a impressão.",
+  "destaque": "céu",
+  "navegação": "ferramentas",
+  "script": "páginas/papel-quadriculado.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador para imprimir</p>
+    <h1 id="título-ferramenta">Papel quadriculado</h1>
+    <p class="ferramenta-resumo">Escolha o tamanho da quadrícula em milímetros, a cor da linha e a margem. O PDF sai em tamanho real, com um quadrado de calibração de 10 mm: confira com uma régua depois de imprimir sem "ajustar à página".</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-papel-quadriculado" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Quadrícula</legend>
+        <div class="campo">
+          <label for="tamanho-da-quadrícula">Tamanho da quadrícula (mm)</label>
+          <input id="tamanho-da-quadrícula" name="tamanho-da-quadrícula" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="5" aria-describedby="tamanho-da-quadrícula-ajuda tamanho-da-quadrícula-erro">
+          <p id="tamanho-da-quadrícula-ajuda" class="campo-ajuda">De 2 a 20 mm.</p>
+          <p id="tamanho-da-quadrícula-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="cor-da-linha">Cor da linha</label>
+          <select id="cor-da-linha" name="cor-da-linha" class="entrada seleção" aria-describedby="cor-da-linha-erro">
+            <option value="cinza" selected>Cinza claro</option>
+            <option value="azul">Azul claro</option>
+            <option value="verde">Verde claro</option>
+          </select>
+          <p id="cor-da-linha-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Margens e cabeçalho</legend>
+        <div class="campo">
+          <label for="margem">Margem (mm)</label>
+          <input id="margem" name="margem" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="10" aria-describedby="margem-ajuda margem-erro">
+          <p id="margem-ajuda" class="campo-ajuda">De 5 a 25 mm, nos quatro lados.</p>
+          <p id="margem-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="título-da-atividade">Nome da atividade (opcional)</label>
+          <input id="título-da-atividade" name="título-da-atividade" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Papel quadriculado 5 mm">
+        </div>
+        <div class="campo">
+          <label class="interruptor">
+            <input type="checkbox" id="com-cabeçalho" name="com-cabeçalho">
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            Incluir campos de Nome e Data
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar papel quadriculado</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#layout-grid"></use></svg>
+        <p class="estado-vazio-título">Seu papel quadriculado aparece aqui</p>
+        <p>Escolha o tamanho da quadrícula e toque em Gerar papel quadriculado.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="área-de-impressão">
+          <article class="folha-de-atividade" data-folha-atividade>
+            <header class="cabeçalho-da-atividade" data-cabeçalho-da-atividade>
+              <h3 class="cabeçalho-da-atividade-título" data-título-impresso></h3>
+              <div class="cabeçalho-da-atividade-campos" data-campos-impressos hidden>
+                <span>Nome:</span>
+                <span>Data:</span>
+              </div>
+            </header>
+            <div class="papel-quadriculado-svg-contêiner" data-papel-quadriculado-contêiner></div>
+          </article>
+        </div>
+
+        <p class="campo-ajuda" data-resumo-da-folha></p>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta configuração</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Quadriculado 5 mm — matemática" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>O PDF é gerado em milímetros reais (1 mm no arquivo = 1 mm impresso); o quadrado de calibração mede sempre 10 mm, independente do tamanho da quadrícula escolhida.</li>
+    <li>Se a impressão do navegador aplicar "ajustar à página", a escala real se perde — use o PDF e imprima em 100% para folhas com medida exata.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-papel-quadriculado" class="botão botão-primário">Gerar papel quadriculado</button>
+</div>

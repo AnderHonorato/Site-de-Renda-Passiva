@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("lista-de-compras-comparativa",14,"Lista de compras comparativa","Compare duas cestas usando preços informados.","Uma linha: produto; quantidade; preço unitário na loja A; preço unitário na loja B. Mesmos produtos e unidades. Não inclui deslocamento nem promoções não informadas.",[h.texto('itens','Produto; quantidade; preço A; preço B','Arroz;2;20;18\nFeijão;4;10;9,75')],async d=>{let a=0,b=0;const ls=h.tabela(d.itens,4).map(([nome,q,pa,pb])=>{const n=h.n(q,'Quantidade',0),x=h.n(pa,'Preço A',0)*n,y=h.n(pb,'Preço B',0)*n;a+=x;b+=y;return nome+': A '+h.reais(x)+'; B '+h.reais(y);});return h.resultado(a===b?'Cestas com mesmo custo':'Cesta '+(a<b?'A':'B')+' mais barata','Cesta A: '+h.reais(a),'Cesta B: '+h.reais(b),'Diferença: '+h.reais(Math.abs(a-b)),...ls);});
+

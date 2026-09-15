@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { gerarCaçaPalavras } from '../scripts/geração/gerar-caça-palavras.js';
 import { normalizarPalavraParaGrade } from '../scripts/geração/normalizar-palavra-para-grade.js';
+import { formatarPalavraDaLista } from '../scripts/geração/formatar-palavra-da-lista.js';
 import { validarCaçaPalavrasSalvo } from '../scripts/validação/validar-caça-palavras-salvo.js';
 
 function extrairPalavraDaGrade(grade, colocada) {
@@ -78,6 +79,21 @@ test('caracteres brasileiros: modo "remover" tira acentos e cedilha de forma con
   assert.equal(normalizarPalavraParaGrade('maçã', 'remover'), 'MACA');
   const resultado = gerarCaçaPalavras({ palavras: ['Coração'], direções: ['horizontal'], linhas: 10, colunas: 10, modoDeAcentos: 'remover', semente: 4 });
   assert.equal(resultado.colocadas[0].palavraNaGrade, 'CORACAO');
+});
+
+test('no modo "remover", a lista mostra a forma buscável na grade com a original entre parênteses quando elas diferem', () => {
+  const resultado = gerarCaçaPalavras({ palavras: ['Coração', 'SOL'], direções: ['horizontal'], linhas: 10, colunas: 10, modoDeAcentos: 'remover', semente: 4 });
+  const coração = resultado.colocadas.find((item) => item.palavra === 'Coração');
+  const sol = resultado.colocadas.find((item) => item.palavra === 'SOL');
+  assert.equal(formatarPalavraDaLista(coração, 'remover'), 'CORACAO (Coração)');
+  // Sem acentos a mais para remover, a forma na grade já bate com a digitada: sem parênteses redundantes.
+  assert.equal(formatarPalavraDaLista(sol, 'remover'), 'SOL');
+});
+
+test('no modo "manter", a lista mostra a palavra exatamente como foi digitada, sem alterações', () => {
+  const resultado = gerarCaçaPalavras({ palavras: ['Coração'], direções: ['horizontal'], linhas: 10, colunas: 10, modoDeAcentos: 'manter', semente: 4 });
+  const coração = resultado.colocadas.find((item) => item.palavra === 'Coração');
+  assert.equal(formatarPalavraDaLista(coração, 'manter'), 'Coração');
 });
 
 test('rejeita configuração sem palavras, sem direção ou grade fora da faixa', () => {

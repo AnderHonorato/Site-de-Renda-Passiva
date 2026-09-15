@@ -1,0 +1,121 @@
+<!--página
+{
+  "título": "Planejador de estudos",
+  "descrição": "Monte uma grade semanal de estudos com suas disciplinas, minutos por sessão e pausas, com total de minutos por dia e por semana, para imprimir.",
+  "destaque": "lápis",
+  "navegação": "ferramentas",
+  "script": "páginas/planejador-de-estudos.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador para imprimir</p>
+    <h1 id="título-ferramenta">Planejador de estudos</h1>
+    <p class="ferramenta-resumo">Liste as disciplinas com os minutos por sessão, escolha a pausa entre elas e os dias da semana. O resultado é uma grade semanal com o total de minutos por dia e por semana — apenas uma distribuição de tempo, sem prometer aprovação.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-planejador-de-estudos" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Disciplinas (até 12)</legend>
+        <div class="lista-de-pares" data-lista-de-disciplinas tabindex="-1"></div>
+        <div class="ações-do-formulário">
+          <button type="button" id="botão-adicionar-disciplina" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>Adicionar disciplina</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Pausa e dias</legend>
+        <div class="campo">
+          <label for="pausa-minutos">Pausa entre sessões (min)</label>
+          <input id="pausa-minutos" name="pausa-minutos" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="5" aria-describedby="pausa-minutos-ajuda pausa-minutos-erro">
+          <p id="pausa-minutos-ajuda" class="campo-ajuda">De 0 a 60 minutos; não entra depois da última sessão do dia.</p>
+          <p id="pausa-minutos-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <span class="campo-ajuda">Dias da semana</span>
+          <div class="opções" role="group" aria-label="Dias da semana">
+            <label class="opção"><input type="checkbox" name="dia" value="segunda" checked> Segunda</label>
+            <label class="opção"><input type="checkbox" name="dia" value="terça" checked> Terça</label>
+            <label class="opção"><input type="checkbox" name="dia" value="quarta" checked> Quarta</label>
+            <label class="opção"><input type="checkbox" name="dia" value="quinta" checked> Quinta</label>
+            <label class="opção"><input type="checkbox" name="dia" value="sexta" checked> Sexta</label>
+            <label class="opção"><input type="checkbox" name="dia" value="sábado"> Sábado</label>
+            <label class="opção"><input type="checkbox" name="dia" value="domingo"> Domingo</label>
+          </div>
+          <p id="dias-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Cabeçalho</legend>
+        <div class="campo">
+          <label for="título-da-atividade">Nome do planejador (opcional)</label>
+          <input id="título-da-atividade" name="título-da-atividade" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Planejador — semana de provas">
+        </div>
+        <div class="campo">
+          <label class="interruptor">
+            <input type="checkbox" id="com-cabeçalho" name="com-cabeçalho">
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            Incluir campos de Nome e Data
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar planejador</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calendar-days"></use></svg>
+        <p class="estado-vazio-título">Seu planejador aparece aqui</p>
+        <p>Preencha as disciplinas e toque em Gerar planejador.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="área-de-impressão">
+          <article class="folha-de-atividade" data-folha-atividade>
+            <header class="cabeçalho-da-atividade" data-cabeçalho-da-atividade>
+              <h3 class="cabeçalho-da-atividade-título" data-título-impresso></h3>
+              <div class="cabeçalho-da-atividade-campos" data-campos-impressos hidden>
+                <span>Nome:</span>
+                <span>Data:</span>
+              </div>
+            </header>
+            <div class="tabela-rolável" data-tabela-contêiner></div>
+          </article>
+        </div>
+
+        <p class="campo-ajuda" data-resumo></p>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta configuração</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Planejador — semana de provas" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>A mesma sequência de disciplinas e pausas se repete em todos os dias escolhidos; para dias diferentes, gere planejadores separados e salve cada um.</li>
+    <li>Este planejador só soma os minutos informados: não avalia conteúdo, não mede dificuldade e não promete aprovação ou qualquer resultado escolar.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-planejador-de-estudos" class="botão botão-primário">Gerar planejador</button>
+</div>

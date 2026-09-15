@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-BR" data-raiz="../" data-prefixo="dobra-e-cola" data-destaque="principal" data-tipo="institucional" data-anúncios="sim" data-página="metodologia">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Metodologia — Dobra &amp; Cola</title>
+  <meta name="description" content="Como o Dobra &amp; Cola monta cada molde: fórmulas de folga, abas, espessura, divisão em folhas e calibração, com exemplos conferidos.">
+  <meta name="author" content="Anderson">
+  <meta name="theme-color" content="#f5f0e7">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" href="../recursos/ícones/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../recursos/fontes/figtree-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../estilos/site.css">
+  <script type="module" src="../scripts/iniciar-aplicação.js"></script>
+</head>
+<body>
+  <a class="pular-para-conteúdo" href="#conteúdo">Pular para o conteúdo</a>
+  <header class="cabeçalho não-imprimir">
+    <a class="cabeçalho-marca logotipo" href="../index.html" aria-label="Dobra &amp; Cola — página inicial"><svg class="marca-símbolo" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#marca"></use></svg><span>Dobra &amp; <em>Cola</em></span></a>
+    <nav class="cabeçalho-navegação" aria-label="Navegação principal">
+      <a class="cabeçalho-link" href="../páginas/ferramentas.html">Ferramentas</a>
+      <a class="cabeçalho-link" href="../páginas/salvos.html">Salvos</a>
+      <a class="cabeçalho-link" href="../páginas/metodologia.html">Metodologia</a>
+      <a class="cabeçalho-link" href="../páginas/sobre.html">Sobre</a>
+      <a class="botão botão-primário cabeçalho-apoiar" href="../páginas/apoiar.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#apoiar"></use></svg><span>Apoiar por Pix</span></a>
+    </nav>
+  </header>
+  <main id="conteúdo" class="conteúdo" tabindex="-1">
+<article class="texto-editorial" aria-labelledby="metodologia-título">
+  <p class="sobretítulo">Como calculamos</p>
+  <h1 id="metodologia-título">Metodologia</h1>
+  <p>Todo molde é montado como uma <strong>rede plana</strong>: um conjunto de retângulos (ou trapézios, no envelope) ligados por dobras, com abas de emenda nas bordas livres. As funções que calculam essa rede são puras — recebem números e devolvem segmentos de corte e de dobra, sem tocar na tela — e têm testes automatizados próprios, listados ao final desta página.</p>
+
+  <h2>Medida interna × medida externa</h2>
+  <p>Em todos os geradores, você informa a <strong>medida interna</strong>: o espaço útil que sobra depois de montado. A ferramenta soma as paredes, abas e a espessura do papel para desenhar o contorno de corte. A <strong>medida externa aproximada</strong> mostrada no resultado já inclui essa espessura; ela é aproximada porque a curvatura exata da dobra depende do papel usado.</p>
+
+  <h2>Como a espessura do papel é considerada</h2>
+  <p>O papel dobra pelo seu eixo médio, então cada dobra "consome" aproximadamente a própria espessura da medida interna nominal. Para compensar, o comprimento e a largura da <strong>base</strong> da rede recebem a espessura declarada somada uma vez antes de montar o molde (comprimento do molde = comprimento interno + espessura; o mesmo para a largura). É uma aproximação prática, não uma simulação física da dobra — com papéis muito grossos (acima de 1 mm), monte um exemplar antes de produzir em quantidade.</p>
+
+  <h2>Caixa retangular</h2>
+  <p>A rede tem uma base central, quatro paredes dobradas a partir das arestas da base (a altura da caixa) e, quando o tamanho da aba é maior que zero, quatro abas de emenda nos cantos, dobradas a partir das paredes de topo e de baixo, para colar por dentro das paredes laterais. A aba não pode ser maior que a altura da caixa, porque ela dobra a partir de uma parede que mede exatamente essa altura.</p>
+  <h3>Exemplo conferido</h3>
+  <p>Caixa de 100 × 60 × 40 mm (comprimento × largura × altura) com aba de 15 mm: o retângulo envolvente do molde mede 180 × 140 mm (2 × altura somada ao comprimento e à largura).</p>
+
+  <h2>Caixa com tampa</h2>
+  <p>A base e a tampa são duas redes independentes, montadas pela mesma função. A tampa recebe o comprimento e a largura internos da base <strong>mais a folga, somada duas vezes</strong> (uma por lado) — por isso uma folga de 1 mm produz uma tampa 2 mm maior em cada direção, não 1 mm.</p>
+  <p><strong>largura interna da tampa = largura interna da base + 2 × folga</strong></p>
+  <h3>Exemplo conferido (caso do prompt-mestre do projeto)</h3>
+  <p>Base com 100 mm de largura interna e folga de 1 mm por lado: <strong>102 mm</strong> de largura interna na tampa.</p>
+
+  <h2>Envelope</h2>
+  <p>O bolso do envelope mede o conteúdo informado mais a folga (nos dois lados, nas duas direções). As quatro abas são trapézios: a base do trapézio é a aresta do bolso e a ponta é cortada a 45° para dentro, encolhendo "tamanho da aba" milímetros de cada lado — assim as quatro abas dobradas para dentro não se sobrepõem. Por isso a aba não pode chegar à metade da largura nem da altura do bolso.</p>
+  <h3>Exemplo conferido</h3>
+  <p>Conteúdo de 100 × 150 mm com folga de 3 mm: bolso de 106 × 156 mm; com aba de 25 mm, o retângulo envolvente do molde mede 156 × 206 mm.</p>
+
+  <h2>Etiquetas e tags</h2>
+  <p>A quantidade de etiquetas que cabem numa folha A4 (210 × 297 mm) é calculada pela área útil, descontando a margem imprimível dos quatro lados: <strong>colunas = piso((largura útil + espaçamento) ÷ (largura da etiqueta + espaçamento))</strong>, e o mesmo para as linhas com a altura. A grade fica centralizada na sobra da área útil.</p>
+  <h3>Exemplo conferido</h3>
+  <p>Etiqueta de 50 × 30 mm, margem de 10 mm e sem espaçamento: 3 colunas × 9 linhas = <strong>27 etiquetas</strong> por folha.</p>
+
+  <h2>Cinta para embalagem</h2>
+  <p>A cinta é uma faixa retangular simples: <strong>comprimento total = perímetro da peça a envolver + sobreposição de colagem</strong>. Uma linha tracejada marca onde a sobreposição começa, como referência para colar.</p>
+  <h3>Exemplo conferido (caso do catálogo)</h3>
+  <p>Perímetro de 300 mm com sobreposição de 15 mm: cinta de <strong>315 mm</strong> de comprimento total.</p>
+
+  <h2>Divisórias de caixa</h2>
+  <p>Para dividir o interior de uma caixa numa grade de <strong>L</strong> linhas × <strong>C</strong> colunas de compartimentos, são necessárias <strong>C − 1</strong> tiras "verticais" (cada uma com <strong>L − 1</strong> entalhes) e <strong>L − 1</strong> tiras "horizontais" (cada uma com <strong>C − 1</strong> entalhes). Os entalhes têm a largura da espessura do material informada e profundidade igual à metade da altura interna, para que as duas tiras se encaixem exatamente na metade uma da outra.</p>
+  <h3>Exemplo conferido</h3>
+  <p>Grade de 2 × 3: <strong>6 compartimentos</strong>, com 2 tiras verticais (1 entalhe cada) e 1 tira horizontal (2 entalhes).</p>
+
+  <h2>Saco de papel simples</h2>
+  <p>O molde plano é um tubo retangular achatado: meia-sanfona, frente, sanfona inteira, verso, meia-sanfona e a aba de colagem lateral, lado a lado; a altura soma a aba superior opcional, o corpo e a aba de fundo (com a profundidade da sanfona). É uma "folha escalada": mostra as dobras principais, mas não simula a dobra diagonal do canto da sanfona, que depende do papel usado — daí a recomendação de montar um exemplar antes de produzir em quantidade.</p>
+
+  <h2>Aproveitamento de folha</h2>
+  <p>Compara duas grades simples — a peça na orientação informada e a peça girada 90° — usando a mesma fórmula de colunas e linhas das etiquetas, e escolhe a orientação que renda mais peças.</p>
+  <h3>Exemplo conferido (caso do catálogo)</h3>
+  <p>Folha útil de 200 × 280 mm, peças de 50 × 70 mm, sem espaçamento: <strong>16 peças</strong> (4 colunas × 4 linhas), sem vantagem em girar.</p>
+
+  <h2>Impressão em tamanho real e divisão em folhas</h2>
+  <p>O PDF é desenhado em milímetros reais (escala 1:1) e sempre traz o aviso "imprima em 100%, sem ajustar à página" e um quadrado de calibração de 50 × 50 mm para conferir com uma régua física. Quando o molde não cabe na área útil de uma folha A4, ele é <strong>dividido automaticamente em várias folhas numeradas</strong>, cada uma com uma faixa de sobreposição marcada para recortar e colar as folhas entre si — a escala nunca é reduzida silenciosamente. Nas linhas de corte e de dobra, a diferença está no traço (contínuo para corte, tracejado para dobra), não só na cor, para continuar legível numa impressão em preto e branco.</p>
+
+  <h2>O que foi conferido, e o que não foi</h2>
+  <ul>
+    <li><strong>Validação geométrica:</strong> testes automatizados conferem as medidas de cada peça, a soma correta de paredes e abas, a folga da tampa, dimensões impossíveis (aba maior que a face, medidas fora da faixa aceita) e os casos limite.</li>
+    <li><strong>Renderização:</strong> testes automatizados conferem que o PDF gerado tem o número esperado de páginas, nenhuma página em branco, o quadrado de calibração no tamanho correto e a divisão em folhas quando o molde é grande.</li>
+    <li><strong>Montagem física:</strong> <em>não</em> foi testada neste momento — nenhum exemplar destes moldes foi recortado e colado em papel. O encaixe depende do papel, da espessura real e da precisão do corte que você usar; monte um exemplar antes de produzir em quantidade.</li>
+  </ul>
+  <p>Os moldes usam formas geométricas próprias, sem copiar moldes comerciais, personagens ou arquivos de terceiros. Esta ferramenta não declara a embalagem segura para contato com alimento nem adequada a carga estrutural: essa escolha de material é sua.</p>
+</article>
+  </main>
+
+  <footer class="rodapé-institucional">
+    <div class="rodapé-conteúdo">
+      <div class="rodapé-autoria">
+        <p class="rodapé-marca logotipo"><svg class="marca-símbolo" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#marca"></use></svg><span>Dobra &amp; <em>Cola</em></span></p>
+        <p class="rodapé-criador">Criado por <strong>Anderson</strong></p>
+      </div>
+      <nav class="rodapé-links não-imprimir" aria-label="Institucional">
+        <ul>
+          <li><a href="../páginas/sobre.html">Sobre</a></li>
+          <li><a href="../páginas/metodologia.html">Metodologia</a></li>
+          <li><a href="../páginas/contato.html">Contato</a></li>
+          <li><a href="../páginas/política-de-privacidade.html">Política de privacidade</a></li>
+          <li><a href="../páginas/termos-de-uso.html">Termos de uso</a></li>
+          <li><button type="button" class="botão-link" data-abrir-preferências-de-privacidade>Preferências de privacidade</button></li>
+        </ul>
+      </nav>
+      <p class="rodapé-direitos">© 2026 Dobra &amp; Cola · versão 1.0.0 · Ferramentas gratuitas. Resultados são estimativas baseadas nos dados informados.</p>
+    </div>
+  </footer>
+
+  <nav class="navegação-inferior não-imprimir" aria-label="Navegação do aplicativo">
+    <a class="navegação-inferior-item" href="../index.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#início"></use></svg><span>Início</span></a>
+    <a class="navegação-inferior-item" href="../páginas/ferramentas.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#ferramentas"></use></svg><span>Ferramentas</span></a>
+    <a class="navegação-inferior-item" href="../páginas/salvos.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#salvos"></use></svg><span>Salvos</span></a>
+    <a class="navegação-inferior-item" href="../páginas/apoiar.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#apoiar"></use></svg><span>Apoiar</span></a>
+    <button type="button" class="navegação-inferior-item" data-abrir-menu-mais aria-haspopup="dialog" aria-controls="menu-mais" data-ativo><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#mais"></use></svg><span>Mais</span></button>
+  </nav>
+
+  <dialog id="menu-mais" class="diálogo menu-mais" aria-labelledby="menu-mais-título">
+    <div class="diálogo-cabeçalho">
+      <h2 id="menu-mais-título" class="diálogo-título">Mais opções</h2>
+      <button type="button" class="botão botão-ícone botão-fantasma" data-fechar-diálogo aria-label="Fechar menu"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#fechar"></use></svg></button>
+    </div>
+    <nav aria-label="Mais opções">
+      <ul class="menu-mais-lista">
+        <li><a class="menu-mais-link" href="../páginas/sobre.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#informação"></use></svg><span>Sobre</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/metodologia.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#lista"></use></svg><span>Metodologia</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/contato.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#contato"></use></svg><span>Contato</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/política-de-privacidade.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#privacidade"></use></svg><span>Política de privacidade</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/termos-de-uso.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#documento"></use></svg><span>Termos de uso</span></a></li>
+        <li><button type="button" class="menu-mais-link" data-abrir-preferências-de-privacidade><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#privacidade"></use></svg><span>Preferências de privacidade</span></button></li>
+      </ul>
+    </nav>
+  </dialog>
+
+  <section id="consentimento" class="consentimento não-imprimir" aria-labelledby="consentimento-título" hidden>
+    <div class="consentimento-texto">
+      <h2 id="consentimento-título" class="consentimento-título">Sua privacidade</h2>
+      <p>Guardamos no seu aparelho apenas o necessário para lembrar suas escolhas e os dados que você decidir salvar. Recursos opcionais, como publicidade, só são carregados se você permitir. Rejeitar não limita nenhuma ferramenta. <a href="../páginas/política-de-privacidade.html">Política de privacidade</a>.</p>
+    </div>
+    <div class="consentimento-ações">
+      <button type="button" class="botão botão-secundário" data-consentimento="rejeitar">Rejeitar opcionais</button>
+      <button type="button" class="botão botão-secundário" data-consentimento="personalizar">Personalizar</button>
+      <button type="button" class="botão botão-primário" data-consentimento="aceitar">Aceitar opcionais</button>
+    </div>
+  </section>
+  <dialog id="preferências-de-privacidade" class="diálogo" aria-labelledby="preferências-título">
+    <form method="dialog" class="diálogo-formulário" data-formulário-de-privacidade>
+      <div class="diálogo-cabeçalho">
+        <h2 id="preferências-título" class="diálogo-título">Preferências de privacidade</h2>
+        <button type="button" class="botão botão-ícone botão-fantasma" data-fechar-diálogo aria-label="Fechar preferências"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#fechar"></use></svg></button>
+      </div>
+      <div class="diálogo-corpo">
+        <div class="opção-de-privacidade">
+          <p class="opção-de-privacidade-título">Necessário <span class="etiqueta etiqueta-secundária">Sempre ativo</span></p>
+          <p class="campo-ajuda">Armazenamento local para guardar esta escolha e os itens que você salvar. Não é enviado a servidores.</p>
+        </div>
+        <div class="opção-de-privacidade">
+          <label class="interruptor">
+            <input type="checkbox" name="publicidade" role="switch" data-preferência="publicidade">
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            <span class="opção-de-privacidade-título">Publicidade</span>
+          </label>
+          <p class="campo-ajuda" data-estado-da-publicidade>Permite carregar anúncios do Google AdSense, que podem usar cookies e identificadores. Enquanto a publicidade não estiver ativa neste site, nada é carregado.</p>
+        </div>
+        <p class="campo-ajuda">Este site não usa ferramentas de medição de audiência. Você pode mudar sua escolha a qualquer momento em “Preferências de privacidade”, no rodapé ou no menu Mais.</p>
+      </div>
+      <div class="diálogo-ações">
+        <button type="submit" value="rejeitar" class="botão botão-secundário">Rejeitar opcionais</button>
+        <button type="submit" value="salvar" class="botão botão-primário">Salvar escolhas</button>
+      </div>
+    </form>
+  </dialog>
+  <div class="região-de-mensagens não-imprimir" role="status" aria-live="polite" data-região-de-mensagens></div>
+</body>
+</html>

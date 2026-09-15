@@ -1,0 +1,89 @@
+<!--página
+{
+  "título": "Área de paredes",
+  "descrição": "Some a área de paredes e tetos e desconte só as aberturas (portas, janelas) que você marcar, sem deixar a área ficar negativa.",
+  "destaque": "sálvia",
+  "navegação": "ferramentas",
+  "script": "páginas/área-de-paredes.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Área de paredes</h1>
+    <p class="ferramenta-resumo">Adicione as superfícies (paredes ou tetos) com largura e altura, depois as aberturas de cada uma. Só a área das aberturas marcadas para desconto sai do total — o restante fica de fora do cálculo.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-cômodo" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Superfícies (paredes ou tetos)</legend>
+        <div class="linhas-editáveis" data-linhas-de-superfícies></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-superfície>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar superfície</span>
+        </button>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Aberturas (portas, janelas...)</legend>
+        <p class="campo-ajuda">Cada abertura pertence a uma superfície e não pode ser maior do que ela. Marque “Descontar” só nas aberturas que devem sair da área.</p>
+        <div class="linhas-editáveis" data-linhas-de-aberturas></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-abertura>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar abertura</span>
+        </button>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular área</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#door-open"></use></svg>
+        <p class="estado-vazio-título">A área útil aparece aqui</p>
+        <p>Preencha as superfícies, adicione as aberturas se houver e toque em Calcular área.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Área útil (a pintar ou revestir)</p>
+          <p class="resultado-valor" data-área-útil></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <div class="tabela-rolável">
+          <table class="tabela" data-tabela-superfícies>
+            <caption>Área por superfície</caption>
+            <thead>
+              <tr><th scope="col">Superfície</th><th scope="col" data-numérico>Área bruta</th><th scope="col" data-numérico>Descontado</th><th scope="col" data-numérico>Área útil</th></tr>
+            </thead>
+            <tbody data-corpo-superfícies></tbody>
+          </table>
+        </div>
+        <form id="formulário-salvar-cômodo" class="campo" novalidate>
+          <label for="nome-do-cômodo">Nome para salvar este cômodo</label>
+          <input id="nome-do-cômodo" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Quarto do casal" aria-describedby="nome-do-cômodo-erro">
+          <p id="nome-do-cômodo-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Área de cada superfície = largura × altura. Área útil = área bruta menos a área das aberturas marcadas para desconto.</li>
+    <li>Uma abertura nunca pode ser maior do que a superfície à qual pertence, e as aberturas descontadas de uma superfície nunca podem somar mais do que a área dela.</li>
+    <li>Esta ferramenta calcula área de acabamento — não substitui projeto ou memorial de cálculo estrutural.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-cômodo" class="botão botão-primário">Calcular área</button>
+</div>

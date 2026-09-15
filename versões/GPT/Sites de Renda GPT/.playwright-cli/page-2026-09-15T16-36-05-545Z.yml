@@ -1,0 +1,175 @@
+- generic [active] [ref=f3e1]:
+  - link "Pular para o conteúdo" [ref=f3e2] [cursor=pointer]:
+    - /url: "#conteudo"
+  - banner [ref=f3e3]:
+    - link "Doce Ofício, início" [ref=f3e4] [cursor=pointer]:
+      - /url: "#inicio"
+      - generic [ref=f3e6]:
+        - strong [ref=f3e7]: doce ofício
+        - generic [ref=f3e8]: ferramentas para o dia a dia
+    - navigation "Principal" [ref=f3e393]:
+      - link "Ferramentas" [ref=f3e394] [cursor=pointer]:
+        - /url: "#ferramentas"
+      - link "Como funciona" [ref=f3e395] [cursor=pointer]:
+        - /url: "#como-funciona"
+      - link "Meus salvos" [ref=f3e396] [cursor=pointer]:
+        - /url: "#salvos"
+      - link "Sobre" [ref=f3e397] [cursor=pointer]:
+        - /url: "#sobre"
+    - link "Apoiar o projeto" [ref=f3e9] [cursor=pointer]:
+      - /url: "#apoiar"
+  - main [ref=f3e10]:
+    - generic [ref=f3e11]:
+      - generic [ref=f3e12]:
+        - generic [ref=f3e13]:
+          - text: UM POUCO DE AJUDA, TODOS OS DIAS
+          - heading [level=1] [ref=f3e14]:
+            - text: Pequenas contas.
+            - emphasis [ref=f3e15]: Grandes planos.
+          - paragraph [ref=f3e16]: Do bolo que você vende à viagem que você sonha. Encontre um jeito mais simples de calcular, criar e organizar.
+          - generic [ref=f3e17]:
+            - link "Encontre sua ferramenta" [ref=f3e18] [cursor=pointer]:
+              - /url: "#ferramentas"
+            - generic [ref=f3e19]: feito para facilitar.
+          - generic [ref=f3e20]: Gratuito. Sem cadastro. No seu navegador.
+        - generic [ref=f3e22]:
+          - img "Ilustração de calculadora, caderno, fita métrica e materiais de papelaria em tons de terracota e verde." [ref=f3e23]
+          - generic [ref=f3e24]:
+            - generic [ref=f3e25]: um lugar, muitas possibilidades
+            - strong [ref=f3e26]: 150 ferramentas úteis
+      - region "Sobre as ferramentas" [ref=f3e27]:
+        - generic [ref=f3e28]:
+          - strong [ref=f3e29]: 15 categorias
+          - text: para todos os seus planos
+        - generic [ref=f3e31]:
+          - strong [ref=f3e32]: Seus arquivos ficam com você
+          - text: processamento local, sem envio
+        - generic [ref=f3e34]:
+          - strong [ref=f3e35]: Resultado bem explicado
+          - text: premissas, medidas e próximos passos
+      - generic [ref=f3e37]:
+        - generic [ref=f3e38]:
+          - generic [ref=f3e39]:
+            - text: ESCOLHA SEU CAMINHO
+            - heading "O que vamos resolver hoje?" [level=2] [ref=f3e40]
+          - generic [ref=f3e398]: 150 pequenas facilidades
+        - generic [ref=f3e41]:
+          - generic [ref=f3e42]:
+            - searchbox "Buscar ferramentas" [ref=f3e43]: regra de tres
+            - generic [ref=f3e399]: /
+          - generic [ref=f3e44]:
+            - generic [ref=f3e45]: Categoria
+            - combobox "Categoria" [ref=f3e46]:
+              - option "Todas as categorias" [selected]
+              - option "Confeitaria"
+              - option "Educação"
+              - option "Artesanato"
+              - option "Festas"
+              - option "Reforma"
+              - option "Embalagens"
+              - option "Texto e escrita"
+              - option "Imagens"
+              - option "PDF e documentos"
+              - option "Datas e tempo"
+              - option "Matemática e medidas"
+              - option "Vendas e negócios"
+              - option "Ferramentas digitais"
+              - option "Casa e economia"
+              - option "Viagens e deslocamentos"
+        - generic "Categorias em destaque" [ref=f3e47]:
+          - button "Todas" [pressed] [ref=f3e48] [cursor=pointer]
+          - button "Confeitaria" [ref=f3e49] [cursor=pointer]
+          - button "Educação" [ref=f3e50] [cursor=pointer]
+          - button "Reforma" [ref=f3e51] [cursor=pointer]
+          - button "Imagens" [ref=f3e52] [cursor=pointer]
+          - button "PDF e documentos" [ref=f3e53] [cursor=pointer]
+          - button "Casa e economia" [ref=f3e54] [cursor=pointer]
+        - generic [ref=f3e55]:
+          - status [ref=f3e56]: 1 ferramenta encontrada
+          - button "Só favoritos" [ref=f3e57] [cursor=pointer]
+        - article [ref=f3e422]:
+          - generic [ref=f3e423]: Matemática e medidas
+          - 'button "Adicionar aos favoritos: Regra de três" [ref=f3e426] [cursor=pointer]'
+          - heading "Regra de três" [level=3] [ref=f3e427]
+          - paragraph [ref=f3e428]: Resolva proporções diretas e inversas.
+          - button "Abrir Regra de três" [ref=f3e429] [cursor=pointer]: Abrir ferramenta
+      - generic [ref=f3e254]:
+        - generic [ref=f3e255]:
+          - text: DO SEU JEITO
+          - heading [level=2] [ref=f3e256]:
+            - text: Feito para caber
+            - emphasis [ref=f3e257]: na sua rotina.
+        - generic [ref=f3e258]:
+          - article [ref=f3e259]:
+            - text: "01"
+            - heading "Encontre o que precisa" [level=3] [ref=f3e261]
+            - paragraph [ref=f3e262]: Explore as categorias ou escreva o que quer resolver.
+          - article [ref=f3e263]:
+            - text: "02"
+            - heading "Preencha com calma" [level=3] [ref=f3e265]
+            - paragraph [ref=f3e266]: Use seus dados e confira as premissas de cada ferramenta.
+          - article [ref=f3e267]:
+            - text: "03"
+            - heading "Leve o resultado" [level=3] [ref=f3e269]
+            - paragraph [ref=f3e270]: Copie, baixe, imprima ou salve para continuar depois.
+      - generic [ref=f3e273]:
+        - text: UM OFÍCIO DIÁRIO
+        - heading [level=2] [ref=f3e274]:
+          - text: Menos tempo nas contas.
+          - emphasis [ref=f3e275]: Mais tempo fazendo acontecer.
+        - paragraph [ref=f3e276]: Criado por Anderson para transformar tarefas do dia a dia em passos simples. Ferramentas gratuitas, com resultados transparentes e espaço para os seus planos.
+        - link "Ajude este projeto a continuar" [ref=f3e277] [cursor=pointer]:
+          - /url: "#apoiar"
+  - contentinfo [ref=f3e278]:
+    - link [ref=f3e279] [cursor=pointer]:
+      - /url: "#inicio"
+      - strong [ref=f3e280]: doce ofício
+    - generic [ref=f3e281]: Criado por Anderson · 2026
+    - navigation "Institucional" [ref=f3e282]:
+      - link "Privacidade" [ref=f3e283] [cursor=pointer]:
+        - /url: "#privacidade"
+      - link "Termos" [ref=f3e284] [cursor=pointer]:
+        - /url: "#termos"
+      - link "Contato" [ref=f3e285] [cursor=pointer]:
+        - /url: "#contato"
+      - button "Preferências de privacidade" [ref=f3e286] [cursor=pointer]
+  - dialog [ref=f3e430]:
+    - generic [ref=f3e318]:
+      - generic [ref=f3e319]:
+        - text: Matemática e medidas
+        - heading "Regra de três" [level=2] [ref=f3e431]
+      - button "Fechar ferramenta" [ref=f3e321] [cursor=pointer]
+    - paragraph [ref=f3e322]: Resolva proporções diretas e inversas.
+    - generic [ref=f3e323]:
+      - generic [ref=f3e432]:
+        - generic [ref=f3e433]:
+          - generic [ref=f3e434]:
+            - generic [ref=f3e435]:
+              - generic [ref=f3e436]: Primeira quantidade
+              - textbox "Primeira quantidade" [ref=f3e437]: "3"
+            - generic [ref=f3e438]:
+              - generic [ref=f3e439]: Valor correspondente
+              - textbox "Valor correspondente" [ref=f3e440]: "12"
+            - generic [ref=f3e441]:
+              - generic [ref=f3e442]: Nova quantidade
+              - textbox "Nova quantidade" [ref=f3e443]: "5"
+            - generic [ref=f3e444]:
+              - generic [ref=f3e445]: Proporção
+              - combobox "Proporção" [ref=f3e446]:
+                - option "Direta" [selected]
+                - option "Inversa"
+          - button "Calcular / gerar" [ref=f3e448] [cursor=pointer]
+        - generic [ref=f3e449]:
+          - text: SEU RESULTADO
+          - heading "20" [level=3] [ref=f3e453]
+          - paragraph [ref=f3e454]: x = b × c / a
+          - generic [ref=f3e455]:
+            - button "Copiar resultado" [ref=f3e456] [cursor=pointer]
+            - button "Imprimir" [ref=f3e457] [cursor=pointer]
+          - generic [ref=f3e458]:
+            - generic [ref=f3e459]: Nome deste registro
+            - textbox "Nome deste registro" [ref=f3e460]: Regra de três
+            - button "Salvar no aparelho" [ref=f3e461] [cursor=pointer]
+      - group [ref=f3e451]:
+        - generic "Como funciona e o que considerar" [ref=f3e452] [cursor=pointer]
+  - status: Registro salvo neste navegador.

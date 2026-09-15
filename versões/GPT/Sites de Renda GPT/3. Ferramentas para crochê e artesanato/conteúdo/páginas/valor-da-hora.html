@@ -1,0 +1,87 @@
+<!--página
+{
+  "título": "Valor da hora",
+  "descrição": "Calcule quanto cobrar por hora de trabalho a partir da sua meta mensal de retirada, dos custos fixos e das horas realmente produtivas do mês.",
+  "destaque": "ameixa",
+  "navegação": "ferramentas",
+  "script": "páginas/valor-da-hora.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Valor da hora</h1>
+    <p class="ferramenta-resumo">Some a meta mensal de retirada aos custos fixos do mês e divida pelas horas realmente produtivas — o tempo em que você está fazendo peças, não o total de horas disponíveis no mês.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-valor-da-hora" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Meta e custos do mês</legend>
+        <div class="campo">
+          <label for="meta-mensal">Meta mensal de retirada (R$)</label>
+          <input id="meta-mensal" name="meta-mensal" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 3000,00" aria-describedby="meta-mensal-ajuda meta-mensal-erro">
+          <p id="meta-mensal-ajuda" class="campo-ajuda">Quanto você quer tirar de pró-labore por mês, antes de contar materiais e taxas de cada peça.</p>
+          <p id="meta-mensal-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="custos-fixos">Custos fixos mensais (R$)</label>
+          <input id="custos-fixos" name="custos-fixos" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="custos-fixos-ajuda custos-fixos-erro">
+          <p id="custos-fixos-ajuda" class="campo-ajuda">Aluguel do ateliê, internet, ferramentas fixas — custos do negócio que não são de uma peça específica.</p>
+          <p id="custos-fixos-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <fieldset class="grupo-de-campos">
+        <legend>Horas produtivas</legend>
+        <div class="campo">
+          <label for="horas-produtivas">Horas produtivas por mês</label>
+          <input id="horas-produtivas" name="horas-produtivas" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 100" aria-describedby="horas-produtivas-ajuda horas-produtivas-erro">
+          <p id="horas-produtivas-ajuda" class="campo-ajuda">Só as horas em que você está de fato produzindo peças: descontam-se pausas, deslocamento, atendimento e outras tarefas do dia.</p>
+          <p id="horas-produtivas-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="horas-totais">Horas totais disponíveis no mês (opcional)</label>
+          <input id="horas-totais" name="horas-totais" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 160" aria-describedby="horas-totais-ajuda horas-totais-erro">
+          <p id="horas-totais-ajuda" class="campo-ajuda">Preencha para ver que fração do seu tempo disponível é realmente produtiva. Não entra na conta do valor da hora.</p>
+          <p id="horas-totais-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular valor da hora</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#hourglass"></use></svg>
+        <p class="estado-vazio-título">O valor da sua hora aparece aqui</p>
+        <p>Preencha a meta mensal e as horas produtivas e toque em Calcular valor da hora.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Valor por hora produtiva</p>
+          <p class="resultado-valor" data-valor-hora></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse valor</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Valor por hora = (meta mensal + custos fixos) ÷ horas produtivas por mês.</li>
+    <li>Horas produtivas são as horas de trabalho na peça, não o total de horas disponíveis no mês.</li>
+    <li>Esse valor entra em Preço da peça multiplicado pelas horas gastas em cada peça.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-valor-da-hora" class="botão botão-primário">Calcular valor da hora</button>
+</div>

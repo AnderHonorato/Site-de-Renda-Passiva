@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "confeitaria", "runtimeExecutable": "node", "runtimeArgs": ["C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\1. Ferramentas para confeitaria\\ferramentas\\servir.mjs", "C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\1. Ferramentas para confeitaria", "--porta", "4311"], "port": 4311 },
+    { "name": "educação", "runtimeExecutable": "node", "runtimeArgs": ["C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\2. Atividades escolares para imprimir\\ferramentas\\servir.mjs", "C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\2. Atividades escolares para imprimir", "--porta", "4312"], "port": 4312 },
+    { "name": "artesanato", "runtimeExecutable": "node", "runtimeArgs": ["C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\3. Ferramentas para crochê e artesanato\\ferramentas\\servir.mjs", "C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\3. Ferramentas para crochê e artesanato", "--porta", "4313"], "port": 4313 },
+    { "name": "festas", "runtimeExecutable": "node", "runtimeArgs": ["C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\4. Planejamento de churrasco e festas\\ferramentas\\servir.mjs", "C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\4. Planejamento de churrasco e festas", "--porta", "4314"], "port": 4314 },
+    { "name": "reforma", "runtimeExecutable": "node", "runtimeArgs": ["C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\5. Calculadoras de pintura e reforma\\ferramentas\\servir.mjs", "C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\5. Calculadoras de pintura e reforma", "--porta", "4315"], "port": 4315 },
+    { "name": "teste-pix", "runtimeExecutable": "node", "runtimeArgs": ["C:\\Users\\Anderson\\AppData\\Local\\Temp\\claude\\C--Projetos-Andamento-1--Sites-de-Renda-Passiva--ADS-\\23424210-c3c7-4d78-a1c1-415b9dd075d3\\scratchpad\\teste-pix\\ferramentas\\servir.mjs", "C:\\Users\\Anderson\\AppData\\Local\\Temp\\claude\\C--Projetos-Andamento-1--Sites-de-Renda-Passiva--ADS-\\23424210-c3c7-4d78-a1c1-415b9dd075d3\\scratchpad\\teste-pix", "--porta", "4390"], "port": 4390 },
+    { "name": "embalagens", "runtimeExecutable": "node", "runtimeArgs": ["C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\6. Moldes de caixas e embalagens\\ferramentas\\servir.mjs", "C:\\Projetos\\Andamento\\1. Sites de Renda Passiva (ADS)\\6. Moldes de caixas e embalagens", "--porta", "4316"], "port": 4316 }
+  ]
+}

@@ -1,0 +1,113 @@
+<!--página
+{
+  "título": "Área de rejunte estimada",
+  "descrição": "Estime o volume e a massa de rejunte a partir da área revestida, das medidas da peça e da densidade informada pelo fabricante.",
+  "destaque": "terracota",
+  "navegação": "ferramentas",
+  "script": "páginas/área-de-rejunte.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Área de rejunte estimada</h1>
+    <p class="ferramenta-resumo">O cálculo é geométrico: comprimento de junta a partir do tamanho da peça, volume pela largura e profundidade da junta e massa pela densidade do rejunte. Não existe um consumo fixo por m² — use os dados da ficha técnica do produto escolhido.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-rejunte" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Área e peça</legend>
+        <div class="campo">
+          <label for="área-rejunte">Área revestida</label>
+          <div class="campo-com-unidade">
+            <input id="área-rejunte" name="área" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 10" aria-describedby="área-rejunte-erro">
+            <span class="unidade">m²</span>
+          </div>
+          <p id="área-rejunte-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="grupo-de-campos grupo-de-campos-duas-colunas">
+          <div class="campo">
+            <label for="comprimento-da-peça">Comprimento da peça</label>
+            <div class="campo-com-unidade">
+              <input id="comprimento-da-peça" name="comprimento-da-peça" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 300" aria-describedby="comprimento-da-peça-erro">
+              <span class="unidade">mm</span>
+            </div>
+            <p id="comprimento-da-peça-erro" class="campo-erro" hidden></p>
+          </div>
+          <div class="campo">
+            <label for="largura-da-peça">Largura da peça</label>
+            <div class="campo-com-unidade">
+              <input id="largura-da-peça" name="largura-da-peça" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 300" aria-describedby="largura-da-peça-erro">
+              <span class="unidade">mm</span>
+            </div>
+            <p id="largura-da-peça-erro" class="campo-erro" hidden></p>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="grupo-de-campos">
+        <legend>Junta e produto (dados do fabricante)</legend>
+        <div class="grupo-de-campos grupo-de-campos-duas-colunas">
+          <div class="campo">
+            <label for="largura-da-junta">Largura da junta</label>
+            <div class="campo-com-unidade">
+              <input id="largura-da-junta" name="largura-da-junta" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 5" aria-describedby="largura-da-junta-erro">
+              <span class="unidade">mm</span>
+            </div>
+            <p id="largura-da-junta-erro" class="campo-erro" hidden></p>
+          </div>
+          <div class="campo">
+            <label for="profundidade-da-junta">Profundidade da junta</label>
+            <div class="campo-com-unidade">
+              <input id="profundidade-da-junta" name="profundidade-da-junta" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 8" aria-describedby="profundidade-da-junta-ajuda profundidade-da-junta-erro">
+              <span class="unidade">mm</span>
+            </div>
+            <p id="profundidade-da-junta-ajuda" class="campo-ajuda">Costuma ser a espessura da peça.</p>
+            <p id="profundidade-da-junta-erro" class="campo-erro" hidden></p>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="densidade">Densidade do rejunte (ficha técnica)</label>
+          <div class="campo-com-unidade">
+            <input id="densidade" name="densidade" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 1,6" aria-describedby="densidade-ajuda densidade-erro">
+            <span class="unidade">kg/L</span>
+          </div>
+          <p id="densidade-ajuda" class="campo-ajuda">Vem na embalagem ou na ficha técnica do produto. Sem esse número, a massa não pode ser estimada.</p>
+          <p id="densidade-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular rejunte</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#square-dashed"></use></svg>
+        <p class="estado-vazio-título">A estimativa de rejunte aparece aqui</p>
+        <p>Preencha a área, as medidas da peça, da junta e a densidade do produto e toque em Calcular rejunte.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Massa estimada de rejunte</p>
+          <p class="resultado-valor" data-massa></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Comprimento de junta por m² = (1 ÷ comprimento da peça) + (1 ÷ largura da peça), com as duas medidas em metros.</li>
+    <li>Volume = comprimento total de junta × largura da junta × profundidade da junta. Massa = volume em litros × densidade informada.</li>
+    <li>Não existe um consumo fixo por m² nesta ferramenta: o resultado depende inteiramente dos dados da peça e do produto que você informar.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-rejunte" class="botão botão-primário">Calcular rejunte</button>
+</div>

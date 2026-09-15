@@ -1,0 +1,141 @@
+<!--página
+{
+  "título": "Calculadora de churrasco",
+  "descrição": "Calcule carnes, acompanhamentos e bebidas para o churrasco a partir de adultos, crianças, duração e apetite, com premissas editáveis.",
+  "destaque": "brasa",
+  "navegação": "ferramentas",
+  "script": "páginas/churrasco.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Calculadora de churrasco</h1>
+    <p class="ferramenta-resumo">Informe quantos adultos e crianças vão comer, o apetite do grupo, a duração e quem consome álcool. Ajuste as quantidades por item antes de calcular: elas são premissas editáveis, não uma porção ideal garantida.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-plano" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Convidados</legend>
+        <div class="grupo-de-campos grupo-de-campos-duas-colunas">
+          <div class="campo">
+            <label for="adultos">Adultos</label>
+            <input id="adultos" name="adultos" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 10" value="10" aria-describedby="adultos-ajuda adultos-erro">
+            <p id="adultos-ajuda" class="campo-ajuda">Contando quem organiza.</p>
+            <p id="adultos-erro" class="campo-erro" hidden></p>
+          </div>
+          <div class="campo">
+            <label for="crianças">Crianças</label>
+            <input id="crianças" name="crianças" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 2" value="0" aria-describedby="crianças-erro">
+            <p id="crianças-erro" class="campo-erro" hidden></p>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="duração-em-horas">Duração do churrasco (horas)</label>
+          <input id="duração-em-horas" name="duração" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 4" value="4" aria-describedby="duração-ajuda duração-em-horas-erro">
+          <p id="duração-ajuda" class="campo-ajuda">As quantidades sobem para eventos mais longos e descem para eventos mais curtos, a partir da referência de 4 horas.</p>
+          <p id="duração-em-horas-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="apetite">Apetite do grupo</label>
+          <select id="apetite" name="apetite" class="entrada seleção">
+            <option value="leve">Leve</option>
+            <option value="médio" selected>Médio</option>
+            <option value="alto">Alto</option>
+          </select>
+        </div>
+        <div class="campo">
+          <p class="campo-ajuda" id="atalhos-rótulo">Preencher rapidamente com um tamanho comum de churrasco (crianças ficam em 0; ajuste depois se precisar)</p>
+          <div class="ações-do-formulário" role="group" aria-labelledby="atalhos-rótulo" data-atalhos-de-pessoas>
+            <button type="button" class="botão botão-secundário" data-atalho="10">10 pessoas</button>
+            <button type="button" class="botão botão-secundário" data-atalho="20">20 pessoas</button>
+            <button type="button" class="botão botão-secundário" data-atalho="30">30 pessoas</button>
+            <button type="button" class="botão botão-secundário" data-atalho="50">50 pessoas</button>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Preferências alimentares</legend>
+        <div class="grupo-de-campos grupo-de-campos-duas-colunas">
+          <div class="campo">
+            <label for="vegetarianos">Pessoas vegetarianas</label>
+            <input id="vegetarianos" name="vegetarianos" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="0" aria-describedby="vegetarianos-erro">
+            <p id="vegetarianos-erro" class="campo-erro" hidden></p>
+          </div>
+          <div class="campo">
+            <label for="sem-carne-vermelha">Pessoas sem carne vermelha</label>
+            <input id="sem-carne-vermelha" name="sem-carne-vermelha" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="0" aria-describedby="sem-carne-vermelha-ajuda sem-carne-vermelha-erro">
+            <p id="sem-carne-vermelha-ajuda" class="campo-ajuda">Sem contar quem já é vegetariano.</p>
+            <p id="sem-carne-vermelha-erro" class="campo-erro" hidden></p>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="álcool-adultos">Adultos que vão consumir álcool</label>
+          <input id="álcool-adultos" name="álcool-adultos" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="0" aria-describedby="álcool-ajuda álcool-adultos-erro">
+          <p id="álcool-ajuda" class="campo-ajuda">Informe a quantidade real, sem supor por sexo. Crianças nunca entram nessa conta.</p>
+          <p id="álcool-adultos-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Itens do churrasco</legend>
+        <p class="campo-ajuda">Desmarque para excluir um item, edite o nome para substituí-lo por outro, e ajuste a quantidade por adulto, a embalagem indivisível e o preço pago conforme a sua realidade.</p>
+        <div data-itens></div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular churrasco</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#flame"></use></svg>
+        <p class="estado-vazio-título">Sua lista de compras aparece aqui</p>
+        <p>Preencha os convidados e toque em Calcular churrasco.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="área-de-impressão">
+          <div class="resultado-destaque">
+            <p class="resultado-rótulo">Total dos itens com preço informado</p>
+            <p class="resultado-valor" data-total></p>
+          </div>
+          <dl class="lista-de-resultado" data-resumo></dl>
+          <div data-tabela-de-itens></div>
+        </div>
+        <details class="memória-de-cálculo">
+          <summary>Ajustes aplicados a cada item</summary>
+          <ul class="memória-de-cálculo-corpo" data-memória></ul>
+        </details>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-copiar-lista><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#copiar"></use></svg>Copiar lista de compras</button>
+          <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+        <form id="formulário-salvar-plano" class="campo não-imprimir" novalidate>
+          <label for="nome-do-plano">Nome para salvar este churrasco</label>
+          <input id="nome-do-plano" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Churrasco de aniversário" aria-describedby="nome-do-plano-erro">
+          <p id="nome-do-plano-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>As quantidades por adulto de cada item são premissas editáveis: mude-as antes de calcular para refletir o seu grupo. Duas delas têm fonte pública verificada (ver <a href="{{raiz}}páginas/metodologia.html">metodologia</a>); as demais são premissas iniciais do site.</li>
+    <li>Crianças entram como uma fração da porção de um adulto em comida e em bebida não alcoólica; nunca entram na bebida alcoólica.</li>
+    <li>São estimativas de planejamento, não uma porção ideal garantida: apetite, calor e o tempo de churrasqueira variam de grupo para grupo.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-plano" class="botão botão-primário">Calcular churrasco</button>
+</div>

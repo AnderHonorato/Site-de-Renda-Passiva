@@ -1,0 +1,4 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,file} from './comum.js';
+import {canvas,carregarImagem,codificar,cor,tipo,resultadoImagem,comImagem,temExif} from './imagem-base.js';
+export default definir("comprimir-imagem",8,"Comprimir imagem","Exporte JPEG ou WebP com qualidade ajustável.","Reencoda em resolução original; resultado pode ser maior que o original. JPEG usa fundo branco para transparências.",[F(),S('formato','Formato','jpeg',[['jpeg','JPEG'],['webp','WebP']]),N('qualidade','Qualidade (%)',75,1,100)],async d=>{return comImagem(d,async(im,f)=>{const m=opcao(d,'formato',['jpeg','webp']),c=canvas(im.width,im.height),ctx=c.getContext('2d');if(m==='jpeg'){ctx.fillStyle='#ffffff';ctx.fillRect(0,0,c.width,c.height);}ctx.drawImage(im,0,0);return resultadoImagem(c,'image/'+m,n(d,'qualidade',1,100)/100,f.size,['Compare visualmente o resultado antes de substituir o original.']);});});
+

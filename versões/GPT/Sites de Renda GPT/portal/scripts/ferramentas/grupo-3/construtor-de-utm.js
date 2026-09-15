@@ -1,0 +1,5 @@
+import * as h from './helpers.js';
+
+export default h.tool("construtor-de-utm",13,"Construtor de UTM","Adicione parâmetros de campanha preservando o endereço.","URL HTTP(S) válida. Origem, meio e campanha substituem parâmetros UTM de mesmo nome; conteúdo e termo opcionais. Demais parâmetros e fragmento são preservados.",[h.texto('url','URL completa','https://exemplo.com/pagina?produto=1#detalhes','text'),h.texto('origem','Origem','email','text'),h.texto('meio','Meio','newsletter','text'),h.texto('campanha','Campanha','lancamento','text'),{...h.texto('conteudo','Conteúdo (opcional)','','text'),obrigatorio:false},{...h.texto('termo','Termo (opcional)','','text'),obrigatorio:false}],async d=>{const u=h.urlWeb(d.url);for(const [key,field]of [['source','origem'],['medium','meio'],['campaign','campanha']])u.searchParams.set('utm_'+key,h.requerido(d[field],field,500).trim());for(const [key,field]of [['content','conteudo'],['term','termo']])if(String(d[field]??'').trim())u.searchParams.set('utm_'+key,h.requerido(d[field],field,500).trim());return h.resultado(u.href,'Parâmetros de campanha adicionados localmente.');});
+
+

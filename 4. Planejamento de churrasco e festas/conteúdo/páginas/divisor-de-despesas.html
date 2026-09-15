@@ -1,0 +1,123 @@
+<!--página
+{
+  "título": "Divisor de despesas",
+  "descrição": "Divida os gastos do evento entre as pessoas pagantes, em partes iguais ou por pesos, sem pedir nenhum dado bancário.",
+  "destaque": "verde",
+  "navegação": "ferramentas",
+  "script": "páginas/divisor-de-despesas.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Divisor de despesas</h1>
+    <p class="ferramenta-resumo">Divida os gastos do evento entre quem vai pagar — que não precisa ser todo mundo que vai à festa. Não pedimos nem guardamos chave Pix, conta ou qualquer dado bancário: a ferramenta só calcula o valor de cada pessoa.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-divisor" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Gastos</legend>
+        <div class="campo">
+          <p class="campo-ajuda" id="modo-de-entrada-rótulo">Como você quer informar os gastos?</p>
+          <select id="modo-de-entrada" name="modo-de-entrada" class="entrada seleção" aria-labelledby="modo-de-entrada-rótulo">
+            <option value="itens" selected>Lista de gastos</option>
+            <option value="total">Um total único</option>
+          </select>
+        </div>
+        <div data-bloco-de-gastos>
+          <div class="linhas-editáveis" data-linhas-de-gastos>
+            <div class="linha-editável" data-linha>
+              <div class="campo"><label for="gasto-0-descrição">Descrição do gasto</label><input id="gasto-0-descrição" class="entrada" type="text" maxlength="120" data-campo="descrição" placeholder="Ex.: Carnes"></div>
+              <div class="campo campo-estreito"><label for="gasto-0-valor">Valor (R$)</label><input id="gasto-0-valor" class="entrada" type="text" inputmode="decimal" data-campo="valor" placeholder="Ex.: 180,00"></div>
+              <button type="button" class="botão botão-ícone botão-fantasma" data-remover-linha aria-label="Remover gasto">
+                <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#remover"></use></svg>
+              </button>
+            </div>
+            <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-gasto>
+              <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+              <span>Adicionar gasto</span>
+            </button>
+          </div>
+        </div>
+        <div class="campo" data-bloco-de-total hidden>
+          <label for="total-direto">Total dos gastos (R$)</label>
+          <input id="total-direto" name="total-direto" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 300,00" aria-describedby="total-direto-erro">
+          <p id="total-direto-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Divisão</legend>
+        <div class="campo">
+          <p class="campo-ajuda" id="modo-rótulo">Como dividir entre as pessoas pagantes?</p>
+          <select id="modo" name="modo" class="entrada seleção" aria-labelledby="modo-rótulo">
+            <option value="igual" selected>Partes iguais</option>
+            <option value="pesos">Por pesos (ex.: casal paga o dobro de uma pessoa sozinha)</option>
+          </select>
+        </div>
+        <div class="linhas-editáveis" data-linhas-de-pagantes>
+          <div class="linha-editável" data-linha>
+            <div class="campo"><label for="pagante-0-nome">Nome da pessoa pagante</label><input id="pagante-0-nome" class="entrada" type="text" maxlength="80" data-campo="nome" placeholder="Ex.: Ana"></div>
+            <div class="campo campo-estreito" data-campo-de-peso hidden><label for="pagante-0-peso">Peso</label><input id="pagante-0-peso" class="entrada" type="text" inputmode="decimal" data-campo="peso" value="1"></div>
+            <button type="button" class="botão botão-ícone botão-fantasma" data-remover-linha aria-label="Remover pessoa pagante">
+              <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#remover"></use></svg>
+            </button>
+          </div>
+          <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-pagante>
+            <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+            <span>Adicionar pessoa pagante</span>
+          </button>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Dividir gastos</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#split"></use></svg>
+        <p class="estado-vazio-título">A divisão aparece aqui</p>
+        <p>Informe os gastos e as pessoas pagantes, e toque em Dividir gastos.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="área-de-impressão">
+          <div class="resultado-destaque">
+            <p class="resultado-rótulo">Total dividido</p>
+            <p class="resultado-valor" data-total></p>
+          </div>
+          <dl class="lista-de-resultado" data-resumo></dl>
+          <div data-tabela-de-partes></div>
+        </div>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-copiar><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#copiar"></use></svg>Copiar divisão</button>
+          <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+        <form id="formulário-salvar-divisão" class="campo não-imprimir" novalidate>
+          <label for="nome-da-divisão">Nome para salvar esta divisão</label>
+          <input id="nome-da-divisão" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Rateio do almoço de domingo" aria-describedby="nome-da-divisão-erro">
+          <p id="nome-da-divisão-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas da divisão">
+    <li>As pessoas pagantes não precisam ser todas as presentes no evento: informe só quem vai dividir a conta.</li>
+    <li>Nenhuma chave Pix, conta ou dado bancário é pedido ou guardado por esta ferramenta.</li>
+    <li>Na divisão por pesos, o resto do arredondamento em centavos é distribuído entre as maiores frações, para que a soma feche exatamente com o total.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-divisor" class="botão botão-primário">Dividir gastos</button>
+</div>

@@ -1,0 +1,70 @@
+/* Prévia SVG dos moldes: linhas de corte (contínuas) e de dobra (tracejadas), distinguíveis
+   também em preto e branco, e um quadro que separa a prévia do restante da ferramenta. */
+.prévia-de-molde {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  align-items: center;
+  padding: var(--espaço-4);
+  background: var(--cor-superfície);
+  border-radius: var(--raio-m);
+  border: 1px solid var(--cor-divisória);
+}
+
+.prévia-de-molde-svg {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.prévia-de-molde-fundo {
+  fill: var(--cor-superfície-elevada);
+  stroke: var(--cor-divisória);
+  stroke-width: 0.4;
+}
+
+.prévia-de-molde-corte {
+  fill: none;
+  stroke: var(--cor-texto);
+  stroke-width: 0.6;
+}
+
+.prévia-de-molde-dobra {
+  fill: none;
+  stroke: var(--cor-texto-suave);
+  stroke-width: 0.5;
+  stroke-dasharray: 3 2;
+}
+
+.prévia-de-molde-escala {
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.legenda-do-molde {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaço-4);
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+}
+
+.legenda-do-molde-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaço-2);
+}
+
+.legenda-do-molde-amostra {
+  display: inline-block;
+  width: 28px;
+  height: 0;
+  border-top: 2px solid var(--cor-texto);
+}
+
+.legenda-do-molde-amostra--dobra {
+  border-top-style: dashed;
+  border-top-color: var(--cor-texto-suave);
+}

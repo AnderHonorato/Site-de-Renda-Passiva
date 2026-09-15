@@ -1,0 +1,13 @@
+{
+  "fundo": "#f4eee4",
+  "neutra": "#857a74",
+  "destaque": "#8872bf",
+  "secundária": "#7c3868",
+  "destaques": {
+    "lavanda": "#7f69b8",
+    "ameixa": "#8a3a70",
+    "malva": "#b0607e",
+    "musgo": "#6a7a46",
+    "anil": "#4d6aa8"
+  }
+}

@@ -1,0 +1,54 @@
+<!--página
+{
+  "título": "Lista de convidados local",
+  "descrição": "Conte confirmados, pendentes e recusados do seu evento; os nomes ficam salvos só neste aparelho.",
+  "destaque": "limão",
+  "navegação": "ferramentas",
+  "script": "páginas/lista-de-convidados.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Lista de convidados local</h1>
+    <p class="ferramenta-resumo">Adicione convidados, marque se cada um confirmou, está pendente ou recusou, e se é criança. Os nomes ficam só no seu aparelho: nada é enviado a nenhum servidor.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <div class="área-de-impressão">
+      <dl class="lista-de-resultado" data-resumo-de-convidados></dl>
+      <div class="linhas-editáveis" data-linhas-de-convidados>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar não-imprimir" data-adicionar-convidado>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar convidado</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="ações-do-formulário">
+      <button type="button" class="botão botão-secundário" data-copiar><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#copiar"></use></svg>Copiar lista</button>
+      <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+    </div>
+
+    <form id="formulário-salvar-lista" class="campo" novalidate>
+      <label for="nome-da-lista">Nome para salvar esta lista</label>
+      <input id="nome-da-lista" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Convidados do churrasco" aria-describedby="nome-da-lista-erro">
+      <p id="nome-da-lista-erro" class="campo-erro" hidden></p>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Sobre a lista de convidados">
+    <li>Os nomes e as confirmações ficam salvos só neste aparelho, dentro do armazenamento local do navegador.</li>
+    <li>Nenhum nome é enviado a servidor, e-mail ou qualquer serviço externo por esta ferramenta.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-salvar-lista" class="botão botão-primário">Salvar lista</button>
+</div>

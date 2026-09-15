@@ -11,6 +11,7 @@
   "scripts": {
     "preparar": "node compartilhado/ferramentas-da-raiz/preparar-recursos.mjs",
     "sincronizar": "node compartilhado/ferramentas-da-raiz/sincronizar-compartilhado.mjs",
+    "documentos": "node compartilhado/ferramentas-da-raiz/gerar-documentos-dos-produtos.mjs",
     "gerar": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs gerar",
     "testar": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs testar",
     "construir": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs construir",

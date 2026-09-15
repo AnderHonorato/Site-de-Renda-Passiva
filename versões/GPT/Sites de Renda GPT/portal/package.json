@@ -1,0 +1,1 @@
+{"name":"doce-oficio-portal","version":"2.0.0","private":true,"type":"module","scripts":{"dev":"node ferramentas/servir.mjs","test":"node --test testes/*.test.mjs","build":"node ferramentas/construir.mjs","preview":"node ferramentas/servir.mjs --producao"}}

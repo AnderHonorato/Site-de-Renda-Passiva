@@ -1,0 +1,45 @@
+{
+  "versãoDoEsquema": 1,
+  "site": {
+    "marca": "Mesa Farta",
+    "marcaDestaque": "Farta",
+    "descrição": "Planejadores gratuitos de churrasco, festa infantil e almoço: quantidades, lista de compras, orçamento e divisão de despesas.",
+    "prefixoDeArmazenamento": "mesa-farta",
+    "versão": "1.0.0"
+  },
+  "criador": {
+    "nome": "Anderson",
+    "portfólio": "",
+    "contato": ""
+  },
+  "publicação": {
+    "endereçoBase": ""
+  },
+  "privacidade": {
+    "versãoDaPolítica": "2026-09-14",
+    "validadeDoConsentimentoEmDias": 180,
+    "contatoDePrivacidade": ""
+  },
+  "publicidade": {
+    "ativa": false,
+    "identificadorDoPublicador": "",
+    "blocos": {},
+    "consentimentoConfigurado": false,
+    "cmp": "nenhuma"
+  },
+  "apoio": {
+    "ativo": false,
+    "chavePix": "",
+    "nomeDoRecebedor": "",
+    "cidadeDoRecebedor": "",
+    "valoresSugeridosEmCentavos": [
+      100,
+      500,
+      1000,
+      2000,
+      3000,
+      5000,
+      10000
+    ]
+  }
+}

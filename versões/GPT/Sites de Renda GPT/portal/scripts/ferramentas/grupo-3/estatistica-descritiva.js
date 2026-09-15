@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("estatistica-descritiva",11,"Estatística descritiva","Obtenha média, mediana, amplitude e desvio padrão.","Uma observação por linha. Desvio populacional divide a soma dos quadrados por n; amostral divide por n−1 e exige pelo menos duas observações.",[h.texto('valores','Valores (um por linha)','2\n4\n6\n8'),h.escolha('tipo','Desvio padrão',[['populacao','População'],['amostra','Amostra']])],async d=>{const a=h.numeros(d.valores).sort((x,y)=>x-y),n=a.length,m=h.soma(a)/n;h.opcao(d.tipo,['populacao','amostra']);if(d.tipo==='amostra'&&n<2)throw new Error('Amostra exige pelo menos dois valores.');const med=n%2?a[(n-1)/2]:(a[n/2-1]+a[n/2])/2,sd=Math.sqrt(h.soma(a.map(x=>(x-m)**2))/(d.tipo==='amostra'?n-1:n));return h.resultado('Média: '+h.f(m),'Mediana: '+h.f(med),'Desvio padrão: '+h.f(sd),'Mínimo: '+h.f(a[0]),'Máximo: '+h.f(a[n-1]),'Amplitude: '+h.f(a[n-1]-a[0]),'Quantidade: '+n);});
+

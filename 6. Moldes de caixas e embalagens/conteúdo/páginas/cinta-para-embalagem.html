@@ -1,0 +1,114 @@
+<!--página
+{
+  "título": "Cinta para embalagem",
+  "descrição": "Gere a faixa de papel que envolve uma caixa, a partir do perímetro e da sobreposição de colagem.",
+  "destaque": "ameixa",
+  "navegação": "ferramentas",
+  "script": "páginas/cinta-para-embalagem.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador de molde</p>
+    <h1 id="título-ferramenta">Cinta para embalagem</h1>
+    <p class="ferramenta-resumo">Uma faixa de papel para envolver uma caixa ou um maço: informe o perímetro da peça a envolver (a volta completa) e a sobreposição de colagem.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-cinta" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Unidade das medidas</legend>
+        <div class="segmentado" role="radiogroup" aria-label="Unidade">
+          <label class="opção"><input type="radio" name="unidade" value="mm" checked> Milímetros</label>
+          <label class="opção"><input type="radio" name="unidade" value="cm"> Centímetros</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Medidas</legend>
+        <div class="campo">
+          <label for="perímetro">Perímetro da peça a envolver</label>
+          <input id="perímetro" name="perímetro" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="300" aria-describedby="perímetro-erro">
+          <p id="perímetro-erro" class="campo-erro" hidden></p>
+          <p class="campo-ajuda">Some os quatro lados da seção da caixa (2 × comprimento + 2 × largura, por exemplo).</p>
+        </div>
+        <div class="campo">
+          <label for="sobreposição">Sobreposição de colagem</label>
+          <input id="sobreposição" name="sobreposição" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="15" aria-describedby="sobreposição-erro">
+          <p id="sobreposição-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="altura">Altura da cinta</label>
+          <input id="altura" name="altura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="4" aria-describedby="altura-erro">
+          <p id="altura-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Papel e texto</legend>
+        <div class="campo">
+          <label for="tipo-de-papel">Tipo de papel (opcional, informativo)</label>
+          <select id="tipo-de-papel" name="tipo-de-papel" class="seleção">
+            <option value="">Não informado</option>
+            <option value="Papel kraft">Papel kraft</option>
+            <option value="Papel-cartão (cartolina)">Papel-cartão (cartolina)</option>
+            <option value="Papel vergê">Papel vergê</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="texto-opcional">Texto na cinta (opcional)</label>
+          <input id="texto-opcional" name="texto-opcional" class="entrada" type="text" maxlength="200" autocomplete="off" placeholder="Ex.: Feito à mão">
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar molde</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#layers"></use></svg>
+        <p class="estado-vazio-título">Sua cinta aparece aqui</p>
+        <p>Informe as medidas e toque em Gerar molde.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="baixar-svg"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#file-down"></use></svg>Baixar SVG</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+        <div class="não-imprimir" data-resumo-de-folhas></div>
+        <div class="prévia-de-molde não-imprimir">
+          <div data-prévia-do-molde></div>
+          <p class="prévia-de-molde-escala" data-escala-da-prévia></p>
+        </div>
+        <dl class="lista-de-resultado" data-resumo-de-medidas></dl>
+        <div class="área-de-impressão">
+          <p>A prévia acima já mostra a cinta na escala indicada. Para imprimir em tamanho real, use o botão “Baixar PDF”.</p>
+        </div>
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta cinta</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Cinta da caixa de biscoitos" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>A sobreposição é a área de colagem: comprimento total da faixa = perímetro + sobreposição.</li>
+    <li>Este molde não foi montado fisicamente em papel para conferência: a validação foi geométrica e da renderização do PDF.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-cinta" class="botão botão-primário">Gerar molde</button>
+</div>

@@ -1,0 +1,167 @@
+<!--página
+{
+  "título": "Caça-palavras",
+  "descrição": "Monte um caça-palavras com suas próprias palavras, escolha as direções e o tamanho da grade, com gabarito em página separada e PDF para imprimir.",
+  "destaque": "lápis",
+  "navegação": "ferramentas",
+  "script": "páginas/caça-palavras.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador para imprimir</p>
+    <h1 id="título-ferramenta">Caça-palavras</h1>
+    <p class="ferramenta-resumo">Digite suas palavras, escolha as direções e o tamanho da grade. Todas as palavras entram na grade sempre que couberem; se alguma não couber, ela aparece listada com o motivo — nunca é omitida em silêncio.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-caça-palavras" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Palavras</legend>
+        <div class="campo">
+          <label for="lista-de-palavras">Uma palavra por linha (até 30 palavras)</label>
+          <textarea id="lista-de-palavras" name="palavras" class="área-de-texto" aria-describedby="lista-de-palavras-ajuda lista-de-palavras-erro">SOL
+LUA
+ESTRELA
+NUVEM
+CHUVA</textarea>
+          <p id="lista-de-palavras-ajuda" class="campo-ajuda">Acentos e cedilha são mantidos ou removidos da grade conforme a opção abaixo.</p>
+          <p id="lista-de-palavras-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="modo-de-acentos">Acentos e cedilha na grade</label>
+          <select id="modo-de-acentos" name="modo-de-acentos" class="entrada seleção">
+            <option value="manter" selected>Manter acentos (Ç, Á, Ã…)</option>
+            <option value="remover">Sem acentos na grade (Ç→C, Á→A…)</option>
+          </select>
+          <p class="campo-ajuda">A grade, a lista exibida e o gabarito sempre usam o mesmo modo. Em "Sem acentos", a lista mostra a forma que está na grade (ex.: CORACAO) e, quando ela difere do que você digitou, a palavra original aparece entre parênteses (ex.: CORACAO (coração)).</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Direções</legend>
+        <div class="opções" role="group" aria-label="Direções permitidas">
+          <label class="opção"><input type="checkbox" name="direção" value="horizontal" checked> Horizontal</label>
+          <label class="opção"><input type="checkbox" name="direção" value="vertical" checked> Vertical</label>
+          <label class="opção"><input type="checkbox" name="direção" value="diagonal-desce"> Diagonal ↘</label>
+          <label class="opção"><input type="checkbox" name="direção" value="diagonal-sobe"> Diagonal ↗</label>
+        </div>
+        <p id="direções-erro" class="campo-erro" hidden></p>
+        <label class="interruptor">
+          <input type="checkbox" id="permitir-invertidas" name="permitir-invertidas">
+          <span class="interruptor-trilho" aria-hidden="true"></span>
+          Permitir palavras invertidas (de trás para frente)
+        </label>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Tamanho da grade</legend>
+        <div class="campo">
+          <label for="linhas">Linhas</label>
+          <input id="linhas" name="linhas" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="12" aria-describedby="linhas-ajuda linhas-erro">
+          <p id="linhas-ajuda" class="campo-ajuda">De 4 a 30.</p>
+          <p id="linhas-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="colunas">Colunas</label>
+          <input id="colunas" name="colunas" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="12" aria-describedby="colunas-erro">
+          <p id="colunas-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Cabeçalho e semente</legend>
+        <div class="campo">
+          <label for="título-da-atividade">Nome da atividade (opcional)</label>
+          <input id="título-da-atividade" name="título-da-atividade" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Caça-palavras do tempo">
+        </div>
+        <div class="campo">
+          <label class="interruptor">
+            <input type="checkbox" id="com-cabeçalho" name="com-cabeçalho" checked>
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            Incluir campos de Nome e Data
+          </label>
+        </div>
+        <div class="campo">
+          <label for="semente">Semente (reproduz a mesma grade)</label>
+          <div class="campo-semente">
+            <input id="semente" name="semente" class="entrada" type="text" inputmode="numeric" autocomplete="off" aria-describedby="semente-erro">
+            <button type="button" id="botão-nova-semente" class="botão botão-secundário botão-ícone" aria-label="Sortear nova semente"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#refresh-cw"></use></svg></button>
+          </div>
+          <p id="semente-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Montar caça-palavras</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#busca"></use></svg>
+        <p class="estado-vazio-título">Seu caça-palavras aparece aqui</p>
+        <p>Digite as palavras e toque em Montar caça-palavras.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="aviso aviso-alerta" data-aviso-não-colocadas hidden>
+          <p data-texto-aviso-não-colocadas></p>
+        </div>
+
+        <div class="área-de-impressão">
+          <article class="folha-de-atividade" data-folha-atividade>
+            <header class="cabeçalho-da-atividade" data-cabeçalho-da-atividade>
+              <h3 class="cabeçalho-da-atividade-título" data-título-impresso></h3>
+              <div class="cabeçalho-da-atividade-campos" data-campos-impressos hidden>
+                <span>Nome:</span>
+                <span>Data:</span>
+              </div>
+            </header>
+            <div class="caça-palavras-contêiner">
+              <div class="grade-de-caça-palavras" data-grade></div>
+              <ul class="lista-de-palavras-a-encontrar" data-lista-de-palavras></ul>
+            </div>
+          </article>
+
+          <article class="folha-de-atividade quebra-de-página" data-folha-gabarito>
+            <header class="cabeçalho-da-atividade">
+              <h3 class="cabeçalho-da-atividade-título" data-título-gabarito></h3>
+            </header>
+            <div class="caça-palavras-contêiner">
+              <div class="grade-de-caça-palavras" data-grade-gabarito></div>
+            </div>
+          </article>
+        </div>
+
+        <p class="campo-ajuda" data-resumo-da-semente></p>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta configuração</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Caça-palavras — estações do ano" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>A estratégia de encaixe tenta até 300 posições por palavra; se nenhuma funcionar, a palavra aparece na lista de "não coube", nunca é omitida em silêncio.</li>
+    <li>Palavras maiores que a grade nas direções escolhidas são recusadas antes mesmo de tentar encaixar.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-caça-palavras" class="botão botão-primário">Montar caça-palavras</button>
+</div>

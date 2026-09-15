@@ -1,0 +1,99 @@
+<!--página
+{
+  "título": "Quantidade de rodapé",
+  "descrição": "Calcule quantas barras de rodapé comprar a partir dos lados do cômodo, dos vãos de porta e da perda percentual.",
+  "destaque": "ocre",
+  "navegação": "ferramentas",
+  "script": "páginas/rodapé.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Quantidade de rodapé</h1>
+    <p class="ferramenta-resumo">Some os lados do cômodo, desconte os trechos sem instalação (como vãos de porta), acrescente uma perda e veja quantas barras comprar.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-rodapé" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Lados do cômodo</legend>
+        <div class="linhas-editáveis" data-linhas-de-lados></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-lado>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar lado</span>
+        </button>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Trechos sem instalação (opcional)</legend>
+        <p class="campo-ajuda">Vãos de porta ou outros trechos onde o rodapé não é instalado.</p>
+        <div class="linhas-editáveis" data-linhas-de-trechos></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-trecho>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar trecho</span>
+        </button>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Perda e embalagem</legend>
+        <div class="campo">
+          <label for="perda">Perda</label>
+          <div class="campo-com-unidade">
+            <input id="perda" name="perda" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="perda-erro">
+            <span class="unidade">%</span>
+          </div>
+          <p id="perda-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="comprimento-da-barra">Comprimento de cada barra</label>
+          <div class="campo-com-unidade">
+            <input id="comprimento-da-barra" name="comprimento-da-barra" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 2" aria-describedby="comprimento-da-barra-erro">
+            <span class="unidade">m</span>
+          </div>
+          <p id="comprimento-da-barra-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular rodapé</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#ruler"></use></svg>
+        <p class="estado-vazio-título">A quantidade de barras aparece aqui</p>
+        <p>Adicione os lados do cômodo, informe o comprimento da barra e toque em Calcular rodapé.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Barras a comprar</p>
+          <p class="resultado-valor" data-barras></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <form id="formulário-salvar-rodapé" class="campo" novalidate>
+          <label for="nome-do-cálculo-de-rodapé">Nome para salvar este cálculo</label>
+          <input id="nome-do-cálculo-de-rodapé" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Sala de estar" aria-describedby="nome-do-cálculo-de-rodapé-erro">
+          <p id="nome-do-cálculo-de-rodapé-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Perímetro útil = soma dos lados menos os trechos sem instalação. Barras = arredondar para cima (perímetro útil × (1 + perda) ÷ comprimento da barra).</li>
+    <li>Os trechos sem instalação nunca podem somar mais do que os lados informados.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-rodapé" class="botão botão-primário">Calcular rodapé</button>
+</div>

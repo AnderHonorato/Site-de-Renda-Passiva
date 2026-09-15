@@ -1,0 +1,13 @@
+Ponto e Preço — © 2026 Anderson. Todos os direitos reservados.
+
+O código-fonte, os textos, a identidade visual e as ilustrações autorais deste site
+pertencem a Anderson. Não é permitido copiar, redistribuir ou publicar este site, ou
+partes dele, sem autorização por escrito. O uso das ferramentas pelo navegador é livre
+e gratuito.
+
+Componentes de terceiros mantêm suas próprias licenças, incluídas no pacote:
+- Fontes Caprasimo, Figtree e Caveat — SIL Open Font License 1.1 (recursos/fontes/licenças).
+- Ícones Lucide — licença ISC (recursos/ícones/LICENÇA-lucide.txt).
+- qrcode-generator, de Kazuhiko Arase — licença MIT (recursos/bibliotecas).
+
+A integridade de cada versão publicada pode ser conferida em manifesto-de-integridade.json.

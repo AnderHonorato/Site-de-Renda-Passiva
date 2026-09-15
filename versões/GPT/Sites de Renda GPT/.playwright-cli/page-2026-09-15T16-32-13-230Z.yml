@@ -1,0 +1,188 @@
+- generic [active] [ref=f2e1]:
+  - link "Pular para o conteúdo" [ref=f2e2] [cursor=pointer]:
+    - /url: "#conteudo"
+  - banner [ref=f2e3]:
+    - link "Doce Ofício, início" [ref=f2e4] [cursor=pointer]:
+      - /url: "#inicio"
+      - generic [ref=f2e6]:
+        - strong [ref=f2e7]: doce ofício
+        - generic [ref=f2e8]: ferramentas para o dia a dia
+    - link "Apoiar o projeto" [ref=f2e9] [cursor=pointer]:
+      - /url: "#apoiar"
+  - main [ref=f2e10]:
+    - generic [ref=f2e11]:
+      - generic [ref=f2e12]:
+        - generic [ref=f2e13]:
+          - text: UM POUCO DE AJUDA, TODOS OS DIAS
+          - heading [level=1] [ref=f2e14]:
+            - text: Pequenas contas.
+            - emphasis [ref=f2e15]: Grandes planos.
+          - paragraph [ref=f2e16]: Do bolo que você vende à viagem que você sonha. Encontre um jeito mais simples de calcular, criar e organizar.
+          - generic [ref=f2e17]:
+            - link "Encontre sua ferramenta" [ref=f2e18] [cursor=pointer]:
+              - /url: "#ferramentas"
+            - generic [ref=f2e19]: feito para facilitar.
+          - generic [ref=f2e20]: Gratuito. Sem cadastro. No seu navegador.
+        - generic [ref=f2e22]:
+          - img "Ilustração de calculadora, caderno, fita métrica e materiais de papelaria em tons de terracota e verde." [ref=f2e23]
+          - generic [ref=f2e24]:
+            - generic [ref=f2e25]: um lugar, muitas possibilidades
+            - strong [ref=f2e26]: 150 ferramentas úteis
+      - region "Sobre as ferramentas" [ref=f2e27]:
+        - generic [ref=f2e28]:
+          - strong [ref=f2e29]: 15 categorias
+          - generic [ref=f2e30]: para todos os seus planos
+        - generic [ref=f2e31]:
+          - strong [ref=f2e32]: Seus arquivos ficam com você
+          - generic [ref=f2e33]: processamento local, sem envio
+        - generic [ref=f2e34]:
+          - strong [ref=f2e35]: Resultado bem explicado
+          - generic [ref=f2e36]: premissas, medidas e próximos passos
+      - generic [ref=f2e37]:
+        - generic [ref=f2e39]:
+          - text: ESCOLHA SEU CAMINHO
+          - heading "O que vamos resolver hoje?" [level=2] [ref=f2e40]
+        - generic [ref=f2e41]:
+          - searchbox "Buscar ferramentas" [ref=f2e43]
+          - generic [ref=f2e44]:
+            - generic [ref=f2e45]: Categoria
+            - combobox "Categoria" [ref=f2e46]:
+              - option "Todas as categorias"
+              - option "Confeitaria" [selected]
+              - option "Educação"
+              - option "Artesanato"
+              - option "Festas"
+              - option "Reforma"
+              - option "Embalagens"
+              - option "Texto e escrita"
+              - option "Imagens"
+              - option "PDF e documentos"
+              - option "Datas e tempo"
+              - option "Matemática e medidas"
+              - option "Vendas e negócios"
+              - option "Ferramentas digitais"
+              - option "Casa e economia"
+              - option "Viagens e deslocamentos"
+        - generic "Categorias em destaque" [ref=f2e47]:
+          - button "Todas" [ref=f2e48] [cursor=pointer]
+          - button "Confeitaria" [pressed] [ref=f2e49] [cursor=pointer]
+          - button "Educação" [ref=f2e50] [cursor=pointer]
+          - button "Reforma" [ref=f2e51] [cursor=pointer]
+          - button "Imagens" [ref=f2e52] [cursor=pointer]
+          - button "PDF e documentos" [ref=f2e53] [cursor=pointer]
+          - button "Casa e economia" [ref=f2e54] [cursor=pointer]
+        - generic [ref=f2e55]:
+          - status [ref=f2e56]: 10 ferramentas encontradas
+          - button "Só favoritos" [ref=f2e57] [cursor=pointer]
+        - generic [ref=f2e58]:
+          - article [ref=f2e100]:
+            - generic [ref=f2e101]: Confeitaria
+            - 'button "Adicionar aos favoritos: Custo da receita" [ref=f2e104] [cursor=pointer]'
+            - heading "Custo da receita" [level=3] [ref=f2e105]
+            - paragraph [ref=f2e106]: Some ingredientes, embalagem e despesas por lote.
+            - button "Abrir Custo da receita" [ref=f2e107] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f2e108]:
+            - generic [ref=f2e109]: Confeitaria
+            - 'button "Adicionar aos favoritos: Preço de venda" [ref=f2e112] [cursor=pointer]'
+            - heading "Preço de venda" [level=3] [ref=f2e113]
+            - paragraph [ref=f2e114]: Inclua margem sobre venda e taxas no preço do lote.
+            - button "Abrir Preço de venda" [ref=f2e115] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f2e116]:
+            - generic [ref=f2e117]: Confeitaria
+            - 'button "Adicionar aos favoritos: Ajuste de receitas" [ref=f2e120] [cursor=pointer]'
+            - heading "Ajuste de receitas" [level=3] [ref=f2e121]
+            - paragraph [ref=f2e122]: Redimensione cada ingrediente para outro rendimento.
+            - button "Abrir Ajuste de receitas" [ref=f2e123] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f2e124]:
+            - generic [ref=f2e125]: Confeitaria
+            - 'button "Adicionar aos favoritos: Lista de compras da produção" [ref=f2e128] [cursor=pointer]'
+            - heading "Lista de compras da produção" [level=3] [ref=f2e129]
+            - paragraph [ref=f2e130]: Consolide ingredientes repetidos e compre pacotes inteiros.
+            - button "Abrir Lista de compras da produção" [ref=f2e131] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f2e132]:
+            - generic [ref=f2e133]: Confeitaria
+            - 'button "Adicionar aos favoritos: Orçamento de doces" [ref=f2e136] [cursor=pointer]'
+            - heading "Orçamento de doces" [level=3] [ref=f2e137]
+            - paragraph [ref=f2e138]: Monte proposta com produtos, entrega e validade.
+            - button "Abrir Orçamento de doces" [ref=f2e139] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f2e140]:
+            - generic [ref=f2e141]: Confeitaria
+            - 'button "Adicionar aos favoritos: Conversor de formas" [ref=f2e144] [cursor=pointer]'
+            - heading "Conversor de formas" [level=3] [ref=f2e145]
+            - paragraph [ref=f2e146]: Compare volumes de formas redondas ou retangulares.
+            - button "Abrir Conversor de formas" [ref=f2e147] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f2e148]:
+            - generic [ref=f2e149]: Confeitaria
+            - 'button "Adicionar aos favoritos: Rendimento com perdas" [ref=f2e152] [cursor=pointer]'
+            - heading "Rendimento com perdas" [level=3] [ref=f2e153]
+            - paragraph [ref=f2e154]: Estime aproveitamento e custo após perdas.
+            - button "Abrir Rendimento com perdas" [ref=f2e155] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f2e156]:
+            - generic [ref=f2e157]: Confeitaria
+            - 'button "Adicionar aos favoritos: Ficha técnica de receita" [ref=f2e160] [cursor=pointer]'
+            - heading "Ficha técnica de receita" [level=3] [ref=f2e161]
+            - paragraph [ref=f2e162]: Gere uma ficha imprimível com ingredientes e preparo.
+            - button "Abrir Ficha técnica de receita" [ref=f2e163] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f2e164]:
+            - generic [ref=f2e165]: Confeitaria
+            - 'button "Adicionar aos favoritos: Cronograma de fornadas" [ref=f2e168] [cursor=pointer]'
+            - heading "Cronograma de fornadas" [level=3] [ref=f2e169]
+            - paragraph [ref=f2e170]: Calcule quantas fornadas serão necessárias e o tempo total.
+            - button "Abrir Cronograma de fornadas" [ref=f2e171] [cursor=pointer]: Abrir ferramenta
+          - article [ref=f2e172]:
+            - generic [ref=f2e173]: Confeitaria
+            - 'button "Adicionar aos favoritos: Quantidade de cobertura" [ref=f2e176] [cursor=pointer]'
+            - heading "Quantidade de cobertura" [level=3] [ref=f2e177]
+            - paragraph [ref=f2e178]: Estime cobertura por área e consumo medido.
+            - button "Abrir Quantidade de cobertura" [ref=f2e179] [cursor=pointer]: Abrir ferramenta
+      - generic [ref=f2e61]:
+        - generic [ref=f2e62]:
+          - text: DO SEU JEITO
+          - heading [level=2] [ref=f2e63]:
+            - text: Feito para caber
+            - emphasis [ref=f2e64]: na sua rotina.
+        - generic [ref=f2e65]:
+          - article [ref=f2e66]:
+            - generic [ref=f2e67]: "01"
+            - heading "Encontre o que precisa" [level=3] [ref=f2e68]
+            - paragraph [ref=f2e69]: Explore as categorias ou escreva o que quer resolver.
+          - article [ref=f2e70]:
+            - generic [ref=f2e71]: "02"
+            - heading "Preencha com calma" [level=3] [ref=f2e72]
+            - paragraph [ref=f2e73]: Use seus dados e confira as premissas de cada ferramenta.
+          - article [ref=f2e74]:
+            - generic [ref=f2e75]: "03"
+            - heading "Leve o resultado" [level=3] [ref=f2e76]
+            - paragraph [ref=f2e77]: Copie, baixe, imprima ou salve para continuar depois.
+      - generic [ref=f2e80]:
+        - text: UM OFÍCIO DIÁRIO
+        - heading [level=2] [ref=f2e81]:
+          - text: Menos tempo nas contas.
+          - emphasis [ref=f2e82]: Mais tempo fazendo acontecer.
+        - paragraph [ref=f2e83]: Criado por Anderson para transformar tarefas do dia a dia em passos simples. Ferramentas gratuitas, com resultados transparentes e espaço para os seus planos.
+        - link "Ajude este projeto a continuar" [ref=f2e84] [cursor=pointer]:
+          - /url: "#apoiar"
+  - contentinfo [ref=f2e85]:
+    - link [ref=f2e86] [cursor=pointer]:
+      - /url: "#inicio"
+      - strong [ref=f2e87]: doce ofício
+    - generic [ref=f2e88]: Criado por Anderson · 2026
+    - navigation "Institucional" [ref=f2e89]:
+      - link "Privacidade" [ref=f2e90] [cursor=pointer]:
+        - /url: "#privacidade"
+      - link "Termos" [ref=f2e91] [cursor=pointer]:
+        - /url: "#termos"
+      - link "Contato" [ref=f2e92] [cursor=pointer]:
+        - /url: "#contato"
+      - button "Preferências de privacidade" [ref=f2e93] [cursor=pointer]
+  - navigation "Navegação no celular" [ref=f2e94]:
+    - link "Início" [ref=f2e95] [cursor=pointer]:
+      - /url: "#inicio"
+    - link "Ferramentas" [ref=f2e96] [cursor=pointer]:
+      - /url: "#ferramentas"
+    - link "Salvos" [ref=f2e97] [cursor=pointer]:
+      - /url: "#salvos"
+    - link "Apoiar" [ref=f2e98] [cursor=pointer]:
+      - /url: "#apoiar"
+    - button "Mais" [ref=f2e99] [cursor=pointer]
+  - status

@@ -1,0 +1,129 @@
+<!--página
+{
+  "título": "Envelope",
+  "descrição": "Gere o molde de um envelope para um cartão ou conteúdo retangular, com folga e abas trapezoidais cortadas a 45°.",
+  "destaque": "kraft",
+  "navegação": "ferramentas",
+  "script": "páginas/envelope.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador de molde</p>
+    <h1 id="título-ferramenta">Envelope</h1>
+    <p class="ferramenta-resumo">Um bolso central para um cartão ou conteúdo retangular, com quatro abas trapezoidais (cortadas a 45° para não se sobrepor quando dobradas). Informe o tamanho do conteúdo e a folga desejada entre ele e o bolso.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-envelope" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Unidade das medidas</legend>
+        <div class="segmentado" role="radiogroup" aria-label="Unidade">
+          <label class="opção"><input type="radio" name="unidade" value="mm" checked> Milímetros</label>
+          <label class="opção"><input type="radio" name="unidade" value="cm"> Centímetros</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Conteúdo e folga</legend>
+        <div class="campo">
+          <label for="largura">Largura do conteúdo</label>
+          <input id="largura" name="largura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="10" aria-describedby="largura-erro">
+          <p id="largura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="altura">Altura do conteúdo</label>
+          <input id="altura" name="altura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="15" aria-describedby="altura-erro">
+          <p id="altura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="folga">Folga (mm, por lado)</label>
+          <input id="folga" name="folga" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="3" aria-describedby="folga-erro">
+          <p id="folga-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="tamanho-da-aba">Tamanho da aba (mm)</label>
+          <input id="tamanho-da-aba" name="tamanho-da-aba" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="25" aria-describedby="tamanho-da-aba-erro">
+          <p id="tamanho-da-aba-erro" class="campo-erro" hidden></p>
+          <p class="campo-ajuda">Não pode chegar à metade da largura nem da altura do bolso (conteúdo + folga).</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Papel e texto</legend>
+        <div class="campo">
+          <label for="tipo-de-papel">Tipo de papel (opcional, informativo)</label>
+          <select id="tipo-de-papel" name="tipo-de-papel" class="seleção">
+            <option value="">Não informado</option>
+            <option value="Papel sulfite/offset">Papel sulfite/offset</option>
+            <option value="Papel-cartão (cartolina)">Papel-cartão (cartolina)</option>
+            <option value="Papel kraft">Papel kraft</option>
+            <option value="Papel vergê">Papel vergê</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="texto-opcional">Texto no molde (opcional)</label>
+          <input id="texto-opcional" name="texto-opcional" class="entrada" type="text" maxlength="200" autocomplete="off" placeholder="Ex.: Convite de aniversário">
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar molde</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#mail"></use></svg>
+        <p class="estado-vazio-título">Seu molde aparece aqui</p>
+        <p>Informe as medidas e toque em Gerar molde.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="baixar-svg"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#file-down"></use></svg>Baixar SVG</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="não-imprimir" data-resumo-de-folhas></div>
+
+        <div class="prévia-de-molde não-imprimir">
+          <div data-prévia-do-molde></div>
+          <p class="prévia-de-molde-escala" data-escala-da-prévia></p>
+          <div class="legenda-do-molde">
+            <span class="legenda-do-molde-item"><span class="legenda-do-molde-amostra"></span>Corte</span>
+            <span class="legenda-do-molde-item"><span class="legenda-do-molde-amostra legenda-do-molde-amostra--dobra"></span>Dobra</span>
+          </div>
+        </div>
+
+        <dl class="lista-de-resultado" data-resumo-de-medidas></dl>
+
+        <div class="área-de-impressão">
+          <p>A prévia acima já mostra o molde na escala indicada. Para imprimir em tamanho real, use o botão “Baixar PDF”.</p>
+        </div>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar este molde</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Envelope para cartão 10×15" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>A folga é somada nos dois lados de cada direção: o bolso fica maior que o conteúdo em 2 × a folga informada.</li>
+    <li>Este molde não foi montado fisicamente em papel para conferência: a validação foi geométrica e da renderização do PDF.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-envelope" class="botão botão-primário">Gerar molde</button>
+</div>

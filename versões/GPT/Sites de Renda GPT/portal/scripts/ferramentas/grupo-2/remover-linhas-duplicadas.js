@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("remover-linhas-duplicadas",7,"Remover linhas duplicadas","Elimine repetições preservando a primeira ocorrência.","Normalização opcional ignora maiúsculas e espaços nas extremidades; acentos permanecem distintos.",[T('texto','Um item por linha','ana\nana\nbia'),C('normalizar','Ignorar maiúsculas e espaços',true)],async d=>{const a=texto(d,'texto').split(/\r?\n/),v=new Set(),b=a.filter(x=>{const k=d.normalizar?x.trim().toLocaleLowerCase('pt-BR'):x;if(v.has(k))return false;v.add(k);return true;});return saidaTexto(b.join('\n'),[(a.length-b.length)+' duplicadas removidas']);});
+

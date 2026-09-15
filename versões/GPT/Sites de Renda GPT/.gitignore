@@ -1,0 +1,14 @@
+node_modules/
+*/publicação/
+.env
+.env.*
+*.log
+.thumbnail
+modelo/uploads/
+modelo/*.zip
+modelo/_ds/broadsheet-*/
+modelo/_ds/classical-*/
+modelo/_ds/industry-*/
+modelo/_ds/modernist-*/
+modelo/_ds/nocturne-*/
+.claude/settings.local.json

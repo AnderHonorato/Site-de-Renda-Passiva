@@ -1,0 +1,100 @@
+<!--página
+{
+  "título": "Ferramentas",
+  "descrição": "Todas as ferramentas gratuitas do Mesa Farta para planejar churrasco, festa infantil, almoço, orçamento e organização do evento.",
+  "destaque": "principal",
+  "navegação": "ferramentas",
+  "script": "páginas/ferramentas.js",
+  "tipo": "catálogo"
+}
+-->
+<header class="ferramenta-cabeçalho">
+  <p class="sobretítulo">Catálogo</p>
+  <h1>Ferramentas de festa</h1>
+  <p class="ferramenta-resumo">Escolha uma ferramenta. Todas funcionam sem cadastro, no seu aparelho, e mostram as premissas usadas no cálculo.</p>
+</header>
+
+<div class="grupo-de-campos grupo-de-campos-duas-colunas">
+  <div class="campo">
+    <label for="busca-de-ferramentas">Buscar ferramenta</label>
+    <input id="busca-de-ferramentas" class="entrada" type="text" placeholder="Ex.: churrasco, orçamento, convidados" autocomplete="off">
+  </div>
+  <div class="campo">
+    <label for="categoria-de-ferramentas">Categoria</label>
+    <select id="categoria-de-ferramentas" class="entrada seleção">
+      <option value="todas" selected>Todas as categorias</option>
+      <option value="planejamento">Planejamento de cardápio</option>
+      <option value="dinheiro">Dinheiro</option>
+      <option value="organização">Organização</option>
+    </select>
+  </div>
+</div>
+<p class="campo-ajuda" data-contagem role="status" aria-live="polite"></p>
+
+<nav class="lista-de-ferramentas" aria-label="Lista de ferramentas" data-lista-de-ferramentas>
+  <a class="item-de-ferramenta" href="{{raiz}}páginas/churrasco.html" data-categoria="planejamento" data-busca="calculadora de churrasco carnes acompanhamentos bebidas">
+    <span class="item-de-ferramenta-ícone"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#flame"></use></svg></span>
+    <span class="item-de-ferramenta-texto">
+      <span class="item-de-ferramenta-título">Calculadora de churrasco</span>
+      <span class="item-de-ferramenta-descrição">Carnes, acompanhamentos e bebidas com premissas editáveis.</span>
+    </span>
+    <svg class="item-de-ferramenta-seta" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#seta-direita"></use></svg>
+  </a>
+  <a class="item-de-ferramenta" href="{{raiz}}páginas/festa-infantil.html" data-categoria="planejamento" data-busca="festa infantil aniversário criança salgados doces bolo">
+    <span class="item-de-ferramenta-ícone"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#party-popper"></use></svg></span>
+    <span class="item-de-ferramenta-texto">
+      <span class="item-de-ferramenta-título">Planejador de festa infantil</span>
+      <span class="item-de-ferramenta-descrição">Salgados, doces, bolo e bebidas por convidado.</span>
+    </span>
+    <svg class="item-de-ferramenta-seta" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#seta-direita"></use></svg>
+  </a>
+  <a class="item-de-ferramenta" href="{{raiz}}páginas/almoço.html" data-categoria="planejamento" data-busca="almoço encontro arroz feijão proteína">
+    <span class="item-de-ferramenta-ícone"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#utensils"></use></svg></span>
+    <span class="item-de-ferramenta-texto">
+      <span class="item-de-ferramenta-título">Quantidade para almoço</span>
+      <span class="item-de-ferramenta-descrição">Proteína, arroz e feijão crus, salada e bebidas.</span>
+    </span>
+    <svg class="item-de-ferramenta-seta" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#seta-direita"></use></svg>
+  </a>
+  <a class="item-de-ferramenta" href="{{raiz}}páginas/orçamento-do-evento.html" data-categoria="dinheiro" data-busca="orçamento evento pdf planilha reserva imprevistos">
+    <span class="item-de-ferramenta-ícone"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#receipt"></use></svg></span>
+    <span class="item-de-ferramenta-texto">
+      <span class="item-de-ferramenta-título">Orçamento do evento</span>
+      <span class="item-de-ferramenta-descrição">Compras, serviços e reserva de imprevistos em PDF, planilha ou link.</span>
+    </span>
+    <svg class="item-de-ferramenta-seta" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#seta-direita"></use></svg>
+  </a>
+  <a class="item-de-ferramenta" href="{{raiz}}páginas/divisor-de-despesas.html" data-categoria="dinheiro" data-busca="divisor despesas rateio dividir conta pagantes">
+    <span class="item-de-ferramenta-ícone"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#split"></use></svg></span>
+    <span class="item-de-ferramenta-texto">
+      <span class="item-de-ferramenta-título">Divisor de despesas</span>
+      <span class="item-de-ferramenta-descrição">Rateio igual ou por pesos entre quem vai pagar.</span>
+    </span>
+    <svg class="item-de-ferramenta-seta" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#seta-direita"></use></svg>
+  </a>
+  <a class="item-de-ferramenta" href="{{raiz}}páginas/checklist.html" data-categoria="organização" data-busca="checklist tarefas lista organização">
+    <span class="item-de-ferramenta-ícone"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#list-checks"></use></svg></span>
+    <span class="item-de-ferramenta-texto">
+      <span class="item-de-ferramenta-título">Checklist do evento</span>
+      <span class="item-de-ferramenta-descrição">Tarefas editáveis, marcação de concluídas, cópia e impressão.</span>
+    </span>
+    <svg class="item-de-ferramenta-seta" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#seta-direita"></use></svg>
+  </a>
+  <a class="item-de-ferramenta" href="{{raiz}}páginas/cronograma.html" data-categoria="organização" data-busca="cronograma horário montagem preparo">
+    <span class="item-de-ferramenta-ícone"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calendar-clock"></use></svg></span>
+    <span class="item-de-ferramenta-texto">
+      <span class="item-de-ferramenta-título">Cronograma do evento</span>
+      <span class="item-de-ferramenta-descrição">Horário de início de cada etapa de preparação, encadeadas até a festa.</span>
+    </span>
+    <svg class="item-de-ferramenta-seta" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#seta-direita"></use></svg>
+  </a>
+  <a class="item-de-ferramenta" href="{{raiz}}páginas/lista-de-convidados.html" data-categoria="organização" data-busca="lista convidados confirmados pendentes rsvp">
+    <span class="item-de-ferramenta-ícone"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#user-check"></use></svg></span>
+    <span class="item-de-ferramenta-texto">
+      <span class="item-de-ferramenta-título">Lista de convidados local</span>
+      <span class="item-de-ferramenta-descrição">Confirmados e pendentes, com nomes só no seu aparelho.</span>
+    </span>
+    <svg class="item-de-ferramenta-seta" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#seta-direita"></use></svg>
+  </a>
+</nav>
+<p class="campo-ajuda" data-sem-resultado hidden>Nenhuma ferramenta encontrada com esses termos. Tente outra palavra ou escolha “Todas as categorias”.</p>

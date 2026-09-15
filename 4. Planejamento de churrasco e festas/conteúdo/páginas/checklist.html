@@ -1,0 +1,57 @@
+<!--página
+{
+  "título": "Checklist do evento",
+  "descrição": "Monte a lista de tarefas do seu evento, marque o que já foi feito, copie, imprima e salve neste aparelho.",
+  "destaque": "brasa",
+  "navegação": "ferramentas",
+  "script": "páginas/checklist.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Checklist do evento</h1>
+    <p class="ferramenta-resumo">Uma lista de tarefas inicial já vem preenchida: edite, remova ou adicione o que precisar, marque o que já foi feito e salve neste aparelho.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-checklist" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Tarefas</legend>
+        <div class="área-de-impressão">
+          <div class="linhas-editáveis" data-linhas-de-tarefas>
+            <button type="button" class="botão botão-secundário linhas-editáveis-adicionar não-imprimir" data-adicionar-tarefa>
+              <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+              <span>Adicionar tarefa</span>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+      <div class="ações-do-formulário">
+        <button type="button" class="botão botão-secundário" data-copiar><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#copiar"></use></svg>Copiar checklist</button>
+        <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+      </div>
+    </form>
+
+    <form id="formulário-salvar-checklist" class="campo" novalidate>
+      <label for="nome-do-checklist">Nome para salvar este checklist</label>
+      <input id="nome-do-checklist" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Checklist do churrasco de aniversário" aria-describedby="nome-do-checklist-erro">
+      <p id="nome-do-checklist-erro" class="campo-erro" hidden></p>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Sobre o checklist">
+    <li>As tarefas iniciais são um ponto de partida comum a churrascos, festas infantis, almoços e encontros: edite livremente.</li>
+    <li>O checklist fica salvo só neste aparelho, até que você o exclua ou apague os dados locais.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-salvar-checklist" class="botão botão-primário">Salvar checklist</button>
+</div>

@@ -1,0 +1,13 @@
+{
+  "fundo": "#f8eee3",
+  "neutra": "#8f7b72",
+  "destaque": "#b85c6b",
+  "secundária": "#8f2d4a",
+  "destaques": {
+    "morango": "#c8434d",
+    "framboesa": "#a8325f",
+    "amora": "#6c3a6e",
+    "caramelo": "#b06a2e",
+    "pistache": "#6c8a45"
+  }
+}

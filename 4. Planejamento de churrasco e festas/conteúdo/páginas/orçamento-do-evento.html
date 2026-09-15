@@ -1,0 +1,132 @@
+<!--página
+{
+  "título": "Orçamento do evento",
+  "descrição": "Some compras, serviços e uma reserva percentual de imprevistos, e baixe em PDF, baixe em planilha, imprima ou compartilhe o link do orçamento.",
+  "destaque": "céu",
+  "navegação": "ferramentas",
+  "script": "páginas/orçamento-do-evento.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Orçamento do evento</h1>
+    <p class="ferramenta-resumo">Some compras e serviços do evento e acrescente uma reserva percentual para imprevistos. Baixe o orçamento em PDF, baixe em planilha, imprima ou compartilhe um link com quem vai ajudar a organizar ou a dividir os custos.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-orçamento" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Quem organiza</legend>
+        <div class="campo">
+          <label for="emissor-nome">Seu nome</label>
+          <input id="emissor-nome" name="emissor-nome" class="entrada" type="text" maxlength="80" autocomplete="off" placeholder="Ex.: Marcela" aria-describedby="emissor-nome-ajuda emissor-nome-erro">
+          <p id="emissor-nome-ajuda" class="campo-ajuda">Aparece no orçamento como quem está organizando o evento.</p>
+          <p id="emissor-nome-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="emissor-contato">Seu contato (opcional)</label>
+          <input id="emissor-contato" name="emissor-contato" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: WhatsApp (11) 90000-0000" aria-describedby="emissor-contato-erro">
+          <p id="emissor-contato-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="cliente-nome">Para quem é o orçamento (opcional)</label>
+          <input id="cliente-nome" name="cliente-nome" class="entrada" type="text" maxlength="80" autocomplete="off" placeholder="Ex.: Família Silva" aria-describedby="cliente-nome-erro">
+          <p id="cliente-nome-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="título-orçamento">Título do orçamento (opcional)</label>
+          <input id="título-orçamento" name="título" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Orçamento do aniversário de 15 anos" aria-describedby="título-orçamento-erro">
+          <p id="título-orçamento-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Compras e serviços</legend>
+        <div class="linhas-editáveis" data-linhas-de-itens>
+          <div class="linha-editável" data-linha>
+            <div class="campo"><label for="item-0-descrição">Item</label><input id="item-0-descrição" class="entrada" type="text" maxlength="120" data-campo="descrição" placeholder="Ex.: Buffet de carnes"></div>
+            <div class="campo campo-estreito">
+              <label for="item-0-categoria">Categoria</label>
+              <select id="item-0-categoria" class="entrada seleção" data-campo="categoria">
+                <option value="compra">Compra</option>
+                <option value="serviço">Serviço</option>
+              </select>
+            </div>
+            <div class="campo campo-estreito"><label for="item-0-valor">Valor (R$)</label><input id="item-0-valor" class="entrada" type="text" inputmode="decimal" data-campo="valor" placeholder="Ex.: 250,00"></div>
+            <button type="button" class="botão botão-ícone botão-fantasma" data-remover-linha aria-label="Remover item">
+              <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#remover"></use></svg>
+            </button>
+          </div>
+          <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-item>
+            <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+            <span>Adicionar item</span>
+          </button>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Reserva e condições</legend>
+        <div class="campo">
+          <label for="reserva">Reserva de imprevistos (%)</label>
+          <input id="reserva" name="reserva" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="10" aria-describedby="reserva-ajuda reserva-erro">
+          <p id="reserva-ajuda" class="campo-ajuda">Calculada uma vez sobre a soma dos itens e somada como uma linha do orçamento. Exemplo: itens de R$ 400 com reserva de 10% somam R$ 440.</p>
+          <p id="reserva-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="prazo">Prazo (opcional)</label>
+          <input id="prazo" name="prazo" class="entrada" type="text" maxlength="80" autocomplete="off" placeholder="Ex.: Confirmar até 20/10" aria-describedby="prazo-erro">
+          <p id="prazo-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="validade">Validade do orçamento (dias, opcional)</label>
+          <input id="validade" name="validade" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 7" aria-describedby="validade-ajuda validade-erro">
+          <p id="validade-ajuda" class="campo-ajuda">Deixe em branco se não quiser mostrar uma data-limite.</p>
+          <p id="validade-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="observações">Observações (opcional)</label>
+          <textarea id="observações" name="observações" class="entrada área-de-texto" maxlength="600" rows="3" placeholder="Ex.: Valores sujeitos a confirmação com os fornecedores." aria-describedby="observações-erro"></textarea>
+          <p id="observações-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar orçamento</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#receipt"></use></svg>
+        <p class="estado-vazio-título">Seu orçamento aparece aqui</p>
+        <p>Preencha seu nome, ao menos um item e toque em Gerar orçamento.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="área-de-impressão" data-documento></div>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-primário" data-baixar-pdf><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-baixar-planilha><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#exportar"></use></svg>Baixar planilha</button>
+          <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+          <button type="button" class="botão botão-secundário" data-copiar><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#copiar"></use></svg>Copiar texto</button>
+          <button type="button" class="botão botão-secundário" data-compartilhar><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#link-externo"></use></svg>Compartilhar link</button>
+        </div>
+        <p class="campo-ajuda não-imprimir">O link contém os dados deste orçamento. Quem receber o link poderá vê-lo — use-o para dividir os custos com quem ajuda a organizar.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do orçamento">
+    <li>O total do orçamento é sempre a soma exata das linhas mostradas: os itens informados mais a reserva, calculada uma única vez sobre a soma dos itens.</li>
+    <li>O link compartilhado guarda os dados só no próprio link (não em um servidor); qualquer pessoa com o link pode abri-lo.</li>
+    <li>Nada é enviado automaticamente: você decide como entregar o PDF, a planilha, a impressão ou o link.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-orçamento" class="botão botão-primário">Gerar orçamento</button>
+</div>

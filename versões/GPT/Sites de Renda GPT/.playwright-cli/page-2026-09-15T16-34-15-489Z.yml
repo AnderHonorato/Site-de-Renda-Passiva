@@ -1,0 +1,81 @@
+- generic [ref=f3e1]:
+  - link "Pular para o conteúdo" [ref=f3e2] [cursor=pointer]:
+    - /url: "#conteudo"
+  - banner [ref=f3e3]:
+    - link "Doce Ofício, início" [ref=f3e4] [cursor=pointer]:
+      - /url: "#inicio"
+      - generic [ref=f3e6]:
+        - strong [ref=f3e7]: doce ofício
+        - generic [ref=f3e8]: ferramentas para o dia a dia
+    - link "Apoiar o projeto" [ref=f3e9] [cursor=pointer]:
+      - /url: "#apoiar"
+  - main [ref=f3e10]:
+    - generic [ref=f3e357]:
+      - text: PARA CONTINUAR DEPOIS
+      - heading [level=1] [ref=f3e358]:
+        - text: Seus
+        - emphasis [ref=f3e359]: salvos.
+      - paragraph [ref=f3e360]: Entradas guardadas neste navegador. Arquivos enviados às ferramentas não são armazenados. Exporte uma cópia antes de limpar os dados do navegador.
+      - generic [ref=f3e361]:
+        - button "Exportar cópia" [ref=f3e362] [cursor=pointer]
+        - generic [ref=f3e363] [cursor=pointer]:
+          - text: Importar cópia
+          - button "Importar cópia" [ref=f3e364]
+      - article [ref=f3e366]:
+        - heading "Auditoria receita" [level=3] [ref=f3e367]
+        - text: Preço de venda
+        - generic [ref=f3e368]:
+          - button "Continuar" [ref=f3e369] [cursor=pointer]
+          - button "Duplicar" [ref=f3e370] [cursor=pointer]
+          - button "Excluir" [ref=f3e371] [cursor=pointer]
+  - contentinfo [ref=f3e278]:
+    - link [ref=f3e279] [cursor=pointer]:
+      - /url: "#inicio"
+      - strong [ref=f3e280]: doce ofício
+    - generic [ref=f3e281]: Criado por Anderson · 2026
+    - navigation "Institucional" [ref=f3e282]:
+      - link "Privacidade" [ref=f3e283] [cursor=pointer]:
+        - /url: "#privacidade"
+      - link "Termos" [ref=f3e284] [cursor=pointer]:
+        - /url: "#termos"
+      - link "Contato" [ref=f3e285] [cursor=pointer]:
+        - /url: "#contato"
+      - button "Preferências de privacidade" [ref=f3e286] [cursor=pointer]
+  - navigation "Navegação no celular" [ref=f3e287]:
+    - link "Início" [ref=f3e288] [cursor=pointer]:
+      - /url: "#inicio"
+    - link "Ferramentas" [ref=f3e289] [cursor=pointer]:
+      - /url: "#ferramentas"
+    - link "Salvos" [ref=f3e290] [cursor=pointer]:
+      - /url: "#salvos"
+    - link "Apoiar" [ref=f3e291] [cursor=pointer]:
+      - /url: "#apoiar"
+    - button "Mais" [ref=f3e292] [cursor=pointer]
+  - dialog [ref=f3e317]:
+    - generic [ref=f3e318]:
+      - generic [ref=f3e319]:
+        - text: Confeitaria
+        - heading "Preço de venda" [level=2] [ref=f3e320]
+      - button "Fechar ferramenta" [active] [ref=f3e321] [cursor=pointer]
+    - paragraph [ref=f3e322]: Inclua margem sobre venda e taxas no preço do lote.
+    - generic [ref=f3e323]:
+      - generic [ref=f3e372]:
+        - generic [ref=f3e373]:
+          - generic [ref=f3e374]:
+            - generic [ref=f3e375]:
+              - generic [ref=f3e376]: Custo do lote (R$)
+              - textbox "Custo do lote (R$)" [ref=f3e377]: "80"
+            - generic [ref=f3e378]:
+              - generic [ref=f3e379]: Margem (%)
+              - textbox "Margem (%)" [ref=f3e380]: "30"
+            - generic [ref=f3e381]:
+              - generic [ref=f3e382]: Taxas (%)
+              - textbox "Taxas (%)" [ref=f3e383]: "0"
+            - generic [ref=f3e384]:
+              - generic [ref=f3e385]: Unidades
+              - textbox "Unidades" [ref=f3e386]: "50"
+          - button "Calcular / gerar" [ref=f3e388] [cursor=pointer]
+        - paragraph [ref=f3e390]: Seu resultado aparece aqui. Confira os campos e escolha Calcular / gerar.
+      - group [ref=f3e391]:
+        - generic "Como funciona e o que considerar" [ref=f3e392] [cursor=pointer]
+  - status: Registro salvo neste navegador.

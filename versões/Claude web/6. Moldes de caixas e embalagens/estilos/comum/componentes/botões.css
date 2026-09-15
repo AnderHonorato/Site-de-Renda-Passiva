@@ -1,0 +1,118 @@
+@charset "UTF-8";
+/* Sincronizado de compartilhado/estilos/componentes/botões.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/botões.css */
+
+.botão {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaço-2);
+  min-height: 44px;
+  padding: var(--espaço-2) var(--espaço-5);
+  border-radius: var(--raio-pílula);
+  border: 1.5px solid transparent;
+  background: var(--cor-superfície);
+  color: var(--cor-texto);
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  transition: background-color var(--duração-controle) var(--curva-suave),
+    border-color var(--duração-controle) var(--curva-suave),
+    color var(--duração-controle) var(--curva-suave),
+    transform var(--duração-controle) var(--curva-suave),
+    box-shadow var(--duração-controle) var(--curva-suave);
+}
+.botão .ícone { width: 20px; height: 20px; }
+.botão:active { transform: scale(0.97); }
+.botão:disabled,
+.botão[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.botão-primário {
+  background: var(--cor-ação);
+  color: var(--cor-sobre-ação);
+  box-shadow: var(--sombra-p);
+}
+.botão-primário:hover { background: var(--cor-ação-hover); }
+.botão-primário:active:not(:disabled) { background: var(--cor-ação-pressionada); }
+
+.botão-secundário {
+  background: transparent;
+  border-color: var(--cor-divisória);
+  color: var(--cor-texto);
+}
+.botão-secundário:hover {
+  background: color-mix(in srgb, var(--cor-texto) 6%, transparent);
+  border-color: var(--cor-texto-suave);
+}
+.botão-secundário:active:not(:disabled) {
+  background: color-mix(in srgb, var(--cor-texto) 12%, transparent);
+}
+
+.botão-fantasma {
+  background: transparent;
+  color: var(--cor-texto-destaque);
+  padding-inline: var(--espaço-3);
+}
+.botão-fantasma:hover {
+  background: color-mix(in srgb, var(--cor-destaque-500) 12%, transparent);
+}
+.botão-fantasma:active:not(:disabled) {
+  background: color-mix(in srgb, var(--cor-destaque-500) 20%, transparent);
+}
+
+.botão-perigo {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--cor-erro) 45%, transparent);
+  color: var(--cor-erro);
+}
+.botão-perigo:hover {
+  background: var(--cor-erro-fundo);
+}
+.botão-perigo:active:not(:disabled) {
+  background: color-mix(in srgb, var(--cor-erro) 18%, transparent);
+}
+.botão-perigo.botão-primário {
+  background: var(--cor-erro);
+  color: var(--cor-neutra-100);
+  border-color: transparent;
+}
+.botão-perigo.botão-primário:hover {
+  background: color-mix(in srgb, var(--cor-erro) 85%, black);
+}
+
+.botão-ícone {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: var(--raio-pílula);
+}
+
+.botão-bloco {
+  display: flex;
+  width: 100%;
+}
+
+/* Botão de texto simples (ex.: "Preferências de privacidade" no rodapé) */
+.botão-link {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.botão-link:hover { color: var(--cor-texto-destaque); }

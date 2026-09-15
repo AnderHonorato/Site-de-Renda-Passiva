@@ -1,0 +1,37 @@
+@charset "UTF-8";
+/* Sincronizado de compartilhado/estilos/componentes/menu-mais.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/menu-mais.css
+   <dialog id="menu-mais" class="diálogo menu-mais"> — reaproveita a base de
+   diálogo.css (folha inferior no celular, modal centrado no computador) e
+   adiciona só a lista de links. */
+
+.menu-mais-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-mais-link {
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-3);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--espaço-2) var(--espaço-3);
+  border-radius: var(--raio-m);
+  color: var(--cor-texto);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: left;
+  transition: background-color var(--duração-controle) var(--curva-suave);
+}
+.menu-mais-link .ícone {
+  color: var(--cor-texto-destaque);
+}
+.menu-mais-link:hover {
+  background: color-mix(in srgb, var(--cor-texto) 6%, transparent);
+}
+.menu-mais-link:active {
+  background: color-mix(in srgb, var(--cor-texto) 12%, transparent);
+}

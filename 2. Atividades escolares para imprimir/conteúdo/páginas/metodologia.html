@@ -1,0 +1,56 @@
+<!--página
+{
+  "título": "Metodologia",
+  "descrição": "Como cada gerador do Folha Pronta funciona, as fórmulas usadas e os limites de cada ferramenta, sem alegar alinhamento pedagógico.",
+  "destaque": "lilás",
+  "navegação": "mais",
+  "tipo": "institucional"
+}
+-->
+<article class="texto-editorial" aria-labelledby="metodologia-título">
+  <p class="sobretítulo">Como cada gerador funciona</p>
+  <h1 id="metodologia-título">Metodologia</h1>
+  <p>O Folha Pronta gera folhas de atividade a partir de regras explícitas e de um gerador de números pseudoaleatório <strong>determinístico</strong> (mulberry32): a mesma semente numérica, com as mesmas opções, sempre produz exatamente a mesma folha. Isso permite reabrir uma atividade salva ou repetir uma folha para outra turma sem perder o gabarito.</p>
+
+  <h2>Operações matemáticas</h2>
+  <p>Cada exercício é resolvido por uma função de cálculo independente da tela (<code>resolverOperaçãoMatemática</code>), usada tanto para gerar a folha quanto para conferir o gabarito. Isso garante que a resposta impressa é sempre a resposta matematicamente correta.</p>
+  <ul>
+    <li><strong>Divisão exata:</strong> o dividendo é montado a partir de um quociente e um divisor sorteados (dividendo = quociente × divisor). O resultado nunca é arredondado.</li>
+    <li><strong>Divisão com resto:</strong> dividendo e divisor são sorteados livremente; o resto pode ser zero ou não.</li>
+    <li><strong>Reserva (soma) e empréstimo (subtração):</strong> comparamos os números dígito a dígito, na mesma posição — uma aproximação didática comum, não uma definição oficial de currículo. Quando a combinação pedida (por exemplo, "sempre com reserva" dentro de um intervalo muito estreito) não é possível em até 200 tentativas por exercício, a folha avisa quantos exercícios não conseguiram satisfazer a regra à risca.</li>
+    <li><strong>Resultado negativo:</strong> só aparece na subtração, e só quando a opção "permitir resultado negativo" está marcada.</li>
+  </ul>
+  <h3>Exemplo conferido</h3>
+  <p>Semente 123, adição, intervalo de 0 a 50: o primeiro exercício sorteado é sempre o mesmo par de números, e a soma bate com <code>resolverOperaçãoMatemática</code> — conferido no teste automatizado do projeto.</p>
+
+  <h2>Tabuada</h2>
+  <p>Cada item é fator × multiplicador, resolvido pela mesma função de multiplicação. Na ordem "sequencial", os itens seguem o fator e depois o multiplicador, do menor ao maior. Na ordem "embaralhada", a mesma lista de itens é embaralhada com a semente (Fisher–Yates), preservando todos os itens — nenhum é adicionado nem removido, só a ordem muda.</p>
+
+  <h2>Caça-palavras</h2>
+  <p>Cada palavra tenta até 300 posições aleatórias (direção e ponto de partida) dentro da grade, sempre verificando se a posição cabe e se não conflita com letras já colocadas. Palavras maiores que a grade nas direções escolhidas são recusadas antes mesmo de tentar. Se uma palavra esgota as 300 tentativas sem encaixar, ela entra na lista de "não coube", com o motivo explicado — nunca é omitida em silêncio. Palavras maiores entram primeiro, o que ajuda a encaixar a lista inteira em grades mais apertadas.</p>
+  <p>O modo de acentos (manter ou remover) é aplicado à palavra antes de colocá-la na grade. No modo "manter", a lista exibida mostra a palavra como foi digitada. No modo "remover", a lista mostra a forma exatamente como está na grade (sem acentos, ex.: CORACAO) e, quando essa forma difere do que foi digitado, acrescenta a forma original entre parênteses (ex.: CORACAO (coração)) — assim grade, lista exibida, impressão, PDF e gabarito sempre correspondem letra a letra, sem normalização silenciosa.</p>
+
+  <h2>Caligrafia</h2>
+  <p>A folha usa três linhas-guia por renglão: a linha de base, a x-altura (tracejada) e a linha ascendente, calculadas a partir do tamanho de letra escolhido. A primeira repetição de cada linha é o modelo, em traço sólido; as repetições seguintes vêm em contorno claro, pensadas para serem cobertas a lápis. A fonte usada no PDF (Helvetica, embutida no leitor de PDF) não tem uma variante pontilhada — por isso optamos pelo contorno/cinza claro, em vez de simular um pontilhado que ficaria ilegível impresso.</p>
+  <p>Se o texto, o tamanho da letra e a quantidade de linhas pedidos não couberem numa página A4, o gerador reduz a quantidade real de linhas ou repetições e avisa — nunca estica o texto para fora da margem.</p>
+
+  <h2>Bingo de números</h2>
+  <p>Cada cartela sorteia, sem repetição, tantos números do intervalo escolhido quanto casas tiver a grade (9, 16 ou 25). A configuração é recusada antes do sorteio se o intervalo tiver menos números do que casas. Entre as cartelas, cada conjunto de números sorteado é comparado com os já usados (não importa a ordem dentro da cartela): se todas as combinações possíveis já saíram e não é possível gerar mais uma cartela diferente das anteriores, o gerador avisa em vez de repetir uma cartela em silêncio. A lista de sorteio (para o organizador chamar os números) é um embaralhamento separado de todo o intervalo, independente de quais números caíram em alguma cartela.</p>
+
+  <h2>Papel quadriculado</h2>
+  <p>O PDF é desenhado em milímetros reais — a mesma unidade do arquivo final, sem qualquer escala aplicada — então 1 mm no cálculo é 1 mm impresso. Um quadrado de calibração de 10 mm (sempre 10 mm, qualquer que seja o tamanho da quadrícula escolhida) fica no canto da grade, para conferir com uma régua depois de imprimir. Se a impressão do navegador ou do leitor de PDF aplicar algum ajuste de escala ("ajustar à página"), o quadrado deixa de medir 10 mm — por isso a orientação de imprimir em 100%.</p>
+
+  <h2>Flashcards</h2>
+  <p>Cada folha de frente tem até 8 cartões, em 2 colunas por 4 linhas; a folha de verso correspondente usa a mesma grade. Com a opção de espelhar o verso marcada, a ordem das colunas de cada linha do verso sai invertida em relação à frente (mantendo a linha) — assim, ao imprimir a frente e o verso nos dois lados do mesmo papel e virar pela borda longa, cada resposta cai atrás da pergunta certa. Colunas sem um par (última linha incompleta) mantêm a posição vazia nos dois lados, para o espelhamento continuar correto mesmo com quantidades ímpares de pares.</p>
+
+  <h2>Planejador de estudos</h2>
+  <p>A mesma sequência de disciplinas e pausas se repete em todos os dias escolhidos: uma pausa aparece entre cada duas sessões, nunca depois da última sessão do dia. O total "de estudo" soma só os minutos das sessões; o total "com pausas" soma sessões e pausas — os dois números são sempre exibidos separados, nunca misturados em um só, para não inflar silenciosamente o tempo de estudo. O planejador não avalia conteúdo, não mede dificuldade e não promete aprovação ou qualquer resultado escolar: é apenas uma distribuição do tempo informado.</p>
+
+  <h2>Limites</h2>
+  <ul>
+    <li>Este gerador não afirma alinhamento com a BNCC nem garante eficácia pedagógica: é uma ferramenta de apoio à preparação de material, não um currículo.</li>
+    <li>As regras de reserva/empréstimo e a estratégia do caça-palavras são simplificações didáticas, documentadas aqui, não normas oficiais.</li>
+    <li>O planejador de estudos distribui tempo, não garante aprendizado nem aprovação; use-o como organização, não como previsão de resultado.</li>
+    <li>Nenhum dado de aluno é enviado a servidor, anúncio ou medição: os campos de texto ficam no navegador, e o PDF é gerado localmente.</li>
+  </ul>
+</article>

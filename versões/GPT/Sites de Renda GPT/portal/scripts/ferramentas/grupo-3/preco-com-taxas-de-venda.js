@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("preco-com-taxas-de-venda",12,"Preço com taxas de venda","Inclua comissão, tarifa fixa e margem no preço.","Preço = (custo + tarifa fixa) / (1 − (comissão + margem)/100). Margem sobre receita; percentuais somados precisam ser menores que 100%.",[h.numero('custo','Custo (R$)',60),h.numero('taxa','Comissão (%)',10,0,100),h.numero('margem','Margem sobre venda (%)',20,0,100),h.numero('fixa','Tarifa fixa (R$)',0)],async d=>{const c=h.n(d.custo),t=h.n(d.taxa),m=h.n(d.margem),f=h.n(d.fixa);if(t+m>=100)throw new Error('Comissão e margem devem somar menos de 100%.');const p=(c+f)/(1-(t+m)/100);return h.resultado(h.reais(p),'Preço matemático: '+h.f(p,6),'Comissão: '+h.reais(p*t/100),'Contribuição após custos e taxas: '+h.reais(p*m/100),'Arredondamento comercial sugerido para cima: '+h.reais(Math.ceil((p-1e-10)*100)/100));});
+

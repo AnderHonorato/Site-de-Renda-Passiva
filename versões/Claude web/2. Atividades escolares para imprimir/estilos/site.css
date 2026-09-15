@@ -1,0 +1,2876 @@
+@charset "UTF-8";
+/* Gerado por npm run gerar a partir de estilos/comum e estilos/produto. Não editar. */
+
+/* ===== comum/fontes.css ===== */
+/* Sincronizado de compartilhado/estilos/fontes.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/fontes.css
+   Declarações @font-face das três famílias do sistema visual Organic.
+   Arquivos WOFF2 hospedados localmente (Fontsource); nenhuma rede externa é usada.
+   Caminho final (após concatenação em estilos/site.css de cada produto):
+   estilos/site.css → ../recursos/fontes/<arquivo> */
+
+/* Caprasimo — títulos e botões */
+@font-face {
+  font-family: "Caprasimo";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../recursos/fontes/caprasimo-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Caprasimo";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../recursos/fontes/caprasimo-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Figtree — texto de corpo, em três pesos */
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../recursos/fontes/figtree-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../recursos/fontes/figtree-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../recursos/fontes/figtree-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../recursos/fontes/figtree-latin-ext-600-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../recursos/fontes/figtree-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../recursos/fontes/figtree-latin-ext-700-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Caveat 700 — logotipo manuscrito (segunda palavra em --cor-texto-destaque via .logotipo em) */
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../recursos/fontes/caveat-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../recursos/fontes/caveat-latin-ext-700-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ===== comum/base.css ===== */
+/* Sincronizado de compartilhado/estilos/base.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/base.css
+   Valores padrão de TODAS as variáveis do contrato (seção 6) — paleta Organic
+   traduzida — mais o reset e a fundação de layout. `estilos/produto/cores.css`
+   (gerado por produto) é concatenado depois e sobrescreve as rampas e as
+   variáveis semânticas de cor com a paleta própria do produto. */
+
+:root {
+  /* ---- Rampas neutras (base do sistema Organic, OKLCH → hex) ---- */
+  --cor-neutra-100: #f9f4ed;
+  --cor-neutra-200: #eee7db;
+  --cor-neutra-300: #dcd3c4;
+  --cor-neutra-400: #c0b6a5;
+  --cor-neutra-500: #a19786;
+  --cor-neutra-600: #82796a;
+  --cor-neutra-700: #645c50;
+  --cor-neutra-800: #474238;
+  --cor-neutra-900: #2e2b25;
+
+  /* ---- Rampa de destaque padrão (terracota) — cada produto sobrescreve ---- */
+  --cor-destaque-100: #fff2eb;
+  --cor-destaque-200: #ffe1d0;
+  --cor-destaque-300: #ffc6a5;
+  --cor-destaque-400: #f6a06b;
+  --cor-destaque-500: #d67f48;
+  --cor-destaque-600: #b2622d;
+  --cor-destaque-700: #8c491a;
+  --cor-destaque-800: #643312;
+  --cor-destaque-900: #402310;
+
+  /* ---- Rampa secundária padrão (sálvia) — cada produto sobrescreve ---- */
+  --cor-secundária-100: #f0fae1;
+  --cor-secundária-200: #e1eecc;
+  --cor-secundária-300: #ccdbb2;
+  --cor-secundária-400: #aebf92;
+  --cor-secundária-500: #8fa073;
+  --cor-secundária-600: #728157;
+  --cor-secundária-700: #56633f;
+  --cor-secundária-800: #3d472b;
+  --cor-secundária-900: #272e1b;
+
+  /* ---- Superfícies ---- */
+  --cor-fundo: #f5ead8;
+  --cor-superfície: #ebddc5;
+  --cor-superfície-elevada: var(--cor-neutra-100);
+  --cor-texto: #201e1d;
+  --cor-texto-suave: color-mix(in srgb, var(--cor-texto) 62%, transparent);
+  --cor-divisória: color-mix(in srgb, var(--cor-texto) 16%, transparent);
+  /* Branco puro fixo (não segue o tema): moldura do código QR — precisa do
+     maior contraste possível com o preto do código para garantir leitura,
+     em qualquer paleta de produto. */
+  --cor-superfície-qr: #ffffff;
+
+  /* ---- Semânticas de ação/destaque ---- */
+  --cor-ação: var(--cor-destaque-700);
+  --cor-ação-hover: var(--cor-destaque-800);
+  --cor-ação-pressionada: var(--cor-destaque-900);
+  --cor-sobre-ação: var(--cor-neutra-100);
+  --cor-texto-destaque: var(--cor-destaque-700);
+  --cor-foco: var(--cor-destaque-700);
+
+  /* ---- Semânticas de estado ---- */
+  --cor-sucesso: #4b5a34;
+  --cor-sucesso-fundo: var(--cor-secundária-100);
+  --cor-erro: #a3271f;
+  --cor-erro-fundo: #fbeae8;
+  --cor-aviso: #7a4a00;
+  --cor-aviso-fundo: #fbf0dc;
+
+  /* ---- Tipografia ---- */
+  --fonte-título: "Caprasimo", "Segoe UI", system-ui, sans-serif;
+  --fonte-corpo: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --fonte-marca: "Caveat", "Segoe UI", cursive, system-ui, sans-serif;
+
+  /* ---- Espaço (escala 1–8) ---- */
+  --espaço-1: 4px;
+  --espaço-2: 8px;
+  --espaço-3: 12px;
+  --espaço-4: 16px;
+  --espaço-5: 20px;
+  --espaço-6: 28px;
+  --espaço-7: 36px;
+  --espaço-8: 44px;
+
+  /* ---- Raios ---- */
+  --raio-p: 8px;
+  --raio-m: 16px;
+  --raio-g: 28px;
+  --raio-pílula: 999px;
+
+  /* ---- Sombras (tingidas de tinta, ajustadas ao fundo claro) ---- */
+  --sombra-p: 0 1px 3px color-mix(in srgb, var(--cor-neutra-900) 16%, transparent);
+  --sombra-m: 0 4px 14px color-mix(in srgb, var(--cor-neutra-900) 18%, transparent);
+  --sombra-g: 0 14px 38px color-mix(in srgb, var(--cor-neutra-900) 24%, transparent);
+
+  /* ---- Camadas (z-index) ---- */
+  --camada-cabeçalho: 20;
+  --camada-navegação: 40;
+  --camada-ação: 45;
+  --camada-consentimento: 60;
+  --camada-mensagens: 70;
+  --camada-diálogo: 80;
+
+  /* ---- Medidas fixas de interface ---- */
+  --altura-navegação-inferior: 64px;
+  --altura-ação-contextual: 64px;
+
+  /* ---- Movimento ---- */
+  --duração-controle: 160ms;
+  --duração-painel: 260ms;
+  --curva-suave: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ══════════════════════════════ Reset ══════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-corpo);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 var(--espaço-2);
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p { margin: 0 0 var(--espaço-3); }
+p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+img, svg { display: block; max-width: 100%; }
+
+a {
+  color: var(--cor-texto-destaque);
+  text-underline-offset: 3px;
+}
+a:hover { text-decoration-thickness: 2px; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+button:disabled { cursor: not-allowed; }
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2.5px solid var(--cor-foco);
+  outline-offset: 2px;
+  border-radius: var(--raio-p);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--cor-destaque-500) 32%, transparent);
+}
+
+[hidden] { display: none !important; }
+
+/* Símbolo da marca (espiral) herda a cor do texto ao redor por padrão */
+.marca-símbolo {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  color: var(--cor-texto-destaque);
+}
+
+/* Ícone padrão do sprite compartilhado */
+.ícone {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* ══════════════════════════════ Acessibilidade ══════════════════════════════ */
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pular-para-conteúdo {
+  position: fixed;
+  top: var(--espaço-2);
+  left: var(--espaço-2);
+  z-index: calc(var(--camada-diálogo) + 10);
+  padding: var(--espaço-2) var(--espaço-4);
+  background: var(--cor-superfície-elevada);
+  color: var(--cor-texto);
+  border-radius: var(--raio-m);
+  box-shadow: var(--sombra-m);
+  transform: translateY(-140%);
+  transition: transform var(--duração-controle) var(--curva-suave);
+}
+.pular-para-conteúdo:focus-visible {
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════ Fundação de layout ══════════════════════════════
+   Reserva o espaço da navegação inferior e da ação contextual no celular, para
+   que nada da página fique escondido atrás delas. `configurarTecladoVirtual`
+   adiciona `tem-ação-contextual` ao <html> quando a página carrega uma
+   `.ação-contextual`; a regra `:has()` cobre navegadores modernos e a classe
+   cobre o fallback (e o estado com teclado virtual aberto). */
+
+.conteúdo {
+  display: block;
+  min-height: 1px;
+}
+
+@media (max-width: 767.98px) {
+  body {
+    padding-bottom: calc(var(--altura-navegação-inferior) + env(safe-area-inset-bottom, 0px));
+  }
+  body:has(.ação-contextual),
+  html.tem-ação-contextual body {
+    padding-bottom: calc(var(--altura-navegação-inferior) + var(--altura-ação-contextual) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Largura de leitura confortável para o miolo da página. Seções que precisam
+   de fundo de sangria total (.herói, .faixa) estouram esta margem com a
+   técnica de largura total (ver herói-e-faixas.css) em vez de exigir um
+   contêiner extra no marcado. */
+.conteúdo {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--espaço-5) var(--espaço-4) var(--espaço-8);
+}
+
+@media (min-width: 768px) {
+  .conteúdo {
+    padding: var(--espaço-7) var(--espaço-6) var(--espaço-8);
+  }
+}
+
+/* ===== produto/cores.css ===== */
+/* Gerado por npm run preparar (compartilhado/ferramentas-da-raiz/gerar-paleta.mjs) a partir de
+   configurações/identidade-visual.json. Não editar à mão.
+   Contrastes WCAG verificados:
+   principal: ação #3c639e sobre-ação 5.55:1; texto-destaque 5.51:1 no fundo e 4.81:1 na superfície
+   texto 15.10:1; texto suave 5.44:1
+   céu: ação #2267a0 sobre-ação 5.48:1; texto-destaque 5.43:1 no fundo e 4.75:1 na superfície
+   girassol: ação #855900 sobre-ação 5.63:1; texto-destaque 5.58:1 no fundo e 4.87:1 na superfície
+   lápis: ação #a0421c sobre-ação 5.86:1; texto-destaque 5.81:1 no fundo e 5.07:1 na superfície
+   folha: ação #277448 sobre-ação 5.24:1; texto-destaque 5.19:1 no fundo e 4.54:1 na superfície
+   lilás: ação #6a549b sobre-ação 5.75:1; texto-destaque 5.70:1 no fundo e 4.98:1 na superfície */
+
+:root {
+  --cor-fundo: #f7f4ec;
+  --cor-superfície: #e9e5db;
+  --cor-superfície-elevada: #fefcf8;
+  --cor-texto: #211e1a;
+  --cor-texto-suave: #67635a;
+  --cor-sobre-ação: #f6f5f3;
+  --cor-divisória: color-mix(in srgb, #211e1a 16%, transparent);
+  --cor-neutra-100: #f6f5f3;
+  --cor-neutra-200: #e9e8e4;
+  --cor-neutra-300: #d7d4ce;
+  --cor-neutra-400: #bebab1;
+  --cor-neutra-500: #a39e94;
+  --cor-neutra-600: #858076;
+  --cor-neutra-700: #67635a;
+  --cor-neutra-800: #4e4a42;
+  --cor-neutra-900: #35322d;
+  --cor-destaque-100: #eff6ff;
+  --cor-destaque-200: #dae9ff;
+  --cor-destaque-300: #bcd6fd;
+  --cor-destaque-400: #98bcf3;
+  --cor-destaque-500: #75a0df;
+  --cor-destaque-600: #5581c2;
+  --cor-destaque-700: #3c639e;
+  --cor-destaque-800: #294a7b;
+  --cor-destaque-900: #1a3357;
+  --cor-secundária-100: #fff3e2;
+  --cor-secundária-200: #fbe5c4;
+  --cor-secundária-300: #f2ce99;
+  --cor-secundária-400: #e4b15f;
+  --cor-secundária-500: #cd921f;
+  --cor-secundária-600: #a97500;
+  --cor-secundária-700: #845a00;
+  --cor-secundária-800: #644300;
+  --cor-secundária-900: #452e00;
+  --cor-ação: #3c639e;
+  --cor-ação-hover: #294a7b;
+  --cor-ação-pressionada: #1a3357;
+  --cor-texto-destaque: #3c639e;
+  --cor-foco: #5581c2;
+}
+
+html[data-destaque="céu"] {
+  --cor-destaque-100: #eef6ff;
+  --cor-destaque-200: #d6ebff;
+  --cor-destaque-300: #b3d9fe;
+  --cor-destaque-400: #89c0f5;
+  --cor-destaque-500: #62a4e1;
+  --cor-destaque-600: #3e85c3;
+  --cor-destaque-700: #2267a0;
+  --cor-destaque-800: #134d7c;
+  --cor-destaque-900: #073558;
+  --cor-ação: #2267a0;
+  --cor-ação-hover: #134d7c;
+  --cor-ação-pressionada: #073558;
+  --cor-texto-destaque: #2267a0;
+  --cor-foco: #3e85c3;
+}
+
+html[data-destaque="girassol"] {
+  --cor-destaque-100: #fff3e4;
+  --cor-destaque-200: #fbe4c6;
+  --cor-destaque-300: #f2ce9c;
+  --cor-destaque-400: #e4b065;
+  --cor-destaque-500: #cd912c;
+  --cor-destaque-600: #ab7400;
+  --cor-destaque-700: #855900;
+  --cor-destaque-800: #654200;
+  --cor-destaque-900: #462d00;
+  --cor-ação: #855900;
+  --cor-ação-hover: #654200;
+  --cor-ação-pressionada: #462d00;
+  --cor-texto-destaque: #855900;
+  --cor-foco: #ab7400;
+}
+
+html[data-destaque="lápis"] {
+  --cor-destaque-100: #fff2ed;
+  --cor-destaque-200: #ffe0d5;
+  --cor-destaque-300: #ffc5b0;
+  --cor-destaque-400: #f9a182;
+  --cor-destaque-500: #e47f5a;
+  --cor-destaque-600: #c55e37;
+  --cor-destaque-700: #a0421c;
+  --cor-destaque-800: #7c2e0d;
+  --cor-destaque-900: #581d04;
+  --cor-ação: #a0421c;
+  --cor-ação-hover: #7c2e0d;
+  --cor-ação-pressionada: #581d04;
+  --cor-texto-destaque: #a0421c;
+  --cor-foco: #c55e37;
+}
+
+html[data-destaque="folha"] {
+  --cor-destaque-100: #eafaef;
+  --cor-destaque-200: #d6f0dd;
+  --cor-destaque-300: #b6e0c3;
+  --cor-destaque-400: #8dcba2;
+  --cor-destaque-500: #67b182;
+  --cor-destaque-600: #439363;
+  --cor-destaque-700: #277448;
+  --cor-destaque-800: #175834;
+  --cor-destaque-900: #0a3d22;
+  --cor-ação: #277448;
+  --cor-ação-hover: #175834;
+  --cor-ação-pressionada: #0a3d22;
+  --cor-texto-destaque: #277448;
+  --cor-foco: #277448;
+}
+
+html[data-destaque="lilás"] {
+  --cor-destaque-100: #f6f3ff;
+  --cor-destaque-200: #eae3ff;
+  --cor-destaque-300: #d8ccfa;
+  --cor-destaque-400: #c0aef0;
+  --cor-destaque-500: #a590db;
+  --cor-destaque-600: #8770bd;
+  --cor-destaque-700: #6a549b;
+  --cor-destaque-800: #503e78;
+  --cor-destaque-900: #372955;
+  --cor-ação: #6a549b;
+  --cor-ação-hover: #503e78;
+  --cor-ação-pressionada: #372955;
+  --cor-texto-destaque: #6a549b;
+  --cor-foco: #8770bd;
+}
+
+/* ===== comum/tipografia.css ===== */
+/* Sincronizado de compartilhado/estilos/tipografia.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/tipografia.css
+   Escala tipográfica: Caprasimo nos títulos e botões, Figtree no corpo. */
+
+h1 { font-size: clamp(28px, 4.6vw, 44px); }
+h2 { font-size: clamp(23px, 3.2vw, 32px); }
+h3 { font-size: clamp(19px, 2.4vw, 24px); }
+h4 { font-size: 18px; }
+h5 { font-size: 16px; font-family: var(--fonte-corpo); font-weight: 700; letter-spacing: normal; }
+h6 {
+  font-size: 12px;
+  font-family: var(--fonte-corpo);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+}
+
+.texto-guia {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  font-weight: 700;
+}
+
+.texto-introdução {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--cor-texto-suave);
+  max-width: 62ch;
+}
+
+.texto-pequeno {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+
+.texto-forte { font-weight: 700; }
+
+.logotipo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaço-2);
+  font-family: var(--fonte-marca);
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+.logotipo em {
+  font-style: normal;
+  color: var(--cor-texto-destaque);
+}
+
+.valor-em-destaque {
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  color: var(--cor-texto-destaque);
+}
+
+code, .código {
+  font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+  font-size: 0.92em;
+  background: var(--cor-superfície);
+  padding: 0.1em 0.4em;
+  border-radius: var(--raio-p);
+}
+
+.medida-de-leitura {
+  max-width: 68ch;
+}
+
+/* ===== comum/movimentos.css ===== */
+/* Sincronizado de compartilhado/estilos/movimentos.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/movimentos.css
+   Transições e animações comuns. Só `transform`/`opacity`. Cada componente
+   usa estas variáveis e classes em vez de inventar durações soltas. */
+
+@keyframes entrada-com-subida {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes entrada-suave {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes escala-de-entrada {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes subir-do-rodapé {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+.entra-com-subida {
+  animation: entrada-com-subida var(--duração-painel) var(--curva-suave) both;
+}
+
+.entra-suave {
+  animation: entrada-suave var(--duração-controle) var(--curva-suave) both;
+}
+
+.gira {
+  animation: girar 900ms linear infinite;
+}
+
+.transição-controle {
+  transition-duration: var(--duração-controle);
+  transition-timing-function: var(--curva-suave);
+}
+
+.transição-painel {
+  transition-duration: var(--duração-painel);
+  transition-timing-function: var(--curva-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== comum/utilitários.css ===== */
+/* Sincronizado de compartilhado/estilos/utilitários.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/utilitários.css
+   Classes auxiliares de layout e visibilidade responsiva. `.não-imprimir` e
+   `.somente-impressão` não têm efeito aqui — a troca acontece em impressão.css;
+   nesta folha elas só existem para não ficarem "undefined" antes da impressão.
+
+   `[hidden]` sempre vence: base.css define `[hidden] { display: none !important; }`,
+   e `!important` prevalece sobre qualquer `display` sem `!important` — inclusive
+   `.consentimento`, `.faixa-de-apoio` e `.espaço-publicitário` — não importa a
+   ordem de concatenação ou a especificidade da regra do componente. Por isso
+   nenhum componente precisa repetir essa regra por conta própria. */
+
+.somente-celular { display: revert; }
+.somente-computador { display: none; }
+
+@media (min-width: 768px) {
+  .somente-celular { display: none; }
+  .somente-computador { display: revert; }
+}
+
+.não-imprimir { display: revert; }
+.somente-impressão { display: none; }
+
+/* Empilhamento vertical com espaço consistente */
+.empilhar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+.empilhar-pequeno { gap: var(--espaço-2); }
+.empilhar-grande { gap: var(--espaço-6); }
+
+/* Agrupamento horizontal que quebra linha em telas estreitas */
+.agrupar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaço-3);
+}
+
+/* Linha com um item "empurrado" para a direita */
+.espalhar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaço-3);
+}
+
+.centralizar-texto { text-align: center; }
+
+.largura-total { width: 100%; }
+
+.sem-margem { margin: 0; }
+
+.itens-esticados { align-items: stretch; }
+
+/* Ícone inline menor que o padrão de 22px (ex.: junto de um link de rodapé) */
+.ícone-pequeno { width: 16px; height: 16px; }
+
+/* Espaçamento superior avulso, quando o ritmo vertical do bloco anterior não
+   é suficiente (ex.: rótulo de uma variação de estado numa página de
+   documentação de componentes). */
+.espaço-acima-2 { margin-top: var(--espaço-2); }
+.espaço-acima-3 { margin-top: var(--espaço-3); }
+.espaço-acima-5 { margin-top: var(--espaço-5); }
+
+.rolagem-horizontal-contida {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* Impede que a página inteira role para os lados — cinto de segurança global */
+html, body {
+  overflow-x: hidden;
+}
+
+/* ===== comum/componentes/ação-contextual.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/ação-contextual.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/ação-contextual.css
+   <div class="ação-contextual"> — a ação principal da ferramenta (Calcular,
+   Gerar, Imprimir…) ao alcance do polegar no celular, presa acima da
+   navegação inferior. No computador ela some e o formulário mostra o botão
+   equivalente marcado com .somente-computador. */
+
+.ação-contextual {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--altura-navegação-inferior) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--camada-ação);
+  display: flex;
+  align-items: center;
+  min-height: var(--altura-ação-contextual);
+  padding: var(--espaço-2) var(--espaço-4);
+  background: color-mix(in srgb, var(--cor-superfície-elevada) 96%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid var(--cor-divisória);
+  box-shadow: var(--sombra-m);
+  transition: bottom var(--duração-painel) var(--curva-suave);
+}
+
+.ação-contextual .botão {
+  flex: 1;
+}
+
+/* Teclado virtual aberto: a navegação inferior recolhe (translateY 100%) —
+   a ação desce para a borda real da viewport visível e continua acessível. */
+html.teclado-aberto .ação-contextual {
+  bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .ação-contextual {
+    display: none;
+  }
+}
+
+/* ===== comum/componentes/apoio-voluntário.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/apoio-voluntário.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/apoio-voluntário.css
+   Faixa de apoio (antes do rodapé, em todas as páginas) e a página de apoio
+   por Pix (valores rápidos, revisão, QR e copia-e-cola). */
+
+/* — faixa de apoio: discreta, em linha, nunca flutuante — */
+.faixa-de-apoio {
+  position: relative;
+  max-width: 1180px;
+  margin: var(--espaço-6) auto;
+  padding: var(--espaço-5) var(--espaço-6);
+  background: var(--cor-secundária-100);
+  border-radius: var(--raio-g);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaço-4);
+}
+@media (max-width: 767.98px) {
+  .faixa-de-apoio {
+    margin: var(--espaço-5) var(--espaço-4);
+    padding: var(--espaço-4);
+    flex-direction: column;
+    align-items: flex-start;
+    padding-right: var(--espaço-7);
+  }
+}
+
+.faixa-de-apoio-texto {
+  flex: 1 1 260px;
+}
+.faixa-de-apoio-título {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+.faixa-de-apoio-texto p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--cor-texto-suave);
+}
+
+.faixa-de-apoio-valores {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaço-2);
+}
+
+.faixa-de-apoio-dispensar {
+  position: absolute;
+  top: var(--espaço-3);
+  right: var(--espaço-3);
+  background: color-mix(in srgb, var(--cor-secundária-100) 40%, var(--cor-superfície-elevada) 60%);
+}
+
+/* — página de apoio — */
+.apoio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-6);
+  max-width: 640px;
+}
+
+.valores-rápidos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaço-2);
+}
+
+.opção-de-valor {
+  min-width: 88px;
+  justify-content: center;
+  font-family: var(--fonte-título);
+  font-size: 16px;
+}
+
+.apoio-revisão {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espaço-3);
+  padding: var(--espaço-5);
+  background: var(--cor-destaque-100);
+  border-radius: var(--raio-m);
+}
+.apoio-revisão dt {
+  font-size: 13px;
+  color: var(--cor-destaque-800);
+}
+.apoio-revisão dd {
+  margin: 0;
+  font-family: var(--fonte-título);
+  font-size: 30px;
+  color: var(--cor-destaque-800);
+}
+
+.apoio-qr {
+  align-self: flex-start;
+  padding: var(--espaço-4);
+  background: var(--cor-superfície-qr);
+  border-radius: var(--raio-m);
+  box-shadow: var(--sombra-p);
+  line-height: 0;
+}
+.apoio-qr img,
+.apoio-qr svg,
+.apoio-qr canvas {
+  width: min(240px, 60vw);
+  height: min(240px, 60vw);
+}
+
+.apoio-copia-e-cola {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+}
+
+.apoio-código {
+  display: block;
+  width: 100%;
+  min-height: 90px;
+  padding: var(--espaço-3) var(--espaço-4);
+  font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+  font-size: 12.5px;
+  line-height: 1.5;
+  word-break: break-all;
+  color: var(--cor-texto);
+  background: var(--cor-superfície);
+  border: 1.5px solid var(--cor-divisória);
+  border-radius: var(--raio-m);
+  resize: none;
+}
+.apoio-código:focus-visible {
+  border-color: var(--cor-foco);
+}
+
+/* ===== comum/componentes/avisos.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/avisos.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/avisos.css */
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaço-3);
+  padding: var(--espaço-4);
+  border-radius: var(--raio-m);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.aviso .ícone {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+.aviso p { margin: 0; }
+.aviso p + p { margin-top: var(--espaço-1); }
+
+.aviso-informação {
+  background: var(--cor-secundária-100);
+  color: var(--cor-secundária-800);
+}
+
+.aviso-sucesso {
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+}
+
+.aviso-erro {
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+}
+
+.aviso-alerta {
+  background: var(--cor-aviso-fundo);
+  color: var(--cor-aviso);
+}
+
+/* ===== comum/componentes/botões.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/botões.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/botões.css */
+
+.botão {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaço-2);
+  min-height: 44px;
+  padding: var(--espaço-2) var(--espaço-5);
+  border-radius: var(--raio-pílula);
+  border: 1.5px solid transparent;
+  background: var(--cor-superfície);
+  color: var(--cor-texto);
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  transition: background-color var(--duração-controle) var(--curva-suave),
+    border-color var(--duração-controle) var(--curva-suave),
+    color var(--duração-controle) var(--curva-suave),
+    transform var(--duração-controle) var(--curva-suave),
+    box-shadow var(--duração-controle) var(--curva-suave);
+}
+.botão .ícone { width: 20px; height: 20px; }
+.botão:active { transform: scale(0.97); }
+.botão:disabled,
+.botão[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.botão-primário {
+  background: var(--cor-ação);
+  color: var(--cor-sobre-ação);
+  box-shadow: var(--sombra-p);
+}
+.botão-primário:hover { background: var(--cor-ação-hover); }
+.botão-primário:active:not(:disabled) { background: var(--cor-ação-pressionada); }
+
+.botão-secundário {
+  background: transparent;
+  border-color: var(--cor-divisória);
+  color: var(--cor-texto);
+}
+.botão-secundário:hover {
+  background: color-mix(in srgb, var(--cor-texto) 6%, transparent);
+  border-color: var(--cor-texto-suave);
+}
+.botão-secundário:active:not(:disabled) {
+  background: color-mix(in srgb, var(--cor-texto) 12%, transparent);
+}
+
+.botão-fantasma {
+  background: transparent;
+  color: var(--cor-texto-destaque);
+  padding-inline: var(--espaço-3);
+}
+.botão-fantasma:hover {
+  background: color-mix(in srgb, var(--cor-destaque-500) 12%, transparent);
+}
+.botão-fantasma:active:not(:disabled) {
+  background: color-mix(in srgb, var(--cor-destaque-500) 20%, transparent);
+}
+
+.botão-perigo {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--cor-erro) 45%, transparent);
+  color: var(--cor-erro);
+}
+.botão-perigo:hover {
+  background: var(--cor-erro-fundo);
+}
+.botão-perigo:active:not(:disabled) {
+  background: color-mix(in srgb, var(--cor-erro) 18%, transparent);
+}
+.botão-perigo.botão-primário {
+  background: var(--cor-erro);
+  color: var(--cor-neutra-100);
+  border-color: transparent;
+}
+.botão-perigo.botão-primário:hover {
+  background: color-mix(in srgb, var(--cor-erro) 85%, black);
+}
+
+.botão-ícone {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: var(--raio-pílula);
+}
+
+.botão-bloco {
+  display: flex;
+  width: 100%;
+}
+
+/* Botão de texto simples (ex.: "Preferências de privacidade" no rodapé) */
+.botão-link {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.botão-link:hover { color: var(--cor-texto-destaque); }
+
+/* ===== comum/componentes/cabeçalho.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/cabeçalho.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/cabeçalho.css
+   No celular a navegação real mora na barra inferior e no menu Mais; o
+   cabeçalho vira uma barra compacta só com a marca. No computador ele mostra
+   a navegação completa e o botão de apoiar. */
+
+.cabeçalho {
+  position: sticky;
+  top: 0;
+  z-index: var(--camada-cabeçalho);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaço-4);
+  padding: var(--espaço-3) var(--espaço-4);
+  background: color-mix(in srgb, var(--cor-fundo) 92%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--cor-divisória);
+}
+
+.cabeçalho-marca {
+  font-size: 20px;
+}
+.cabeçalho-marca .marca-símbolo {
+  width: 24px;
+  height: 24px;
+}
+
+.cabeçalho-navegação {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .cabeçalho {
+    justify-content: flex-start;
+    padding: var(--espaço-4) var(--espaço-6);
+  }
+  .cabeçalho-marca { font-size: 22px; margin-right: auto; }
+  .cabeçalho-navegação {
+    display: flex;
+    align-items: center;
+    gap: var(--espaço-1);
+  }
+}
+
+.cabeçalho-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--espaço-2) var(--espaço-4);
+  border-radius: var(--raio-pílula);
+  color: var(--cor-texto);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color var(--duração-controle) var(--curva-suave),
+    color var(--duração-controle) var(--curva-suave);
+}
+.cabeçalho-link:hover {
+  background: color-mix(in srgb, var(--cor-texto) 6%, transparent);
+}
+.cabeçalho-link[aria-current="page"] {
+  color: var(--cor-texto-destaque);
+  background: var(--cor-destaque-100);
+}
+
+.cabeçalho-apoiar {
+  margin-left: var(--espaço-2);
+}
+
+/* ===== comum/componentes/cartões.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/cartões.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/cartões.css
+   Cartões pontuais (ex.: dentro de um resultado ou lista curta) — o sistema
+   evita usar grade de cartões como estrutura principal das páginas. */
+
+.cartão {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  padding: var(--espaço-5);
+  background: var(--cor-superfície);
+  border-radius: var(--raio-g);
+}
+.cartão-elevado {
+  background: var(--cor-superfície-elevada);
+  box-shadow: var(--sombra-m);
+}
+
+.cartão-título {
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  font-size: 19px;
+  margin: 0;
+}
+
+.cartão-legenda {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--cor-texto-destaque);
+}
+
+.cartão-corpo {
+  margin: 0;
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+  flex: 1;
+}
+
+.cartão-rodapé {
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-2);
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+  padding-top: var(--espaço-2);
+  border-top: 1px solid var(--cor-divisória);
+}
+
+/* ===== comum/componentes/consentimento.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/consentimento.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/consentimento.css
+   Banner de consentimento (#consentimento) — mostrado via configurarConsentimento().
+   No celular fica acima da navegação inferior e da ação contextual, nunca as
+   cobrindo. No computador é um cartão no canto inferior esquerdo. O diálogo
+   de preferências (#preferências-de-privacidade) usa a base de diálogo.css. */
+
+.consentimento {
+  position: fixed;
+  left: var(--espaço-3);
+  right: var(--espaço-3);
+  bottom: calc(var(--altura-navegação-inferior) + var(--espaço-3) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--camada-consentimento);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-3);
+  padding: var(--espaço-4);
+  background: var(--cor-superfície-elevada);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra-g);
+}
+
+body:has(.ação-contextual) .consentimento {
+  bottom: calc(var(--altura-navegação-inferior) + var(--altura-ação-contextual) + var(--espaço-3) + env(safe-area-inset-bottom, 0px));
+}
+
+/* Teclado virtual aberto: a barra inferior recolhe (ver navegação-inferior.css)
+   e a ação contextual desce para bottom: 0 (ver ação-contextual.css) — o
+   banner acompanha para continuar visível sem cobrir nada. */
+html.teclado-aberto .consentimento {
+  bottom: calc(var(--altura-ação-contextual) + var(--espaço-3) + env(safe-area-inset-bottom, 0px));
+}
+html.teclado-aberto body:not(:has(.ação-contextual)) .consentimento {
+  bottom: calc(var(--espaço-3) + env(safe-area-inset-bottom, 0px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .consentimento {
+    animation: entrada-com-subida var(--duração-painel) var(--curva-suave) both;
+  }
+}
+
+.consentimento-título {
+  margin: 0 0 var(--espaço-1);
+  font-size: 17px;
+}
+
+.consentimento-texto p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+.consentimento-texto a { color: var(--cor-texto-destaque); }
+
+.consentimento-ações {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaço-2);
+}
+.consentimento-ações .botão { flex: 1 1 auto; }
+
+@media (min-width: 768px) {
+  .consentimento {
+    left: var(--espaço-5);
+    right: auto;
+    bottom: var(--espaço-5);
+    width: min(460px, calc(100vw - var(--espaço-5) * 2));
+  }
+  body:has(.ação-contextual) .consentimento,
+  html.teclado-aberto .consentimento,
+  html.teclado-aberto body:not(:has(.ação-contextual)) .consentimento {
+    bottom: var(--espaço-5);
+  }
+  .consentimento-ações .botão { flex: 0 0 auto; }
+}
+
+/* — linhas de opção dentro do diálogo de preferências — */
+.opção-de-privacidade {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-1);
+  padding: var(--espaço-3) 0;
+  border-bottom: 1px solid var(--cor-divisória);
+}
+.opção-de-privacidade:last-of-type { border-bottom: 0; }
+.opção-de-privacidade .interruptor {
+  order: -1;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  width: 100%;
+}
+.opção-de-privacidade-título {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-2);
+}
+
+/* ===== comum/componentes/diálogo.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/diálogo.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/diálogo.css
+   <dialog class="diálogo">, aberto/fechado por interface/abrir-diálogo.js e
+   fechar-diálogo.js. Centralizado no computador; folha inferior no celular. */
+
+dialog.diálogo {
+  border: 0;
+  margin: auto;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  max-height: min(88vh, 720px);
+  z-index: var(--camada-diálogo);
+}
+
+dialog.diálogo::backdrop {
+  background: color-mix(in srgb, var(--cor-neutra-900) 55%, transparent);
+}
+
+@starting-style {
+  dialog.diálogo[open] { opacity: 0; }
+  dialog.diálogo[open]::backdrop { opacity: 0; }
+}
+dialog.diálogo::backdrop {
+  transition: opacity var(--duração-painel) var(--curva-suave);
+}
+
+/* Importante: o `display` de `dialog.diálogo` só pode ser definido quando
+   ele está [open] — regra de autor sempre vence a UA stylesheet
+   (`dialog:not([open]) { display: none }`) não importa a especificidade,
+   porque a origem "autor" tem prioridade sobre a origem "user-agent" no
+   cascade. Sem o `[open]` aqui, o diálogo ficaria visível mesmo fechado. */
+.diálogo-formulário {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+
+dialog.diálogo[open] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+
+dialog.diálogo {
+  width: min(92vw, 480px);
+  padding: var(--espaço-5);
+  background: var(--cor-superfície-elevada);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra-g);
+  overflow-y: auto;
+  opacity: 1;
+  transition: opacity var(--duração-painel) var(--curva-suave),
+    transform var(--duração-painel) var(--curva-suave);
+}
+
+.diálogo-cabeçalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaço-3);
+}
+
+.diálogo-título {
+  margin: 0;
+  font-size: 21px;
+}
+
+.diálogo-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-3);
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+}
+.diálogo-corpo p:last-child { margin-bottom: 0; }
+
+.diálogo-ações {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--espaço-2);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog.diálogo[open] {
+    animation: escala-de-entrada var(--duração-painel) var(--curva-suave) both;
+  }
+}
+
+/* — celular: folha inferior — */
+@media (max-width: 767.98px) {
+  dialog.diálogo {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    max-height: 86vh;
+    margin: 0;
+    border-radius: var(--raio-g) var(--raio-g) 0 0;
+    padding: var(--espaço-4) var(--espaço-4) calc(var(--espaço-5) + env(safe-area-inset-bottom, 0px));
+  }
+  .diálogo-ações {
+    flex-direction: column-reverse;
+  }
+  .diálogo-ações .botão {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767.98px) and (prefers-reduced-motion: no-preference) {
+  dialog.diálogo[open] {
+    animation: subir-do-rodapé var(--duração-painel) var(--curva-suave) both;
+  }
+}
+
+/* Alça visual de folha inferior, decorativa */
+@media (max-width: 767.98px) {
+  dialog.diálogo::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto calc(var(--espaço-2) * -1);
+    border-radius: var(--raio-pílula);
+    background: var(--cor-divisória);
+  }
+}
+
+/* ===== comum/componentes/espaço-publicitário.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/espaço-publicitário.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/espaço-publicitário.css
+   Reserva de espaço para anúncios — só aparece com consentimento e
+   configuração completas (html.publicidade-ativa, ligado por
+   publicidade/carregar-anúncios.js). Nunca fixo, nunca junto da navegação ou
+   da ação contextual; a reserva evita CLS quando o anúncio real carrega. */
+
+.espaço-publicitário {
+  display: none;
+}
+
+html.publicidade-ativa .espaço-publicitário {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 100px;
+  margin: var(--espaço-6) 0;
+  padding: var(--espaço-4);
+  background: var(--cor-superfície);
+  border: 1.5px dashed var(--cor-divisória);
+  border-radius: var(--raio-m);
+  overflow: hidden;
+}
+
+html.publicidade-ativa .espaço-publicitário::before {
+  content: "Publicidade";
+  position: absolute;
+  top: var(--espaço-2);
+  left: var(--espaço-2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  background: var(--cor-superfície-elevada);
+  padding: 2px 8px;
+  border-radius: var(--raio-pílula);
+}
+
+@media (min-width: 768px) {
+  html.publicidade-ativa .espaço-publicitário {
+    min-height: 120px;
+  }
+}
+
+/* ===== comum/componentes/etiquetas.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/etiquetas.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/etiquetas.css */
+
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaço-1);
+  padding: 4px var(--espaço-3);
+  border-radius: var(--raio-pílula);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  background: var(--cor-superfície);
+  color: var(--cor-texto);
+}
+.etiqueta .ícone { width: 14px; height: 14px; }
+
+.etiqueta-destaque {
+  background: var(--cor-destaque-100);
+  color: var(--cor-destaque-800);
+}
+
+.etiqueta-secundária {
+  background: var(--cor-secundária-100);
+  color: var(--cor-secundária-800);
+}
+
+.etiqueta-contorno {
+  background: transparent;
+  border: 1.5px solid var(--cor-texto-destaque);
+  color: var(--cor-texto-destaque);
+}
+
+/* ===== comum/componentes/ferramenta.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/ferramenta.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/ferramenta.css
+   Estrutura de uma página de ferramenta: cabeçalho editorial, formulário e
+   resultado lado a lado no computador, empilhados no celular. */
+
+.ferramenta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-6);
+}
+
+.ferramenta-cabeçalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  max-width: 68ch;
+}
+
+.ferramenta-corpo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espaço-5);
+  align-items: start;
+}
+
+@media (min-width: 860px) {
+  .ferramenta-corpo {
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: var(--espaço-6);
+  }
+}
+
+.ferramenta-formulário {
+  padding: var(--espaço-5);
+  background: var(--cor-superfície);
+  border-radius: var(--raio-g);
+}
+.ferramenta-formulário .campo:last-of-type { margin-bottom: 0; }
+
+.ferramenta-resultado {
+  padding: var(--espaço-5);
+  background: var(--cor-superfície-elevada);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+
+/* Premissas assumidas pelo cálculo, listadas junto do resultado */
+.premissas {
+  margin: 0;
+  padding: var(--espaço-3) var(--espaço-4);
+  background: var(--cor-superfície);
+  border-radius: var(--raio-m);
+  font-size: 12.5px;
+  color: var(--cor-texto-suave);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.premissas li {
+  display: flex;
+  gap: 6px;
+}
+.premissas li::before {
+  content: "•";
+  color: var(--cor-texto-destaque);
+}
+
+/* ===== comum/componentes/formulário.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/formulário.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/formulário.css */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--espaço-4);
+}
+.campo > label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+/* Campo curto dentro de uma linha (ex.: quantidade ao lado do nome do item
+   numa .linha-editável) */
+.campo-estreito {
+  flex: 0 1 120px;
+  max-width: 120px;
+}
+
+.entrada,
+.seleção,
+.área-de-texto {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--espaço-2) var(--espaço-4);
+  font-family: var(--fonte-corpo);
+  font-size: 16px;
+  color: var(--cor-texto);
+  background: var(--cor-superfície-elevada);
+  border: 1.5px solid var(--cor-divisória);
+  border-radius: var(--raio-pílula);
+  caret-color: var(--cor-texto-destaque);
+  transition: border-color var(--duração-controle) var(--curva-suave),
+    box-shadow var(--duração-controle) var(--curva-suave);
+}
+.área-de-texto {
+  border-radius: var(--raio-m);
+  min-height: 110px;
+  resize: vertical;
+}
+.seleção {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23645c50' stroke-width='2.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--espaço-4) center;
+  background-size: 18px;
+  padding-right: calc(var(--espaço-4) * 2 + 18px);
+}
+
+.entrada:hover,
+.seleção:hover,
+.área-de-texto:hover {
+  border-color: color-mix(in srgb, var(--cor-texto) 40%, transparent);
+}
+.entrada:focus-visible,
+.seleção:focus-visible,
+.área-de-texto:focus-visible {
+  border-color: var(--cor-foco);
+  outline-offset: 0;
+}
+.entrada::placeholder,
+.área-de-texto::placeholder {
+  color: var(--cor-texto-suave);
+}
+.entrada:disabled,
+.seleção:disabled,
+.área-de-texto:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.entrada[aria-invalid="true"],
+.seleção[aria-invalid="true"],
+.área-de-texto[aria-invalid="true"] {
+  border-color: var(--cor-erro);
+}
+.entrada[aria-invalid="true"]:focus-visible,
+.seleção[aria-invalid="true"]:focus-visible,
+.área-de-texto[aria-invalid="true"]:focus-visible {
+  outline-color: var(--cor-erro);
+}
+
+.campo-ajuda {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  margin: 0;
+}
+
+.campo-erro {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cor-erro);
+  margin: 0;
+}
+.campo-erro::before {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  background-color: var(--cor-erro);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.campo-com-unidade {
+  display: flex;
+  align-items: stretch;
+}
+.campo-com-unidade .entrada {
+  border-top-right-radius: var(--raio-p);
+  border-bottom-right-radius: var(--raio-p);
+  border-right: 0;
+}
+.campo-com-unidade .unidade {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--espaço-4);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cor-texto-suave);
+  background: var(--cor-superfície);
+  border: 1.5px solid var(--cor-divisória);
+  border-left: 0;
+  border-top-right-radius: var(--raio-pílula);
+  border-bottom-right-radius: var(--raio-pílula);
+}
+
+.grupo-de-campos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 var(--espaço-4);
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--espaço-4);
+}
+.grupo-de-campos > legend {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: var(--espaço-2);
+  padding: 0;
+}
+@media (min-width: 560px) {
+  .grupo-de-campos.grupo-de-campos-duas-colunas {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* — opções em pílula (rádio/caixa disfarçados) — */
+.opções {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaço-2);
+}
+.opção {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaço-2);
+  min-height: 44px;
+  padding: var(--espaço-2) var(--espaço-4);
+  border-radius: var(--raio-pílula);
+  border: 1.5px solid var(--cor-divisória);
+  background: var(--cor-superfície-elevada);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color var(--duração-controle) var(--curva-suave),
+    border-color var(--duração-controle) var(--curva-suave),
+    color var(--duração-controle) var(--curva-suave);
+}
+.opção input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.opção:hover { border-color: var(--cor-texto-destaque); }
+.opção:has(input:checked) {
+  background: var(--cor-destaque-100);
+  border-color: var(--cor-texto-destaque);
+  color: var(--cor-destaque-800);
+  font-weight: 700;
+}
+.opção:has(input:focus-visible) {
+  outline: 2.5px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+/* — controle segmentado — */
+.segmentado {
+  display: inline-flex;
+  padding: 3px;
+  gap: 3px;
+  background: var(--cor-superfície);
+  border-radius: var(--raio-pílula);
+}
+.segmentado .opção {
+  border: 0;
+  background: transparent;
+  min-height: 38px;
+}
+.segmentado .opção:has(input:checked) {
+  background: var(--cor-superfície-elevada);
+  box-shadow: var(--sombra-p);
+}
+
+/* — interruptor (switch) — */
+.interruptor {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaço-3);
+  cursor: pointer;
+  min-height: 44px;
+}
+.interruptor input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.interruptor-trilho {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 26px;
+  border-radius: var(--raio-pílula);
+  background: var(--cor-neutra-400);
+  transition: background-color var(--duração-controle) var(--curva-suave);
+}
+.interruptor-trilho::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--cor-neutra-100);
+  box-shadow: var(--sombra-p);
+  transition: transform var(--duração-controle) var(--curva-suave);
+}
+.interruptor input:checked + .interruptor-trilho {
+  background: var(--cor-ação);
+}
+.interruptor input:checked + .interruptor-trilho::before {
+  transform: translateX(18px);
+}
+.interruptor input:focus-visible + .interruptor-trilho {
+  outline: 2.5px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+.interruptor input:disabled + .interruptor-trilho {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ações-do-formulário {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaço-3);
+  margin-top: var(--espaço-5);
+}
+
+/* ===== comum/componentes/herói-e-faixas.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/herói-e-faixas.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/herói-e-faixas.css
+   Faixas de largura total (o herói e as faixas suaves "estouram" a margem de
+   .conteúdo com a técnica de sangria total, sem exigir um contêiner extra no
+   marcado do fragmento) mais o círculo decorativo em espiral do herói. */
+
+.herói,
+.faixa {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.herói-conteúdo,
+.faixa-conteúdo {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--espaço-7) var(--espaço-4);
+}
+@media (min-width: 768px) {
+  .herói-conteúdo,
+  .faixa-conteúdo {
+    padding: var(--espaço-8) var(--espaço-6);
+  }
+}
+
+.herói {
+  background: var(--cor-superfície);
+  border-radius: 0 0 var(--raio-g) var(--raio-g);
+}
+
+.herói-conteúdo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espaço-6);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .herói-conteúdo {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+.herói-texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-3);
+  max-width: 46ch;
+}
+.herói-texto h1 { margin: 0; }
+.herói-texto p { margin: 0; color: var(--cor-texto-suave); font-size: 16px; }
+
+.herói-ações {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaço-2);
+  margin-top: var(--espaço-2);
+}
+
+/* Espiral decorativa grande e translúcida, ancorada no canto — puramente
+   ornamental (aria-hidden no marcado que a usar). */
+.herói::before {
+  content: "";
+  position: absolute;
+  left: -18%;
+  bottom: -28%;
+  width: min(70vw, 460px);
+  height: min(70vw, 460px);
+  background-color: var(--cor-destaque-400);
+  opacity: 0.16;
+  pointer-events: none;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M%2051.60%2050.00%20L%2051.89%2050.23%20L%2052.15%2050.53%20L%2052.36%2050.89%20L%2052.50%2051.30%20L%2052.58%2051.77%20L%2052.58%2052.27%20L%2052.50%2052.79%20L%2052.32%2053.32%20L%2052.05%2053.84%20L%2051.69%2054.34%20L%2051.23%2054.81%20L%2050.69%2055.23%20L%2050.06%2055.58%20L%2049.36%2055.85%20L%2048.59%2056.03%20L%2047.78%2056.10%20L%2046.92%2056.07%20L%2046.05%2055.91%20L%2045.17%2055.63%20L%2044.31%2055.21%20L%2043.48%2054.67%20L%2042.69%2054.01%20L%2041.98%2053.22%20L%2041.36%2052.31%20L%2040.84%2051.31%20L%2040.45%2050.21%20L%2040.19%2049.03%20L%2040.07%2047.80%20L%2040.12%2046.52%20L%2040.33%2045.23%20L%2040.72%2043.94%20L%2041.28%2042.67%20L%2042.01%2041.46%20L%2042.90%2040.32%20L%2043.96%2039.27%20L%2045.18%2038.34%20L%2046.52%2037.55%20L%2047.99%2036.93%20L%2049.56%2036.47%20L%2051.21%2036.21%20L%2052.92%2036.16%20L%2054.65%2036.32%20L%2056.39%2036.70%20L%2058.10%2037.30%20L%2059.76%2038.12%20L%2061.33%2039.16%20L%2062.79%2040.41%20L%2064.11%2041.86%20L%2065.26%2043.49%20L%2066.23%2045.28%20L%2066.98%2047.20%20L%2067.50%2049.24%20L%2067.77%2051.37%20L%2067.77%2053.54%20L%2067.51%2055.74%20L%2066.98%2057.93%20L%2066.17%2060.06%20L%2065.08%2062.12%20L%2063.74%2064.06%20L%2062.14%2065.84%20L%2060.31%2067.44%20L%2058.28%2068.83%20L%2056.05%2069.98%20L%2053.67%2070.86%20L%2051.16%2071.46%20L%2048.56%2071.75%20L%2045.91%2071.72%20L%2043.25%2071.37%20L%2040.61%2070.68%20L%2038.05%2069.67%20L%2035.59%2068.34%20L%2033.28%2066.70%20L%2031.16%2064.77%20L%2029.27%2062.56%20L%2027.63%2060.12%20L%2026.29%2057.46%20L%2025.27%2054.62%20L%2024.59%2051.65%20L%2024.27%2048.58%20L%2024.32%2045.45%20L%2024.76%2042.32%20L%2025.58%2039.23%20L%2026.78%2036.23%20L%2028.35%2033.36%20L%2030.28%2030.68%20L%2032.54%2028.22%20L%2035.11%2026.02%20L%2037.96%2024.14%20L%2041.05%2022.59%20L%2044.34%2021.42%20L%2047.78%2020.64%20L%2051.32%2020.28%20L%2054.92%2020.35%20L%2058.52%2020.86%20L%2062.07%2021.80%20L%2065.51%2023.19%20L%2068.79%2024.99%20L%2071.86%2027.20%20L%2074.67%2029.79%20L%2077.17%2032.72%20L%2079.32%2035.97%20L%2081.08%2039.48%20L%2082.42%2043.21%20L%2083.30%2047.12%20L%2083.71%2051.13%20L%2083.64%2055.21%20L%2083.06%2059.28%20L%2082.00%2063.29%20L%2080.44%2067.17%20L%2078.42%2070.88%20L%2075.94%2074.34%20L%2073.03%2077.50%20L%2069.74%2080.32%20L%2066.10%2082.74%20L%2062.17%2084.72%20L%2057.99%2086.22%20L%2053.63%2087.23%20L%2049.14%2087.70%20L%2044.59%2087.63%20L%2040.04%2087.00%20L%2035.57%2085.83%20L%2031.24%2084.11%20L%2027.11%2081.87%20L%2023.25%2079.13%20L%2019.73%2075.91%20L%2016.59%2072.27%20L%2013.89%2068.25%20L%2011.68%2063.90%20L%209.99%2059.28%20L%208.86%2054.46%20L%208.32%2049.50%20L%208.37%2044.47%20L%209.04%2039.45%20L%2010.31%2034.51%20L%2012.18%2029.73%20L%2014.63%2025.17%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M%2051.60%2050.00%20L%2051.89%2050.23%20L%2052.15%2050.53%20L%2052.36%2050.89%20L%2052.50%2051.30%20L%2052.58%2051.77%20L%2052.58%2052.27%20L%2052.50%2052.79%20L%2052.32%2053.32%20L%2052.05%2053.84%20L%2051.69%2054.34%20L%2051.23%2054.81%20L%2050.69%2055.23%20L%2050.06%2055.58%20L%2049.36%2055.85%20L%2048.59%2056.03%20L%2047.78%2056.10%20L%2046.92%2056.07%20L%2046.05%2055.91%20L%2045.17%2055.63%20L%2044.31%2055.21%20L%2043.48%2054.67%20L%2042.69%2054.01%20L%2041.98%2053.22%20L%2041.36%2052.31%20L%2040.84%2051.31%20L%2040.45%2050.21%20L%2040.19%2049.03%20L%2040.07%2047.80%20L%2040.12%2046.52%20L%2040.33%2045.23%20L%2040.72%2043.94%20L%2041.28%2042.67%20L%2042.01%2041.46%20L%2042.90%2040.32%20L%2043.96%2039.27%20L%2045.18%2038.34%20L%2046.52%2037.55%20L%2047.99%2036.93%20L%2049.56%2036.47%20L%2051.21%2036.21%20L%2052.92%2036.16%20L%2054.65%2036.32%20L%2056.39%2036.70%20L%2058.10%2037.30%20L%2059.76%2038.12%20L%2061.33%2039.16%20L%2062.79%2040.41%20L%2064.11%2041.86%20L%2065.26%2043.49%20L%2066.23%2045.28%20L%2066.98%2047.20%20L%2067.50%2049.24%20L%2067.77%2051.37%20L%2067.77%2053.54%20L%2067.51%2055.74%20L%2066.98%2057.93%20L%2066.17%2060.06%20L%2065.08%2062.12%20L%2063.74%2064.06%20L%2062.14%2065.84%20L%2060.31%2067.44%20L%2058.28%2068.83%20L%2056.05%2069.98%20L%2053.67%2070.86%20L%2051.16%2071.46%20L%2048.56%2071.75%20L%2045.91%2071.72%20L%2043.25%2071.37%20L%2040.61%2070.68%20L%2038.05%2069.67%20L%2035.59%2068.34%20L%2033.28%2066.70%20L%2031.16%2064.77%20L%2029.27%2062.56%20L%2027.63%2060.12%20L%2026.29%2057.46%20L%2025.27%2054.62%20L%2024.59%2051.65%20L%2024.27%2048.58%20L%2024.32%2045.45%20L%2024.76%2042.32%20L%2025.58%2039.23%20L%2026.78%2036.23%20L%2028.35%2033.36%20L%2030.28%2030.68%20L%2032.54%2028.22%20L%2035.11%2026.02%20L%2037.96%2024.14%20L%2041.05%2022.59%20L%2044.34%2021.42%20L%2047.78%2020.64%20L%2051.32%2020.28%20L%2054.92%2020.35%20L%2058.52%2020.86%20L%2062.07%2021.80%20L%2065.51%2023.19%20L%2068.79%2024.99%20L%2071.86%2027.20%20L%2074.67%2029.79%20L%2077.17%2032.72%20L%2079.32%2035.97%20L%2081.08%2039.48%20L%2082.42%2043.21%20L%2083.30%2047.12%20L%2083.71%2051.13%20L%2083.64%2055.21%20L%2083.06%2059.28%20L%2082.00%2063.29%20L%2080.44%2067.17%20L%2078.42%2070.88%20L%2075.94%2074.34%20L%2073.03%2077.50%20L%2069.74%2080.32%20L%2066.10%2082.74%20L%2062.17%2084.72%20L%2057.99%2086.22%20L%2053.63%2087.23%20L%2049.14%2087.70%20L%2044.59%2087.63%20L%2040.04%2087.00%20L%2035.57%2085.83%20L%2031.24%2084.11%20L%2027.11%2081.87%20L%2023.25%2079.13%20L%2019.73%2075.91%20L%2016.59%2072.27%20L%2013.89%2068.25%20L%2011.68%2063.90%20L%209.99%2059.28%20L%208.86%2054.46%20L%208.32%2049.50%20L%208.37%2044.47%20L%209.04%2039.45%20L%2010.31%2034.51%20L%2012.18%2029.73%20L%2014.63%2025.17%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* — faixas suaves (chamadas de atenção, ex.: apoio) — */
+.faixa-suave {
+  background: var(--cor-secundária-100);
+}
+.faixa-suave .faixa-conteúdo {
+  padding-top: var(--espaço-6);
+  padding-bottom: var(--espaço-6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaço-4);
+}
+
+/* ===== comum/componentes/linhas-editáveis.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/linhas-editáveis.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/linhas-editáveis.css
+   Listas dinâmicas dentro de um formulário (ex.: ingredientes, itens de uma
+   lista de compras) — cada linha tem seus campos e um botão de remover. */
+
+.linhas-editáveis {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  margin-bottom: var(--espaço-4);
+}
+
+.linha-editável {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--espaço-2);
+  padding: var(--espaço-2);
+  border-radius: var(--raio-m);
+  transition: opacity var(--duração-controle) var(--curva-suave),
+    transform var(--duração-controle) var(--curva-suave);
+}
+.linha-editável .campo {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+.linha-editável .botão-ícone {
+  flex: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .linha-editável {
+    animation: entrada-com-subida var(--duração-controle) var(--curva-suave) both;
+  }
+}
+
+.linha-editável[data-saindo] {
+  opacity: 0;
+  transform: translateX(12px);
+}
+
+.linhas-editáveis-adicionar {
+  align-self: flex-start;
+}
+
+@media (max-width: 480px) {
+  .linha-editável {
+    flex-wrap: wrap;
+  }
+  .linha-editável .campo {
+    flex-basis: 100%;
+  }
+}
+
+/* ===== comum/componentes/lista-de-ferramentas.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/lista-de-ferramentas.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/lista-de-ferramentas.css
+   Lista editorial de ferramentas/guias — a alternativa preferida a uma grade
+   de cartões quadrados repetidos como estrutura principal da página. */
+
+.lista-de-ferramentas {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-de-ferramenta {
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-4);
+  padding: var(--espaço-4) var(--espaço-3);
+  border-radius: var(--raio-m);
+  border-bottom: 1px solid var(--cor-divisória);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--duração-controle) var(--curva-suave);
+}
+.lista-de-ferramentas > .item-de-ferramenta:last-child {
+  border-bottom: 0;
+}
+.item-de-ferramenta:hover {
+  background: color-mix(in srgb, var(--cor-texto) 5%, transparent);
+}
+
+.item-de-ferramenta-ícone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--cor-destaque-100);
+  color: var(--cor-destaque-800);
+}
+
+.item-de-ferramenta-texto {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.item-de-ferramenta-título {
+  margin: 0;
+  font-size: 16px;
+  font-family: var(--fonte-corpo);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+.item-de-ferramenta-descrição {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--cor-texto-suave);
+}
+
+.item-de-ferramenta-seta {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--cor-texto-suave);
+  transition: transform var(--duração-controle) var(--curva-suave);
+}
+.item-de-ferramenta:hover .item-de-ferramenta-seta {
+  transform: translateX(3px);
+  color: var(--cor-texto-destaque);
+}
+
+/* ===== comum/componentes/menu-mais.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/menu-mais.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/menu-mais.css
+   <dialog id="menu-mais" class="diálogo menu-mais"> — reaproveita a base de
+   diálogo.css (folha inferior no celular, modal centrado no computador) e
+   adiciona só a lista de links. */
+
+.menu-mais-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-mais-link {
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-3);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--espaço-2) var(--espaço-3);
+  border-radius: var(--raio-m);
+  color: var(--cor-texto);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: left;
+  transition: background-color var(--duração-controle) var(--curva-suave);
+}
+.menu-mais-link .ícone {
+  color: var(--cor-texto-destaque);
+}
+.menu-mais-link:hover {
+  background: color-mix(in srgb, var(--cor-texto) 6%, transparent);
+}
+.menu-mais-link:active {
+  background: color-mix(in srgb, var(--cor-texto) 12%, transparent);
+}
+
+/* ===== comum/componentes/navegação-inferior.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/navegação-inferior.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/navegação-inferior.css
+   Barra fixa de 5 destinos no celular — o app fica com cara de aplicativo.
+   Some no computador, onde a navegação completa já está no cabeçalho. */
+
+.navegação-inferior {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--camada-navegação);
+  height: calc(var(--altura-navegação-inferior) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--cor-superfície-elevada);
+  border-top: 1px solid var(--cor-divisória);
+  box-shadow: var(--sombra-m);
+  transition: transform var(--duração-painel) var(--curva-suave);
+}
+
+/* Recolhe temporariamente quando o teclado virtual está aberto, para não
+   disputar espaço com o campo em foco; configurarTecladoVirtual() controla a
+   classe no <html>. */
+html.teclado-aberto .navegação-inferior {
+  transform: translateY(100%);
+}
+
+.navegação-inferior-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 44px;
+  padding: var(--espaço-1) 2px;
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  border: 0;
+  background: none;
+}
+.navegação-inferior-item .ícone {
+  width: 22px;
+  height: 22px;
+  transition: transform var(--duração-controle) var(--curva-suave);
+}
+.navegação-inferior-item[aria-current="page"],
+.navegação-inferior-item[data-ativo] {
+  color: var(--cor-texto-destaque);
+}
+.navegação-inferior-item[aria-current="page"] .ícone,
+.navegação-inferior-item[data-ativo] .ícone {
+  transform: translateY(-2px);
+}
+.navegação-inferior-item:active .ícone {
+  transform: scale(0.9);
+}
+
+@media (min-width: 768px) {
+  .navegação-inferior {
+    display: none;
+  }
+}
+
+/* ===== comum/componentes/notificações.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/notificações.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/notificações.css
+   Região de mensagens (`.região-de-mensagens[role="status"]`), preenchida por
+   interface/exibir-mensagem.js. No topo no celular, canto inferior direito no
+   computador — nunca no mesmo canto do consentimento. */
+
+.região-de-mensagens {
+  position: fixed;
+  z-index: var(--camada-mensagens);
+  top: calc(env(safe-area-inset-top, 0px) + var(--espaço-3));
+  left: var(--espaço-3);
+  right: var(--espaço-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .região-de-mensagens {
+    top: auto;
+    left: auto;
+    bottom: var(--espaço-5);
+    right: var(--espaço-5);
+    width: min(360px, calc(100vw - var(--espaço-5) * 2));
+    align-items: flex-end;
+  }
+}
+
+.mensagem {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaço-2);
+  width: 100%;
+  padding: var(--espaço-3) var(--espaço-4);
+  border-radius: var(--raio-m);
+  background: var(--cor-superfície-elevada);
+  box-shadow: var(--sombra-m);
+  font-size: 14px;
+  line-height: 1.4;
+  border-left: 4px solid var(--cor-texto-destaque);
+}
+.mensagem .ícone {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+.mensagem p { margin: 0; }
+
+.mensagem-sucesso { border-left-color: var(--cor-sucesso); }
+.mensagem-sucesso .ícone { color: var(--cor-sucesso); }
+
+.mensagem-erro { border-left-color: var(--cor-erro); }
+.mensagem-erro .ícone { color: var(--cor-erro); }
+
+.mensagem-informação { border-left-color: var(--cor-secundária-700); }
+.mensagem-informação .ícone { color: var(--cor-secundária-700); }
+
+.mensagem-aviso { border-left-color: var(--cor-aviso); }
+.mensagem-aviso .ícone { color: var(--cor-aviso); }
+
+.mensagem-fechar {
+  margin-left: auto;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  color: var(--cor-texto-suave);
+}
+.mensagem-fechar .ícone { width: 16px; height: 16px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .mensagem {
+    animation: entrada-com-subida var(--duração-controle) var(--curva-suave) both;
+  }
+}
+
+.mensagem[data-saindo] {
+  animation: entrada-suave var(--duração-controle) var(--curva-suave) reverse both;
+}
+
+/* ===== comum/componentes/orçamento.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/orçamento.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/orçamento.css
+   Documento de orçamento com aparência de papel da marca: usado na prévia da
+   ferramenta, na página do cliente (link compartilhado) e na impressão. */
+
+.orçamento-compartilhado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-5);
+  max-width: 820px;
+}
+
+.documento-de-orçamento {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+  padding: 0 0 var(--espaço-5);
+  background: var(--cor-superfície-elevada);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra-m);
+  overflow: hidden;
+}
+.documento-de-orçamento > :not(.orçamento-topo) {
+  margin-inline: var(--espaço-5);
+}
+
+.orçamento-topo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espaço-3);
+  padding: var(--espaço-4) var(--espaço-5);
+  background: var(--cor-ação);
+  color: var(--cor-sobre-ação);
+}
+.orçamento-marca {
+  margin: 0;
+  font-family: var(--fonte-marca);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+}
+.orçamento-rótulo {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.orçamento-título {
+  margin-block: 0;
+  color: var(--cor-texto-destaque);
+}
+
+.orçamento-dados,
+.orçamento-totais {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--espaço-1) var(--espaço-4);
+  margin-block: 0;
+}
+.orçamento-informação {
+  display: contents;
+}
+.orçamento-informação dt {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+.orçamento-informação dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.orçamento-tabela .número {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.orçamento-totais {
+  justify-self: end;
+  align-self: flex-end;
+  min-width: min(100%, 300px);
+  padding: var(--espaço-3) var(--espaço-4);
+  background: var(--cor-destaque-100);
+  border-radius: var(--raio-m);
+}
+.orçamento-totais dd {
+  text-align: right;
+}
+.orçamento-total dt,
+.orçamento-total dd {
+  font-family: var(--fonte-título);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--cor-texto-destaque);
+}
+
+.orçamento-observações {
+  margin-block: 0;
+  white-space: pre-line;
+  font-size: 14px;
+}
+.orçamento-rodapé {
+  margin-block: 0;
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+@media print {
+  .documento-de-orçamento {
+    box-shadow: none;
+    border: 1px solid #999;
+    border-radius: 0;
+    background: #fff;
+  }
+  .orçamento-topo {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+/* ===== comum/componentes/resultado.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/resultado.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/resultado.css */
+
+.resultado-destaque {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--espaço-5);
+  background: var(--cor-destaque-100);
+  border-radius: var(--raio-m);
+}
+.resultado-rótulo {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-destaque-800);
+}
+.resultado-valor {
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  font-size: clamp(28px, 7vw, 40px);
+  line-height: 1.1;
+  color: var(--cor-destaque-800);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .resultado-valor[data-atualizado] {
+    animation: entrada-com-subida var(--duração-controle) var(--curva-suave) both;
+  }
+}
+
+.lista-de-resultado {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--espaço-2) var(--espaço-4);
+  margin: 0;
+}
+.lista-de-resultado dt {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  align-self: center;
+}
+.lista-de-resultado dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+  align-self: center;
+}
+.lista-de-resultado > div {
+  display: contents;
+}
+.lista-de-resultado .linha-com-régua {
+  grid-column: 1 / -1;
+  border-bottom: 1px dashed var(--cor-divisória);
+  height: 0;
+}
+
+.memória-de-cálculo {
+  border-radius: var(--raio-m);
+  background: var(--cor-superfície);
+  padding: var(--espaço-1) var(--espaço-4);
+}
+.memória-de-cálculo summary {
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-2);
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cor-texto);
+  list-style: none;
+}
+.memória-de-cálculo summary::-webkit-details-marker { display: none; }
+.memória-de-cálculo summary::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform var(--duração-controle) var(--curva-suave);
+}
+.memória-de-cálculo[open] summary::after {
+  transform: rotate(180deg);
+}
+.memória-de-cálculo-corpo {
+  padding: 0 0 var(--espaço-3);
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .memória-de-cálculo[open] .memória-de-cálculo-corpo {
+    animation: entrada-suave var(--duração-controle) var(--curva-suave) both;
+  }
+}
+
+.estado-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaço-2);
+  padding: var(--espaço-6) var(--espaço-4);
+  text-align: left;
+  color: var(--cor-texto-suave);
+}
+.estado-vazio .ícone {
+  width: 32px;
+  height: 32px;
+  color: var(--cor-texto-destaque);
+  opacity: 0.7;
+}
+.estado-vazio-título {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cor-texto);
+  font-family: var(--fonte-corpo);
+}
+.estado-vazio p {
+  margin: 0;
+  font-size: 13.5px;
+}
+
+/* ===== comum/componentes/rodapé.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/rodapé.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/rodapé.css */
+
+.rodapé-institucional {
+  margin-top: var(--espaço-8);
+  padding: var(--espaço-7) var(--espaço-4) var(--espaço-6);
+  background: var(--cor-superfície);
+  border-top: 1px solid var(--cor-divisória);
+}
+
+.rodapé-conteúdo {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+
+.rodapé-autoria {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+}
+
+.rodapé-marca {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaço-2);
+  font-size: 19px;
+  margin: 0;
+}
+.rodapé-marca .marca-símbolo { width: 22px; height: 22px; }
+
+.rodapé-criador {
+  margin: 0;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.rodapé-criador a { color: var(--cor-texto); }
+.rodapé-criador a:hover { color: var(--cor-texto-destaque); }
+
+.rodapé-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaço-2) var(--espaço-5);
+}
+.rodapé-links a,
+.rodapé-links .botão-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cor-texto-suave);
+  text-decoration: none;
+}
+.rodapé-links a:hover,
+.rodapé-links .botão-link:hover {
+  color: var(--cor-texto-destaque);
+}
+
+.rodapé-direitos {
+  margin: 0;
+  padding-top: var(--espaço-4);
+  border-top: 1px solid var(--cor-divisória);
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+.rodapé-link-externo {
+  color: inherit;
+}
+
+/* ===== comum/componentes/salvos.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/salvos.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/salvos.css
+   Página "Salvos" — registros guardados localmente (ver
+   armazenamento/configurar-página-de-salvos.js). Quando não há nada salvo,
+   reaproveita `.estado-vazio` de resultado.css. */
+
+.salvos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-6);
+}
+
+.lista-de-salvos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+}
+
+.item-salvo {
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-3);
+  padding: var(--espaço-4);
+  background: var(--cor-superfície);
+  border-radius: var(--raio-m);
+  transition: background-color var(--duração-controle) var(--curva-suave);
+}
+.item-salvo:hover {
+  background: var(--cor-neutra-200);
+}
+
+.item-salvo-texto {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.item-salvo-título {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.item-salvo-meta {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--cor-texto-suave);
+}
+
+.item-salvo-ações {
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-1);
+  flex: none;
+}
+
+@media (max-width: 480px) {
+  .item-salvo {
+    flex-wrap: wrap;
+  }
+  .item-salvo-ações {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* ===== comum/componentes/tabela.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/tabela.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/tabela.css */
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabela caption {
+  text-align: left;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  margin-bottom: var(--espaço-2);
+}
+
+.tabela th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  padding: var(--espaço-3);
+  background: var(--cor-superfície);
+  white-space: nowrap;
+}
+.tabela th:first-child { border-top-left-radius: var(--raio-p); }
+.tabela th:last-child { border-top-right-radius: var(--raio-p); }
+
+.tabela td {
+  padding: var(--espaço-3);
+  border-bottom: 1px solid var(--cor-divisória);
+  vertical-align: middle;
+}
+
+.tabela tbody tr:last-child td { border-bottom: 0; }
+.tabela tbody tr:hover {
+  background: color-mix(in srgb, var(--cor-texto) 4%, transparent);
+}
+
+.tabela td[data-numérico],
+.tabela th[data-numérico] {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Rolagem horizontal contida — a página nunca rola para os lados por causa
+   de uma tabela larga ou molde grande. */
+.tabela-rolável {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  border: 1px solid var(--cor-divisória);
+  border-radius: var(--raio-m);
+}
+.tabela-rolável .tabela {
+  min-width: 480px;
+}
+.tabela-rolável .tabela th,
+.tabela-rolável .tabela td {
+  border-radius: 0;
+}
+
+/* ===== comum/componentes/texto-editorial.css ===== */
+/* Sincronizado de compartilhado/estilos/componentes/texto-editorial.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/texto-editorial.css
+   Tipografia de páginas institucionais longas (metodologia, sobre, política
+   de privacidade, termos de uso). */
+
+.texto-editorial {
+  max-width: 68ch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+
+.texto-editorial h2 {
+  margin-top: var(--espaço-4);
+  font-size: 26px;
+}
+.texto-editorial h3 {
+  font-size: 20px;
+}
+
+.texto-editorial p {
+  margin: 0;
+  font-size: 15.5px;
+}
+
+.texto-editorial ul,
+.texto-editorial ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  padding-left: 1.3em;
+}
+.texto-editorial ul { list-style: disc; }
+.texto-editorial ol { list-style: decimal; }
+.texto-editorial li { font-size: 15.5px; }
+.texto-editorial li::marker { color: var(--cor-texto-destaque); }
+
+.texto-editorial blockquote {
+  margin: 0;
+  padding: var(--espaço-4) var(--espaço-5);
+  background: var(--cor-superfície);
+  border-left: 4px solid var(--cor-texto-destaque);
+  border-radius: 0 var(--raio-m) var(--raio-m) 0;
+  font-style: italic;
+  color: var(--cor-texto-suave);
+}
+
+.texto-editorial figure {
+  margin: 0;
+}
+.texto-editorial figcaption {
+  margin-top: var(--espaço-1);
+  font-size: 12.5px;
+  color: var(--cor-texto-suave);
+}
+
+.texto-editorial-destaque {
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--cor-texto-destaque);
+  line-height: 1.35;
+}
+
+.texto-editorial hr {
+  border: 0;
+  border-top: 1px solid var(--cor-divisória);
+  margin: var(--espaço-2) 0;
+}
+
+/* ===== comum/impressão.css ===== */
+/* Sincronizado de compartilhado/estilos/impressão.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/impressão.css
+   Regras de impressão. Concatenado por último em estilos/site.css.
+   `#fff`/`#000` aqui são deliberados, não variáveis do tema: a seção 6 do
+   contrato exige "texto preto em fundo branco" na impressão — papel e tinta
+   são absolutos, independentes da paleta do produto (que usa color-mix() e
+   transparências que não fazem sentido numa folha impressa). */
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  html, body {
+    overflow-x: visible;
+    background: #fff !important;
+    color: #000 !important;
+    padding-bottom: 0 !important;
+  }
+
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  a { color: #000 !important; text-decoration: underline; }
+
+  .não-imprimir,
+  .cabeçalho,
+  .navegação-inferior,
+  .rodapé-institucional,
+  .faixa-de-apoio,
+  .consentimento,
+  .espaço-publicitário,
+  .região-de-mensagens,
+  .ação-contextual,
+  dialog,
+  .diálogo {
+    display: none !important;
+  }
+
+  .somente-impressão {
+    display: revert !important;
+  }
+
+  .conteúdo {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .quebra-de-página {
+    break-before: page;
+  }
+
+  .evitar-quebra {
+    break-inside: avoid;
+  }
+
+  img, svg, .ícone {
+    filter: none !important;
+  }
+
+  .área-de-impressão {
+    width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #000 !important;
+  }
+
+  table, .tabela {
+    border-color: #000 !important;
+  }
+}

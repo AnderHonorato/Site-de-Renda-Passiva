@@ -34,7 +34,7 @@ export function mostrarErroDeCampo(entrada, mensagem) {
     elementoDeErro.textContent = mensagem;
     elementoDeErro.hidden = false;
   } else {
-    elementoDeErro = criarElemento('p', { classe: 'campo-erro', texto: mensagem, atributos: { id } });
+    elementoDeErro = criarElemento('p', { classe: 'campo-erro', texto: mensagem, atributos: { id }, dados: { erroDinâmico: 'sim' } });
     const ancoragem = entrada.closest('.campo-com-unidade') || entrada;
     ancoragem.insertAdjacentElement('afterend', elementoDeErro);
   }

@@ -1,0 +1,131 @@
+<!--página
+{
+  "título": "Bingo de números",
+  "descrição": "Gere cartelas de bingo de números sem repetição, com lista de sorteio separada, prévia na tela, impressão e PDF para a turma.",
+  "destaque": "lilás",
+  "navegação": "ferramentas",
+  "script": "páginas/bingo-de-números.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador para imprimir</p>
+    <h1 id="título-ferramenta">Bingo de números</h1>
+    <p class="ferramenta-resumo">Escolha o intervalo de números, o tamanho da cartela e quantas cartelas quer imprimir. Nenhuma cartela sai com números repetidos nela mesma, e nenhuma cartela sai igual a outra — a lista de sorteio vem separada, em ordem embaralhada.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-bingo" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Intervalo de números</legend>
+        <div class="campo">
+          <label for="intervalo-mínimo">De</label>
+          <input id="intervalo-mínimo" name="intervalo-mínimo" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="1" aria-describedby="intervalo-mínimo-erro">
+          <p id="intervalo-mínimo-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="intervalo-máximo">Até</label>
+          <input id="intervalo-máximo" name="intervalo-máximo" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="75" aria-describedby="intervalo-máximo-ajuda intervalo-máximo-erro">
+          <p id="intervalo-máximo-ajuda" class="campo-ajuda">O intervalo precisa ter, no mínimo, tantos números quanto as casas da cartela.</p>
+          <p id="intervalo-máximo-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Cartelas</legend>
+        <div class="campo">
+          <label for="tamanho-da-grade">Tamanho da cartela</label>
+          <select id="tamanho-da-grade" name="tamanho-da-grade" class="entrada seleção" aria-describedby="tamanho-da-grade-erro">
+            <option value="3">3×3 (9 números)</option>
+            <option value="4">4×4 (16 números)</option>
+            <option value="5" selected>5×5 (25 números)</option>
+          </select>
+          <p id="tamanho-da-grade-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="quantidade-de-cartelas">Quantidade de cartelas</label>
+          <input id="quantidade-de-cartelas" name="quantidade-de-cartelas" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="4" aria-describedby="quantidade-de-cartelas-ajuda quantidade-de-cartelas-erro">
+          <p id="quantidade-de-cartelas-ajuda" class="campo-ajuda">De 1 a 50 cartelas, todas diferentes entre si.</p>
+          <p id="quantidade-de-cartelas-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Cabeçalho e semente</legend>
+        <div class="campo">
+          <label for="título-da-atividade">Nome da atividade (opcional)</label>
+          <input id="título-da-atividade" name="título-da-atividade" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Bingo da turma B">
+        </div>
+        <div class="campo">
+          <label class="interruptor">
+            <input type="checkbox" id="com-cabeçalho" name="com-cabeçalho" checked>
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            Incluir campos de Nome e Data em cada cartela
+          </label>
+        </div>
+        <div class="campo">
+          <label for="semente">Semente (reproduz as mesmas cartelas)</label>
+          <div class="campo-semente">
+            <input id="semente" name="semente" class="entrada" type="text" inputmode="numeric" autocomplete="off" aria-describedby="semente-erro">
+            <button type="button" id="botão-nova-semente" class="botão botão-secundário botão-ícone" aria-label="Sortear nova semente"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#refresh-cw"></use></svg></button>
+          </div>
+          <p id="semente-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar cartelas</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#dice-5"></use></svg>
+        <p class="estado-vazio-título">Suas cartelas aparecem aqui</p>
+        <p>Escolha o intervalo e o tamanho da cartela, e toque em Gerar cartelas.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="área-de-impressão">
+          <div data-cartelas></div>
+
+          <article class="folha-de-atividade quebra-de-página" data-folha-sorteio>
+            <header class="cabeçalho-da-atividade">
+              <h3 class="cabeçalho-da-atividade-título" data-título-sorteio></h3>
+            </header>
+            <p class="campo-ajuda">Ordem embaralhada para chamar os números; separada das cartelas.</p>
+            <ul class="lista-de-sorteio" data-lista-de-sorteio></ul>
+          </article>
+        </div>
+
+        <p class="campo-ajuda" data-resumo-da-semente></p>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta configuração</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Bingo — turma B" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>Cada cartela é um sorteio de números distintos do intervalo; a configuração é recusada antes do sorteio se o intervalo tiver menos números que as casas da cartela.</li>
+    <li>Nenhuma cartela sai idêntica a outra (mesmo conjunto de números); se não for possível gerar cartelas diferentes o bastante, o gerador avisa em vez de repetir uma cartela em silêncio.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-bingo" class="botão botão-primário">Gerar cartelas</button>
+</div>

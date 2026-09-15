@@ -1,0 +1,138 @@
+<!--página
+{
+  "título": "Quantidade de tinta",
+  "descrição": "Calcule quantos litros de tinta comprar a partir da área, das demãos e do rendimento do rótulo, com conversão para as embalagens vendidas.",
+  "destaque": "terracota",
+  "navegação": "ferramentas",
+  "script": "páginas/quantidade-de-tinta.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Quantidade de tinta</h1>
+    <p class="ferramenta-resumo">Informe a área, o número de demãos e o rendimento do rótulo do produto. Diga se esse rendimento é por demão ou já é o rendimento acabado — o cálculo muda conforme a escolha.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-tinta" class="ferramenta-formulário" novalidate>
+      <div class="campo" data-campo-cômodo-salvo hidden>
+        <label for="cômodo-salvo">Usar a área de um cômodo salvo (opcional)</label>
+        <select id="cômodo-salvo" name="cômodo-salvo" class="entrada seleção">
+          <option value="">Digitar a área manualmente</option>
+        </select>
+        <p class="campo-ajuda">Preenche a área com o total já calculado em Área de paredes. Você ainda pode ajustar o valor depois.</p>
+      </div>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Área e demãos</legend>
+        <div class="campo">
+          <label for="área">Área a pintar</label>
+          <div class="campo-com-unidade">
+            <input id="área" name="área" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 40" aria-describedby="área-erro">
+            <span class="unidade">m²</span>
+          </div>
+          <p id="área-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="demãos">Número de demãos</label>
+          <input id="demãos" name="demãos" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="2" aria-describedby="demãos-erro">
+          <p id="demãos-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Rendimento do produto</legend>
+        <div class="campo">
+          <label for="rendimento">Rendimento informado no rótulo</label>
+          <div class="campo-com-unidade">
+            <input id="rendimento" name="rendimento" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 10" aria-describedby="rendimento-ajuda rendimento-erro">
+            <span class="unidade">m²/L</span>
+          </div>
+          <p id="rendimento-ajuda" class="campo-ajuda">Use o número da ficha técnica ou da lata do produto escolhido — esta ferramenta não presume um rendimento padrão.</p>
+          <p id="rendimento-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <span id="tipo-de-rendimento-rótulo">Esse rendimento já é...</span>
+          <div class="opções" role="radiogroup" aria-labelledby="tipo-de-rendimento-rótulo">
+            <label class="opção"><input type="radio" name="tipo-de-rendimento" value="porDemão" checked><span>Por demão (multiplicar pelas demãos)</span></label>
+            <label class="opção"><input type="radio" name="tipo-de-rendimento" value="acabado"><span>O rendimento acabado (já considera as demãos)</span></label>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="reserva">Reserva extra (opcional)</label>
+          <div class="campo-com-unidade">
+            <input id="reserva" name="reserva" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="reserva-ajuda reserva-erro">
+            <span class="unidade">%</span>
+          </div>
+          <p id="reserva-ajuda" class="campo-ajuda">Uma margem para retoques e repintura, além do que o cálculo exige.</p>
+          <p id="reserva-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Embalagens vendidas (opcional)</legend>
+        <p class="campo-ajuda">Adicione os tamanhos de lata que você encontra à venda para ver quantas comprar de cada um.</p>
+        <div class="linhas-editáveis" data-linhas-de-embalagens></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-embalagem>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar embalagem</span>
+        </button>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular tinta</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#paint-bucket"></use></svg>
+        <p class="estado-vazio-título">A quantidade de tinta aparece aqui</p>
+        <p>Preencha a área, as demãos e o rendimento e toque em Calcular tinta.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Litros necessários (com reserva)</p>
+          <p class="resultado-valor" data-litros></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <div class="tabela-rolável" data-bloco-embalagens hidden>
+          <table class="tabela" data-tabela-embalagens>
+            <caption>Quantidade por embalagem</caption>
+            <thead>
+              <tr><th scope="col">Embalagem</th><th scope="col" data-numérico>Comprar</th><th scope="col" data-numérico>Total comprado</th><th scope="col" data-numérico>Sobra</th></tr>
+            </thead>
+            <tbody data-corpo-embalagens></tbody>
+          </table>
+        </div>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse valor</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+        <form id="formulário-salvar-tinta" class="campo" novalidate>
+          <label for="nome-do-cálculo-de-tinta">Nome para salvar este cálculo</label>
+          <input id="nome-do-cálculo-de-tinta" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Sala — parede clara" aria-describedby="nome-do-cálculo-de-tinta-erro">
+          <p id="nome-do-cálculo-de-tinta-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Rendimento por demão: litros = (área × demãos) ÷ rendimento. Rendimento acabado: litros = área ÷ rendimento (sem multiplicar pelas demãos de novo).</li>
+    <li>Use sempre o rendimento do rótulo ou da ficha técnica do produto: esta ferramenta não presume nenhum valor padrão de mercado.</li>
+    <li>Cada embalagem é arredondada para cima; a sobra mostrada é a tinta comprada a mais em relação ao necessário.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-tinta" class="botão botão-primário">Calcular tinta</button>
+</div>

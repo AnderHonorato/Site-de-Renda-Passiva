@@ -889,9 +889,229 @@
 
 ---
 
-## SEÇÕES 16 A 25 — EM RECONSTRUÇÃO
+## COBERTURA DAS SEÇÕES 10 A 15 — implementação e testes (orquestrador, 15/09/2026)
 
-A primeira versão destas seções, produzida pelo assistente de documentação, foi descartada pelo orquestrador em 15/09/2026 porque continha requisitos que não existem no prompt mestre (por exemplo, guias de comunidade e de backlinks). As seções 16 a 25 serão reescritas pelo orquestrador a partir do texto original, com implementação e evidência preenchidas.
+As linhas R10–R15 acima detalham cada frase do prompt. Esta tabela liga as exigências principais de cada produto ao código e à evidência. Caminhos relativos à pasta do produto.
+
+| Seção | Exigência | Implementação | Teste | Evidência no navegador | Situação |
+|---|---|---|---|---|---|
+| 10 | Custo proporcional, g/kg e ml/L, sem volume→massa | `scripts/cálculos/calcular-custo-do-ingrediente.js`, `converter-unidade.js` | `calcular-custo-do-ingrediente.test.js`, `converter-unidade.test.js` | Exemplo de brigadeiro: custo, estoque e embalagens inteiras | testado |
+| 10 | Custo consumido × estoque × dinheiro para embalagens inteiras | `calcular-custo-da-receita.js` | `calcular-custo-da-receita.test.js` | R$ 44,00 / R$ 27,00 / R$ 71,00 | testado |
+| 10 | Preço = custo ÷ (1 − margem − taxas); bloquear denominador ≤ 0; caso R$ 80/50/30% → R$ 2,29 e R$ 114,50 | `calcular-preço-de-venda.js` | `calcular-preço-de-venda.test.js` | Caso conferido na interface | testado |
+| 10 | Escala por rendimento e lotes; ajuste manual de tempo e forno | `calcular-ajuste-de-quantidade.js`, `escalar-ingredientes.js` | testes correspondentes | — | testado (unitário) |
+| 10 | Lista de compras com embalagens inteiras | `agregar-itens-de-produção.js`, `calcular-lista-de-compras.js` | testes correspondentes | — | testado (unitário) |
+| 10 | Salvar, duplicar, editar, excluir; cópia validada | `definições-do-produto.js`, `validação/*` + comum | `validar-registro-de-receita.test.js`, `armazenamento.test.js` | Salvos e reabertura | testado |
+| 10 | Orçamento sem custo interno; copiar texto | `páginas/orçamento.js` + `comum/orçamento/*` | `orçamento.test.js` (comum) | PDF, planilha e link (artesanato e reforma) | testado |
+| 11 | Operações com reserva, negativos e divisão exata por quociente × divisor | `resolver-operação-matemática.js`, `gerar-lista-de-operações.js` | `operações-matemáticas.test.js` | 12 divisões exatas conferidas | testado |
+| 11 | Tabuada com gabarito separado | `gerar-tabuada.js` | `tabuada.test.js` | Gabarito gerado | testado |
+| 11 | Caça-palavras determinístico, sem omissão silenciosa, acentos coerentes | `geração/gerar-caça-palavras.js`, `normalizar-palavra-para-grade.js` | `caça-palavras.test.js` | Aviso de palavra que não coube; Ç na grade | testado (correção da lista sem acentos em andamento) |
+| 11 | Caligrafia com linhas-guia e contorno legível | `calcular-folha-de-caligrafia.js`, `geração/gerar-pdf-de-caligrafia.js` | `caligrafia.test.js` | Prévia com “João” | testado |
+| 11 | PDF A4 local com gabarito em página separada, sem anúncio | `geração/gerar-pdf-de-*.js` | `pdf-de-atividades.test.js` | PDF de operações gerado | testado |
+| 11 | Extras: bingo, papel quadriculado, flashcards, planejador | `gerar-cartelas-de-bingo.js`, `calcular-papel-quadriculado.js`, `montar-páginas-de-flashcards.js`, `montar-planejador-de-estudos.js` | testes correspondentes | — | em andamento |
+| 12 | Custo do material (R$ 20/100 g/25 g → R$ 5), sem g→m sem relação | `calcular-custo-do-material.js` | `calcular-custo-do-material.test.js` | R$ 5,00 e quantidade zero recusada | testado |
+| 12 | Valor da hora, preço da peça com soma antes da margem, desconto com prejuízo | `calcular-valor-da-hora.js`, `calcular-preço-da-peça.js`, `calcular-efeito-de-desconto.js` | testes correspondentes | — | testado (unitário) |
+| 12 | Encomendas, amostra de pontos, saldo de material | `calcular-planejador-de-encomendas.js`, `calcular-amostra-de-pontos.js`, `calcular-saldo-de-material.js` | testes correspondentes | — | testado (unitário) |
+| 13 | Motor com adultos, crianças, duração, apetite, preferências; álcool só para adultos declarados | `calcular-plano-de-consumo.js`, `montar-catálogo-de-itens-padrão.js` | `calcular-plano-de-consumo.test.js`, `montar-catálogo-de-itens-padrão.test.js` | 0 consumidores → “Não incluído”; só crianças → sem álcool | testado |
+| 13 | Embalagem indivisível e custo por kg/litro/pacote | `arredondar-para-embalagem.js`, `calcular-custo-de-compra.js` | testes correspondentes | Total R$ 826,00 = soma das linhas (após correção do ×100) | testado |
+| 13 | Divisão por pagantes; orçamento com reserva; cronograma; convidados | `calcular-divisao-de-despesas.js`, `calcular-orçamento-do-evento.js`, `calcular-cronograma-do-evento.js`, `calcular-contagem-de-convidados.js` | testes correspondentes | R$ 300 ÷ 4 = R$ 75; sem pagantes → mensagem | testado |
+| 13 | Premissas de fontes identificadas e editáveis | Catálogo de itens + metodologia (iFood, Descorcha; demais marcadas como iniciais) | revisão | Rótulo de fonte por item | concluído |
+| 14 | Paredes sem área negativa; abertura maior que a parede recusada | `calcular-área-de-paredes.js` | `calcular-área-de-paredes.test.js` | — | testado (unitário) |
+| 14 | Tinta por demão × acabado | `calcular-quantidade-de-tinta.js` | `calcular-quantidade-de-tinta.test.js` | 8 L por demão; 4 L acabado; 3 galões de 3,6 L | testado |
+| 14 | Piso 20 m² + 10% ÷ 2,2 → 10 caixas, sem erro de ponto flutuante | `calcular-piso-por-caixa.js` + `arredondarParaCima` | `calcular-piso-por-caixa.test.js` | 10 caixas (e 22 ÷ 2,2 → 10) | testado |
+| 14 | Rodapé por barra; orçamento estimado | `calcular-rodapé.js`, `páginas/orçamento.js` | `calcular-rodapé.test.js` | Orçamento R$ 1.300,00 | testado |
+| 15 | Caixa, tampa (folga 1 mm → 102 mm), envelope, etiquetas | `construir-rede-de-caixa.js`, `calcular-caixa-com-tampa.js`, `construir-rede-de-envelope.js`, `calcular-grade-de-etiquetas.js` | testes correspondentes | Tampa 102 × 102 mm | testado |
+| 15 | SVG em mm com texto escapado; PDF 1:1 com calibração de 50 mm; corte contínuo e dobra tracejada | `geração/gerar-svg-de-molde.js`, `desenhar-calibração-em-pdf.js`, `desenhar-molde-em-pdf.js` | `pdf-e-svg-de-moldes.test.js` | SVG `width="180mm"`, texto escapado | testado |
+| 15 | Molde grande dividido em folhas sem reduzir escala | `dividir-molde-em-folhas.js`, `recortar-segmento-em-retângulo.js` | `dividir-molde-em-folhas.test.js`, `recortar-segmento-em-retângulo.test.js` | 900 × 600 × 300 mm → 87 folhas A4 (aviso prévio em andamento) | testado |
+| 15 | Extras: cinta, divisórias, saco de papel, aproveitamento de folha | `calcular-cinta.js`, `calcular-divisórias-de-caixa.js`, `calcular-saco-de-papel.js`, `calcular-aproveitamento-de-folha.js` | `ferramentas-secundárias.test.js`, `pdf-de-ferramentas-secundárias.test.js` | — | testado (unitário) |
+
+## SEÇÕES 16 A 25 — reescritas pelo orquestrador em 15/09/2026
+
+A primeira versão destas seções, produzida pelo assistente de documentação, foi descartada porque continha requisitos inexistentes no prompt mestre. As tabelas abaixo foram reescritas a partir do texto original. Caminhos de implementação relativos a `compartilhado/` quando não indicado.
+
+## SEÇÃO 16 — Cookies e consentimento na primeira visita
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R16.01 | Interface de privacidade no primeiro acesso sem preferência válida | Todos | `scripts/privacidade/configurar-consentimento.js`; `#consentimento` no layout | Navegador: aviso exibido na 1ª visita (confeitaria) | testado |
+| R16.02 | Aceitar opcionais, Rejeitar opcionais e Personalizar com acesso igualmente fácil | Todos | `ferramentas/modelo-de-layout.mjs` | Navegador | testado |
+| R16.03 | Rejeitar não impede cálculos, impressão, downloads nem conteúdo | Todos | Ferramentas independentes do consentimento | Navegador: cálculo após rejeição | testado |
+| R16.04 | Publicidade e medição opcionais desativadas por padrão | Todos | `validar-configuração.js`; nenhuma medição existe | `privacidade-publicidade-e-configuração.test.js` | testado |
+| R16.05 | Nenhuma tag de anúncio, analytics, pixel, vídeo ou rastreamento antes da escolha | Todos | `publicidade/pode-carregar-anúncios.js` | Navegador: 0 scripts de anúncio | testado |
+| R16.06 | Sem pedidos “sem cookie” de medição antecipada | Todos | Não há medição | Revisão de código | concluído |
+| R16.07 | Recursos necessários descritos fielmente | Todos | Diálogo de preferências e política | Revisão | concluído |
+| R16.08 | Guardar escolha com versão da política e prazo | Todos | `salvar-consentimento.js` | Teste unitário | testado |
+| R16.09 | Não solicitar de novo a cada navegação | Todos | `ler-consentimento.js` | Navegador: Salvos sem aviso após escolha | testado |
+| R16.10 | Prazo configurável, sem apresentá-lo como duração legal | Todos | `privacidade.validadeDoConsentimentoEmDias` | Revisão | concluído |
+| R16.11 | Reexibir ao expirar, ser apagada ou mudar a finalidade (versão) | Todos | `ler-consentimento.js` | Teste unitário (expiração e versão) | testado |
+| R16.12 | “Preferências de privacidade” permanente no rodapé e no menu | Todos | Layout (rodapé e menu Mais) | Revisão | concluído |
+| R16.13 | Alterar e revogar tão simples quanto aceitar | Todos | Diálogo de preferências | Navegador: pendente para críticos | concluído |
+| R16.14 | Persistência funcional explicada, com exclusão e cópia | Todos | Página Salvos; política | Navegador | testado |
+| R16.15 | Rejeitar publicidade não apaga itens salvos | Todos | `revogar-consentimento.js` só grava a escolha | Revisão | concluído |
+| R16.16 | Chaves de armazenamento próprias por site | Todos | `data-prefixo` + `criar-armazenamento.js` | Teste unitário de prefixos | testado |
+| R16.17 | Documentar que prefixo não isola a mesma origem; preferir origens separadas | Central | `proteções-e-limites-de-segurança.md` | Revisão | concluído |
+| R16.18 | Consentimento controla o carregamento, não só esconde o aviso | Todos | `iniciar-aplicação-comum.js` | Navegador | testado |
+| R16.19 | Testar contexto novo, aceitação, rejeição, revogação e armazenamento indisponível | Todos | — | Novo e rejeição testados; indisponível em teste unitário; aceitação e revogação no navegador pendentes | em andamento |
+| R16.20 | Ao revogar: impedir novos carregamentos, recarregar se preciso, preservar dados | Todos | `configurar-consentimento.js` | Revisão | concluído |
+| R16.21 | Explicar que requisições já feitas e cookies de terceiros não são desfeitos | Todos | Política de privacidade | Revisão | concluído |
+| R16.22 | CMP certificada com TCF quando houver AdSense nas regiões aplicáveis | Todos | `como-conectar-o-adsense.md` | — | aguarda configuração externa |
+| R16.23 | Banner autoral não equivale a CMP certificada | Central | Documentado | Revisão | concluído |
+| R16.24 | Fonte única de decisão; local não sobrepõe recusa da CMP | Todos | Consentimento em duas camadas documentado | — | preparado para configuração |
+| R16.25 | Não inventar strings ou APIs TCF | Todos | Nenhuma string TCF no código | Revisão | concluído |
+| R16.26 | Não inferir localização por idioma | Todos | Não há inferência | Revisão | concluído |
+| R16.27 | Se a CMP falhar ou o contexto for incerto, anúncios desativados e ferramentas funcionando | Todos | `consentimentoConfigurado` obrigatório | Teste unitário | preparado para configuração |
+| R16.28 | Guia com alcance geográfico e ausência de corrida entre CMP e anúncios | Central | `como-conectar-o-adsense.md` | Revisão | concluído |
+| R16.29 | Política coerente: operador, contato, dados locais, logs, fornecedores, escolhas, retenção, canais | Todos | `conteúdo-comum/política-de-privacidade.html` | Revisão | concluído |
+| R16.30 | Não afirmar “nenhum dado é enviado” havendo anúncios ou logs | Todos | Política cita logs e publicidade | Revisão | concluído |
+| R16.31 | Não prometer conformidade jurídica absoluta | Todos | Política | Revisão | concluído |
+
+## SEÇÃO 17 — Doação voluntária exclusivamente por Pix
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R17.01 | Faixa discreta e dispensável, página Apoiar e destino inferior | Todos | Layout; `apoio/configurar-faixa-de-apoio.js`; `conteúdo-comum/apoiar.html` | Navegador | testado |
+| R17.02 | Texto sem culpa, urgência falsa, bloqueio ou pagamento obrigatório | Todos | Textos da faixa e da página | Revisão | concluído |
+| R17.03 | Valores rápidos R$ 1, 5, 10, 20, 30, 50 e 100 | Todos | `apoiar.html` | Navegador + teste unitário dos sete valores | testado |
+| R17.04 | Valor livre em formato brasileiro | Todos | `apoio/validar-valor-pix.js` | Teste unitário | testado |
+| R17.05 | Só gera instrução; nunca débito, recorrência ou abertura automática de app | Todos | Fluxo da página | Revisão | concluído |
+| R17.06 | Fluxo valor → revisão → QR e Copia e Cola → copiar, baixar ou fechar | Todos | `apoio/configurar-página-de-apoio.js` | Navegador (cópia isolada) | testado |
+| R17.07 | Copia e Cola acessível no celular | Todos | `textarea` + botão Copiar | Revisão | concluído |
+| R17.08 | Chave, nome e cidade reais, não inventados; sugerir chave aleatória | Todos | `dados-que-o-proprietário-precisa-preencher.md` | — | aguarda configuração externa |
+| R17.09 | Chave pública não tratada como segredo | Central | Documentado | Revisão | concluído |
+| R17.10 | BR Code estático gerado localmente, campos, comprimentos e CRC corretos | Todos | `apoio/gerar-payload-pix.js`, `calcular-crc-pix.js`, `montar-campo-emv.js` | CRC 1D3D do exemplo do manual; campos conferidos | testado |
+| R17.11 | QR decodificado por ferramenta independente | Todos | — | jsQR em `pix.test.js` | testado |
+| R17.12 | Validação, payload, CRC, renderização e cópia em arquivos próprios | Todos | `scripts/apoio/` | Revisão | concluído |
+| R17.13 | Centavos inteiros; rejeitar vazio, negativo, zero, expoente e excesso de precisão | Todos | `validar-valor-pix.js` | Teste unitário | testado |
+| R17.14 | Limites técnicos explicados no campo | Todos | “De R$ 0,01 a R$ 99.999,99” | Revisão | concluído |
+| R17.15 | Valor, QR e texto idênticos; alterar valor invalida o código | Todos | `configurar-página-de-apoio.js` | Navegador | testado |
+| R17.16 | Chave e recebedor só da configuração publicada | Todos | `validar-configuração.js` | Teste unitário | testado |
+| R17.17 | Sem chave de exemplo em produção; apoio indisponível de forma honesta | Todos | Aviso gerado e formulário desativado | Navegador (confeitaria sem configuração) | testado |
+| R17.18 | Prévia local com marcadores não pagáveis | Central | Cópia isolada em scratchpad com a chave do manual | Navegador | concluído |
+| R17.19 | Cópia pode falhar: seleção manual e sem “copiado” falso | Todos | `apoio/copiar-texto.js` | Revisão | concluído |
+| R17.20 | Sem saldo, comprovante, lista de doadores ou confirmação falsa | Todos | — | Revisão | concluído |
+| R17.21 | Não prometer Pix gratuito em qualquer situação | Todos | Aviso de tarifas | Revisão | concluído |
+| R17.22 | Nenhuma API de pagamento, checkout ou banco | Todos | — | Revisão | concluído |
+| R17.23 | Não misturar apoio com anúncios | Todos | Apoiar com `anúncios: false` | Revisão | concluído |
+| R17.24 | Respeitar a dispensa temporária da faixa | Todos | 30 dias | Revisão | concluído |
+| R17.25 | Produto escolar: pedido de apoio só ao adulto, nunca na atividade | 2 | — | — | pendente |
+
+## SEÇÃO 18 — Requisitos obrigatórios se houver backend
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R18.01 | Registrar “não aplicável” na arquitetura estática; não simular login, chat ou feedback | Todos | `decisão-sobre-cadastro-e-servidor.md` | Revisão | concluído |
+| R18.02 | 18.1 Contas e administração | Todos | — | — | não aplicável (sem backend) |
+| R18.03 | 18.2 Chat na tela principal | Todos | — | — | não aplicável (sem backend) |
+| R18.04 | 18.3 Feedback flutuante | Todos | — | — | não aplicável (sem backend) |
+| R18.05 | 18.4 Operação do servidor | Todos | — | — | não aplicável (sem backend) |
+
+## SEÇÃO 19 — Segurança e proteção contra clonagem
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R19.01 | Análise de ameaças (XSS, backup malicioso, troca de chave Pix, SVG/PDF, URLs, dependências, anúncios) | Central | `proteções-e-limites-de-segurança.md` | Revisão | concluído |
+| R19.02 | Validar tipo, faixa, tamanho e unidade; sem NaN, Infinity ou divisão por zero | Todos | `validação/*`, `matemática/*` | Testes unitários | testado (comum) |
+| R19.03 | Texto por APIs seguras; sem `innerHTML` com entrada do usuário | Todos | `interface/criar-elemento.js`; verificador | `npm run verificar` | testado |
+| R19.04 | Escape em SVG, PDF, CSV e cópia; CSV sem execução de fórmulas | Todos | `escapar-xml.js`, `escapar-csv.js`, PDF, planilha | Testes unitários | testado |
+| R19.05 | Importação com esquema versionado, limite de tamanho e profundidade; sem `eval`; sem poluição de protótipo; sem misturar com configuração | Todos | `armazenamento/importar-cópia-local.js` | Teste unitário malicioso | testado |
+| R19.06 | Links externos validados, protocolos permitidos | Todos | `validar-url-externa.js` | Teste unitário | testado |
+| R19.07 | Nenhum segredo em JavaScript, JSON, mapa de código, log ou pacote | Todos | Configuração só pública; construtor recusa arquivos indevidos | `construir.mjs` | concluído |
+| R19.08 | Dependências mínimas, versões fixadas, licenças registradas | Central | `package.json`, `licenças-de-terceiros.md` | `npm install`: 0 vulnerabilidades | concluído |
+| R19.09 | HTTPS e cabeçalhos (enquadramento, tipos, referência); HSTS só após verificar | Todos | `.htaccess` gerado; `hospedagem/nginx-exemplo.conf` | Revisão | preparado para configuração |
+| R19.10 | Configuração de hospedagem aplicável; `meta` não substitui `frame-ancestors` | Todos | Cabeçalhos HTTP, sem CSP em `meta` | Revisão | concluído |
+| R19.11 | Perfis CSP sem e com publicidade; nonce imprevisível por resposta | Todos | Perfil sem anúncios aplicado; perfil com anúncios documentado | — | preparado para configuração |
+| R19.12 | Não inventar CSP que bloqueie AdSense nem remover proteções; modo relatório | Central | `proteções-e-limites-de-segurança.md` | Revisão | concluído |
+| R19.13 | Anticlonagem realista: autoria, licença, metadados, versão e hashes | Todos | `LICENÇA.txt`, `meta author`, `manifesto-de-integridade.json` | `construir.mjs` | concluído |
+| R19.14 | Não bloquear botão direito, seleção, atalhos ou acessibilidade; sem autodestruição ou redirecionamento | Todos | Nada disso implementado | Revisão | concluído |
+| R19.15 | Lógica secreta só com servidor; não criar backend para esconder fórmulas | Todos | Fórmulas públicas | Revisão | concluído |
+
+## SEÇÃO 20 — AdSense pronto para conexão pelo proprietário
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R20.01 | Espaços e carregador reais, desativados sem configuração, consentimento ou aprovação | Todos | `publicidade/*`, `.espaço-publicitário` | Teste unitário + navegador | testado |
+| R20.02 | Sem identificador fictício em código ativo | Todos | Configuração vazia | Revisão | concluído |
+| R20.03 | Configuração pública por produto: ativa, publicador, blocos, consentimento, domínio, posições | Todos | `configuração-pública.json` | Teste unitário | concluído |
+| R20.04 | Blocos discretos, responsivos, rotulados “Publicidade”, com reserva de espaço | Todos | `componentes/espaço-publicitário.css` | Revisão | concluído |
+| R20.05 | Nunca junto de copiar Pix, baixar, gerar, menu inferior ou confirmação; nunca no impresso | Todos | Guia do executor; Apoiar sem anúncios; CSS de impressão | Revisão pelos críticos | em andamento |
+| R20.06 | Sem pedir clique, disfarçar ou recarregar anúncio a cada cálculo | Todos | Inicialização única | Revisão | concluído |
+| R20.07 | Script uma vez por contexto; blocos sem duplicação | Todos | `carregar-anúncios.js` | Revisão | concluído |
+| R20.08 | Bloqueador, recusa, falta de inventário e falha de rede sem quebrar a página | Todos | Recolhimento dos espaços | Revisão | preparado para configuração |
+| R20.09 | Testes não clicam em anúncios reais nem geram tráfego | Todos | Nenhum anúncio real carregado | — | concluído |
+| R20.10 | Guia `como-conectar-o-adsense.md` por produto e consolidado, com os 9 assuntos | Central | Consolidado escrito; cópias por produto pendentes | Revisão | em andamento |
+| R20.11 | Não garantir aprovação, receita, RPM ou prazo; conteúdo original útil | Todos | Guia e textos | Revisão | concluído |
+
+## SEÇÃO 21 — Configuração pendente sem impedir o desenvolvimento
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R21.01 | Documento com campo, finalidade, arquivo e efeito quando ausente | Central | `dados-que-o-proprietário-precisa-preencher.md` | Revisão | concluído |
+| R21.02 | Campos públicos listados; nenhum segredo em arquivo público | Todos | Configuração pública | Revisão | concluído |
+| R21.03 | Campos privados só se houver servidor | Todos | Não há | — | não aplicável (sem backend) |
+| R21.04 | Validar esquema e dependências (sem anúncio com id vazio, sem Pix sem recebedor) | Todos | `validar-configuração.js` | Teste unitário | testado |
+| R21.05 | Fluxo testado com dados não pagáveis; conexão real pendente | Todos | Cópia isolada + testes | Navegador | testado |
+
+## SEÇÃO 22 — Conteúdo, descoberta e publicação independente
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R22.01 | Início, catálogo, ferramentas, metodologia, exemplos, sobre, contato, privacidade, termos e 404 | Todos | Modelos comuns + páginas dos executores | `gerar-páginas.mjs` exige as obrigatórias | em andamento |
+| R22.02 | Textos próprios, sem prometer resultados não demonstrados | Todos | — | Revisão pelos críticos | em andamento |
+| R22.03 | Títulos e descrições únicos; hierarquia semântica; links internos válidos | Todos | Gerador e verificador | `npm run verificar` | testado (confeitaria) |
+| R22.04 | Canonical com domínio real; sitemap e robots coerentes | Todos | Gerador (canonical e sitemap só com endereço base) | Revisão | preparado para configuração |
+| R22.05 | Não indexar resultados pessoais, prévias, testes ou parâmetros infinitos | Todos | `noindex` em Salvos, 404 e orçamento compartilhado | Revisão | concluído |
+| R22.06 | Sem avaliações estruturadas ou números de usuários inventados | Todos | — | Revisão | concluído |
+| R22.07 | Premissas, unidade, arredondamento e limites perto do resultado | Todos | `.premissas` | Revisão | em andamento |
+| R22.08 | Testes de fórmula independentes da exibição | Todos | Funções puras em `scripts/cálculos/` | `npm run testar` | em andamento |
+| R22.09 | Portas locais distintas (4311–4316) em 127.0.0.1 | Todos | `servir.mjs`, `package.json` | Servidor testado | testado |
+| R22.10 | Pacote publicável próprio, raiz ou subpasta, sem banco, segredos, `.git`, dependências ou testes | Todos | `construir.mjs` | Execução por produto pendente | em andamento |
+| R22.11 | Não assumir mesmo tratamento de maiúsculas/Unicode em Windows e Linux | Central | NFC verificado; `convenções-e-exceções-técnicas.md` | `npm run verificar` | concluído |
+
+## SEÇÃO 23 — Plano de execução e continuidade
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R23.01 | Fase A: inventário, modelos e ferramentas, arquitetura, contrato, matriz | Central | `estado-da-execução.md`, `arquitetura-e-contratos.md`, esta matriz | — | concluído |
+| R23.02 | Fase B: base comum integrada primeiro numa fatia real da confeitaria | Central | `compartilhado/` + preço de venda | Navegador | concluído |
+| R23.03 | Fase C: seis produtos em ondas, propriedade de arquivos definida | Todos | `guia-do-executor.md`; onda 1 em andamento | — | em andamento |
+| R23.04 | Fase D: integração dos seis pacotes | Todos | — | — | pendente |
+| R23.05 | Fase E: dois críticos independentes com pareceres separados | Central | — | — | pendente |
+| R23.06 | Fase F: correção, reteste e aceite assinado | Central | — | — | pendente |
+| R23.07 | Estado persistido em `estado-da-execução.md` | Central | Atualizado a cada etapa | — | em andamento |
+
+## SEÇÃO 24 — Critérios de teste e aceite
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R24.01 | Funcionalidade: entradas normais, inválidas e extremas; exemplos conferidos | Todos | Testes por produto | — | em andamento |
+| R24.02 | Modularidade e idioma verificados | Todos | Verificador | — | em andamento |
+| R24.03 | Celular: navegação inferior, ativo, toque, paisagem, teclado, safe area, sem sobreposição | Todos | CSS comum | Navegador (confeitaria 390×844) | em andamento |
+| R24.04 | Computador: navegação, formulários, teclado, foco, larguras | Todos | CSS comum | Navegador parcial | em andamento |
+| R24.05 | Consentimento: sem opcionais antes; aceitar, rejeitar, personalizar, persistir, revogar | Todos | — | Parcial | em andamento |
+| R24.06 | Pix: valores, centavos, QR decodificado, CRC, recebedor, cópia, alteração, sem falsa confirmação | Todos | — | Unitário + navegador | testado |
+| R24.07 | Anúncios: desativado seguro, inicialização única, posição, bloqueador, rede, guias | Todos | — | Parcial | em andamento |
+| R24.08 | Armazenamento: salvar, editar, excluir, exportar, importar, backup malicioso, separação | Todos | — | Unitário + navegador | testado (comum) |
+| R24.09 | Impressão sem navegação, anúncios, apoio ou gabarito misturado | Todos | `impressão.css` | — | pendente |
+| R24.10 | Segurança: HTML/script/URLs perigosas, dependências, segredos, HTTP | Todos | — | Parcial | em andamento |
+| R24.11 | Desempenho medido no pacote real em condições registradas | Todos | — | — | pendente |
+| R24.12 | Seis pacotes, documentação, dois pareceres e validação final | Central | — | — | pendente |
+| R24.13 | Chromium e, quando houver, Firefox e WebKit; distinguir emulador, aparelho físico, banco real e AdSense aprovado | Central | Somente Chromium do painel disponível | — | em andamento |
+
+## SEÇÃO 25 — Entregáveis e relatório final
+
+| ID | Requisito | Produtos | Implementação | Teste/evidência | Situação |
+|---|---|---|---|---|---|
+| R25.01 | Seis projetos completos com código modular e pacote independente | Todos | — | — | em andamento |
+| R25.02 | Documentação de cada produto (executar, testar, compilar, publicar, identidade, Pix, AdSense, privacidade) | Todos | — | — | pendente |
+| R25.03 | `matriz-de-requisitos.md` | Central | Este arquivo | — | em andamento |
+| R25.04 | `arquitetura-e-contratos.md` e `decisão-sobre-cadastro-e-servidor.md` | Central | Escritos | — | concluído |
+| R25.05 | `convenções-e-exceções-técnicas.md` e `licenças-de-terceiros.md` | Central | Escritos | — | concluído |
+| R25.06 | `proteções-e-limites-de-segurança.md` | Central | Escrito | — | concluído |
+| R25.07 | `dados-que-o-proprietário-precisa-preencher.md` | Central | Escrito | — | concluído |
+| R25.08 | `estado-da-execução.md` e `histórico-de-versões.md` | Central | Estado escrito; histórico pendente | — | em andamento |
+| R25.09 | Dois pareceres críticos | Central | — | — | pendente |
+| R25.10 | `relatório-final-do-orquestrador.md` com testes, capturas, riscos e pendências | Central | — | — | pendente |
+| R25.11 | Commits só com autorização; sem push implícito | Central | Nenhum commit feito até aqui | — | concluído |
+| R25.12 | Resposta final curta: implementado, testado, onde está, o que falta | Central | — | — | pendente |
 
 ## TOTALIZADOR FINAL
 

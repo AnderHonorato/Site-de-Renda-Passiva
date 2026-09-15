@@ -1,0 +1,76 @@
+<!--página
+{
+  "título": "Simulador de desconto",
+  "descrição": "Veja quanto sobra depois de um desconto percentual sobre o preço da peça, com aviso claro quando o desconto derruba o preço abaixo do custo.",
+  "destaque": "musgo",
+  "navegação": "ferramentas",
+  "script": "páginas/simulador-de-desconto.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Simulador de desconto</h1>
+    <p class="ferramenta-resumo">Informe o preço da peça, o custo do artesanato (de Preço da peça) e o desconto que pensa em dar. O resultado mostra o que sobra depois do custo — sem contar ainda taxas ou outros descontos.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-desconto" class="ferramenta-formulário" novalidate>
+      <div class="campo">
+        <label for="preço">Preço da peça (R$)</label>
+        <input id="preço" name="preço" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 100,00" aria-describedby="preço-erro">
+        <p id="preço-erro" class="campo-erro" hidden></p>
+      </div>
+      <div class="campo">
+        <label for="custo">Custo do artesanato (R$)</label>
+        <input id="custo" name="custo" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 60,00" aria-describedby="custo-ajuda custo-erro">
+        <p id="custo-ajuda" class="campo-ajuda">O custo total calculado em Preço da peça (materiais + mão de obra + embalagem + custos adicionais).</p>
+        <p id="custo-erro" class="campo-erro" hidden></p>
+      </div>
+      <div class="campo">
+        <label for="desconto">Desconto (%)</label>
+        <input id="desconto" name="desconto" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 10" aria-describedby="desconto-erro">
+        <p id="desconto-erro" class="campo-erro" hidden></p>
+      </div>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular efeito do desconto</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#percent"></use></svg>
+        <p class="estado-vazio-título">O efeito do desconto aparece aqui</p>
+        <p>Preencha preço, custo e desconto e toque em Calcular efeito do desconto.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Sobra depois do custo</p>
+          <p class="resultado-valor" data-contribuição></p>
+        </div>
+        <div class="aviso aviso-erro" data-aviso-prejuízo hidden>
+          <p>Com esse desconto, o preço fica abaixo do custo informado: você venderia no prejuízo.</p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse valor</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Preço com desconto = preço × (1 − desconto).</li>
+    <li>Sobra = preço com desconto − custo do artesanato. Taxas sobre a venda não entram aqui: calcule-as em Preço da peça.</li>
+    <li>Nenhum preço de mercado é sugerido: o desconto é uma decisão sua.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-desconto" class="botão botão-primário">Calcular efeito do desconto</button>
+</div>

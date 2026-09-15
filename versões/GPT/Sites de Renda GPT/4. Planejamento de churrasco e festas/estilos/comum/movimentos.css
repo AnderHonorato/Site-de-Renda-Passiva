@@ -1,0 +1,60 @@
+@charset "UTF-8";
+/* Sincronizado de compartilhado/estilos/movimentos.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/movimentos.css
+   Transições e animações comuns. Só `transform`/`opacity`. Cada componente
+   usa estas variáveis e classes em vez de inventar durações soltas. */
+
+@keyframes entrada-com-subida {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes entrada-suave {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes escala-de-entrada {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes subir-do-rodapé {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+.entra-com-subida {
+  animation: entrada-com-subida var(--duração-painel) var(--curva-suave) both;
+}
+
+.entra-suave {
+  animation: entrada-suave var(--duração-controle) var(--curva-suave) both;
+}
+
+.gira {
+  animation: girar 900ms linear infinite;
+}
+
+.transição-controle {
+  transition-duration: var(--duração-controle);
+  transition-timing-function: var(--curva-suave);
+}
+
+.transição-painel {
+  transition-duration: var(--duração-painel);
+  transition-timing-function: var(--curva-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

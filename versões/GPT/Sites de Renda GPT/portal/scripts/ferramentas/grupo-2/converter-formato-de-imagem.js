@@ -1,0 +1,4 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,file} from './comum.js';
+import {canvas,carregarImagem,codificar,cor,tipo,resultadoImagem,comImagem,temExif} from './imagem-base.js';
+export default definir("converter-formato-de-imagem",8,"Converter formato de imagem","Converta PNG, JPEG ou WebP localmente.","PNG preserva transparência; JPEG aplica fundo escolhido. Formatos não suportados na exportação são informados.",[F(),S('formato','Formato final','png',[['png','PNG'],['jpeg','JPEG'],['webp','WebP']]),{nome:'fundo',rotulo:'Cor de fundo para JPEG',tipo:'color',valor:'#ffffff'},N('qualidade','Qualidade JPEG/WebP (%)',90,1,100)],async d=>{return comImagem(d,async(im,f)=>{const mime=tipo(d),bg=cor(d.fundo),c=canvas(im.width,im.height),ctx=c.getContext('2d');if(mime==='image/jpeg'){ctx.fillStyle=bg;ctx.fillRect(0,0,c.width,c.height);}ctx.drawImage(im,0,0);return resultadoImagem(c,mime,n(d,'qualidade',1,100)/100,f.size);});});
+

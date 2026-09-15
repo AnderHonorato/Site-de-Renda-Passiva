@@ -1,0 +1,45 @@
+{
+  "versãoDoEsquema": 1,
+  "site": {
+    "marca": "Ponto e Preço",
+    "marcaDestaque": "Preço",
+    "descrição": "Ferramentas gratuitas para crochê e artesanato: preço da peça, valor da hora, custo do fio, encomendas e orçamento.",
+    "prefixoDeArmazenamento": "ponto-e-preço",
+    "versão": "1.0.0"
+  },
+  "criador": {
+    "nome": "Anderson",
+    "portfólio": "",
+    "contato": ""
+  },
+  "publicação": {
+    "endereçoBase": ""
+  },
+  "privacidade": {
+    "versãoDaPolítica": "2026-09-14",
+    "validadeDoConsentimentoEmDias": 180,
+    "contatoDePrivacidade": ""
+  },
+  "publicidade": {
+    "ativa": false,
+    "identificadorDoPublicador": "",
+    "blocos": {},
+    "consentimentoConfigurado": false,
+    "cmp": "nenhuma"
+  },
+  "apoio": {
+    "ativo": false,
+    "chavePix": "",
+    "nomeDoRecebedor": "",
+    "cidadeDoRecebedor": "",
+    "valoresSugeridosEmCentavos": [
+      100,
+      500,
+      1000,
+      2000,
+      3000,
+      5000,
+      10000
+    ]
+  }
+}

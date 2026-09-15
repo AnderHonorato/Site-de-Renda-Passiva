@@ -1,0 +1,123 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/orçamento.css
+   Documento de orçamento com aparência de papel da marca: usado na prévia da
+   ferramenta, na página do cliente (link compartilhado) e na impressão. */
+
+.orçamento-compartilhado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-5);
+  max-width: 820px;
+}
+
+.documento-de-orçamento {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+  padding: 0 0 var(--espaço-5);
+  background: var(--cor-superfície-elevada);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra-m);
+  overflow: hidden;
+}
+.documento-de-orçamento > :not(.orçamento-topo) {
+  margin-inline: var(--espaço-5);
+}
+
+.orçamento-topo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espaço-3);
+  padding: var(--espaço-4) var(--espaço-5);
+  background: var(--cor-ação);
+  color: var(--cor-sobre-ação);
+}
+.orçamento-marca {
+  margin: 0;
+  font-family: var(--fonte-marca);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+}
+.orçamento-rótulo {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.orçamento-título {
+  margin-block: 0;
+  color: var(--cor-texto-destaque);
+}
+
+.orçamento-dados,
+.orçamento-totais {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--espaço-1) var(--espaço-4);
+  margin-block: 0;
+}
+.orçamento-informação {
+  display: contents;
+}
+.orçamento-informação dt {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+.orçamento-informação dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.orçamento-tabela .número {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.orçamento-totais {
+  justify-self: end;
+  align-self: flex-end;
+  min-width: min(100%, 300px);
+  padding: var(--espaço-3) var(--espaço-4);
+  background: var(--cor-destaque-100);
+  border-radius: var(--raio-m);
+}
+.orçamento-totais dd {
+  text-align: right;
+}
+.orçamento-total dt,
+.orçamento-total dd {
+  font-family: var(--fonte-título);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--cor-texto-destaque);
+}
+
+.orçamento-observações {
+  margin-block: 0;
+  white-space: pre-line;
+  font-size: 14px;
+}
+.orçamento-rodapé {
+  margin-block: 0;
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+@media print {
+  .documento-de-orçamento {
+    box-shadow: none;
+    border: 1px solid #999;
+    border-radius: 0;
+    background: #fff;
+  }
+  .orçamento-topo {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

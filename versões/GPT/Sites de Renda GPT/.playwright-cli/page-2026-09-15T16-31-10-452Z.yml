@@ -1,0 +1,137 @@
+- generic [active] [ref=f1e1]:
+  - link "Pular para o conteúdo" [ref=f1e2] [cursor=pointer]:
+    - /url: "#conteudo"
+  - banner [ref=f1e3]:
+    - link "Doce Ofício, início" [ref=f1e4] [cursor=pointer]:
+      - /url: "#inicio"
+      - generic [ref=f1e6]:
+        - strong [ref=f1e7]: doce ofício
+        - generic [ref=f1e8]: ferramentas para o dia a dia
+    - navigation "Principal" [ref=f1e9]:
+      - link "Ferramentas" [ref=f1e10] [cursor=pointer]:
+        - /url: "#ferramentas"
+      - link "Como funciona" [ref=f1e11] [cursor=pointer]:
+        - /url: "#como-funciona"
+      - link "Meus salvos" [ref=f1e12] [cursor=pointer]:
+        - /url: "#salvos"
+      - link "Sobre" [ref=f1e13] [cursor=pointer]:
+        - /url: "#sobre"
+  - main [ref=f1e14]:
+    - generic [ref=f1e15]:
+      - generic [ref=f1e16]:
+        - generic [ref=f1e17]:
+          - text: UM POUCO DE AJUDA, TODOS OS DIAS
+          - heading [level=1] [ref=f1e18]:
+            - text: Pequenas contas.
+            - emphasis [ref=f1e19]: Grandes planos.
+          - paragraph [ref=f1e20]: Do bolo que você vende à viagem que você sonha. Encontre um jeito mais simples de calcular, criar e organizar.
+          - generic [ref=f1e21]:
+            - link "Encontre sua ferramenta" [ref=f1e22] [cursor=pointer]:
+              - /url: "#ferramentas"
+            - generic [ref=f1e23]: feito para facilitar.
+          - generic [ref=f1e24]: Gratuito. Sem cadastro. No seu navegador.
+        - generic [ref=f1e26]:
+          - img "Ilustração de calculadora, caderno, fita métrica e materiais de papelaria em tons de terracota e verde." [ref=f1e27]
+          - generic [ref=f1e28]:
+            - generic [ref=f1e29]: um lugar, muitas possibilidades
+            - strong [ref=f1e30]: 150 ferramentas úteis
+      - region "Sobre as ferramentas" [ref=f1e31]:
+        - generic [ref=f1e32]:
+          - strong [ref=f1e33]: 15 categorias
+          - text: para todos os seus planos
+        - generic [ref=f1e34]:
+          - strong [ref=f1e35]: Seus arquivos ficam com você
+          - text: processamento local, sem envio
+        - generic [ref=f1e36]:
+          - strong [ref=f1e37]: Resultado bem explicado
+          - text: premissas, medidas e próximos passos
+      - generic [ref=f1e38]:
+        - generic [ref=f1e39]:
+          - generic [ref=f1e40]:
+            - text: ESCOLHA SEU CAMINHO
+            - heading "O que vamos resolver hoje?" [level=2] [ref=f1e41]
+          - generic [ref=f1e42]: 150 pequenas facilidades
+        - generic [ref=f1e43]:
+          - generic [ref=f1e44]:
+            - searchbox "Buscar ferramentas" [ref=f1e45]
+            - generic [ref=f1e46]: /
+          - generic [ref=f1e47]:
+            - generic [ref=f1e48]: Categoria
+            - combobox "Categoria" [ref=f1e49]:
+              - option "Todas as categorias" [selected]
+              - option "Confeitaria"
+              - option "Educação"
+              - option "Artesanato"
+              - option "Festas"
+              - option "Reforma"
+              - option "Embalagens"
+              - option "Texto e escrita"
+              - option "Imagens"
+              - option "PDF e documentos"
+              - option "Datas e tempo"
+              - option "Matemática e medidas"
+              - option "Vendas e negócios"
+              - option "Ferramentas digitais"
+              - option "Casa e economia"
+              - option "Viagens e deslocamentos"
+        - generic "Categorias em destaque" [ref=f1e50]:
+          - button "Todas" [pressed] [ref=f1e51] [cursor=pointer]
+          - button "Confeitaria" [ref=f1e52] [cursor=pointer]
+          - button "Educação" [ref=f1e53] [cursor=pointer]
+          - button "Reforma" [ref=f1e54] [cursor=pointer]
+          - button "Imagens" [ref=f1e55] [cursor=pointer]
+          - button "PDF e documentos" [ref=f1e56] [cursor=pointer]
+          - button "Casa e economia" [ref=f1e57] [cursor=pointer]
+        - generic [ref=f1e58]:
+          - status [ref=f1e59]: 0 ferramentas encontradas
+          - button "Só favoritos" [ref=f1e60] [cursor=pointer]
+        - paragraph [ref=f1e62]: Não encontramos uma ferramenta. Experimente outra palavra ou escolha todas as categorias.
+      - generic [ref=f1e64]:
+        - generic [ref=f1e65]:
+          - text: DO SEU JEITO
+          - heading [level=2] [ref=f1e66]:
+            - text: Feito para caber
+            - emphasis [ref=f1e67]: na sua rotina.
+        - generic [ref=f1e68]:
+          - article [ref=f1e69]:
+            - text: "01"
+            - heading "Encontre o que precisa" [level=3] [ref=f1e70]
+            - paragraph [ref=f1e71]: Explore as categorias ou escreva o que quer resolver.
+          - article [ref=f1e72]:
+            - text: "02"
+            - heading "Preencha com calma" [level=3] [ref=f1e73]
+            - paragraph [ref=f1e74]: Use seus dados e confira as premissas de cada ferramenta.
+          - article [ref=f1e75]:
+            - text: "03"
+            - heading "Leve o resultado" [level=3] [ref=f1e76]
+            - paragraph [ref=f1e77]: Copie, baixe, imprima ou salve para continuar depois.
+      - generic [ref=f1e80]:
+        - text: UM OFÍCIO DIÁRIO
+        - heading [level=2] [ref=f1e81]:
+          - text: Menos tempo nas contas.
+          - emphasis [ref=f1e82]: Mais tempo fazendo acontecer.
+        - paragraph [ref=f1e83]: Criado por Anderson para transformar tarefas do dia a dia em passos simples. Ferramentas gratuitas, com resultados transparentes e espaço para os seus planos.
+        - link "Ajude este projeto a continuar" [ref=f1e84] [cursor=pointer]:
+          - /url: "#apoiar"
+  - contentinfo [ref=f1e85]:
+    - link [ref=f1e86] [cursor=pointer]:
+      - /url: "#inicio"
+      - strong [ref=f1e87]: doce ofício
+    - generic [ref=f1e88]: Criado por Anderson · 2026
+    - navigation "Institucional" [ref=f1e89]:
+      - link "Privacidade" [ref=f1e90] [cursor=pointer]:
+        - /url: "#privacidade"
+      - link "Termos" [ref=f1e91] [cursor=pointer]:
+        - /url: "#termos"
+      - link "Contato" [ref=f1e92] [cursor=pointer]:
+        - /url: "#contato"
+      - button "Preferências de privacidade" [ref=f1e93] [cursor=pointer]
+  - region "Preferências de privacidade" [ref=f1e94]:
+    - generic [ref=f1e95]:
+      - strong [ref=f1e96]: Um espaço que respeita você.
+      - paragraph [ref=f1e97]: Salvos e favoritos ficam neste navegador. Não carregamos anúncios ou medição nas ferramentas. Você escolhe suas preferências opcionais.
+    - generic [ref=f1e98]:
+      - button "Rejeitar opcionais" [ref=f1e99] [cursor=pointer]
+      - button "Aceitar opcionais" [ref=f1e100] [cursor=pointer]
+      - button "Personalizar" [ref=f1e101] [cursor=pointer]
+  - status

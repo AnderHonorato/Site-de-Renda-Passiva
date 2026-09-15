@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR" data-raiz="../" data-prefixo="demão-certa" data-destaque="principal" data-tipo="institucional" data-anúncios="não" data-página="apoiar">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Apoiar com Pix — Demão Certa</title>
+  <meta name="description" content="Apoie voluntariamente a manutenção de Demão Certa com um Pix de qualquer valor. Nada é cobrado e nenhuma ferramenta é bloqueada.">
+  <meta name="author" content="Anderson">
+  <meta name="theme-color" content="#f3ece0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" href="../recursos/ícones/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../recursos/fontes/figtree-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../estilos/site.css">
+  <script type="module" src="../scripts/iniciar-aplicação.js"></script>
+</head>
+<body>
+  <a class="pular-para-conteúdo" href="#conteúdo">Pular para o conteúdo</a>
+  <header class="cabeçalho não-imprimir">
+    <a class="cabeçalho-marca logotipo" href="../index.html" aria-label="Demão Certa — página inicial"><svg class="marca-símbolo" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#marca"></use></svg><span>Demão <em>Certa</em></span></a>
+    <nav class="cabeçalho-navegação" aria-label="Navegação principal">
+      <a class="cabeçalho-link" href="../páginas/ferramentas.html">Ferramentas</a>
+      <a class="cabeçalho-link" href="../páginas/salvos.html">Salvos</a>
+      <a class="cabeçalho-link" href="../páginas/metodologia.html">Metodologia</a>
+      <a class="cabeçalho-link" href="../páginas/sobre.html">Sobre</a>
+      <a class="botão botão-primário cabeçalho-apoiar" href="../páginas/apoiar.html" aria-current="page"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#apoiar"></use></svg><span>Apoiar por Pix</span></a>
+    </nav>
+  </header>
+  <main id="conteúdo" class="conteúdo" tabindex="-1">
+<section class="apoio" aria-labelledby="apoio-título">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Apoio voluntário</p>
+    <h1 id="apoio-título">Apoie Demão Certa com um Pix</h1>
+    <p class="ferramenta-resumo">Este projeto é gratuito. Se ele ajudou você, pode apoiar sua manutenção com qualquer valor. Nada é cobrado automaticamente e nenhuma ferramenta depende disso.</p>
+  </header>
+
+  <div class="aviso aviso-informação" data-apoio-indisponível><p><strong>O apoio por Pix ainda não está disponível.</strong> O responsável pelo site ainda não configurou os dados de recebimento. Nenhum código é gerado até lá, e todas as ferramentas continuam gratuitas.</p></div>
+
+  <form id="formulário-apoio" class="apoio-formulário" novalidate data-apoio-formulário>
+    <fieldset class="grupo-de-campos" data-apoio-campos>
+      <legend>Escolha um valor</legend>
+      <div class="valores-rápidos">
+        <label class="opção-de-valor"><input type="radio" name="valor" value="100"><span>R$ 1</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="500"><span>R$ 5</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="1000"><span>R$ 10</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="2000"><span>R$ 20</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="3000"><span>R$ 30</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="5000"><span>R$ 50</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="10000"><span>R$ 100</span></label>
+      </div>
+      <div class="campo">
+        <label for="valor-livre">Ou digite outro valor (R$)</label>
+        <input id="valor-livre" name="valor-livre" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 15,00" aria-describedby="valor-livre-ajuda valor-livre-erro">
+        <p id="valor-livre-ajuda" class="campo-ajuda">Use vírgula para os centavos. De R$ 0,01 a R$ 99.999,99.</p>
+        <p id="valor-livre-erro" class="campo-erro" hidden></p>
+      </div>
+      <div class="ações-do-formulário">
+        <button type="submit" class="botão botão-primário">Revisar apoio</button>
+      </div>
+    </fieldset>
+  </form>
+
+  <section class="apoio-revisão" aria-labelledby="revisão-título" data-apoio-revisão tabindex="-1" hidden>
+    <h2 id="revisão-título">Confira antes de gerar</h2>
+    <dl class="lista-de-resultado">
+      <div><dt>Valor</dt><dd data-revisão-valor></dd></div>
+      <div><dt>Recebedor</dt><dd data-revisão-recebedor></dd></div>
+      <div><dt>Cidade</dt><dd data-revisão-cidade></dd></div>
+      <div><dt>Chave Pix</dt><dd data-revisão-chave></dd></div>
+    </dl>
+    <div class="ações-do-formulário">
+      <button type="button" class="botão botão-primário" data-gerar-pix><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#código-qr"></use></svg>Gerar QR Code Pix</button>
+      <button type="button" class="botão botão-secundário" data-alterar-valor>Alterar valor</button>
+    </div>
+  </section>
+
+  <section class="apoio-código" aria-labelledby="código-título" data-apoio-código tabindex="-1" hidden>
+    <h2 id="código-título">Pix de <span data-código-valor></span></h2>
+    <p>Abra o aplicativo do seu banco, escolha pagar com Pix e leia o QR Code. No celular, copie o código abaixo e use a opção Pix Copia e Cola.</p>
+    <div class="apoio-qr" data-apoio-qr></div>
+    <div class="campo">
+      <label for="pix-copia-e-cola">Pix Copia e Cola</label>
+      <textarea id="pix-copia-e-cola" class="entrada área-de-texto apoio-copia-e-cola" rows="4" readonly data-pix-copia-e-cola></textarea>
+    </div>
+    <div class="ações-do-formulário">
+      <button type="button" class="botão botão-primário" data-copiar-pix><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#copiar"></use></svg>Copiar código</button>
+      <button type="button" class="botão botão-secundário" data-baixar-qr><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#baixar"></use></svg>Baixar QR Code</button>
+      <button type="button" class="botão botão-fantasma" data-fechar-código>Fechar</button>
+    </div>
+    <p class="aviso aviso-informação">Obrigado pela intenção de apoiar! Este site não recebe confirmação de pagamentos: a conferência é feita pelo recebedor no próprio banco. Confira o nome do recebedor e o valor no aplicativo antes de confirmar. Eventuais tarifas dependem do seu banco.</p>
+  </section>
+
+  <section class="texto-editorial" aria-labelledby="como-funciona-título">
+    <h2 id="como-funciona-título">Como funciona</h2>
+    <ul>
+      <li>O QR Code e o código Copia e Cola são montados no seu próprio aparelho, a partir dos dados públicos do recebedor.</li>
+      <li>O site não pede, não recebe e não guarda dados bancários. O pagamento acontece somente no aplicativo do seu banco, se você decidir confirmar.</li>
+      <li>Não há cobrança recorrente, cadastro ou contrapartida: o apoio não libera recursos extras, porque todos já são gratuitos.</li>
+      <li>Se mudar o valor, um novo código precisa ser gerado; o anterior deixa de ser exibido.</li>
+    </ul>
+  </section>
+</section>
+  </main>
+
+  <footer class="rodapé-institucional">
+    <div class="rodapé-conteúdo">
+      <div class="rodapé-autoria">
+        <p class="rodapé-marca logotipo"><svg class="marca-símbolo" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#marca"></use></svg><span>Demão <em>Certa</em></span></p>
+        <p class="rodapé-criador">Criado por <strong>Anderson</strong></p>
+      </div>
+      <nav class="rodapé-links não-imprimir" aria-label="Institucional">
+        <ul>
+          <li><a href="../páginas/sobre.html">Sobre</a></li>
+          <li><a href="../páginas/metodologia.html">Metodologia</a></li>
+          <li><a href="../páginas/contato.html">Contato</a></li>
+          <li><a href="../páginas/política-de-privacidade.html">Política de privacidade</a></li>
+          <li><a href="../páginas/termos-de-uso.html">Termos de uso</a></li>
+          <li><button type="button" class="botão-link" data-abrir-preferências-de-privacidade>Preferências de privacidade</button></li>
+        </ul>
+      </nav>
+      <p class="rodapé-direitos">© 2026 Demão Certa · versão 1.0.0 · Ferramentas gratuitas. Resultados são estimativas baseadas nos dados informados.</p>
+    </div>
+  </footer>
+
+  <nav class="navegação-inferior não-imprimir" aria-label="Navegação do aplicativo">
+    <a class="navegação-inferior-item" href="../index.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#início"></use></svg><span>Início</span></a>
+    <a class="navegação-inferior-item" href="../páginas/ferramentas.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#ferramentas"></use></svg><span>Ferramentas</span></a>
+    <a class="navegação-inferior-item" href="../páginas/salvos.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#salvos"></use></svg><span>Salvos</span></a>
+    <a class="navegação-inferior-item" href="../páginas/apoiar.html" aria-current="page"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#apoiar"></use></svg><span>Apoiar</span></a>
+    <button type="button" class="navegação-inferior-item" data-abrir-menu-mais aria-haspopup="dialog" aria-controls="menu-mais"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#mais"></use></svg><span>Mais</span></button>
+  </nav>
+
+  <dialog id="menu-mais" class="diálogo menu-mais" aria-labelledby="menu-mais-título">
+    <div class="diálogo-cabeçalho">
+      <h2 id="menu-mais-título" class="diálogo-título">Mais opções</h2>
+      <button type="button" class="botão botão-ícone botão-fantasma" data-fechar-diálogo aria-label="Fechar menu"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#fechar"></use></svg></button>
+    </div>
+    <nav aria-label="Mais opções">
+      <ul class="menu-mais-lista">
+        <li><a class="menu-mais-link" href="../páginas/sobre.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#informação"></use></svg><span>Sobre</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/metodologia.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#lista"></use></svg><span>Metodologia</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/contato.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#contato"></use></svg><span>Contato</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/política-de-privacidade.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#privacidade"></use></svg><span>Política de privacidade</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/termos-de-uso.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#documento"></use></svg><span>Termos de uso</span></a></li>
+        <li><button type="button" class="menu-mais-link" data-abrir-preferências-de-privacidade><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#privacidade"></use></svg><span>Preferências de privacidade</span></button></li>
+      </ul>
+    </nav>
+  </dialog>
+
+  <section id="consentimento" class="consentimento não-imprimir" aria-labelledby="consentimento-título" hidden>
+    <div class="consentimento-texto">
+      <h2 id="consentimento-título" class="consentimento-título">Sua privacidade</h2>
+      <p>Guardamos no seu aparelho apenas o necessário para lembrar suas escolhas e os dados que você decidir salvar. Recursos opcionais, como publicidade, só são carregados se você permitir. Rejeitar não limita nenhuma ferramenta. <a href="../páginas/política-de-privacidade.html">Política de privacidade</a>.</p>
+    </div>
+    <div class="consentimento-ações">
+      <button type="button" class="botão botão-secundário" data-consentimento="rejeitar">Rejeitar opcionais</button>
+      <button type="button" class="botão botão-secundário" data-consentimento="personalizar">Personalizar</button>
+      <button type="button" class="botão botão-primário" data-consentimento="aceitar">Aceitar opcionais</button>
+    </div>
+  </section>
+  <dialog id="preferências-de-privacidade" class="diálogo" aria-labelledby="preferências-título">
+    <form method="dialog" class="diálogo-formulário" data-formulário-de-privacidade>
+      <div class="diálogo-cabeçalho">
+        <h2 id="preferências-título" class="diálogo-título">Preferências de privacidade</h2>
+        <button type="button" class="botão botão-ícone botão-fantasma" data-fechar-diálogo aria-label="Fechar preferências"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#fechar"></use></svg></button>
+      </div>
+      <div class="diálogo-corpo">
+        <div class="opção-de-privacidade">
+          <p class="opção-de-privacidade-título">Necessário <span class="etiqueta etiqueta-secundária">Sempre ativo</span></p>
+          <p class="campo-ajuda">Armazenamento local para guardar esta escolha e os itens que você salvar. Não é enviado a servidores.</p>
+        </div>
+        <div class="opção-de-privacidade">
+          <label class="interruptor">
+            <input type="checkbox" name="publicidade" role="switch" data-preferência="publicidade">
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            <span class="opção-de-privacidade-título">Publicidade</span>
+          </label>
+          <p class="campo-ajuda" data-estado-da-publicidade>Permite carregar anúncios do Google AdSense, que podem usar cookies e identificadores. Enquanto a publicidade não estiver ativa neste site, nada é carregado.</p>
+        </div>
+        <p class="campo-ajuda">Este site não usa ferramentas de medição de audiência. Você pode mudar sua escolha a qualquer momento em “Preferências de privacidade”, no rodapé ou no menu Mais.</p>
+      </div>
+      <div class="diálogo-ações">
+        <button type="submit" value="rejeitar" class="botão botão-secundário">Rejeitar opcionais</button>
+        <button type="submit" value="salvar" class="botão botão-primário">Salvar escolhas</button>
+      </div>
+    </form>
+  </dialog>
+  <div class="região-de-mensagens não-imprimir" role="status" aria-live="polite" data-região-de-mensagens></div>
+</body>
+</html>

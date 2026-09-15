@@ -1,0 +1,66 @@
+<!--página
+{
+  "título": "Comparador de embalagens de tinta",
+  "descrição": "Compare embalagens de tinta pelo custo por litro e pelo custo por m² a partir do rendimento declarado, antes de escolher qual comprar.",
+  "destaque": "azulejo",
+  "navegação": "ferramentas",
+  "script": "páginas/comparador-de-tinta.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Comparador de embalagens de tinta</h1>
+    <p class="ferramenta-resumo">Adicione duas ou mais embalagens com preço, litros e a cobertura declarada na lata. A ferramenta calcula o custo por litro e o custo por m², e aponta a mais barata em cada critério.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-comparador" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Embalagens</legend>
+        <div class="linhas-editáveis" data-linhas-de-embalagens></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-embalagem>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar embalagem</span>
+        </button>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Comparar embalagens</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#paint-roller"></use></svg>
+        <p class="estado-vazio-título">A comparação aparece aqui</p>
+        <p>Adicione ao menos duas embalagens com preço, litros e cobertura declarada e toque em Comparar embalagens.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="tabela-rolável">
+          <table class="tabela" data-tabela-comparação>
+            <caption>Custo por litro e por m²</caption>
+            <thead>
+              <tr><th scope="col">Embalagem</th><th scope="col" data-numérico>Custo por litro</th><th scope="col" data-numérico>Custo por m²</th></tr>
+            </thead>
+            <tbody data-corpo-comparação></tbody>
+          </table>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Custo por litro = preço ÷ litros. Custo por m² = preço ÷ cobertura declarada na embalagem.</li>
+    <li>A cobertura declarada é a do rótulo do fabricante — rendimentos reais variam com a superfície e a técnica de aplicação.</li>
+    <li>O preço mais baixo por litro nem sempre é o mais baixo por m²: confira os dois antes de decidir.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-comparador" class="botão botão-primário">Comparar embalagens</button>
+</div>

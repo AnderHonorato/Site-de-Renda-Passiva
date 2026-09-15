@@ -1,0 +1,78 @@
+<!--página
+{
+  "título": "Rendimento com perdas",
+  "descrição": "Descubra quantas unidades realmente sobram para vender depois de uma perda percentual, e o custo por unidade aproveitável.",
+  "destaque": "amora",
+  "navegação": "ferramentas",
+  "script": "páginas/rendimento-com-perdas.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Rendimento com perdas</h1>
+    <p class="ferramenta-resumo">Nem tudo que sai do forno vira venda: quebra, teste, embalagem malfeita. Informe as unidades produzidas e a perda percentual para saber quantas unidades realmente sobram para vender.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-rendimento" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Produção e perda</legend>
+        <div class="campo">
+          <label for="unidades-produzidas">Unidades produzidas</label>
+          <input id="unidades-produzidas" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 100" aria-describedby="unidades-produzidas-erro">
+          <p id="unidades-produzidas-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="percentual-de-perda">Perda estimada (%)</label>
+          <input id="percentual-de-perda" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 5" aria-describedby="percentual-de-perda-ajuda percentual-de-perda-erro">
+          <p id="percentual-de-perda-ajuda" class="campo-ajuda">Quebra, testes de forno, embalagens malfeitas ou qualquer perda que você costuma ter.</p>
+          <p id="percentual-de-perda-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="custo-total-do-lote">Custo total do lote (R$, opcional)</label>
+          <input id="custo-total-do-lote" class="entrada" type="text" inputmode="decimal" autocomplete="off" aria-describedby="custo-total-do-lote-ajuda custo-total-do-lote-erro">
+          <p id="custo-total-do-lote-ajuda" class="campo-ajuda">Se informado, mostramos o custo por unidade que realmente sobra para vender.</p>
+          <p id="custo-total-do-lote-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular rendimento</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#cake-slice"></use></svg>
+        <p class="estado-vazio-título">O rendimento aparece aqui</p>
+        <p>Informe as unidades produzidas e a perda estimada, e toque em Calcular rendimento.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Unidades aproveitáveis</p>
+          <p class="resultado-valor" data-unidades-aproveitáveis></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse valor</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Unidades aproveitáveis = unidades produzidas × (1 − perda), arredondado para baixo: não é possível vender uma fração de unidade.</li>
+    <li>A perda é uma estimativa sua, não uma garantia: ajuste-a com base no que você realmente observa na sua produção.</li>
+    <li>O custo por unidade aproveitável reparte o custo total do lote pelas unidades que sobram, não pelas que foram produzidas.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-rendimento" class="botão botão-primário">Calcular rendimento</button>
+</div>

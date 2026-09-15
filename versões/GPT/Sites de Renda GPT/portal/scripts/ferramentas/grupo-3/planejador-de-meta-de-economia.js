@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("planejador-de-meta-de-economia",14,"Planejador de meta de economia","Divida o valor restante pelo prazo em meses.","Necessário = máximo(0, meta − valor já guardado). Parcela mensal é arredondada para cima em centavos; última parcela compensa. Sem juros, inflação ou rendimento presumido.",[h.numero('meta','Meta (R$)',1200),h.numero('guardado','Já guardado (R$)',200),h.numero('meses','Meses disponíveis',5,1,600)],async d=>{const falta=Math.max(0,Math.round((h.n(d.meta)-h.n(d.guardado))*100)),m=h.inteiro(d.meses,'Meses',1,600),p=Math.ceil(falta/m);const valores=Array.from({length:m},(_,i)=>Math.max(0,Math.min(p,falta-i*p))/100);return h.resultado(h.reais(p/100)+' por mês','Restante: '+h.reais(falta/100),...valores.map((v,i)=>'Mês '+(i+1)+': '+h.reais(v)));});
+

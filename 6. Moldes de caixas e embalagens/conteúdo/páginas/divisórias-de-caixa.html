@@ -1,0 +1,144 @@
+<!--página
+{
+  "título": "Divisórias de caixa",
+  "descrição": "Gere as tiras encaixáveis que dividem o interior de uma caixa em linhas e colunas de compartimentos.",
+  "destaque": "petróleo",
+  "navegação": "ferramentas",
+  "script": "páginas/divisórias-de-caixa.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador de molde</p>
+    <h1 id="título-ferramenta">Divisórias de caixa</h1>
+    <p class="ferramenta-resumo">Tiras que se encaixam em cruz (como uma grade de garrafeira) para dividir o interior de uma caixa em compartimentos. Informe as medidas internas e a grade de linhas × colunas desejada.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-divisórias" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Unidade das medidas</legend>
+        <div class="segmentado" role="radiogroup" aria-label="Unidade">
+          <label class="opção"><input type="radio" name="unidade" value="mm" checked> Milímetros</label>
+          <label class="opção"><input type="radio" name="unidade" value="cm"> Centímetros</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Medidas internas da caixa</legend>
+        <div class="campo">
+          <label for="comprimento">Comprimento interno</label>
+          <input id="comprimento" name="comprimento" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="20" aria-describedby="comprimento-erro">
+          <p id="comprimento-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="largura">Largura interna</label>
+          <input id="largura" name="largura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="15" aria-describedby="largura-erro">
+          <p id="largura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="altura">Altura interna</label>
+          <input id="altura" name="altura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="8" aria-describedby="altura-erro">
+          <p id="altura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="espessura">Espessura do material (mm)</label>
+          <input id="espessura" name="espessura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="2" aria-describedby="espessura-erro">
+          <p id="espessura-erro" class="campo-erro" hidden></p>
+          <p class="campo-ajuda">É a largura do entalhe: use a espessura real do papelão ou cartão que vai cortar.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Grade de compartimentos</legend>
+        <div class="campo">
+          <label for="linhas">Linhas</label>
+          <input id="linhas" name="linhas" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="2" aria-describedby="linhas-erro">
+          <p id="linhas-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="colunas">Colunas</label>
+          <input id="colunas" name="colunas" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="3" aria-describedby="colunas-erro">
+          <p id="colunas-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Papel</legend>
+        <div class="campo">
+          <label for="tipo-de-papel">Tipo de material (opcional, informativo)</label>
+          <select id="tipo-de-papel" name="tipo-de-papel" class="seleção">
+            <option value="">Não informado</option>
+            <option value="Cartão duplex/triplex">Cartão duplex/triplex</option>
+            <option value="Papelão micro-ondulado">Papelão micro-ondulado</option>
+            <option value="MDF fino">MDF fino</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar tiras</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#layers"></use></svg>
+        <p class="estado-vazio-título">Suas tiras aparecem aqui</p>
+        <p>Informe as medidas e a grade e toque em Gerar tiras.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-valor" data-total-de-compartimentos></p>
+          <p class="resultado-rótulo">compartimentos</p>
+        </div>
+
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF (todas as tiras)</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="não-imprimir" data-resumo-de-folhas></div>
+
+        <p data-aviso-vertical hidden></p>
+        <div class="prévia-de-molde não-imprimir" data-bloco-vertical hidden>
+          <div data-prévia-vertical></div>
+          <p class="prévia-de-molde-escala" data-escala-vertical></p>
+        </div>
+        <p data-aviso-horizontal hidden></p>
+        <div class="prévia-de-molde não-imprimir" data-bloco-horizontal hidden>
+          <div data-prévia-horizontal></div>
+          <p class="prévia-de-molde-escala" data-escala-horizontal></p>
+        </div>
+
+        <dl class="lista-de-resultado" data-resumo-de-medidas></dl>
+
+        <div class="área-de-impressão">
+          <p>As prévias acima já mostram uma tira de cada tipo, na escala indicada. O PDF traz todas as tiras necessárias, cada uma em sua própria folha.</p>
+        </div>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta grade</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Divisórias para bombons" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>Os entalhes têm a largura da espessura do material informada e profundidade igual à metade da altura interna, para encaixar na metade da tira perpendicular.</li>
+    <li>Este molde não foi montado fisicamente em papel para conferência: a validação foi geométrica e da renderização do PDF.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-divisórias" class="botão botão-primário">Gerar tiras</button>
+</div>

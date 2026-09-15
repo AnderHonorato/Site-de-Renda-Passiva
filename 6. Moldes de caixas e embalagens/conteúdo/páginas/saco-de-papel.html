@@ -1,0 +1,126 @@
+<!--página
+{
+  "título": "Saco de papel",
+  "descrição": "Gere o molde plano de uma sacola de papel simples, sem alça estrutural, a partir da largura, profundidade e altura.",
+  "destaque": "damasco",
+  "navegação": "ferramentas",
+  "script": "páginas/saco-de-papel.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador de molde</p>
+    <h1 id="título-ferramenta">Saco de papel simples</h1>
+    <p class="ferramenta-resumo">O molde plano (a folha escalada) de uma sacola sem alça estrutural: frente, duas sanfonas laterais, verso, aba de colagem, aba de fundo e aba superior opcional.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-saco" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Unidade das medidas</legend>
+        <div class="segmentado" role="radiogroup" aria-label="Unidade">
+          <label class="opção"><input type="radio" name="unidade" value="mm" checked> Milímetros</label>
+          <label class="opção"><input type="radio" name="unidade" value="cm"> Centímetros</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Medidas da sacola</legend>
+        <div class="campo">
+          <label for="largura">Largura (frente)</label>
+          <input id="largura" name="largura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="12" aria-describedby="largura-erro">
+          <p id="largura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="profundidade">Profundidade (sanfona)</label>
+          <input id="profundidade" name="profundidade" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="7" aria-describedby="profundidade-erro">
+          <p id="profundidade-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="altura">Altura</label>
+          <input id="altura" name="altura" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="20" aria-describedby="altura-erro">
+          <p id="altura-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="aba-superior">Aba superior (mm, 0 para não ter)</label>
+          <input id="aba-superior" name="aba-superior" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="20" aria-describedby="aba-superior-erro">
+          <p id="aba-superior-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="aba-de-colagem">Aba de colagem lateral (mm)</label>
+          <input id="aba-de-colagem" name="aba-de-colagem" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="15" aria-describedby="aba-de-colagem-erro">
+          <p id="aba-de-colagem-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Papel e texto</legend>
+        <div class="campo">
+          <label for="tipo-de-papel">Tipo de papel (opcional, informativo)</label>
+          <select id="tipo-de-papel" name="tipo-de-papel" class="seleção">
+            <option value="">Não informado</option>
+            <option value="Papel kraft">Papel kraft</option>
+            <option value="Papel sulfite/offset">Papel sulfite/offset</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="texto-opcional">Texto no molde (opcional)</label>
+          <input id="texto-opcional" name="texto-opcional" class="entrada" type="text" maxlength="200" autocomplete="off" placeholder="Ex.: Loja da Ana">
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar molde</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#package"></use></svg>
+        <p class="estado-vazio-título">Seu molde aparece aqui</p>
+        <p>Informe as medidas e toque em Gerar molde.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="baixar-svg"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#file-down"></use></svg>Baixar SVG</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+        <div class="não-imprimir" data-resumo-de-folhas></div>
+        <div class="prévia-de-molde não-imprimir">
+          <div data-prévia-do-molde></div>
+          <p class="prévia-de-molde-escala" data-escala-da-prévia></p>
+          <div class="legenda-do-molde">
+            <span class="legenda-do-molde-item"><span class="legenda-do-molde-amostra"></span>Corte</span>
+            <span class="legenda-do-molde-item"><span class="legenda-do-molde-amostra legenda-do-molde-amostra--dobra"></span>Dobra</span>
+          </div>
+        </div>
+        <dl class="lista-de-resultado" data-resumo-de-medidas></dl>
+        <div class="área-de-impressão">
+          <p>A prévia acima já mostra o molde na escala indicada. Para imprimir em tamanho real, use o botão “Baixar PDF”.</p>
+        </div>
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar este molde</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Saco para pão" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>É uma folha escalada com as dobras principais indicadas — sem alça estrutural nem simulação da dobra diagonal do canto da sanfona, que depende do papel usado.</li>
+    <li>Este molde não foi montado fisicamente em papel para conferência: a validação foi geométrica e da renderização do PDF.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-saco" class="botão botão-primário">Gerar molde</button>
+</div>

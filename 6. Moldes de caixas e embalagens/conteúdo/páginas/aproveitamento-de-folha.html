@@ -1,0 +1,104 @@
+<!--página
+{
+  "título": "Aproveitamento de folha",
+  "descrição": "Compare duas orientações de corte de uma peça retangular numa folha e veja quantas peças cabem em cada uma.",
+  "destaque": "kraft",
+  "navegação": "ferramentas",
+  "script": "páginas/aproveitamento-de-folha.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta de planejamento</p>
+    <h1 id="título-ferramenta">Aproveitamento de folha</h1>
+    <p class="ferramenta-resumo">Informe o tamanho da folha e o tamanho da peça retangular que você vai recortar dela: a ferramenta compara a orientação normal e a peça girada 90° e mostra qual rende mais unidades.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-aproveitamento" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Unidade das medidas</legend>
+        <div class="segmentado" role="radiogroup" aria-label="Unidade">
+          <label class="opção"><input type="radio" name="unidade" value="mm" checked> Milímetros</label>
+          <label class="opção"><input type="radio" name="unidade" value="cm"> Centímetros</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Folha e peça</legend>
+        <div class="campo">
+          <label for="largura-da-folha">Largura da folha</label>
+          <input id="largura-da-folha" name="largura-da-folha" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="200" aria-describedby="largura-da-folha-erro">
+          <p id="largura-da-folha-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="altura-da-folha">Altura da folha</label>
+          <input id="altura-da-folha" name="altura-da-folha" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="280" aria-describedby="altura-da-folha-erro">
+          <p id="altura-da-folha-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="largura-da-peça">Largura da peça</label>
+          <input id="largura-da-peça" name="largura-da-peça" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="50" aria-describedby="largura-da-peça-erro">
+          <p id="largura-da-peça-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="altura-da-peça">Altura da peça</label>
+          <input id="altura-da-peça" name="altura-da-peça" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="70" aria-describedby="altura-da-peça-erro">
+          <p id="altura-da-peça-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="espaçamento">Espaçamento entre peças (mm)</label>
+          <input id="espaçamento" name="espaçamento" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="espaçamento-erro">
+          <p id="espaçamento-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Comparar orientações</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#square"></use></svg>
+        <p class="estado-vazio-título">A comparação aparece aqui</p>
+        <p>Informe as medidas e toque em Comparar orientações.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-valor" data-total-de-peças></p>
+          <p class="resultado-rótulo" data-orientação-escolhida></p>
+        </div>
+
+        <dl class="lista-de-resultado" data-resumo-de-medidas></dl>
+
+        <div class="prévia-de-molde não-imprimir">
+          <div data-prévia-do-molde></div>
+          <p class="prévia-de-molde-escala" data-escala-da-prévia></p>
+        </div>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta comparação</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Etiquetas na sobra de kraft" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>Compara só duas orientações (peça normal e peça girada 90°) em grade simples, sem aninhamento irregular de peças.</li>
+    <li>Esta ferramenta é de planejamento: não gera PDF de corte, só a comparação e uma prévia da grade escolhida.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-aproveitamento" class="botão botão-primário">Comparar orientações</button>
+</div>

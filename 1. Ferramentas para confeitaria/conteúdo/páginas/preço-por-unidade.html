@@ -1,0 +1,91 @@
+<!--página
+{
+  "título": "Preço por unidade",
+  "descrição": "Compare de duas a quatro embalagens pelo preço por quilo, litro ou unidade, e veja qual é a mais econômica.",
+  "destaque": "morango",
+  "navegação": "ferramentas",
+  "script": "páginas/preço-por-unidade.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Preço por unidade</h1>
+    <p class="ferramenta-resumo">Compare de duas a quatro embalagens do mesmo tipo de ingrediente pelo preço por quilo, litro ou unidade, e descubra qual delas é a mais econômica. Embalagens em grandezas diferentes (massa, volume ou contagem) não podem ser comparadas diretamente.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-comparação" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Embalagens</legend>
+        <div class="linhas-editáveis" data-linhas-de-embalagens>
+          <div class="linha-editável" data-linha>
+            <div class="campo"><label for="embalagem-nome-0">Embalagem</label><input id="embalagem-nome-0" class="entrada" type="text" maxlength="60" data-campo="nome" placeholder="Ex.: Pacote pequeno" value="Pacote pequeno"></div>
+            <div class="campo campo-estreito"><label for="embalagem-quantidade-0">Quantidade</label><input id="embalagem-quantidade-0" class="entrada" type="text" inputmode="decimal" data-campo="quantidade" placeholder="Ex.: 500"></div>
+            <div class="campo campo-estreito">
+              <label for="embalagem-unidade-0">Unidade</label>
+              <select id="embalagem-unidade-0" class="entrada seleção" data-campo="unidade">
+                <option value="g" selected>g</option><option value="kg">kg</option><option value="ml">ml</option><option value="L">L</option><option value="unidade">unidade</option>
+              </select>
+            </div>
+            <div class="campo campo-estreito"><label for="embalagem-preço-0">Preço (R$)</label><input id="embalagem-preço-0" class="entrada" type="text" inputmode="decimal" data-campo="preço" placeholder="Ex.: 12,00"></div>
+          </div>
+          <div class="linha-editável" data-linha>
+            <div class="campo"><label for="embalagem-nome-1">Embalagem</label><input id="embalagem-nome-1" class="entrada" type="text" maxlength="60" data-campo="nome" placeholder="Ex.: Pacote grande" value="Pacote grande"></div>
+            <div class="campo campo-estreito"><label for="embalagem-quantidade-1">Quantidade</label><input id="embalagem-quantidade-1" class="entrada" type="text" inputmode="decimal" data-campo="quantidade" placeholder="Ex.: 1"></div>
+            <div class="campo campo-estreito">
+              <label for="embalagem-unidade-1">Unidade</label>
+              <select id="embalagem-unidade-1" class="entrada seleção" data-campo="unidade">
+                <option value="g">g</option><option value="kg" selected>kg</option><option value="ml">ml</option><option value="L">L</option><option value="unidade">unidade</option>
+              </select>
+            </div>
+            <div class="campo campo-estreito"><label for="embalagem-preço-1">Preço (R$)</label><input id="embalagem-preço-1" class="entrada" type="text" inputmode="decimal" data-campo="preço" placeholder="Ex.: 20,00"></div>
+          </div>
+          <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-embalagem>
+            <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+            <span>Adicionar embalagem (até 4)</span>
+          </button>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Comparar preços</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#scale"></use></svg>
+        <p class="estado-vazio-título">A comparação aparece aqui</p>
+        <p>Preencha ao menos duas embalagens da mesma grandeza e toque em Comparar preços.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Mais econômica</p>
+          <p class="resultado-valor" data-mais-econômica></p>
+        </div>
+        <div class="tabela-rolável">
+          <table class="tabela" data-tabela-de-embalagens>
+            <caption>Preço por unidade de referência</caption>
+            <thead><tr><th scope="col">Embalagem</th><th scope="col">Quantidade</th><th scope="col">Preço</th><th scope="col">Preço por unidade de referência</th></tr></thead>
+            <tbody data-corpo-da-tabela></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Todas as embalagens comparadas precisam ser da mesma grandeza: todas em massa (g/kg), todas em volume (ml/L) ou todas em unidades.</li>
+    <li>O preço por unidade de referência usa quilo para massa, litro para volume e a própria unidade para contagem.</li>
+    <li>"Mais econômica" é só o menor preço por unidade de referência: não considera qualidade, validade ou se você realmente vai usar tudo.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-comparação" class="botão botão-primário">Comparar preços</button>
+</div>

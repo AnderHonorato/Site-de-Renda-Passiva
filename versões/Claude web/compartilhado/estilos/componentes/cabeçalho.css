@@ -1,0 +1,70 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/cabeçalho.css
+   No celular a navegação real mora na barra inferior e no menu Mais; o
+   cabeçalho vira uma barra compacta só com a marca. No computador ele mostra
+   a navegação completa e o botão de apoiar. */
+
+.cabeçalho {
+  position: sticky;
+  top: 0;
+  z-index: var(--camada-cabeçalho);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaço-4);
+  padding: var(--espaço-3) var(--espaço-4);
+  background: color-mix(in srgb, var(--cor-fundo) 92%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--cor-divisória);
+}
+
+.cabeçalho-marca {
+  font-size: 20px;
+}
+.cabeçalho-marca .marca-símbolo {
+  width: 24px;
+  height: 24px;
+}
+
+.cabeçalho-navegação {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .cabeçalho {
+    justify-content: flex-start;
+    padding: var(--espaço-4) var(--espaço-6);
+  }
+  .cabeçalho-marca { font-size: 22px; margin-right: auto; }
+  .cabeçalho-navegação {
+    display: flex;
+    align-items: center;
+    gap: var(--espaço-1);
+  }
+}
+
+.cabeçalho-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--espaço-2) var(--espaço-4);
+  border-radius: var(--raio-pílula);
+  color: var(--cor-texto);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color var(--duração-controle) var(--curva-suave),
+    color var(--duração-controle) var(--curva-suave);
+}
+.cabeçalho-link:hover {
+  background: color-mix(in srgb, var(--cor-texto) 6%, transparent);
+}
+.cabeçalho-link[aria-current="page"] {
+  color: var(--cor-texto-destaque);
+  background: var(--cor-destaque-100);
+}
+
+.cabeçalho-apoiar {
+  margin-left: var(--espaço-2);
+}
