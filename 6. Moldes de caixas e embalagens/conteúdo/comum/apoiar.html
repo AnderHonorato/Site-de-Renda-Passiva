@@ -1,0 +1,84 @@
+<!--página
+{
+  "título": "Apoiar com Pix",
+  "descrição": "Apoie voluntariamente a manutenção de {{marca}} com um Pix de qualquer valor. Nada é cobrado e nenhuma ferramenta é bloqueada.",
+  "destaque": "principal",
+  "navegação": "apoiar",
+  "tipo": "institucional",
+  "anúncios": false,
+  "faixaDeApoio": false
+}
+-->
+<section class="apoio" aria-labelledby="apoio-título">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Apoio voluntário</p>
+    <h1 id="apoio-título">Apoie {{marca}} com um Pix</h1>
+    <p class="ferramenta-resumo">Este projeto é gratuito. Se ele ajudou você, pode apoiar sua manutenção com qualquer valor. Nada é cobrado automaticamente e nenhuma ferramenta depende disso.</p>
+  </header>
+
+  {{gerado:aviso-de-apoio}}
+
+  <form id="formulário-apoio" class="apoio-formulário" novalidate data-apoio-formulário>
+    <fieldset class="grupo-de-campos" data-apoio-campos>
+      <legend>Escolha um valor</legend>
+      <div class="valores-rápidos">
+        <label class="opção-de-valor"><input type="radio" name="valor" value="100"><span>R$ 1</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="500"><span>R$ 5</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="1000"><span>R$ 10</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="2000"><span>R$ 20</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="3000"><span>R$ 30</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="5000"><span>R$ 50</span></label>
+        <label class="opção-de-valor"><input type="radio" name="valor" value="10000"><span>R$ 100</span></label>
+      </div>
+      <div class="campo">
+        <label for="valor-livre">Ou digite outro valor (R$)</label>
+        <input id="valor-livre" name="valor-livre" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 15,00" aria-describedby="valor-livre-ajuda valor-livre-erro">
+        <p id="valor-livre-ajuda" class="campo-ajuda">Use vírgula para os centavos. De R$ 0,01 a R$ 99.999,99.</p>
+        <p id="valor-livre-erro" class="campo-erro" hidden></p>
+      </div>
+      <div class="ações-do-formulário">
+        <button type="submit" class="botão botão-primário">Revisar apoio</button>
+      </div>
+    </fieldset>
+  </form>
+
+  <section class="apoio-revisão" aria-labelledby="revisão-título" data-apoio-revisão tabindex="-1" hidden>
+    <h2 id="revisão-título">Confira antes de gerar</h2>
+    <dl class="lista-de-resultado">
+      <div><dt>Valor</dt><dd data-revisão-valor></dd></div>
+      <div><dt>Recebedor</dt><dd data-revisão-recebedor></dd></div>
+      <div><dt>Cidade</dt><dd data-revisão-cidade></dd></div>
+      <div><dt>Chave Pix</dt><dd data-revisão-chave></dd></div>
+    </dl>
+    <div class="ações-do-formulário">
+      <button type="button" class="botão botão-primário" data-gerar-pix><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#código-qr"></use></svg>Gerar QR Code Pix</button>
+      <button type="button" class="botão botão-secundário" data-alterar-valor>Alterar valor</button>
+    </div>
+  </section>
+
+  <section class="apoio-código" aria-labelledby="código-título" data-apoio-código tabindex="-1" hidden>
+    <h2 id="código-título">Pix de <span data-código-valor></span></h2>
+    <p>Abra o aplicativo do seu banco, escolha pagar com Pix e leia o QR Code. No celular, copie o código abaixo e use a opção Pix Copia e Cola.</p>
+    <div class="apoio-qr" data-apoio-qr></div>
+    <div class="campo">
+      <label for="pix-copia-e-cola">Pix Copia e Cola</label>
+      <textarea id="pix-copia-e-cola" class="entrada área-de-texto apoio-copia-e-cola" rows="4" readonly data-pix-copia-e-cola></textarea>
+    </div>
+    <div class="ações-do-formulário">
+      <button type="button" class="botão botão-primário" data-copiar-pix><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#copiar"></use></svg>Copiar código</button>
+      <button type="button" class="botão botão-secundário" data-baixar-qr><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar QR Code</button>
+      <button type="button" class="botão botão-fantasma" data-fechar-código>Fechar</button>
+    </div>
+    <p class="aviso aviso-informação">Obrigado pela intenção de apoiar! Este site não recebe confirmação de pagamentos: a conferência é feita pelo recebedor no próprio banco. Confira o nome do recebedor e o valor no aplicativo antes de confirmar. Eventuais tarifas dependem do seu banco.</p>
+  </section>
+
+  <section class="texto-editorial" aria-labelledby="como-funciona-título">
+    <h2 id="como-funciona-título">Como funciona</h2>
+    <ul>
+      <li>O QR Code e o código Copia e Cola são montados no seu próprio aparelho, a partir dos dados públicos do recebedor.</li>
+      <li>O site não pede, não recebe e não guarda dados bancários. O pagamento acontece somente no aplicativo do seu banco, se você decidir confirmar.</li>
+      <li>Não há cobrança recorrente, cadastro ou contrapartida: o apoio não libera recursos extras, porque todos já são gratuitos.</li>
+      <li>Se mudar o valor, um novo código precisa ser gerado; o anterior deixa de ser exibido.</li>
+    </ul>
+  </section>
+</section>

@@ -1,0 +1,270 @@
+@charset "UTF-8";
+/* compartilhado/estilos/base.css
+   Valores padrão de TODAS as variáveis do contrato (seção 6) — paleta Organic
+   traduzida — mais o reset e a fundação de layout. `estilos/produto/cores.css`
+   (gerado por produto) é concatenado depois e sobrescreve as rampas e as
+   variáveis semânticas de cor com a paleta própria do produto. */
+
+:root {
+  /* ---- Rampas neutras (base do sistema Organic, OKLCH → hex) ---- */
+  --cor-neutra-100: #f9f4ed;
+  --cor-neutra-200: #eee7db;
+  --cor-neutra-300: #dcd3c4;
+  --cor-neutra-400: #c0b6a5;
+  --cor-neutra-500: #a19786;
+  --cor-neutra-600: #82796a;
+  --cor-neutra-700: #645c50;
+  --cor-neutra-800: #474238;
+  --cor-neutra-900: #2e2b25;
+
+  /* ---- Rampa de destaque padrão (terracota) — cada produto sobrescreve ---- */
+  --cor-destaque-100: #fff2eb;
+  --cor-destaque-200: #ffe1d0;
+  --cor-destaque-300: #ffc6a5;
+  --cor-destaque-400: #f6a06b;
+  --cor-destaque-500: #d67f48;
+  --cor-destaque-600: #b2622d;
+  --cor-destaque-700: #8c491a;
+  --cor-destaque-800: #643312;
+  --cor-destaque-900: #402310;
+
+  /* ---- Rampa secundária padrão (sálvia) — cada produto sobrescreve ---- */
+  --cor-secundária-100: #f0fae1;
+  --cor-secundária-200: #e1eecc;
+  --cor-secundária-300: #ccdbb2;
+  --cor-secundária-400: #aebf92;
+  --cor-secundária-500: #8fa073;
+  --cor-secundária-600: #728157;
+  --cor-secundária-700: #56633f;
+  --cor-secundária-800: #3d472b;
+  --cor-secundária-900: #272e1b;
+
+  /* ---- Superfícies ---- */
+  --cor-fundo: #f5ead8;
+  --cor-superfície: #ebddc5;
+  --cor-superfície-elevada: var(--cor-neutra-100);
+  --cor-texto: #201e1d;
+  --cor-texto-suave: color-mix(in srgb, var(--cor-texto) 62%, transparent);
+  --cor-divisória: color-mix(in srgb, var(--cor-texto) 16%, transparent);
+  /* Branco puro fixo (não segue o tema): moldura do código QR — precisa do
+     maior contraste possível com o preto do código para garantir leitura,
+     em qualquer paleta de produto. */
+  --cor-superfície-qr: #ffffff;
+
+  /* ---- Semânticas de ação/destaque ---- */
+  --cor-ação: var(--cor-destaque-700);
+  --cor-ação-hover: var(--cor-destaque-800);
+  --cor-ação-pressionada: var(--cor-destaque-900);
+  --cor-sobre-ação: var(--cor-neutra-100);
+  --cor-texto-destaque: var(--cor-destaque-700);
+  --cor-foco: var(--cor-destaque-700);
+
+  /* ---- Semânticas de estado ---- */
+  --cor-sucesso: #4b5a34;
+  --cor-sucesso-fundo: var(--cor-secundária-100);
+  --cor-erro: #a3271f;
+  --cor-erro-fundo: #fbeae8;
+  --cor-aviso: #7a4a00;
+  --cor-aviso-fundo: #fbf0dc;
+
+  /* ---- Tipografia ---- */
+  --fonte-título: "Caprasimo", "Segoe UI", system-ui, sans-serif;
+  --fonte-corpo: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --fonte-marca: "Caveat", "Segoe UI", cursive, system-ui, sans-serif;
+
+  /* ---- Espaço (escala 1–8) ---- */
+  --espaço-1: 4px;
+  --espaço-2: 8px;
+  --espaço-3: 12px;
+  --espaço-4: 16px;
+  --espaço-5: 20px;
+  --espaço-6: 28px;
+  --espaço-7: 36px;
+  --espaço-8: 44px;
+
+  /* ---- Raios ---- */
+  --raio-p: 8px;
+  --raio-m: 16px;
+  --raio-g: 28px;
+  --raio-pílula: 999px;
+
+  /* ---- Sombras (tingidas de tinta, ajustadas ao fundo claro) ---- */
+  --sombra-p: 0 1px 3px color-mix(in srgb, var(--cor-neutra-900) 16%, transparent);
+  --sombra-m: 0 4px 14px color-mix(in srgb, var(--cor-neutra-900) 18%, transparent);
+  --sombra-g: 0 14px 38px color-mix(in srgb, var(--cor-neutra-900) 24%, transparent);
+
+  /* ---- Camadas (z-index) ---- */
+  --camada-cabeçalho: 20;
+  --camada-navegação: 40;
+  --camada-ação: 45;
+  --camada-consentimento: 60;
+  --camada-mensagens: 70;
+  --camada-diálogo: 80;
+
+  /* ---- Medidas fixas de interface ---- */
+  --altura-navegação-inferior: 64px;
+  --altura-ação-contextual: 64px;
+
+  /* ---- Movimento ---- */
+  --duração-controle: 160ms;
+  --duração-painel: 260ms;
+  --curva-suave: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ══════════════════════════════ Reset ══════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-corpo);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 var(--espaço-2);
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p { margin: 0 0 var(--espaço-3); }
+p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+img, svg { display: block; max-width: 100%; }
+
+a {
+  color: var(--cor-texto-destaque);
+  text-underline-offset: 3px;
+}
+a:hover { text-decoration-thickness: 2px; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+button:disabled { cursor: not-allowed; }
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2.5px solid var(--cor-foco);
+  outline-offset: 2px;
+  border-radius: var(--raio-p);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--cor-destaque-500) 32%, transparent);
+}
+
+[hidden] { display: none !important; }
+
+/* Símbolo da marca (espiral) herda a cor do texto ao redor por padrão */
+.marca-símbolo {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  color: var(--cor-texto-destaque);
+}
+
+/* Ícone padrão do sprite compartilhado */
+.ícone {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* ══════════════════════════════ Acessibilidade ══════════════════════════════ */
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pular-para-conteúdo {
+  position: fixed;
+  top: var(--espaço-2);
+  left: var(--espaço-2);
+  z-index: calc(var(--camada-diálogo) + 10);
+  padding: var(--espaço-2) var(--espaço-4);
+  background: var(--cor-superfície-elevada);
+  color: var(--cor-texto);
+  border-radius: var(--raio-m);
+  box-shadow: var(--sombra-m);
+  transform: translateY(-140%);
+  transition: transform var(--duração-controle) var(--curva-suave);
+}
+.pular-para-conteúdo:focus-visible {
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════ Fundação de layout ══════════════════════════════
+   Reserva o espaço da navegação inferior e da ação contextual no celular, para
+   que nada da página fique escondido atrás delas. `configurarTecladoVirtual`
+   adiciona `tem-ação-contextual` ao <html> quando a página carrega uma
+   `.ação-contextual`; a regra `:has()` cobre navegadores modernos e a classe
+   cobre o fallback (e o estado com teclado virtual aberto). */
+
+.conteúdo {
+  display: block;
+  min-height: 1px;
+}
+
+@media (max-width: 767.98px) {
+  body {
+    padding-bottom: calc(var(--altura-navegação-inferior) + env(safe-area-inset-bottom, 0px));
+  }
+  body:has(.ação-contextual),
+  html.tem-ação-contextual body {
+    padding-bottom: calc(var(--altura-navegação-inferior) + var(--altura-ação-contextual) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Largura de leitura confortável para o miolo da página. Seções que precisam
+   de fundo de sangria total (.herói, .faixa) estouram esta margem com a
+   técnica de largura total (ver herói-e-faixas.css) em vez de exigir um
+   contêiner extra no marcado. */
+.conteúdo {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--espaço-5) var(--espaço-4) var(--espaço-8);
+}
+
+@media (min-width: 768px) {
+  .conteúdo {
+    padding: var(--espaço-7) var(--espaço-6) var(--espaço-8);
+  }
+}

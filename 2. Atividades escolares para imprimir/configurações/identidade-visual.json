@@ -1,0 +1,13 @@
+{
+  "fundo": "#f7f4ec",
+  "neutra": "#7f7a70",
+  "destaque": "#4d78b8",
+  "secundária": "#d99a1e",
+  "destaques": {
+    "céu": "#3f86c4",
+    "girassol": "#c98a12",
+    "lápis": "#c8613a",
+    "folha": "#3f8f5f",
+    "lilás": "#7b64b0"
+  }
+}

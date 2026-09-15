@@ -1,0 +1,34 @@
+<!--página
+{
+  "título": "Orçamento recebido",
+  "descrição": "Veja o orçamento que foi enviado a você, com itens, valores e o nome de quem o gerou. Baixe em PDF ou planilha.",
+  "destaque": "principal",
+  "navegação": "nenhuma",
+  "tipo": "institucional",
+  "indexar": false,
+  "anúncios": false,
+  "faixaDeApoio": false
+}
+-->
+<section class="orçamento-compartilhado" aria-labelledby="orçamento-recebido-título" data-orçamento-compartilhado>
+  <header class="ferramenta-cabeçalho não-imprimir">
+    <p class="sobretítulo">Orçamento compartilhado</p>
+    <h1 id="orçamento-recebido-título">Orçamento recebido</h1>
+  </header>
+
+  <p class="aviso aviso-erro" data-erro-do-orçamento hidden></p>
+
+  <div class="aviso aviso-informação não-imprimir" data-aviso-do-orçamento hidden>
+    <p>Este orçamento foi montado no aparelho de quem o enviou e está guardado apenas neste link. {{marca}} não confere, não registra e não garante os valores: confirme qualquer dúvida diretamente com quem enviou.</p>
+  </div>
+
+  <div class="área-de-impressão" data-documento></div>
+
+  <div class="ações-do-formulário não-imprimir" data-ações-do-orçamento hidden>
+    <button type="button" class="botão botão-primário" data-baixar-pdf><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+    <button type="button" class="botão botão-secundário" data-baixar-planilha><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#exportar"></use></svg>Baixar planilha</button>
+    <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+  </div>
+
+  <p class="campo-ajuda não-imprimir">Quer montar os seus próprios cálculos? <a href="{{raiz}}páginas/ferramentas.html">Conheça as ferramentas gratuitas de {{marca}}</a>.</p>
+</section>
