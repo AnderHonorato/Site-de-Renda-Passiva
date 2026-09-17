@@ -1,0 +1,21 @@
+{
+  "name": "portal-ferramentas-ander",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {"node": ">=20"},
+  "scripts": {
+    "dev": "node servidor.mjs",
+    "start": "node servidor.mjs",
+    "kill": "node matar-porta.mjs 4480",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "6.16.2"
+  },
+  "devDependencies": {
+    "prisma": "6.16.2"
+  }
+}
