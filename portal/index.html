@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f8eee3">
+  <meta name="description" content="Portal de ferramentas práticas do Ander: utilidades organizadas por categoria, com histórico, busca, ajuda e atalhos rápidos.">
+  <title>Ferramentas do Ander</title>
+  <link rel="stylesheet" href="./estilos.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="faixa" aria-label="Avisos">
+    <div class="faixa__trilho" id="faixa-trilho"></div>
+  </div>
+
+  <header class="topo">
+    <a class="marca" href="./" aria-label="Ferramentas do Ander, início">
+      <span class="marca__sinal" aria-hidden="true">A</span>
+      <span><strong>Ferramentas</strong><small>por Ander</small></span>
+    </a>
+    <nav class="topo__acoes" aria-label="Ações principais">
+      <button class="botao botao--fantasma" id="botao-ajuda" type="button">Ajuda</button>
+      <button class="botao" id="botao-conta" type="button">Entrar</button>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero revelar">
+      <div>
+        <p class="rotulo">Tudo no mesmo lugar</p>
+        <h1>Ferramentas úteis sem caça ao botão certo.</h1>
+        <p class="hero__texto">Busque, abra, volte ao que usou recentemente e descubra ferramentas relacionadas. As funções públicas continuam acessíveis sem cadastro.</p>
+      </div>
+      <div class="busca-wrap">
+        <label for="busca">O que você precisa fazer?</label>
+        <input id="busca" type="search" autocomplete="off" placeholder="Ex.: orçamento, caixa, receita, pintura…">
+        <p id="resultado-busca" class="muted" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="banner revelar" aria-label="Destaques" id="banner">
+      <button class="banner__seta" id="banner-anterior" type="button" aria-label="Banner anterior">‹</button>
+      <div class="banner__conteudo" id="banner-conteudo"></div>
+      <button class="banner__seta" id="banner-proximo" type="button" aria-label="Próximo banner">›</button>
+    </section>
+
+    <section class="secao revelar" id="recentes" hidden>
+      <div class="secao__cabecalho">
+        <div><p class="rotulo">Retomar</p><h2>Vistos recentemente</h2></div>
+        <button class="link-botao" id="limpar-recentes" type="button">Limpar</button>
+      </div>
+      <div class="grade grade--compacta" id="grade-recentes"></div>
+    </section>
+
+    <section class="secao revelar">
+      <div class="secao__cabecalho">
+        <div><p class="rotulo">Organizado de verdade</p><h2>Categorias</h2></div>
+        <span class="contador" id="contador-ferramentas"></span>
+      </div>
+      <div class="categorias" id="categorias"></div>
+    </section>
+
+    <section class="secao revelar">
+      <div class="secao__cabecalho">
+        <div><p class="rotulo">Catálogo</p><h2>Ferramentas disponíveis</h2></div>
+        <select id="filtro-categoria" aria-label="Filtrar por categoria"></select>
+      </div>
+      <div class="grade" id="grade-ferramentas"></div>
+      <div class="vazio" id="estado-vazio" hidden>Nenhuma ferramenta combina com essa busca.</div>
+    </section>
+
+    <section class="secao revelar faq">
+      <p class="rotulo">Sem manual de 80 páginas</p>
+      <h2>Perguntas frequentes</h2>
+      <details><summary>Preciso criar conta?</summary><p>Não para usar as ferramentas públicas. A conta serve para sincronizar histórico, preferências e downloads entre aparelhos quando o backend estiver conectado.</p></details>
+      <details><summary>Meus arquivos são enviados para algum servidor?</summary><p>As ferramentas atuais foram projetadas para processar no navegador sempre que possível. Cada ferramenta deve informar quando um recurso exigir servidor.</p></details>
+      <details><summary>Onde ficam os downloads?</summary><p>No modo local, o portal registra apenas nome, ferramenta e data no seu navegador. Com conta conectada, o histórico poderá ser sincronizado via banco.</p></details>
+      <details><summary>Como peço ajuda numa ferramenta?</summary><p>Use o botão Ajuda no topo. O painel explica o fluxo básico e mostra atalhos para as categorias.</p></details>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <span>Ferramentas do Ander · 2026</span>
+    <span>Feito para ser simples antes de ser enfeitado.</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <dialog id="modal-boas-vindas" class="modal">
+    <form method="dialog" class="modal__caixa">
+      <p class="rotulo">Primeira visita</p>
+      <h2>Bem-vindo ao portal</h2>
+      <p>Você pode começar pela busca, escolher uma categoria ou voltar às ferramentas vistas recentemente. Nada básico fica bloqueado por login.</p>
+      <div class="modal__acoes"><button class="botao" value="ok">Começar</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="modal-ajuda" class="modal">
+    <form method="dialog" class="modal__caixa">
+      <button class="modal__fechar" value="fechar" aria-label="Fechar">×</button>
+      <p class="rotulo">Ajuda rápida</p>
+      <h2>Como usar</h2>
+      <ol class="passos"><li>Busque pelo que quer fazer.</li><li>Abra uma ferramenta e conclua o processo.</li><li>Ao voltar, ela aparece em Vistos recentemente.</li><li>Ferramentas da mesma categoria ficam próximas para facilitar comparação.</li></ol>
+      <p class="muted">Atalho: pressione <kbd>/</kbd> para focar a busca.</p>
+    </form>
+  </dialog>
+
+  <dialog id="modal-conta" class="modal">
+    <form method="dialog" class="modal__caixa">
+      <button class="modal__fechar" value="fechar" aria-label="Fechar">×</button>
+      <p class="rotulo">Conta</p>
+      <h2>Entrar e sincronizar</h2>
+      <p>Os botões abaixo já usam as rotas previstas do backend. Enquanto as credenciais OAuth não forem configuradas, o portal continua funcionando em modo local.</p>
+      <div class="login-opcoes">
+        <button type="button" data-login="google">Continuar com Google</button>
+        <button type="button" data-login="apple">Continuar com Apple</button>
+        <button type="button" data-login="x">Continuar com X</button>
+      </div>
+      <p class="muted">Nenhum provedor é simulado. Sem configuração real, o portal informa que a integração ainda não está ativa.</p>
+    </form>
+  </dialog>
+</body>
+</html>
