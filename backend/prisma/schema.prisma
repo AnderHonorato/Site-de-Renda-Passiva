@@ -1,0 +1,76 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "sqlite" url = env("DATABASE_URL") }
+
+model User {
+  id           String    @id @default(cuid())
+  name         String?
+  email        String?   @unique
+  image        String?
+  provider     String?
+  providerId   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  sessions     Session[]
+  downloads    Download[]
+  recentViews  RecentView[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
+
+model Download {
+  id           String   @id @default(cuid())
+  userId       String
+  toolId       String
+  toolName     String
+  fileName     String
+  mimeType     String?
+  storageKey   String?
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId, createdAt])
+}
+
+model RecentView {
+  id        String   @id @default(cuid())
+  userId    String
+  toolId    String
+  toolName  String
+  viewedAt  DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId, toolId])
+  @@index([userId, viewedAt])
+}
+
+model Notice {
+  id          String   @id @default(cuid())
+  title       String
+  summary     String
+  details     String
+  link        String?
+  active      Boolean  @default(true)
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Banner {
+  id          String   @id @default(cuid())
+  title       String
+  text        String
+  imageUrl    String?
+  buttonText  String?
+  link        String?
+  accent      String?
+  active      Boolean  @default(true)
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

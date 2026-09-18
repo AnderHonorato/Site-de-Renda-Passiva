@@ -1,138 +1,165 @@
-# Sites de Renda Passiva — seis ferramentas gratuitas
+# Sites de Renda Passiva
 
-Seis sites estáticos, independentes e gratuitos, criados por **Anderson**. Tudo roda no navegador: não há cadastro nem banco de dados. Os sites estão preparados para apoio voluntário por Pix e anúncios do Google AdSense, ambos **desativados** até você preencher os dados reais.
+Portal de ferramentas úteis em PT-BR, com seis produtos independentes e uma base comum.
 
-| Pasta | Marca provisória | Porta local |
-|---|---|---|
-| `1. Ferramentas para confeitaria` | Doce Ofício | 4311 |
-| `2. Atividades escolares para imprimir` | Folha Pronta | 4312 |
-| `3. Ferramentas para crochê e artesanato` | Ponto e Preço | 4313 |
-| `4. Planejamento de churrasco e festas` | Mesa Farta | 4314 |
-| `5. Calculadoras de pintura e reforma` | Demão Certa | 4315 |
-| `6. Moldes de caixas e embalagens` | Dobra & Cola | 4316 |
+## Estado da arquitetura
 
-> **Situação:** em construção. A lista de conferência abaixo diz exatamente o que já está pronto e o que falta. Este arquivo será atualizado ao fim de cada etapa.
+O frontend continua estático e roda no navegador. A partir desta versão, existe uma API opcional em `backend/` para recursos que realmente precisam de servidor: contas, sessões, histórico de downloads, vistos recentes, avisos e banners. A persistência usa Prisma.
 
-## Lista de conferência
+> O login social Google, Apple e X está preparado no modelo e nas variáveis de ambiente. A validação OAuth de produção depende das credenciais dos respectivos provedores; nunca coloque client secret no frontend.
 
-Legenda: `[x]` feito e verificado · `[~]` em andamento · `[ ]` não feito.
+## Dependências
 
-### Base comum (vale para os seis sites)
-- [x] Arquitetura estática documentada (`documentação/arquitetura-e-contratos.md`, `decisão-sobre-cadastro-e-servidor.md`)
-- [x] Visual baseado no seu modelo (`modelo/`): fundo creme, Caprasimo, Figtree, logotipo em Caveat, espiral, botões em pílula, paleta própria por site e por página (contraste ≥ 4,5:1 verificado)
-- [x] Navegação inferior de aplicativo no celular (Início, Ferramentas, Salvos, Apoiar, Mais) e cabeçalho completo no computador
-- [x] Aviso de privacidade na primeira visita (aceitar, rejeitar, personalizar, revogar)
-- [x] Apoio por Pix: 7 valores + valor livre, revisão, QR Code e Copia e Cola (CRC conferido com o manual do Banco Central; QR lido por leitor independente)
-- [x] Anúncios AdSense preparados e desligados (só carregam com configuração completa e aceite)
-- [x] Salvar no aparelho, página Salvos, exportar e importar cópia (com proteção contra arquivo malicioso)
-- [x] Orçamentos: PDF com o visual do site, planilha Excel (.xlsx), impressão e link para o cliente ver valor e nome de quem gerou
-- [x] Geração de PDF, fontes e ícones locais (sem serviços externos)
-- [x] Ferramentas de desenvolvimento: gerar, servir, testar, verificar, construir pacote
-- [x] 39 testes automáticos dos módulos comuns passando
-- [x] Documentos: dados a preencher, convenções, licenças, segurança, guia do AdSense, exemplo Nginx
+Requisitos:
+- Node.js 20+
+- npm
 
-### Produtos
-- [x] 1. Confeitaria — 9 ferramentas (custo da receita, preço de venda, ajuste de quantidade, lista de compras, orçamento com PDF/Excel/link, preço por unidade, conversor de formas, rendimento com perdas, ficha técnica); 49 testes; verificação limpa
-- [x] 2. Atividades escolares — operações, tabuada, caça-palavras e caligrafia com prévia, impressão, PDF e gabarito separado; 45 testes; testado no navegador após correção de um defeito comum
-- [x] 2b. Atividades escolares, segunda prioridade — bingo, papel quadriculado, flashcards e planejador de estudos; caça-palavras sem acentos mostra `CORACAO (coração)`; educação com 81 testes
-- [x] 3. Crochê e artesanato — 8 ferramentas (custo do material, valor da hora, preço da peça, desconto, encomendas, orçamento com PDF/Excel/link, amostra de pontos, controle de materiais); 30 testes; testado no navegador
-- [x] 4. Churrasco e festas — 8 ferramentas (churrasco, festa infantil, almoço, divisor de despesas, orçamento do evento com PDF/Excel/link, checklist, cronograma, lista de convidados); 51 testes; verificação limpa
-- [x] 5. Pintura e reforma — 8 ferramentas (área de paredes, quantidade de tinta, piso por caixa, rodapé, orçamento com PDF/Excel/link, papel de parede, rejunte, comparador de tinta); 39 testes; verificação limpa
-- [x] 6. Moldes de caixas e embalagens — 8 geradores (caixa retangular, caixa com tampa, envelope, etiquetas, cinta, divisórias, saco de papel, aproveitamento de folha) com prévia, SVG e PDF em tamanho real, calibração de 50 mm e divisão em folhas; 56 testes; verificação limpa. Montagem física em papel não testada.
-
-### Validação e entrega
-- [ ] Parecer do crítico de segurança e correção
-- [ ] Parecer do crítico de experiência e desempenho
-- [ ] Correções e reteste
-- [ ] Relatório final do orquestrador
-- [ ] Pacotes de publicação dos seis sites
-- [ ] Commit e envio ao GitHub (aguarda sua autorização)
-
-### Não incluído (decisão registrada)
-- Orçamento doméstico e custo de combustível do exemplo do Manus: pertencem às categorias 14 e 15 do catálogo (sites futuros), fora dos seis produtos.
-
-## Requisitos
-
-- Node.js 20 ou mais recente (testado com 22.14) e npm.
-- Nenhuma dependência paga. As dependências de desenvolvimento (fontes, ícones, QR e leitor de QR para testes) são gratuitas e têm versão fixada.
-
-## Comandos
-
-Na primeira vez, na raiz do projeto:
+Frontend:
 
 ```bash
 npm install
-```
-
-```bash
 npm run preparar
-```
-
-```bash
 npm run sincronizar
 ```
 
-Gerar, testar e verificar os seis sites de uma vez:
+Backend:
+
+```bash
+cd backend
+npm install
+Copy-Item .env.example .env
+npm run prisma:generate
+npm run prisma:migrate -- --name inicial
+npm run dev
+```
+
+API local: `http://127.0.0.1:4490`
+
+## Desenvolvimento
+
+Raiz:
 
 ```bash
 npm run gerar
-```
-
-```bash
 npm run testar
-```
-
-```bash
 npm run verificar
+npm run construir
 ```
 
-Criar os pacotes publicáveis (pasta `publicação/` dentro de cada site):
+Para rodar um produto específico, entre na pasta dele e use seu `npm run servir`.
+
+## Encerrar processos
+
+PowerShell:
+
+```powershell
+Get-NetTCPConnection -LocalPort 4311,4312,4313,4314,4315,4316,4490 -ErrorAction SilentlyContinue |
+  Select-Object OwningProcess,LocalPort |
+  Sort-Object LocalPort
+
+Stop-Process -Id <PID> -Force
+```
+
+CMD:
+
+```cmd
+netstat -ano | findstr ":4311 :4312 :4313 :4314 :4315 :4316 :4490"
+taskkill /PID <PID> /F
+```
+
+Não mate processos aleatórios: o Windows já tem drama suficiente.
+
+## Prisma
+
+O schema fica em `backend/prisma/schema.prisma`.
+
+Desenvolvimento usa SQLite:
+
+```
+DATABASE_URL="file:./dev.db"
+```
+
+Produção deve usar PostgreSQL ou outro banco gerenciado compatível. O banco guarda metadados e relações. PDFs, imagens e outros binários devem ficar em storage de objetos, com apenas a referência armazenada em `Download.storageKey`.
+
+## Login e conta
+
+O backend possui:
+- User
+- Session
+- Download
+- RecentView
+- Notice
+- Banner
+
+A home pode consumir `/api/recent` para vistos recentes. A página de downloads pode consumir `/api/downloads`. Avisos e banners podem vir de `/api/notices` e `/api/banners`.
+
+Para OAuth real, configure:
+
+```
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+APPLE_CLIENT_ID=
+APPLE_CLIENT_SECRET=
+X_CLIENT_ID=
+X_CLIENT_SECRET=
+PUBLIC_BASE_URL=
+SESSION_SECRET=
+```
+
+O fluxo de produção deve validar o retorno do provedor no servidor, localizar/criar o usuário, criar uma sessão e devolver somente um token de sessão seguro.
+
+## Publicação
+
+Frontend estático:
 
 ```bash
 npm run construir
 ```
 
-Trabalhar em um site só (exemplo: confeitaria):
+O pacote publicável de cada produto é gerado em sua pasta `publicação/`.
 
-```bash
-cd "1. Ferramentas para confeitaria"
-```
+Backend:
+1. Escolha um host Node.
+2. Configure as variáveis do `.env`.
+3. Use PostgreSQL em produção.
+4. Execute `npm run prisma:generate`.
+5. Execute a migração de produção.
+6. Inicie com `npm start`.
+7. Coloque HTTPS e um proxy reverso na frente da API.
+8. Configure CORS apenas para os domínios reais dos seis sites.
 
-```bash
-npm run servir
-```
+## UX Plus
 
-Abra `http://127.0.0.1:4311/`. Para ver exatamente o pacote que será publicado:
+As regras detalhadas estão em `documentação/UX-PLUS.md`. A lista completa de evolução está em `documentação/100-funcionalidades.md`.
 
-```bash
-npm run construir && npm run visualizar
-```
+Princípio central:
 
-As páginas usam módulos JavaScript: abra sempre por `http://`, não com dois cliques no arquivo.
+**o usuário precisa entender o que a ferramenta faz, enviar o arquivo, ajustar visualmente, conferir o resultado e só então baixar.**
 
-## O que você precisa fazer
+Recursos planejados/implementados nesta linha:
+- ajuda contextual por ferramenta;
+- dicas flutuantes;
+- notificações em faixa horizontal com modal;
+- banners finos configuráveis, carrossel de 30 s, hover/swipe;
+- ferramentas similares;
+- vistos recentemente;
+- boas-vindas;
+- FAQ;
+- animações de entrada no scroll com respeito a `prefers-reduced-motion`;
+- processamento visual e estado “arquivo pronto para download”;
+- editores visuais para recorte de imagem/PDF;
+- histórico de downloads por conta;
+- identidade visual consistente em PDF/Excel.
 
-1. **Preencher os dados reais** em `N. …/configurações/configuração-pública.json` de cada site: portfólio, contato, endereço de publicação, chave Pix (recomendado: chave aleatória), nome e cidade do recebedor. Tabela completa em `documentação/dados-que-o-proprietário-precisa-preencher.md`.
-2. **Conferir as marcas provisórias** e verificar se há conflito de marca ou domínio antes de publicar.
-3. **Escolher domínio e hospedagem com HTTPS**. O ideal é um subdomínio por site; ver `documentação/proteções-e-limites-de-segurança.md`.
-4. Rodar `npm run construir` e enviar a pasta `publicação/` de cada site para a hospedagem. O `.htaccess` gerado aplica os cabeçalhos de segurança no Apache; há exemplo para Nginx em `documentação/hospedagem/`.
-5. **AdSense (opcional):** seguir `documentação/como-conectar-o-adsense.md` (conta, verificação, `ads.txt` na raiz do domínio, mensagem de privacidade/CMP e perfil de CSP com anúncios).
-6. **Testar num celular de verdade** e **fazer um Pix de teste** com o seu banco, conferindo nome e valor.
+## Segurança
+
+Nunca versionar `.env`, banco SQLite de desenvolvimento, tokens ou client secrets. Em produção, valide autenticação no servidor, limite uploads, gere nomes de arquivos seguros e use autorização por usuário para downloads.
 
 ## Estrutura
 
-```text
-compartilhado/          código comum (origem); copiado para cada site por "npm run sincronizar"
-documentação/           contratos, decisões, segurança, guias e relatórios
-N. Nome do site/        cada site é independente e pode ser publicado sozinho
-  conteúdo/             textos das páginas (fonte)
-  scripts/              JavaScript modular (uma função por arquivo)
-  estilos/              CSS (comum + do site)
-  configurações/        configuração pública, cores e ícones
-  testes/               testes automáticos do site
-  publicação/           pacote pronto para enviar (gerado)
-modelo/                 modelo visual fornecido
-manus modelos/          exemplo de ferramentas usado como referência
-```
+- `compartilhado/`: base comum dos seis produtos.
+- `1. Ferramentas para confeitaria/` até `6. Moldes de caixas e embalagens/`: produtos.
+- `backend/`: API opcional + Prisma.
+- `documentação/`: arquitetura, UX e roadmap.
 
-Licença: © 2026 Anderson, todos os direitos reservados. Componentes de terceiros mantêm suas licenças (`documentação/licenças-de-terceiros.md`).
+Licença: © 2026 Anderson.
