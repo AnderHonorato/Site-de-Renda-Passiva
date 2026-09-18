@@ -4,7 +4,16 @@ import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const raizRepositorio = fileURLToPath(new URL('../', import.meta.url));
-const porta = Number(process.env.PORT || 4480);
+const argumentos = process.argv.slice(2);
+const indicePorta = argumentos.indexOf('--port');
+const portaInformada = indicePorta >= 0 ? argumentos[indicePorta + 1] : argumentos.find((valor) => /^\d+$/.test(valor));
+const porta = Number(portaInformada || process.env.PORT || 4481);
+
+if (!Number.isInteger(porta) || porta < 1 || porta > 65535) {
+  console.error('Porta inválida. Use --port 4481 ou defina PORT.');
+  process.exit(1);
+}
+
 const tipos = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.woff2':'font/woff2'};
 
 function json(res,status,dados){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'});res.end(JSON.stringify(dados))}
@@ -36,6 +45,15 @@ const servidor=http.createServer(async(req,res)=>{
   }catch{
     res.writeHead(404,{'content-type':'text/plain; charset=utf-8'});res.end('Arquivo não encontrado');
   }
+});
+
+servidor.on('error',(erro)=>{
+  if(erro.code==='EADDRINUSE'){
+    console.error(`A porta ${porta} já está em uso. Tente: npm run dev -- --port 4482`);
+    process.exit(1);
+  }
+  console.error(erro);
+  process.exit(1);
 });
 
 servidor.listen(porta,'127.0.0.1',()=>console.log(`Portal: http://127.0.0.1:${porta}/`));
