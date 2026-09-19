@@ -1,0 +1,3 @@
+export const categorias = [
+ ['Confeitaria','cake-slice','#a6533e'],['Educação','book-open','#59678a'],['Artesanato','scissors','#876378'],['Festas','party-popper','#ab653c'],['Reforma','paint-roller','#5a7765'],['Embalagens','package','#9a7445'],['Texto e escrita','type','#79648c'],['Imagens','image','#4b7b76'],['PDF e documentos','files','#a65359'],['Datas e tempo','calendar-days','#5a7292'],['Matemática e medidas','ruler','#707d43'],['Vendas e negócios','store','#8b6951'],['Ferramentas digitais','scan-line','#567b89'],['Casa e economia','house','#6e7e56'],['Viagens e deslocamentos','map','#a16f40']
+].map(([nome,icone,cor],i)=>({id:i+1,nome,icone,cor}));

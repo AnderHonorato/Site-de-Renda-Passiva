@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("numero-da-semana",10,"Número da semana ISO","Descubra semana ISO e dia da semana de uma data.","ISO 8601: semana começa na segunda, semana 1 contém a primeira quinta-feira. O ano ISO pode diferir do ano civil.",[D('data','Data','2026-01-01')],async d=>{const a=data(d.data),dia=a.getUTCDay()||7;a.setUTCDate(a.getUTCDate()+4-dia);const ano=a.getUTCFullYear(),inicio=data(String(ano).padStart(4,'0')+'-01-01'),semana=Math.ceil(((a-inicio)/86400000+1)/7);return {resumo:ano+'-W'+String(semana).padStart(2,'0'),linhas:['Dia ISO '+dia+' (segunda = 1)',data(d.data).toLocaleDateString('pt-BR',{weekday:'long',timeZone:'UTC'})]};});
+

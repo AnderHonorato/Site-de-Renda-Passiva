@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Doce Ofício: ferramentas gratuitas para casa, festas, confeitaria, artesanato e organização." />
+  <title>Doce Ofício · Ferramentas úteis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Doce Ofício início"><span class="brand-mark">D</span><span><strong>doce ofício</strong><small>ferramentas para o dia a dia</small></span></a>
+      <nav class="desktop-nav" aria-label="Navegação principal"><a href="#ferramentas">Ferramentas</a><a href="#como-funciona">Como funciona</a><a href="#sobre">Sobre</a></nav>
+      <button class="icon-btn" id="themeToggle" aria-label="Alternar modo de cor">◐</button>
+    </header>
+
+    <main id="inicio">
+      <section class="hero section-grid">
+        <div class="hero-copy"><span class="eyebrow">feito para facilitar</span><h1>Pequenas contas.<br><em>Grandes planos.</em></h1><p>Ferramentas simples, gratuitas e feitas para a vida real. Calcule, organize e siga em frente.</p><div class="hero-actions"><a class="btn btn-primary" href="#ferramentas">Explorar ferramentas <span>→</span></a><a class="text-link" href="#como-funciona">Como funciona?</a></div><div class="hero-note"><span class="scribble">✦</span><span>Sem cadastro. Sem complicação.<br><b>Feito no seu navegador.</b></span></div></div>
+        <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="paper-card card-a"><span>lista de compras</span><b>☑ ovos<br>☑ farinha<br>☐ chocolate</b></div><div class="paper-card card-b"><span>seu resultado</span><strong>R$ 128,40</strong><small>calculado com carinho</small></div><div class="doodle">✿</div><div class="leaf leaf-1">◜</div><div class="leaf leaf-2">◝</div></div>
+      </section>
+
+      <section class="trust-strip"><div><b>100% gratuito</b><span>feito para todos</span></div><div><b>no navegador</b><span>seus dados ficam com você</span></div><div><b>bem explicado</b><span>resultado sem enrolação</span></div></section>
+
+      <section id="ferramentas" class="tools-section"><div class="section-heading"><div><span class="eyebrow">escolha seu caminho</span><h2>O que você quer resolver hoje?</h2></div><label class="search"><span>⌕</span><input id="searchInput" placeholder="Buscar ferramenta..." /></label></div><div class="category-row" id="categoryRow"><button class="category active" data-category="todos">Todas</button><button class="category" data-category="casa">Casa</button><button class="category" data-category="festa">Festas</button><button class="category" data-category="confeitaria">Confeitaria</button><button class="category" data-category="artesanato">Artesanato</button><button class="category" data-category="organização">Organização</button></div><div class="tool-grid" id="toolGrid"></div></section>
+
+      <section id="como-funciona" class="how-section"><div><span class="eyebrow">do seu jeito</span><h2>Feito para caber<br><em>na sua rotina.</em></h2></div><div class="steps"><article><span>01</span><h3>Escolha uma ferramenta</h3><p>Encontre a solução certa para o que você precisa agora.</p></article><article><span>02</span><h3>Preencha com calma</h3><p>Campos simples, exemplos claros e nenhuma surpresa.</p></article><article><span>03</span><h3>Use o resultado</h3><p>Salve, imprima ou compartilhe. O resultado é seu.</p></article></div></section>
+
+      <section id="sobre" class="closing"><div class="closing-stamp">✦</div><div><span class="eyebrow">um ofício diário</span><h2>Menos tempo fazendo contas.<br><em>Mais tempo fazendo acontecer.</em></h2><p>O Doce Ofício nasceu para transformar aquelas pequenas tarefas que parecem difíceis em passos leves e possíveis.</p></div></section>
+    </main>
+    <footer><span>© 2026 Doce Ofício</span><span>feito com cuidado no Brasil · <a href="#sobre">sobre o projeto</a></span></footer>
+  </div>
+
+  <dialog id="toolDialog"><div class="dialog-head"><div><span class="eyebrow" id="dialogCategory">ferramenta</span><h2 id="dialogTitle">Ferramenta</h2></div><button class="close-btn" id="closeDialog" aria-label="Fechar">×</button></div><div id="dialogBody"></div></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

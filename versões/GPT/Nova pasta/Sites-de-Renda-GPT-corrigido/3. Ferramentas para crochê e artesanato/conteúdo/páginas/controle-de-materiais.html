@@ -1,0 +1,100 @@
+<!--página
+{
+  "título": "Controle de materiais",
+  "descrição": "Some entradas e consumos de um material a partir de um saldo inicial e veja o saldo atual, tudo salvo só neste aparelho.",
+  "destaque": "malva",
+  "navegação": "ferramentas",
+  "script": "páginas/controle-de-materiais.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Controle de materiais</h1>
+    <p class="ferramenta-resumo">Lance entradas (compras) e consumos (uso em peças) de um material a partir de um saldo inicial. É apenas soma e subtração do que você informa — não substitui um controle de estoque completo.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-estoque" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Material</legend>
+        <div class="campo">
+          <label for="unidade">Unidade</label>
+          <select id="unidade" name="unidade" class="entrada seleção">
+            <option value="g">Gramas (g)</option>
+            <option value="kg">Quilos (kg)</option>
+            <option value="m">Metros (m)</option>
+            <option value="cm">Centímetros (cm)</option>
+            <option value="un">Unidades (un.)</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="saldo-inicial">Saldo inicial</label>
+          <input id="saldo-inicial" name="saldo-inicial" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 100" aria-describedby="saldo-inicial-erro">
+          <p id="saldo-inicial-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Lançamentos</legend>
+        <div class="linhas-editáveis" data-linhas-de-lançamentos></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-lançamento>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar lançamento</span>
+        </button>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular saldo</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#boxes"></use></svg>
+        <p class="estado-vazio-título">O saldo aparece aqui</p>
+        <p>Informe o saldo inicial, adicione lançamentos e toque em Calcular saldo.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Saldo atual</p>
+          <p class="resultado-valor" data-saldo-atual></p>
+        </div>
+        <div class="aviso aviso-alerta" data-aviso-negativo hidden>
+          <p>O saldo ficou negativo: os consumos lançados somam mais do que havia disponível.</p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <div class="tabela-rolável">
+          <table class="tabela" data-tabela-histórico>
+            <caption>Histórico de lançamentos</caption>
+            <thead>
+              <tr><th scope="col">Tipo</th><th scope="col" data-numérico>Quantidade</th><th scope="col" data-numérico>Saldo após</th></tr>
+            </thead>
+            <tbody data-corpo-histórico></tbody>
+          </table>
+        </div>
+        <form id="formulário-salvar-estoque" class="campo" novalidate>
+          <label for="nome-do-estoque">Nome para salvar este controle</label>
+          <input id="nome-do-estoque" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Fio Alegria rosa" aria-describedby="nome-do-estoque-erro">
+          <p id="nome-do-estoque-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Saldo atual = saldo inicial + entradas − consumos, na ordem em que você lançar.</li>
+    <li>É apenas soma e subtração local: não conta como inventário fiscal nem contábil.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-estoque" class="botão botão-primário">Calcular saldo</button>
+</div>

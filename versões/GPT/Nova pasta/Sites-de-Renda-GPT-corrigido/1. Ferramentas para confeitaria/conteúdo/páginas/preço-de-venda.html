@@ -1,0 +1,112 @@
+<!--página
+{
+  "título": "Preço de venda",
+  "descrição": "Calcule o preço de venda de doces a partir do custo, da margem sobre a venda e das taxas, com arredondamento por unidade.",
+  "destaque": "framboesa",
+  "navegação": "ferramentas",
+  "script": "páginas/preço-de-venda.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Preço de venda</h1>
+    <p class="ferramenta-resumo">Informe quanto custou produzir o lote, quantas unidades ele rende, a margem que você deseja sobre o preço de venda e as taxas da forma de venda. O resultado não é lucro garantido: ele depende de o custo informado estar completo.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-preço" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos" data-bloco-de-receita-salva hidden>
+        <legend>Receita salva (opcional)</legend>
+        <div class="campo">
+          <label for="receita-salva-preço">Preencher com uma receita salva</label>
+          <select id="receita-salva-preço" class="entrada seleção" aria-describedby="receita-salva-preço-ajuda">
+            <option value="">Não usar receita salva</option>
+          </select>
+          <p id="receita-salva-preço-ajuda" class="campo-ajuda">Traz o custo total e o rendimento da ferramenta <a href="{{raiz}}páginas/custo-da-receita.html">Custo da receita</a>. Você ainda pode editar os campos abaixo à mão.</p>
+        </div>
+      </fieldset>
+      <fieldset class="grupo-de-campos">
+        <legend>Custo e lote</legend>
+        <div class="campo">
+          <label for="custo-total">Custo total do lote (R$)</label>
+          <input id="custo-total" name="custo-total" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 80,00" aria-describedby="custo-total-ajuda custo-total-erro">
+          <p id="custo-total-ajuda" class="campo-ajuda">Ingredientes, embalagens, gás, energia, sua hora de trabalho e outros custos do lote.</p>
+          <p id="custo-total-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="quantidade">Unidades aproveitáveis</label>
+          <input id="quantidade" name="quantidade" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 50" aria-describedby="quantidade-ajuda quantidade-erro">
+          <p id="quantidade-ajuda" class="campo-ajuda">Só as unidades que você realmente vai vender, descontadas as perdas.</p>
+          <p id="quantidade-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <fieldset class="grupo-de-campos">
+        <legend>Margem e taxas</legend>
+        <div class="campo">
+          <label for="margem">Margem desejada sobre o preço de venda (%)</label>
+          <input id="margem" name="margem" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 30" aria-describedby="margem-ajuda margem-erro">
+          <p id="margem-ajuda" class="campo-ajuda">Parte do preço de venda que sobra depois do custo e das taxas. Não é o mesmo que acréscimo sobre o custo.</p>
+          <p id="margem-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="taxas">Taxas sobre a venda (%)</label>
+          <input id="taxas" name="taxas" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="taxas-ajuda taxas-erro">
+          <p id="taxas-ajuda" class="campo-ajuda">Taxas cobradas como percentual do preço, como maquininha ou aplicativo de entrega. Informe o valor do seu contrato.</p>
+          <p id="taxas-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="arredondamento">Arredondamento do preço por unidade</label>
+          <select id="arredondamento" name="arredondamento" class="entrada seleção">
+            <option value="acima">Para cima, ao centavo</option>
+            <option value="próximo">Ao centavo mais próximo</option>
+          </select>
+        </div>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular preço</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#percent"></use></svg>
+        <p class="estado-vazio-título">Seu preço aparece aqui</p>
+        <p>Preencha o custo, as unidades e a margem e toque em Calcular preço.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Preço por unidade</p>
+          <p class="resultado-valor" data-preço-unitário></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse valor</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+        <form id="formulário-salvar-preço" class="campo" novalidate>
+          <label for="nome-do-cálculo">Nome para salvar este cálculo</label>
+          <input id="nome-do-cálculo" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Brigadeiro 50 unidades" aria-describedby="nome-do-cálculo-erro">
+          <p id="nome-do-cálculo-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Margem e taxas são percentuais do preço de venda e precisam somar menos de 100%.</li>
+    <li>O arredondamento é feito uma vez, no preço por unidade; o lote é o preço unitário arredondado vezes a quantidade.</li>
+    <li>Nenhum preço de mercado é consultado: todos os valores vêm do que você informa.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-preço" class="botão botão-primário">Calcular preço</button>
+</div>

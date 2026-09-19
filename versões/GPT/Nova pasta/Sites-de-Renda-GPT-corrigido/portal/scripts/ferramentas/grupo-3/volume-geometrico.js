@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("volume-geometrico",11,"Volume geométrico","Calcule o volume de caixas, cilindros, cones e esferas.","Dimensões em centímetros. Caixa a×b×h; cilindro πr²h; cone πr²h/3; esfera 4πr³/3. Cada 1.000 cm³ equivale a 1 litro.",[h.escolha('forma','Forma',[['caixa','Caixa'],['cilindro','Cilindro'],['cone','Cone'],['esfera','Esfera']]),h.numero('a','Comprimento ou raio (cm)',10),h.numero('b','Largura da caixa (cm)',10),h.numero('altura','Altura (cm; exceto esfera)',10)],async d=>{const a=h.positivo(d.a,'Comprimento ou raio'),b=h.n(d.b,'Largura',0),z=h.n(d.altura,'Altura',0);h.opcao(d.forma,['caixa','cilindro','cone','esfera']);if(d.forma!=='esfera'&&!z)throw new Error('Altura deve ser positiva.');if(d.forma==='caixa'&&!b)throw new Error('Largura deve ser positiva.');const r={caixa:a*b*z,cilindro:Math.PI*a*a*z,cone:Math.PI*a*a*z/3,esfera:4*Math.PI*a**3/3}[d.forma];return h.resultado(h.f(r)+' cm³',h.f(r/1000)+' L');});
+

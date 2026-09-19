@@ -1,0 +1,5 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,file,arquivoTexto} from './comum.js';
+import {pdfLib,lerPDF,paginas,salvarPDF,pdfJS,previewPDF} from './pdf-base.js';
+import {canvas,carregarImagem,codificar} from './imagem-base.js';
+export default definir("organizar-paginas-de-pdf",9,"Organizar páginas de PDF","Reordene e exclua páginas com prévia do resultado.","Informe a nova ordem; páginas omitidas são excluídas. Prévia mostra até 12 páginas após organizar, sem alterar o download completo.",[F('arquivo','PDF','.pdf'),T('ordem','Nova ordem (ex.: 3,1,2)','1'),C('previa','Gerar prévia do resultado',true)],async d=>{const doc=await lerPDF(file(d)),sel=paginas(texto(d,'ordem'),doc.getPageCount()),{PDFDocument}=await pdfLib(),out=await PDFDocument.create();for(const p of await out.copyPages(doc,sel))out.addPage(p);const r=await salvarPDF(out,'pdf-organizado.pdf',['Ordem original: '+sel.map(x=>x+1).join(', ')]);if(d.previa){r.imagem=await previewPDF(r.arquivo.blob,out.getPageIndices());r.linhas.push('Prévia: até 12 páginas na nova ordem.');}return r;});
+

@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("equacao-segundo-grau",11,"Equação de segundo grau","Encontre raízes reais ou complexas de uma equação quadrática.","Resolve ax² + bx + c = 0. Delta = b² − 4ac. Coeficiente a precisa ser diferente de zero; raízes reais usam fórmula estável contra cancelamento.",[h.numero('a','Coeficiente a',1,-1e12),h.numero('b','Coeficiente b',-5,-1e12),h.numero('c','Coeficiente c',6,-1e12)],async d=>{const a=h.n(d.a),b=h.n(d.b),c=h.n(d.c);if(!a)throw new Error('a deve ser diferente de zero.');const delta=b*b-4*a*c;if(delta<0){const re=-b/(2*a),im=Math.sqrt(-delta)/Math.abs(2*a);return h.resultado(h.f(re)+' ± '+h.f(im)+'i','Delta = '+h.f(delta),'Duas raízes complexas conjugadas.');}if(delta===0)return h.resultado('x = '+h.f(-b/(2*a)),'Raiz real dupla; delta = 0.');const q=-.5*(b+(b>=0?1:-1)*Math.sqrt(delta));return h.resultado('x₁ = '+h.f(q/a)+'; x₂ = '+h.f(c/q),'Delta = '+h.f(delta));});
+

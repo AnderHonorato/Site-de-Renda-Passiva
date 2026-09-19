@@ -1,0 +1,5 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,file,arquivoTexto} from './comum.js';
+import {pdfLib,lerPDF,paginas,salvarPDF,pdfJS,previewPDF} from './pdf-base.js';
+import {canvas,carregarImagem,codificar} from './imagem-base.js';
+export default definir("juntar-pdfs",9,"Juntar PDFs","Una PDFs na ordem em que os arquivos foram selecionados.","Copia páginas para um novo documento. Até 20 arquivos e 80 MB no total; formulários interativos e assinaturas podem não ser preservados.",[F('arquivos','PDFs em ordem','.pdf',true)],async d=>{const fs=d.arquivos;if(!Array.isArray(fs)||fs.length<2||fs.length>20)throw Error('Selecione de 2 a 20 PDFs.');if(fs.reduce((s,f)=>s+f.size,0)>80*1024*1024)throw Error('Limite total de 80 MB.');const {PDFDocument}=await pdfLib(),out=await PDFDocument.create();for(const f of fs){const doc=await lerPDF(f);if(out.getPageCount()+doc.getPageCount()>1000)throw Error('Resultado excede 1.000 páginas.');for(const p of await out.copyPages(doc,doc.getPageIndices()))out.addPage(p);}return salvarPDF(out,'pdfs-unidos.pdf',fs.map((f,i)=>(i+1)+'. '+f.name));});
+

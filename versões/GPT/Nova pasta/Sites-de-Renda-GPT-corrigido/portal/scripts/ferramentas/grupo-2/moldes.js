@@ -1,0 +1,10 @@
+import {escape,fmt} from './comum.js';
+export const linha=(x1,y1,x2,y2,dobra=false)=>'<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'"'+(dobra?' stroke-dasharray="2 1"':'')+'/>';
+export const rect=(x,y,w,h)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'"/>';
+export const pol=p=>'<polygon points="'+p.map(x=>x.join(',')).join(' ')+'"/>';
+export const label=(x,y,s,size=3)=>'<text x="'+x+'" y="'+y+'" fill="#333" stroke="none" font-family="Arial" font-size="'+size+'">'+escape(s)+'</text>';
+export function molde(titulo,w,h,conteudo,linhas=[]){if(w>2000||h>2000)throw Error('Molde maior que 2 metros. Reduza as medidas.');const W=Math.max(80,w+20),H=h+40;const cabe=(W<=210&&H<=297)||(W<=297&&H<=210);const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'mm" height="'+H+'mm" viewBox="0 0 '+W+' '+H+'"><rect width="100%" height="100%" fill="white"/>'+label(10,9,titulo)+'<g transform="translate(10,18)" fill="none" stroke="#262626" stroke-width="0.25">'+conteudo+'</g><g fill="none" stroke="#262626" stroke-width="0.25">'+rect(10,H-14,10,10)+'</g>'+label(23,H-8,'Calibração: quadrado 10 × 10 mm',2.8)+'</svg>';return {resumo:titulo+' — '+fmt(W)+' × '+fmt(H)+' mm',linhas:['Linhas contínuas: cortar. Tracejadas: dobrar. Medidas internas nominais; teste o papel antes da produção.','Imprima em tamanho real (100%), sem ajustar à página. Confira o quadrado de 10 mm.',cabe?'O molde cabe em A4 na orientação adequada.':'ATENÇÃO: excede A4. Use papel maior ou impressão em mosaico a 100%; não reduza para caber.',...linhas],svg,arquivo:{nome:titulo.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.svg',blob:new Blob([svg],{type:'image/svg+xml'})}};}
+export function bandeja(w,l,h,a){const x=h+a,y=h+a;let s=pol([[x,y-h],[x+w,y-h],[x+w,y],[x+w+h,y],[x+w+h,y+l],[x+w,y+l],[x+w,y+l+h],[x,y+l+h],[x,y+l],[x-h,y+l],[x-h,y],[x,y]]);s+=linha(x,y,x+w,y,true)+linha(x,y+l,x+w,y+l,true)+linha(x,y,x,y+l,true)+linha(x+w,y,x+w,y+l,true);
+for(const [xx,yy,dx,dy]of [[x,y,1,-1],[x+w,y,-1,-1],[x,y+l,1,1],[x+w,y+l,-1,1]]){s+=pol([[xx,yy],[xx,yy+dy*h],[xx-dx*a,yy+dy*(h-a/2)],[xx-dx*a,yy+dy*a/2]])+linha(xx,yy,xx,yy+dy*h,true);}
+return {w:w+2*h+2*a,h:l+2*h+2*a,s};}
+

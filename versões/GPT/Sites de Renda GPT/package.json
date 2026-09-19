@@ -1,8 +1,8 @@
 {
-  "name": "sites-de-renda-passiva",
+  "name": "doce-oficio-gpt",
   "private": true,
-  "version": "1.0.0",
-  "description": "Seis sites estáticos de ferramentas gratuitas, criados por Anderson.",
+  "version": "2.0.0",
+  "description": "Portal único com 150 ferramentas locais, criado por Anderson.",
   "type": "module",
   "license": "UNLICENSED",
   "engines": {
@@ -13,10 +13,13 @@
     "sincronizar": "node compartilhado/ferramentas-da-raiz/sincronizar-compartilhado.mjs",
     "documentos": "node compartilhado/ferramentas-da-raiz/gerar-documentos-dos-produtos.mjs",
     "gerar": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs gerar",
-    "testar": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs testar",
-    "construir": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs construir",
+    "testar": "node --test portal/testes/*.test.mjs",
+    "construir": "node portal/ferramentas/construir.mjs",
     "verificar": "node compartilhado/ferramentas-da-raiz/executar-em-todos.mjs verificar",
-    "test": "npm run testar"
+    "test": "node --test portal/testes/*.test.mjs",
+    "dev": "node portal/ferramentas/servir.mjs --port 4480",
+    "build": "node portal/ferramentas/construir.mjs",
+    "preview": "node portal/ferramentas/servir.mjs --producao --port 4481"
   },
   "devDependencies": {
     "@fontsource/caprasimo": "5.3.0",

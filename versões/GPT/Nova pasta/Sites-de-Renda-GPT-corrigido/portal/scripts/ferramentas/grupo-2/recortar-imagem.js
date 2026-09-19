@@ -1,0 +1,4 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,file} from './comum.js';
+import {canvas,carregarImagem,codificar,cor,tipo,resultadoImagem,comImagem,temExif} from './imagem-base.js';
+export default definir("recortar-imagem",8,"Recortar imagem","Recorte na proporção e posição escolhidas.","Mantém o maior retângulo da proporção pedida dentro da imagem. Posição 0 é esquerda/topo; 100 é direita/base.",[F(),N('proporcaoW','Proporção: largura',1,1,100),N('proporcaoH','Proporção: altura',1,1,100),N('x','Posição horizontal (%)',50,0,100),N('y','Posição vertical (%)',50,0,100)],async d=>{return comImagem(d,async(im,f)=>{const ratio=n(d,'proporcaoW',1,100)/n(d,'proporcaoH',1,100);let w=im.width,h=w/ratio;if(h>im.height){h=im.height;w=h*ratio;}const x=(im.width-w)*n(d,'x',0,100)/100,y=(im.height-h)*n(d,'y',0,100)/100,c=canvas(w,h);c.getContext('2d').drawImage(im,x,y,w,h,0,0,c.width,c.height);return resultadoImagem(c,'image/png',1,f.size);});});
+

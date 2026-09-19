@@ -1,0 +1,46 @@
+@charset "UTF-8";
+/* Sincronizado de compartilhado/estilos/componentes/espaço-publicitário.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/espaço-publicitário.css
+   Reserva de espaço para anúncios — só aparece com consentimento e
+   configuração completas (html.publicidade-ativa, ligado por
+   publicidade/carregar-anúncios.js). Nunca fixo, nunca junto da navegação ou
+   da ação contextual; a reserva evita CLS quando o anúncio real carrega. */
+
+.espaço-publicitário {
+  display: none;
+}
+
+html.publicidade-ativa .espaço-publicitário {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 100px;
+  margin: var(--espaço-6) 0;
+  padding: var(--espaço-4);
+  background: var(--cor-superfície);
+  border: 1.5px dashed var(--cor-divisória);
+  border-radius: var(--raio-m);
+  overflow: hidden;
+}
+
+html.publicidade-ativa .espaço-publicitário::before {
+  content: "Publicidade";
+  position: absolute;
+  top: var(--espaço-2);
+  left: var(--espaço-2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  background: var(--cor-superfície-elevada);
+  padding: 2px 8px;
+  border-radius: var(--raio-pílula);
+}
+
+@media (min-width: 768px) {
+  html.publicidade-ativa .espaço-publicitário {
+    min-height: 120px;
+  }
+}

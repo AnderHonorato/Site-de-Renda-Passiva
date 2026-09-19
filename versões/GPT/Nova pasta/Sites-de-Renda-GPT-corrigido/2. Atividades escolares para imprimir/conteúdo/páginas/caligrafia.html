@@ -1,0 +1,124 @@
+<!--página
+{
+  "título": "Caligrafia",
+  "descrição": "Gere folhas de caligrafia personalizadas com o texto do responsável, linhas-guia de base, x-altura e ascendente, prontas para imprimir ou baixar em PDF.",
+  "destaque": "folha",
+  "navegação": "ferramentas",
+  "script": "páginas/caligrafia.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador para imprimir</p>
+    <h1 id="título-ferramenta">Caligrafia</h1>
+    <p class="ferramenta-resumo">Digite o texto que a criança vai copiar. Cada linha mostra a pauta com linha de base, x-altura e ascendente, com o modelo em traço sólido e as repetições em contorno claro, feitas para serem realmente cobertas a lápis.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-caligrafia" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Texto a copiar</legend>
+        <div class="campo">
+          <label for="texto">Texto (nome, palavra ou frase curta)</label>
+          <input id="texto" name="texto" class="entrada" type="text" maxlength="40" autocomplete="off" value="João" aria-describedby="texto-ajuda texto-erro">
+          <p id="texto-ajuda" class="campo-ajuda">Até 40 caracteres. Acentos são preservados.</p>
+          <p id="texto-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Repetições e tamanho</legend>
+        <div class="campo">
+          <label for="repetições">Repetições por linha</label>
+          <input id="repetições" name="repetições" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="6" aria-describedby="repetições-erro">
+          <p id="repetições-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="quantidade-de-linhas">Quantidade de linhas</label>
+          <input id="quantidade-de-linhas" name="quantidade-de-linhas" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="8" aria-describedby="quantidade-de-linhas-erro">
+          <p id="quantidade-de-linhas-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="tamanho-da-letra">Tamanho da letra</label>
+          <select id="tamanho-da-letra" name="tamanho-da-letra" class="entrada seleção">
+            <option value="20">Pequeno</option>
+            <option value="28" selected>Médio</option>
+            <option value="40">Grande</option>
+            <option value="56">Extragrande</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Cabeçalho</legend>
+        <div class="campo">
+          <label for="título-da-atividade">Nome da atividade (opcional)</label>
+          <input id="título-da-atividade" name="título-da-atividade" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Caligrafia do João">
+        </div>
+        <div class="campo">
+          <label class="interruptor">
+            <input type="checkbox" id="com-cabeçalho" name="com-cabeçalho" checked>
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            Incluir campos de Nome e Data
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar folha</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#pencil-line"></use></svg>
+        <p class="estado-vazio-título">Sua folha de caligrafia aparece aqui</p>
+        <p>Digite o texto e toque em Gerar folha.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="área-de-impressão">
+          <article class="folha-de-atividade" data-folha-atividade>
+            <header class="cabeçalho-da-atividade" data-cabeçalho-da-atividade>
+              <h3 class="cabeçalho-da-atividade-título" data-título-impresso></h3>
+              <div class="cabeçalho-da-atividade-campos" data-campos-impressos hidden>
+                <span>Nome:</span>
+                <span>Data:</span>
+              </div>
+            </header>
+            <div class="caligrafia-svg-contêiner" data-caligrafia-contêiner></div>
+          </article>
+        </div>
+
+        <p class="campo-ajuda" data-resumo-da-folha></p>
+        <p class="campo-ajuda">Esta atividade não tem gabarito: o objetivo é copiar o modelo, não obter uma resposta certa.</p>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta configuração</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Caligrafia — João" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>A fonte usada no PDF (Helvetica) não tem uma variante pontilhada; por isso as repetições vêm em contorno e cinza claro, feitas para cobrir de verdade — não é um pontilhado decorativo ilegível.</li>
+    <li>Se o texto, o tamanho da letra e a quantidade de linhas não couberem na folha A4, o gerador ajusta automaticamente e avisa.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-caligrafia" class="botão botão-primário">Gerar folha</button>
+</div>

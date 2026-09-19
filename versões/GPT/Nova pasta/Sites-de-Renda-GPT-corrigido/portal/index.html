@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+ <meta name="description" content="150 ferramentas gratuitas para calcular, criar e organizar. Confeitaria, casa, imagens, PDF, estudos e muito mais, no seu navegador.">
+ <meta name="theme-color" content="#f7f1e7"><title>Doce Ofício — pequenas contas, grandes planos</title>
+ <link rel="icon" href="recursos/icones/sprout.svg" type="image/svg+xml"><link rel="stylesheet" href="estilos/portal.css">
+ <script type="module" src="scripts/iniciar.js"></script>
+</head>
+<body>
+ <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+ <header class="cabecalho largura">
+  <a href="#inicio" class="marca" aria-label="Doce Ofício, início"><span class="marca-simbolo"><img src="recursos/icones/sprout.svg" width="30" height="30" alt=""></span><span><strong>doce ofício</strong><small>ferramentas para o dia a dia</small></span></a>
+  <nav class="navegacao-desktop" aria-label="Principal">
+   <a href="#ferramentas">Ferramentas</a>
+   <div class="menu-documentos" id="menu-documentos">
+    <button class="menu-documentos-gatilho" id="menu-documentos-gatilho" type="button" aria-expanded="false" aria-controls="mega-documentos">PDF &amp; Imagens <span class="chevron-menu" aria-hidden="true"></span></button>
+    <div class="mega-documentos" id="mega-documentos">
+     <div class="mega-documentos-topo"><div><span class="sobretitulo">OFICINA VISUAL</span><strong>PDF e imagens sem sair do navegador</strong></div><a href="#documentos-imagens">Ver seção completa</a></div>
+     <div class="mega-documentos-grade">
+      <section><div class="mega-grupo-titulo"><span class="mega-selo pdf">PDF</span><div><strong>PDF e documentos</strong><small>Organize, converta e prepare seus arquivos.</small></div></div><div class="mega-lista" id="menu-pdf-lista"></div><a class="mega-ver-todas" href="#ferramentas" data-abrir-categoria="9">Todas as ferramentas de PDF</a></section>
+      <section><div class="mega-grupo-titulo"><span class="mega-selo img">IMG</span><div><strong>Imagens</strong><small>Recorte, reduza e transforme suas imagens.</small></div></div><div class="mega-lista" id="menu-imagem-lista"></div><a class="mega-ver-todas" href="#ferramentas" data-abrir-categoria="8">Todas as ferramentas de imagem</a></section>
+     </div>
+    </div>
+   </div>
+   <a href="#como-funciona">Como funciona</a><a href="#salvos">Meus salvos</a><a href="#sobre">Sobre</a>
+  </nav>
+  <a class="botao apoio-topo" href="#apoiar"><img src="recursos/icones/heart.svg" width="18" height="18" alt="">Apoiar o projeto</a>
+ </header>
+ <main id="conteudo">
+  <div id="pagina-inicio">
+   <section class="hero largura" id="inicio"><div class="hero-texto"><span class="sobretitulo">UM POUCO DE AJUDA, TODOS OS DIAS</span><h1>Pequenas contas.<br><em>Grandes planos.</em></h1><p>Do bolo que você vende à viagem que você sonha. Encontre um jeito mais simples de calcular, criar e organizar.</p><div class="hero-acoes"><a href="#ferramentas" class="botao primario">Encontre sua ferramenta <img src="recursos/icones/arrow-up-right.svg" width="20" height="20" alt=""></a><span class="nota-manuscrita">feito para facilitar.</span></div><div class="hero-garantia"><img src="recursos/icones/shield-check.svg" width="20" height="20" alt=""><span>Gratuito. Sem cadastro. No seu navegador.</span></div></div><div class="hero-visual"><img class="ilustracao" src="recursos/ilustracao-oficio.png" width="768" height="512" alt="Ilustração de calculadora, caderno, fita métrica e materiais de papelaria em tons de terracota e verde."><div class="etiqueta-hero"><span>um lugar, muitas possibilidades</span><strong>150 ferramentas úteis</strong></div></div></section>
+   <section class="faixa-confianca largura" aria-label="Sobre as ferramentas"><div><strong>15 categorias</strong><span>para todos os seus planos</span></div><div><strong>Seus arquivos ficam com você</strong><span>processamento local, sem envio</span></div><div><strong>Resultado bem explicado</strong><span>premissas, medidas e próximos passos</span></div></section>
+   <section id="documentos-imagens" class="laboratorio-midia largura" aria-labelledby="titulo-documentos-imagens">
+    <div class="laboratorio-cabecalho">
+     <div><span class="sobretitulo">OFICINA DE ARQUIVOS</span><h2 id="titulo-documentos-imagens">PDF e imagens, <em>do seu jeito.</em></h2><p>Uma área dedicada para juntar, separar, organizar e converter PDFs — ou recortar, comprimir, redimensionar e transformar imagens. Tudo integrado às ferramentas que já existem no projeto.</p></div>
+     <div class="laboratorio-resumo"><strong>20</strong><span>ferramentas visuais</span><small>processamento local</small></div>
+    </div>
+    <div class="abas-midia" role="group" aria-label="Filtrar ferramentas de PDF e imagens">
+     <button type="button" data-midia-filtro="9" aria-pressed="true"><span class="aba-icone">PDF</span>PDF e documentos</button>
+     <button type="button" data-midia-filtro="8" aria-pressed="false"><span class="aba-icone">IMG</span>Imagens</button>
+     <button type="button" data-midia-filtro="todos" aria-pressed="false">Ver as 20</button>
+    </div>
+    <div class="laboratorio-status"><p id="midia-contador" role="status" aria-live="polite">Carregando ferramentas...</p><span>Selecione uma ferramenta para abrir o editor.</span></div>
+    <div id="midia-destaques" class="grade-midia"></div>
+    <div class="laboratorio-rodape"><div><img src="recursos/icones/shield-check.svg" width="20" height="20" alt=""><span><strong>Privacidade primeiro.</strong> Seus arquivos são processados localmente sempre que a ferramenta permitir.</span></div><a href="#ferramentas">Explorar todas as 150 ferramentas</a></div>
+   </section>
+   <section id="ferramentas" class="catalogo largura"><div class="titulo-secao"><div><span class="sobretitulo">ESCOLHA SEU CAMINHO</span><h2>O que vamos resolver hoje?</h2></div><span class="contador-total">150 pequenas facilidades</span></div>
+    <div class="barra-busca"><label class="busca"><img src="recursos/icones/search.svg" width="22" height="22" alt=""><input id="busca" type="search" placeholder="Busque por ferramenta, tarefa ou categoria..." aria-label="Buscar ferramentas" autocomplete="off"><kbd>/</kbd></label><label class="seletor"><span class="sr-only">Categoria</span><select id="categoria"><option value="0">Todas as categorias</option></select></label></div>
+    <div class="atalhos" id="atalhos" aria-label="Categorias em destaque"></div>
+    <div class="catalogo-legenda"><p id="contagem" role="status" aria-live="polite">Carregando ferramentas...</p><button id="apenas-favoritos" class="texto-botao" aria-pressed="false"><img src="recursos/icones/bookmark.svg" width="18" height="18" alt="">Só favoritos</button></div>
+    <div id="lista-ferramentas" class="lista-ferramentas"></div><div class="ver-mais"><button id="ver-mais" class="botao secundario" hidden>Mostrar mais ferramentas</button></div>
+    <noscript>Ative o JavaScript para executar as ferramentas. Seus arquivos são processados no próprio navegador.</noscript>
+   </section>
+   <section id="como-funciona" class="como"><div class="largura como-conteudo"><div><span class="sobretitulo">DO SEU JEITO</span><h2>Feito para caber<br><em>na sua rotina.</em></h2></div><div class="passos"><article><span>01</span><h3>Encontre o que precisa</h3><p>Explore as categorias ou escreva o que quer resolver.</p></article><article><span>02</span><h3>Preencha com calma</h3><p>Use seus dados e confira as premissas de cada ferramenta.</p></article><article><span>03</span><h3>Leve o resultado</h3><p>Copie, baixe, imprima ou salve para continuar depois.</p></article></div></div></section>
+   <section id="sobre" class="sobre largura"><div class="selo"><img src="recursos/icones/sprout.svg" width="62" height="62" alt=""></div><div><span class="sobretitulo">UM OFÍCIO DIÁRIO</span><h2>Menos tempo nas contas.<br><em>Mais tempo fazendo acontecer.</em></h2><p>Criado por Anderson para transformar tarefas do dia a dia em passos simples. Ferramentas gratuitas, com resultados transparentes e espaço para os seus planos.</p><a class="texto-link" href="#apoiar">Ajude este projeto a continuar</a></div></section>
+  </div>
+  <section id="pagina-salvos" class="largura pagina-interna" hidden><span class="sobretitulo">PARA CONTINUAR DEPOIS</span><h1>Seus <em>salvos.</em></h1><p>Entradas guardadas neste navegador. Arquivos enviados às ferramentas não são armazenados. Exporte uma cópia antes de limpar os dados do navegador.</p><div class="acoes"><button id="exportar" class="botao secundario">Exportar cópia</button><label class="botao secundario importar">Importar cópia<input id="importar" type="file" accept=".json,application/json" class="sr-only"></label></div><div id="registros" class="registros"></div></section>
+  <section id="pagina-apoio" class="largura pagina-interna" hidden><span class="sobretitulo">PEQUENOS GESTOS, GRANDES POSSIBILIDADES</span><h1>Um apoio ao <em>ofício.</em></h1><p>As ferramentas são gratuitas. Se ajudaram você, um apoio voluntário pode contribuir com a manutenção do projeto.</p><div id="apoio-conteudo" class="painel"></div></section>
+  <section id="pagina-legal" class="largura pagina-interna texto-legal" hidden></section>
+ </main>
+ <footer class="rodape largura"><a href="#inicio" class="marca"><strong>doce ofício</strong></a><span>Criado por Anderson · 2026</span><nav aria-label="Institucional"><a href="#privacidade">Privacidade</a><a href="#termos">Termos</a><a href="#contato">Contato</a><button class="texto-botao" data-privacidade>Preferências de privacidade</button></nav></footer>
+ <nav class="navegacao-mobile" aria-label="Navegação no celular"><a href="#inicio"><img src="recursos/icones/house.svg" alt="" width="21" height="21">Início</a><a href="#ferramentas"><img src="recursos/icones/layout-grid.svg" alt="" width="21" height="21">Ferramentas</a><a href="#salvos"><img src="recursos/icones/bookmark.svg" alt="" width="21" height="21">Salvos</a><a href="#apoiar"><img src="recursos/icones/heart.svg" alt="" width="21" height="21">Apoiar</a><button id="mais"><img src="recursos/icones/menu.svg" alt="" width="21" height="21">Mais</button></nav>
+ <dialog id="menu-mais" aria-labelledby="titulo-mais"><div class="dialogo-topo"><h2 id="titulo-mais">Mais do Doce Ofício</h2><button class="fechar" data-fechar aria-label="Fechar menu"><img src="recursos/icones/x.svg" width="24" height="24" alt=""></button></div><nav class="menu-links"><a href="#documentos-imagens">PDF &amp; Imagens</a><a href="#sobre">Sobre o projeto</a><a href="#como-funciona">Como funciona</a><a href="#privacidade">Política de privacidade</a><a href="#termos">Termos de uso</a><a href="#contato">Contato</a></nav></dialog>
+ <dialog id="ferramenta-dialogo" aria-labelledby="ferramenta-titulo"><div class="dialogo-topo"><div><span id="ferramenta-categoria" class="sobretitulo"></span><h2 id="ferramenta-titulo"></h2></div><button class="fechar" data-fechar aria-label="Fechar ferramenta"><img src="recursos/icones/x.svg" width="24" height="24" alt=""></button></div><p id="ferramenta-descricao"></p><div id="ferramenta-corpo"></div></dialog>
+ <dialog id="confirmacao" aria-labelledby="confirmacao-titulo"><h2 id="confirmacao-titulo">Excluir este registro?</h2><p>Você pode exportar uma cópia antes de excluir.</p><div class="acoes"><button class="botao secundario" data-fechar>Cancelar</button><button id="confirmar-exclusao" class="botao primario">Excluir registro</button></div></dialog>
+ <section id="privacidade" class="privacidade" aria-label="Preferências de privacidade" hidden><div><strong>Um espaço que respeita você.</strong><p>Salvos e favoritos ficam neste navegador. Não carregamos anúncios ou medição nas ferramentas. Você escolhe suas preferências opcionais.</p></div><div class="privacidade-acoes"><button id="rejeitar" class="botao secundario">Rejeitar opcionais</button><button id="aceitar" class="botao secundario">Aceitar opcionais</button><button id="personalizar" class="texto-botao">Personalizar</button></div><div id="personalizacao" hidden><label><input type="checkbox" id="opcionais"> Permitir opcionais caso sejam disponibilizados</label><p>Nenhum serviço opcional está ativo nesta versão. Uma nova finalidade exigirá uma nova escolha.</p><button id="salvar-privacidade" class="botao secundario">Salvar preferências</button><a href="#privacidade">Ler a política</a></div></section>
+ <div id="notificacao" class="notificacao" role="status" aria-live="polite"></div>
+</body></html>

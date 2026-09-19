@@ -1,0 +1,63 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/tabela.css */
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabela caption {
+  text-align: left;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  margin-bottom: var(--espaço-2);
+}
+
+.tabela th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  padding: var(--espaço-3);
+  background: var(--cor-superfície);
+  white-space: nowrap;
+}
+.tabela th:first-child { border-top-left-radius: var(--raio-p); }
+.tabela th:last-child { border-top-right-radius: var(--raio-p); }
+
+.tabela td {
+  padding: var(--espaço-3);
+  border-bottom: 1px solid var(--cor-divisória);
+  vertical-align: middle;
+}
+
+.tabela tbody tr:last-child td { border-bottom: 0; }
+.tabela tbody tr:hover {
+  background: color-mix(in srgb, var(--cor-texto) 4%, transparent);
+}
+
+.tabela td[data-numérico],
+.tabela th[data-numérico] {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Rolagem horizontal contida — a página nunca rola para os lados por causa
+   de uma tabela larga ou molde grande. */
+.tabela-rolável {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  border: 1px solid var(--cor-divisória);
+  border-radius: var(--raio-m);
+}
+.tabela-rolável .tabela {
+  min-width: 480px;
+}
+.tabela-rolável .tabela th,
+.tabela-rolável .tabela td {
+  border-radius: 0;
+}

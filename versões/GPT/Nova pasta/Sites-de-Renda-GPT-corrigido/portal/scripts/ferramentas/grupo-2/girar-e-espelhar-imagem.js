@@ -1,0 +1,4 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,file} from './comum.js';
+import {canvas,carregarImagem,codificar,cor,tipo,resultadoImagem,comImagem,temExif} from './imagem-base.js';
+export default definir("girar-e-espelhar-imagem",8,"Girar e espelhar imagem","Gire em ângulos retos ou espelhe sua imagem.","Espelhamento horizontal/vertical é aplicado antes da rotação horária.",[F(),S('angulo','Giro horário','90',[['0','Sem giro'],['90','90 graus'],['180','180 graus'],['270','270 graus']]),C('horizontal','Espelhar na horizontal'),C('vertical','Espelhar na vertical')],async d=>{return comImagem(d,async(im,f)=>{const a=Number(opcao(d,'angulo',['0','90','180','270'])),c=canvas(a%180?im.height:im.width,a%180?im.width:im.height),ctx=c.getContext('2d');ctx.translate(c.width/2,c.height/2);ctx.rotate(a*Math.PI/180);ctx.scale(d.horizontal?-1:1,d.vertical?-1:1);ctx.drawImage(im,-im.width/2,-im.height/2);return resultadoImagem(c,'image/png',1,f.size);});});
+

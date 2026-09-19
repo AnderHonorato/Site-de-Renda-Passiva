@@ -1,0 +1,123 @@
+<!--página
+{
+  "título": "Ajuste de quantidade",
+  "descrição": "Escale uma receita salva ou digitada para outra quantidade, com fator contínuo ou lotes inteiros, e corrija tempo, forno e desperdício manualmente.",
+  "destaque": "amora",
+  "navegação": "ferramentas",
+  "script": "páginas/ajuste-de-quantidade.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Ajuste de quantidade</h1>
+    <p class="ferramenta-resumo">Escale uma receita salva ou um rendimento digitado para a quantidade que você precisa. O fator contínuo mistura tudo em um lote maior; os lotes inteiros repetem a receita completa. Tempo de forno e desperdício não crescem na mesma proporção: ajuste-os à mão.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-ajuste" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>De onde vem o rendimento original</legend>
+        <div class="opções" role="radiogroup" aria-label="Fonte do rendimento original">
+          <label class="opção"><input type="radio" name="fonte" value="manual" checked> Digitar rendimento</label>
+          <label class="opção"><input type="radio" name="fonte" value="salva"> Usar receita salva</label>
+        </div>
+
+        <div data-fonte="manual">
+          <div class="campo">
+            <label for="rendimento-manual">Rendimento original (unidades)</label>
+            <input id="rendimento-manual" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 20" aria-describedby="rendimento-manual-erro">
+            <p id="rendimento-manual-erro" class="campo-erro" hidden></p>
+          </div>
+        </div>
+
+        <div data-fonte="salva" hidden>
+          <div class="campo">
+            <label for="receita-salva">Receita salva</label>
+            <select id="receita-salva" class="entrada seleção" aria-describedby="receita-salva-ajuda"></select>
+            <p id="receita-salva-ajuda" class="campo-ajuda">Ingredientes escalados aparecem no resultado quando você escolhe uma receita salva.</p>
+          </div>
+          <p class="aviso aviso-informação" data-sem-receitas hidden>Você ainda não salvou nenhuma receita. Use a ferramenta <a href="{{raiz}}páginas/custo-da-receita.html">Custo da receita</a> primeiro, ou digite o rendimento manualmente.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Nova quantidade</legend>
+        <div class="campo">
+          <label for="quantidade-desejada">Quantidade desejada (unidades)</label>
+          <input id="quantidade-desejada" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 50" aria-describedby="quantidade-desejada-erro">
+          <p id="quantidade-desejada-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <span class="campo-rótulo">Como aplicar a escala</span>
+          <div class="opções" role="radiogroup" aria-label="Como aplicar a escala">
+            <label class="opção"><input type="radio" name="modo" value="lotes" checked> Lotes inteiros (repete a receita)</label>
+            <label class="opção"><input type="radio" name="modo" value="fator"> Fator contínuo (um lote só, maior)</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Ajustes manuais (não escalam automaticamente)</legend>
+        <p class="campo-ajuda">Tempo de forno, número de fornadas e desperdício não crescem na mesma proporção da receita. Anote aqui os seus próprios ajustes; eles só aparecem no resultado, sem entrar na conta.</p>
+        <div class="campo">
+          <label for="tempo-ajustado">Tempo de preparo e forno ajustado (minutos)</label>
+          <input id="tempo-ajustado" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 90">
+        </div>
+        <div class="campo">
+          <label for="nota-de-forno">Observação sobre o forno</label>
+          <input id="nota-de-forno" class="entrada" type="text" maxlength="200" autocomplete="off" placeholder="Ex.: precisa de mais uma fornada de 20 minutos">
+        </div>
+        <div class="campo">
+          <label for="desperdício-ajustado">Desperdício estimado (%)</label>
+          <input id="desperdício-ajustado" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 5">
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular ajuste</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#scaling"></use></svg>
+        <p class="estado-vazio-título">O ajuste aparece aqui</p>
+        <p>Informe o rendimento original e a quantidade desejada, e toque em Calcular ajuste.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo" data-rótulo-principal>Rendimento final</p>
+          <p class="resultado-valor" data-rendimento-final></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <div class="tabela-rolável" data-bloco-de-ingredientes hidden>
+          <table class="tabela" data-tabela-de-ingredientes>
+            <caption>Ingredientes escalados</caption>
+            <thead><tr><th scope="col">Ingrediente</th><th scope="col">Quantidade original</th><th scope="col">Quantidade escalada</th></tr></thead>
+            <tbody data-corpo-da-tabela></tbody>
+          </table>
+        </div>
+        <dl class="lista-de-resultado" data-ajustes-manuais hidden></dl>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse valor</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>O fator contínuo (quantidade desejada ÷ rendimento original) mistura os ingredientes em um único lote maior; os lotes inteiros repetem a receita completa o número de vezes necessário, arredondado para cima.</li>
+    <li>Tempo de preparo, tempo de forno e desperdício raramente crescem na mesma proporção da receita: ajuste-os à mão nos campos acima.</li>
+    <li>Os ingredientes escalados só aparecem quando você escolhe uma receita salva; ao digitar o rendimento manualmente, só o fator e os lotes são calculados.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-ajuste" class="botão botão-primário">Calcular ajuste</button>
+</div>

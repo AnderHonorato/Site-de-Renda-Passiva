@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("peso-de-bagagem",15,"Peso de bagagem","Some pesos dos itens e compare com o limite informado.","Cada linha: item; quantidade; peso unitário em kg. Total = peso da mala vazia + soma(quantidade × peso unitário). Limite fornecido pelo viajante; não consulta regras de transporte.",[h.numero('mala','Peso da mala vazia (kg)',2),h.numero('limite','Limite declarado (kg)',10),h.texto('itens','Item; quantidade; peso unitário (kg)','Camiseta;3;0,2\nCalçado;1;0,8')],async d=>{const a=h.tabela(d.itens,3).map(([nome,q,p])=>({nome,peso:h.inteiro(q,'Quantidade',0,10000)*h.n(p,'Peso unitário',0)})),t=h.n(d.mala)+h.soma(a.map(x=>x.peso)),lim=h.positivo(d.limite,'Limite');return h.resultado(h.f(t)+' kg no total',t<=lim?'Folga: '+h.f(lim-t)+' kg':'Excesso: '+h.f(t-lim)+' kg',...a.map(x=>x.nome+': '+h.f(x.peso)+' kg'));});
+

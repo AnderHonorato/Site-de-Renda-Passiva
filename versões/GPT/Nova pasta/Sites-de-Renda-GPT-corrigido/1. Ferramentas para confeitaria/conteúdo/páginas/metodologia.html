@@ -1,0 +1,71 @@
+<!--página
+{
+  "título": "Metodologia",
+  "descrição": "Fórmulas, premissas e exemplos conferidos das ferramentas do Doce Ofício: custo, preço, escala, compras, orçamento e comparação.",
+  "destaque": "pistache",
+  "navegação": "mais",
+  "tipo": "institucional"
+}
+-->
+<article class="texto-editorial" aria-labelledby="metodologia-título">
+  <p class="sobretítulo">Como calculamos</p>
+  <h1 id="metodologia-título">Metodologia</h1>
+  <p>As ferramentas do Doce Ofício usam fórmulas simples e explícitas. Os resultados dependem dos valores informados por você e não consultam preços externos.</p>
+
+  <h2>Custo da receita</h2>
+  <p>O custo de cada ingrediente é proporcional: <strong>custo consumido = preço da embalagem × quantidade usada ÷ quantidade comprada</strong>, convertendo a quantidade usada para a unidade da embalagem comprada. Só convertemos unidades da mesma grandeza: gramas com quilos, mililitros com litros, unidade com unidade. Gramas não viram mililitros sem uma densidade específica, que esta ferramenta não presume.</p>
+  <p>Separamos três totais: o <strong>custo consumido</strong> (proporcional ao uso real), o <strong>custo de estoque</strong> (o que sobra em embalagens abertas) e o <strong>dinheiro necessário</strong> (quanto custaria comprar todas as embalagens inteiras envolvidas, arredondando para cima). O custo por unidade soma ingredientes consumidos, mão de obra (tempo ÷ 60 × valor da hora), embalagens de venda e custos adicionais, e divide pelo rendimento aproveitável.</p>
+  <h3>Exemplo conferido</h3>
+  <p>Dois ingredientes de R$ 50 e R$ 30 (R$ 80 no total) para um rendimento de 50 unidades, sem outros custos: <strong>R$ 1,60 por unidade</strong>.</p>
+
+  <h2>Preço de venda</h2>
+  <p>A margem é calculada sobre o <strong>preço de venda</strong>, e as taxas também são percentuais do preço de venda. Por isso:</p>
+  <p><strong>preço do lote = custo ÷ (1 − margem − taxas)</strong></p>
+  <p>Margem e taxas somadas precisam ficar abaixo de 100%. Margem sobre a venda não é o mesmo que acréscimo sobre o custo: 30% de margem corresponde a cerca de 42,86% de acréscimo sobre o custo. Esta ferramenta pode ser preenchida automaticamente a partir de uma receita salva em Custo da receita.</p>
+  <h3>Exemplo conferido</h3>
+  <p>Custo completo de R$ 80,00 para 50 unidades, margem de 30% e nenhuma taxa:</p>
+  <ul>
+    <li>Preço matemático do lote: 80 ÷ 0,70 = R$ 114,2857.</li>
+    <li>Por unidade: 114,2857 ÷ 50 = R$ 2,2857, arredondado para cima: <strong>R$ 2,29</strong>.</li>
+    <li>Lote com o preço arredondado: 2,29 × 50 = <strong>R$ 114,50</strong>.</li>
+  </ul>
+  <p>O arredondamento acontece uma única vez, no preço por unidade, para não distorcer o resultado com arredondamentos em cada etapa.</p>
+
+  <h2>Ajuste de quantidade</h2>
+  <p>O <strong>fator de escala</strong> é a quantidade desejada dividida pelo rendimento original (contínuo, mistura tudo em um único lote maior). Os <strong>lotes inteiros</strong> são o mesmo fator arredondado para cima, repetindo a receita completa esse número de vezes.</p>
+  <h3>Exemplo conferido</h3>
+  <p>Receita que rende 20 unidades, pedido de 50: fator de escala <strong>2,5×</strong>; ou <strong>3 lotes inteiros</strong>, rendendo 60 unidades. Tempo de forno e desperdício não crescem na mesma proporção: corrija-os manualmente.</p>
+
+  <h2>Lista de compras da produção</h2>
+  <p>Os ingredientes de todas as receitas escolhidas, multiplicados pelos respectivos lotes, são somados por nome (convertendo unidades compatíveis). Para cada ingrediente, <strong>embalagens a comprar = arredondar para cima(necessário ÷ quantidade da embalagem)</strong>.</p>
+  <h3>Exemplo conferido</h3>
+  <p>Necessidade de 1,2 kg de um ingrediente vendido em pacotes de 500 g: 1.200 ÷ 500 = 2,4, arredondado para cima: <strong>3 pacotes</strong>.</p>
+
+  <h2>Orçamento ao cliente</h2>
+  <p>Cada item soma <strong>quantidade × preço unitário</strong>, arredondado ao centavo uma única vez por item; o total soma os subtotais e subtrai um desconto opcional. O orçamento mostra só informações comerciais escolhidas por você: nunca o custo interno nem a margem das outras ferramentas.</p>
+  <h3>Exemplo de conferência</h3>
+  <p>50 doces a R$ 2,29 cada: 50 × 2,29 = <strong>R$ 114,50</strong>.</p>
+
+  <h2>Preço por unidade</h2>
+  <p>Cada embalagem é convertida para uma unidade de referência comum (quilo para massa, litro para volume, a própria unidade para contagem), e o preço é dividido pela quantidade nessa referência. Embalagens de grandezas diferentes não são comparáveis e a ferramenta avisa em vez de comparar errado.</p>
+  <h3>Exemplo conferido</h3>
+  <p>500 g por R$ 12 equivalem a R$ 24 por quilo; 1 kg por R$ 20 é mais econômico.</p>
+
+  <h2>Conversor de formas</h2>
+  <p>O fator de conversão é a razão entre as áreas das duas formas, na mesma altura: <strong>fator = área de destino ÷ área de origem</strong>. Formas redondas usam a área do círculo, quadradas o lado ao quadrado e retangulares largura × comprimento.</p>
+  <h3>Exemplo conferido</h3>
+  <p>De uma forma redonda de 20 cm para uma de 30 cm: fator <strong>2,25</strong>. O tempo de cocção não escala junto: acompanhe o ponto da nova forma.</p>
+
+  <h2>Rendimento com perdas</h2>
+  <p><strong>unidades aproveitáveis = unidades produzidas × (1 − perda)</strong>, arredondado para baixo.</p>
+  <h3>Exemplo conferido</h3>
+  <p>100 unidades produzidas com 5% de perda: <strong>95 unidades aproveitáveis</strong>.</p>
+
+  <h2>Limites</h2>
+  <ul>
+    <li>Nenhum resultado é lucro garantido: custos esquecidos, perdas e impostos não informados mudam o resultado.</li>
+    <li>Não convertemos volume em massa sem uma densidade informada.</li>
+    <li>Tempo de forno, trabalho e desperdício nem sempre crescem na mesma proporção da receita; ajuste esses valores quando mudar o tamanho da encomenda.</li>
+    <li>Nenhuma ferramenta consulta preço de mercado: todos os valores vêm do que você informa.</li>
+  </ul>
+</article>

@@ -1,0 +1,58 @@
+// Base para a futura conta Doce Ofício. Não é usado pelo portal estático atual.
+// Antes de ativar, configurar DATABASE_URL, um adaptador de autenticação e OAuth.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id          String       @id @default(cuid())
+  nome        String?
+  email       String?      @unique
+  imagemUrl   String?
+  criadoEm    DateTime     @default(now())
+  atualizadoEm DateTime    @updatedAt
+  contas      ContaOAuth[]
+  sessoes     Sessao[]
+  downloads   Download[]
+}
+
+model ContaOAuth {
+  id                String   @id @default(cuid())
+  usuarioId         String
+  provedor          String
+  idDaConta         String
+  tokenDeAcesso     String?
+  tokenDeAtualizacao String?
+  expiraEm          Int?
+  usuario           Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@unique([provedor, idDaConta])
+}
+
+model Sessao {
+  id           String   @id @default(cuid())
+  token         String   @unique
+  usuarioId     String
+  expiraEm      DateTime
+  usuario       Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+}
+
+model Download {
+  id           String   @id @default(cuid())
+  usuarioId    String
+  nomeArquivo  String
+  tipoMime     String
+  ferramentaId String
+  caminhoSeguro String
+  tamanhoBytes Int
+  expiraEm     DateTime?
+  criadoEm     DateTime @default(now())
+  usuario      Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@index([usuarioId, criadoEm])
+}

@@ -1,0 +1,2 @@
+import {definir} from './comum.js';import {montarRelogio} from './relogios.js';
+export default {...definir('temporizador-de-foco',10,'Temporizador de foco','Alterne períodos de foco e pausa com duração própria.','De 1 a 180 minutos por etapa. O aviso é visual e a próxima etapa exige Iniciar. O navegador pode suspender atualizações em segundo plano; ao retornar, o tempo é recalculado.',[],async()=>({resumo:'Ajuste foco e pausa nos controles abaixo.',linhas:['Avisos visuais locais. Nenhuma notificação ou som automático.']})),montar:el=>montarRelogio(el,true)};

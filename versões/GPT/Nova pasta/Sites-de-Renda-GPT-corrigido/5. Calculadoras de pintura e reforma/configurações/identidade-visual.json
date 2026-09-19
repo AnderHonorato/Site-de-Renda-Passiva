@@ -1,0 +1,13 @@
+{
+  "fundo": "#f3ece0",
+  "neutra": "#857c70",
+  "destaque": "#6f9078",
+  "secundária": "#c06640",
+  "destaques": {
+    "sálvia": "#5f8a6c",
+    "terracota": "#c0603a",
+    "azulejo": "#3f7a8a",
+    "ocre": "#b08a2e",
+    "grafite": "#5c6773"
+  }
+}

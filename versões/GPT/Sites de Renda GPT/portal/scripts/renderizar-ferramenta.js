@@ -5,8 +5,8 @@ import {notificar} from './notificar.js';
 let limparMontagem;let urls=[];let versao=0;
 function limpar(){limparMontagem?.();limparMontagem=undefined;urls.forEach(u=>URL.revokeObjectURL(u));urls=[];versao++;}
 function urlBlob(blob){const url=URL.createObjectURL(blob);urls.push(url);return url;}
-export function renderizarFerramenta(f,categoria,restaurado){
- limpar();const dialogo=document.getElementById('ferramenta-dialogo');const corpo=document.getElementById('ferramenta-corpo');corpo.replaceChildren();
+export function renderizarFerramenta(f,categoria,restaurado,similares=[],abrirSimilar){
+ limpar();const dialogo=document.getElementById('ferramenta-dialogo');const corpo=document.getElementById('ferramenta-corpo');corpo.replaceChildren();dialogo.classList.remove('saida-grafica');
  document.getElementById('ferramenta-titulo').textContent=f.titulo;document.getElementById('ferramenta-categoria').textContent=categoria.nome;document.getElementById('ferramenta-descricao').textContent=f.descricao;
  corpo.style.setProperty('--destaque',categoria.cor);
  if(f.montar){const espaco=elemento('div','painel');corpo.append(espaco);limparMontagem=f.montar(espaco);}
@@ -28,15 +28,16 @@ export function renderizarFerramenta(f,categoria,restaurado){
  }
  const acoes=elemento('div','acoes');const executar=elemento('button','botao primario',f.acao??'Calcular / gerar');executar.type='submit';acoes.append(executar);const erro=elemento('p','erro');erro.hidden=true;erro.setAttribute('role','alert');erro.tabIndex=-1;
  form.append(campos,acoes,erro);layout.append(form,resultado);if(f.campos?.length||f.executar)corpo.append(layout);
+ if(f.id==='recortar-imagem'){const atalho=elemento('aside','atalho-estudio');atalho.append(elemento('strong','','Quer escolher o recorte arrastando?'),elemento('p','','Use o Estúdio de arquivos para marcar a área visualmente e conferir antes de baixar.'),Object.assign(botao('Abrir recorte visual',()=>{dialogo.close();location.hash='estudio';setTimeout(()=>document.getElementById('estudio')?.scrollIntoView({behavior:'smooth'}),0);}),{type:'button'}));corpo.append(atalho);}
  const detalhes=elemento('details','metodologia');detalhes.append(elemento('summary','','Como funciona e o que considerar'),elemento('p','',f.metodologia??'Resultados calculados a partir dos dados informados.'));corpo.append(detalhes);
  const obterDados=()=>Object.fromEntries([...controles].map(([nome,{c,entrada}])=>[nome,c.tipo==='file'?(c.multiplo?[...entrada.files]:entrada.files[0]):c.tipo==='checkbox'?entrada.checked:entrada.value]));
  form.addEventListener('input',()=>{urls.forEach(u=>URL.revokeObjectURL(u));urls=[];versao++;resultado.replaceChildren(elemento('p','resultado-vazio','Os campos foram alterados. Calcule novamente para atualizar o resultado.'));erro.hidden=true;});
- form.onsubmit=async e=>{e.preventDefault();erro.hidden=true;executar.disabled=true;executar.textContent='Preparando resultado...';const atual=++versao;
+ form.onsubmit=async e=>{e.preventDefault();erro.hidden=true;executar.disabled=true;executar.textContent='Processando… preparando sua prévia';const atual=++versao;const inicio=Date.now();
   try{
    const dados=obterDados();for(const {c,entrada} of controles.values()){if(c.obrigatorio&&c.tipo==='file'&&!entrada.files.length)throw Error(`Selecione: ${c.rotulo}.`);}
-   const r=await f.executar(dados);if(atual!==versao||!dialogo.open)return;
-   urls.forEach(u=>URL.revokeObjectURL(u));urls=[];resultado.replaceChildren(elemento('span','sobretitulo','SEU RESULTADO'),elemento('h3','',String(r.resumo??'Pronto')));
-   for(const linha of r.linhas??[])resultado.append(elemento('p','',String(linha)));
+   const r=await f.executar(dados);await new Promise(resolve=>setTimeout(resolve,Math.max(0,10000-(Date.now()-inicio))));if(atual!==versao||!dialogo.open)return;
+   urls.forEach(u=>URL.revokeObjectURL(u));urls=[];resultado.replaceChildren(elemento('span','sobretitulo','ARQUIVO PRONTO PARA DOWNLOAD'),elemento('h3','',String(r.resumo??'Pronto')));
+   dialogo.classList.toggle('saida-grafica',!!r.svg);const dadosImpressao=elemento('div','dados-impressao');for(const c of f.campos??[]){if(c.tipo!=='file')dadosImpressao.append(elemento('p','',c.rotulo+': '+String(dados[c.nome]??'')));}resultado.append(dadosImpressao);for(const linha of r.linhas??[])resultado.append(elemento('p','',String(linha)));
    if(r.svg||r.imagem){const previa=elemento('div','preview');const img=elemento('img');img.alt='Prévia do resultado gerado';if(r.svg){img.src=urlBlob(new Blob([r.svg],{type:'image/svg+xml'}));const doc=new DOMParser().parseFromString(r.svg,'image/svg+xml');const largura=doc.documentElement.getAttribute('width');if(/^\d+(\.\d+)?mm$/.test(largura??''))img.style.width=largura;}else img.src=r.imagem instanceof Blob?urlBlob(r.imagem):r.imagem;previa.append(img);resultado.append(previa);}
    const botoes=elemento('div','acoes');
    botoes.append(botao('Copiar resultado',async()=>{try{await navigator.clipboard.writeText([f.titulo,r.resumo,...(r.linhas??[])].join('\n'));notificar('Resultado copiado.');}catch{notificar('Não foi possível copiar. Selecione o texto do resultado.');}}));
@@ -54,6 +55,9 @@ export function renderizarFerramenta(f,categoria,restaurado){
   }catch(e){if(atual===versao){erro.textContent=e.message||'Não foi possível gerar o resultado. Revise os dados.';erro.hidden=false;erro.focus();}}
   finally{executar.disabled=false;executar.textContent=f.acao??'Calcular / gerar';}
  };
+ const ajuda=document.getElementById('ajuda-ferramenta');ajuda.onclick=()=>{const conteudo=document.getElementById('ajuda-conteudo');conteudo.replaceChildren(elemento('p','','1. Preencha os campos indicados. 2. Escolha “Calcular / gerar”. 3. Aguarde a preparação visual. 4. Confira o resultado e só então baixe, copie ou imprima.'),elemento('h3','','O que esta ferramenta considera'),elemento('p','',f.metodologia??'Os resultados são obtidos a partir dos dados informados.'),elemento('p','',f.sensivel?'Por segurança, esta ferramenta não oferece salvamento.':'Você pode salvar somente os campos de texto e números neste navegador. Arquivos selecionados não são guardados.'));document.getElementById('ajuda-titulo').textContent='Como usar: '+f.titulo;document.getElementById('ajuda-dialogo').showModal();};
+ if(similares.length){const lateral=elemento('aside','ferramentas-similares');lateral.append(elemento('span','sobretitulo','TALVEZ TAMBÉM AJUDE'),elemento('h3','','Ferramentas parecidas'));for(const item of similares)lateral.append(botao(item.titulo,()=>abrirSimilar?.(item)));corpo.append(lateral);}
  dialogo.onclose=()=>{limpar();corpo.replaceChildren();};dialogo.showModal();
 }
+
 
