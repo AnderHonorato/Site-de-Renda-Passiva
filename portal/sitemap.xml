@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://exemplo.invalid/portal/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/ferramentas.html</loc></url>
+  <url><loc>https://exemplo.invalid/portal/ajuda.html</loc></url>
+  <url><loc>https://exemplo.invalid/portal/privacidade.html</loc></url>
+  <url><loc>https://exemplo.invalid/portal/termos.html</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/porcentagem/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/preco-de-venda/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/juros/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/parcelamento/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/divisao-de-contas/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/preco-por-unidade/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/numero-por-extenso/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/orcamento/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/recibo/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/regra-de-tres/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/conversor-de-unidades/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/calculadora-de-datas/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/calculadora-de-horas/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/json/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/base64/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/gerador-de-senhas/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/validador-cpf-cnpj/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/qr-code/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/limpar-planilha/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/csv-e-json/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/sorteio/</loc></url>
+</urlset>

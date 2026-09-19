@@ -1,0 +1,146 @@
+/* Layout: cabeçalho, navegação, divisórias, rodapé e barra inferior. */
+
+/* ---------- Cabeçalho ---------- */
+.topo {
+  position: sticky; top: 0; z-index: 60;
+  background: color-mix(in srgb, var(--fundo) 88%, transparent);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid var(--borda);
+}
+.topo__interior {
+  height: var(--altura-topo);
+  display: flex; align-items: center; gap: 10px;
+}
+.marca {
+  display: inline-flex; align-items: center; gap: 9px;
+  text-decoration: none; color: var(--tinta); font-weight: 700;
+  padding: 4px; margin-left: -4px; border-radius: var(--raio-p);
+}
+.marca__selo {
+  width: 30px; height: 30px; flex: 0 0 30px;
+  border-radius: 9px; display: grid; place-items: center;
+  background: var(--marca); color: var(--marca-contraste);
+}
+.marca__selo svg { width: 19px; height: 19px; }
+.marca__nome { display: flex; flex-direction: column; line-height: 1.05; }
+.marca__nome b { font-size: .95rem; letter-spacing: -.01em; }
+.marca__nome span { font-size: .68rem; color: var(--tinta-suave); font-weight: 600; }
+
+.topo__nav { display: flex; align-items: center; gap: 2px; margin-left: 8px; }
+.topo__nav a, .topo__nav > button {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 10px; border-radius: var(--raio-p);
+  background: none; border: 0; cursor: pointer;
+  color: var(--tinta-média); font-size: var(--t-sm); font-weight: 600;
+  text-decoration: none; white-space: nowrap;
+}
+.topo__nav a:hover, .topo__nav > button:hover { background: var(--superfície-3); color: var(--tinta); }
+.topo__nav a[aria-current="page"] { color: var(--marca); background: var(--marca-fraca); }
+.topo__espaço { flex: 1 1 auto; }
+.topo__fim { display: flex; align-items: center; gap: 6px; }
+
+.ícone-botão {
+  width: 34px; height: 34px; flex: 0 0 34px;
+  display: grid; place-items: center;
+  border: 1px solid var(--borda); border-radius: var(--raio-p);
+  background: var(--superfície); color: var(--tinta-média); cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.ícone-botão:hover { background: var(--superfície-3); color: var(--tinta); border-color: var(--borda-forte); }
+.ícone-botão svg { width: 17px; height: 17px; }
+
+/* ---------- Menu de categorias ---------- */
+.menu-categorias { position: relative; }
+.menu-categorias__painel {
+  position: absolute; left: 0; top: calc(100% + 8px); z-index: 70;
+  width: min(620px, calc(100vw - 32px));
+  background: var(--superfície); border: 1px solid var(--borda);
+  border-radius: var(--raio-g); box-shadow: var(--sombra-3);
+  padding: 12px;
+}
+.menu-categorias__painel[hidden] { display: none; }
+.menu-categorias__grade {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px;
+}
+.menu-categorias__grade a {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 9px; border-radius: var(--raio-p);
+  text-decoration: none; color: var(--tinta); font-size: var(--t-sm); font-weight: 600;
+}
+.menu-categorias__grade a:hover { background: var(--superfície-3); }
+.menu-categorias__grade svg { width: 17px; height: 17px; color: var(--marca); flex: 0 0 17px; }
+.menu-categorias__grade small { display: block; font-weight: 400; color: var(--tinta-suave); font-size: var(--t-xs); }
+.menu-categorias__rodapé {
+  margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--borda);
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  font-size: var(--t-sm);
+}
+
+/* ---------- Faixa de avisos ---------- */
+.avisos {
+  background: var(--marca); color: var(--marca-contraste);
+  font-size: var(--t-sm);
+}
+.avisos__interior { display: flex; align-items: center; gap: 10px; min-height: 34px; }
+.avisos__texto { flex: 1 1 auto; margin: 0; }
+.avisos__texto a { color: inherit; }
+.avisos button {
+  background: none; border: 0; color: inherit; cursor: pointer;
+  width: 26px; height: 26px; display: grid; place-items: center; border-radius: 6px; opacity: .8;
+}
+.avisos button:hover { opacity: 1; background: rgba(255, 255, 255, .15); }
+.avisos svg { width: 15px; height: 15px; }
+
+/* ---------- Divisória ondulada ---------- */
+.onda { display: block; width: 100%; height: 28px; color: var(--fundo-fundo); }
+.onda svg { width: 100%; height: 100%; }
+.faixa-fundo { background: var(--fundo-fundo); }
+
+/* ---------- Rodapé ---------- */
+.rodapé {
+  margin-top: 40px; border-top: 1px solid var(--borda);
+  background: var(--superfície-2);
+  padding-bottom: calc(var(--altura-barra-inferior) + 12px);
+}
+.rodapé__interior {
+  display: grid; gap: 18px; padding-block: 22px;
+  grid-template-columns: minmax(200px, 1fr) repeat(3, minmax(0, auto));
+}
+.rodapé h4 { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--tinta-suave); margin-bottom: 8px; }
+.rodapé ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.rodapé a { color: var(--tinta-média); text-decoration: none; font-size: var(--t-sm); }
+.rodapé a:hover { color: var(--marca); text-decoration: underline; }
+.rodapé__legal {
+  border-top: 1px solid var(--borda); padding-block: 12px;
+  display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between;
+  font-size: var(--t-xs); color: var(--tinta-suave);
+}
+
+/* ---------- Barra inferior (celular) ---------- */
+.barra-inferior {
+  position: fixed; inset: auto 0 0 0; z-index: 80;
+  display: none; align-items: stretch;
+  background: color-mix(in srgb, var(--superfície) 94%, transparent);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--borda);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.barra-inferior a, .barra-inferior button {
+  flex: 1 1 0; min-height: var(--altura-barra-inferior);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  background: none; border: 0; cursor: pointer;
+  color: var(--tinta-suave); font-size: .68rem; font-weight: 600; text-decoration: none;
+}
+.barra-inferior svg { width: 20px; height: 20px; }
+.barra-inferior [aria-current="page"] { color: var(--marca); }
+
+@media (max-width: 860px) {
+  .barra-inferior { display: flex; }
+  .topo__nav { display: none; }
+  .rodapé__interior { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  :root { --gutter: 14px; }
+  .rodapé__interior { grid-template-columns: 1fr; }
+  .marca__nome span { display: none; }
+}

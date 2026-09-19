@@ -1,0 +1,37 @@
+{
+  "name": "Ferramentas do Ander",
+  "short_name": "Ferramentas",
+  "description": "Ferramentas para calcular, criar e organizar, direto no navegador.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f1ea",
+  "theme_color": "#9a3d28",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "recursos/ícone.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Calculadora de porcentagem",
+      "url": "f/porcentagem/"
+    },
+    {
+      "name": "Preço de venda",
+      "url": "f/preco-de-venda/"
+    },
+    {
+      "name": "Calculadora de juros",
+      "url": "f/juros/"
+    },
+    {
+      "name": "Simulador de parcelamento",
+      "url": "f/parcelamento/"
+    }
+  ]
+}

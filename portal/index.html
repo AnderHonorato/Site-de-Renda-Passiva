@@ -3,124 +3,203 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f8eee3">
-  <meta name="description" content="Portal de ferramentas práticas do Ander: utilidades organizadas por categoria, com histórico, busca, ajuda e atalhos rápidos.">
-  <title>Ferramentas do Ander</title>
-  <link rel="stylesheet" href="./estilos.css">
-  <script type="module" src="./app.js"></script>
+  <title>Ferramentas do Ander — resolva a tarefa, não procure o botão</title>
+  <meta name="description" content="Portal com 21 ferramentas prontas para calcular, criar e organizar. Funciona no navegador, sem cadastro e sem enviar seus dados.">
+  <meta name="theme-color" content="#f6f1ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15110f" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="recursos/ícone.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifesto.webmanifest">
+  <link rel="stylesheet" href="estilos/núcleo.css">
+  <link rel="stylesheet" href="estilos/fontes.css">
+  <link rel="stylesheet" href="estilos/layout.css">
+  <link rel="stylesheet" href="estilos/componentes.css">
+  <link rel="stylesheet" href="estilos/páginas.css">
+  <script src="scripts/núcleo/tema-inicial.js"></script>
+  <script type="module" src="scripts/páginas/início.js"></script>
 </head>
 <body>
-  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
-
-  <div class="faixa" aria-label="Avisos">
-    <div class="faixa__trilho" id="faixa-trilho"></div>
-  </div>
-
-  <header class="topo">
+  <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
+<header class="topo">
+  <div class="largura topo__interior">
     <a class="marca" href="./" aria-label="Ferramentas do Ander, início">
-      <span class="marca__sinal" aria-hidden="true">A</span>
-      <span><strong>Ferramentas</strong><small>por Ander</small></span>
+      <span class="marca__selo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 5 7v5.2c0 4.2 2.9 7.3 7 8.3 4.1-1 7-4.1 7-8.3V7l-7-3.5Z"/><path d="M9.2 12.1l2 2.1 3.6-4"/></svg></span>
+      <span class="marca__nome"><b>Ferramentas</b><span>do Ander</span></span>
     </a>
-    <nav class="topo__acoes" aria-label="Ações principais">
-      <button class="botao botao--fantasma" id="botao-ajuda" type="button">Ajuda</button>
-      <button class="botao" id="botao-conta" type="button">Entrar</button>
+    <nav class="topo__nav" aria-label="Navegação principal">
+      <span class="menu-categorias">
+        <button type="button" id="abrir-categorias" aria-expanded="false" aria-controls="painel-categorias">
+          Categorias <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9.5 6 6 6-6"/></svg>
+        </button>
+        <div class="menu-categorias__painel" id="painel-categorias" hidden>
+          <p class="rótulo b-2">Encontre pelo que precisa fazer</p>
+          <div class="menu-categorias__grade">
+        <a href="ferramentas.html?categoria=dinheiro"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.3c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.5.8-2.5 2s1 1.8 2.5 2 2.5.6 2.5 2-1 2-2.5 2c-1.1 0-2-.5-2.5-1.3"/><path d="M12 6.3v1.7M12 16v1.7"/></svg><span>Dinheiro e preços<small>Preço, margem, juros, parcelas e divisão de contas.</small></span></a>
+        <a href="ferramentas.html?categoria=vendas"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 6.5h2.3l2 10.2a1.5 1.5 0 0 0 1.5 1.2h7.4a1.5 1.5 0 0 0 1.5-1.2l1.3-6.4H6.3"/><circle cx="10" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg><span>Vendas e propostas<small>Orçamento, proposta, comissão e acompanhamento.</small></span></a>
+        <a href="ferramentas.html?categoria=c%C3%A1lculo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.7 12h.01M12 12h.01M15.3 12h.01M8.7 16h.01M12 16h.01M15.3 16h.01"/></svg><span>Cálculo e conversão<small>Porcentagem, regra de três e unidades de medida.</small></span></a>
+        <a href="ferramentas.html?categoria=datas"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M3.5 10h17"/><path d="M8 3.5v4M16 3.5v4"/></svg><span>Datas e horas<small>Diferenças, prazos, dias úteis e carga horária.</small></span></a>
+        <a href="ferramentas.html?categoria=texto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></svg><span>Texto<small>Contar, limpar, padronizar, comparar e transformar.</small></span></a>
+        <a href="ferramentas.html?categoria=documentos"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8l-4.5-4.5Z"/><path d="M14 3.5V8h4.5"/><path d="M9 13h6M9 16.5h4"/></svg><span>Documentos e PDF<small>Gerar, converter, organizar e assinar documentos.</small></span></a>
+        <a href="ferramentas.html?categoria=planilhas"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 4.5v15M15 4.5v15"/></svg><span>Planilhas e dados<small>Limpar, comparar, converter e analisar tabelas.</small></span></a>
+        <a href="ferramentas.html?categoria=imagens"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.8" cy="9.5" r="1.6"/><path d="m4.5 17 4.3-4.3 3.4 3.4 3-3 4.3 4.3"/></svg><span>Imagens<small>Redimensionar, converter, comprimir e inspecionar.</small></span></a>
+        <a href="ferramentas.html?categoria=desenvolvimento"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m8.5 8-4 4 4 4"/><path d="m15.5 8 4 4-4 4"/><path d="m13.5 5.5-3 13"/></svg><span>Desenvolvimento<small>JSON, códigos, conversores e utilitários técnicos.</small></span></a>
+        <a href="ferramentas.html?categoria=seguran%C3%A7a"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="8" cy="12" r="4"/><path d="M12 12h8"/><path d="M17 12v3M20 12v2.2"/></svg><span>Senhas e segurança<small>Gerar segredos, validar documentos e conferir dados.</small></span></a>
+        <a href="ferramentas.html?categoria=trabalho"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg><span>RH e trabalho<small>Jornada, férias, currículo, escala e avaliação.</small></span></a>
+        <a href="ferramentas.html?categoria=opera%C3%A7%C3%B5es"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 4 7.5v9l8 4 8-4v-9l-8-4Z"/><path d="m4 7.5 8 4 8-4"/><path d="M12 11.5v9"/></svg><span>Estoque e logística<small>Estoque, reposição, frete, cubagem e conferência.</small></span></a>
+        <a href="ferramentas.html?categoria=marketing"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2"/></svg><span>Marketing<small>Campanha, métricas, UTM e materiais de conteúdo.</small></span></a>
+        <a href="ferramentas.html?categoria=produtividade"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/></svg><span>Produtividade<small>Tarefas, reuniões, planejamento e acompanhamento.</small></span></a>
+        <a href="ferramentas.html?categoria=estudos"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 5a1.5 1.5 0 0 1 1.5-1.5h5V20H6a1.5 1.5 0 0 1-1.5-1.5V5Z"/><path d="M19.5 5A1.5 1.5 0 0 0 18 3.5h-5V20h5a1.5 1.5 0 0 0 1.5-1.5V5Z"/></svg><span>Estudos<small>Atividades, treino, revisão e material para imprimir.</small></span></a>
+        <a href="ferramentas.html?categoria=of%C3%ADcio"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14.5 6.5 3 3"/><path d="M10.5 10.5 4.8 16.2a2 2 0 0 0 2.8 2.8l5.7-5.7"/><path d="M12.6 4.4a2 2 0 0 1 2.8 0l4.2 4.2a2 2 0 0 1 0 2.8l-1.4 1.4-7-7 1.4-1.4Z"/></svg><span>Ofício, casa e obra<small>Produção artesanal, reforma, festas e embalagens.</small></span></a>
+          </div>
+          <div class="menu-categorias__rodapé">
+            <span class="suave pequeno">Processamento no seu navegador</span>
+            <a href="ferramentas.html">Ver o catálogo completo</a>
+          </div>
+        </div>
+      </span>
+      <a href="ferramentas.html">Ferramentas</a><a href="salvos.html">Salvos</a><a href="ajuda.html">Ajuda</a>
     </nav>
-  </header>
-
-  <main id="conteudo">
-    <section class="hero revelar">
-      <div>
-        <p class="rotulo">Tudo no mesmo lugar</p>
-        <h1>Ferramentas úteis sem caça ao botão certo.</h1>
-        <p class="hero__texto">Busque, abra, volte ao que usou recentemente e descubra ferramentas relacionadas. As funções públicas continuam acessíveis sem cadastro.</p>
-      </div>
-      <div class="busca-wrap">
-        <label for="busca">O que você precisa fazer?</label>
-        <input id="busca" type="search" autocomplete="off" placeholder="Ex.: orçamento, caixa, receita, pintura…">
-        <p id="resultado-busca" class="muted" aria-live="polite"></p>
+    <span class="topo__espaço"></span>
+    <div class="topo__fim">
+      <button class="ícone-botão" type="button" id="ir-para-busca" aria-label="Buscar ferramenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg></button>
+      <button class="ícone-botão" type="button" id="alternar-tema" aria-label="Alternar tema claro e escuro"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19.5 13.8A7.7 7.7 0 0 1 10.2 4.5a7.8 7.8 0 1 0 9.3 9.3Z"/></svg></button>
+    </div>
+  </div>
+</header>
+  <main id="conteúdo">
+    <section class="largura abertura">
+      <div class="abertura__grade">
+        <div>
+          <h1 class="abertura__título">O que você precisa <em>resolver</em> agora?</h1>
+          <p class="abertura__linha">Escreva a tarefa, não o nome da ferramenta. 21 ferramentas prontas, sem cadastro, rodando no seu navegador.</p>
+          <div class="busca">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg>
+            <input id="busca" type="search" autocomplete="off" enterkeyhint="search"
+              placeholder="Ex.: preciso saber quanto cobrar" aria-label="Buscar ferramenta"
+              role="combobox" aria-expanded="false" aria-controls="sugestões" aria-autocomplete="list">
+            <kbd>/</kbd>
+            <div class="sugestões" id="sugestões" role="listbox" aria-label="Sugestões" hidden></div>
+          </div>
+          <div class="intenções">
+            <p class="rótulo">Pessoas costumam pedir</p>
+            <div class="intenções__lista" id="intenções"></div>
+          </div>
+        </div>
+        <aside class="acesso-rápido" aria-label="Acesso rápido">
+          <p class="acesso-rápido__título">Comece por aqui</p>
+          <a class="categoria-cartão" href="f/porcentagem/"><span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.7 12h.01M12 12h.01M15.3 12h.01M8.7 16h.01M12 16h.01M15.3 16h.01"/></svg></span><span><b>Calculadora de porcentagem</b><small>Cálculo e conversão</small></span></a><a class="categoria-cartão" href="f/preco-de-venda/"><span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.3c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.5.8-2.5 2s1 1.8 2.5 2 2.5.6 2.5 2-1 2-2.5 2c-1.1 0-2-.5-2.5-1.3"/><path d="M12 6.3v1.7M12 16v1.7"/></svg></span><span><b>Preço de venda</b><small>Dinheiro e preços</small></span></a><a class="categoria-cartão" href="f/juros/"><span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 19.5h15"/><rect x="6" y="11" width="3.2" height="6"/><rect x="11.4" y="7" width="3.2" height="10"/><rect x="16.8" y="13.5" width="3.2" height="3.5"/></svg></span><span><b>Calculadora de juros</b><small>Dinheiro e preços</small></span></a><a class="categoria-cartão" href="f/parcelamento/"><span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.7 12h.01M12 12h.01M15.3 12h.01M8.7 16h.01M12 16h.01M15.3 16h.01"/></svg></span><span><b>Simulador de parcelamento</b><small>Dinheiro e preços</small></span></a><a class="categoria-cartão" href="f/divisao-de-contas/"><span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg></span><span><b>Divisão de contas</b><small>Dinheiro e preços</small></span></a>
+        </aside>
       </div>
     </section>
 
-    <section class="banner revelar" aria-label="Destaques" id="banner">
-      <button class="banner__seta" id="banner-anterior" type="button" aria-label="Banner anterior">‹</button>
-      <div class="banner__conteudo" id="banner-conteudo"></div>
-      <button class="banner__seta" id="banner-proximo" type="button" aria-label="Próximo banner">›</button>
-    </section>
-
-    <section class="secao revelar" id="recentes" hidden>
-      <div class="secao__cabecalho">
-        <div><p class="rotulo">Retomar</p><h2>Vistos recentemente</h2></div>
-        <button class="link-botao" id="limpar-recentes" type="button">Limpar</button>
+    <section class="largura seção" id="recentes" hidden>
+      <div class="seção__topo">
+        <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 1.8"/></svg> Continue de onde parou</h2>
+        <button class="botão botão--texto" type="button" id="limpar-recentes">Limpar</button>
       </div>
-      <div class="grade grade--compacta" id="grade-recentes"></div>
+      <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-recentes"></div>
     </section>
 
-    <section class="secao revelar">
-      <div class="secao__cabecalho">
-        <div><p class="rotulo">Organizado de verdade</p><h2>Categorias</h2></div>
-        <span class="contador" id="contador-ferramentas"></span>
+    <div class="onda" aria-hidden="true"><svg viewBox="0 0 1440 28" preserveAspectRatio="none"><path d="M0,0 C240,28 480,0 720,14 C960,28 1200,4 1440,18 L1440,28 L0,28 Z" fill="currentColor"/></svg></div>
+    <div class="faixa-fundo">
+      <section class="largura seção">
+        <div class="seção__topo">
+          <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg> Categorias</h2>
+          <a class="botão botão--texto" href="ferramentas.html">Ver tudo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h13"/><path d="m12.5 6.5 6 5.5-6 5.5"/></svg></a>
+        </div>
+        <div class="grade-categorias"><a class="categoria-cartão" href="ferramentas.html?categoria=dinheiro">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.3c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.5.8-2.5 2s1 1.8 2.5 2 2.5.6 2.5 2-1 2-2.5 2c-1.1 0-2-.5-2.5-1.3"/><path d="M12 6.3v1.7M12 16v1.7"/></svg></span>
+      <span><b>Dinheiro e preços</b><small data-contagem="dinheiro"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=vendas">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 6.5h2.3l2 10.2a1.5 1.5 0 0 0 1.5 1.2h7.4a1.5 1.5 0 0 0 1.5-1.2l1.3-6.4H6.3"/><circle cx="10" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg></span>
+      <span><b>Vendas e propostas</b><small data-contagem="vendas"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=c%C3%A1lculo">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.7 12h.01M12 12h.01M15.3 12h.01M8.7 16h.01M12 16h.01M15.3 16h.01"/></svg></span>
+      <span><b>Cálculo e conversão</b><small data-contagem="cálculo"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=datas">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M3.5 10h17"/><path d="M8 3.5v4M16 3.5v4"/></svg></span>
+      <span><b>Datas e horas</b><small data-contagem="datas"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=texto">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></svg></span>
+      <span><b>Texto</b><small data-contagem="texto"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=documentos">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8l-4.5-4.5Z"/><path d="M14 3.5V8h4.5"/><path d="M9 13h6M9 16.5h4"/></svg></span>
+      <span><b>Documentos e PDF</b><small data-contagem="documentos"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=planilhas">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 4.5v15M15 4.5v15"/></svg></span>
+      <span><b>Planilhas e dados</b><small data-contagem="planilhas"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=imagens">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.8" cy="9.5" r="1.6"/><path d="m4.5 17 4.3-4.3 3.4 3.4 3-3 4.3 4.3"/></svg></span>
+      <span><b>Imagens</b><small data-contagem="imagens"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=desenvolvimento">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m8.5 8-4 4 4 4"/><path d="m15.5 8 4 4-4 4"/><path d="m13.5 5.5-3 13"/></svg></span>
+      <span><b>Desenvolvimento</b><small data-contagem="desenvolvimento"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=seguran%C3%A7a">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="8" cy="12" r="4"/><path d="M12 12h8"/><path d="M17 12v3M20 12v2.2"/></svg></span>
+      <span><b>Senhas e segurança</b><small data-contagem="segurança"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=trabalho">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg></span>
+      <span><b>RH e trabalho</b><small data-contagem="trabalho"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=opera%C3%A7%C3%B5es">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 4 7.5v9l8 4 8-4v-9l-8-4Z"/><path d="m4 7.5 8 4 8-4"/><path d="M12 11.5v9"/></svg></span>
+      <span><b>Estoque e logística</b><small data-contagem="operações"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=marketing">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2"/></svg></span>
+      <span><b>Marketing</b><small data-contagem="marketing"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=produtividade">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/></svg></span>
+      <span><b>Produtividade</b><small data-contagem="produtividade"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=estudos">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 5a1.5 1.5 0 0 1 1.5-1.5h5V20H6a1.5 1.5 0 0 1-1.5-1.5V5Z"/><path d="M19.5 5A1.5 1.5 0 0 0 18 3.5h-5V20h5a1.5 1.5 0 0 0 1.5-1.5V5Z"/></svg></span>
+      <span><b>Estudos</b><small data-contagem="estudos"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=of%C3%ADcio">
+      <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14.5 6.5 3 3"/><path d="M10.5 10.5 4.8 16.2a2 2 0 0 0 2.8 2.8l5.7-5.7"/><path d="M12.6 4.4a2 2 0 0 1 2.8 0l4.2 4.2a2 2 0 0 1 0 2.8l-1.4 1.4-7-7 1.4-1.4Z"/></svg></span>
+      <span><b>Ofício, casa e obra</b><small data-contagem="ofício"></small></span>
+    </a></div>
+      </section>
+    </div>
+    <div class="onda" aria-hidden="true"><svg viewBox="0 0 1440 28" preserveAspectRatio="none"><path d="M0,28 C240,0 480,28 720,14 C960,0 1200,24 1440,10 L1440,0 L0,0 Z" fill="currentColor"/></svg></div>
+
+    <section class="largura seção">
+      <div class="seção__topo">
+        <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="m8.4 12.2 2.6 2.6 4.6-5"/></svg> Prontas para usar</h2>
+        <p class="filtros__contagem">21 de 150 ferramentas do catálogo</p>
       </div>
-      <div class="categorias" id="categorias"></div>
+      <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-prontas"></div>
+      <p class="pequeno suave t-2">As demais estão no catálogo com a ficha completa do que farão. Nenhuma abre uma tela vazia.</p>
     </section>
 
-    <section class="secao revelar">
-      <div class="secao__cabecalho">
-        <div><p class="rotulo">Catálogo</p><h2>Ferramentas disponíveis</h2></div>
-        <select id="filtro-categoria" aria-label="Filtrar por categoria"></select>
-      </div>
-      <div class="grade" id="grade-ferramentas"></div>
-      <div class="vazio" id="estado-vazio" hidden>Nenhuma ferramenta combina com essa busca.</div>
-    </section>
-
-    <section class="secao revelar faq">
-      <p class="rotulo">Sem manual de 80 páginas</p>
-      <h2>Perguntas frequentes</h2>
-      <details><summary>Preciso criar conta?</summary><p>Não para usar as ferramentas públicas. A conta serve para sincronizar histórico, preferências e downloads entre aparelhos quando o backend estiver conectado.</p></details>
-      <details><summary>Meus arquivos são enviados para algum servidor?</summary><p>As ferramentas atuais foram projetadas para processar no navegador sempre que possível. Cada ferramenta deve informar quando um recurso exigir servidor.</p></details>
-      <details><summary>Onde ficam os downloads?</summary><p>No modo local, o portal registra apenas nome, ferramenta e data no seu navegador. Com conta conectada, o histórico poderá ser sincronizado via banco.</p></details>
-      <details><summary>Como peço ajuda numa ferramenta?</summary><p>Use o botão Ajuda no topo. O painel explica o fluxo básico e mostra atalhos para as categorias.</p></details>
+    <section class="largura seção prosa">
+      <h2>Perguntas de quem chega agora</h2>
+      <details><summary>Preciso criar conta?</summary><p>Não. Todas as ferramentas do portal funcionam sem cadastro. Favoritos e histórico ficam guardados no seu próprio navegador.</p></details>
+      <details><summary>Meus arquivos são enviados para algum servidor?</summary><p>Não. O portal é um site estático: o processamento acontece no seu navegador. Cada ferramenta informa isso na ficha, e se alguma vier a precisar de servidor, o aviso aparecerá antes de você enviar qualquer coisa.</p></details>
+      <details><summary>Por que algumas ferramentas aparecem como "planejada"?</summary><p>Porque ainda não estão implementadas. Preferimos mostrar a ficha do que elas vão fazer a abrir uma tela vazia. Só recebe o selo de pronta a ferramenta que abre, valida a entrada, calcula, trata erro, exporta o que promete e tem teste automático.</p></details>
+      <details><summary>Posso usar no celular?</summary><p>Sim. O portal foi desenhado primeiro para a tela pequena, com navegação inferior e campos que o teclado não cobre.</p></details>
     </section>
   </main>
-
-  <footer class="rodape">
-    <span>Ferramentas do Ander · 2026</span>
-    <span>Feito para ser simples antes de ser enfeitado.</span>
-  </footer>
-
-  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-
-  <dialog id="modal-boas-vindas" class="modal">
-    <form method="dialog" class="modal__caixa">
-      <p class="rotulo">Primeira visita</p>
-      <h2>Bem-vindo ao portal</h2>
-      <p>Você pode começar pela busca, escolher uma categoria ou voltar às ferramentas vistas recentemente. Nada básico fica bloqueado por login.</p>
-      <div class="modal__acoes"><button class="botao" value="ok">Começar</button></div>
-    </form>
-  </dialog>
-
-  <dialog id="modal-ajuda" class="modal">
-    <form method="dialog" class="modal__caixa">
-      <button class="modal__fechar" value="fechar" aria-label="Fechar">×</button>
-      <p class="rotulo">Ajuda rápida</p>
-      <h2>Como usar</h2>
-      <ol class="passos"><li>Busque pelo que quer fazer.</li><li>Abra uma ferramenta e conclua o processo.</li><li>Ao voltar, ela aparece em Vistos recentemente.</li><li>Ferramentas da mesma categoria ficam próximas para facilitar comparação.</li></ol>
-      <p class="muted">Atalho: pressione <kbd>/</kbd> para focar a busca.</p>
-    </form>
-  </dialog>
-
-  <dialog id="modal-conta" class="modal">
-    <form method="dialog" class="modal__caixa">
-      <button class="modal__fechar" value="fechar" aria-label="Fechar">×</button>
-      <p class="rotulo">Conta</p>
-      <h2>Entrar e sincronizar</h2>
-      <p>Os botões abaixo já usam as rotas previstas do backend. Enquanto as credenciais OAuth não forem configuradas, o portal continua funcionando em modo local.</p>
-      <div class="login-opcoes">
-        <button type="button" data-login="google">Continuar com Google</button>
-        <button type="button" data-login="apple">Continuar com Apple</button>
-        <button type="button" data-login="x">Continuar com X</button>
-      </div>
-      <p class="muted">Nenhum provedor é simulado. Sem configuração real, o portal informa que a integração ainda não está ativa.</p>
-    </form>
-  </dialog>
+<footer class="rodapé">
+  <div class="largura rodapé__interior">
+    <div>
+      <a class="marca" href="./"><span class="marca__selo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 5 7v5.2c0 4.2 2.9 7.3 7 8.3 4.1-1 7-4.1 7-8.3V7l-7-3.5Z"/><path d="M9.2 12.1l2 2.1 3.6-4"/></svg></span><span class="marca__nome"><b>Ferramentas</b><span>do Ander</span></span></a>
+      <p class="pequeno suave t-1 medida-curta">Ferramentas para calcular, criar e organizar. Rodam no seu navegador, sem cadastro.</p>
+    </div>
+    <div><h4>Categorias</h4><ul><li><a href="ferramentas.html?categoria=dinheiro">Dinheiro e preços</a></li><li><a href="ferramentas.html?categoria=vendas">Vendas e propostas</a></li><li><a href="ferramentas.html?categoria=c%C3%A1lculo">Cálculo e conversão</a></li><li><a href="ferramentas.html?categoria=datas">Datas e horas</a></li><li><a href="ferramentas.html?categoria=texto">Texto</a></li><li><a href="ferramentas.html?categoria=documentos">Documentos e PDF</a></li></ul></div>
+    <div><h4>Portal</h4><ul>
+      <li><a href="ferramentas.html">Todas as ferramentas</a></li>
+      <li><a href="salvos.html">Meus salvos</a></li>
+      <li><a href="ajuda.html">Como usar</a></li>
+    </ul></div>
+    <div><h4>Legal</h4><ul>
+      <li><a href="privacidade.html">Privacidade</a></li>
+      <li><a href="termos.html">Termos de uso</a></li>
+    </ul></div>
+  </div>
+  <div class="largura rodapé__legal">
+    <span>Criado por Anderson · 2026</span>
+    <span>Seus dados ficam neste aparelho.</span>
+  </div>
+</footer>
+<nav class="barra-inferior" aria-label="Navegação no celular"><a href="" aria-current="page"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V19a1 1 0 0 0 1 1h3.5v-4.5h3V20H17a1 1 0 0 0 1-1V9.8"/></svg>Início</a><a href="ferramentas.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>Ferramentas</a><a href="salvos.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 4.5h11a1 1 0 0 1 1 1V20l-6.5-3.8L5.5 20V5.5a1 1 0 0 1 1-1Z"/></svg>Salvos</a><a href="ajuda.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M9.7 9.6a2.4 2.4 0 1 1 3.1 2.6c-.6.2-.8.7-.8 1.3v.4"/><path d="M12 17h.01"/></svg>Ajuda</a></nav>
+  <div class="notificação" id="aviso" role="status" aria-live="polite"></div>
+  <script type="module" src="scripts/núcleo/cabeçalho.js"></script>
 </body>
 </html>
