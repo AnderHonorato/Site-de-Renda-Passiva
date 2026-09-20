@@ -8,6 +8,7 @@ import { emCentavos } from '../cálculos/dinheiro.js';
 import { paraNúmero } from '../núcleo/texto.js';
 import { formatarMoeda } from '../comum/formatação/formatar-moeda.js';
 import { gravar, ler } from '../núcleo/armazenamento.js';
+import { mostrarOrçamentoCompartilhado } from './auxiliares/orcamento-compartilhado.js';
 
 const LIMITE_DE_ITENS = 60;
 
@@ -88,6 +89,20 @@ export default {
   },
 
   montar(raiz, ferramenta) {
+    // Quem chega pelo link do emissor vê o orçamento pronto, não o formulário.
+    const doLink = /^#o=(.+)$/.exec(location.hash);
+    if (doLink) {
+      mostrarOrçamentoCompartilhado(raiz, doLink[1]);
+      // Trocar o endereço na mesma aba precisa redesenhar; sem isso o cliente
+      // ficaria vendo o orçamento antigo ao abrir um link novo.
+      addEventListener('hashchange', () => {
+        const novo = /^#o=(.+)$/.exec(location.hash);
+        if (novo) mostrarOrçamentoCompartilhado(raiz, novo[1]);
+        else location.reload();
+      });
+      return;
+    }
+
     const emissorSalvo = ler('orçamento.emissor', {});
 
     montarFerramenta(raiz, ferramenta, {

@@ -1,60 +1,67 @@
-# Sites de Renda Passiva — seis ferramentas gratuitas
+# Ferramentas do Ander — portal único de ferramentas
 
-Seis sites estáticos, independentes e gratuitos, criados por **Anderson**. Tudo roda no navegador: não há cadastro nem banco de dados. Os sites estão preparados para apoio voluntário por Pix e anúncios do Google AdSense, ambos **desativados** até você preencher os dados reais.
+Um site só, com muitas ferramentas úteis. Tudo roda no navegador: sem cadastro, sem banco de dados e sem enviar seus arquivos para lugar nenhum. Criado por **Anderson**.
 
-| Pasta | Marca provisória | Porta local |
-|---|---|---|
-| `1. Ferramentas para confeitaria` | Doce Ofício | 4311 |
-| `2. Atividades escolares para imprimir` | Folha Pronta | 4312 |
-| `3. Ferramentas para crochê e artesanato` | Ponto e Preço | 4313 |
-| `4. Planejamento de churrasco e festas` | Mesa Farta | 4314 |
-| `5. Calculadoras de pintura e reforma` | Demão Certa | 4315 |
-| `6. Moldes de caixas e embalagens` | Dobra & Cola | 4316 |
+O portal fica em [`portal/`](portal/). As seis pastas numeradas na raiz são a versão anterior do projeto (seis sites separados): elas continuam funcionando e servem como origem da lógica já testada que está sendo trazida para o portal. **Elas não são mais o produto final.**
 
-> **Situação:** em construção. A lista de conferência abaixo diz exatamente o que já está pronto e o que falta. Este arquivo será atualizado ao fim de cada etapa.
+> **Situação:** 150 ferramentas no catálogo, **21 prontas para usar** e 129 planejadas. A lista de conferência abaixo diz exatamente o que está feito e o que falta. Nada aparece como pronto sem abrir, validar, calcular, tratar erro, exportar o que promete e ter teste automático.
 
 ## Lista de conferência
 
-Legenda: `[x]` feito e verificado · `[~]` em andamento · `[ ]` não feito.
+Legenda: `[x]` feito e verificado · `[~]` parcial · `[ ]` não feito.
 
-### Base comum (vale para os seis sites)
-- [x] Arquitetura estática documentada (`documentação/arquitetura-e-contratos.md`, `decisão-sobre-cadastro-e-servidor.md`)
-- [x] Visual baseado no seu modelo (`modelo/`): fundo creme, Caprasimo, Figtree, logotipo em Caveat, espiral, botões em pílula, paleta própria por site e por página (contraste ≥ 4,5:1 verificado)
-- [x] Navegação inferior de aplicativo no celular (Início, Ferramentas, Salvos, Apoiar, Mais) e cabeçalho completo no computador
-- [x] Aviso de privacidade na primeira visita (aceitar, rejeitar, personalizar, revogar)
-- [x] Apoio por Pix: 7 valores + valor livre, revisão, QR Code e Copia e Cola (CRC conferido com o manual do Banco Central; QR lido por leitor independente)
-- [x] Anúncios AdSense preparados e desligados (só carregam com configuração completa e aceite)
-- [x] Salvar no aparelho, página Salvos, exportar e importar cópia (com proteção contra arquivo malicioso)
-- [x] Orçamentos: PDF com o visual do site, planilha Excel (.xlsx), impressão e link para o cliente ver valor e nome de quem gerou
-- [x] Geração de PDF, fontes e ícones locais (sem serviços externos)
-- [x] Ferramentas de desenvolvimento: gerar, servir, testar, verificar, construir pacote
-- [x] 39 testes automáticos dos módulos comuns passando
-- [x] Documentos: dados a preencher, convenções, licenças, segurança, guia do AdSense, exemplo Nginx
+### Fundação do portal
+- [x] Auditoria do projeto antes de alterar (`documentação/auditoria-projeto.md`)
+- [x] Checkpoint em Git e branch de trabalho (`portal/ferramentas-v2`)
+- [x] Identidade visual própria: paleta com quatro níveis de superfície, tema claro e escuro, tipografia local
+- [x] 50 ícones SVG autorais em grade única (sem biblioteca de terceiros, sem emoji na interface)
+- [x] Divisórias onduladas e animações só onde dão retorno, respeitando `prefers-reduced-motion`
+- [x] **Densidade corrigida**: linha de ferramenta de ~54 px no lugar do cartão de 210 px; primeira dobra com busca, categorias e acesso rápido sem rolar
+- [x] Navegação inferior no celular e cabeçalho completo no computador
+- [x] Catálogo de 150 ferramentas como fonte única de verdade (busca, menus, páginas, testes e documentação saem dele)
+- [x] Busca por intenção: "preciso saber quanto cobrar" chega em Preço de venda
+- [x] Favoritos, histórico recente e exportação/importação de cópia, tudo no próprio navegador
+- [x] Páginas geradas a partir de um modelo único (`portal/ferramentas/gerar.mjs`)
+- [x] Verificação estrutural automática: link quebrado, ícone inexistente, título repetido, módulo órfão, sobra de desenvolvimento
+- [x] 51 testes automáticos passando
+- [x] Sem atributo `style` e sem script embutido: o site passa em política de segurança estrita
+- [x] PWA básico: manifesto, ícone e atalhos
 
-### Produtos
-- [x] 1. Confeitaria — 9 ferramentas (custo da receita, preço de venda, ajuste de quantidade, lista de compras, orçamento com PDF/Excel/link, preço por unidade, conversor de formas, rendimento com perdas, ficha técnica); 49 testes; verificação limpa
-- [x] 2. Atividades escolares — operações, tabuada, caça-palavras e caligrafia com prévia, impressão, PDF e gabarito separado; 45 testes; testado no navegador após correção de um defeito comum
-- [x] 2b. Atividades escolares, segunda prioridade — bingo, papel quadriculado, flashcards e planejador de estudos; caça-palavras sem acentos mostra `CORACAO (coração)`; educação com 81 testes
-- [x] 3. Crochê e artesanato — 8 ferramentas (custo do material, valor da hora, preço da peça, desconto, encomendas, orçamento com PDF/Excel/link, amostra de pontos, controle de materiais); 30 testes; testado no navegador
-- [x] 4. Churrasco e festas — 8 ferramentas (churrasco, festa infantil, almoço, divisor de despesas, orçamento do evento com PDF/Excel/link, checklist, cronograma, lista de convidados); 51 testes; verificação limpa
-- [x] 5. Pintura e reforma — 8 ferramentas (área de paredes, quantidade de tinta, piso por caixa, rodapé, orçamento com PDF/Excel/link, papel de parede, rejunte, comparador de tinta); 39 testes; verificação limpa
-- [x] 6. Moldes de caixas e embalagens — 8 geradores (caixa retangular, caixa com tampa, envelope, etiquetas, cinta, divisórias, saco de papel, aproveitamento de folha) com prévia, SVG e PDF em tamanho real, calibração de 50 mm e divisão em folhas; 56 testes; verificação limpa. Montagem física em papel não testada.
+### Ferramentas prontas (21)
+- [x] **Dinheiro:** porcentagem, preço de venda, juros, parcelamento, divisão de contas, preço por unidade, número por extenso
+- [x] **Vendas e documentos:** orçamento com PDF, planilha e link para o cliente; recibo em PDF com valor por extenso
+- [x] **Cálculo e datas:** regra de três, conversor de unidades (8 grandezas), calculadora de datas, calculadora de horas
+- [x] **Dados:** limpeza de planilha, CSV ↔ JSON
+- [x] **Técnicas:** JSON (validar/formatar), Base64, QR Code, gerador de senhas, validador de CPF e CNPJ
+- [x] **Outras:** sorteio (números, nomes e times)
+
+### Documentação
+- [x] Auditoria do projeto
+- [x] Matriz das 150 ferramentas, gerada do catálogo (`documentação/catalogo-ferramentas.md`)
+- [x] Registro de decisões com motivo e alternativas descartadas (`documentação/decisoes-projeto.md`)
+- [x] "Como usar", exemplo real, limites e perguntas frequentes dentro de cada ferramenta pronta
+- [x] Privacidade e termos escritos para o que o site realmente faz
 
 ### Validação e entrega
-- [ ] Parecer do crítico de segurança e correção
-- [ ] Parecer do crítico de experiência e desempenho
-- [ ] Correções e reteste
-- [ ] Relatório final do orquestrador
-- [ ] Pacotes de publicação dos seis sites
-- [ ] Commit e envio ao GitHub (aguarda sua autorização)
+- [~] Parecer do crítico técnico e de segurança — em execução
+- [~] Parecer do crítico de experiência e produto — em execução
+- [ ] Correções dos pareceres e reteste
+- [ ] Relatório final
+- [ ] Envio ao GitHub (aguarda sua autorização)
 
-### Não incluído (decisão registrada)
-- Orçamento doméstico e custo de combustível do exemplo do Manus: pertencem às categorias 14 e 15 do catálogo (sites futuros), fora dos seis produtos.
+### Ainda não feito (e por quê)
+- [ ] **129 ferramentas planejadas.** Estão no catálogo com ficha completa. 28 delas têm a lógica pronta nos seis sites antigos e só precisam ser portadas; as outras serão escritas.
+- [ ] **Conta, login e favoritos sincronizados.** Exige servidor e banco. O portal hoje é estático; o esqueleto falso de banco que existia foi removido em vez de mantido como enfeite.
+- [ ] **Planos pagos e bloqueio de recursos.** Sem backend, qualquer bloqueio seria burlável pelo navegador — e o prompt proíbe fingir que funciona.
+- [ ] **Painel administrativo, notificações, mensagens, banners e popup.** Dependem de conta e servidor.
+- [ ] **Chat flutuante.** Depende de serviço externo com custo.
+- [ ] **Aplicativo Android (APK).** O portal já é instalável como PWA; o empacotamento Android ainda não foi feito.
+- [ ] **Ferramentas de PDF e imagem que exigem processamento pesado.** Estão marcadas no catálogo com o plano e o local de processamento corretos.
 
 ## Requisitos
 
 - Node.js 20 ou mais recente (testado com 22.14) e npm.
-- Nenhuma dependência paga. As dependências de desenvolvimento (fontes, ícones, QR e leitor de QR para testes) são gratuitas e têm versão fixada.
+- Nenhuma dependência paga. As de desenvolvimento (fontes, QR e leitor de QR para teste) são gratuitas e com versão fixada.
 
 ## Comandos
 
@@ -64,75 +71,87 @@ Na primeira vez, na raiz do projeto:
 npm install
 ```
 
-```bash
-npm run preparar
-```
+Entre na pasta do portal:
 
 ```bash
-npm run sincronizar
+cd portal
 ```
 
-Gerar, testar e verificar os seis sites de uma vez:
+Gerar as páginas a partir do catálogo:
 
 ```bash
 npm run gerar
 ```
 
+Rodar os testes automáticos:
+
 ```bash
 npm run testar
 ```
+
+Verificar a estrutura (links, módulos, títulos, sobras):
 
 ```bash
 npm run verificar
 ```
 
-Criar os pacotes publicáveis (pasta `publicação/` dentro de cada site):
+Os três de uma vez:
 
 ```bash
-npm run construir
+npm run conferir
 ```
 
-Trabalhar em um site só (exemplo: confeitaria):
-
-```bash
-cd "1. Ferramentas para confeitaria"
-```
+Abrir o site localmente em `http://127.0.0.1:4400/`:
 
 ```bash
 npm run servir
 ```
 
-Abra `http://127.0.0.1:4311/`. Para ver exatamente o pacote que será publicado:
+Regerar a matriz de ferramentas da documentação:
 
 ```bash
-npm run construir && npm run visualizar
+node ferramentas/gerar-documentos.mjs
 ```
 
-As páginas usam módulos JavaScript: abra sempre por `http://`, não com dois cliques no arquivo.
+As páginas usam módulos JavaScript: abra sempre por `http://`, nunca com dois cliques no arquivo.
+
+### Os seis sites antigos
+
+Continuam funcionando com os comandos da raiz (`npm run gerar`, `testar`, `verificar`, `construir`). Eles não fazem parte do portal e não precisam ser publicados.
 
 ## O que você precisa fazer
 
-1. **Preencher os dados reais** em `N. …/configurações/configuração-pública.json` de cada site: portfólio, contato, endereço de publicação, chave Pix (recomendado: chave aleatória), nome e cidade do recebedor. Tabela completa em `documentação/dados-que-o-proprietário-precisa-preencher.md`.
-2. **Conferir as marcas provisórias** e verificar se há conflito de marca ou domínio antes de publicar.
-3. **Escolher domínio e hospedagem com HTTPS**. O ideal é um subdomínio por site; ver `documentação/proteções-e-limites-de-segurança.md`.
-4. Rodar `npm run construir` e enviar a pasta `publicação/` de cada site para a hospedagem. O `.htaccess` gerado aplica os cabeçalhos de segurança no Apache; há exemplo para Nginx em `documentação/hospedagem/`.
-5. **AdSense (opcional):** seguir `documentação/como-conectar-o-adsense.md` (conta, verificação, `ads.txt` na raiz do domínio, mensagem de privacidade/CMP e perfil de CSP com anúncios).
-6. **Testar num celular de verdade** e **fazer um Pix de teste** com o seu banco, conferindo nome e valor.
+1. **Escolher o nome definitivo.** "Ferramentas do Ander" é provisório. Antes de publicar, confira se não há conflito de marca ou de domínio.
+2. **Escolher domínio e hospedagem com HTTPS.** O portal é estático: qualquer hospedagem de arquivos serve, inclusive GitHub Pages. Publique o conteúdo de `portal/` na raiz do site.
+3. **Preencher o endereço real** em `portal/ferramentas/gerar.mjs` (função `sitemap`, hoje com `https://exemplo.invalid/portal/`) e regerar.
+4. **Preencher o contato** citado na página de privacidade, assim que houver um endereço de e-mail para isso.
+5. **Testar num celular de verdade.** A verificação até aqui foi feita em emulação de 375 × 812 e 390 × 844, não em aparelho físico.
+6. **Decidir sobre as 129 planejadas.** Elas podem ser implementadas em ondas; a ordem sugerida é começar pelas 28 que só precisam ser portadas dos seis sites antigos.
+7. **Autorizar o envio ao GitHub.** Os commits estão no branch `portal/ferramentas-v2` e nada foi enviado ao repositório remoto.
 
 ## Estrutura
 
 ```text
-compartilhado/          código comum (origem); copiado para cada site por "npm run sincronizar"
-documentação/           contratos, decisões, segurança, guias e relatórios
-N. Nome do site/        cada site é independente e pode ser publicado sozinho
-  conteúdo/             textos das páginas (fonte)
-  scripts/              JavaScript modular (uma função por arquivo)
-  estilos/              CSS (comum + do site)
-  configurações/        configuração pública, cores e ícones
-  testes/               testes automáticos do site
-  publicação/           pacote pronto para enviar (gerado)
-modelo/                 modelo visual fornecido
-manus modelos/          exemplo de ferramentas usado como referência
+portal/                  o site — é isto que se publica
+  index.html             início (gerado)
+  ferramentas.html       catálogo completo (gerado)
+  f/<slug>/index.html    uma página por ferramenta pronta (gerado)
+  dados/                 catálogo e categorias — fonte única de verdade
+  scripts/
+    núcleo/              montador, busca, armazenamento, ícones, interface
+    cálculos/            funções puras e testáveis, sem interface
+    ferramentas/         um módulo por ferramenta
+    comum/               PDF, planilha, QR e formatação reaproveitados
+    páginas/             comportamento de cada página
+  estilos/               núcleo, layout, componentes e páginas
+  ferramentas/           gerar, verificar, servir e gerar documentos
+  testes/                testes automáticos
+documentação/            auditoria, matriz, decisões, segurança e relatórios
+N. Nome do site/         versão anterior: seis sites, origem da lógica a portar
+compartilhado/           código comum dos seis sites antigos
+modelo/                  modelo visual fornecido
+manus modelos/           exemplo de ferramentas usado como referência
+versões/                 versões históricas, sem edição
 ```
 
 Licença: © 2026 Anderson, todos os direitos reservados. Componentes de terceiros mantêm suas licenças (`documentação/licenças-de-terceiros.md`).
