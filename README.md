@@ -4,7 +4,7 @@ Um site só, com muitas ferramentas úteis. Tudo roda no navegador: sem cadastro
 
 O portal fica em [`portal/`](portal/). As seis pastas numeradas na raiz são a versão anterior do projeto (seis sites separados): elas continuam funcionando e servem como origem da lógica já testada que está sendo trazida para o portal. **Elas não são mais o produto final.**
 
-> **Situação:** 150 ferramentas no catálogo, **21 prontas para usar** e 129 planejadas. A lista de conferência abaixo diz exatamente o que está feito e o que falta. Nada aparece como pronto sem abrir, validar, calcular, tratar erro, exportar o que promete e ter teste automático.
+> **Situação:** 150 ferramentas no catálogo, **30 prontas para usar** e 120 planejadas. A lista de conferência abaixo diz exatamente o que está feito e o que falta. Nada aparece como pronto sem abrir, validar, calcular, tratar erro, exportar o que promete e ter teste automático.
 
 ## Lista de conferência
 
@@ -16,23 +16,25 @@ Legenda: `[x]` feito e verificado · `[~]` parcial · `[ ]` não feito.
 - [x] Identidade visual própria: paleta com quatro níveis de superfície, tema claro e escuro, tipografia local
 - [x] 50 ícones SVG autorais em grade única (sem biblioteca de terceiros, sem emoji na interface)
 - [x] Divisórias onduladas e animações só onde dão retorno, respeitando `prefers-reduced-motion`
-- [x] **Densidade corrigida**: linha de ferramenta de ~54 px no lugar do cartão de 210 px; primeira dobra com busca, categorias e acesso rápido sem rolar
+- [x] **Densidade corrigida**: linha de ferramenta de 63 px no lugar do cartão de 210 px; 21 ferramentas visíveis sem rolar em 1366 × 768
+- [x] Linha inteira clicável, sem estouro horizontal de 320 px a 1920 px, contraste medido de 6,2:1 a 14,9:1 nos dois temas
 - [x] Navegação inferior no celular e cabeçalho completo no computador
 - [x] Catálogo de 150 ferramentas como fonte única de verdade (busca, menus, páginas, testes e documentação saem dele)
 - [x] Busca por intenção: "preciso saber quanto cobrar" chega em Preço de venda
 - [x] Favoritos, histórico recente e exportação/importação de cópia, tudo no próprio navegador
 - [x] Páginas geradas a partir de um modelo único (`portal/ferramentas/gerar.mjs`)
 - [x] Verificação estrutural automática: link quebrado, ícone inexistente, título repetido, módulo órfão, sobra de desenvolvimento
-- [x] 51 testes automáticos passando
+- [x] 86 testes automáticos passando, incluindo regressão de cada defeito achado pelos críticos
 - [x] Sem atributo `style` e sem script embutido: o site passa em política de segurança estrita
 - [x] PWA básico: manifesto, ícone e atalhos
 
-### Ferramentas prontas (21)
+### Ferramentas prontas (30)
 - [x] **Dinheiro:** porcentagem, preço de venda, juros, parcelamento, divisão de contas, preço por unidade, número por extenso
 - [x] **Vendas e documentos:** orçamento com PDF, planilha e link para o cliente; recibo em PDF com valor por extenso
 - [x] **Cálculo e datas:** regra de três, conversor de unidades (8 grandezas), calculadora de datas, calculadora de horas
 - [x] **Dados:** limpeza de planilha, CSV ↔ JSON
 - [x] **Técnicas:** JSON (validar/formatar), Base64, QR Code, gerador de senhas, validador de CPF e CNPJ
+- [x] **Obra e ofício:** área de paredes, calculadora de tinta, piso por caixa, rodapé, rejunte, papel de parede, custo de receita, valor da hora, churrasco
 - [x] **Outras:** sorteio (números, nomes e times)
 
 ### Documentação
@@ -43,14 +45,16 @@ Legenda: `[x]` feito e verificado · `[~]` parcial · `[ ]` não feito.
 - [x] Privacidade e termos escritos para o que o site realmente faz
 
 ### Validação e entrega
-- [~] Parecer do crítico técnico e de segurança — em execução
-- [~] Parecer do crítico de experiência e produto — em execução
-- [ ] Correções dos pareceres e reteste
+- [x] Parecer do crítico técnico e de segurança (`revisão/crítico-segurança/parecer-portal.md`) — REPROVADO, 2 críticos e 9 correções obrigatórias
+- [x] Parecer do crítico de experiência e produto (`revisão/crítico-experiência/parecer-portal.md`) — REPROVADO, 11 correções obrigatórias
+- [x] Correções dos dois pareceres e reteste: 20 itens obrigatórios resolvidos, cada um com teste de regressão
+- [~] Visual: o proprietário recusou a identidade atual. Quatro propostas em `portal/visuais/`, aguardando escolha
+- [ ] Segunda rodada dos críticos sobre os pontos corrigidos
 - [ ] Relatório final
 - [ ] Envio ao GitHub (aguarda sua autorização)
 
 ### Ainda não feito (e por quê)
-- [ ] **129 ferramentas planejadas.** Estão no catálogo com ficha completa. 28 delas têm a lógica pronta nos seis sites antigos e só precisam ser portadas; as outras serão escritas.
+- [ ] **120 ferramentas planejadas.** Estão no catálogo com ficha completa, que abre na própria linha do catálogo. 19 delas têm a lógica pronta nos seis sites antigos e só precisam ser portadas; as outras serão escritas.
 - [ ] **Conta, login e favoritos sincronizados.** Exige servidor e banco. O portal hoje é estático; o esqueleto falso de banco que existia foi removido em vez de mantido como enfeite.
 - [ ] **Planos pagos e bloqueio de recursos.** Sem backend, qualquer bloqueio seria burlável pelo navegador — e o prompt proíbe fingir que funciona.
 - [ ] **Painel administrativo, notificações, mensagens, banners e popup.** Dependem de conta e servidor.
@@ -130,8 +134,9 @@ Só o portal está em `.claude/launch.json`, porque o painel de pré-visualizaç
 3. **Preencher o endereço real** em `portal/ferramentas/gerar.mjs` (função `sitemap`, hoje com `https://exemplo.invalid/portal/`) e regerar.
 4. **Preencher o contato** citado na página de privacidade, assim que houver um endereço de e-mail para isso.
 5. **Testar num celular de verdade.** A verificação até aqui foi feita em emulação de 375 × 812 e 390 × 844, não em aparelho físico.
-6. **Decidir sobre as 129 planejadas.** Elas podem ser implementadas em ondas; a ordem sugerida é começar pelas 28 que só precisam ser portadas dos seis sites antigos.
-7. **Autorizar o envio ao GitHub.** Os commits estão no branch `portal/ferramentas-v2` e nada foi enviado ao repositório remoto.
+6. **Escolher o visual.** Abra `http://127.0.0.1:4400/visuais/` e diga a letra: A artesanal, B aplicativo, C sóbrio ou D vivo. Dá para misturar características de duas.
+7. **Decidir sobre as 120 planejadas.** Elas podem ser implementadas em ondas; a ordem sugerida é começar pelas 19 que só precisam ser portadas dos seis sites antigos.
+8. **Autorizar o envio ao GitHub.** Os commits estão no branch `portal/ferramentas-v2` e nada foi enviado ao repositório remoto.
 
 ## Estrutura
 
