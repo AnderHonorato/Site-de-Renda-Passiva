@@ -26,4 +26,13 @@
   <url><loc>https://exemplo.invalid/portal/f/limpar-planilha/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/csv-e-json/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/sorteio/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/custo-de-receita/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/valor-da-hora/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/calculadora-de-tinta/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/piso-por-caixa/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/quantidade-de-rodape/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/papel-de-parede/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/area-de-rejunte/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/area-de-paredes/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/calculadora-de-churrasco/</loc></url>
 </urlset>

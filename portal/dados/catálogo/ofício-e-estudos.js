@@ -190,11 +190,11 @@ export const ferramentas = [
   },
   {
     id: 'F133', slug: 'custo-de-receita', nome: 'Custo de receita', cat: 'ofício',
-    ícone: 'dinheiro', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'dinheiro', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Calcula o custo total e por unidade de uma receita a partir dos ingredientes.',
     problema: 'Saber quanto custa realmente produzir cada unidade antes de precificar.',
     entra: 'Ingredientes, quantidade usada, preço de compra e rendimento da receita.',
-    processa: 'Converte as quantidades para a mesma unidade de compra e soma o custo total.',
+    processa: 'Calcula o custo proporcional ao consumo de cada ingrediente e soma o total. Exige que as quantidades estejam na mesma unidade e avisa quando não parecem estar.',
     sai: 'Custo total da receita e custo por unidade produzida.',
     exporta: ['copiar', 'pdf'], plano: 'gratuito', local: true,
     origem: 'porte',
@@ -243,7 +243,7 @@ export const ferramentas = [
   },
   {
     id: 'F137', slug: 'valor-da-hora', nome: 'Valor da hora de trabalho', cat: 'ofício',
-    ícone: 'relógio', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'relógio', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Calcula quanto cobrar por hora de trabalho a partir da renda desejada e das horas disponíveis.',
     problema: 'Descobrir quanto vale a própria hora antes de precificar uma peça ou serviço.',
     entra: 'Renda mensal desejada, despesas fixas e horas de trabalho disponíveis por mês.',
@@ -256,7 +256,7 @@ export const ferramentas = [
   },
   {
     id: 'F138', slug: 'calculadora-de-tinta', nome: 'Calculadora de tinta', cat: 'ofício',
-    ícone: 'cálculo', tarefas: ['calcular', 'comparar'], status: 'planejada',
+    ícone: 'cálculo', tarefas: ['calcular', 'comparar'], status: 'pronta',
     resumo: 'Calcula os litros de tinta necessários pela área e demãos, e compara o custo das embalagens.',
     problema: 'Comprar a quantidade certa de tinta e escolher a embalagem que sai mais barata.',
     entra: 'Área a pintar, número de demãos, rendimento do rótulo e preço das embalagens disponíveis.',
@@ -270,7 +270,7 @@ export const ferramentas = [
   },
   {
     id: 'F139', slug: 'piso-por-caixa', nome: 'Piso por caixa', cat: 'ofício',
-    ícone: 'caixa', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'caixa', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Calcula quantas caixas de piso ou revestimento comprar a partir da área e da margem de corte.',
     problema: 'Comprar piso sem faltar nem sobrar caixa demais.',
     entra: 'Área do ambiente, cobertura de cada caixa e margem de recorte.',
@@ -283,7 +283,7 @@ export const ferramentas = [
   },
   {
     id: 'F140', slug: 'quantidade-de-rodape', nome: 'Quantidade de rodapé', cat: 'ofício',
-    ícone: 'régua', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'régua', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Calcula quantas barras de rodapé comprar a partir do perímetro do cômodo e da perda.',
     problema: 'Comprar rodapé sem sobra grande nem falta na hora de instalar.',
     entra: 'Lados do cômodo, vãos de porta e percentual de perda.',
@@ -296,7 +296,7 @@ export const ferramentas = [
   },
   {
     id: 'F141', slug: 'papel-de-parede', nome: 'Papel de parede', cat: 'ofício',
-    ícone: 'régua', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'régua', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Calcula faixas e rolos de papel de parede considerando a altura e a repetição da estampa.',
     problema: 'Comprar rolos de papel de parede sem sobrar estampa cortada errada.',
     entra: 'Medidas da parede, largura do rolo e repetição da estampa.',
@@ -309,7 +309,7 @@ export const ferramentas = [
   },
   {
     id: 'F142', slug: 'area-de-rejunte', nome: 'Área e quantidade de rejunte', cat: 'ofício',
-    ícone: 'cálculo', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'cálculo', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Estima o volume e a massa de rejunte a partir da área revestida e da medida da peça.',
     problema: 'Comprar rejunte sem saber quantos quilos o serviço vai consumir.',
     entra: 'Área revestida, medidas da peça, largura da junta e densidade do rejunte.',
@@ -322,7 +322,7 @@ export const ferramentas = [
   },
   {
     id: 'F143', slug: 'area-de-paredes', nome: 'Área de paredes e tetos', cat: 'ofício',
-    ícone: 'régua', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'régua', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Soma a área de paredes e tetos, descontando portas e janelas marcadas.',
     problema: 'Ter a área certa de um ambiente para calcular tinta, papel ou revestimento.',
     entra: 'Medidas dos cômodos e das aberturas a descontar.',
@@ -375,7 +375,7 @@ export const ferramentas = [
   },
   {
     id: 'F147', slug: 'calculadora-de-churrasco', nome: 'Calculadora de churrasco e almoço em grupo', cat: 'ofício',
-    ícone: 'pessoas', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'pessoas', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Calcula carnes, acompanhamentos e bebidas a partir do número de convidados e do apetite.',
     problema: 'Comprar comida e bebida para um churrasco ou almoço sem sobrar nem faltar.',
     entra: 'Número de adultos e crianças, duração e nível de apetite.',
