@@ -1,0 +1,20 @@
+/* Cor de cada categoria e de cada ferramenta, em classe.
+   Atributo style é bloqueado pela política de segurança do site. */
+.cor-0 { --cor: #2f8f5b; }
+.cor-1 { --cor: #c2410c; }
+.cor-2 { --cor: #7c3aed; }
+.cor-3 { --cor: #0891b2; }
+.cor-4 { --cor: #be185d; }
+.cor-5 { --cor: #b91c1c; }
+.cor-6 { --cor: #047857; }
+.cor-7 { --cor: #7e22ce; }
+.cor-8 { --cor: #4338ca; }
+.cor-9 { --cor: #0369a1; }
+.cor-10 { --cor: #a16207; }
+.cor-11 { --cor: #9a3412; }
+.cor-f0 { --cor: #2f8f5b; }
+.cor-f1 { --cor: #0369a1; }
+.cor-f2 { --cor: #c2410c; }
+.cor-f3 { --cor: #9a3412; }
+.cor-f4 { --cor: #4338ca; }
+.cor-f5 { --cor: #047857; }
