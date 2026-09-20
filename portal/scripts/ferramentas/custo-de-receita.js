@@ -69,7 +69,7 @@ export default {
     ],
     exemplo: {
       texto: 'Farinha; 1000; 5,90; 500\nAçúcar; 1000; 4,50; 300\nOvos; 12; 12,00; 4\n\n'
-        + 'Rendendo 12 fatias: custo total de R$ 8,32 e R$ 0,70 por fatia.',
+        + 'Rendendo 12 fatias: custo total de R$ 8,30 e R$ 0,70 por fatia.',
     },
     limites: 'A conta é proporcional ao consumo: meio pacote custa metade do pacote. '
       + 'Ela cobre o custo de ingrediente, não a embalagem, a energia do forno nem o seu tempo — '
