@@ -119,6 +119,10 @@ As páginas usam módulos JavaScript: abra sempre por `http://`, nunca com dois 
 
 Continuam funcionando com os comandos da raiz (`npm run gerar`, `testar`, `verificar`, `construir`). Eles não fazem parte do portal e não precisam ser publicados.
 
+Para abrir um deles no navegador, entre na pasta e rode `npm run servir`. As portas são 4311 para confeitaria, 4312 para atividades escolares, 4313 para crochê e artesanato, 4314 para churrasco e festas, 4315 para pintura e reforma e 4316 para caixas e embalagens. O `npm run visualizar` serve a pasta `publicação/` nas portas 4321 a 4326, para conferir o pacote antes de enviar.
+
+Só o portal está em `.claude/launch.json`, porque o painel de pré-visualização sobe todas as entradas do arquivo de uma vez e aceita no máximo cinco servidores.
+
 ## O que você precisa fazer
 
 1. **Escolher o nome definitivo.** "Ferramentas do Ander" é provisório. Antes de publicar, confira se não há conflito de marca ou de domínio.
