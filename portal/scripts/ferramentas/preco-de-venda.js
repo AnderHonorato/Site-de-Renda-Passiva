@@ -1,5 +1,5 @@
 /** Preço de venda com margem sobre a receita, taxas e imposto. */
-import { montarFerramenta, número } from '../núcleo/montador.js';
+import { montarFerramenta, número, comCampo } from '../núcleo/montador.js';
 import { preçoDeVenda, emCentavos } from '../cálculos/dinheiro.js';
 import { formatarMoeda } from '../comum/formatação/formatar-moeda.js';
 import { formatarNúmero } from '../comum/formatação/formatar-número.js';
@@ -45,11 +45,11 @@ export default {
         const imposto = número(dados, 'imposto', { rótulo: 'Imposto', mín: 0, máx: 99, obrigatório: false, padrão: 0 });
         const unidades = número(dados, 'unidades', { rótulo: 'Unidades', mín: 1, inteiro: true });
 
-        const r = preçoDeVenda({
+        const r = comCampo('margem', () => preçoDeVenda({
           custoCentavos: emCentavos(custo),
           fixoCentavos: emCentavos(fixo),
           margem, taxas, imposto, unidades,
-        });
+        }));
 
         return {
           valor: `${formatarMoeda(r.preçoCentavos / 100)} o lote`,

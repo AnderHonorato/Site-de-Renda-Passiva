@@ -1,5 +1,6 @@
 /** Datas: diferença, prazo, dias úteis, idade e dia da semana. */
-import { montarFerramenta, número, ErroDeEntrada } from '../núcleo/montador.js';
+import { montarFerramenta, número, comCampo, ErroDeEntrada } from '../núcleo/montador.js';
+import { plural } from '../núcleo/texto.js';
 import {
   lerData, formatarData, diaDaSemana, diferençaEntreDatas,
   somarDias, diasÚteisEntre, idade,
@@ -63,7 +64,7 @@ export default {
       ],
       calcular(dados) {
         const úteis = dados.úteis === 'sim';
-        const feriados = úteis ? lerFeriados(dados.feriados) : [];
+        const feriados = úteis ? comCampo('feriados', () => lerFeriados(dados.feriados)) : [];
 
         if (dados.operação === 'idade') {
           if (!dados.inicial) throw new ErroDeEntrada('Informe a data de nascimento no campo "Data inicial".', 'inicial');
@@ -71,10 +72,11 @@ export default {
           const referência = dados.final ? lerData(dados.final) : undefined;
           const r = idade(nascimento, referência);
           return {
-            valor: `${r.anos} anos, ${r.meses} meses e ${r.dias} dias`,
+            valor: `${r.anos} ${plural(r.anos, 'ano', 'anos')}, ${r.meses} ${plural(r.meses, 'mês', 'meses')}`
+              + ` e ${r.dias} ${plural(r.dias, 'dia', 'dias')}`,
             resumo: `Nascimento em ${formatarData(nascimento)}, uma ${diaDaSemana(nascimento)}.`,
             linhas: [
-              ['Idade completa', `${r.anos} anos`],
+              ['Idade completa', `${r.anos} ${plural(r.anos, 'ano', 'anos')}`],
               ['Total de dias vividos', r.totalDeDias.toLocaleString('pt-BR')],
               ['Total de semanas', Math.trunc(r.totalDeDias / 7).toLocaleString('pt-BR')],
               ['Total de meses', String(r.anos * 12 + r.meses)],
@@ -89,7 +91,8 @@ export default {
           const final = somarDias(inicial, dias, { úteis, feriados });
           return {
             valor: formatarData(final),
-            resumo: `${dias >= 0 ? 'Somando' : 'Subtraindo'} ${Math.abs(dias)} ${úteis ? 'dias úteis' : 'dias corridos'}.`,
+            resumo: `${dias >= 0 ? 'Somando' : 'Subtraindo'} ${Math.abs(dias)} `
+              + `${plural(Math.abs(dias), úteis ? 'dia útil' : 'dia corrido', úteis ? 'dias úteis' : 'dias corridos')}.`,
             texto: formatarData(final),
             linhas: [
               ['Data inicial', `${formatarData(inicial)} (${diaDaSemana(inicial)})`],
@@ -108,17 +111,26 @@ export default {
         const final = lerData(dados.final);
         const d = diferençaEntreDatas(inicial, final);
 
+        // A decomposição já vem como grandeza positiva e o sentido da contagem
+        // fica em `invertido`: não há valor absoluto escondendo sinal errado.
+        const corridos = Math.abs(d.dias);
+        const úteisEntre = Math.abs(diasÚteisEntre(inicial, final, feriados));
+
         return {
-          valor: `${Math.abs(d.dias).toLocaleString('pt-BR')} dias`,
+          valor: `${corridos.toLocaleString('pt-BR')} ${plural(corridos, 'dia', 'dias')}`,
           resumo: `De ${formatarData(inicial)} (${diaDaSemana(inicial)}) a ${formatarData(final)} (${diaDaSemana(final)}).`,
           linhas: [
-            ['Dias corridos', Math.abs(d.dias).toLocaleString('pt-BR')],
-            ['Semanas completas', String(Math.abs(d.semanas))],
-            ['Em anos, meses e dias', `${Math.abs(d.anos)} anos, ${Math.abs(d.meses)} meses e ${Math.abs(d.restoDeDias)} dias`],
-            ['Dias úteis', String(Math.abs(diasÚteisEntre(inicial, final, feriados)))],
+            ['Dias corridos', corridos.toLocaleString('pt-BR')],
+            ['Semanas completas', String(d.semanas)],
+            ['Em anos, meses e dias',
+              `${d.anos} ${plural(d.anos, 'ano', 'anos')}, ${d.meses} ${plural(d.meses, 'mês', 'meses')}`
+              + ` e ${d.restoDeDias} ${plural(d.restoDeDias, 'dia', 'dias')}`],
+            ['Dias úteis', String(úteisEntre)],
           ],
           observações: [
-            d.dias < 0 ? 'A data final é anterior à inicial: os valores estão em módulo.' : 'A contagem não inclui o dia inicial.',
+            d.invertido
+              ? 'A data final é anterior à inicial: a contagem está no sentido inverso.'
+              : 'A contagem não inclui o dia inicial.',
             úteis && feriados.length > 0 ? `${feriados.length} feriado(s) excluído(s) da contagem de dias úteis.` : '',
           ].filter(Boolean),
         };

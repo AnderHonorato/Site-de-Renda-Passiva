@@ -23,6 +23,31 @@ export class ErroDeEntrada extends Error {
 }
 
 /**
+ * Executa um cálculo e transforma a recusa dele em erro do campo certo.
+ *
+ * Os módulos de cálculo lançam `Error` comum, porque não conhecem a interface.
+ * Sem esta ponte, uma recusa legítima — "margem e taxas somam mais de 100%" —
+ * chegava à pessoa como "Algo deu errado no cálculo", que não ajuda ninguém a
+ * consertar o que digitou.
+ *
+ * @template T
+ * @param {string} campo nome do campo que a pessoa precisa corrigir
+ * @param {() => T} executar
+ * @returns {T}
+ */
+export function comCampo(campo, executar) {
+  try {
+    return executar();
+  } catch (erro) {
+    if (erro instanceof ErroDeEntrada) throw erro;
+    if (erro instanceof RangeError) {
+      throw new ErroDeEntrada('O valor informado é grande ou profundo demais para processar.', campo);
+    }
+    throw new ErroDeEntrada(erro instanceof Error ? erro.message : String(erro), campo);
+  }
+}
+
+/**
  * Lê um campo numérico validando faixa.
  * @param {Record<string,string>} dados
  * @param {string} nome
@@ -33,7 +58,10 @@ export function número(dados, nome, regras) {
   const { rótulo, mín, máx, inteiro = false, obrigatório = true, padrão } = regras;
   const bruto = String(dados[nome] ?? '').trim();
   if (!bruto) {
-    if (obrigatório) throw new ErroDeEntrada(`Informe ${rótulo.toLowerCase()}.`, nome);
+    // Não dá para acertar género e número derivando do rótulo: "Informe renda
+    // desejada" e "Informe custo" pedem artigos diferentes. Citar o campo entre
+    // aspas resolve para todos os rótulos sem inventar concordância.
+    if (obrigatório) throw new ErroDeEntrada(`Preencha o campo "${rótulo}".`, nome);
     return padrão ?? 0;
   }
   const valor = paraNúmero(bruto);
@@ -53,7 +81,7 @@ export function número(dados, nome, regras) {
  */
 export function texto(dados, nome, { rótulo, obrigatório = true, máximo = 2000 }) {
   const valor = String(dados[nome] ?? '').trim();
-  if (!valor && obrigatório) throw new ErroDeEntrada(`Informe ${rótulo.toLowerCase()}.`, nome);
+  if (!valor && obrigatório) throw new ErroDeEntrada(`Preencha o campo "${rótulo}".`, nome);
   if (valor.length > máximo) throw new ErroDeEntrada(`${rótulo} passou de ${máximo} caracteres.`, nome);
   return valor;
 }
@@ -220,10 +248,20 @@ export function montarFerramenta(raiz, ferramenta, definição) {
         } else {
           avisar(erro.message);
         }
+      } else if (erro instanceof Error && erro.constructor === Error) {
+        // Recusa de regra de negócio vinda de um módulo de cálculo: ele não
+        // conhece os campos da tela, mas a mensagem dele é útil e precisa
+        // chegar a quem está usando, em vez de morrer no console.
+        progresso.esconder();
+        avisar(erro.message);
       } else {
+        // Defeito de programação (TypeError, ReferenceError e afins): a mensagem
+        // não ajuda ninguém, então vai para o console e a pessoa recebe um aviso
+        // honesto de que o problema é nosso.
         console.error(erro);
-        progresso.falhar('Não foi possível calcular');
-        avisar('Algo deu errado no cálculo. Confira os valores e tente de novo.');
+        if (demorada) progresso.falhar('Não foi possível concluir');
+        else progresso.esconder();
+        avisar('Algo deu errado aqui dentro. Confira os valores e tente de novo.');
       }
     }
   }

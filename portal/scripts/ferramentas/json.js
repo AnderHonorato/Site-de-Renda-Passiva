@@ -11,8 +11,23 @@ function localizarErro(conteúdo, mensagem) {
   return `${mensagem.replace(/ in JSON at position \d+.*/, '')} — linha ${linha}, coluna ${coluna}.`;
 }
 
+/**
+ * Profundidade máxima aceita.
+ *
+ * Acima disso, percorrer a árvore recursivamente estoura a pilha do navegador e
+ * a pessoa recebia "JSON válido" seguido de um erro sem sentido. Melhor recusar
+ * com uma explicação.
+ */
+const PROFUNDIDADE_MÁXIMA = 200;
+
 /** Conta chaves e profundidade para dar uma noção do tamanho do documento. */
 function medir(valor, profundidade = 1) {
+  if (profundidade > PROFUNDIDADE_MÁXIMA) {
+    throw new ErroDeEntrada(
+      `Este JSON tem mais de ${PROFUNDIDADE_MÁXIMA} níveis encaixados, fundo demais para processar aqui.`,
+      'conteúdo',
+    );
+  }
   if (Array.isArray(valor)) {
     return valor.reduce((acumulado, item) => {
       const filho = medir(item, profundidade + 1);
@@ -30,10 +45,18 @@ function medir(valor, profundidade = 1) {
 }
 
 /** Ordena as chaves de objetos, mantendo a ordem dos arrays. */
-function ordenar(valor) {
-  if (Array.isArray(valor)) return valor.map(ordenar);
+function ordenar(valor, profundidade = 1) {
+  if (profundidade > PROFUNDIDADE_MÁXIMA) {
+    throw new ErroDeEntrada(
+      `Este JSON tem mais de ${PROFUNDIDADE_MÁXIMA} níveis encaixados, fundo demais para ordenar aqui.`,
+      'conteúdo',
+    );
+  }
+  if (Array.isArray(valor)) return valor.map((item) => ordenar(item, profundidade + 1));
   if (valor && typeof valor === 'object') {
-    return Object.fromEntries(Object.keys(valor).sort().map((c) => [c, ordenar(valor[c])]));
+    return Object.fromEntries(
+      Object.keys(valor).sort().map((c) => [c, ordenar(valor[c], profundidade + 1)]),
+    );
   }
   return valor;
 }
@@ -79,11 +102,17 @@ export default {
           throw new ErroDeEntrada(localizarErro(conteúdo, erro.message), 'conteúdo');
         }
 
+        // Medir primeiro: é a travessia que já conhece o teto de profundidade.
+        const { chaves, profundidade } = medir(valor);
         const preparado = dados.ordenarChaves === 'sim' ? ordenar(valor) : valor;
-        const { chaves, profundidade } = medir(preparado);
-        const saída = dados.modo === 'minificar'
-          ? JSON.stringify(preparado)
-          : JSON.stringify(preparado, null, 2);
+        let saída;
+        try {
+          saída = dados.modo === 'minificar'
+            ? JSON.stringify(preparado)
+            : JSON.stringify(preparado, null, 2);
+        } catch (erro) {
+          throw new ErroDeEntrada(`Não foi possível escrever o resultado: ${erro.message}`, 'conteúdo');
+        }
 
         const tipo = Array.isArray(preparado) ? `lista com ${preparado.length} itens`
           : preparado === null ? 'nulo' : typeof preparado === 'object' ? 'objeto' : typeof preparado;

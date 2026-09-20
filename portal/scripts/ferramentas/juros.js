@@ -1,5 +1,5 @@
 /** Juros simples e compostos, com aportes e tabela de evolução. */
-import { montarFerramenta, número, baixarPlanilha, nomeDeArquivo } from '../núcleo/montador.js';
+import { montarFerramenta, número, comCampo, baixarPlanilha, nomeDeArquivo } from '../núcleo/montador.js';
 import { juros, emCentavos } from '../cálculos/dinheiro.js';
 import { formatarMoeda } from '../comum/formatação/formatar-moeda.js';
 
@@ -52,13 +52,13 @@ export default {
         const aporte = número(dados, 'aporte', { rótulo: 'Aporte', mín: 0, obrigatório: false, padrão: 0 });
         const unidade = PERÍODOS.find((p) => p.valor === dados.unidade)?.rótulo ?? 'períodos';
 
-        const r = juros({
+        const r = comCampo('períodos', () => juros({
           principalCentavos: emCentavos(principal),
           taxa,
           períodos,
           composto: dados.tipo === 'composto',
           aporteCentavos: emCentavos(aporte),
-        });
+        }));
 
         // A tabela completa pode ter 1200 linhas; mostramos um recorte legível
         // e o arquivo exportado leva tudo.

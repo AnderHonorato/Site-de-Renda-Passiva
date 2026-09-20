@@ -9,8 +9,7 @@
 import { escapar } from '../../núcleo/texto.js';
 import { ícone } from '../../núcleo/ícones.js';
 import { formatarMoeda } from '../../comum/formatação/formatar-moeda.js';
-
-const LIMITE_DE_ITENS = 60;
+import { LIMITE_DE_ITENS, LIMITE_DO_LINK } from './limites-do-orçamento.js';
 
 /**
  * Decodifica e valida o conteúdo do fragmento.
@@ -21,7 +20,7 @@ const LIMITE_DE_ITENS = 60;
 export function lerOrçamentoDoLink(codificado) {
   let limpo = String(codificado).replace(/-/g, '+').replace(/_/g, '/');
   while (limpo.length % 4 !== 0) limpo += '=';
-  if (limpo.length > 8000) throw new Error('Link grande demais para ser um orçamento.');
+  if (limpo.length > LIMITE_DO_LINK * 2) throw new Error('Link grande demais para ser um orçamento.');
 
   let dados;
   try {
@@ -48,12 +47,23 @@ export function lerOrçamentoDoLink(codificado) {
     return { descrição, quantidade, unitárioCentavos, totalCentavos: Math.round(unitárioCentavos * quantidade) };
   });
 
+  // O total vem escrito no link, mas quem manda o link pode ter mexido nele.
+  // O valor exibido é sempre o recalculado a partir dos itens; se os dois não
+  // baterem, o link não é confiável e nada é mostrado.
+  const totalDosItens = itens.reduce((soma, i) => soma + i.totalCentavos, 0);
+  const descontoDeclarado = Number.isFinite(dados.d) ? dados.d : 0;
+  if (descontoDeclarado < 0 || descontoDeclarado > 100) erro('O desconto do link é inválido.');
+  const totalRecalculado = totalDosItens - Math.round(totalDosItens * (descontoDeclarado / 100));
+  if (Math.abs(totalRecalculado - dados.t) > 1) {
+    erro('O total deste link não confere com a soma dos itens. Peça um link novo a quem enviou.');
+  }
+
   return {
     emissor: dados.e.slice(0, 120),
     cliente: dados.c.slice(0, 120),
     número: Number.isSafeInteger(dados.n) ? dados.n : null,
     desconto: Number.isFinite(dados.d) ? dados.d : 0,
-    totalCentavos: dados.t,
+    totalCentavos: totalRecalculado,
     emitidoEm: typeof dados.em === 'string' ? dados.em.slice(0, 20) : '',
     válidoAté: typeof dados.va === 'string' ? dados.va.slice(0, 20) : null,
     itens,
@@ -66,6 +76,11 @@ export function lerOrçamentoDoLink(codificado) {
  * @param {string} codificado
  */
 export function mostrarOrçamentoCompartilhado(raiz, codificado) {
+  // Quem abre o link é o cliente, não quem usa a ferramenta: ele precisa ver o
+  // orçamento, não a página de produto. O modo tira ficha, lateral, caminho e
+  // "Como usar" da frente — antes o total só aparecia depois de 619 px de rolagem.
+  document.body.dataset.modo = 'cliente';
+
   let orçamento;
   try {
     orçamento = lerOrçamentoDoLink(codificado);
@@ -78,9 +93,14 @@ export function mostrarOrçamentoCompartilhado(raiz, codificado) {
   const subtotal = orçamento.itens.reduce((soma, i) => soma + i.totalCentavos, 0);
   const descontoCentavos = subtotal - orçamento.totalCentavos;
 
+  // O documento passa a ser o orçamento: título da aba e h1 são dele.
+  document.title = `Orçamento de ${orçamento.emissor} para ${orçamento.cliente}`;
+  const títuloDaPágina = document.querySelector('.ferramenta-topo h1');
+  if (títuloDaPágina) títuloDaPágina.textContent = `Orçamento de ${orçamento.emissor}`;
+  const subtítulo = document.querySelector('.ferramenta-topo p');
+  if (subtítulo) subtítulo.textContent = `Para ${orçamento.cliente}`;
+
   raiz.innerHTML = `
-    <p class="rótulo">Orçamento recebido</p>
-    <h2 class="b-1">${escapar(orçamento.emissor)}</h2>
     <p class="suave pequeno b-3">
       Para ${escapar(orçamento.cliente)}${orçamento.número ? ` · nº ${orçamento.número}` : ''}
       ${orçamento.emitidoEm ? ` · emitido em ${escapar(orçamento.emitidoEm)}` : ''}

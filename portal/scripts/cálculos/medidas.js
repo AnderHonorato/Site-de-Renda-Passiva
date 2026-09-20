@@ -136,6 +136,8 @@ export function regraDeTrês(a, b, c, { inversa = false } = {}) {
   if (![a, b, c].every(Number.isFinite)) throw new Error('Informe os três valores.');
   if (a === 0) throw new Error('O primeiro valor não pode ser zero.');
   if (inversa) {
+    // Na proporção inversa o divisor é C, e dividir por zero não tem resultado.
+    if (c === 0) throw new Error('Na proporção inversa, o terceiro valor não pode ser zero.');
     return { x: (a * b) / c, fórmula: `x = (${a} × ${b}) ÷ ${c}` };
   }
   return { x: (b * c) / a, fórmula: `x = (${b} × ${c}) ÷ ${a}` };

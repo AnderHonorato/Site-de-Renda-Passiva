@@ -1,7 +1,8 @@
 /** Conversor de unidades de oito grandezas, incluindo temperatura. */
-import { montarFerramenta, número } from '../núcleo/montador.js';
+import { montarFerramenta, número, comCampo } from '../núcleo/montador.js';
 import { GRANDEZAS, UNIDADES_DE_TEMPERATURA, converter } from '../cálculos/medidas.js';
 import { formatarNúmero } from '../comum/formatação/formatar-número.js';
+import { escapar } from '../núcleo/texto.js';
 
 const GRANDEZAS_LISTA = [
   ...Object.entries(GRANDEZAS).map(([id, g]) => ({ valor: id, rótulo: g.nome })),
@@ -53,7 +54,7 @@ export default {
       calcular(dados) {
         const valor = número(dados, 'valor', { rótulo: 'Valor' });
         const { grandeza, de, para } = dados;
-        const resultado = converter(valor, grandeza, de, para);
+        const resultado = comCampo('valor', () => converter(valor, grandeza, de, para));
 
         const equivalências = grandeza === 'temperatura'
           ? Object.keys(UNIDADES_DE_TEMPERATURA)
@@ -80,8 +81,10 @@ export default {
         const preencher = () => {
           const unidades = unidadesDe(grandeza.value);
           for (const seleção of [deSeleção, paraSeleção]) {
+            // Escapado por disciplina: hoje os rótulos vêm de uma tabela fixa,
+            // mas markup montado à mão não pode depender da origem do dado.
             seleção.innerHTML = unidades
-              .map((u) => `<option value="${u.valor}">${u.rótulo}</option>`).join('');
+              .map((u) => `<option value="${escapar(u.valor)}">${escapar(u.rótulo)}</option>`).join('');
           }
           deSeleção.selectedIndex = 0;
           paraSeleção.selectedIndex = Math.min(1, unidades.length - 1);

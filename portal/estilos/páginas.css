@@ -61,6 +61,7 @@
 
 /* ---------- Barra de filtros do catálogo ---------- */
 .filtros { display: grid; gap: 8px; margin-bottom: 12px; }
+.filtros > * { min-width: 0; }
 .filtros__linha { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .filtros__contagem { font-size: var(--t-sm); color: var(--tinta-suave); margin: 0; }
 .filtros select {
@@ -94,7 +95,7 @@
 /* Ficha "o que é / o que preciso / o que recebo", acima da dobra */
 .ficha {
   display: grid; gap: 1px; margin-bottom: 14px;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
   background: var(--borda); border: 1px solid var(--borda);
   border-radius: var(--raio); overflow: hidden;
 }
@@ -143,4 +144,47 @@
   .ferramenta-lado, .ferramenta-topo__ações, .onda, .caminho { display: none !important; }
   body { background: #fff; color: #000; }
   .painel, .resultado { border-color: #999; box-shadow: none; }
+}
+
+/* ---------- Modo cliente ----------
+   Quem abre um link de orçamento não veio conhecer a ferramenta: veio ver o
+   preço. Nesse modo, a página de produto sai da frente e sobra o documento. */
+body[data-modo="cliente"] .ficha,
+body[data-modo="cliente"] .ferramenta-lado,
+body[data-modo="cliente"] #como-usar,
+body[data-modo="cliente"] .caminho,
+body[data-modo="cliente"] .ferramenta-topo__ações { display: none; }
+body[data-modo="cliente"] .ferramenta-corpo { grid-template-columns: minmax(0, 1fr); }
+body[data-modo="cliente"] .ferramenta-topo { padding-block: 14px 10px; }
+
+/* ---------- Primeira dobra da página de ferramenta ----------
+   No celular, o formulário vem antes da ficha. Antes, o preâmbulo empurrava o
+   primeiro campo para y=694 em 320 px de largura: mais de uma tela de rolagem
+   só para começar a usar. No computador a ordem continua a original. */
+.ferramenta-área { display: flex; flex-direction: column; gap: 14px; }
+.ferramenta-área > .ficha { order: 1; margin-bottom: 0; }
+.ferramenta-área > .ferramenta-corpo { order: 2; }
+
+@media (max-width: 720px) {
+  .ferramenta-área > .ficha { order: 3; }
+  .ferramenta-topo { padding-block: 6px 10px; gap: 10px; }
+  .ferramenta-topo h1 { font-size: 1.25rem; }
+  .ferramenta-topo__ícone { width: 34px; height: 34px; flex: 0 0 34px; border-radius: 10px; }
+  .ferramenta-topo__ícone svg { width: 18px; height: 18px; }
+  /* O resumo completo continua disponível na ficha, logo abaixo do formulário. */
+  .ferramenta-topo p {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .caminho { padding-top: 8px; }
+}
+
+/* ---------- Impressão ----------
+   No papel não entra nada que só serve na tela. */
+@media print {
+  .ficha, #como-usar, .ações, .intenções, .sugestões,
+  .filtros, .pílulas, .acesso-rápido { display: none !important; }
+  .ferramenta-corpo { grid-template-columns: minmax(0, 1fr) !important; }
+  .resultado { border-left-width: 2px; page-break-inside: avoid; }
+  table.tabela { page-break-inside: auto; }
+  table.tabela tr { page-break-inside: avoid; }
 }

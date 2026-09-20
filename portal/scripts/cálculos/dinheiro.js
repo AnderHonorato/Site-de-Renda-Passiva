@@ -140,21 +140,42 @@ export function juros({ principalCentavos, taxa, períodos, composto = true, apo
 
 /**
  * Parcelamento pela Tabela Price.
+ *
+ * A última parcela absorve o centavo de arredondamento. Sem isso, um
+ * parcelamento sem juros de R$ 700,00 em três vezes fecharia em R$ 699,99 e a
+ * ferramenta anunciaria um centavo de juros negativo — número impossível que
+ * destrói a confiança no resto da conta.
+ *
  * @param {{valorCentavos: number, entradaCentavos?: number, parcelas: number, taxa: number}} entrada
- * @returns {{parcelaCentavos: number, totalCentavos: number, jurosCentavos: number}}
+ * @returns {{parcelaCentavos: number, últimaParcelaCentavos: number, totalCentavos: number, jurosCentavos: number}}
  */
 export function parcelamento({ valorCentavos, entradaCentavos = 0, parcelas, taxa }) {
   if (!Number.isInteger(parcelas) || parcelas < 1 || parcelas > 480) {
     throw new Error('Informe de 1 a 480 parcelas.');
   }
   if (entradaCentavos >= valorCentavos) throw new Error('A entrada não pode cobrir o valor todo.');
+
   const financiado = valorCentavos - entradaCentavos;
   const i = taxa / 100;
+
   const parcelaCentavos = i === 0
-    ? Math.round(financiado / parcelas)
+    ? Math.floor(financiado / parcelas)
     : Math.round((financiado * i) / (1 - (1 + i) ** -parcelas));
-  const totalCentavos = parcelaCentavos * parcelas + entradaCentavos;
-  return { parcelaCentavos, totalCentavos, jurosCentavos: totalCentavos - valorCentavos };
+
+  const anteriores = parcelaCentavos * (parcelas - 1);
+  // Sem juros, o que sobrar da divisão vai na última parcela e o total fecha
+  // exatamente com o valor. Com juros, as parcelas são iguais por definição
+  // da Tabela Price.
+  const últimaParcelaCentavos = i === 0 ? financiado - anteriores : parcelaCentavos;
+  const totalCentavos = anteriores + últimaParcelaCentavos + entradaCentavos;
+
+  return {
+    parcelaCentavos,
+    últimaParcelaCentavos,
+    totalCentavos,
+    // Juros nunca são negativos: o que sobra de arredondamento não é desconto.
+    jurosCentavos: Math.max(0, totalCentavos - valorCentavos),
+  };
 }
 
 /**
@@ -173,6 +194,9 @@ export function divisãoDeContas(participantes) {
   for (const p of participantes) {
     if (!Number.isSafeInteger(p.pagouCentavos) || p.pagouCentavos < 0) {
       throw new Error(`Valor inválido para ${p.nome}.`);
+    }
+    if (p.peso !== undefined && (!Number.isFinite(p.peso) || p.peso <= 0)) {
+      throw new Error(`Peso inválido para ${p.nome}: precisa ser um número maior que zero.`);
     }
   }
 

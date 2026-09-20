@@ -198,7 +198,7 @@ export const ferramentas = [
     sai: 'Custo total da receita e custo por unidade produzida.',
     exporta: ['copiar', 'pdf'], plano: 'gratuito', local: true,
     origem: 'porte',
-    tags: ['custo de receita', 'ficha de custo', 'ingredientes'],
+    tags: ['custo de receita', 'ficha de custo', 'ingredientes', 'bolo', 'doce', 'salgado', 'confeitaria', 'cozinha'],
     intenções: ['calcular custo da receita', 'quanto custa fazer esse doce'],
   },
   {

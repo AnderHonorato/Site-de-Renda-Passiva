@@ -38,7 +38,17 @@
 .etiqueta svg { width: 12px; height: 12px; }
 
 /* ---------- Filtros em pílula ---------- */
-.pílulas { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+/* min-width:0 é obrigatório: como item de grade, o padrão min-width:auto faz a
+   faixa rolável empurrar a largura do documento inteiro, e o navegador do
+   celular responde encolhendo a página em vez de mostrar barra de rolagem. */
+.pílulas {
+  display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  padding-bottom: 2px; min-width: 0;
+  /* Sombra que revela que a faixa continua para o lado. */
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+}
+.pílulas:hover, .pílulas:focus-within { -webkit-mask-image: none; mask-image: none; }
 .pílulas::-webkit-scrollbar { display: none; }
 .pílulas button {
   display: inline-flex; align-items: center; gap: 6px;
@@ -79,23 +89,41 @@
 
 /* ---------- Linha de ferramenta (padrão do catálogo) ---------- */
 .lista-ferramentas { display: grid; gap: 6px; }
-.lista-ferramentas--colunas { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+/* min() evita que a faixa de 320px fique maior que a largura disponível: sem
+   ele, um aparelho de 320px de tela ganha 14px de estouro e o navegador
+   encolhe a página inteira em ~4% para compensar. */
+.lista-ferramentas--colunas { grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
 
 .ferramenta-linha {
+  position: relative;
   display: grid;
   grid-template-columns: 36px minmax(0, 1fr) auto;
   align-items: center; gap: 12px;
-  padding: 9px 12px;
+  padding: 9px 12px; min-height: 56px;
   background: var(--superfície); border: 1px solid var(--borda);
   border-radius: var(--raio); text-decoration: none; color: inherit;
   transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
 }
+/* O link cobre a linha inteira: tocar no ícone, no resumo ou no espaço vazio
+   abre a ferramenta. Antes só o texto do nome respondia, 22% da área. */
+.ferramenta-linha__alvo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.ferramenta-linha__alvo {
+  border: 0; background: none; padding: 0; text-align: left; cursor: pointer;
+  color: inherit; text-decoration: none; font: inherit;
+}
+.ferramenta-linha__alvo:focus-visible { outline: none; }
+.ferramenta-linha:has(.ferramenta-linha__alvo:focus-visible) {
+  outline: 2px solid var(--marca-viva); outline-offset: 2px;
+}
+/* O favorito e a ficha ficam acima do link esticado. */
+.ferramenta-linha__fim, .ferramenta-linha__ficha { position: relative; z-index: 1; }
+.ferramenta-linha:active { background: var(--superfície-3); }
 .ferramenta-linha:hover {
   border-color: var(--borda-forte); background: var(--superfície-2);
   box-shadow: var(--sombra-2); color: inherit;
 }
 .ferramenta-linha__ícone {
-  width: 36px; height: 36px; border-radius: 10px;
+  width: 36px; height: 36px; flex: 0 0 36px; border-radius: 10px;
   display: grid; place-items: center;
   background: var(--marca-fraca); color: var(--marca);
 }
@@ -113,7 +141,17 @@
 .ferramenta-linha__seta { color: var(--tinta-suave); }
 .ferramenta-linha__seta svg { width: 16px; height: 16px; }
 .ferramenta-linha:hover .ferramenta-linha__seta { color: var(--marca); }
-.ferramenta-linha[data-status="planejada"] { opacity: .62; }
+/* Planejada não pode ser marcada por opacidade: ela compõe a cor do texto com
+   o fundo e derruba o contraste de 6,2:1 para 3,1:1. A distinção fica no selo,
+   no fundo e no ícone, que não são texto de leitura. */
+.ferramenta-linha[data-status="planejada"] { background: var(--superfície-2); border-style: dashed; }
+.ferramenta-linha[data-status="planejada"] .ferramenta-linha__ícone { background: var(--superfície-3); color: var(--tinta-suave); }
+.ferramenta-linha__ficha {
+  grid-column: 1 / -1; margin-top: 8px; padding-top: 10px;
+  border-top: 1px dashed var(--borda-forte);
+}
+.ferramenta-linha__ficha[hidden] { display: none; }
+.ferramenta-linha__ficha .ficha { margin-bottom: 0; }
 
 .favorito {
   width: 30px; height: 30px; display: grid; place-items: center;
@@ -128,7 +166,7 @@
 /* ---------- Cartão de categoria (compacto) ---------- */
 .grade-categorias {
   display: grid; gap: 8px;
-  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(168px, 100%), 1fr));
 }
 .categoria-cartão {
   display: flex; align-items: center; gap: 10px;
@@ -163,7 +201,7 @@
 
 /* ---------- Formulário ---------- */
 .campos { display: grid; gap: 12px; }
-.campos--2 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.campos--2 { grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); }
 .campo { display: grid; gap: 4px; min-width: 0; }
 .campo > label { font-size: var(--t-sm); font-weight: 600; }
 .campo__dica { font-size: var(--t-xs); color: var(--tinta-suave); }

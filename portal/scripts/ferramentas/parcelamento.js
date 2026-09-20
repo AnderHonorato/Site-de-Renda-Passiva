@@ -53,20 +53,25 @@ export default {
         const diferença = r.totalCentavos - àVistaCentavos;
         const melhor = diferença > 0 ? 'à vista' : 'parcelado';
 
+        const diferençaRelevante = Math.abs(diferença) >= 100; // menos de um real não é vantagem
+
         return {
           valor: `${parcelas}× de ${formatarMoeda(r.parcelaCentavos / 100)}`,
           resumo: `Total parcelado: ${formatarMoeda(r.totalCentavos / 100)}.`,
           linhas: [
             ['Valor financiado', formatarMoeda((emCentavos(valor) - emCentavos(entrada)) / 100)],
             ['Parcela', formatarMoeda(r.parcelaCentavos / 100)],
+            ...(r.últimaParcelaCentavos !== r.parcelaCentavos
+              ? [['Última parcela', formatarMoeda(r.últimaParcelaCentavos / 100)]]
+              : []),
             ['Total parcelado', formatarMoeda(r.totalCentavos / 100)],
             ['Juros embutidos', formatarMoeda(r.jurosCentavos / 100)],
             ['Total à vista', formatarMoeda(àVistaCentavos / 100)],
             ['Diferença', formatarMoeda(Math.abs(diferença) / 100)],
           ],
           observações: [
-            diferença === 0
-              ? 'As duas opções custam o mesmo.'
+            !diferençaRelevante
+              ? 'As duas opções custam praticamente o mesmo: a diferença não chega a um real.'
               : `Pagar ${melhor} economiza ${formatarMoeda(Math.abs(diferença) / 100)} (${formatarNúmero((Math.abs(diferença) / Math.max(r.totalCentavos, àVistaCentavos)) * 100, { casas: 1 })}%).`,
             'Não inclui IOF, tarifas nem seguro. O custo real de um financiamento bancário costuma ser um pouco maior.',
           ],

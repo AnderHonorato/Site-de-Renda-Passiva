@@ -9,8 +9,7 @@ import { paraNúmero } from '../núcleo/texto.js';
 import { formatarMoeda } from '../comum/formatação/formatar-moeda.js';
 import { gravar, ler } from '../núcleo/armazenamento.js';
 import { mostrarOrçamentoCompartilhado } from './auxiliares/orcamento-compartilhado.js';
-
-const LIMITE_DE_ITENS = 60;
+import { LIMITE_DE_ITENS, LIMITE_DO_LINK } from './auxiliares/limites-do-orçamento.js';
 
 /**
  * Lê as linhas de item: "descrição; quantidade; valor unitário".
@@ -199,8 +198,8 @@ export default {
             i: itens.map((i) => [i.descrição, i.quantidade, i.unitárioCentavos]),
             d: desconto, t: total, em: emitidoEm, va: válidoAté,
           });
-          if (link.length > 4000) {
-            avisar('O orçamento ficou grande demais para caber num link. Envie o PDF.');
+          if (link.length > LIMITE_DO_LINK) {
+            avisar('O orçamento ficou grande demais para caber num link. Envie o PDF ou a planilha.');
             return;
           }
           const situação = await copiar(link);

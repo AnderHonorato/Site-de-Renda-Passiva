@@ -1,5 +1,5 @@
 /** Regra de três direta e inversa. */
-import { montarFerramenta, número } from '../núcleo/montador.js';
+import { montarFerramenta, número, comCampo } from '../núcleo/montador.js';
 import { regraDeTrês } from '../cálculos/medidas.js';
 import { formatarNúmero } from '../comum/formatação/formatar-número.js';
 
@@ -38,7 +38,8 @@ export default {
         const a = número(dados, 'a', { rótulo: 'Valor A' });
         const b = número(dados, 'b', { rótulo: 'Valor B' });
         const c = número(dados, 'c', { rótulo: 'Valor C' });
-        const { x, fórmula } = regraDeTrês(a, b, c, { inversa: dados.tipo === 'inversa' });
+        const { x, fórmula } = comCampo(dados.tipo === 'inversa' ? 'c' : 'a',
+          () => regraDeTrês(a, b, c, { inversa: dados.tipo === 'inversa' }));
         return {
           valor: formatarNúmero(x, { casas: 4, casasMínimas: 0 }),
           resumo: fórmula,

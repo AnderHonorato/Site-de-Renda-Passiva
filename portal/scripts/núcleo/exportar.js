@@ -36,14 +36,40 @@ export function baixar(conteúdo, nome, tipo) {
 }
 
 /**
- * Converte linhas em CSV com escape correto e BOM, para o Excel abrir com acento.
- * @param {readonly (readonly unknown[])[]} linhas
- * @param {{separador?: string, comBom?: boolean}} [opções]
+ * Caracteres que fazem uma planilha tratar a célula como fórmula ao abrir o CSV.
+ * Aspas não protegem: elas delimitam o campo, o conteúdo continua sendo interpretado.
+ */
+const INÍCIO_DE_FÓRMULA = /^[=+\-@\t\r]/;
+
+/** Número comum começando com sinal é dado legítimo, não fórmula. */
+const NÚMERO_SIMPLES = /^[+-]?\d+([.,]\d+)?$/;
+
+/**
+ * Neutraliza injeção de fórmula em planilha.
+ *
+ * Uma célula como `=HYPERLINK("http://...")` vinda de um arquivo de terceiro é
+ * executada pelo Excel ao abrir o CSV. O apóstrofo à frente faz a planilha
+ * tratar o conteúdo como texto. Valores numéricos com sinal são preservados,
+ * porque `-1` é um número e não uma fórmula.
+ * @param {string} texto
  * @returns {string}
  */
-export function montarCsv(linhas, { separador = ';', comBom = true } = {}) {
+export function neutralizarFórmula(texto) {
+  if (!INÍCIO_DE_FÓRMULA.test(texto)) return texto;
+  if (NÚMERO_SIMPLES.test(texto)) return texto;
+  return `'${texto}`;
+}
+
+/**
+ * Converte linhas em CSV com escape correto e BOM, para o Excel abrir com acento.
+ * @param {readonly (readonly unknown[])[]} linhas
+ * @param {{separador?: string, comBom?: boolean, protegerFórmulas?: boolean}} [opções]
+ * @returns {string}
+ */
+export function montarCsv(linhas, { separador = ';', comBom = true, protegerFórmulas = true } = {}) {
   const escapar = (célula) => {
-    const texto = célula === null || célula === undefined ? '' : String(célula);
+    const bruto = célula === null || célula === undefined ? '' : String(célula);
+    const texto = protegerFórmulas ? neutralizarFórmula(bruto) : bruto;
     return /["\n\r]|[;,\t]/.test(texto) ? `"${texto.replace(/"/g, '""')}"` : texto;
   };
   const corpo = linhas.map((linha) => linha.map(escapar).join(separador)).join('\r\n');

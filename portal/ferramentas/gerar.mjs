@@ -294,6 +294,7 @@ function páginaDeFerramenta(f) {
         </div>
       </header>
 
+      <div class="ferramenta-área">
       <dl class="ficha">
         <div><dt>Para que serve</dt><dd>${escapar(f.problema)}</dd></div>
         <div><dt>Você informa</dt><dd>${escapar(f.entra)}</dd></div>
@@ -314,6 +315,8 @@ function páginaDeFerramenta(f) {
           </div>
           ${relacionadas ? `<div class="painel"><p class="rótulo b-2">Ferramentas relacionadas</p><div class="relacionadas">${relacionadas}</div></div>` : ''}
         </aside>
+      </div>
+
       </div>
 
       <section class="seção prosa" id="como-usar">

@@ -1,5 +1,5 @@
 /** Jornada, horas extras e saldo de banco de horas. */
-import { montarFerramenta, número, ErroDeEntrada } from '../núcleo/montador.js';
+import { montarFerramenta, número, comCampo, ErroDeEntrada } from '../núcleo/montador.js';
 import { jornadaDoDia, lerHora, formatarMinutos } from '../cálculos/tempo.js';
 
 /**
@@ -66,7 +66,7 @@ export default {
       ],
       calcular(dados) {
         const dias = lerPonto(dados.ponto);
-        const jornada = lerHora(String(dados.jornada || '08:00'));
+        const jornada = comCampo('jornada', () => lerHora(String(dados.jornada || '08:00')));
         const total = dias.reduce((soma, d) => soma + d.minutos, 0);
         const esperado = jornada * dias.length;
         const saldo = total - esperado;

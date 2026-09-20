@@ -1,5 +1,5 @@
 /** Número e valor em reais por extenso. */
-import { montarFerramenta, número } from '../núcleo/montador.js';
+import { montarFerramenta, número, comCampo } from '../núcleo/montador.js';
 import { inteiroPorExtenso, reaisPorExtenso } from '../cálculos/por-extenso.js';
 import { emCentavos } from '../cálculos/dinheiro.js';
 
@@ -34,14 +34,15 @@ export default {
         const valor = número(dados, 'valor', { rótulo: 'Número' });
 
         if (dados.modo === 'dinheiro') {
-          const texto = reaisPorExtenso(emCentavos(valor));
+          const texto = comCampo('valor', () => reaisPorExtenso(emCentavos(valor)));
           return { valor: texto, texto, resumo: 'Pronto para copiar no documento.' };
         }
 
         if (!Number.isInteger(valor)) {
           const inteiro = Math.trunc(valor);
           const decimais = Math.round(Math.abs(valor - inteiro) * 100);
-          const texto = `${inteiroPorExtenso(inteiro)} vírgula ${inteiroPorExtenso(decimais)}`;
+          const texto = comCampo('valor',
+            () => `${inteiroPorExtenso(inteiro)} vírgula ${inteiroPorExtenso(decimais)}`);
           return {
             valor: texto,
             texto,
@@ -49,7 +50,7 @@ export default {
           };
         }
 
-        const texto = inteiroPorExtenso(valor);
+        const texto = comCampo('valor', () => inteiroPorExtenso(valor));
         return { valor: texto, texto };
       },
     });

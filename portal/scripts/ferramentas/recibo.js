@@ -1,5 +1,5 @@
 /** Recibo de pagamento em PDF, com valor por extenso. */
-import { montarFerramenta, número, texto, baixar, nomeDeArquivo } from '../núcleo/montador.js';
+import { montarFerramenta, número, texto, comCampo, baixar, nomeDeArquivo } from '../núcleo/montador.js';
 import { montarDocumentoPdf } from '../comum/documentos/montar-documento-pdf.js';
 import { reaisPorExtenso } from '../cálculos/por-extenso.js';
 import { emCentavos } from '../cálculos/dinheiro.js';
@@ -22,8 +22,9 @@ export default {
       'Baixe o PDF e assine. O valor por extenso já vem escrito.',
     ],
     exemplo: {
-      texto: 'Recebi de Maria Souza a quantia de R$ 1.250,00 (mil duzentos e cinquenta reais) referente a '
-        + 'serviço de manutenção elétrica. São Paulo, 19 de setembro de 2026.',
+      texto: 'Com valor 1250,00 e "serviço de manutenção elétrica" como referência, o recibo sai assim: '
+        + '"Recebi de Maria Souza a quantia de R$ 1.250,00 (mil duzentos e cinquenta reais), referente a '
+        + 'serviço de manutenção elétrica." A data do fechamento é a que você escolher no campo Data.',
     },
     limites: 'O recibo é um comprovante particular de pagamento: ele não é documento fiscal e não substitui nota fiscal '
       + 'nem recolhe imposto. Para venda de mercadoria ou prestação de serviço sujeita a nota, procure seu contador. '
@@ -59,7 +60,7 @@ export default {
         const data = dados.data || hoje();
 
         const centavos = emCentavos(valor);
-        const extenso = reaisPorExtenso(centavos);
+        const extenso = comCampo('valor', () => reaisPorExtenso(centavos));
         const corpo = `Recebi de ${pagador}${documentoPagador ? `, inscrito(a) sob o nº ${documentoPagador},` : ''} `
           + `a quantia de ${formatarMoeda(valor)} (${extenso}), referente a ${referência}. `
           + 'Para clareza, firmo o presente recibo, dando plena e geral quitação do valor acima.';

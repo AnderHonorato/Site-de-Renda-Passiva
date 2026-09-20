@@ -2,7 +2,7 @@
 import { ferramentas, ferramentasProntas, ferramentaPorSlug } from '../../dados/catálogo.js';
 import { categorias } from '../../dados/categorias.js';
 import { buscar } from '../núcleo/busca.js';
-import { desenharLista, ligarFavoritos } from '../núcleo/lista.js';
+import { desenharLista, ligarLista } from '../núcleo/lista.js';
 import { lerRecentes, limparRecentes } from '../núcleo/preferências.js';
 import { escapar } from '../núcleo/texto.js';
 import { ícone } from '../núcleo/ícones.js';
@@ -126,8 +126,8 @@ function desenharRecentes() {
 
 desenharLista(listaProntas, ferramentasProntas);
 desenharRecentes();
-ligarFavoritos(listaProntas);
-ligarFavoritos(listaRecentes);
+ligarLista(listaProntas, ferramentas, desenharRecentes);
+ligarLista(listaRecentes, ferramentas, desenharRecentes);
 
 document.getElementById('limpar-recentes')?.addEventListener('click', () => {
   limparRecentes();

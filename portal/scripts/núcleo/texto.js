@@ -59,6 +59,9 @@ export function paraNúmero(valor) {
     // "1.234" é milhar, não decimal.
     texto = texto.replace(/\./g, '');
   }
+  // Number() aceita "0x10", "0b11" e "1e5"; nenhum deles é número escrito por
+  // pessoa num campo de preço ou medida, e aceitá-los esconde erro de digitação.
+  if (!/^[+-]?(\d+(\.\d*)?|\.\d+)$/.test(texto)) return NaN;
   const número = Number(texto);
   return Number.isFinite(número) ? número : NaN;
 }

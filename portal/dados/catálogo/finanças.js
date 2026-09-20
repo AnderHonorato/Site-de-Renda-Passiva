@@ -26,7 +26,7 @@ export const ferramentas = [
     sai: 'Preço sugerido, lucro por unidade, markup equivalente e composição do preço.',
     exporta: ['copiar', 'pdf'], plano: 'gratuito', local: true,
     unifica: ['Markup', 'Margem de lucro', 'Preço mínimo', 'Formação de preço'],
-    tags: ['preço', 'margem', 'markup', 'lucro', 'taxa', 'imposto'],
+    tags: ['preço', 'margem', 'markup', 'lucro', 'taxa', 'imposto', 'bolo', 'doce', 'salgado', 'peça', 'produto', 'quanto cobrar'],
     intenções: ['por quanto devo vender', 'calcular margem de lucro', 'formar preço de venda', 'markup'],
   },
   {
@@ -104,7 +104,7 @@ export const ferramentas = [
     sai: 'Orçamento pronto, PDF, planilha .xlsx e link compartilhável.',
     exporta: ['pdf', 'xlsx', 'link', 'imprimir'], plano: 'gratuito', local: true,
     unifica: ['Orçamento de doces', 'Orçamento artesanal', 'Orçamento de festa', 'Orçamento de reforma', 'Proposta comercial'],
-    tags: ['orçamento', 'proposta', 'cliente', 'pdf', 'excel'],
+    tags: ['orçamento', 'proposta', 'cliente', 'pdf', 'excel', 'encomenda', 'bolo', 'festa', 'obra'],
     intenções: ['fazer um orçamento', 'mandar proposta para o cliente', 'orçamento em pdf'],
   },
   {

@@ -1,6 +1,6 @@
 /** Meus salvos: favoritos, histórico e cópia de segurança. */
-import { ferramentaPorSlug } from '../../dados/catálogo.js';
-import { desenharLista, ligarFavoritos } from '../núcleo/lista.js';
+import { ferramentas, ferramentaPorSlug } from '../../dados/catálogo.js';
+import { desenharLista, ligarLista } from '../núcleo/lista.js';
 import { lerFavoritos, lerRecentes, limparRecentes } from '../núcleo/preferências.js';
 import { exportarTudo, importarTudo, armazenamentoAtivo } from '../núcleo/armazenamento.js';
 import { baixar } from '../núcleo/exportar.js';
@@ -25,8 +25,8 @@ function desenharTudo() {
 }
 
 desenharTudo();
-ligarFavoritos(listaFavoritos, desenharTudo);
-ligarFavoritos(listaRecentes, desenharTudo);
+ligarLista(listaFavoritos, ferramentas, desenharTudo);
+ligarLista(listaRecentes, ferramentas, desenharTudo);
 
 document.getElementById('limpar-recentes')?.addEventListener('click', () => {
   limparRecentes();

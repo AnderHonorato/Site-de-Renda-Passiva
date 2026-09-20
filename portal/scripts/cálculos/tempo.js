@@ -38,32 +38,55 @@ export function diaDaSemana(data) {
 }
 
 /**
+ * Soma meses a uma data civil, limitando o dia ao tamanho do mês de destino.
+ *
+ * 31 de janeiro mais um mês é 28 de fevereiro, não 3 de março: é assim que se
+ * conta prazo e idade.
+ * @param {Date} data
+ * @param {number} meses
+ * @returns {Date}
+ */
+function somarMeses(data, meses) {
+  const ano = data.getUTCFullYear();
+  const mês = data.getUTCMonth() + meses;
+  const diasDoMêsDestino = new Date(Date.UTC(ano, mês + 1, 0)).getUTCDate();
+  return new Date(Date.UTC(ano, mês, Math.min(data.getUTCDate(), diasDoMêsDestino)));
+}
+
+/**
  * Diferença entre duas datas, em várias unidades.
+ *
+ * `anos`, `meses` e `restoDeDias` são sempre grandezas positivas e formam uma
+ * decomposição válida: "1 mês e 1 dia", nunca "1 mês e −2 dias". O sentido da
+ * contagem fica em `dias` (com sinal) e em `invertido`.
+ *
  * @param {Date} inicial
  * @param {Date} final
- * @returns {{dias: number, semanas: number, meses: number, anos: number, restoDeDias: number}}
+ * @returns {{dias: number, invertido: boolean, semanas: number, anos: number, meses: number, restoDeDias: number}}
  */
 export function diferençaEntreDatas(inicial, final) {
   const dias = Math.round((final - inicial) / DIA_EM_MS);
-  const sinal = dias < 0 ? -1 : 1;
   const [menor, maior] = dias < 0 ? [final, inicial] : [inicial, final];
 
   let anos = maior.getUTCFullYear() - menor.getUTCFullYear();
   let meses = maior.getUTCMonth() - menor.getUTCMonth();
-  let restoDeDias = maior.getUTCDate() - menor.getUTCDate();
-  if (restoDeDias < 0) {
-    meses -= 1;
-    // Dias do mês anterior ao mês final.
-    restoDeDias += new Date(Date.UTC(maior.getUTCFullYear(), maior.getUTCMonth(), 0)).getUTCDate();
-  }
+  // Se ainda não chegou no mesmo dia do mês, o último mês não completou.
+  if (maior.getUTCDate() < menor.getUTCDate()) meses -= 1;
   if (meses < 0) { anos -= 1; meses += 12; }
+
+  // O resto em dias é medido a partir da data já avançada em anos e meses.
+  // Contar pela diferença bruta de dia do mês produz resto negativo quando o
+  // dia inicial não existe no mês de destino — o defeito que isto corrige.
+  const âncora = somarMeses(menor, anos * 12 + meses);
+  const restoDeDias = Math.round((maior - âncora) / DIA_EM_MS);
 
   return {
     dias,
-    semanas: Math.trunc(dias / 7),
-    anos: anos * sinal,
-    meses: meses * sinal,
-    restoDeDias: restoDeDias * sinal,
+    invertido: dias < 0,
+    semanas: Math.trunc(Math.abs(dias) / 7),
+    anos,
+    meses,
+    restoDeDias,
   };
 }
 
@@ -83,8 +106,15 @@ export function somarDias(data, dias, { úteis = false, feriados = [] } = {}) {
   const bloqueados = new Set(feriados);
   const passo = dias < 0 ? -1 : 1;
   let restantes = Math.abs(dias);
+  // Teto de segurança: mesmo com muitos feriados, 7 dias de calendário por dia
+  // útil pedido é folga de sobra. Sem o teto, uma lista que bloqueie toda a
+  // semana faria o laço girar para sempre.
+  let passosRestantes = Math.abs(dias) * 7 + 400;
   let atual = new Date(data.getTime());
   while (restantes > 0) {
+    if (passosRestantes-- <= 0) {
+      throw new Error('Não foi possível encontrar dias úteis suficientes: confira a lista de feriados.');
+    }
     atual = new Date(atual.getTime() + passo * DIA_EM_MS);
     const diaDaSemanaAtual = atual.getUTCDay();
     const fimDeSemana = diaDaSemanaAtual === 0 || diaDaSemanaAtual === 6;
