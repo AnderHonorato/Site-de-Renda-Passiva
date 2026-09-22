@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <title data-texto="limpar-planilha.titulo_pagina"></title>
+  <meta name="description" data-texto-content="limpar-planilha.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/compartilhado/compartilhado-ferramenta.css">
+  <link rel="stylesheet" href="/estatico/ferramentas/limpar-planilha/limpar-planilha.css">
+  <script type="module" src="/estatico/ferramentas/limpar-planilha/limpar-planilha.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo ferramenta limpar-planilha">
+    <nav class="migalhas" data-texto-aria-label="compartilhado.ferramenta.migalhas_rotulo">
+      <ol>
+        <li><a href="/ferramentas" data-texto="compartilhado.cabecalho.ferramentas"></a></li>
+        <li><a href="/ferramentas?categoria=planilhas" data-texto="compartilhado.categorias.planilhas.nome"></a></li>
+        <li><span aria-current="page" data-texto="limpar-planilha.titulo"></span></li>
+      </ol>
+    </nav>
+
+    <header class="ferramenta__cabecalho">
+      <div class="ferramenta__titulo-linha">
+        <h1 class="titulo-display titulo-display--2" data-texto="limpar-planilha.titulo"></h1>
+        <button type="button" class="botao-icone" data-acao="favoritar">
+          <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-estrela"></use></svg>
+        </button>
+      </div>
+      <p class="texto-2 ferramenta__resumo" data-texto="limpar-planilha.resumo"></p>
+      <p class="nota-local">
+        <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-cadeado"></use></svg>
+        <span data-texto="compartilhado.ferramenta.arquivo_local"></span>
+      </p>
+    </header>
+
+    <ol class="etapas">
+      <li class="etapas__item etapas__item--atual" data-etapa="enviar" aria-current="step"><span class="etapas__numero" aria-hidden="true"></span><span data-texto="limpar-planilha.etapas.enviar"></span></li>
+      <li class="etapas__item" data-etapa="configurar"><span class="etapas__numero" aria-hidden="true"></span><span data-texto="limpar-planilha.etapas.configurar"></span></li>
+      <li class="etapas__item" data-etapa="revisar"><span class="etapas__numero" aria-hidden="true"></span><span data-texto="limpar-planilha.etapas.revisar"></span></li>
+      <li class="etapas__item" data-etapa="exportar"><span class="etapas__numero" aria-hidden="true"></span><span data-texto="limpar-planilha.etapas.exportar"></span></li>
+    </ol>
+
+    <p class="campo__erro" id="erro-planilha" role="alert"></p>
+
+    <section class="etapa-painel" data-painel="enviar" tabindex="-1">
+      <h2 class="titulo-display titulo-display--4" data-texto="limpar-planilha.enviar.titulo"></h2>
+      <div class="soltar-arquivos" id="area-soltar">
+        <svg class="icone icone--32" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-planilha"></use></svg>
+        <p class="soltar-arquivos__titulo" data-texto="limpar-planilha.enviar.arraste_titulo"></p>
+        <p class="soltar-arquivos__texto texto-2" data-texto="limpar-planilha.enviar.arraste_texto"></p>
+        <label class="botao botao--secundario">
+          <span data-texto="limpar-planilha.enviar.botao_selecionar"></span>
+          <input class="visualmente-oculto" id="campo-arquivo" type="file" accept=".csv,.txt,.xlsx,.xls"
+                 data-texto-aria-label="limpar-planilha.enviar.botao_selecionar">
+        </label>
+        <p class="texto-pequeno texto-2" data-texto="limpar-planilha.enviar.formatos_aceitos"></p>
+      </div>
+      <p class="texto-2" id="resumo-arquivo" hidden></p>
+    </section>
+
+    <section class="etapa-painel" data-painel="configurar" tabindex="-1" hidden>
+      <h2 class="titulo-display titulo-display--4" id="titulo-configurar"></h2>
+
+      <fieldset class="ferramenta__grupo">
+        <legend class="ferramenta__grupo-titulo" data-texto="limpar-planilha.configurar.duplicidade_titulo"></legend>
+        <div class="limpar-planilha__colunas" id="lista-colunas"></div>
+        <p class="campo__erro" id="erro-colunas" role="alert"></p>
+      </fieldset>
+
+      <fieldset class="ferramenta__grupo">
+        <legend class="ferramenta__grupo-titulo" data-texto="limpar-planilha.configurar.qual_linha_titulo"></legend>
+        <div class="opcoes">
+          <label class="opcao">
+            <input type="radio" name="qual-linha" value="mais_recente" checked>
+            <span data-texto="limpar-planilha.configurar.opcao_mais_recente"></span>
+          </label>
+          <label class="opcao">
+            <input type="radio" name="qual-linha" value="mais_completa">
+            <span data-texto="limpar-planilha.configurar.opcao_mais_completa"></span>
+          </label>
+          <label class="opcao">
+            <input type="radio" name="qual-linha" value="primeira">
+            <span data-texto="limpar-planilha.configurar.opcao_primeira"></span>
+          </label>
+        </div>
+
+        <label class="campo limpar-planilha__coluna-data">
+          <span class="campo__rotulo" data-texto="limpar-planilha.configurar.coluna_data_rotulo"></span>
+          <span class="campo__controle">
+            <select class="campo__entrada" id="campo-coluna-data"></select>
+          </span>
+        </label>
+      </fieldset>
+
+      <fieldset class="ferramenta__grupo">
+        <legend class="ferramenta__grupo-titulo" data-texto="limpar-planilha.etapas.configurar"></legend>
+        <label class="marcador"><input type="checkbox" id="campo-padronizar-email" checked><span data-texto="limpar-planilha.configurar.padronizar_email"></span></label>
+        <label class="marcador"><input type="checkbox" id="campo-aparar-espacos" checked><span data-texto="limpar-planilha.configurar.aparar_espacos"></span></label>
+        <label class="marcador"><input type="checkbox" id="campo-remover-vazias" checked><span data-texto="limpar-planilha.configurar.remover_vazias"></span></label>
+      </fieldset>
+
+      <div class="ferramenta__acoes">
+        <button type="button" class="botao botao--primario" data-ir="revisar" data-texto="limpar-planilha.acoes.revisar_tudo"></button>
+        <button type="button" class="botao botao--fantasma" data-ir="enviar" data-texto="compartilhado.acoes.voltar"></button>
+      </div>
+    </section>
+
+    <section class="etapa-painel" data-painel="revisar" tabindex="-1" hidden>
+      <h2 class="titulo-display titulo-display--4" data-texto="limpar-planilha.revisar.titulo"></h2>
+      <p class="texto-2" id="resumo-contagens"></p>
+      <p class="sobretitulo" id="previa-titulo"></p>
+
+      <div class="limpar-planilha__tabela-rolagem">
+        <table class="tabela limpar-planilha__previa">
+          <thead><tr id="previa-cabecalho"></tr></thead>
+          <tbody id="previa-corpo"></tbody>
+        </table>
+      </div>
+
+      <p class="texto-pequeno texto-2" data-texto="limpar-planilha.revisar.nota_local"></p>
+
+      <div class="ferramenta__acoes">
+        <button type="button" class="botao botao--primario" data-ir="exportar" data-texto="limpar-planilha.acoes.continuar_exportar"></button>
+        <button type="button" class="botao botao--fantasma" data-ir="configurar" data-texto="compartilhado.acoes.voltar"></button>
+      </div>
+    </section>
+
+    <section class="etapa-painel" data-painel="exportar" tabindex="-1" hidden>
+      <h2 class="titulo-display titulo-display--4" data-texto="limpar-planilha.exportar.titulo"></h2>
+      <p class="texto-2" data-texto="limpar-planilha.exportar.texto"></p>
+      <p class="resultado__valor" id="linhas-continuam"></p>
+
+      <div class="ferramenta__acoes">
+        <button type="button" class="botao botao--primario" data-acao="baixar-csv" data-texto="limpar-planilha.exportar.botao_csv"></button>
+        <button type="button" class="botao botao--secundario" data-acao="baixar-xlsx" data-texto="limpar-planilha.exportar.botao_xlsx"></button>
+        <button type="button" class="botao botao--fantasma so-sessao" data-acao="salvar-trabalho" data-texto="compartilhado.ferramenta.salvar_trabalho"></button>
+        <button type="button" class="botao botao--fantasma" data-acao="recomecar" data-texto="limpar-planilha.exportar.nova_limpeza"></button>
+      </div>
+    </section>
+
+    <div class="ferramenta__ajuda">
+      <section>
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.como_usar"></h2>
+        <ol class="passos">
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="limpar-planilha.como_usar.um"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="limpar-planilha.como_usar.dois"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="limpar-planilha.como_usar.tres"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="limpar-planilha.como_usar.quatro"></p></li>
+        </ol>
+      </section>
+
+      <section class="perguntas">
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.perguntas"></h2>
+        <details>
+          <summary data-texto="limpar-planilha.perguntas.original.pergunta"></summary>
+          <p data-texto="limpar-planilha.perguntas.original.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="limpar-planilha.perguntas.criterio.pergunta"></summary>
+          <p data-texto="limpar-planilha.perguntas.criterio.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="limpar-planilha.perguntas.limite.pergunta"></summary>
+          <p data-texto="limpar-planilha.perguntas.limite.resposta"></p>
+        </details>
+      </section>
+
+      <aside class="ferramenta__lateral">
+        <h2 class="sobretitulo" data-texto="compartilhado.ferramenta.relacionadas"></h2>
+        <ul class="relacionadas"></ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>
