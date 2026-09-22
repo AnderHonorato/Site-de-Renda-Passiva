@@ -1,0 +1,43 @@
+<header class="cabecalho">
+  <a class="cabecalho__marca" href="/" data-texto-aria-label="compartilhado.marca.ir_para_inicio">
+    <span class="cabecalho__monograma" aria-hidden="true" data-texto="compartilhado.marca.monograma"></span>
+    <span class="cabecalho__nome" data-texto="compartilhado.marca.nome"></span>
+  </a>
+
+  <nav class="cabecalho__navegacao" data-texto-aria-label="compartilhado.cabecalho.navegacao_rotulo">
+    <a href="/ferramentas" data-nav="ferramentas" data-texto="compartilhado.cabecalho.ferramentas"></a>
+    <a href="/trabalho" data-nav="trabalho" class="so-sessao" data-texto="compartilhado.cabecalho.trabalho"></a>
+    <a href="/salvos" data-nav="salvos" data-texto="compartilhado.cabecalho.salvos"></a>
+    <a href="/planos" data-nav="planos" data-texto="compartilhado.cabecalho.planos"></a>
+  </nav>
+
+  <span class="cabecalho__espaco"></span>
+
+  <div class="cabecalho__acoes">
+    <button type="button" class="botao-icone" data-acao="alternar-tema" aria-pressed="false" data-texto-aria-label="compartilhado.tema.usar_escuro">
+      <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-sol"></use></svg>
+    </button>
+
+    <div class="cabecalho__idioma" data-texto-aria-label="compartilhado.idioma.seletor_rotulo" role="group">
+      <button type="button" data-acao="trocar-idioma" data-idioma="pt-BR" aria-pressed="true" data-texto="compartilhado.idioma.sigla_pt-BR" data-texto-aria-label="compartilhado.idioma.pt-BR"></button>
+      <button type="button" data-acao="trocar-idioma" data-idioma="en" aria-pressed="false" data-texto="compartilhado.idioma.sigla_en" data-texto-aria-label="compartilhado.idioma.en"></button>
+    </div>
+
+    <button type="button" class="botao-icone cabecalho__notificacao so-sessao" data-acao="abrir-avisos" data-texto-aria-label="compartilhado.cabecalho.avisos">
+      <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-sino"></use></svg>
+      <span class="cabecalho__notificacao-ponto" hidden></span>
+    </button>
+
+    <a class="botao botao--secundario botao--pequeno so-anonimo" href="/entrar" data-texto="compartilhado.cabecalho.entrar"></a>
+
+    <div class="cabecalho__conta so-sessao">
+      <button type="button" class="cabecalho__conta-inicial" data-acao="abrir-menu-conta" aria-haspopup="true" aria-expanded="false" aria-controls="af-menu-conta" data-texto-aria-label="compartilhado.cabecalho.menu_conta_rotulo">{{usuario_inicial}}</button>
+      <div class="cabecalho__menu-conta" id="af-menu-conta" hidden>
+        <a href="/conta" data-texto="compartilhado.cabecalho.conta"></a>
+        <a href="/conta/avisos" data-texto="compartilhado.cabecalho.avisos"></a>
+        <a href="/admin" class="so-admin" data-texto="compartilhado.cabecalho.admin"></a>
+        <button type="button" data-acao="sair" data-texto="compartilhado.cabecalho.sair"></button>
+      </div>
+    </div>
+  </div>
+</header>

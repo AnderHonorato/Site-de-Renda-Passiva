@@ -1,0 +1,390 @@
+/* compartilhado-ferramenta.css — layout da página de ferramenta (docs/contratos.md §6.2, §13). Zero cor literal. */
+
+.ferramenta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-7);
+  padding-bottom: var(--espaco-9);
+}
+
+.ferramenta__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  max-width: 72ch;
+}
+
+.ferramenta__corpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
+  gap: var(--espaco-6);
+  align-items: start;
+}
+
+@media (max-width: 1023px) {
+  .ferramenta__corpo {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ferramenta__formulario {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-superficie);
+  padding: var(--espaco-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+}
+
+.ferramenta__grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.ferramenta__grupo + .ferramenta__grupo {
+  border-top: 1px solid var(--cor-linha);
+  padding-top: var(--espaco-5);
+}
+
+.ferramenta__grupo-titulo {
+  font-size: var(--texto-etiqueta);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cor-texto-2);
+}
+
+.ferramenta__acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  border-top: 1px solid var(--cor-linha);
+  padding-top: var(--espaco-5);
+  flex-wrap: wrap;
+}
+
+.ferramenta__resultado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.ferramenta__exportar {
+  display: flex;
+  gap: var(--espaco-2);
+}
+
+.ferramenta__ajuda {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--espaco-8);
+  align-items: start;
+}
+
+@media (max-width: 1023px) {
+  .ferramenta__ajuda {
+    grid-template-columns: 1fr;
+    gap: var(--espaco-6);
+  }
+}
+
+.ferramenta__lateral {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+/* ===== Resultado (painel de tinta) ===== */
+.resultado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+}
+
+.resultado__rotulo {
+  font-size: var(--texto-etiqueta);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cor-sobre-tinta-2);
+}
+
+.resultado__valor {
+  font-family: var(--fonte-display);
+  font-size: 56px;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.resultado__linhas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  border-top: 1px solid var(--cor-linha-forte);
+  padding-top: var(--espaco-4);
+  font-size: 14.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.resultado__linha {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+
+.resultado__linha-rotulo {
+  color: var(--cor-sobre-tinta-2);
+}
+
+.resultado__linha-valor {
+  color: var(--cor-sobre-tinta);
+}
+
+.resultado__linha--destaque {
+  border-top: 1px solid var(--cor-linha-forte);
+  padding-top: var(--espaco-2);
+  margin-top: var(--espaco-1);
+}
+
+.resultado__linha--destaque .resultado__linha-valor {
+  font-weight: 700;
+}
+
+/* ===== A conta ===== */
+.conta-formula {
+  background: var(--cor-recuo);
+  border-radius: var(--raio-controle);
+  padding: var(--espaco-4) var(--espaco-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.conta-formula code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13.5px;
+  color: var(--cor-texto-2);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* ===== Nota local ===== */
+.nota-local {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-2);
+}
+
+/* ===== Como usar (passos) ===== */
+.passos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.passos__item {
+  display: flex;
+  gap: var(--espaco-4);
+  align-items: flex-start;
+}
+
+.passos__numero {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--cor-linha-forte);
+  color: var(--cor-texto-2);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+/* ===== Perguntas ===== */
+.perguntas {
+  display: flex;
+  flex-direction: column;
+}
+
+.perguntas details {
+  border-bottom: 1px solid var(--cor-linha);
+  padding: var(--espaco-3) 0;
+}
+
+.perguntas summary {
+  cursor: pointer;
+  font-size: 15.5px;
+  font-weight: 500;
+  list-style: none;
+  color: var(--cor-texto);
+  min-height: var(--alvo-toque);
+  display: flex;
+  align-items: center;
+}
+
+.perguntas summary::-webkit-details-marker {
+  display: none;
+}
+
+.perguntas p {
+  margin: var(--espaco-2) 0 0;
+  font-size: 15px;
+  color: var(--cor-texto-2);
+  max-width: 62ch;
+}
+
+/* ===== Relacionadas ===== */
+.relacionadas {
+  display: flex;
+  flex-direction: column;
+}
+
+.relacionadas__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--espaco-3) 0;
+  border-bottom: 1px solid var(--cor-linha);
+  color: var(--cor-texto);
+}
+
+.relacionadas__item:hover {
+  color: var(--cor-destaque);
+}
+
+/* ===== Etapas (fluxo em 4 passos) ===== */
+.etapas {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.etapas__item {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  flex: none;
+  font-size: 14.5px;
+  color: var(--cor-texto-2);
+}
+
+.etapas__item::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--cor-linha);
+  margin: 0 var(--espaco-4);
+  min-width: var(--espaco-6);
+}
+
+.etapas__item:last-child::after {
+  display: none;
+}
+
+.etapas__item .etapas__numero {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--cor-linha-forte);
+  color: var(--cor-texto-2);
+  font-size: 13.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.etapas__item--atual {
+  color: var(--cor-texto);
+  font-weight: 600;
+}
+
+.etapas__item--atual .etapas__numero {
+  background: var(--cor-destaque);
+  border-color: var(--cor-destaque);
+  color: var(--cor-sobre-destaque);
+}
+
+.etapas__item--feita .etapas__numero {
+  background: var(--cor-salvia);
+  border-color: var(--cor-salvia);
+  color: var(--cor-sobre-destaque);
+}
+
+.etapas__item--feita::after {
+  background: var(--cor-salvia);
+}
+
+.etapa-painel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-6);
+}
+
+/* ===== Arquivos ===== */
+.soltar-arquivos {
+  border: 1px dashed var(--cor-linha-forte);
+  border-radius: var(--raio-superficie);
+  padding: var(--espaco-7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-2);
+  text-align: center;
+  color: var(--cor-texto-2);
+}
+
+.soltar-arquivos--ativa {
+  border-color: var(--cor-destaque);
+  background: var(--cor-destaque-suave);
+}
+
+.soltar-arquivos__titulo {
+  font-size: 15.5px;
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+.soltar-arquivos__texto {
+  font-size: 14px;
+}
+
+.lista-arquivos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.lista-arquivos__item {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  font-size: 14.5px;
+}
+
+@media (max-width: 767px) {
+  .ferramenta__formulario {
+    padding: var(--espaco-5);
+  }
+
+  .resultado__valor {
+    font-size: 42px;
+  }
+}

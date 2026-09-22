@@ -1,0 +1,38 @@
+/* compartilhado-tema-escuro.css — tema Carvão. Toda cor literal do tema escuro mora aqui.
+   Mesma composição do claro, tinta invertida (ver docs/contratos.md §6.1 e seção 07 do arquivo de design 2). */
+
+html[data-tema="escuro"] {
+  --cor-fundo: #232120;
+  --cor-superficie: #2B2826;
+  --cor-recuo: #2E2B29;
+  --cor-linha: #3A3634;
+  --cor-linha-forte: #4C4744;
+
+  --cor-texto: #F5F1E8;
+  --cor-texto-2: #ADA496;
+  --cor-texto-3: #7D7568;
+
+  --cor-destaque: #D08560;
+  --cor-destaque-forte: #E0996F;
+  --cor-destaque-suave: #3A2A22;
+  --cor-sobre-destaque: #241F1B;
+
+  --cor-salvia: #A9BA9C;
+  --cor-salvia-suave: #333A2E;
+
+  --cor-erro: #E2A184;
+  --cor-erro-suave: #3A2620;
+
+  /* Painel de resultado: sempre o tom mais escuro da tela, mesmo no tema escuro */
+  --cor-tinta: #171514;
+  --cor-sobre-tinta: #F5F1E8;
+  --cor-sobre-tinta-2: #A69C8C;
+
+  --cor-foco: #D08560;
+
+  --cor-etiqueta-plus-fundo: #3D3226;
+  --cor-etiqueta-plus-texto: #E3B78E;
+  --cor-etiqueta-aviso-fundo: #3A2620;
+  --cor-etiqueta-aviso-texto: #E2A184;
+  --cor-sombra-selecao: #4A3226;
+}
