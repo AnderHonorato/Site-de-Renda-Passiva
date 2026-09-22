@@ -7,3 +7,4 @@ frontend/compartilhado/bibliotecas/
 frontend/compartilhado/fontes/*.woff2
 testes/testes-visuais/capturas/
 *.log
+!.env.exemplo
