@@ -70,7 +70,7 @@ function mostrarErro(resultado) {
     campo.setAttribute('aria-describedby', `erro-${nome}`);
   }
   for (const id of ['resultado-preco', 'resultado-custo', 'resultado-taxa', 'resultado-sobra', 'resultado-minimo']) {
-    document.getElementById(id).textContent = '—';
+    document.getElementById(id).textContent = t('compartilhado.simbolos.sem_valor');
   }
   contaTexto.textContent = t(`${SLUG}.conta.formula`);
   ultimoResultado = null;

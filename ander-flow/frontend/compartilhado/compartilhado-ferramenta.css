@@ -388,3 +388,16 @@
     font-size: 42px;
   }
 }
+
+/* A numeração dos passos vem do CSS: nada de número fixo no HTML. */
+.passos {
+  counter-reset: passo;
+}
+
+.passos__item {
+  counter-increment: passo;
+}
+
+.passos__numero::before {
+  content: counter(passo);
+}

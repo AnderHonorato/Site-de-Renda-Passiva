@@ -99,22 +99,70 @@
       "resultados": "{quantidade} resultados"
     },
     "categorias": {
-      "dinheiro": { "nome": "Dinheiro e preços", "resumo": "Preço, margem, juros, parcelas e divisão de contas." },
-      "vendas": { "nome": "Vendas e propostas", "resumo": "Orçamento, proposta, comissão e acompanhamento." },
-      "calculo": { "nome": "Cálculo e conversão", "resumo": "Porcentagem, regra de três e unidades de medida." },
-      "datas": { "nome": "Datas e horas", "resumo": "Diferenças, prazos, dias úteis e carga horária." },
-      "texto": { "nome": "Texto", "resumo": "Contar, limpar, padronizar, comparar e transformar." },
-      "documentos": { "nome": "Documentos e PDF", "resumo": "Gerar, converter, organizar e assinar documentos." },
-      "planilhas": { "nome": "Planilhas e dados", "resumo": "Limpar, comparar, converter e analisar tabelas." },
-      "imagens": { "nome": "Imagens", "resumo": "Redimensionar, converter, comprimir e inspecionar." },
-      "desenvolvimento": { "nome": "Desenvolvimento", "resumo": "JSON, códigos, conversores e utilitários técnicos." },
-      "seguranca": { "nome": "Senhas e segurança", "resumo": "Gerar segredos, validar documentos e conferir dados." },
-      "trabalho": { "nome": "RH e trabalho", "resumo": "Jornada, férias, currículo, escala e avaliação." },
-      "operacoes": { "nome": "Estoque e logística", "resumo": "Estoque, reposição, frete, cubagem e conferência." },
-      "marketing": { "nome": "Marketing", "resumo": "Campanha, métricas, UTM e materiais de conteúdo." },
-      "produtividade": { "nome": "Produtividade", "resumo": "Tarefas, reuniões, planejamento e acompanhamento." },
-      "estudos": { "nome": "Estudos", "resumo": "Atividades, treino, revisão e material para imprimir." },
-      "oficio": { "nome": "Ofício, casa e obra", "resumo": "Produção artesanal, reforma, festas e embalagens." }
+      "dinheiro": {
+        "nome": "Dinheiro e preços",
+        "resumo": "Preço, margem, juros, parcelas e divisão de contas."
+      },
+      "vendas": {
+        "nome": "Vendas e propostas",
+        "resumo": "Orçamento, proposta, comissão e acompanhamento."
+      },
+      "calculo": {
+        "nome": "Cálculo e conversão",
+        "resumo": "Porcentagem, regra de três e unidades de medida."
+      },
+      "datas": {
+        "nome": "Datas e horas",
+        "resumo": "Diferenças, prazos, dias úteis e carga horária."
+      },
+      "texto": {
+        "nome": "Texto",
+        "resumo": "Contar, limpar, padronizar, comparar e transformar."
+      },
+      "documentos": {
+        "nome": "Documentos e PDF",
+        "resumo": "Gerar, converter, organizar e assinar documentos."
+      },
+      "planilhas": {
+        "nome": "Planilhas e dados",
+        "resumo": "Limpar, comparar, converter e analisar tabelas."
+      },
+      "imagens": {
+        "nome": "Imagens",
+        "resumo": "Redimensionar, converter, comprimir e inspecionar."
+      },
+      "desenvolvimento": {
+        "nome": "Desenvolvimento",
+        "resumo": "JSON, códigos, conversores e utilitários técnicos."
+      },
+      "seguranca": {
+        "nome": "Senhas e segurança",
+        "resumo": "Gerar segredos, validar documentos e conferir dados."
+      },
+      "trabalho": {
+        "nome": "RH e trabalho",
+        "resumo": "Jornada, férias, currículo, escala e avaliação."
+      },
+      "operacoes": {
+        "nome": "Estoque e logística",
+        "resumo": "Estoque, reposição, frete, cubagem e conferência."
+      },
+      "marketing": {
+        "nome": "Marketing",
+        "resumo": "Campanha, métricas, UTM e materiais de conteúdo."
+      },
+      "produtividade": {
+        "nome": "Produtividade",
+        "resumo": "Tarefas, reuniões, planejamento e acompanhamento."
+      },
+      "estudos": {
+        "nome": "Estudos",
+        "resumo": "Atividades, treino, revisão e material para imprimir."
+      },
+      "oficio": {
+        "nome": "Ofício, casa e obra",
+        "resumo": "Produção artesanal, reforma, festas e embalagens."
+      }
     },
     "ferramenta": {
       "estado_pronta": "Pronta",
@@ -191,6 +239,11 @@
       "acao_nao_permitida": "Esta ação não é permitida.",
       "erro_interno": "Algo deu errado do nosso lado. Tente de novo em instantes.",
       "sem_conexao": "Sem conexão com o servidor. Confira a internet e tente de novo."
+    },
+    "simbolos": {
+      "moeda": "R$",
+      "percentual": "%",
+      "sem_valor": "—"
     }
   }
 }
