@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <title data-texto="contador-de-texto.titulo_pagina"></title>
+  <meta name="description" data-texto-content="contador-de-texto.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/compartilhado/compartilhado-ferramenta.css">
+  <link rel="stylesheet" href="/estatico/ferramentas/contador-de-texto/contador-de-texto.css">
+  <script type="module" src="/estatico/ferramentas/contador-de-texto/contador-de-texto.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo ferramenta">
+    <nav class="migalhas" data-texto-aria-label="compartilhado.ferramenta.migalhas_rotulo">
+      <ol>
+        <li><a href="/ferramentas" data-texto="compartilhado.cabecalho.ferramentas"></a></li>
+        <li><a href="/ferramentas?categoria=texto" data-texto="compartilhado.categorias.texto.nome"></a></li>
+        <li><span aria-current="page" data-texto="contador-de-texto.titulo"></span></li>
+      </ol>
+    </nav>
+
+    <header class="ferramenta__cabecalho">
+      <div class="ferramenta__titulo-linha">
+        <h1 class="titulo-display titulo-display--2" data-texto="contador-de-texto.titulo"></h1>
+        <button type="button" class="botao-icone" data-acao="favoritar">
+          <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-estrela"></use></svg>
+        </button>
+      </div>
+      <p class="texto-2 ferramenta__resumo" data-texto="contador-de-texto.resumo"></p>
+      <p class="nota-local">
+        <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-cadeado"></use></svg>
+        <span data-texto="contador-de-texto.nota_privacidade"></span>
+      </p>
+    </header>
+
+    <div class="ferramenta__corpo">
+      <form class="ferramenta__formulario contador-de-texto__forma" novalidate>
+        <label class="campo">
+          <span class="campo__rotulo" data-texto="contador-de-texto.campos.texto"></span>
+          <textarea class="campo__entrada contador-de-texto__area" id="campo-texto" rows="16" spellcheck="false"
+                    data-texto-placeholder="contador-de-texto.campos.texto_placeholder"
+                    data-texto-aria-label="contador-de-texto.campos.texto"></textarea>
+        </label>
+
+        <div class="ferramenta__acoes">
+          <button type="button" class="botao botao--fantasma" data-acao="exemplo" data-texto="compartilhado.ferramenta.preencher_exemplo"></button>
+          <button type="button" class="botao botao--fantasma" data-acao="limpar" data-texto="compartilhado.acoes.limpar"></button>
+        </div>
+      </form>
+
+      <div class="ferramenta__resultado">
+        <div class="resultado superficie--tinta">
+          <p class="resultado__rotulo" data-texto="contador-de-texto.resultado.titulo"></p>
+          <p class="resultado__valor" id="resultado-palavras" aria-live="polite"></p>
+          <div class="resultado__linhas">
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="contador-de-texto.resultado.caracteres"></span>
+              <span class="resultado__linha-valor" id="resultado-caracteres"></span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="contador-de-texto.resultado.caracteres_sem_espaco"></span>
+              <span class="resultado__linha-valor" id="resultado-sem-espaco"></span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="contador-de-texto.resultado.frases"></span>
+              <span class="resultado__linha-valor" id="resultado-frases"></span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="contador-de-texto.resultado.paragrafos"></span>
+              <span class="resultado__linha-valor" id="resultado-paragrafos"></span>
+            </div>
+            <div class="resultado__linha resultado__linha--destaque">
+              <span class="resultado__linha-rotulo" data-texto="contador-de-texto.resultado.leitura"></span>
+              <span class="resultado__linha-valor" id="resultado-leitura"></span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="contador-de-texto.resultado.fala"></span>
+              <span class="resultado__linha-valor" id="resultado-fala"></span>
+            </div>
+          </div>
+        </div>
+
+        <section class="contador-de-texto__limites">
+          <h2 class="sobretitulo" data-texto="contador-de-texto.limites.titulo"></h2>
+          <ul class="contador-de-texto__lista-limites"></ul>
+        </section>
+
+        <div class="ferramenta__exportar">
+          <button type="button" class="botao botao--secundario botao--pequeno" data-acao="copiar">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-copiar"></use></svg>
+            <span data-texto="contador-de-texto.acoes.copiar_contagem"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ferramenta__ajuda">
+      <section>
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.como_usar"></h2>
+        <ol class="passos">
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="contador-de-texto.como_usar.um"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="contador-de-texto.como_usar.dois"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="contador-de-texto.como_usar.tres"></p></li>
+        </ol>
+      </section>
+
+      <section class="perguntas">
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.perguntas"></h2>
+        <details>
+          <summary data-texto="contador-de-texto.perguntas.emoji.pergunta"></summary>
+          <p data-texto="contador-de-texto.perguntas.emoji.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="contador-de-texto.perguntas.tempo.pergunta"></summary>
+          <p data-texto="contador-de-texto.perguntas.tempo.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="contador-de-texto.perguntas.guarda.pergunta"></summary>
+          <p data-texto="contador-de-texto.perguntas.guarda.resposta"></p>
+        </details>
+      </section>
+
+      <aside class="ferramenta__lateral">
+        <h2 class="sobretitulo" data-texto="compartilhado.ferramenta.relacionadas"></h2>
+        <ul class="relacionadas"></ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

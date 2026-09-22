@@ -1,0 +1,27 @@
+{
+  "slug": "contador-de-texto",
+  "estado": "pronta",
+  "categoria": "texto",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "texto",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Contador de texto",
+    "en": "Text counter"
+  },
+  "descricao": {
+    "pt-BR": "Conta caracteres, palavras, frases e parágrafos, e estima o tempo de leitura.",
+    "en": "Counts characters, words, sentences, and paragraphs, and estimates reading time."
+  },
+  "intencoes": {
+    "pt-BR": ["quantas palavras tem esse texto", "contar caracteres para o post", "cabe no limite de caracteres"],
+    "en": ["how many words is this text", "count characters for a post", "does it fit the character limit"]
+  },
+  "etiquetas": {
+    "pt-BR": ["contar palavras", "caracteres", "tempo de leitura"],
+    "en": ["word count", "characters", "reading time"]
+  },
+  "relacionadas": ["limpador-de-texto", "comparador-de-textos"],
+  "recursos_plus": []
+}

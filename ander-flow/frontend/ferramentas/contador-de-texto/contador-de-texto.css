@@ -1,0 +1,46 @@
+/* contador-de-texto.css — área de texto grande e tabela de limites. */
+
+.contador-de-texto__forma {
+  gap: var(--espaco-3);
+}
+
+.contador-de-texto__area {
+  min-height: 320px;
+  resize: vertical;
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+.contador-de-texto__limites {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  padding: var(--espaco-4);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-superficie);
+  background: var(--cor-superficie);
+}
+
+.contador-de-texto__lista-limites {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contador-de-texto__limite {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--espaco-3);
+  padding-block: var(--espaco-1);
+  font-size: 14px;
+}
+
+@media (max-width: 767px) {
+  .contador-de-texto__area {
+    min-height: 200px;
+  }
+}

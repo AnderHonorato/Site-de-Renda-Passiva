@@ -1,0 +1,55 @@
+{
+  "contador-de-texto": {
+    "titulo_pagina": "Contador de texto — Ander Flow",
+    "descricao_pagina": "Conta caracteres, palavras, frases e parágrafos, e estima o tempo de leitura e de fala. O texto não sai do seu navegador.",
+    "titulo": "Contador de texto",
+    "resumo": "Cole ou escreva o texto. A contagem acompanha cada tecla e mostra se ele cabe nos limites mais comuns.",
+    "nota_privacidade": "O texto fica só na memória deste navegador: não é enviado a servidor nem guardado no aparelho.",
+    "campos": {
+      "texto": "Seu texto",
+      "texto_placeholder": "Cole ou escreva aqui"
+    },
+    "acoes": {
+      "copiar_contagem": "Copiar contagem"
+    },
+    "resultado": {
+      "titulo": "Palavras",
+      "palavras_valor": "{quantidade} palavras",
+      "caracteres": "Caracteres",
+      "caracteres_sem_espaco": "Caracteres sem espaço",
+      "frases": "Frases",
+      "paragrafos": "Parágrafos",
+      "leitura": "Tempo de leitura",
+      "fala": "Tempo de fala"
+    },
+    "limites": {
+      "titulo": "Cabe no limite?",
+      "x": "Post no X",
+      "sms": "SMS",
+      "meta_descricao": "Descrição no Google",
+      "titulo_pagina": "Título de página",
+      "restam": "restam {quantidade} de {total}",
+      "passou": "passou {quantidade}"
+    },
+    "exemplo": "Bom dia! Segue o orçamento do serviço que conversamos.\n\nO valor inclui material e mão de obra, com prazo de sete dias úteis para começar. Qualquer dúvida, é só responder esta mensagem.",
+    "como_usar": {
+      "um": "Cole o texto na caixa. A contagem muda **enquanto você digita**, sem precisar apertar nada.",
+      "dois": "Use os caracteres sem espaço quando o limite for de sistema, e as palavras quando for de leitura.",
+      "tres": "O tempo de leitura serve para estimar quanto dura um texto lido em silêncio; o de fala, quanto dura falado em voz alta."
+    },
+    "perguntas": {
+      "emoji": {
+        "pergunta": "Emoji conta como quantos caracteres?",
+        "resposta": "Como um. A contagem segue o que a pessoa vê na tela, e não o número de códigos internos — por isso um emoji de família, que é composto por vários, aparece como um caractere só. Alguns sistemas contam diferente, então confira no limite do destino quando for apertado."
+      },
+      "tempo": {
+        "pergunta": "De onde vem o tempo de leitura?",
+        "resposta": "De uma média: 200 palavras por minuto para leitura em silêncio e 130 por minuto para fala em voz alta. É estimativa, não medição."
+      },
+      "guarda": {
+        "pergunta": "O texto fica guardado em algum lugar?",
+        "resposta": "Não. Diferente das outras ferramentas, esta não guarda rascunho: quando você fecha ou recarrega a página, o texto some."
+      }
+    }
+  }
+}
