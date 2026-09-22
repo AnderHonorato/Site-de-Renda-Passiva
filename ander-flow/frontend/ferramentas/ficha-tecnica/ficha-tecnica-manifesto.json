@@ -1,0 +1,39 @@
+{
+  "slug": "ficha-tecnica",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Ficha técnica de produto",
+    "en": "Product spec sheet"
+  },
+  "descricao": {
+    "pt-BR": "Documenta ingredientes, modo de preparo, custo e rendimento de um produto artesanal.",
+    "en": "Documents ingredients, preparation steps, cost, and yield for a handmade product."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer a ficha técnica do produto"
+    ],
+    "en": [
+      "create a product spec sheet"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ficha técnica",
+      "padronização",
+      "receita"
+    ],
+    "en": [
+      "spec sheet",
+      "standardization",
+      "recipe"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "custo-de-material-artesanal",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Custo de material artesanal",
+    "en": "Craft material cost"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o custo dos materiais usados numa peça artesanal a partir do consumo de cada um.",
+    "en": "Calculates the material cost of a handmade item from how much of each material it uses."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular custo de material da peça artesanal"
+    ],
+    "en": [
+      "calculate the material cost of a handmade item"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "custo de material",
+      "artesanato",
+      "consumo de insumo"
+    ],
+    "en": [
+      "material cost",
+      "crafts",
+      "material usage"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

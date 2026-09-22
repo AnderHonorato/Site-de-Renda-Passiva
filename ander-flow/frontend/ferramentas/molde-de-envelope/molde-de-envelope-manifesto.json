@@ -1,0 +1,39 @@
+{
+  "slug": "molde-de-envelope",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 130,
+  "nome": {
+    "pt-BR": "Molde de envelope",
+    "en": "Envelope template"
+  },
+  "descricao": {
+    "pt-BR": "Gera o molde de um envelope no tamanho certo para o cartão ou papel que ele vai guardar.",
+    "en": "Generates an envelope template sized to fit the card or paper it will hold."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer molde de envelope sob medida"
+    ],
+    "en": [
+      "make a custom-sized envelope template"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "envelope",
+      "molde",
+      "papelaria"
+    ],
+    "en": [
+      "envelope",
+      "template",
+      "stationery"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

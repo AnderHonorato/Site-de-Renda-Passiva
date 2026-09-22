@@ -1,0 +1,37 @@
+{
+  "slug": "papel-de-parede",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 90,
+  "nome": {
+    "pt-BR": "Papel de parede",
+    "en": "Wallpaper calculator"
+  },
+  "descricao": {
+    "pt-BR": "Calcula faixas e rolos de papel de parede considerando a altura e a repetição da estampa.",
+    "en": "Calculates wallpaper strips and rolls needed, accounting for wall height and pattern repeat."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quantos rolos de papel de parede comprar"
+    ],
+    "en": [
+      "how many rolls of wallpaper to buy"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "papel de parede",
+      "revestimento de parede"
+    ],
+    "en": [
+      "wallpaper",
+      "wall covering"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

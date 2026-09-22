@@ -1,0 +1,39 @@
+{
+  "slug": "ficha-de-cliente",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Ficha de cliente",
+    "en": "Customer records"
+  },
+  "descricao": {
+    "pt-BR": "Cadastro simples de clientes salvo no próprio aparelho, com busca e exportação.",
+    "en": "Simple customer database stored on your own device, with search and export."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "guardar meus clientes"
+    ],
+    "en": [
+      "keep track of my customers"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cliente",
+      "cadastro",
+      "crm"
+    ],
+    "en": [
+      "customer",
+      "records",
+      "crm"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

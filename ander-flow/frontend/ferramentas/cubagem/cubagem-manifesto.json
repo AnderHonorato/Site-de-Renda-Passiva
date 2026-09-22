@@ -1,0 +1,39 @@
+{
+  "slug": "cubagem",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Cálculo de cubagem",
+    "en": "Freight cubing calculator"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o volume ocupado por uma carga a partir das medidas de cada volume.",
+    "en": "Calculates the volume a shipment takes up from each package's dimensions."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular cubagem da carga"
+    ],
+    "en": [
+      "calculate freight cubic volume"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cubagem",
+      "volume de carga",
+      "m³"
+    ],
+    "en": [
+      "cubing",
+      "cargo volume",
+      "m³"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

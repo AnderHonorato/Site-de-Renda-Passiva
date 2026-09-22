@@ -1,0 +1,39 @@
+{
+  "slug": "rotina-de-revisao",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 150,
+  "nome": {
+    "pt-BR": "Rotina de revisão espaçada",
+    "en": "Spaced repetition review schedule"
+  },
+  "descricao": {
+    "pt-BR": "Calcula as datas de revisão de um conteúdo pela repetição espaçada.",
+    "en": "Calculates review dates for a topic using spaced repetition."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quando devo revisar essa matéria"
+    ],
+    "en": [
+      "when should I review this subject"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "revisão espaçada",
+      "memorização",
+      "repetição"
+    ],
+    "en": [
+      "spaced repetition",
+      "memorization",
+      "repetition"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

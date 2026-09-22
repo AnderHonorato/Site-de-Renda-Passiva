@@ -1,0 +1,39 @@
+{
+  "slug": "piso-por-caixa",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Piso por caixa",
+    "en": "Flooring boxes needed"
+  },
+  "descricao": {
+    "pt-BR": "Calcula quantas caixas de piso ou revestimento comprar a partir da área e da margem de corte.",
+    "en": "Calculates how many boxes of flooring or tile to buy from the area and a cutting margin."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quantas caixas de piso comprar"
+    ],
+    "en": [
+      "how many boxes of flooring to buy"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "piso",
+      "revestimento",
+      "reforma"
+    ],
+    "en": [
+      "flooring",
+      "tiling",
+      "renovation"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

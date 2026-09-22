@@ -1,0 +1,43 @@
+{
+  "slug": "transformador-de-caixa",
+  "estado": "planejada",
+  "categoria": "texto",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "texto",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Maiúsculas e minúsculas",
+    "en": "Uppercase and lowercase"
+  },
+  "descricao": {
+    "pt-BR": "Converte o texto para maiúsculas, minúsculas, Cada Palavra ou frase normal.",
+    "en": "Converts text to uppercase, lowercase, Title Case, or normal sentence case."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "transformar texto em maiúsculas",
+      "tirar caixa alta"
+    ],
+    "en": [
+      "convert text to uppercase",
+      "turn off all caps"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "maiúscula",
+      "minúscula",
+      "caixa alta",
+      "título"
+    ],
+    "en": [
+      "uppercase",
+      "lowercase",
+      "all caps",
+      "title case"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

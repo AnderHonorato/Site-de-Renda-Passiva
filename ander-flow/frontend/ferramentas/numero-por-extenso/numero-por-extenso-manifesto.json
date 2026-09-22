@@ -1,0 +1,45 @@
+{
+  "slug": "numero-por-extenso",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Número por extenso",
+    "en": "Numbers in words"
+  },
+  "descricao": {
+    "pt-BR": "Escreve números e valores em reais por extenso, para recibos e contratos.",
+    "en": "Spells out numbers and amounts in reais as words, for receipts and contracts."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "escrever valor por extenso",
+      "número por extenso"
+    ],
+    "en": [
+      "spell out an amount in words",
+      "numbers in words"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "extenso",
+      "recibo",
+      "cheque",
+      "contrato",
+      "reais"
+    ],
+    "en": [
+      "spelled out",
+      "receipt",
+      "check",
+      "contract",
+      "reais"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

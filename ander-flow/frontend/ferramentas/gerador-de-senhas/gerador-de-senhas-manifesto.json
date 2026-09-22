@@ -1,0 +1,47 @@
+{
+  "slug": "gerador-de-senhas",
+  "estado": "planejada",
+  "categoria": "seguranca",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Gerador de senhas",
+    "en": "Password generator"
+  },
+  "descricao": {
+    "pt-BR": "Senhas fortes, PIN, senha de Wi-Fi e frase-senha, com medidor de força real.",
+    "en": "Strong passwords, PINs, Wi-Fi passwords, and passphrases, with a real strength meter."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "criar senha forte",
+      "gerar pin",
+      "senha do wifi"
+    ],
+    "en": [
+      "create a strong password",
+      "generate a pin",
+      "wifi password"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "senha",
+      "pin",
+      "wifi",
+      "segurança",
+      "aleatório"
+    ],
+    "en": [
+      "password",
+      "pin",
+      "wifi",
+      "security",
+      "random"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

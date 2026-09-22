@@ -1,0 +1,41 @@
+{
+  "slug": "ajuste-de-receita",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Ajuste de quantidade e rendimento da receita",
+    "en": "Recipe scaling and yield adjustment"
+  },
+  "descricao": {
+    "pt-BR": "Escala a receita para outra quantidade e ajusta o rendimento por perdas de produção.",
+    "en": "Scales a recipe to a different quantity and adjusts the yield for production losses."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "aumentar a receita para mais porções",
+      "quanto sobra depois da perda"
+    ],
+    "en": [
+      "scale a recipe for more servings",
+      "how much is left after production loss"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ajuste de receita",
+      "escalar receita",
+      "perda de produção"
+    ],
+    "en": [
+      "recipe adjustment",
+      "scale recipe",
+      "production loss"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

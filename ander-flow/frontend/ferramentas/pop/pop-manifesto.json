@@ -1,0 +1,39 @@
+{
+  "slug": "pop",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 100,
+  "nome": {
+    "pt-BR": "Procedimento operacional padrão (POP)",
+    "en": "Standard operating procedure (SOP)"
+  },
+  "descricao": {
+    "pt-BR": "Monta um POP com objetivo, materiais, passo a passo e responsável.",
+    "en": "Builds an SOP with objective, materials, step-by-step instructions, and owner."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "documentar um processo da empresa"
+    ],
+    "en": [
+      "document a company process"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "pop",
+      "procedimento",
+      "processo"
+    ],
+    "en": [
+      "sop",
+      "procedure",
+      "process"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

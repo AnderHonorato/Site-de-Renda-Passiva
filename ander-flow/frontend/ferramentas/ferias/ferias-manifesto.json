@@ -1,0 +1,41 @@
+{
+  "slug": "ferias",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Cálculo de férias",
+    "en": "Vacation pay calculation"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o valor das férias com um terço constitucional e o abono pecuniário.",
+    "en": "Calculates vacation pay including the one-third constitutional bonus and the cash-out option (abono pecuniário), as set by Brazilian labor law."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular valor das férias",
+      "quanto vou receber de férias"
+    ],
+    "en": [
+      "calculate vacation pay",
+      "how much will I get for vacation"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "férias",
+      "abono pecuniário",
+      "um terço"
+    ],
+    "en": [
+      "vacation pay",
+      "abono pecuniário (cash-out bonus)",
+      "one-third constitutional bonus"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

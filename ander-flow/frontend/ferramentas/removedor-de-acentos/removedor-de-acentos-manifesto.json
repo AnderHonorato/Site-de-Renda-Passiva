@@ -1,0 +1,37 @@
+{
+  "slug": "removedor-de-acentos",
+  "estado": "planejada",
+  "categoria": "texto",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "texto",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Remover acentos",
+    "en": "Remove accents"
+  },
+  "descricao": {
+    "pt-BR": "Remove acentos e caracteres especiais do texto, mantendo a pontuação.",
+    "en": "Removes accents and special characters from text while keeping punctuation."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "tirar acento do texto"
+    ],
+    "en": [
+      "remove accents from text"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "remover acento",
+      "normalizar texto"
+    ],
+    "en": [
+      "remove accent",
+      "normalize text"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

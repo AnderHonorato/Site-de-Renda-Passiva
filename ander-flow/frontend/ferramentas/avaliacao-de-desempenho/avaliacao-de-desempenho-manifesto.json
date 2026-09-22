@@ -1,0 +1,39 @@
+{
+  "slug": "avaliacao-de-desempenho",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Avaliação de desempenho",
+    "en": "Performance review"
+  },
+  "descricao": {
+    "pt-BR": "Monta um formulário de avaliação por competências com nota e comentário.",
+    "en": "Builds a competency-based review form with scores and comments."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer avaliação de desempenho do funcionário"
+    ],
+    "en": [
+      "do an employee performance review"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "avaliação de desempenho",
+      "competências",
+      "feedback"
+    ],
+    "en": [
+      "performance review",
+      "competencies",
+      "feedback"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

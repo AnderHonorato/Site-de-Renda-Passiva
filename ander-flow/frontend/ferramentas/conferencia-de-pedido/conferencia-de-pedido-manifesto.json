@@ -1,0 +1,39 @@
+{
+  "slug": "conferencia-de-pedido",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 90,
+  "nome": {
+    "pt-BR": "Conferência de pedido",
+    "en": "Order check"
+  },
+  "descricao": {
+    "pt-BR": "Confere os itens separados contra a lista do pedido e aponta o que falta ou sobra.",
+    "en": "Checks picked items against the order list and flags what's missing or extra."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "conferir pedido antes de despachar"
+    ],
+    "en": [
+      "check an order before shipping"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "conferência",
+      "separação de pedido",
+      "picking"
+    ],
+    "en": [
+      "order check",
+      "order picking",
+      "picking"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

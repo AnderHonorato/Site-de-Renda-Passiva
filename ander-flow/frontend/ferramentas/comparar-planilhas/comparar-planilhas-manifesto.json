@@ -1,0 +1,39 @@
+{
+  "slug": "comparar-planilhas",
+  "estado": "planejada",
+  "categoria": "planilhas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "planilha",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Comparar duas planilhas",
+    "en": "Compare two spreadsheets"
+  },
+  "descricao": {
+    "pt-BR": "Mostra o que entrou, o que saiu e o que mudou entre duas versões da mesma lista.",
+    "en": "Shows what was added, removed, and changed between two versions of the same list."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "o que mudou entre as duas planilhas"
+    ],
+    "en": [
+      "what changed between the two spreadsheets"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "comparar",
+      "diferença",
+      "planilha"
+    ],
+    "en": [
+      "compare",
+      "difference",
+      "spreadsheet"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

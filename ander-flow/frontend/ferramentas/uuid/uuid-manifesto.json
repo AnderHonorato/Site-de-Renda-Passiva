@@ -1,0 +1,39 @@
+{
+  "slug": "uuid",
+  "estado": "planejada",
+  "categoria": "desenvolvimento",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "codigo",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Gerador de identificadores",
+    "en": "ID generator"
+  },
+  "descricao": {
+    "pt-BR": "UUID v4, identificadores curtos e códigos legíveis, em lote.",
+    "en": "UUID v4, short identifiers, and readable codes, in bulk."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "gerar uuid"
+    ],
+    "en": [
+      "generate a uuid"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "uuid",
+      "id",
+      "código"
+    ],
+    "en": [
+      "uuid",
+      "id",
+      "code"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

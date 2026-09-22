@@ -1,0 +1,41 @@
+{
+  "slug": "fluxo-de-caixa",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Fluxo de caixa",
+    "en": "Cash flow"
+  },
+  "descricao": {
+    "pt-BR": "Entradas e saídas por período, saldo acumulado e projeção simples.",
+    "en": "Income and expenses by period, running balance, and a simple projection."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "organizar meu caixa",
+      "quando vou ficar no vermelho"
+    ],
+    "en": [
+      "organize my cash flow",
+      "when will I go into the red"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "fluxo de caixa",
+      "contas a pagar",
+      "contas a receber"
+    ],
+    "en": [
+      "cash flow",
+      "accounts payable",
+      "accounts receivable"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

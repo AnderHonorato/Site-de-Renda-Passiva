@@ -1,0 +1,43 @@
+{
+  "slug": "validador-cpf-cnpj",
+  "estado": "planejada",
+  "categoria": "seguranca",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Validador de CPF e CNPJ",
+    "en": "CPF and CNPJ validator"
+  },
+  "descricao": {
+    "pt-BR": "Confere os dígitos verificadores de CPF e CNPJ e formata o número.",
+    "en": "Checks the verification digits of a CPF or CNPJ (Brazilian tax IDs) and formats the number."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "esse cpf é válido",
+      "conferir cnpj"
+    ],
+    "en": [
+      "is this cpf valid",
+      "check a cnpj"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cpf",
+      "cnpj",
+      "validar",
+      "documento"
+    ],
+    "en": [
+      "cpf (Brazilian individual tax ID)",
+      "cnpj (Brazilian company tax ID)",
+      "validate",
+      "document"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

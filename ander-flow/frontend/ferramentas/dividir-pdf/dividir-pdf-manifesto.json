@@ -1,0 +1,41 @@
+{
+  "slug": "dividir-pdf",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Dividir PDF e extrair páginas",
+    "en": "Split PDF and extract pages"
+  },
+  "descricao": {
+    "pt-BR": "Divide um PDF em partes ou extrai só as páginas escolhidas.",
+    "en": "Splits a PDF into parts or extracts just the pages you choose."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "tirar só uma página do pdf",
+      "dividir pdf em partes"
+    ],
+    "en": [
+      "pull one page out of a pdf",
+      "split a pdf into parts"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "dividir pdf",
+      "extrair páginas",
+      "separar pdf"
+    ],
+    "en": [
+      "split pdf",
+      "extract pages",
+      "separate pdf"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

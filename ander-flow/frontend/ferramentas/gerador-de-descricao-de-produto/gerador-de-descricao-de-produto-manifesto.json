@@ -1,0 +1,39 @@
+{
+  "slug": "gerador-de-descricao-de-produto",
+  "estado": "planejada",
+  "categoria": "marketing",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "megafone",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Gerador de descrição de produto",
+    "en": "Product description generator"
+  },
+  "descricao": {
+    "pt-BR": "Monta a descrição de um produto a partir de características e benefícios informados.",
+    "en": "Builds a product description from the features and benefits you enter."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "escrever descrição de produto para anúncio"
+    ],
+    "en": [
+      "write a product description for a listing"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "descrição de produto",
+      "anúncio",
+      "loja"
+    ],
+    "en": [
+      "product description",
+      "listing",
+      "store"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

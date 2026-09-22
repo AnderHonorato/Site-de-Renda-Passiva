@@ -1,0 +1,41 @@
+{
+  "slug": "extrator-de-contatos-em-texto",
+  "estado": "planejada",
+  "categoria": "texto",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "texto",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Extrair e-mails e telefones de um texto",
+    "en": "Extract emails and phone numbers from text"
+  },
+  "descricao": {
+    "pt-BR": "Localiza e lista e-mails, telefones e links soltos dentro de um texto.",
+    "en": "Finds and lists emails, phone numbers, and standalone links inside a block of text."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "tirar os emails desse texto",
+      "achar telefones no texto"
+    ],
+    "en": [
+      "pull the emails out of this text",
+      "find phone numbers in the text"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "extrair email",
+      "extrair telefone",
+      "links"
+    ],
+    "en": [
+      "extract email",
+      "extract phone number",
+      "links"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "matriz-raci",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 120,
+  "nome": {
+    "pt-BR": "Matriz RACI",
+    "en": "RACI matrix"
+  },
+  "descricao": {
+    "pt-BR": "Define quem é responsável, aprovador, consultado e informado em cada atividade.",
+    "en": "Defines who is responsible, accountable, consulted, and informed for each activity."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar matriz raci"
+    ],
+    "en": [
+      "build a raci matrix"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "raci",
+      "responsabilidades",
+      "papéis do projeto"
+    ],
+    "en": [
+      "raci",
+      "responsibilities",
+      "project roles"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

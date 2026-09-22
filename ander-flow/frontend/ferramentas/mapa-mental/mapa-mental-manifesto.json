@@ -1,0 +1,37 @@
+{
+  "slug": "mapa-mental",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 130,
+  "nome": {
+    "pt-BR": "Montador de mapa mental",
+    "en": "Mind map builder"
+  },
+  "descricao": {
+    "pt-BR": "Organiza um tema central e seus ramos em um mapa mental visual.",
+    "en": "Organizes a central topic and its branches into a visual mind map."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar mapa mental para estudar"
+    ],
+    "en": [
+      "build a mind map to study"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "mapa mental",
+      "organização de ideias"
+    ],
+    "en": [
+      "mind map",
+      "organizing ideas"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

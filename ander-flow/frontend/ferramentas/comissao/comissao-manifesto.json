@@ -1,0 +1,41 @@
+{
+  "slug": "comissao",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Calculadora de comissão",
+    "en": "Commission calculator"
+  },
+  "descricao": {
+    "pt-BR": "Comissão simples, escalonada por faixa de meta e comissão líquida após descontos.",
+    "en": "Flat commission, tiered by sales target, and net commission after deductions."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular comissão",
+      "comissão escalonada"
+    ],
+    "en": [
+      "calculate commission",
+      "tiered commission"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "comissão",
+      "vendedor",
+      "meta"
+    ],
+    "en": [
+      "commission",
+      "salesperson",
+      "sales target"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

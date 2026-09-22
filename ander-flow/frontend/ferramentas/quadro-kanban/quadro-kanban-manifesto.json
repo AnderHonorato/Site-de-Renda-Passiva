@@ -1,0 +1,39 @@
+{
+  "slug": "quadro-kanban",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Quadro Kanban",
+    "en": "Kanban board"
+  },
+  "descricao": {
+    "pt-BR": "Organiza tarefas em colunas de a fazer, fazendo e feito, com arrastar e soltar.",
+    "en": "Organizes tasks into to-do, doing, and done columns, with drag and drop."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar um quadro kanban"
+    ],
+    "en": [
+      "build a kanban board"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "kanban",
+      "quadro de tarefas",
+      "andamento"
+    ],
+    "en": [
+      "kanban",
+      "task board",
+      "progress"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

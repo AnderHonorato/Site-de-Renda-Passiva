@@ -1,0 +1,47 @@
+{
+  "slug": "calculadora-de-datas",
+  "estado": "planejada",
+  "categoria": "datas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "calendario",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Calculadora de datas",
+    "en": "Date calculator"
+  },
+  "descricao": {
+    "pt-BR": "Diferença entre datas, somar ou subtrair prazos, dias úteis, idade e dia da semana.",
+    "en": "Difference between dates, add or subtract time spans, business days, age, and day of the week."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quantos dias faltam",
+      "calcular prazo em dias úteis",
+      "qual minha idade exata"
+    ],
+    "en": [
+      "how many days are left",
+      "calculate a deadline in business days",
+      "what is my exact age"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "data",
+      "prazo",
+      "dias úteis",
+      "idade",
+      "vencimento"
+    ],
+    "en": [
+      "date",
+      "deadline",
+      "business days",
+      "age",
+      "due date"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

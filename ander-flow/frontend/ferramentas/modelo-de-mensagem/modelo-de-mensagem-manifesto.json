@@ -1,0 +1,41 @@
+{
+  "slug": "modelo-de-mensagem",
+  "estado": "planejada",
+  "categoria": "texto",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "texto",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Modelo de mensagem",
+    "en": "Message template"
+  },
+  "descricao": {
+    "pt-BR": "Preenche modelos de aviso, cobrança e agradecimento com os dados informados.",
+    "en": "Fills in templates for notices, payment reminders, and thank-you notes with your details."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "escrever mensagem de cobrança educada",
+      "modelo de aviso"
+    ],
+    "en": [
+      "write a polite payment reminder",
+      "notice template"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "modelo de mensagem",
+      "aviso",
+      "cobrança"
+    ],
+    "en": [
+      "message template",
+      "notice",
+      "payment reminder"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

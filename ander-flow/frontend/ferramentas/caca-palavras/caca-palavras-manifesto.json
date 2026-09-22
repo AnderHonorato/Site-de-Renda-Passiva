@@ -1,0 +1,37 @@
+{
+  "slug": "caca-palavras",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Caça-palavras",
+    "en": "Word search"
+  },
+  "descricao": {
+    "pt-BR": "Monta um caça-palavras com as palavras escolhidas, com gabarito em página separada.",
+    "en": "Builds a word search from the words you choose, with the answer key on a separate page."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar caça-palavras para imprimir"
+    ],
+    "en": [
+      "make a printable word search"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "caça-palavras",
+      "atividade escolar"
+    ],
+    "en": [
+      "word search",
+      "classroom activity"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

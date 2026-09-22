@@ -1,0 +1,39 @@
+{
+  "slug": "tabuada",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Tabuada para imprimir",
+    "en": "Printable multiplication table"
+  },
+  "descricao": {
+    "pt-BR": "Gera folhas de tabuada por fator, em ordem ou embaralhada, com gabarito separado.",
+    "en": "Generates multiplication table worksheets by factor, in order or shuffled, with a separate answer key."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "folha de tabuada para imprimir"
+    ],
+    "en": [
+      "printable multiplication table worksheet"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "tabuada",
+      "multiplicação",
+      "matemática"
+    ],
+    "en": [
+      "multiplication table",
+      "multiplication",
+      "math"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,47 @@
+{
+  "slug": "parcelamento",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Simulador de parcelamento",
+    "en": "Installment plan simulator"
+  },
+  "descricao": {
+    "pt-BR": "Parcela pela Tabela Price, custo total do crédito e comparação com o pagamento à vista.",
+    "en": "Calculates installments using the Price Table method (constant-installment amortization), the total cost of credit, and a comparison with paying in cash."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "vale a pena parcelar",
+      "calcular parcela",
+      "quanto fica por mês"
+    ],
+    "en": [
+      "is it worth paying in installments",
+      "calculate the installment amount",
+      "how much per month"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "parcela",
+      "financiamento",
+      "crediário",
+      "price",
+      "à vista"
+    ],
+    "en": [
+      "installment",
+      "financing",
+      "installment credit",
+      "price table method",
+      "cash price"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

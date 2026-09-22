@@ -1,0 +1,39 @@
+{
+  "slug": "papel-quadriculado",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 100,
+  "nome": {
+    "pt-BR": "Papel quadriculado para imprimir",
+    "en": "Printable graph paper"
+  },
+  "descricao": {
+    "pt-BR": "Gera papel quadriculado em tamanho real, com quadrado de calibração para conferir a impressão.",
+    "en": "Generates true-to-scale graph paper, with a calibration square to check the print size."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "papel quadriculado para imprimir"
+    ],
+    "en": [
+      "printable graph paper"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "papel quadriculado",
+      "milimetrado",
+      "grade"
+    ],
+    "en": [
+      "graph paper",
+      "grid paper",
+      "grid"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

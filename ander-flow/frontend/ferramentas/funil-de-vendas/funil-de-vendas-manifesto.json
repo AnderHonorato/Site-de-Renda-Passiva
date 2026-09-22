@@ -1,0 +1,39 @@
+{
+  "slug": "funil-de-vendas",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Funil de vendas",
+    "en": "Sales funnel"
+  },
+  "descricao": {
+    "pt-BR": "Acompanha quantos leads passam por cada etapa até virar venda, com taxa de conversão.",
+    "en": "Tracks how many leads move through each stage until becoming a sale, with conversion rate."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar funil de vendas"
+    ],
+    "en": [
+      "build a sales funnel"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "funil de vendas",
+      "conversão",
+      "leads"
+    ],
+    "en": [
+      "sales funnel",
+      "conversion",
+      "leads"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}
