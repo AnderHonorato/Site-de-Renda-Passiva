@@ -1,0 +1,8 @@
+{
+  "paginas": { "limite": 300, "janelaSegundos": 60 },
+  "api": { "limite": 120, "janelaSegundos": 60 },
+  "entrar_falhas": { "limiteFalhas": 5, "janelaSegundos": 900 },
+  "criar_conta": { "limite": 3, "janelaSegundos": 3600 },
+  "recuperar_senha": { "limite": 3, "janelaSegundos": 3600 },
+  "admin": { "limite": 60, "janelaSegundos": 60 }
+}
