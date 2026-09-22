@@ -1,0 +1,74 @@
+{
+  "preco-de-venda": {
+    "titulo_pagina": "Preço de venda — Ander Flow",
+    "descricao_pagina": "Calcule o preço de venda a partir do custo, com margem sobre a venda, taxa do cartão e imposto. O cálculo roda no seu navegador.",
+    "titulo": "Preço de venda",
+    "resumo": "Informe o custo e para onde o dinheiro vai. A ferramenta devolve o preço mínimo, o preço com a margem que você quer e quanto sobra no bolso.",
+    "grupos": {
+      "gastos": "O que você gasta",
+      "saidas": "O que sai do preço"
+    },
+    "campos": {
+      "custo": "Custo do produto",
+      "despesa": "Despesa fixa rateada por unidade",
+      "despesa_ajuda": "Divida a despesa fixa do mês pela quantidade que você costuma vender.",
+      "taxa": "Taxa do cartão",
+      "imposto": "Imposto sobre venda",
+      "margem": "Margem que você quer sobre a venda",
+      "margem_ajuda": "Margem sobre a venda, não acréscimo sobre o custo — a conta muda."
+    },
+    "acoes": {
+      "calcular": "Calcular preço"
+    },
+    "resultado": {
+      "titulo": "Preço sugerido",
+      "custo_total": "Custo total por unidade",
+      "taxa_imposto": "Taxa e imposto",
+      "sobra": "Sobra por venda",
+      "minimo": "Preço mínimo sem lucro",
+      "nota_plus": "Exportar a planilha com todos os cenários é do Plus. O cálculo, a cópia e o PDF continuam no grátis.",
+      "copiado": "Resultado copiado",
+      "pdf_pronto": "PDF baixado",
+      "xlsx_pronto": "Planilha de cenários baixada",
+      "resumo_copia": "Preço sugerido {preco} · custo total {custo} · taxa e imposto {taxa} · sobra {sobra} · preço mínimo {minimo}"
+    },
+    "conta": {
+      "formula": "preço = custo ÷ (1 − margem − taxa − imposto)",
+      "linha": "{preco} = {custo} ÷ (1 − {margem} − {taxa} − {imposto})",
+      "nota": "Denominador zero ou negativo é recusado: com esses percentuais não existe preço possível."
+    },
+    "erros": {
+      "numero_invalido": "Informe um número válido.",
+      "valor_negativo": "O valor não pode ser negativo.",
+      "custo_zerado": "Informe o custo do produto para calcular.",
+      "margem_acima_do_limite": "Margem + taxa + imposto passam de 100%. Não existe preço que feche essa conta — reduza a margem para menos de {limite}."
+    },
+    "plus": {
+      "titulo": "Planilha de cenários é do Plus",
+      "texto": "O Plus exporta a tabela com o preço para cada margem, de 10% a 50%. O cálculo e o PDF continuam liberados no grátis."
+    },
+    "trabalho": {
+      "titulo_padrao": "Preço de venda — custo {custo}"
+    },
+    "como_usar": {
+      "um": "Some o que sai do seu bolso para ter o produto pronto — matéria-prima, embalagem, frete de compra. Esse é o **custo**.",
+      "dois": "Divida a despesa fixa do mês pela quantidade que você costuma vender e informe o valor por unidade.",
+      "tres": "Informe taxa de cartão e imposto como percentual **do preço final**, que é como eles são cobrados.",
+      "quatro": "Ajuste a margem e observe a sobra por venda. Se ela ficar negativa, o preço não paga o custo."
+    },
+    "perguntas": {
+      "margem_markup": {
+        "pergunta": "Margem de 30% é o mesmo que markup de 30%?",
+        "resposta": "Não. Margem de 30% significa que R$ 30 de cada R$ 100 vendidos ficam com você. Markup de 30% soma 30% ao custo — e dá um preço menor. Esta ferramenta trabalha com margem sobre a venda."
+      },
+      "minimo": {
+        "pergunta": "Por que o preço mínimo não é só custo + taxa?",
+        "resposta": "Porque taxa e imposto incidem sobre o preço, não sobre o custo. Somar direto subestima o valor — por isso a conta divide em vez de multiplicar."
+      },
+      "servico": {
+        "pergunta": "Posso usar para serviço?",
+        "resposta": "Sim. No lugar do custo do produto, informe o custo da hora multiplicado pelas horas do serviço."
+      }
+    }
+  }
+}

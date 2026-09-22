@@ -1,0 +1,26 @@
+/* preco-de-venda.css — ajustes próprios da ferramenta de preço de venda. */
+
+.preco-de-venda__dupla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-3);
+}
+
+.preco-de-venda__margem .campo__rotulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--espaco-3);
+}
+
+.preco-de-venda__margem-valor {
+  font-family: var(--fonte-display);
+  font-size: 20px;
+  color: var(--cor-destaque);
+}
+
+@media (max-width: 767px) {
+  .preco-de-venda__dupla {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

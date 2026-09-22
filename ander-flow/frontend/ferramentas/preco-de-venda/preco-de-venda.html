@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <title data-texto="preco-de-venda.titulo_pagina"></title>
+  <meta name="description" data-texto-content="preco-de-venda.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/compartilhado/compartilhado-ferramenta.css">
+  <link rel="stylesheet" href="/estatico/ferramentas/preco-de-venda/preco-de-venda.css">
+  <script type="module" src="/estatico/ferramentas/preco-de-venda/preco-de-venda.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo ferramenta">
+    <nav class="migalhas" data-texto-aria-label="compartilhado.ferramenta.migalhas_rotulo">
+      <ol>
+        <li><a href="/ferramentas" data-texto="compartilhado.cabecalho.ferramentas"></a></li>
+        <li><a href="/ferramentas?categoria=dinheiro" data-texto="compartilhado.categorias.dinheiro.nome"></a></li>
+        <li><span aria-current="page" data-texto="preco-de-venda.titulo"></span></li>
+      </ol>
+    </nav>
+
+    <header class="ferramenta__cabecalho">
+      <div class="ferramenta__titulo-linha">
+        <h1 class="titulo-display titulo-display--2" data-texto="preco-de-venda.titulo"></h1>
+        <button type="button" class="botao-icone" data-acao="favoritar">
+          <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-estrela"></use></svg>
+        </button>
+      </div>
+      <p class="texto-2 ferramenta__resumo" data-texto="preco-de-venda.resumo"></p>
+      <p class="nota-local">
+        <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-cadeado"></use></svg>
+        <span data-texto="compartilhado.ferramenta.processamento_local"></span>
+      </p>
+    </header>
+
+    <div class="ferramenta__corpo">
+      <form class="ferramenta__formulario" novalidate>
+        <fieldset class="ferramenta__grupo">
+          <legend class="ferramenta__grupo-titulo" data-texto="preco-de-venda.grupos.gastos"></legend>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="preco-de-venda.campos.custo"></span>
+            <span class="campo__controle">
+              <span class="campo__prefixo" aria-hidden="true">R$</span>
+              <input class="campo__entrada" id="campo-custo" name="custo" type="text" inputmode="decimal"
+                     autocomplete="off" data-texto-aria-label="preco-de-venda.campos.custo">
+            </span>
+            <span class="campo__erro" id="erro-custo" role="alert"></span>
+          </label>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="preco-de-venda.campos.despesa"></span>
+            <span class="campo__controle">
+              <span class="campo__prefixo" aria-hidden="true">R$</span>
+              <input class="campo__entrada" id="campo-despesa" name="despesa" type="text" inputmode="decimal"
+                     autocomplete="off" data-texto-aria-label="preco-de-venda.campos.despesa">
+            </span>
+            <span class="campo__ajuda" data-texto="preco-de-venda.campos.despesa_ajuda"></span>
+            <span class="campo__erro" id="erro-despesa" role="alert"></span>
+          </label>
+        </fieldset>
+
+        <fieldset class="ferramenta__grupo">
+          <legend class="ferramenta__grupo-titulo" data-texto="preco-de-venda.grupos.saidas"></legend>
+
+          <div class="preco-de-venda__dupla">
+            <label class="campo">
+              <span class="campo__rotulo" data-texto="preco-de-venda.campos.taxa"></span>
+              <span class="campo__controle">
+                <input class="campo__entrada" id="campo-taxa" name="taxa" type="text" inputmode="decimal"
+                       autocomplete="off" data-texto-aria-label="preco-de-venda.campos.taxa">
+                <span class="campo__sufixo" aria-hidden="true">%</span>
+              </span>
+              <span class="campo__erro" id="erro-taxa" role="alert"></span>
+            </label>
+
+            <label class="campo">
+              <span class="campo__rotulo" data-texto="preco-de-venda.campos.imposto"></span>
+              <span class="campo__controle">
+                <input class="campo__entrada" id="campo-imposto" name="imposto" type="text" inputmode="decimal"
+                       autocomplete="off" data-texto-aria-label="preco-de-venda.campos.imposto">
+                <span class="campo__sufixo" aria-hidden="true">%</span>
+              </span>
+              <span class="campo__erro" id="erro-imposto" role="alert"></span>
+            </label>
+          </div>
+
+          <div class="campo preco-de-venda__margem">
+            <label class="campo__rotulo" for="campo-margem">
+              <span data-texto="preco-de-venda.campos.margem"></span>
+              <output class="preco-de-venda__margem-valor" for="campo-margem"></output>
+            </label>
+            <input class="deslizante" id="campo-margem" name="margem" type="range" min="0" max="95" step="1" value="30">
+            <span class="campo__ajuda" data-texto="preco-de-venda.campos.margem_ajuda"></span>
+            <span class="campo__erro" id="erro-margem" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <div class="ferramenta__acoes">
+          <button type="submit" class="botao botao--primario" data-texto="preco-de-venda.acoes.calcular"></button>
+          <button type="button" class="botao botao--fantasma" data-acao="exemplo" data-texto="compartilhado.ferramenta.preencher_exemplo"></button>
+        </div>
+      </form>
+
+      <div class="ferramenta__resultado">
+        <div class="resultado superficie--tinta">
+          <p class="resultado__rotulo" data-texto="preco-de-venda.resultado.titulo"></p>
+          <p class="resultado__valor" id="resultado-preco" aria-live="polite">—</p>
+          <div class="resultado__linhas">
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="preco-de-venda.resultado.custo_total"></span>
+              <span class="resultado__linha-valor" id="resultado-custo">—</span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="preco-de-venda.resultado.taxa_imposto"></span>
+              <span class="resultado__linha-valor" id="resultado-taxa">—</span>
+            </div>
+            <div class="resultado__linha resultado__linha--destaque">
+              <span class="resultado__linha-rotulo" data-texto="preco-de-venda.resultado.sobra"></span>
+              <span class="resultado__linha-valor" id="resultado-sobra">—</span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="preco-de-venda.resultado.minimo"></span>
+              <span class="resultado__linha-valor" id="resultado-minimo">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ferramenta__exportar">
+          <button type="button" class="botao botao--secundario botao--pequeno" data-acao="copiar">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-copiar"></use></svg>
+            <span data-texto="compartilhado.acoes.copiar"></span>
+          </button>
+          <button type="button" class="botao botao--secundario botao--pequeno" data-acao="pdf">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-pdf"></use></svg>
+            <span data-texto="compartilhado.acoes.pdf"></span>
+          </button>
+          <button type="button" class="botao botao--secundario botao--pequeno" data-acao="xlsx">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-planilha"></use></svg>
+            <span data-texto="compartilhado.acoes.xlsx"></span>
+            <span class="etiqueta etiqueta--plus" data-texto="compartilhado.ferramenta.plano_plus"></span>
+          </button>
+          <button type="button" class="botao botao--secundario botao--pequeno so-sessao" data-acao="salvar-trabalho">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-salvos"></use></svg>
+            <span data-texto="compartilhado.ferramenta.salvar_trabalho"></span>
+          </button>
+        </div>
+        <p class="texto-pequeno texto-2" data-texto="preco-de-venda.resultado.nota_plus"></p>
+
+        <div class="bloqueio-plano" hidden></div>
+
+        <div class="conta-formula">
+          <p class="sobretitulo" data-texto="compartilhado.ferramenta.a_conta"></p>
+          <code id="conta-formula-texto"></code>
+          <p class="texto-pequeno texto-2" data-texto="preco-de-venda.conta.nota"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ferramenta__ajuda">
+      <section>
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.como_usar"></h2>
+        <ol class="passos">
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true">1</span><p data-texto="preco-de-venda.como_usar.um"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true">2</span><p data-texto="preco-de-venda.como_usar.dois"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true">3</span><p data-texto="preco-de-venda.como_usar.tres"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true">4</span><p data-texto="preco-de-venda.como_usar.quatro"></p></li>
+        </ol>
+      </section>
+
+      <section class="perguntas">
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.perguntas"></h2>
+        <details>
+          <summary data-texto="preco-de-venda.perguntas.margem_markup.pergunta"></summary>
+          <p data-texto="preco-de-venda.perguntas.margem_markup.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="preco-de-venda.perguntas.minimo.pergunta"></summary>
+          <p data-texto="preco-de-venda.perguntas.minimo.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="preco-de-venda.perguntas.servico.pergunta"></summary>
+          <p data-texto="preco-de-venda.perguntas.servico.resposta"></p>
+        </details>
+      </section>
+
+      <aside class="ferramenta__lateral">
+        <h2 class="sobretitulo" data-texto="compartilhado.ferramenta.relacionadas"></h2>
+        <ul class="relacionadas"></ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>
