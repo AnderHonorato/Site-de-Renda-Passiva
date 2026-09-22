@@ -193,7 +193,7 @@ export function fecharBanco()
 Formato de validação: `400 { "erro": "dados_invalidos", "campos": { "email": "email_invalido" } }`.
 
 ### 8.3 Aplicativo — `servidor/servidor.js`
-`export async function criarAplicativo({ configuracao, banco })` → `{ app, contexto }` (usado nos testes com banco `:memory:` migrado).
+`export async function criarAplicativo({ configuracao, banco, modulos?, controle? })` → `{ app, contexto }` (usado nos testes com banco `:memory:` migrado).
 Ordem dos middlewares: `trust proxy` conforme config → `aplicarCabecalhos` → `compression` → leitor de cookies (`req.cookies`, próprio, simples) → `express.json({ limit: '100kb' })` (corpo maior → 413 `corpo_grande_demais`) → estáticos `/estatico` → limitador `paginas` (não-API) / `api` (`/api/*`) → `middlewareCsrf` → `sessao.middleware` → rotas descobertas (ordem alfabética) → páginas do montador → 404 → tratador de erros.
 Execução direta (`node servidor/servidor.js`): carrega config, migra o banco, escolhe porta (§8.5), escuta com `server.headersTimeout = 15000`, `server.requestTimeout = 30000`, `maxHeaderSize` 16 KB, imprime `Ander Flow rodando em http://localhost:4871 (a 4870 estava ocupada)`, grava `.execucao/servidor.json` e trata SIGINT/SIGTERM com desligamento limpo (para de aceitar, fecha conexões em até 5 s, fecha o banco, apaga os arquivos de execução).
 
@@ -280,6 +280,7 @@ export function criarLimitador({ banco, regras, agora = () => Date.now(), regist
       desbloquear(grupo, chave) }
 export function chaveIp(req)   // req.ip normalizado (IPv4 mapeado em IPv6 → IPv4)
 ```
+**Chave composta** (entrar_falhas, recuperar_senha): `` `${chaveIp(req)}|${email.trim().toLowerCase()}` ``.
 Log de bloqueio: `{ evento: 'bloqueio_trafego', grupo, chave_resumo (IP com último octeto mascarado / e-mail só com hash curto), segundos }`.
 
 ### 9.3 CSRF — `seguranca-csrf.js`
