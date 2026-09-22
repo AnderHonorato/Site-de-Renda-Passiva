@@ -1,0 +1,38 @@
+{
+  "name": "ander-flow",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Ander Flow — portal de ferramentas que rodam no navegador.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "desenvolver": "node scripts/scripts-iniciar.js --desenvolver",
+    "iniciar": "node scripts/scripts-iniciar.js",
+    "parar": "node scripts/scripts-parar.js",
+    "banco:migrar": "node banco/banco-migrador.js",
+    "banco:semear": "node banco/sementes/banco-sementes.js",
+    "admin:criar": "node scripts/scripts-admin-criar.js",
+    "bibliotecas:copiar": "node scripts/scripts-copiar-bibliotecas.js",
+    "verificar": "node scripts/scripts-verificar-nomes.js && node scripts/scripts-verificar-idiomas.js && node scripts/scripts-verificar-textos-fixos.js",
+    "verificar:propriedade": "node scripts/scripts-verificar-propriedade.js",
+    "testar": "node --test --test-concurrency=1 \"testes/testes-unidade/**/*.test.js\" \"testes/testes-integracao/**/*.test.js\"",
+    "testar:visual": "node --test --test-concurrency=1 \"testes/testes-visuais/**/*.test.js\"",
+    "postinstall": "node scripts/scripts-copiar-bibliotecas.js"
+  },
+  "dependencies": {
+    "@fontsource-variable/newsreader": "^5.3.0",
+    "@fontsource/instrument-sans": "^5.3.0",
+    "better-sqlite3": "^13.0.3",
+    "compression": "^1.8.2",
+    "express": "^5.2.1",
+    "helmet": "^8.3.0",
+    "pdf-lib": "^1.17.1",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "compartilhado": {
+    "marca": {
+      "nome": "Ander Flow",
+      "monograma": "AF",
+      "ir_para_inicio": "Ander Flow — ir para o início"
+    },
+    "pular_para_conteudo": "Pular para o conteúdo",
+    "cabecalho": {
+      "navegacao_rotulo": "Navegação principal",
+      "ferramentas": "Ferramentas",
+      "trabalho": "Trabalho",
+      "salvos": "Salvos",
+      "planos": "Planos",
+      "entrar": "Entrar",
+      "criar_conta": "Criar conta",
+      "conta": "Conta",
+      "avisos": "Avisos",
+      "admin": "Admin",
+      "sair": "Sair",
+      "menu_conta_rotulo": "Menu da conta de {usuario_nome}",
+      "avisos_nao_lidos": "{quantidade} avisos não lidos"
+    },
+    "tema": {
+      "alternar": "Alternar tema",
+      "claro": "Tema claro",
+      "escuro": "Tema escuro",
+      "usar_claro": "Usar tema claro",
+      "usar_escuro": "Usar tema escuro"
+    },
+    "idioma": {
+      "seletor_rotulo": "Idioma",
+      "pt-BR": "Português (Brasil)",
+      "en": "English",
+      "sigla_pt-BR": "PT",
+      "sigla_en": "EN"
+    },
+    "navegacao_celular": {
+      "rotulo": "Navegação inferior",
+      "inicio": "Início",
+      "ferramentas": "Ferramentas",
+      "salvos": "Salvos",
+      "conta": "Conta"
+    },
+    "rodape": {
+      "resumo": "Ferramentas que resolvem uma tarefa de cada vez. O cálculo roda no seu navegador.",
+      "grupo_produto": "Produto",
+      "grupo_conta": "Conta",
+      "grupo_legal": "Transparência",
+      "ferramentas": "Todas as ferramentas",
+      "planos": "Planos",
+      "entrar": "Entrar",
+      "criar_conta": "Criar conta",
+      "privacidade": "Privacidade",
+      "termos": "Termos de uso",
+      "cookies": "Cookies e armazenamento local",
+      "direitos": "© {ano} Ander Flow. Feito por Anderson."
+    },
+    "acoes": {
+      "salvar": "Salvar",
+      "cancelar": "Cancelar",
+      "confirmar": "Confirmar",
+      "voltar": "Voltar",
+      "continuar": "Continuar",
+      "fechar": "Fechar",
+      "copiar": "Copiar",
+      "copiado": "Copiado",
+      "baixar": "Baixar",
+      "pdf": "PDF",
+      "xlsx": "XLSX",
+      "csv": "CSV",
+      "editar": "Editar",
+      "excluir": "Excluir",
+      "remover": "Remover",
+      "tentar_de_novo": "Tentar de novo",
+      "ver_mais": "Ver mais",
+      "ir_para_catalogo": "Ir para o catálogo",
+      "limpar": "Limpar",
+      "enviar": "Enviar",
+      "agora_nao": "Agora não",
+      "entendi": "Entendi",
+      "subir": "Mover para cima",
+      "descer": "Mover para baixo"
+    },
+    "estados": {
+      "carregando": "Carregando…",
+      "processando": "Processando",
+      "vazio_titulo": "Nada por aqui ainda",
+      "erro_titulo": "Algo não saiu como esperado",
+      "erro_texto": "Não foi possível carregar agora. Confira a conexão e tente de novo.",
+      "sem_resultados": "Nenhuma ferramenta encontrada para \"{consulta}\".",
+      "sem_resultados_dica": "Tente descrever a tarefa com outras palavras."
+    },
+    "busca": {
+      "rotulo": "Buscar ferramenta",
+      "placeholder": "Escreva o que você precisa resolver",
+      "atalho": "/",
+      "atalho_rotulo": "Atalho: tecla barra",
+      "resultados": "{quantidade} resultados"
+    },
+    "categorias": {
+      "dinheiro": { "nome": "Dinheiro e preços", "resumo": "Preço, margem, juros, parcelas e divisão de contas." },
+      "vendas": { "nome": "Vendas e propostas", "resumo": "Orçamento, proposta, comissão e acompanhamento." },
+      "calculo": { "nome": "Cálculo e conversão", "resumo": "Porcentagem, regra de três e unidades de medida." },
+      "datas": { "nome": "Datas e horas", "resumo": "Diferenças, prazos, dias úteis e carga horária." },
+      "texto": { "nome": "Texto", "resumo": "Contar, limpar, padronizar, comparar e transformar." },
+      "documentos": { "nome": "Documentos e PDF", "resumo": "Gerar, converter, organizar e assinar documentos." },
+      "planilhas": { "nome": "Planilhas e dados", "resumo": "Limpar, comparar, converter e analisar tabelas." },
+      "imagens": { "nome": "Imagens", "resumo": "Redimensionar, converter, comprimir e inspecionar." },
+      "desenvolvimento": { "nome": "Desenvolvimento", "resumo": "JSON, códigos, conversores e utilitários técnicos." },
+      "seguranca": { "nome": "Senhas e segurança", "resumo": "Gerar segredos, validar documentos e conferir dados." },
+      "trabalho": { "nome": "RH e trabalho", "resumo": "Jornada, férias, currículo, escala e avaliação." },
+      "operacoes": { "nome": "Estoque e logística", "resumo": "Estoque, reposição, frete, cubagem e conferência." },
+      "marketing": { "nome": "Marketing", "resumo": "Campanha, métricas, UTM e materiais de conteúdo." },
+      "produtividade": { "nome": "Produtividade", "resumo": "Tarefas, reuniões, planejamento e acompanhamento." },
+      "estudos": { "nome": "Estudos", "resumo": "Atividades, treino, revisão e material para imprimir." },
+      "oficio": { "nome": "Ofício, casa e obra", "resumo": "Produção artesanal, reforma, festas e embalagens." }
+    },
+    "ferramenta": {
+      "estado_pronta": "Pronta",
+      "estado_planejada": "Planejada",
+      "plano_gratis": "Grátis",
+      "plano_plus": "Plus",
+      "processamento_local": "Cálculo no seu navegador. Nada é enviado para servidor.",
+      "arquivo_local": "O arquivo é lido no seu navegador e não sai do aparelho.",
+      "como_usar": "Como usar",
+      "perguntas": "Perguntas que aparecem",
+      "relacionadas": "Quem usa esta, usa também",
+      "a_conta": "A conta",
+      "favoritar": "Salvar ferramenta",
+      "desfavoritar": "Tirar dos salvos",
+      "favoritada": "Ferramenta salva",
+      "salvar_trabalho": "Salvar trabalho",
+      "trabalho_salvo": "Trabalho salvo na sua conta",
+      "entrar_para_salvar": "Entre na conta para guardar este trabalho",
+      "preencher_exemplo": "Preencher com um exemplo",
+      "planejada_aviso": "Esta ferramenta está planejada e ainda não pode ser usada.",
+      "migalhas_rotulo": "Você está em"
+    },
+    "plano": {
+      "recurso_plus": "Recurso do Plus",
+      "ver_plus": "Ver o Plus",
+      "preco_mensal": "{valor}/mês",
+      "sessao_necessaria": "Entre na conta para usar este recurso.",
+      "limite_atingido": "Você chegou ao limite de {limite} no plano grátis."
+    },
+    "primeira_visita": {
+      "titulo": "Privacidade",
+      "texto": "Usamos só o armazenamento local essencial para lembrar tema, idioma e o que você salva. Não há rastreador nem anúncio de terceiros.",
+      "saiba_mais": "Cookies e armazenamento local",
+      "ok": "Entendi"
+    },
+    "popup": {
+      "rotulo": "Novidade",
+      "fechar": "Fechar aviso"
+    },
+    "confirmacao": {
+      "titulo": "Tem certeza?",
+      "texto_excluir": "Esta ação não pode ser desfeita."
+    },
+    "tempo": {
+      "agora": "agora",
+      "minutos": "há {quantidade} min",
+      "horas": "há {quantidade} h",
+      "dias": "há {quantidade} dias"
+    },
+    "erros": {
+      "dados_invalidos": "Confira os campos destacados.",
+      "campo_obrigatorio": "Preencha este campo.",
+      "formato_invalido": "O formato não está certo.",
+      "numero_invalido": "Informe um número válido.",
+      "valor_fora_do_limite": "O valor está fora do permitido.",
+      "texto_longo_demais": "O texto passou do tamanho permitido.",
+      "email_invalido": "Informe um e-mail válido.",
+      "email_em_uso": "Já existe uma conta com este e-mail.",
+      "senha_fraca": "A senha precisa ter pelo menos 10 caracteres.",
+      "credenciais_invalidas": "E-mail ou senha não conferem.",
+      "senha_atual_incorreta": "A senha atual não confere.",
+      "termos_nao_aceitos": "Para criar a conta é preciso aceitar os termos.",
+      "token_invalido": "Este link expirou ou já foi usado. Peça um novo.",
+      "conta_suspensa": "Esta conta está suspensa. Fale com o administrador.",
+      "sessao_necessaria": "Entre na conta para continuar.",
+      "acesso_negado": "Você não tem permissão para isso.",
+      "plano_insuficiente": "Este recurso é do Plus.",
+      "limite_do_plano": "Você chegou ao limite do seu plano ({limite}).",
+      "csrf_invalido": "A página ficou aberta por muito tempo. Recarregue e tente de novo.",
+      "muitas_tentativas": "Muitas tentativas. Tente de novo em {minutos} minutos.",
+      "nao_encontrado": "Não encontramos o que você procurou.",
+      "ferramenta_inexistente": "Essa ferramenta não existe.",
+      "corpo_grande_demais": "O envio passou do tamanho permitido.",
+      "acao_nao_permitida": "Esta ação não é permitida.",
+      "erro_interno": "Algo deu errado do nosso lado. Tente de novo em instantes.",
+      "sem_conexao": "Sem conexão com o servidor. Confira a internet e tente de novo."
+    }
+  }
+}

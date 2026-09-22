@@ -1,0 +1,21 @@
+# Decisões
+
+Registro das decisões do orquestrador, com motivo. Mais recente embaixo.
+
+## Onda 0
+
+1. **Projeto novo em `ander-flow/`, dentro do repositório existente.** O `portal/` antigo é estático, sem servidor, e foi recusado visualmente; continua intacto como fonte de lógica já testada (catálogo das 150 ferramentas, cálculos). Branch de trabalho: `ander-flow/v1`, criado a partir de `portal/ferramentas-v2`.
+2. **Hierarquia de fontes:** Claude Design (três `.dc.html`) > quadro de marca do GPT (PNGs) > prompt mestre V2. Terracota `#A05134` (não `#AD6047`).
+3. **Exemplo numérico do design está errado.** O arquivo 1 mostra "Preço sugerido R$ 74,35" para custo 44,50, margem 30%, taxa 4,2% e imposto 6%. A própria fórmula exibida (`44,50 ÷ (1 − 0,30 − 0,042 − 0,06)`) dá **R$ 74,41**; taxa e imposto R$ 7,59 (design: 7,55); sobra R$ 22,32 (design: 22,30); mínimo R$ 49,55 (design: 49,66). Seguimos a fórmula; o teste usa os valores corretos.
+4. **`better-sqlite3` 13.0.3 instalou e funcionou no Windows (Node 22.14, SQLite 3.53).** Não foi preciso cair para `node:sqlite`.
+5. **SheetJS 0.20.3 instalado da CDN oficial** (`https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz`), não do pacote `xlsx` do npm (0.18.5, desatualizado e vulnerável). Versão fixada no `package.json`. Conferido: nem SheetJS nem pdf-lib usam `eval`/`new Function` (compatíveis com a CSP estrita).
+6. **Bibliotecas e fontes são copiadas do `node_modules`** para `frontend/compartilhado/{bibliotecas,fontes}` pelo `postinstall` (`scripts-copiar-bibliotecas.js`) e ficam fora do git. Instalação limpa refaz a cópia.
+7. **Testes visuais usam o Edge já instalado no Windows** (`channel: 'msedge'`), configurável por `NAVEGADOR_TESTES`. O Playwright 1.63 pede o Chromium 1243 e o cache local tem o 1234; usar o Edge evita baixar ~150 MB.
+8. **Bloqueio de plano real no servidor, com limite honesto.** Como o processamento é no navegador, o que o servidor pode garantir é: (a) cotas guardadas na conta — favoritos e trabalhos (grátis 10 e 3; Plus 500) — recusadas pela API; (b) código dos recursos Plus (lote de 100 PDFs, XLSX de cenários) servido só em `/plus/<slug>/<recurso>` para sessão Plus. Quem reescrever o JavaScript no próprio navegador consegue contornar (b); isso consta no README. Pagamento não integrado: o admin muda o plano.
+9. **Plano Equipe do design fica fora** (escopo pede Grátis e Plus). Chat flutuante "Ajuda a encontrar" e anúncios também ficam fora.
+10. **Sem medição nem anúncio → aviso de primeira visita só informa** (armazenamento local essencial) com "Entendi" e link para Cookies, em vez de "aceitar/recusar opcionais" do design, que não teria o que aceitar.
+11. **E-mail sem provedor integrado:** recuperação de senha grava o e-mail traduzido em `.execucao/emails/`. Integração com SMTP fica como pendência.
+12. **Textos iniciais vão no HTML como `<script type="application/json">`** (dados, não executável; permitido pela CSP) para o `t()` do navegador funcionar sem requisição extra.
+13. **Divisão de propriedade diferente da tabela do prompt, para caber na regra de ~8 arquivos por agente:** A1 virou A1a (núcleo e porta) e A1b (montador, idioma, catálogo); A5 (segurança) sobe para a Onda 1 porque tudo depende dele; A12 (manifestos) sobe para a Onda 1 porque é independente; A3 é dono do HTML das partes compartilhadas (cabeçalho, rodapé, navegação) além do CSS; A4 é dono de todo JS compartilhado. O dicionário `compartilhado-idioma-pt-br.json`, o esquema SQL, `servidor-erros.js`, `servidor-planos.json` e as categorias foram escritos pelo orquestrador para não terem vários donos.
+14. **Cada agente trabalha num worktree git próprio**, para a verificação de propriedade comparar só o que ele mexeu. O orquestrador confere e junta os branches.
+15. **Catálogo planejado vem do catálogo antigo** (`docs/lista-ferramentas-origem.json`, 150 ferramentas exportadas de `portal/dados/catálogo/`). Com a nova `margem-de-contribuicao`, o total calculado passa a ser 151 — o número na tela sai dos manifestos.
