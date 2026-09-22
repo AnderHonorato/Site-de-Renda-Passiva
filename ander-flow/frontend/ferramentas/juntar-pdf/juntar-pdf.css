@@ -1,0 +1,49 @@
+/* juntar-pdf.css — área de soltar arquivos e lista ordenável. */
+
+.juntar-pdf__corpo .ferramenta__formulario {
+  gap: var(--espaco-4);
+}
+
+.lista-arquivos__item {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  min-height: var(--alvo-toque);
+  padding: var(--espaco-2) var(--espaco-3);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+}
+
+.lista-arquivos__posicao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--cor-recuo);
+  color: var(--cor-texto-2);
+  font-size: 12px;
+  flex: none;
+}
+
+.lista-arquivos__nome {
+  flex: 1;
+  overflow-wrap: anywhere;
+  font-weight: 500;
+}
+
+.lista-arquivos__acoes {
+  display: flex;
+  gap: var(--espaco-1);
+  flex: none;
+}
+
+.juntar-pdf__progresso .progresso {
+  width: 100%;
+}
+
+.juntar-pdf__resumo .botao--largo {
+  margin-top: var(--espaco-3);
+}

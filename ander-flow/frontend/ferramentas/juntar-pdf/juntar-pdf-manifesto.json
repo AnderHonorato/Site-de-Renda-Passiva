@@ -1,0 +1,27 @@
+{
+  "slug": "juntar-pdf",
+  "estado": "pronta",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pdf",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Juntar PDF",
+    "en": "Merge PDF"
+  },
+  "descricao": {
+    "pt-BR": "Junta vários arquivos PDF em um só, na ordem escolhida.",
+    "en": "Merges several PDF files into one, in the order you choose."
+  },
+  "intencoes": {
+    "pt-BR": ["juntar vários pdfs em um só", "unir documentos em pdf", "montar um pdf único"],
+    "en": ["merge several pdfs into one", "combine pdf documents", "build a single pdf"]
+  },
+  "etiquetas": {
+    "pt-BR": ["juntar pdf", "unir pdf", "documentos"],
+    "en": ["merge pdf", "combine pdf", "documents"]
+  },
+  "relacionadas": ["dividir-pdf", "comprimir-pdf"],
+  "recursos_plus": ["lote"]
+}

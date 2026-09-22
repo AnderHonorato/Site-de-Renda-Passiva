@@ -184,9 +184,27 @@ export async function carregarRecursoPlus(recurso, slug) {
   }
 }
 
+/** Cria as partes do bloqueio quando a página traz só a caixa vazia. */
+function montarEstruturaDoBloqueio(elemento) {
+  const partes = [
+    ['p', 'bloqueio-plano__titulo'],
+    ['p', 'bloqueio-plano__texto'],
+    ['p', 'bloqueio-plano__preco'],
+    ['a', 'bloqueio-plano__acao botao botao--secundario botao--pequeno'],
+  ];
+  for (const [etiqueta, classe] of partes) {
+    const seletor = `.${classe.split(' ')[0]}`;
+    if (elemento.querySelector(seletor)) continue;
+    const parte = document.createElement(etiqueta);
+    parte.className = classe;
+    elemento.append(parte);
+  }
+}
+
 /** Preenche `.bloqueio-plano` com o preço do Plus vindo de `/api/planos`. */
 export async function mostrarBloqueioPlano(elemento, { titulo, texto } = {}) {
   if (!elemento) return;
+  montarEstruturaDoBloqueio(elemento);
   const elementoTitulo = elemento.querySelector('.bloqueio-plano__titulo');
   const elementoTexto = elemento.querySelector('.bloqueio-plano__texto');
   const elementoPreco = elemento.querySelector('.bloqueio-plano__preco');
