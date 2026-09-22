@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/planos">
+  <meta name="af-acesso" content="publico">
+  <title data-texto="planos.titulo_pagina"></title>
+  <meta name="description" data-texto-content="planos.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/planos/planos.css">
+  <script type="module" src="/estatico/paginas/planos/planos.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo planos">
+    <header class="planos__cabecalho">
+      <h1 class="titulo-display titulo-display--2" data-texto="planos.hero.titulo"></h1>
+      <p class="texto-2 planos__resumo" data-texto="planos.hero.resumo"></p>
+    </header>
+
+    <div class="planos__grade">
+      <section class="superficie planos__cartao">
+        <div class="planos__cartao-cabecalho">
+          <span class="planos__cartao-nome" data-texto="planos.gratis.nome"></span>
+          <p class="planos__cartao-preco">
+            <span class="planos__cartao-preco-valor" data-texto="planos.gratis.preco"></span>
+            <span class="texto-pequeno planos__cartao-preco-detalhe" data-texto="planos.gratis.preco_detalhe"></span>
+          </p>
+          <p class="texto-2 planos__cartao-descricao" data-texto="planos.gratis.descricao"></p>
+        </div>
+
+        <ul class="planos__recursos">
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.gratis.recursos.ferramentas"></span>
+          </li>
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.gratis.recursos.uso"></span>
+          </li>
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.gratis.recursos.exportar"></span>
+          </li>
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.gratis.recursos.lote"></span>
+          </li>
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.gratis.recursos.favoritos"></span>
+          </li>
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.gratis.recursos.trabalhos"></span>
+          </li>
+        </ul>
+
+        <a class="botao botao--secundario botao--largo planos__cartao-acao" href="/ferramentas" data-texto="planos.gratis.acao"></a>
+      </section>
+
+      <section class="superficie--tinta planos__cartao planos__cartao--plus">
+        <span class="etiqueta planos__destaque" data-texto="planos.plus.etiqueta"></span>
+
+        <div class="planos__cartao-cabecalho">
+          <span class="planos__cartao-nome" data-texto="planos.plus.nome"></span>
+          <p class="planos__cartao-preco">
+            <span class="planos__cartao-preco-valor" data-texto="planos.plus.preco_mensal"></span>
+            <span class="texto-pequeno planos__cartao-preco-detalhe" data-texto="planos.plus.preco_mensal_detalhe"></span>
+          </p>
+          <p class="texto-pequeno planos__cartao-preco-anual" data-texto="planos.plus.preco_anual"></p>
+          <p class="texto-2 planos__cartao-descricao" data-texto="planos.plus.descricao"></p>
+        </div>
+
+        <ul class="planos__recursos">
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.plus.recursos.tudo"></span>
+          </li>
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.plus.recursos.lote"></span>
+          </li>
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.plus.recursos.marca"></span>
+          </li>
+          <li class="planos__recurso">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg>
+            <span data-texto="planos.plus.recursos.historico"></span>
+          </li>
+        </ul>
+
+        <button type="button" class="botao botao--primario botao--largo planos__cartao-acao" data-acao="assinar-plus" data-texto="planos.plus.acao"></button>
+        <p class="texto-pequeno planos__cartao-nota" data-texto="planos.plus.acao_detalhe"></p>
+      </section>
+    </div>
+
+    <div class="planos__nota-local">
+      <svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-cadeado"></use></svg>
+      <p data-texto="planos.nota_local.texto"></p>
+    </div>
+
+    <section class="planos__perguntas">
+      <h2 class="sobretitulo" data-texto="planos.perguntas.titulo"></h2>
+      <div class="planos__lista-perguntas">
+        <details class="planos__pergunta">
+          <summary data-texto="planos.perguntas.pagamento.pergunta"></summary>
+          <p class="texto-2" data-texto="planos.perguntas.pagamento.resposta"></p>
+        </details>
+        <details class="planos__pergunta">
+          <summary data-texto="planos.perguntas.liberacao.pergunta"></summary>
+          <p class="texto-2" data-texto="planos.perguntas.liberacao.resposta"></p>
+        </details>
+        <details class="planos__pergunta">
+          <summary data-texto="planos.perguntas.cancelar.pergunta"></summary>
+          <p class="texto-2" data-texto="planos.perguntas.cancelar.resposta"></p>
+        </details>
+        <details class="planos__pergunta">
+          <summary data-texto="planos.perguntas.gratis_para_sempre.pergunta"></summary>
+          <p class="texto-2" data-texto="planos.perguntas.gratis_para_sempre.resposta"></p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>
