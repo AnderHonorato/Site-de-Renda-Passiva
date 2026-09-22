@@ -1,0 +1,51 @@
+/* compartilhado-tokens.css — variáveis sem cor: espaço, raio, tipografia, alvo de toque.
+   Cor literal fica só aqui (se precisar de um tom invariável entre temas) e em
+   compartilhado-tema-claro.css / compartilhado-tema-escuro.css — ver §1 e §6.1 de docs/contratos.md. */
+
+:root {
+  /* Espaço */
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-5: 24px;
+  --espaco-6: 32px;
+  --espaco-7: 48px;
+  --espaco-8: 64px;
+  --espaco-9: 96px;
+
+  /* Raios — só três */
+  --raio-etiqueta: 6px;
+  --raio-controle: 10px;
+  --raio-superficie: 14px;
+
+  /* Tipografia */
+  --fonte-interface: "Instrument Sans", system-ui, sans-serif;
+  --fonte-display: "Newsreader", Georgia, serif;
+  --texto-corpo: 15.5px;
+  --texto-corpo-altura: 1.5;
+  --texto-pequeno: 13.5px;
+  --texto-apoio: 13px;
+  --texto-etiqueta: 12px;
+
+  --texto-display-1: 56px;
+  --texto-display-2: 42px;
+  --texto-display-3: 34px;
+  --texto-display-4: 28px;
+
+  /* Alvo de toque */
+  --alvo-toque: 44px;
+
+  /* Duração de transição — respeitada só quando prefers-reduced-motion não pede "reduce" */
+  --duracao-rapida: 120ms;
+  --duracao-normal: 180ms;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --texto-display-1: 34px;
+    --texto-display-2: 28px;
+    --texto-display-3: 24px;
+    --texto-display-4: 22px;
+  }
+}
