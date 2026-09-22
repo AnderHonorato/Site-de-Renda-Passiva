@@ -1,0 +1,57 @@
+{
+  "conta": {
+    "titulo_pagina": "Minha conta — Ander Flow",
+    "descricao_pagina": "Veja e altere os dados, preferências, plano e segurança da sua conta Ander Flow.",
+    "titulo": "Minha conta",
+    "perfil": {
+      "titulo": "Perfil",
+      "nome": "Nome",
+      "email": "E-mail",
+      "salvar": "Salvar nome",
+      "salvo": "Nome atualizado"
+    },
+    "preferencias": {
+      "titulo": "Preferências",
+      "idioma": "Idioma",
+      "tema": "Tema",
+      "tema_sistema": "Usar do sistema",
+      "tema_claro": "Claro",
+      "tema_escuro": "Escuro"
+    },
+    "plano": {
+      "titulo": "Plano e uso",
+      "favoritos": "Favoritos",
+      "trabalhos": "Trabalhos salvos",
+      "de_limite": "{usado} de {limite}",
+      "ver_planos": "Ver os planos"
+    },
+    "senha": {
+      "titulo": "Trocar senha",
+      "atual": "Senha atual",
+      "nova": "Nova senha",
+      "confirmar": "Confirmar nova senha",
+      "enviar": "Trocar senha",
+      "enviando": "Trocando…",
+      "sucesso": "Senha trocada. As outras sessões foram encerradas."
+    },
+    "dados": {
+      "titulo": "Meus dados",
+      "legenda": "Baixe uma cópia de tudo que guardamos sobre a sua conta.",
+      "exportar": "Exportar meus dados"
+    },
+    "excluir": {
+      "titulo": "Excluir conta",
+      "legenda": "Apaga a conta e todos os dados associados. Não pode ser desfeito.",
+      "abrir": "Excluir minha conta",
+      "campo_senha": "Confirme sua senha",
+      "confirmar": "Excluir conta",
+      "cancelar": "Cancelar",
+      "titulo_confirmacao": "Excluir sua conta?",
+      "texto_confirmacao": "Isso apaga sua conta e todos os dados associados para sempre. Não pode ser desfeito.",
+      "botao_confirmacao": "Excluir para sempre"
+    },
+    "erros": {
+      "senha_nao_confere": "As senhas não são iguais."
+    }
+  }
+}
