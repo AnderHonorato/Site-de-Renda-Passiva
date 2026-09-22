@@ -1,0 +1,27 @@
+<section class="principal__abertura">
+  <h1 class="titulo-display titulo-display--1" data-texto="principal.busca.titulo"></h1>
+  <p class="principal__chamada texto-2" data-texto="principal.busca.chamada"></p>
+
+  <form class="principal__forma-busca" action="/ferramentas" method="get" role="search">
+    <label class="visualmente-oculto" for="principal-busca" data-texto="compartilhado.busca.rotulo"></label>
+    <div class="busca-intencao">
+      <svg class="icone busca-intencao__icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-busca"></use></svg>
+      <input class="busca-intencao__entrada" id="principal-busca" name="busca" type="search" autocomplete="off"
+             role="combobox" aria-expanded="false" aria-controls="principal-resultados" aria-autocomplete="list"
+             data-texto-placeholder="compartilhado.busca.placeholder">
+      <span class="busca-intencao__atalho" aria-hidden="true">/</span>
+    </div>
+    <button type="submit" class="visualmente-oculto" data-texto="principal.busca.enviar"></button>
+  </form>
+
+  <div class="principal__resultados superficie" id="principal-resultados" role="listbox" hidden>
+    <p class="sobretitulo principal__resultados-contagem"></p>
+    <ul class="lista-densa principal__resultados-lista"></ul>
+    <div class="principal__resultados-rodape">
+      <span class="texto-pequeno texto-2" data-texto="principal.busca.dica_teclado"></span>
+      <a class="principal__resultados-todos" href="/ferramentas" data-texto="principal.busca.ver_todos"></a>
+    </div>
+  </div>
+
+  <div class="principal__sugestoes"></div>
+</section>

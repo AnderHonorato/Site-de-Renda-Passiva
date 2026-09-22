@@ -1,0 +1,116 @@
+/* catalogo.css — catálogo em lista densa, com filtros à esquerda. */
+
+.catalogo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+  padding-block: var(--espaco-6) var(--espaco-8);
+}
+
+.catalogo__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.catalogo__resumo {
+  margin: 0;
+  max-width: 62ch;
+}
+
+.catalogo__corpo {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: var(--espaco-6);
+  align-items: start;
+}
+
+.catalogo__filtros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  position: sticky;
+  top: var(--espaco-4);
+}
+
+.catalogo__filtros-titulo-2 {
+  margin-top: var(--espaco-4);
+}
+
+.catalogo__categorias {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.catalogo__categoria {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-height: 36px;
+  padding: var(--espaco-2) var(--espaco-3);
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: transparent;
+  color: var(--cor-texto-2);
+  font-size: 14.5px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.catalogo__categoria:hover {
+  background: var(--cor-recuo);
+  color: var(--cor-texto);
+}
+
+.catalogo__categoria[aria-pressed='true'] {
+  background: var(--cor-recuo);
+  color: var(--cor-destaque);
+  font-weight: 600;
+}
+
+.catalogo__categoria-total {
+  font-size: 13px;
+  color: var(--cor-texto-2);
+}
+
+.catalogo__resultado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.catalogo__barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+.catalogo__contagem {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--cor-texto-2);
+}
+
+@media (max-width: 899px) {
+  .catalogo__corpo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--espaco-4);
+  }
+
+  .catalogo__filtros {
+    position: static;
+  }
+
+  .catalogo__categorias {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--espaco-2);
+  }
+
+  .catalogo__categoria {
+    border: 1px solid var(--cor-linha);
+  }
+}

@@ -1,0 +1,58 @@
+/* erro.css — página de erro (404, 403, 429, 500). */
+
+.erro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  align-items: flex-start;
+  max-width: 62ch;
+  padding-block: var(--espaco-8);
+}
+
+.erro__codigo {
+  color: var(--cor-destaque);
+}
+
+.erro__texto {
+  margin: 0;
+  font-size: 17px;
+}
+
+.erro__busca {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-3);
+  align-items: center;
+  width: 100%;
+  margin-top: var(--espaco-2);
+}
+
+.erro__busca .busca-intencao {
+  flex: 1 1 18rem;
+}
+
+.erro__atalhos {
+  display: flex;
+  gap: var(--espaco-3);
+  align-items: center;
+  margin: 0;
+  color: var(--cor-texto-2);
+}
+
+.erro__mais-usadas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  width: 100%;
+  margin-top: var(--espaco-5);
+}
+
+@media (max-width: 767px) {
+  .erro {
+    padding-block: var(--espaco-6);
+  }
+
+  .erro__busca .botao {
+    width: 100%;
+  }
+}

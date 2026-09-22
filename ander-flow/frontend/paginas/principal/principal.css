@@ -1,0 +1,215 @@
+/* principal.css — Início: primeira dobra com busca, retomada e categorias. */
+
+.principal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-8);
+  padding-block: var(--espaco-7) var(--espaco-8);
+}
+
+.principal__dobra {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: var(--espaco-8);
+  align-items: start;
+}
+
+.principal__abertura {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+  position: relative;
+}
+
+.principal__chamada {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 17px;
+}
+
+.principal__forma-busca {
+  margin: 0;
+}
+
+.principal__resultados {
+  position: absolute;
+  top: calc(100% - 4.5rem);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4);
+}
+
+.principal__resultados-rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding-top: var(--espaco-3);
+  border-top: 1px solid var(--cor-linha);
+}
+
+.principal__sugestoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+}
+
+.principal__lateral {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.principal__retomar,
+.principal__plano {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4);
+}
+
+.principal__cabecalho-bloco {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--espaco-3);
+}
+
+.principal__retomar-lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.principal__retomar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  min-height: var(--alvo-toque);
+  padding: var(--espaco-2) var(--espaco-2);
+  border-radius: var(--raio-controle);
+  color: var(--cor-texto);
+}
+
+.principal__retomar-item:hover,
+.principal__retomar-item:focus-visible {
+  background: var(--cor-recuo);
+  color: var(--cor-destaque);
+}
+
+.principal__retomar-nome {
+  flex: 1;
+  font-weight: 500;
+}
+
+.principal__plano p {
+  margin: 0;
+}
+
+.principal__plano-link {
+  font-weight: 500;
+}
+
+.principal__categorias {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.principal__subtitulo {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.principal__catalogo-link {
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+.principal__grade-categorias {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.principal__grade-categorias .esqueleto {
+  height: 84px;
+  border-radius: var(--raio-superficie);
+}
+
+.principal__categoria {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  height: 100%;
+  padding: var(--espaco-4);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-superficie);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+}
+
+.principal__categoria:hover,
+.principal__categoria:focus-visible {
+  border-color: var(--cor-destaque);
+}
+
+.principal__categoria-icone {
+  color: var(--cor-destaque);
+  flex: none;
+}
+
+.principal__categoria-textos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  flex: 1;
+}
+
+.principal__categoria-total {
+  font-family: var(--fonte-display);
+  font-size: 18px;
+  color: var(--cor-texto-2);
+}
+
+.principal__nota-categorias {
+  margin: 0;
+}
+
+@media (max-width: 1023px) {
+  .principal__grade-categorias {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .principal {
+    gap: var(--espaco-6);
+    padding-block: var(--espaco-5) var(--espaco-7);
+  }
+
+  .principal__dobra {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--espaco-5);
+  }
+
+  .principal__resultados {
+    position: static;
+  }
+
+  .principal__grade-categorias {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -38,7 +38,8 @@ export function criarTratadorErros(contexto) {
     }
 
     if (contexto?.montador && typeof contexto.montador.renderizarErro === 'function') {
-      contexto.montador.renderizarErro(req, res, status, { codigo, ...extras });
+      // `codigo` da página é o número HTTP (contrato §3.3); o código textual vai separado.
+      contexto.montador.renderizarErro(req, res, status, { ...extras, codigo_erro: codigo });
       return;
     }
 

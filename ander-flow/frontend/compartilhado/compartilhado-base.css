@@ -142,3 +142,8 @@ hr, .divisor {
 .pular-para-conteudo:focus-visible {
   top: var(--espaco-4);
 }
+
+/* O atributo hidden vence qualquer display de componente. */
+[hidden] {
+  display: none !important;
+}

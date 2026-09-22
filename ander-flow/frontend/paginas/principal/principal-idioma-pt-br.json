@@ -1,0 +1,40 @@
+{
+  "principal": {
+    "titulo_pagina": "Ander Flow — ferramentas que resolvem a tarefa",
+    "descricao_pagina": "São {ferramentas_total} ferramentas de trabalho. O cálculo roda no seu navegador e o arquivo não sai do aparelho.",
+    "busca": {
+      "titulo": "O que você precisa resolver?",
+      "chamada": "Escreva a tarefa com suas palavras. São {ferramentas_total} ferramentas — a busca encontra pela intenção, não pelo nome técnico.",
+      "enviar": "Buscar",
+      "resolvem": "{quantidade} ferramentas resolvem isso",
+      "resolve_uma": "1 ferramenta resolve isso",
+      "dica_teclado": "Enter abre a primeira · ↑ ↓ navega",
+      "ver_todos": "Ver todas",
+      "sugestoes_titulo": "Exemplos do que dá para pedir"
+    },
+    "sugestoes": {
+      "um": "quanto preciso vender para pagar as despesas",
+      "dois": "quanto cobrar pelo meu produto",
+      "tres": "juntar vários PDFs em um só",
+      "quatro": "tirar as linhas repetidas da planilha",
+      "cinco": "contar as palavras de um texto"
+    },
+    "retomar": {
+      "titulo": "Onde você parou",
+      "limpar": "Limpar",
+      "limpo": "Histórico deste aparelho apagado",
+      "em_aberto": "em aberto"
+    },
+    "plano": {
+      "titulo": "Grátis para usar",
+      "texto": "{ferramentas_prontas} ferramentas já funcionam sem conta e sem enviar arquivo para servidor. O Plus libera lote maior, histórico na conta e exportação em planilha.",
+      "link": "Ver o que muda"
+    },
+    "categorias": {
+      "titulo": "Por onde as pessoas entram",
+      "ver_catalogo": "Catálogo completo · {ferramentas_total}",
+      "nota": "Mais {quantidade} categorias no catálogo.",
+      "contagem_rotulo": "{quantidade} ferramentas"
+    }
+  }
+}
