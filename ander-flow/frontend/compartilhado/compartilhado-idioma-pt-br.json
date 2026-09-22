@@ -238,7 +238,9 @@
       "corpo_grande_demais": "O envio passou do tamanho permitido.",
       "acao_nao_permitida": "Esta ação não é permitida.",
       "erro_interno": "Algo deu errado do nosso lado. Tente de novo em instantes.",
-      "sem_conexao": "Sem conexão com o servidor. Confira a internet e tente de novo."
+      "sem_conexao": "Sem conexão com o servidor. Confira a internet e tente de novo.",
+      "usuario_inexistente": "Esse usuário não existe mais.",
+      "aviso_inexistente": "Esse aviso não existe mais."
     },
     "simbolos": {
       "moeda": "R$",
