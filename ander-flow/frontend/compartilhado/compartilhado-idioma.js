@@ -82,7 +82,8 @@ export function t(chave, variaveis = {}) {
 export function aplicarTextos(raiz = document) {
   if (typeof document === 'undefined') return;
   const ATRIBUTOS = {
-    'data-texto': (elemento, texto) => { elemento.textContent = texto; },
+    // `**negrito**` vira <strong> como o montador faz no servidor; sem asterisco na tela.
+    'data-texto': (elemento, texto) => { aplicarTextoComNegrito(elemento, texto); },
     'data-texto-placeholder': (elemento, texto) => elemento.setAttribute('placeholder', texto),
     'data-texto-aria-label': (elemento, texto) => elemento.setAttribute('aria-label', texto),
     'data-texto-title': (elemento, texto) => elemento.setAttribute('title', texto),
@@ -121,11 +122,16 @@ export function segmentarNegrito(texto) {
   return segmentos;
 }
 
-export function textoComNegrito(elemento, chave, variaveis = {}) {
+/** Escreve o texto no elemento montando `<strong>` para cada trecho entre `**`. */
+export function aplicarTextoComNegrito(elemento, texto) {
   if (typeof document === 'undefined') return;
-  const texto = t(chave, variaveis);
+  const segmentos = segmentarNegrito(texto);
+  if (segmentos.length === 1 && !segmentos[0].negrito) {
+    elemento.textContent = texto;
+    return;
+  }
   elemento.textContent = '';
-  for (const segmento of segmentarNegrito(texto)) {
+  for (const segmento of segmentos) {
     if (segmento.negrito) {
       const forte = document.createElement('strong');
       forte.textContent = segmento.texto;
@@ -134,6 +140,10 @@ export function textoComNegrito(elemento, chave, variaveis = {}) {
       elemento.appendChild(document.createTextNode(segmento.texto));
     }
   }
+}
+
+export function textoComNegrito(elemento, chave, variaveis = {}) {
+  aplicarTextoComNegrito(elemento, t(chave, variaveis));
 }
 
 export function aoTrocarIdioma(funcao) {
