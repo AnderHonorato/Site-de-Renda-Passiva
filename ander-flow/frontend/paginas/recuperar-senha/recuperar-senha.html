@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/recuperar-senha">
+  <meta name="af-acesso" content="publico">
+  <title data-texto="recuperar-senha.titulo_pagina"></title>
+  <meta name="description" data-texto-content="recuperar-senha.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/recuperar-senha/recuperar-senha.css">
+  <script type="module" src="/estatico/paginas/recuperar-senha/recuperar-senha.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo recuperar-senha">
+    <div class="recuperar-senha__cartao superficie">
+
+      <section class="recuperar-senha__etapa" data-etapa="pedido">
+        <h1 class="titulo-display titulo-display--3" data-texto="recuperar-senha.pedido.titulo"></h1>
+        <p class="texto-2 recuperar-senha__legenda" data-texto="recuperar-senha.pedido.legenda"></p>
+
+        <p class="recuperar-senha__erro-geral" id="pedido-erro-geral" role="alert" hidden></p>
+
+        <form class="recuperar-senha__formulario" data-formulario="pedido" novalidate>
+          <label class="campo" for="pedido-campo-email">
+            <span class="campo__rotulo" data-texto="recuperar-senha.pedido.campo_email"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="email" name="email" id="pedido-campo-email" autocomplete="email" required>
+            </span>
+            <span class="campo__erro" id="pedido-erro-email"></span>
+          </label>
+
+          <div class="recuperar-senha__acoes">
+            <button type="submit" class="botao botao--primario botao--largo" data-texto="recuperar-senha.pedido.enviar"></button>
+          </div>
+        </form>
+
+        <div class="estado estado--vazio recuperar-senha__sucesso" hidden>
+          <p class="estado__titulo" data-texto="recuperar-senha.pedido.sucesso_titulo"></p>
+          <p class="estado__texto" data-texto="recuperar-senha.pedido.sucesso_texto"></p>
+        </div>
+
+        <a class="recuperar-senha__voltar" href="/entrar" data-texto="recuperar-senha.pedido.voltar"></a>
+      </section>
+
+      <section class="recuperar-senha__etapa" data-etapa="redefinir" hidden>
+        <h1 class="titulo-display titulo-display--3" data-texto="recuperar-senha.redefinir.titulo"></h1>
+        <p class="texto-2 recuperar-senha__legenda" data-texto="recuperar-senha.redefinir.legenda"></p>
+
+        <p class="recuperar-senha__erro-geral" id="redefinir-erro-geral" role="alert" hidden></p>
+
+        <form class="recuperar-senha__formulario" data-formulario="redefinir" novalidate>
+          <label class="campo" for="redefinir-campo-senha">
+            <span class="campo__rotulo" data-texto="recuperar-senha.redefinir.campo_senha"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="password" name="senha" id="redefinir-campo-senha" autocomplete="new-password" minlength="10" maxlength="200" required>
+            </span>
+            <span class="campo__erro" id="redefinir-erro-senha"></span>
+          </label>
+
+          <label class="campo" for="redefinir-campo-confirmar">
+            <span class="campo__rotulo" data-texto="recuperar-senha.redefinir.campo_confirmar"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="password" name="confirmar" id="redefinir-campo-confirmar" autocomplete="new-password" minlength="10" maxlength="200" required>
+            </span>
+            <span class="campo__erro" id="redefinir-erro-confirmar"></span>
+          </label>
+
+          <div class="recuperar-senha__acoes">
+            <button type="submit" class="botao botao--primario botao--largo" data-texto="recuperar-senha.redefinir.enviar"></button>
+          </div>
+        </form>
+
+        <a class="recuperar-senha__voltar" href="/recuperar-senha" data-texto="recuperar-senha.redefinir.pedir_novo"></a>
+
+        <div class="estado estado--vazio recuperar-senha__sucesso" hidden>
+          <p class="estado__titulo" data-texto="recuperar-senha.redefinir.sucesso_titulo"></p>
+          <p class="estado__texto" data-texto="recuperar-senha.redefinir.sucesso_texto"></p>
+          <a class="botao botao--secundario estado__acao" href="/entrar" data-texto="recuperar-senha.redefinir.ir_para_entrar"></a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>
