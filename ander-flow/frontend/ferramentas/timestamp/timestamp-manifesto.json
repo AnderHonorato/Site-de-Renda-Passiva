@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Conversor de timestamp",
-    "en": "[TRADUZIR: Conversor de timestamp]"
+    "en": "Timestamp converter"
   },
   "descricao": {
     "pt-BR": "Unix, milissegundos e ISO 8601 em data legível, com fuso escolhido.",
-    "en": "[TRADUZIR: Unix, milissegundos e ISO 8601 em data legível, com fuso escolhido.]"
+    "en": "Unix, milliseconds, and ISO 8601 into a readable date, with your chosen time zone."
   },
   "intencoes": {
     "pt-BR": [
       "converter timestamp"
     ],
     "en": [
-      "[TRADUZIR: converter timestamp]"
+      "convert a timestamp"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "iso"
     ],
     "en": [
-      "[TRADUZIR: timestamp]",
-      "[TRADUZIR: unix]",
-      "[TRADUZIR: iso]"
+      "timestamp",
+      "unix",
+      "iso"
     ]
   },
   "relacionadas": [],

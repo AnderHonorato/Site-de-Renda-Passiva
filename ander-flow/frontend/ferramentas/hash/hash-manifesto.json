@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Gerador de hash",
-    "en": "[TRADUZIR: Gerador de hash]"
+    "en": "Hash generator"
   },
   "descricao": {
     "pt-BR": "SHA-1, SHA-256, SHA-384 e SHA-512 de texto ou arquivo, para conferir integridade.",
-    "en": "[TRADUZIR: SHA-1, SHA-256, SHA-384 e SHA-512 de texto ou arquivo, para conferir integridade.]"
+    "en": "SHA-1, SHA-256, SHA-384, and SHA-512 of text or a file, to check integrity."
   },
   "intencoes": {
     "pt-BR": [
       "conferir hash do arquivo"
     ],
     "en": [
-      "[TRADUZIR: conferir hash do arquivo]"
+      "check a file's hash"
     ]
   },
   "etiquetas": {
@@ -30,8 +30,8 @@
     ],
     "en": [
       "hash",
-      "[TRADUZIR: sha256]",
-      "[TRADUZIR: integridade]"
+      "sha256",
+      "integrity check"
     ]
   },
   "relacionadas": [],

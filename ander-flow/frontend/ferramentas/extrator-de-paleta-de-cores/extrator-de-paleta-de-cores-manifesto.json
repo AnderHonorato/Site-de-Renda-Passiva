@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Extrair paleta de cores da imagem",
-    "en": "[TRADUZIR: Extrair paleta de cores da imagem]"
+    "en": "Extract color palette from image"
   },
   "descricao": {
     "pt-BR": "Identifica as cores predominantes de uma imagem e devolve os códigos hexadecimais.",
-    "en": "[TRADUZIR: Identifica as cores predominantes de uma imagem e devolve os códigos hexadecimais.]"
+    "en": "Identifies an image's dominant colors and returns their hex codes."
   },
   "intencoes": {
     "pt-BR": [
       "pegar as cores dessa imagem"
     ],
     "en": [
-      "[TRADUZIR: pegar as cores dessa imagem]"
+      "get the colors from this image"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "hexadecimal"
     ],
     "en": [
-      "[TRADUZIR: paleta de cores]",
-      "[TRADUZIR: extrair cor]",
-      "[TRADUZIR: hexadecimal]"
+      "color palette",
+      "extract color",
+      "hex code"
     ]
   },
   "relacionadas": [],

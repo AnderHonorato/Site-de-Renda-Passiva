@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Valor da hora de trabalho",
-    "en": "[TRADUZIR: Valor da hora de trabalho]"
+    "en": "Hourly rate calculator"
   },
   "descricao": {
     "pt-BR": "Calcula quanto cobrar por hora de trabalho a partir da renda desejada e das horas disponíveis.",
-    "en": "[TRADUZIR: Calcula quanto cobrar por hora de trabalho a partir da renda desejada e das horas disponíveis.]"
+    "en": "Calculates how much to charge per hour of work from your target income and available hours."
   },
   "intencoes": {
     "pt-BR": [
       "quanto cobrar por hora de trabalho"
     ],
     "en": [
-      "[TRADUZIR: quanto cobrar por hora de trabalho]"
+      "how much to charge per hour of work"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "precificação de mão de obra"
     ],
     "en": [
-      "[TRADUZIR: valor da hora]",
-      "[TRADUZIR: precificação de mão de obra]"
+      "hourly rate",
+      "labor pricing"
     ]
   },
   "relacionadas": [],

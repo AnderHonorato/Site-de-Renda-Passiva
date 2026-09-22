@@ -8,11 +8,11 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Calculadora de horas",
-    "en": "[TRADUZIR: Calculadora de horas]"
+    "en": "Hours calculator"
   },
   "descricao": {
     "pt-BR": "Soma jornadas com intervalo, calcula carga horária, extras e saldo de banco de horas.",
-    "en": "[TRADUZIR: Soma jornadas com intervalo, calcula carga horária, extras e saldo de banco de horas.]"
+    "en": "Adds up work shifts with breaks, and calculates total hours, overtime, and time-bank balance."
   },
   "intencoes": {
     "pt-BR": [
@@ -21,9 +21,9 @@
       "fechar o ponto"
     ],
     "en": [
-      "[TRADUZIR: somar horas trabalhadas]",
-      "[TRADUZIR: calcular hora extra]",
-      "[TRADUZIR: fechar o ponto]"
+      "add up hours worked",
+      "calculate overtime",
+      "close out the timesheet"
     ]
   },
   "etiquetas": {
@@ -35,11 +35,11 @@
       "banco de horas"
     ],
     "en": [
-      "[TRADUZIR: horas]",
-      "[TRADUZIR: ponto]",
-      "[TRADUZIR: jornada]",
-      "[TRADUZIR: hora extra]",
-      "[TRADUZIR: banco de horas]"
+      "hours",
+      "timesheet",
+      "work shift",
+      "overtime",
+      "time bank"
     ]
   },
   "relacionadas": [],

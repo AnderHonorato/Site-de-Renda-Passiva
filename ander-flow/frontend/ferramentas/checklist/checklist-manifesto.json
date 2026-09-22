@@ -8,18 +8,18 @@
   "ordem": 90,
   "nome": {
     "pt-BR": "Checklist para imprimir",
-    "en": "[TRADUZIR: Checklist para imprimir]"
+    "en": "Printable checklist"
   },
   "descricao": {
     "pt-BR": "Monta uma lista de tarefas com caixas de marcar, para qualquer finalidade.",
-    "en": "[TRADUZIR: Monta uma lista de tarefas com caixas de marcar, para qualquer finalidade.]"
+    "en": "Builds a task list with checkboxes, for any purpose."
   },
   "intencoes": {
     "pt-BR": [
       "fazer um checklist para imprimir"
     ],
     "en": [
-      "[TRADUZIR: fazer um checklist para imprimir]"
+      "make a printable checklist"
     ]
   },
   "etiquetas": {
@@ -28,7 +28,7 @@
       "lista de tarefas"
     ],
     "en": [
-      "[TRADUZIR: checklist]",
+      "checklist",
       "task list"
     ]
   },

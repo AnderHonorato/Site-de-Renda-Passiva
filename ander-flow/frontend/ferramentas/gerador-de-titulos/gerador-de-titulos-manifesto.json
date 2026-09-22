@@ -8,18 +8,18 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Gerador de títulos",
-    "en": "[TRADUZIR: Gerador de títulos]"
+    "en": "Headline generator"
   },
   "descricao": {
     "pt-BR": "Sugere variações de título para post, anúncio ou e-mail a partir do assunto.",
-    "en": "[TRADUZIR: Sugere variações de título para post, anúncio ou e-mail a partir do assunto.]"
+    "en": "Suggests headline variations for a post, ad, or email based on the topic."
   },
   "intencoes": {
     "pt-BR": [
       "sugestão de título para o post"
     ],
     "en": [
-      "[TRADUZIR: sugestão de título para o post]"
+      "headline suggestion for a post"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "copywriting"
     ],
     "en": [
+      "headline",
       "title",
-      "[TRADUZIR: headline]",
-      "[TRADUZIR: copywriting]"
+      "copywriting"
     ]
   },
   "relacionadas": [],

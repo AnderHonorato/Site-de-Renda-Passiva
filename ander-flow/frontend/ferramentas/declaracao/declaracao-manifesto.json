@@ -8,18 +8,18 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Gerador de declaração",
-    "en": "[TRADUZIR: Gerador de declaração]"
+    "en": "Statement letter generator"
   },
   "descricao": {
     "pt-BR": "Monta declarações simples (residência, próprio punho, para os fins que couber) em PDF.",
-    "en": "[TRADUZIR: Monta declarações simples (residência, próprio punho, para os fins que couber) em PDF.]"
+    "en": "Builds simple statement letters (proof of residence, self-written, general purpose) in PDF."
   },
   "intencoes": {
     "pt-BR": [
       "fazer uma declaração de residência"
     ],
     "en": [
-      "[TRADUZIR: fazer uma declaração de residência]"
+      "write a proof-of-residence letter"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "documento simples"
     ],
     "en": [
-      "[TRADUZIR: declaração]",
-      "[TRADUZIR: documento simples]"
+      "statement letter",
+      "simple document"
     ]
   },
   "relacionadas": [],

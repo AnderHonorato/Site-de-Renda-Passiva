@@ -8,18 +8,18 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "CSV e JSON",
-    "en": "[TRADUZIR: CSV e JSON]"
+    "en": "CSV and JSON"
   },
   "descricao": {
     "pt-BR": "Converte CSV em JSON e JSON em CSV, com separador e cabeçalho configuráveis.",
-    "en": "[TRADUZIR: Converte CSV em JSON e JSON em CSV, com separador e cabeçalho configuráveis.]"
+    "en": "Converts CSV to JSON and JSON to CSV, with configurable delimiter and header."
   },
   "intencoes": {
     "pt-BR": [
       "converter csv para json"
     ],
     "en": [
-      "[TRADUZIR: converter csv para json]"
+      "convert csv to json"
     ]
   },
   "etiquetas": {
@@ -32,8 +32,8 @@
     "en": [
       "csv",
       "json",
-      "[TRADUZIR: converter]",
-      "[TRADUZIR: dados]"
+      "convert",
+      "data"
     ]
   },
   "relacionadas": [],

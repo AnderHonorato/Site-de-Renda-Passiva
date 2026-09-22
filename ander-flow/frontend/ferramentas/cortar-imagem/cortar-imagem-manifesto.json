@@ -8,11 +8,11 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Cortar imagem",
-    "en": "[TRADUZIR: Cortar imagem]"
+    "en": "Crop image"
   },
   "descricao": {
     "pt-BR": "Corta a imagem livremente ou numa proporção pronta para post, story ou capa.",
-    "en": "[TRADUZIR: Corta a imagem livremente ou numa proporção pronta para post, story ou capa.]"
+    "en": "Crops an image freely or to a preset ratio for a post, story, or cover photo."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "recortar foto"
     ],
     "en": [
-      "[TRADUZIR: cortar imagem para o instagram]",
-      "[TRADUZIR: recortar foto]"
+      "crop an image for instagram",
+      "crop a photo"
     ]
   },
   "etiquetas": {
@@ -32,10 +32,10 @@
       "story"
     ],
     "en": [
-      "[TRADUZIR: cortar imagem]",
-      "[TRADUZIR: recorte]",
-      "[TRADUZIR: redes sociais]",
-      "[TRADUZIR: story]"
+      "crop image",
+      "crop",
+      "social media",
+      "story"
     ]
   },
   "relacionadas": [],

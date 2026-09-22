@@ -8,18 +8,18 @@
   "ordem": 80,
   "nome": {
     "pt-BR": "Funil de vendas",
-    "en": "[TRADUZIR: Funil de vendas]"
+    "en": "Sales funnel"
   },
   "descricao": {
     "pt-BR": "Acompanha quantos leads passam por cada etapa até virar venda, com taxa de conversão.",
-    "en": "[TRADUZIR: Acompanha quantos leads passam por cada etapa até virar venda, com taxa de conversão.]"
+    "en": "Tracks how many leads move through each stage until becoming a sale, with conversion rate."
   },
   "intencoes": {
     "pt-BR": [
       "montar funil de vendas"
     ],
     "en": [
-      "[TRADUZIR: montar funil de vendas]"
+      "build a sales funnel"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "leads"
     ],
     "en": [
-      "[TRADUZIR: funil de vendas]",
+      "sales funnel",
       "conversion",
-      "[TRADUZIR: leads]"
+      "leads"
     ]
   },
   "relacionadas": [],

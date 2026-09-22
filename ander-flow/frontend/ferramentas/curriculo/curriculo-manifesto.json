@@ -8,18 +8,18 @@
   "ordem": 110,
   "nome": {
     "pt-BR": "Gerador de currículo",
-    "en": "[TRADUZIR: Gerador de currículo]"
+    "en": "Resume builder"
   },
   "descricao": {
     "pt-BR": "Monta um currículo organizado com experiência, formação e habilidades.",
-    "en": "[TRADUZIR: Monta um currículo organizado com experiência, formação e habilidades.]"
+    "en": "Builds an organized resume with experience, education, and skills."
   },
   "intencoes": {
     "pt-BR": [
       "fazer um currículo"
     ],
     "en": [
-      "[TRADUZIR: fazer um currículo]"
+      "make a resume"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "vaga"
     ],
     "en": [
-      "[TRADUZIR: currículo]",
-      "[TRADUZIR: emprego]",
-      "[TRADUZIR: vaga]"
+      "resume",
+      "job",
+      "job opening"
     ]
   },
   "relacionadas": [],

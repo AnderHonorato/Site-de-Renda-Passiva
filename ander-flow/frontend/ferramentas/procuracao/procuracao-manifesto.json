@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Gerador de procuração",
-    "en": "[TRADUZIR: Gerador de procuração]"
+    "en": "Power of attorney generator"
   },
   "descricao": {
     "pt-BR": "Monta uma procuração simples com outorgante, outorgado e poderes concedidos.",
-    "en": "[TRADUZIR: Monta uma procuração simples com outorgante, outorgado e poderes concedidos.]"
+    "en": "Builds a simple power of attorney with grantor, grantee, and the powers granted."
   },
   "intencoes": {
     "pt-BR": [
       "fazer uma procuração simples"
     ],
     "en": [
-      "[TRADUZIR: fazer uma procuração simples]"
+      "draft a simple power of attorney"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "poderes"
     ],
     "en": [
-      "[TRADUZIR: procuração]",
-      "[TRADUZIR: poderes]"
+      "power of attorney",
+      "granted powers"
     ]
   },
   "relacionadas": [],

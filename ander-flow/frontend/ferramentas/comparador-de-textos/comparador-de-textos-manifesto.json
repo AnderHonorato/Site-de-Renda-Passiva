@@ -8,11 +8,11 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Comparar dois textos",
-    "en": "[TRADUZIR: Comparar dois textos]"
+    "en": "Compare two texts"
   },
   "descricao": {
     "pt-BR": "Mostra as diferenças entre duas versões de um texto, linha a linha.",
-    "en": "[TRADUZIR: Mostra as diferenças entre duas versões de um texto, linha a linha.]"
+    "en": "Shows the differences between two versions of a text, line by line."
   },
   "intencoes": {
     "pt-BR": [

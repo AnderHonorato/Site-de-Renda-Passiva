@@ -8,18 +8,18 @@
   "ordem": 80,
   "nome": {
     "pt-BR": "Verificador de contraste de cores",
-    "en": "[TRADUZIR: Verificador de contraste de cores]"
+    "en": "Color contrast checker"
   },
   "descricao": {
     "pt-BR": "Confere se a combinação de cor do texto e do fundo atende às regras de acessibilidade.",
-    "en": "[TRADUZIR: Confere se a combinação de cor do texto e do fundo atende às regras de acessibilidade.]"
+    "en": "Checks whether a text and background color combination meets accessibility rules."
   },
   "intencoes": {
     "pt-BR": [
       "esse texto tem contraste suficiente"
     ],
     "en": [
-      "[TRADUZIR: esse texto tem contraste suficiente]"
+      "does this text have enough contrast"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "wcag"
     ],
     "en": [
-      "[TRADUZIR: contraste]",
-      "[TRADUZIR: acessibilidade]",
-      "[TRADUZIR: wcag]"
+      "contrast",
+      "accessibility",
+      "wcag"
     ]
   },
   "relacionadas": [],

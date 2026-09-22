@@ -8,18 +8,18 @@
   "ordem": 80,
   "nome": {
     "pt-BR": "Etiqueta de expedição",
-    "en": "[TRADUZIR: Etiqueta de expedição]"
+    "en": "Shipping label"
   },
   "descricao": {
     "pt-BR": "Gera etiquetas de volume com remetente, destinatário e numeração da carga.",
-    "en": "[TRADUZIR: Gera etiquetas de volume com remetente, destinatário e numeração da carga.]"
+    "en": "Generates package labels with sender, recipient, and shipment numbering."
   },
   "intencoes": {
     "pt-BR": [
       "gerar etiqueta para a caixa da entrega"
     ],
     "en": [
-      "[TRADUZIR: gerar etiqueta para a caixa da entrega]"
+      "generate a label for a delivery box"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "transporte"
     ],
     "en": [
-      "[TRADUZIR: etiqueta de expedição]",
-      "[TRADUZIR: volume]",
-      "[TRADUZIR: transporte]"
+      "shipping label",
+      "package",
+      "freight"
     ]
   },
   "relacionadas": [],

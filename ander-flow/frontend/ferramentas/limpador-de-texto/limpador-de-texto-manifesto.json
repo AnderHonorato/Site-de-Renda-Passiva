@@ -8,11 +8,11 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Limpeza de texto",
-    "en": "[TRADUZIR: Limpeza de texto]"
+    "en": "Text cleanup"
   },
   "descricao": {
     "pt-BR": "Remove espaços duplicados, linhas vazias e quebras de linha soltas.",
-    "en": "[TRADUZIR: Remove espaços duplicados, linhas vazias e quebras de linha soltas.]"
+    "en": "Removes double spaces, blank lines, and stray line breaks."
   },
   "intencoes": {
     "pt-BR": [
@@ -21,7 +21,7 @@
     ],
     "en": [
       "remove double spaces from text",
-      "clean text copied from pdf"
+      "clean up text pasted from a pdf"
     ]
   },
   "etiquetas": {

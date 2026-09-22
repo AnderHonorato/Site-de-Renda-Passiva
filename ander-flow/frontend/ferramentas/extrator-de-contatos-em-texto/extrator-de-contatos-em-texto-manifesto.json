@@ -8,11 +8,11 @@
   "ordem": 80,
   "nome": {
     "pt-BR": "Extrair e-mails e telefones de um texto",
-    "en": "[TRADUZIR: Extrair e-mails e telefones de um texto]"
+    "en": "Extract emails and phone numbers from text"
   },
   "descricao": {
     "pt-BR": "Localiza e lista e-mails, telefones e links soltos dentro de um texto.",
-    "en": "[TRADUZIR: Localiza e lista e-mails, telefones e links soltos dentro de um texto.]"
+    "en": "Finds and lists emails, phone numbers, and standalone links inside a block of text."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "achar telefones no texto"
     ],
     "en": [
-      "[TRADUZIR: tirar os emails desse texto]",
-      "[TRADUZIR: achar telefones no texto]"
+      "pull the emails out of this text",
+      "find phone numbers in the text"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "links"
     ],
     "en": [
-      "[TRADUZIR: extrair email]",
-      "[TRADUZIR: extrair telefone]",
-      "[TRADUZIR: links]"
+      "extract email",
+      "extract phone number",
+      "links"
     ]
   },
   "relacionadas": [],

@@ -8,11 +8,11 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Sorteio",
-    "en": "[TRADUZIR: Sorteio]"
+    "en": "Random draw"
   },
   "descricao": {
     "pt-BR": "Sorteia números, nomes e divide participantes em times, sem repetição quando pedido.",
-    "en": "[TRADUZIR: Sorteia números, nomes e divide participantes em times, sem repetição quando pedido.]"
+    "en": "Draws numbers and names, and splits participants into teams, with no repeats when requested."
   },
   "intencoes": {
     "pt-BR": [
@@ -21,9 +21,9 @@
       "sortear nomes"
     ],
     "en": [
-      "[TRADUZIR: fazer um sorteio]",
-      "[TRADUZIR: dividir times]",
-      "[TRADUZIR: sortear nomes]"
+      "run a raffle",
+      "split into teams",
+      "draw random names"
     ]
   },
   "etiquetas": {
@@ -35,11 +35,11 @@
       "rifa"
     ],
     "en": [
-      "[TRADUZIR: sorteio]",
-      "[TRADUZIR: sortear]",
-      "[TRADUZIR: times]",
-      "[TRADUZIR: amigo secreto]",
-      "[TRADUZIR: rifa]"
+      "raffle",
+      "random draw",
+      "teams",
+      "secret santa",
+      "giveaway"
     ]
   },
   "relacionadas": [],

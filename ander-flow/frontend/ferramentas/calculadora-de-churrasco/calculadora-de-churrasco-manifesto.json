@@ -8,11 +8,11 @@
   "ordem": 150,
   "nome": {
     "pt-BR": "Calculadora de churrasco e almoço em grupo",
-    "en": "[TRADUZIR: Calculadora de churrasco e almoço em grupo]"
+    "en": "Barbecue and group lunch calculator"
   },
   "descricao": {
     "pt-BR": "Calcula carnes, acompanhamentos e bebidas a partir do número de convidados e do apetite.",
-    "en": "[TRADUZIR: Calcula carnes, acompanhamentos e bebidas a partir do número de convidados e do apetite.]"
+    "en": "Calculates meat, side dishes, and drinks based on guest count and appetite."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "quantidade de comida para o almoço"
     ],
     "en": [
-      "[TRADUZIR: quanta carne comprar para o churrasco]",
-      "[TRADUZIR: quantidade de comida para o almoço]"
+      "how much meat to buy for a barbecue",
+      "how much food for the lunch"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "quantidade de comida"
     ],
     "en": [
-      "[TRADUZIR: churrasco]",
-      "[TRADUZIR: almoço em grupo]",
-      "[TRADUZIR: quantidade de comida]"
+      "barbecue",
+      "group lunch",
+      "food quantity"
     ]
   },
   "relacionadas": [],

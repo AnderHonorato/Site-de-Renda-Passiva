@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Gerador de dados de teste",
-    "en": "[TRADUZIR: Gerador de dados de teste]"
+    "en": "Test data generator"
   },
   "descricao": {
     "pt-BR": "Gera listas fictícias de pessoas, produtos e pedidos para testar planilhas e sistemas.",
-    "en": "[TRADUZIR: Gera listas fictícias de pessoas, produtos e pedidos para testar planilhas e sistemas.]"
+    "en": "Generates fake lists of people, products, and orders for testing spreadsheets and systems."
   },
   "intencoes": {
     "pt-BR": [
       "gerar dados para teste"
     ],
     "en": [
-      "[TRADUZIR: gerar dados para teste]"
+      "generate test data"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "mock"
     ],
     "en": [
-      "[TRADUZIR: dados falsos]",
-      "[TRADUZIR: teste]",
-      "[TRADUZIR: mock]"
+      "fake data",
+      "test data",
+      "mock"
     ]
   },
   "relacionadas": [],

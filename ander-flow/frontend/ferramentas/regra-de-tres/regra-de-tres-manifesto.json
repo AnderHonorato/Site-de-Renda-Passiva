@@ -8,11 +8,11 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Regra de três",
-    "en": "[TRADUZIR: Regra de três]"
+    "en": "Rule of three"
   },
   "descricao": {
     "pt-BR": "Proporção direta e inversa, com a conta montada passo a passo.",
-    "en": "[TRADUZIR: Proporção direta e inversa, com a conta montada passo a passo.]"
+    "en": "Direct and inverse proportion, with the calculation laid out step by step."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "se 3 custam x quanto custam 7"
     ],
     "en": [
-      "[TRADUZIR: regra de três]",
-      "[TRADUZIR: se 3 custam x quanto custam 7]"
+      "rule of three",
+      "if 3 cost x, how much do 7 cost"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "proporcional"
     ],
     "en": [
-      "[TRADUZIR: regra de três]",
-      "[TRADUZIR: proporção]",
-      "[TRADUZIR: proporcional]"
+      "rule of three",
+      "proportion",
+      "proportional"
     ]
   },
   "relacionadas": [],

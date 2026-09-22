@@ -8,11 +8,11 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Marca d'água e senha no PDF",
-    "en": "[TRADUZIR: Marca d'água e senha no PDF]"
+    "en": "PDF watermark and password"
   },
   "descricao": {
     "pt-BR": "Adiciona marca d'água de texto ou protege o PDF com senha de abertura.",
-    "en": "[TRADUZIR: Adiciona marca d'água de texto ou protege o PDF com senha de abertura.]"
+    "en": "Adds a text watermark or protects a PDF with an open password."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "proteger pdf com senha"
     ],
     "en": [
-      "[TRADUZIR: colocar marca d'água no pdf]",
-      "[TRADUZIR: proteger pdf com senha]"
+      "add a watermark to a pdf",
+      "protect a pdf with a password"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "senha no pdf"
     ],
     "en": [
-      "[TRADUZIR: marca d'água]",
-      "[TRADUZIR: proteger pdf]",
-      "[TRADUZIR: senha no pdf]"
+      "watermark",
+      "protect pdf",
+      "pdf password"
     ]
   },
   "relacionadas": [],

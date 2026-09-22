@@ -8,11 +8,11 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Quiz de múltipla escolha",
-    "en": "[TRADUZIR: Quiz de múltipla escolha]"
+    "en": "Multiple-choice quiz"
   },
   "descricao": {
     "pt-BR": "Monta um quiz com perguntas, alternativas e gabarito, pronto para aplicar.",
-    "en": "[TRADUZIR: Monta um quiz com perguntas, alternativas e gabarito, pronto para aplicar.]"
+    "en": "Builds a quiz with questions, answer choices, and an answer key, ready to give."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "fazer prova de múltipla escolha"
     ],
     "en": [
-      "[TRADUZIR: montar um quiz para os alunos]",
-      "[TRADUZIR: fazer prova de múltipla escolha]"
+      "build a quiz for students",
+      "make a multiple-choice test"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "prova"
     ],
     "en": [
-      "[TRADUZIR: quiz]",
-      "[TRADUZIR: múltipla escolha]",
-      "[TRADUZIR: prova]"
+      "quiz",
+      "multiple choice",
+      "test"
     ]
   },
   "relacionadas": [],

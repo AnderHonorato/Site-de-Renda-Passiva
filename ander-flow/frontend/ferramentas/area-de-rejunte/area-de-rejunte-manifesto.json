@@ -8,18 +8,18 @@
   "ordem": 100,
   "nome": {
     "pt-BR": "Área e quantidade de rejunte",
-    "en": "[TRADUZIR: Área e quantidade de rejunte]"
+    "en": "Grout area and quantity"
   },
   "descricao": {
     "pt-BR": "Estima o volume e a massa de rejunte a partir da área revestida e da medida da peça.",
-    "en": "[TRADUZIR: Estima o volume e a massa de rejunte a partir da área revestida e da medida da peça.]"
+    "en": "Estimates grout volume and weight from the tiled area and tile size."
   },
   "intencoes": {
     "pt-BR": [
       "quanto rejunte comprar"
     ],
     "en": [
-      "[TRADUZIR: quanto rejunte comprar]"
+      "how much grout to buy"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "massa de rejunte"
     ],
     "en": [
-      "[TRADUZIR: rejunte]",
-      "[TRADUZIR: revestimento]",
-      "[TRADUZIR: massa de rejunte]"
+      "grout",
+      "tiling",
+      "grout mix"
     ]
   },
   "relacionadas": [],

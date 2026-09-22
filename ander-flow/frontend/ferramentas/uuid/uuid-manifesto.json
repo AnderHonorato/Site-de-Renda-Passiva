@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Gerador de identificadores",
-    "en": "[TRADUZIR: Gerador de identificadores]"
+    "en": "ID generator"
   },
   "descricao": {
     "pt-BR": "UUID v4, identificadores curtos e códigos legíveis, em lote.",
-    "en": "[TRADUZIR: UUID v4, identificadores curtos e códigos legíveis, em lote.]"
+    "en": "UUID v4, short identifiers, and readable codes, in bulk."
   },
   "intencoes": {
     "pt-BR": [
       "gerar uuid"
     ],
     "en": [
-      "generate uuid"
+      "generate a uuid"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "código"
     ],
     "en": [
-      "[TRADUZIR: uuid]",
-      "[TRADUZIR: id]",
-      "[TRADUZIR: código]"
+      "uuid",
+      "id",
+      "code"
     ]
   },
   "relacionadas": [],

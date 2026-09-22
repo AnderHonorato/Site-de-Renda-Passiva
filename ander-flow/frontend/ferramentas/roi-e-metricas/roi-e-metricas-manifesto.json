@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "ROI, ROAS, CAC e LTV",
-    "en": "[TRADUZIR: ROI, ROAS, CAC e LTV]"
+    "en": "ROI, ROAS, CAC, and LTV"
   },
   "descricao": {
     "pt-BR": "Retorno de investimento, retorno de anúncio, custo de aquisição e valor do cliente.",
-    "en": "[TRADUZIR: Retorno de investimento, retorno de anúncio, custo de aquisição e valor do cliente.]"
+    "en": "Return on investment, return on ad spend, customer acquisition cost, and customer lifetime value."
   },
   "intencoes": {
     "pt-BR": [
       "a campanha deu retorno"
     ],
     "en": [
-      "[TRADUZIR: a campanha deu retorno]"
+      "did the campaign pay off"
     ]
   },
   "etiquetas": {
@@ -31,11 +31,11 @@
       "campanha"
     ],
     "en": [
-      "[TRADUZIR: roi]",
-      "[TRADUZIR: roas]",
-      "[TRADUZIR: cac]",
-      "[TRADUZIR: ltv]",
-      "[TRADUZIR: campanha]"
+      "roi",
+      "roas",
+      "cac",
+      "ltv",
+      "campaign"
     ]
   },
   "relacionadas": [],

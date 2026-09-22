@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Plano de estudos",
-    "en": "[TRADUZIR: Plano de estudos]"
+    "en": "Study plan"
   },
   "descricao": {
     "pt-BR": "Monta uma grade semanal de estudos por disciplina, com minutos por sessão e pausas.",
-    "en": "[TRADUZIR: Monta uma grade semanal de estudos por disciplina, com minutos por sessão e pausas.]"
+    "en": "Builds a weekly study schedule by subject, with minutes per session and breaks."
   },
   "intencoes": {
     "pt-BR": [
       "montar plano de estudos da semana"
     ],
     "en": [
-      "[TRADUZIR: montar plano de estudos da semana]"
+      "build a weekly study plan"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "rotina de estudo"
     ],
     "en": [
-      "[TRADUZIR: plano de estudos]",
-      "[TRADUZIR: grade semanal]",
-      "[TRADUZIR: rotina de estudo]"
+      "study plan",
+      "weekly schedule",
+      "study routine"
     ]
   },
   "relacionadas": [],

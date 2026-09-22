@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Plano de ação com responsáveis",
-    "en": "[TRADUZIR: Plano de ação com responsáveis]"
+    "en": "Action plan with owners"
   },
   "descricao": {
     "pt-BR": "Lista ações, responsáveis e prazos, com acompanhamento de status.",
-    "en": "[TRADUZIR: Lista ações, responsáveis e prazos, com acompanhamento de status.]"
+    "en": "Lists actions, owners, and deadlines, with status tracking."
   },
   "intencoes": {
     "pt-BR": [
       "organizar ações e responsáveis da reunião"
     ],
     "en": [
-      "[TRADUZIR: organizar ações e responsáveis da reunião]"
+      "organize a meeting's action items and owners"
     ]
   },
   "etiquetas": {
@@ -29,8 +29,8 @@
       "prazo"
     ],
     "en": [
-      "[TRADUZIR: plano de ação]",
-      "[TRADUZIR: responsáveis]",
+      "action plan",
+      "owners",
       "deadline"
     ]
   },

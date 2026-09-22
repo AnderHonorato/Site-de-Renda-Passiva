@@ -8,18 +8,18 @@
   "ordem": 100,
   "nome": {
     "pt-BR": "Calculadora de frete",
-    "en": "[TRADUZIR: Calculadora de frete]"
+    "en": "Shipping cost calculator"
   },
   "descricao": {
     "pt-BR": "Estima o frete por peso, cubagem e distância, e compara transportadoras.",
-    "en": "[TRADUZIR: Estima o frete por peso, cubagem e distância, e compara transportadoras.]"
+    "en": "Estimates shipping cost by weight, dimensional volume, and distance, and compares carriers."
   },
   "intencoes": {
     "pt-BR": [
       "comparar frete de transportadoras"
     ],
     "en": [
-      "[TRADUZIR: comparar frete de transportadoras]"
+      "compare shipping costs between carriers"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "cotação de frete"
     ],
     "en": [
-      "[TRADUZIR: frete]",
-      "[TRADUZIR: transportadora]",
-      "[TRADUZIR: cotação de frete]"
+      "shipping",
+      "carrier",
+      "freight quote"
     ]
   },
   "relacionadas": [],

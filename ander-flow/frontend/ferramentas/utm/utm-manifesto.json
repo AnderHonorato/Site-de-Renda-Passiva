@@ -8,18 +8,18 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Montador e leitor de UTM",
-    "en": "[TRADUZIR: Montador e leitor de UTM]"
+    "en": "UTM builder and reader"
   },
   "descricao": {
     "pt-BR": "Monta URLs com parâmetros de campanha e lê os parâmetros de uma URL existente.",
-    "en": "[TRADUZIR: Monta URLs com parâmetros de campanha e lê os parâmetros de uma URL existente.]"
+    "en": "Builds URLs with campaign parameters and reads the parameters from an existing URL."
   },
   "intencoes": {
     "pt-BR": [
       "criar link com utm"
     ],
     "en": [
-      "[TRADUZIR: criar link com utm]"
+      "create a link with utm parameters"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "analytics"
     ],
     "en": [
-      "[TRADUZIR: utm]",
-      "[TRADUZIR: campanha]",
-      "[TRADUZIR: analytics]"
+      "utm",
+      "campaign",
+      "analytics"
     ]
   },
   "relacionadas": [],

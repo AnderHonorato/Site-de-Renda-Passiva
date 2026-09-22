@@ -8,18 +8,18 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Estimativa de rescisão",
-    "en": "[TRADUZIR: Estimativa de rescisão]"
+    "en": "Severance pay estimate"
   },
   "descricao": {
     "pt-BR": "Estima o valor da rescisão por tipo de desligamento, com aviso, férias e décimo terceiro.",
-    "en": "[TRADUZIR: Estima o valor da rescisão por tipo de desligamento, com aviso, férias e décimo terceiro.]"
+    "en": "Estimates severance pay by termination type, including notice period, vacation pay, and the 13th-month bonus (décimo terceiro salário)."
   },
   "intencoes": {
     "pt-BR": [
       "quanto vou receber de rescisão"
     ],
     "en": [
-      "[TRADUZIR: quanto vou receber de rescisão]"
+      "how much severance will I receive"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "aviso prévio"
     ],
     "en": [
-      "[TRADUZIR: rescisão]",
-      "[TRADUZIR: demissão]",
-      "[TRADUZIR: aviso prévio]"
+      "severance pay",
+      "termination",
+      "notice period"
     ]
   },
   "relacionadas": [],

@@ -8,18 +8,18 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Descrição de vaga",
-    "en": "[TRADUZIR: Descrição de vaga]"
+    "en": "Job posting"
   },
   "descricao": {
     "pt-BR": "Monta o anúncio da vaga com responsabilidades, requisitos e benefícios.",
-    "en": "[TRADUZIR: Monta o anúncio da vaga com responsabilidades, requisitos e benefícios.]"
+    "en": "Builds a job posting with responsibilities, requirements, and benefits."
   },
   "intencoes": {
     "pt-BR": [
       "escrever descrição de vaga"
     ],
     "en": [
-      "[TRADUZIR: escrever descrição de vaga]"
+      "write a job posting"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "recrutamento"
     ],
     "en": [
-      "[TRADUZIR: vaga]",
-      "[TRADUZIR: anúncio de emprego]",
-      "[TRADUZIR: recrutamento]"
+      "job opening",
+      "job posting",
+      "recruiting"
     ]
   },
   "relacionadas": [],

@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Montador de fórmulas de planilha",
-    "en": "[TRADUZIR: Montador de fórmulas de planilha]"
+    "en": "Spreadsheet formula builder"
   },
   "descricao": {
     "pt-BR": "Monta PROCV, PROCX, SOMASES, CONT.SES e SE aninhado a partir de perguntas simples.",
-    "en": "[TRADUZIR: Monta PROCV, PROCX, SOMASES, CONT.SES e SE aninhado a partir de perguntas simples.]"
+    "en": "Builds VLOOKUP, XLOOKUP, SUMIFS, COUNTIFS, and nested IF formulas from simple questions."
   },
   "intencoes": {
     "pt-BR": [
       "como fazer procv"
     ],
     "en": [
-      "[TRADUZIR: como fazer procv]"
+      "how to do a vlookup"
     ]
   },
   "etiquetas": {
@@ -31,10 +31,10 @@
       "excel"
     ],
     "en": [
-      "[TRADUZIR: procv]",
-      "[TRADUZIR: procx]",
-      "[TRADUZIR: somases]",
-      "[TRADUZIR: fórmula]",
+      "vlookup",
+      "xlookup",
+      "sumifs",
+      "formula",
       "excel"
     ]
   },

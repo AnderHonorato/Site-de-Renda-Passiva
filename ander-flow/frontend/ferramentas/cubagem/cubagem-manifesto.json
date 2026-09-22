@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Cálculo de cubagem",
-    "en": "[TRADUZIR: Cálculo de cubagem]"
+    "en": "Freight cubing calculator"
   },
   "descricao": {
     "pt-BR": "Calcula o volume ocupado por uma carga a partir das medidas de cada volume.",
-    "en": "[TRADUZIR: Calcula o volume ocupado por uma carga a partir das medidas de cada volume.]"
+    "en": "Calculates the volume a shipment takes up from each package's dimensions."
   },
   "intencoes": {
     "pt-BR": [
       "calcular cubagem da carga"
     ],
     "en": [
-      "[TRADUZIR: calcular cubagem da carga]"
+      "calculate freight cubic volume"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "m³"
     ],
     "en": [
-      "[TRADUZIR: cubagem]",
-      "[TRADUZIR: volume de carga]",
-      "[TRADUZIR: m³]"
+      "cubing",
+      "cargo volume",
+      "m³"
     ]
   },
   "relacionadas": [],

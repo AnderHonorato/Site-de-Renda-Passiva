@@ -8,11 +8,11 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Calculadora de juros",
-    "en": "[TRADUZIR: Calculadora de juros]"
+    "en": "Interest calculator"
   },
   "descricao": {
     "pt-BR": "Juros simples e compostos, com aportes mensais e tabela período a período.",
-    "en": "[TRADUZIR: Juros simples e compostos, com aportes mensais e tabela período a período.]"
+    "en": "Simple and compound interest, with monthly contributions and a period-by-period table."
   },
   "intencoes": {
     "pt-BR": [
@@ -22,10 +22,10 @@
       "valor futuro"
     ],
     "en": [
-      "[TRADUZIR: quanto rende meu dinheiro]",
-      "[TRADUZIR: juros compostos]",
-      "[TRADUZIR: simular poupança]",
-      "[TRADUZIR: valor futuro]"
+      "how much will my money earn",
+      "compound interest",
+      "simulate a savings account",
+      "future value"
     ]
   },
   "etiquetas": {
@@ -37,11 +37,11 @@
       "montante"
     ],
     "en": [
-      "[TRADUZIR: juros]",
-      "[TRADUZIR: rendimento]",
-      "[TRADUZIR: investimento]",
-      "[TRADUZIR: poupança]",
-      "[TRADUZIR: montante]"
+      "interest",
+      "return",
+      "investment",
+      "savings",
+      "future value"
     ]
   },
   "relacionadas": [],

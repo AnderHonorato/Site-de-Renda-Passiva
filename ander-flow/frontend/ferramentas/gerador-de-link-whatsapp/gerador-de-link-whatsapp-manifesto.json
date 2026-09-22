@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Link de WhatsApp",
-    "en": "[TRADUZIR: Link de WhatsApp]"
+    "en": "WhatsApp link generator"
   },
   "descricao": {
     "pt-BR": "Monta o link wa.me com número e mensagem pronta, mais o QR Code correspondente.",
-    "en": "[TRADUZIR: Monta o link wa.me com número e mensagem pronta, mais o QR Code correspondente.]"
+    "en": "Builds a wa.me link with a phone number and pre-filled message, plus the matching QR code."
   },
   "intencoes": {
     "pt-BR": [
       "criar link do whatsapp"
     ],
     "en": [
-      "[TRADUZIR: criar link do whatsapp]"
+      "create a whatsapp link"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "wa.me"
     ],
     "en": [
-      "[TRADUZIR: whatsapp]",
-      "[TRADUZIR: link]",
-      "[TRADUZIR: wa.me]"
+      "whatsapp",
+      "link",
+      "wa.me"
     ]
   },
   "relacionadas": [],

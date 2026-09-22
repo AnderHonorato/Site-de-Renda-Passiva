@@ -8,11 +8,11 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Modelo de mensagem",
-    "en": "[TRADUZIR: Modelo de mensagem]"
+    "en": "Message template"
   },
   "descricao": {
     "pt-BR": "Preenche modelos de aviso, cobrança e agradecimento com os dados informados.",
-    "en": "[TRADUZIR: Preenche modelos de aviso, cobrança e agradecimento com os dados informados.]"
+    "en": "Fills in templates for notices, payment reminders, and thank-you notes with your details."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "modelo de aviso"
     ],
     "en": [
-      "[TRADUZIR: escrever mensagem de cobrança educada]",
-      "[TRADUZIR: modelo de aviso]"
+      "write a polite payment reminder",
+      "notice template"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "cobrança"
     ],
     "en": [
-      "[TRADUZIR: modelo de mensagem]",
-      "warning",
-      "[TRADUZIR: cobrança]"
+      "message template",
+      "notice",
+      "payment reminder"
     ]
   },
   "relacionadas": [],

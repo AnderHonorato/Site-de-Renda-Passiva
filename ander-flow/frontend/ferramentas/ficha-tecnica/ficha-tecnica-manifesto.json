@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Ficha técnica de produto",
-    "en": "[TRADUZIR: Ficha técnica de produto]"
+    "en": "Product spec sheet"
   },
   "descricao": {
     "pt-BR": "Documenta ingredientes, modo de preparo, custo e rendimento de um produto artesanal.",
-    "en": "[TRADUZIR: Documenta ingredientes, modo de preparo, custo e rendimento de um produto artesanal.]"
+    "en": "Documents ingredients, preparation steps, cost, and yield for a handmade product."
   },
   "intencoes": {
     "pt-BR": [
       "fazer a ficha técnica do produto"
     ],
     "en": [
-      "[TRADUZIR: fazer a ficha técnica do produto]"
+      "create a product spec sheet"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "receita"
     ],
     "en": [
-      "[TRADUZIR: ficha técnica]",
-      "[TRADUZIR: padronização]",
-      "[TRADUZIR: receita]"
+      "spec sheet",
+      "standardization",
+      "recipe"
     ]
   },
   "relacionadas": [],

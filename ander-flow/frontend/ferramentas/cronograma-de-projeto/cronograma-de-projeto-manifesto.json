@@ -8,18 +8,18 @@
   "ordem": 100,
   "nome": {
     "pt-BR": "Cronograma de projeto",
-    "en": "[TRADUZIR: Cronograma de projeto]"
+    "en": "Project timeline"
   },
   "descricao": {
     "pt-BR": "Organiza as etapas de um projeto em uma linha do tempo com datas e responsáveis.",
-    "en": "[TRADUZIR: Organiza as etapas de um projeto em uma linha do tempo com datas e responsáveis.]"
+    "en": "Organizes a project's steps into a timeline with dates and owners."
   },
   "intencoes": {
     "pt-BR": [
       "montar cronograma do projeto"
     ],
     "en": [
-      "[TRADUZIR: montar cronograma do projeto]"
+      "build a project timeline"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "linha do tempo"
     ],
     "en": [
-      "schedule",
+      "timeline",
       "project",
-      "[TRADUZIR: linha do tempo]"
+      "project schedule"
     ]
   },
   "relacionadas": [],

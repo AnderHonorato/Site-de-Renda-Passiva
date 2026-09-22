@@ -8,11 +8,11 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Remover acentos",
-    "en": "[TRADUZIR: Remover acentos]"
+    "en": "Remove accents"
   },
   "descricao": {
     "pt-BR": "Remove acentos e caracteres especiais do texto, mantendo a pontuação.",
-    "en": "[TRADUZIR: Remove acentos e caracteres especiais do texto, mantendo a pontuação.]"
+    "en": "Removes accents and special characters from text while keeping punctuation."
   },
   "intencoes": {
     "pt-BR": [
@@ -28,7 +28,7 @@
       "normalizar texto"
     ],
     "en": [
-      "remove accents",
+      "remove accent",
       "normalize text"
     ]
   },

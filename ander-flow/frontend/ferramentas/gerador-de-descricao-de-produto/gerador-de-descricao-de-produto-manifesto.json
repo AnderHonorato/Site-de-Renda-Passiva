@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Gerador de descrição de produto",
-    "en": "[TRADUZIR: Gerador de descrição de produto]"
+    "en": "Product description generator"
   },
   "descricao": {
     "pt-BR": "Monta a descrição de um produto a partir de características e benefícios informados.",
-    "en": "[TRADUZIR: Monta a descrição de um produto a partir de características e benefícios informados.]"
+    "en": "Builds a product description from the features and benefits you enter."
   },
   "intencoes": {
     "pt-BR": [
       "escrever descrição de produto para anúncio"
     ],
     "en": [
-      "[TRADUZIR: escrever descrição de produto para anúncio]"
+      "write a product description for a listing"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "loja"
     ],
     "en": [
-      "[TRADUZIR: descrição de produto]",
-      "[TRADUZIR: anúncio]",
-      "[TRADUZIR: loja]"
+      "product description",
+      "listing",
+      "store"
     ]
   },
   "relacionadas": [],

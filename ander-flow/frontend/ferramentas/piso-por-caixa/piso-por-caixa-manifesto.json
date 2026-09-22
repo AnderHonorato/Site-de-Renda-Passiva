@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Piso por caixa",
-    "en": "[TRADUZIR: Piso por caixa]"
+    "en": "Flooring boxes needed"
   },
   "descricao": {
     "pt-BR": "Calcula quantas caixas de piso ou revestimento comprar a partir da área e da margem de corte.",
-    "en": "[TRADUZIR: Calcula quantas caixas de piso ou revestimento comprar a partir da área e da margem de corte.]"
+    "en": "Calculates how many boxes of flooring or tile to buy from the area and a cutting margin."
   },
   "intencoes": {
     "pt-BR": [
       "quantas caixas de piso comprar"
     ],
     "en": [
-      "[TRADUZIR: quantas caixas de piso comprar]"
+      "how many boxes of flooring to buy"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "reforma"
     ],
     "en": [
-      "[TRADUZIR: piso]",
-      "[TRADUZIR: revestimento]",
-      "[TRADUZIR: reforma]"
+      "flooring",
+      "tiling",
+      "renovation"
     ]
   },
   "relacionadas": [],

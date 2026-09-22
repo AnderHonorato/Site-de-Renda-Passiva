@@ -8,18 +8,18 @@
   "ordem": 80,
   "nome": {
     "pt-BR": "Plano de onboarding",
-    "en": "[TRADUZIR: Plano de onboarding]"
+    "en": "Onboarding plan"
   },
   "descricao": {
     "pt-BR": "Monta o cronograma dos primeiros dias de um novo funcionário, por etapa e responsável.",
-    "en": "[TRADUZIR: Monta o cronograma dos primeiros dias de um novo funcionário, por etapa e responsável.]"
+    "en": "Builds a schedule for a new employee's first days, by step and owner."
   },
   "intencoes": {
     "pt-BR": [
       "planejar integração de novo funcionário"
     ],
     "en": [
-      "[TRADUZIR: planejar integração de novo funcionário]"
+      "plan a new employee's onboarding"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "novo funcionário"
     ],
     "en": [
-      "[TRADUZIR: onboarding]",
-      "[TRADUZIR: integração]",
-      "[TRADUZIR: novo funcionário]"
+      "onboarding",
+      "integration",
+      "new employee"
     ]
   },
   "relacionadas": [],

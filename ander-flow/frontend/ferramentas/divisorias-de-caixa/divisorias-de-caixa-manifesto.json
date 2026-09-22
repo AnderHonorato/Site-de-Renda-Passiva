@@ -8,18 +8,18 @@
   "ordem": 140,
   "nome": {
     "pt-BR": "Divisórias de caixa",
-    "en": "[TRADUZIR: Divisórias de caixa]"
+    "en": "Box dividers"
   },
   "descricao": {
     "pt-BR": "Gera o molde das divisórias internas de uma caixa pelo número de compartimentos.",
-    "en": "[TRADUZIR: Gera o molde das divisórias internas de uma caixa pelo número de compartimentos.]"
+    "en": "Generates the template for a box's internal dividers based on the number of compartments."
   },
   "intencoes": {
     "pt-BR": [
       "fazer divisórias para dentro da caixa"
     ],
     "en": [
-      "[TRADUZIR: fazer divisórias para dentro da caixa]"
+      "make dividers to fit inside a box"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "organização de embalagem"
     ],
     "en": [
-      "[TRADUZIR: divisórias]",
-      "[TRADUZIR: caixa]",
-      "[TRADUZIR: organização de embalagem]"
+      "dividers",
+      "box",
+      "packaging organization"
     ]
   },
   "relacionadas": [],

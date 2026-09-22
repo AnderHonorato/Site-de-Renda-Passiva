@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Ficha de cliente",
-    "en": "[TRADUZIR: Ficha de cliente]"
+    "en": "Customer records"
   },
   "descricao": {
     "pt-BR": "Cadastro simples de clientes salvo no próprio aparelho, com busca e exportação.",
-    "en": "[TRADUZIR: Cadastro simples de clientes salvo no próprio aparelho, com busca e exportação.]"
+    "en": "Simple customer database stored on your own device, with search and export."
   },
   "intencoes": {
     "pt-BR": [
       "guardar meus clientes"
     ],
     "en": [
-      "[TRADUZIR: guardar meus clientes]"
+      "keep track of my customers"
     ]
   },
   "etiquetas": {
@@ -30,8 +30,8 @@
     ],
     "en": [
       "customer",
-      "[TRADUZIR: cadastro]",
-      "[TRADUZIR: crm]"
+      "records",
+      "crm"
     ]
   },
   "relacionadas": [],

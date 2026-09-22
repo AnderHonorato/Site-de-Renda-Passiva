@@ -8,18 +8,18 @@
   "ordem": 180,
   "nome": {
     "pt-BR": "Cronograma do evento",
-    "en": "[TRADUZIR: Cronograma do evento]"
+    "en": "Event timeline"
   },
   "descricao": {
     "pt-BR": "Calcula o horário de início de cada etapa de preparação a partir do horário da festa.",
-    "en": "[TRADUZIR: Calcula o horário de início de cada etapa de preparação a partir do horário da festa.]"
+    "en": "Calculates the start time for each prep step, working back from the event's start time."
   },
   "intencoes": {
     "pt-BR": [
       "montar cronograma do evento"
     ],
     "en": [
-      "[TRADUZIR: montar cronograma do evento]"
+      "build an event timeline"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "horário"
     ],
     "en": [
-      "[TRADUZIR: cronograma de evento]",
-      "[TRADUZIR: organização de festa]",
-      "[TRADUZIR: horário]"
+      "event timeline",
+      "party planning",
+      "schedule"
     ]
   },
   "relacionadas": [],

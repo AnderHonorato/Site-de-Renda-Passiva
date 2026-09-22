@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Ticket médio e conversão",
-    "en": "[TRADUZIR: Ticket médio e conversão]"
+    "en": "Average order value and conversion"
   },
   "descricao": {
     "pt-BR": "Ticket médio, taxa de conversão e o efeito de melhorar cada um deles.",
-    "en": "[TRADUZIR: Ticket médio, taxa de conversão e o efeito de melhorar cada um deles.]"
+    "en": "Average order value, conversion rate, and the impact of improving each one."
   },
   "intencoes": {
     "pt-BR": [
       "melhorar minhas vendas"
     ],
     "en": [
-      "[TRADUZIR: melhorar minhas vendas]"
+      "improve my sales"
     ]
   },
   "etiquetas": {
@@ -28,7 +28,7 @@
       "conversão"
     ],
     "en": [
-      "[TRADUZIR: ticket médio]",
+      "average order value",
       "conversion"
     ]
   },

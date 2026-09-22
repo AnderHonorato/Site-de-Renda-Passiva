@@ -8,18 +8,18 @@
   "ordem": 80,
   "nome": {
     "pt-BR": "Ata de reunião",
-    "en": "[TRADUZIR: Ata de reunião]"
+    "en": "Meeting minutes"
   },
   "descricao": {
     "pt-BR": "Registra pauta, presentes, decisões e ações combinadas numa reunião.",
-    "en": "[TRADUZIR: Registra pauta, presentes, decisões e ações combinadas numa reunião.]"
+    "en": "Records the agenda, attendees, decisions, and action items from a meeting."
   },
   "intencoes": {
     "pt-BR": [
       "fazer a ata da reunião"
     ],
     "en": [
-      "[TRADUZIR: fazer a ata da reunião]"
+      "write up meeting minutes"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "registro"
     ],
     "en": [
-      "[TRADUZIR: ata de reunião]",
-      "[TRADUZIR: decisões]",
-      "[TRADUZIR: registro]"
+      "meeting minutes",
+      "decisions",
+      "record"
     ]
   },
   "relacionadas": [],

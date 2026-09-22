@@ -8,18 +8,18 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Ordenar linhas",
-    "en": "[TRADUZIR: Ordenar linhas]"
+    "en": "Sort lines"
   },
   "descricao": {
     "pt-BR": "Ordena as linhas de um texto em ordem alfabética, numérica, reversa ou aleatória.",
-    "en": "[TRADUZIR: Ordena as linhas de um texto em ordem alfabética, numérica, reversa ou aleatória.]"
+    "en": "Sorts the lines of a text alphabetically, numerically, in reverse, or randomly."
   },
   "intencoes": {
     "pt-BR": [
       "colocar lista em ordem alfabética"
     ],
     "en": [
-      "[TRADUZIR: colocar lista em ordem alfabética]"
+      "put a list in alphabetical order"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "lista alfabética"
     ],
     "en": [
-      "[TRADUZIR: ordenar]",
-      "[TRADUZIR: lista alfabética]"
+      "sort",
+      "alphabetical list"
     ]
   },
   "relacionadas": [],

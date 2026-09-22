@@ -8,18 +8,18 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Peso volumétrico",
-    "en": "[TRADUZIR: Peso volumétrico]"
+    "en": "Dimensional weight"
   },
   "descricao": {
     "pt-BR": "Calcula o peso cubado de um volume e compara com o peso real para o frete.",
-    "en": "[TRADUZIR: Calcula o peso cubado de um volume e compara com o peso real para o frete.]"
+    "en": "Calculates a package's dimensional weight and compares it with actual weight for shipping."
   },
   "intencoes": {
     "pt-BR": [
       "calcular peso cubado do frete"
     ],
     "en": [
-      "[TRADUZIR: calcular peso cubado do frete]"
+      "calculate dimensional weight for shipping"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "frete"
     ],
     "en": [
-      "[TRADUZIR: peso volumétrico]",
-      "[TRADUZIR: peso cubado]",
-      "[TRADUZIR: frete]"
+      "dimensional weight",
+      "volumetric weight",
+      "shipping"
     ]
   },
   "relacionadas": [],

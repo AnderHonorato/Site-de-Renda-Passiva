@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Escala e proporção",
-    "en": "[TRADUZIR: Escala e proporção]"
+    "en": "Scale and proportion"
   },
   "descricao": {
     "pt-BR": "Redimensiona medidas mantendo proporção e converte escalas de planta.",
-    "en": "[TRADUZIR: Redimensiona medidas mantendo proporção e converte escalas de planta.]"
+    "en": "Resizes measurements while keeping proportion, and converts blueprint scales."
   },
   "intencoes": {
     "pt-BR": [
       "redimensionar mantendo proporção"
     ],
     "en": [
-      "[TRADUZIR: redimensionar mantendo proporção]"
+      "resize while keeping proportion"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "planta"
     ],
     "en": [
-      "[TRADUZIR: escala]",
-      "[TRADUZIR: proporção]",
-      "[TRADUZIR: planta]"
+      "scale",
+      "proportion",
+      "blueprint"
     ]
   },
   "relacionadas": [],

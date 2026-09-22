@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Testador de expressão regular",
-    "en": "[TRADUZIR: Testador de expressão regular]"
+    "en": "Regex tester"
   },
   "descricao": {
     "pt-BR": "Testa padrões com destaque das correspondências, grupos e substituição.",
-    "en": "[TRADUZIR: Testa padrões com destaque das correspondências, grupos e substituição.]"
+    "en": "Tests regex patterns with highlighted matches, groups, and substitution."
   },
   "intencoes": {
     "pt-BR": [
       "testar regex"
     ],
     "en": [
-      "[TRADUZIR: testar regex]"
+      "test a regex"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "expressão regular"
     ],
     "en": [
-      "[TRADUZIR: regex]",
-      "[TRADUZIR: expressão regular]"
+      "regex",
+      "regular expression"
     ]
   },
   "relacionadas": [],

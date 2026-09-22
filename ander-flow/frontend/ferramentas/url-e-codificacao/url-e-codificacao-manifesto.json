@@ -8,18 +8,18 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Codificador de URL e HTML",
-    "en": "[TRADUZIR: Codificador de URL e HTML]"
+    "en": "URL and HTML encoder"
   },
   "descricao": {
     "pt-BR": "Codifica e decodifica URL, parâmetros de consulta e entidades HTML.",
-    "en": "[TRADUZIR: Codifica e decodifica URL, parâmetros de consulta e entidades HTML.]"
+    "en": "Encodes and decodes URLs, query parameters, and HTML entities."
   },
   "intencoes": {
     "pt-BR": [
       "codificar url"
     ],
     "en": [
-      "[TRADUZIR: codificar url]"
+      "encode a url"
     ]
   },
   "etiquetas": {
@@ -30,7 +30,7 @@
     ],
     "en": [
       "url",
-      "[TRADUZIR: encode]",
+      "encode",
       "html"
     ]
   },

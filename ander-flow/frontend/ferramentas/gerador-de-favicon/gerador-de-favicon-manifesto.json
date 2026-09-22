@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Gerador de favicon",
-    "en": "[TRADUZIR: Gerador de favicon]"
+    "en": "Favicon generator"
   },
   "descricao": {
     "pt-BR": "Gera o favicon do site em vários tamanhos a partir de uma imagem.",
-    "en": "[TRADUZIR: Gera o favicon do site em vários tamanhos a partir de uma imagem.]"
+    "en": "Generates a site favicon in multiple sizes from an image."
   },
   "intencoes": {
     "pt-BR": [
       "gerar favicon do site"
     ],
     "en": [
-      "[TRADUZIR: gerar favicon do site]"
+      "generate a site favicon"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "ícone do site"
     ],
     "en": [
-      "[TRADUZIR: favicon]",
-      "[TRADUZIR: ícone do site]"
+      "favicon",
+      "site icon"
     ]
   },
   "relacionadas": [],

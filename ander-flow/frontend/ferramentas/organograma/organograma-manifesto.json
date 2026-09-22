@@ -8,18 +8,18 @@
   "ordem": 90,
   "nome": {
     "pt-BR": "Gerador de organograma",
-    "en": "[TRADUZIR: Gerador de organograma]"
+    "en": "Org chart generator"
   },
   "descricao": {
     "pt-BR": "Monta o organograma da equipe a partir dos cargos e das relações de hierarquia.",
-    "en": "[TRADUZIR: Monta o organograma da equipe a partir dos cargos e das relações de hierarquia.]"
+    "en": "Builds the team's org chart from job titles and reporting relationships."
   },
   "intencoes": {
     "pt-BR": [
       "montar organograma da empresa"
     ],
     "en": [
-      "[TRADUZIR: montar organograma da empresa]"
+      "build the company's org chart"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "estrutura"
     ],
     "en": [
-      "[TRADUZIR: organograma]",
-      "[TRADUZIR: hierarquia]",
-      "[TRADUZIR: estrutura]"
+      "org chart",
+      "hierarchy",
+      "structure"
     ]
   },
   "relacionadas": [],

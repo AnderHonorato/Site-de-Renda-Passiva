@@ -8,18 +8,18 @@
   "ordem": 120,
   "nome": {
     "pt-BR": "Folha de operações matemáticas",
-    "en": "[TRADUZIR: Folha de operações matemáticas]"
+    "en": "Math operations worksheet"
   },
   "descricao": {
     "pt-BR": "Gera folhas de adição, subtração, multiplicação e divisão, com gabarito separado.",
-    "en": "[TRADUZIR: Gera folhas de adição, subtração, multiplicação e divisão, com gabarito separado.]"
+    "en": "Generates addition, subtraction, multiplication, and division worksheets, with a separate answer key."
   },
   "intencoes": {
     "pt-BR": [
       "folha de continhas para treinar"
     ],
     "en": [
-      "[TRADUZIR: folha de continhas para treinar]"
+      "practice worksheet for basic math"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "exercício de matemática"
     ],
     "en": [
-      "[TRADUZIR: operações matemáticas]",
-      "[TRADUZIR: continhas]",
-      "[TRADUZIR: exercício de matemática]"
+      "math operations",
+      "arithmetic",
+      "math exercise"
     ]
   },
   "relacionadas": [],

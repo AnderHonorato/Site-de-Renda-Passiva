@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Romaneio de carga",
-    "en": "[TRADUZIR: Romaneio de carga]"
+    "en": "Packing list"
   },
   "descricao": {
     "pt-BR": "Monta o romaneio com os volumes, pesos e destinatários de uma expedição.",
-    "en": "[TRADUZIR: Monta o romaneio com os volumes, pesos e destinatários de uma expedição.]"
+    "en": "Builds a packing list with the packages, weights, and recipients of a shipment."
   },
   "intencoes": {
     "pt-BR": [
       "fazer romaneio de carga"
     ],
     "en": [
-      "[TRADUZIR: fazer romaneio de carga]"
+      "make a cargo packing list"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "carga"
     ],
     "en": [
-      "[TRADUZIR: romaneio]",
-      "[TRADUZIR: expedição]",
-      "[TRADUZIR: carga]"
+      "packing list",
+      "shipment",
+      "cargo"
     ]
   },
   "relacionadas": [],

@@ -8,18 +8,18 @@
   "ordem": 90,
   "nome": {
     "pt-BR": "Folha de caligrafia",
-    "en": "[TRADUZIR: Folha de caligrafia]"
+    "en": "Handwriting practice sheet"
   },
   "descricao": {
     "pt-BR": "Gera folhas de caligrafia com o texto escolhido e linhas-guia de base e altura.",
-    "en": "[TRADUZIR: Gera folhas de caligrafia com o texto escolhido e linhas-guia de base e altura.]"
+    "en": "Generates handwriting sheets with your chosen text and baseline/height guide lines."
   },
   "intencoes": {
     "pt-BR": [
       "folha de caligrafia personalizada"
     ],
     "en": [
-      "[TRADUZIR: folha de caligrafia personalizada]"
+      "custom handwriting practice sheet"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "treino de escrita"
     ],
     "en": [
-      "[TRADUZIR: caligrafia]",
-      "[TRADUZIR: letra cursiva]",
-      "[TRADUZIR: treino de escrita]"
+      "handwriting",
+      "cursive",
+      "writing practice"
     ]
   },
   "relacionadas": [],

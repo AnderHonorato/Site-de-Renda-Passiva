@@ -8,18 +8,18 @@
   "ordem": 110,
   "nome": {
     "pt-BR": "Bingo de números",
-    "en": "[TRADUZIR: Bingo de números]"
+    "en": "Number bingo"
   },
   "descricao": {
     "pt-BR": "Gera cartelas de bingo sem repetição, com lista de sorteio separada para conduzir o jogo.",
-    "en": "[TRADUZIR: Gera cartelas de bingo sem repetição, com lista de sorteio separada para conduzir o jogo.]"
+    "en": "Generates bingo cards with no repeats, plus a separate draw list to run the game."
   },
   "intencoes": {
     "pt-BR": [
       "gerar cartelas de bingo para a turma"
     ],
     "en": [
-      "[TRADUZIR: gerar cartelas de bingo para a turma]"
+      "generate bingo cards for the class"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "sorteio"
     ],
     "en": [
-      "[TRADUZIR: bingo]",
-      "[TRADUZIR: cartela]",
-      "[TRADUZIR: sorteio]"
+      "bingo",
+      "bingo card",
+      "draw"
     ]
   },
   "relacionadas": [],

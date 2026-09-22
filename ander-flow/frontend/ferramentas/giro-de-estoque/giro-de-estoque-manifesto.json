@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Giro de estoque",
-    "en": "[TRADUZIR: Giro de estoque]"
+    "en": "Inventory turnover"
   },
   "descricao": {
     "pt-BR": "Calcula quantas vezes o estoque girou no período e o tempo médio de permanência.",
-    "en": "[TRADUZIR: Calcula quantas vezes o estoque girou no período e o tempo médio de permanência.]"
+    "en": "Calculates how many times inventory turned over in the period and the average days on hand."
   },
   "intencoes": {
     "pt-BR": [
       "calcular giro de estoque"
     ],
     "en": [
-      "[TRADUZIR: calcular giro de estoque]"
+      "calculate inventory turnover"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "estoque médio"
     ],
     "en": [
-      "[TRADUZIR: giro de estoque]",
-      "[TRADUZIR: estoque médio]"
+      "inventory turnover",
+      "average inventory"
     ]
   },
   "relacionadas": [],

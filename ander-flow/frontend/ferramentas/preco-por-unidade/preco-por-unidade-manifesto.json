@@ -8,11 +8,11 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Preço por unidade",
-    "en": "[TRADUZIR: Preço por unidade]"
+    "en": "Price per unit"
   },
   "descricao": {
     "pt-BR": "Compara embalagens de tamanhos diferentes e mostra qual sai mais barata de verdade.",
-    "en": "[TRADUZIR: Compara embalagens de tamanhos diferentes e mostra qual sai mais barata de verdade.]"
+    "en": "Compares packages of different sizes and shows which one is actually cheaper."
   },
   "intencoes": {
     "pt-BR": [
@@ -21,9 +21,9 @@
       "comparar preços de embalagens"
     ],
     "en": [
-      "[TRADUZIR: qual embalagem compensa]",
-      "[TRADUZIR: preço por quilo]",
-      "[TRADUZIR: comparar preços de embalagens]"
+      "which package is the better deal",
+      "price per kilogram",
+      "compare package prices"
     ]
   },
   "etiquetas": {
@@ -35,11 +35,11 @@
       "supermercado"
     ],
     "en": [
-      "[TRADUZIR: comparar preço]",
-      "[TRADUZIR: embalagem]",
-      "[TRADUZIR: custo por kg]",
-      "[TRADUZIR: litro]",
-      "[TRADUZIR: supermercado]"
+      "compare price",
+      "package",
+      "cost per kg",
+      "liter",
+      "grocery shopping"
     ]
   },
   "relacionadas": [],

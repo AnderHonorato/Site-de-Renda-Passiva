@@ -8,11 +8,11 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Divisão de contas",
-    "en": "[TRADUZIR: Divisão de contas]"
+    "en": "Splitting the bill"
   },
   "descricao": {
     "pt-BR": "Quem pagou o quê, quanto cada um deve e o menor número de transferências para acertar.",
-    "en": "[TRADUZIR: Quem pagou o quê, quanto cada um deve e o menor número de transferências para acertar.]"
+    "en": "Who paid for what, how much each person owes, and the fewest transfers needed to settle up."
   },
   "intencoes": {
     "pt-BR": [
@@ -21,9 +21,9 @@
       "quem deve pra quem"
     ],
     "en": [
-      "[TRADUZIR: rachar a conta]",
-      "[TRADUZIR: dividir despesas da viagem]",
-      "[TRADUZIR: quem deve pra quem]"
+      "split the bill",
+      "split trip expenses",
+      "who owes who"
     ]
   },
   "etiquetas": {
@@ -35,11 +35,11 @@
       "viagem"
     ],
     "en": [
-      "[TRADUZIR: rachar]",
-      "[TRADUZIR: dividir conta]",
-      "[TRADUZIR: rateio]",
-      "[TRADUZIR: despesas]",
-      "[TRADUZIR: viagem]"
+      "split the bill",
+      "divide expenses",
+      "cost sharing",
+      "expenses",
+      "trip"
     ]
   },
   "relacionadas": [],

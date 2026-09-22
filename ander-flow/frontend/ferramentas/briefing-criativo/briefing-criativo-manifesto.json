@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Briefing criativo",
-    "en": "[TRADUZIR: Briefing criativo]"
+    "en": "Creative brief"
   },
   "descricao": {
     "pt-BR": "Organiza objetivo, público, tom e referências antes de pedir uma peça de conteúdo.",
-    "en": "[TRADUZIR: Organiza objetivo, público, tom e referências antes de pedir uma peça de conteúdo.]"
+    "en": "Organizes goal, audience, tone, and references before commissioning a piece of content."
   },
   "intencoes": {
     "pt-BR": [
       "fazer um briefing para o designer"
     ],
     "en": [
-      "[TRADUZIR: fazer um briefing para o designer]"
+      "write a brief for the designer"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "criação"
     ],
     "en": [
-      "[TRADUZIR: briefing]",
-      "[TRADUZIR: conteúdo]",
-      "[TRADUZIR: criação]"
+      "creative brief",
+      "content",
+      "design"
     ]
   },
   "relacionadas": [],

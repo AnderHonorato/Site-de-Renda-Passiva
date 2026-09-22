@@ -8,18 +8,18 @@
   "ordem": 90,
   "nome": {
     "pt-BR": "Papel de parede",
-    "en": "[TRADUZIR: Papel de parede]"
+    "en": "Wallpaper calculator"
   },
   "descricao": {
     "pt-BR": "Calcula faixas e rolos de papel de parede considerando a altura e a repetição da estampa.",
-    "en": "[TRADUZIR: Calcula faixas e rolos de papel de parede considerando a altura e a repetição da estampa.]"
+    "en": "Calculates wallpaper strips and rolls needed, accounting for wall height and pattern repeat."
   },
   "intencoes": {
     "pt-BR": [
       "quantos rolos de papel de parede comprar"
     ],
     "en": [
-      "[TRADUZIR: quantos rolos de papel de parede comprar]"
+      "how many rolls of wallpaper to buy"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "revestimento de parede"
     ],
     "en": [
-      "[TRADUZIR: papel de parede]",
-      "[TRADUZIR: revestimento de parede]"
+      "wallpaper",
+      "wall covering"
     ]
   },
   "relacionadas": [],

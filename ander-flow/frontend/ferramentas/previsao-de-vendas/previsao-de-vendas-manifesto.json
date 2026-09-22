@@ -8,11 +8,11 @@
   "ordem": 110,
   "nome": {
     "pt-BR": "Previsão de vendas",
-    "en": "[TRADUZIR: Previsão de vendas]"
+    "en": "Sales forecast"
   },
   "descricao": {
     "pt-BR": "Projeta as vendas dos próximos meses a partir do histórico e de uma taxa de crescimento.",
-    "en": "[TRADUZIR: Projeta as vendas dos próximos meses a partir do histórico e de uma taxa de crescimento.]"
+    "en": "Projects the coming months' sales from historical data and a growth rate."
   },
   "intencoes": {
     "pt-BR": [

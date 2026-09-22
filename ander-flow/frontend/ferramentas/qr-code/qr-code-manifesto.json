@@ -8,18 +8,18 @@
   "ordem": 90,
   "nome": {
     "pt-BR": "Gerador de QR Code",
-    "en": "[TRADUZIR: Gerador de QR Code]"
+    "en": "QR code generator"
   },
   "descricao": {
     "pt-BR": "QR Code de link, texto, Wi-Fi ou contato, com download em PNG e SVG.",
-    "en": "[TRADUZIR: QR Code de link, texto, Wi-Fi ou contato, com download em PNG e SVG.]"
+    "en": "QR code for a link, text, Wi-Fi, or contact, downloadable as PNG and SVG."
   },
   "intencoes": {
     "pt-BR": [
       "gerar qr code"
     ],
     "en": [
-      "[TRADUZIR: gerar qr code]"
+      "generate a qr code"
     ]
   },
   "etiquetas": {
@@ -30,10 +30,10 @@
       "contato"
     ],
     "en": [
-      "[TRADUZIR: qr code]",
-      "[TRADUZIR: wifi]",
-      "[TRADUZIR: link]",
-      "[TRADUZIR: contato]"
+      "qr code",
+      "wifi",
+      "link",
+      "contact"
     ]
   },
   "relacionadas": [],

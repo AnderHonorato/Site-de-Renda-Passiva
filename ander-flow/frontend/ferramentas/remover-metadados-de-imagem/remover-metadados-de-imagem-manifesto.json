@@ -8,11 +8,11 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Remover metadados da imagem",
-    "en": "[TRADUZIR: Remover metadados da imagem]"
+    "en": "Remove image metadata"
   },
   "descricao": {
     "pt-BR": "Apaga dados de localização, câmera e data escondidos dentro do arquivo da foto.",
-    "en": "[TRADUZIR: Apaga dados de localização, câmera e data escondidos dentro do arquivo da foto.]"
+    "en": "Erases location, camera, and date data hidden inside the photo file."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "remover exif"
     ],
     "en": [
-      "[TRADUZIR: tirar localização da foto]",
-      "[TRADUZIR: remover exif]"
+      "remove location data from a photo",
+      "remove exif data"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "privacidade da foto"
     ],
     "en": [
-      "[TRADUZIR: metadados]",
-      "[TRADUZIR: exif]",
-      "[TRADUZIR: privacidade da foto]"
+      "metadata",
+      "exif",
+      "photo privacy"
     ]
   },
   "relacionadas": [],

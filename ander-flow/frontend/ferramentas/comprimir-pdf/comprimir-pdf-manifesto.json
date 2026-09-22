@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Comprimir PDF",
-    "en": "[TRADUZIR: Comprimir PDF]"
+    "en": "Compress PDF"
   },
   "descricao": {
     "pt-BR": "Reduz o tamanho do arquivo PDF recomprimindo as imagens internas.",
-    "en": "[TRADUZIR: Reduz o tamanho do arquivo PDF recomprimindo as imagens internas.]"
+    "en": "Reduces PDF file size by recompressing the images inside it."
   },
   "intencoes": {
     "pt-BR": [
       "diminuir tamanho do pdf"
     ],
     "en": [
-      "[TRADUZIR: diminuir tamanho do pdf]"
+      "reduce PDF file size"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "reduzir tamanho"
     ],
     "en": [
-      "[TRADUZIR: comprimir pdf]",
-      "[TRADUZIR: reduzir tamanho]"
+      "compress pdf",
+      "reduce size"
     ]
   },
   "relacionadas": [],

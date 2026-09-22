@@ -8,18 +8,18 @@
   "ordem": 160,
   "nome": {
     "pt-BR": "Planejador de festa infantil",
-    "en": "[TRADUZIR: Planejador de festa infantil]"
+    "en": "Kids' party planner"
   },
   "descricao": {
     "pt-BR": "Organiza salgados, doces, bolo e bebidas de uma festa infantil por número de convidados.",
-    "en": "[TRADUZIR: Organiza salgados, doces, bolo e bebidas de uma festa infantil por número de convidados.]"
+    "en": "Plans savory snacks, sweets, cake, and drinks for a kids' party based on guest count."
   },
   "intencoes": {
     "pt-BR": [
       "quanto salgado comprar para festa infantil"
     ],
     "en": [
-      "[TRADUZIR: quanto salgado comprar para festa infantil]"
+      "how many snacks to buy for a kids' party"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "quantidade de comida"
     ],
     "en": [
-      "[TRADUZIR: festa infantil]",
-      "[TRADUZIR: aniversário]",
-      "[TRADUZIR: quantidade de comida]"
+      "kids' party",
+      "birthday party",
+      "food quantity"
     ]
   },
   "relacionadas": [],

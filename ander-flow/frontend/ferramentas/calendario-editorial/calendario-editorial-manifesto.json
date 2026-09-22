@@ -8,18 +8,18 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Calendário editorial",
-    "en": "[TRADUZIR: Calendário editorial]"
+    "en": "Content calendar"
   },
   "descricao": {
     "pt-BR": "Organiza os posts do mês por data, rede social e status de produção.",
-    "en": "[TRADUZIR: Organiza os posts do mês por data, rede social e status de produção.]"
+    "en": "Organizes the month's posts by date, social network, and production status."
   },
   "intencoes": {
     "pt-BR": [
       "planejar postagens do mês"
     ],
     "en": [
-      "[TRADUZIR: planejar postagens do mês]"
+      "plan the month's posts"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "rede social"
     ],
     "en": [
-      "[TRADUZIR: calendário editorial]",
-      "[TRADUZIR: conteúdo]",
-      "[TRADUZIR: rede social]"
+      "content calendar",
+      "content",
+      "social media"
     ]
   },
   "relacionadas": [],

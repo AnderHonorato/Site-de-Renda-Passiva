@@ -8,18 +8,18 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Flashcards",
-    "en": "[TRADUZIR: Flashcards]"
+    "en": "Flashcards"
   },
   "descricao": {
     "pt-BR": "Cria flashcards com pergunta na frente e resposta no verso, para cortar e estudar.",
-    "en": "[TRADUZIR: Cria flashcards com pergunta na frente e resposta no verso, para cortar e estudar.]"
+    "en": "Creates flashcards with a question on the front and answer on the back, ready to cut and study."
   },
   "intencoes": {
     "pt-BR": [
       "criar flashcards para estudar"
     ],
     "en": [
-      "[TRADUZIR: criar flashcards para estudar]"
+      "create flashcards to study"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "estudo"
     ],
     "en": [
-      "[TRADUZIR: flashcards]",
-      "[TRADUZIR: memorização]",
-      "[TRADUZIR: estudo]"
+      "flashcards",
+      "memorization",
+      "studying"
     ]
   },
   "relacionadas": [],

@@ -8,11 +8,11 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Maiúsculas e minúsculas",
-    "en": "[TRADUZIR: Maiúsculas e minúsculas]"
+    "en": "Uppercase and lowercase"
   },
   "descricao": {
     "pt-BR": "Converte o texto para maiúsculas, minúsculas, Cada Palavra ou frase normal.",
-    "en": "[TRADUZIR: Converte o texto para maiúsculas, minúsculas, Cada Palavra ou frase normal.]"
+    "en": "Converts text to uppercase, lowercase, Title Case, or normal sentence case."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "tirar caixa alta"
     ],
     "en": [
-      "transform text to uppercase",
-      "remove uppercase letters"
+      "convert text to uppercase",
+      "turn off all caps"
     ]
   },
   "etiquetas": {
@@ -34,8 +34,8 @@
     "en": [
       "uppercase",
       "lowercase",
-      "uppercase letters",
-      "title"
+      "all caps",
+      "title case"
     ]
   },
   "relacionadas": [],

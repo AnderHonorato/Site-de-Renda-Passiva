@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Salário líquido estimado",
-    "en": "[TRADUZIR: Salário líquido estimado]"
+    "en": "Estimated net salary"
   },
   "descricao": {
     "pt-BR": "Estima o salário líquido a partir do bruto, descontando INSS e IRRF pela tabela vigente.",
-    "en": "[TRADUZIR: Estima o salário líquido a partir do bruto, descontando INSS e IRRF pela tabela vigente.]"
+    "en": "Estimates net salary from gross pay, deducting INSS (Brazilian social security) and IRRF (Brazilian income tax withholding) under the current tables."
   },
   "intencoes": {
     "pt-BR": [
       "quanto sobra do salário depois do desconto"
     ],
     "en": [
-      "[TRADUZIR: quanto sobra do salário depois do desconto]"
+      "how much is left of my salary after deductions"
     ]
   },
   "etiquetas": {
@@ -30,10 +30,10 @@
       "holerite"
     ],
     "en": [
-      "[TRADUZIR: salário líquido]",
-      "[TRADUZIR: inss]",
-      "[TRADUZIR: irrf]",
-      "[TRADUZIR: holerite]"
+      "net salary",
+      "INSS (Brazilian social security)",
+      "IRRF (Brazilian income tax)",
+      "pay stub"
     ]
   },
   "relacionadas": [],

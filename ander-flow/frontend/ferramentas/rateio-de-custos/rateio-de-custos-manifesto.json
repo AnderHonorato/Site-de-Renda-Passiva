@@ -8,18 +8,18 @@
   "ordem": 80,
   "nome": {
     "pt-BR": "Rateio de custos",
-    "en": "[TRADUZIR: Rateio de custos]"
+    "en": "Cost allocation"
   },
   "descricao": {
     "pt-BR": "Distribui um custo comum entre setores, produtos ou pessoas por critério escolhido.",
-    "en": "[TRADUZIR: Distribui um custo comum entre setores, produtos ou pessoas por critério escolhido.]"
+    "en": "Distributes a shared cost across departments, products, or people by a chosen criterion."
   },
   "intencoes": {
     "pt-BR": [
       "dividir custo entre setores"
     ],
     "en": [
-      "[TRADUZIR: dividir custo entre setores]"
+      "split a cost across departments"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "proporcional"
     ],
     "en": [
-      "[TRADUZIR: rateio]",
-      "[TRADUZIR: custo indireto]",
-      "[TRADUZIR: proporcional]"
+      "cost allocation",
+      "overhead cost",
+      "proportional"
     ]
   },
   "relacionadas": [],

@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Modelo de resumo esquemático",
-    "en": "[TRADUZIR: Modelo de resumo esquemático]"
+    "en": "Outline summary template"
   },
   "descricao": {
     "pt-BR": "Organiza um resumo de estudo em tópicos, palavras-chave e perguntas de revisão.",
-    "en": "[TRADUZIR: Organiza um resumo de estudo em tópicos, palavras-chave e perguntas de revisão.]"
+    "en": "Organizes a study summary into topics, keywords, and review questions."
   },
   "intencoes": {
     "pt-BR": [
       "fazer um resumo esquemático para estudar"
     ],
     "en": [
-      "[TRADUZIR: fazer um resumo esquemático para estudar]"
+      "make an outline summary to study"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "revisão"
     ],
     "en": [
-      "[TRADUZIR: resumo]",
-      "[TRADUZIR: anotação]",
-      "[TRADUZIR: revisão]"
+      "summary",
+      "notes",
+      "review"
     ]
   },
   "relacionadas": [],

@@ -8,18 +8,18 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Ponto de reposição",
-    "en": "[TRADUZIR: Ponto de reposição]"
+    "en": "Reorder point"
   },
   "descricao": {
     "pt-BR": "Calcula em qual quantidade fazer o novo pedido para não zerar o estoque.",
-    "en": "[TRADUZIR: Calcula em qual quantidade fazer o novo pedido para não zerar o estoque.]"
+    "en": "Calculates the quantity at which to reorder so stock never runs out."
   },
   "intencoes": {
     "pt-BR": [
       "quando fazer o próximo pedido de estoque"
     ],
     "en": [
-      "[TRADUZIR: quando fazer o próximo pedido de estoque]"
+      "when to place the next stock order"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "pedido de compra"
     ],
     "en": [
-      "[TRADUZIR: ponto de reposição]",
-      "[TRADUZIR: pedido de compra]"
+      "reorder point",
+      "purchase order"
     ]
   },
   "relacionadas": [],

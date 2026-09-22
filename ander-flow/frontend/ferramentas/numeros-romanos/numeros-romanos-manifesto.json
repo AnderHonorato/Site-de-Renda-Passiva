@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Números romanos",
-    "en": "[TRADUZIR: Números romanos]"
+    "en": "Roman numerals"
   },
   "descricao": {
     "pt-BR": "Converte entre algarismos romanos e decimais, validando a grafia.",
-    "en": "[TRADUZIR: Converte entre algarismos romanos e decimais, validando a grafia.]"
+    "en": "Converts between Roman numerals and decimal numbers, validating the spelling."
   },
   "intencoes": {
     "pt-BR": [
       "converter número romano"
     ],
     "en": [
-      "[TRADUZIR: converter número romano]"
+      "convert a roman numeral"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "algarismo"
     ],
     "en": [
-      "[TRADUZIR: romano]",
-      "[TRADUZIR: algarismo]"
+      "roman numeral",
+      "numeral"
     ]
   },
   "relacionadas": [],

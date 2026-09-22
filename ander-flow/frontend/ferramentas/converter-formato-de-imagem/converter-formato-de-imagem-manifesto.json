@@ -8,11 +8,11 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Converter formato de imagem",
-    "en": "[TRADUZIR: Converter formato de imagem]"
+    "en": "Convert image format"
   },
   "descricao": {
     "pt-BR": "Converte entre JPG, PNG, WebP e outros formatos de imagem.",
-    "en": "[TRADUZIR: Converte entre JPG, PNG, WebP e outros formatos de imagem.]"
+    "en": "Converts between JPG, PNG, WebP, and other image formats."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "transformar imagem em webp"
     ],
     "en": [
-      "[TRADUZIR: converter png para jpg]",
-      "[TRADUZIR: transformar imagem em webp]"
+      "convert png to jpg",
+      "convert an image to webp"
     ]
   },
   "etiquetas": {
@@ -32,10 +32,10 @@
       "webp"
     ],
     "en": [
-      "[TRADUZIR: converter imagem]",
-      "[TRADUZIR: jpg]",
-      "[TRADUZIR: png]",
-      "[TRADUZIR: webp]"
+      "convert image",
+      "jpg",
+      "png",
+      "webp"
     ]
   },
   "relacionadas": [],

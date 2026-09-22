@@ -8,18 +8,18 @@
   "ordem": 130,
   "nome": {
     "pt-BR": "Molde de envelope",
-    "en": "[TRADUZIR: Molde de envelope]"
+    "en": "Envelope template"
   },
   "descricao": {
     "pt-BR": "Gera o molde de um envelope no tamanho certo para o cartão ou papel que ele vai guardar.",
-    "en": "[TRADUZIR: Gera o molde de um envelope no tamanho certo para o cartão ou papel que ele vai guardar.]"
+    "en": "Generates an envelope template sized to fit the card or paper it will hold."
   },
   "intencoes": {
     "pt-BR": [
       "fazer molde de envelope sob medida"
     ],
     "en": [
-      "[TRADUZIR: fazer molde de envelope sob medida]"
+      "make a custom-sized envelope template"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "papelaria"
     ],
     "en": [
-      "[TRADUZIR: envelope]",
-      "[TRADUZIR: molde]",
-      "[TRADUZIR: papelaria]"
+      "envelope",
+      "template",
+      "stationery"
     ]
   },
   "relacionadas": [],

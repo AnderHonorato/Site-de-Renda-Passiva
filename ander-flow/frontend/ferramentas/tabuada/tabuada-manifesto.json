@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Tabuada para imprimir",
-    "en": "[TRADUZIR: Tabuada para imprimir]"
+    "en": "Printable multiplication table"
   },
   "descricao": {
     "pt-BR": "Gera folhas de tabuada por fator, em ordem ou embaralhada, com gabarito separado.",
-    "en": "[TRADUZIR: Gera folhas de tabuada por fator, em ordem ou embaralhada, com gabarito separado.]"
+    "en": "Generates multiplication table worksheets by factor, in order or shuffled, with a separate answer key."
   },
   "intencoes": {
     "pt-BR": [
       "folha de tabuada para imprimir"
     ],
     "en": [
-      "[TRADUZIR: folha de tabuada para imprimir]"
+      "printable multiplication table worksheet"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "matemática"
     ],
     "en": [
-      "[TRADUZIR: tabuada]",
-      "[TRADUZIR: multiplicação]",
-      "mathematics"
+      "multiplication table",
+      "multiplication",
+      "math"
     ]
   },
   "relacionadas": [],

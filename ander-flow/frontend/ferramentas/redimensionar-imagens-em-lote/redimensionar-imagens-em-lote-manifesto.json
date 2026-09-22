@@ -8,18 +8,18 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Redimensionar imagens em lote",
-    "en": "[TRADUZIR: Redimensionar imagens em lote]"
+    "en": "Batch resize images"
   },
   "descricao": {
     "pt-BR": "Redimensiona várias imagens de uma vez para o tamanho ou peso desejado.",
-    "en": "[TRADUZIR: Redimensiona várias imagens de uma vez para o tamanho ou peso desejado.]"
+    "en": "Resizes several images at once to a target size or file weight."
   },
   "intencoes": {
     "pt-BR": [
       "redimensionar várias fotos de uma vez"
     ],
     "en": [
-      "[TRADUZIR: redimensionar várias fotos de uma vez]"
+      "resize several photos at once"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "tamanho"
     ],
     "en": [
-      "[TRADUZIR: redimensionar imagem]",
-      "[TRADUZIR: lote]",
-      "[TRADUZIR: tamanho]"
+      "resize image",
+      "batch",
+      "size"
     ]
   },
   "relacionadas": [],

@@ -8,11 +8,11 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Simulador de parcelamento",
-    "en": "[TRADUZIR: Simulador de parcelamento]"
+    "en": "Installment plan simulator"
   },
   "descricao": {
     "pt-BR": "Parcela pela Tabela Price, custo total do crédito e comparação com o pagamento à vista.",
-    "en": "[TRADUZIR: Parcela pela Tabela Price, custo total do crédito e comparação com o pagamento à vista.]"
+    "en": "Calculates installments using the Price Table method (constant-installment amortization), the total cost of credit, and a comparison with paying in cash."
   },
   "intencoes": {
     "pt-BR": [
@@ -21,9 +21,9 @@
       "quanto fica por mês"
     ],
     "en": [
-      "[TRADUZIR: vale a pena parcelar]",
-      "[TRADUZIR: calcular parcela]",
-      "[TRADUZIR: quanto fica por mês]"
+      "is it worth paying in installments",
+      "calculate the installment amount",
+      "how much per month"
     ]
   },
   "etiquetas": {
@@ -35,11 +35,11 @@
       "à vista"
     ],
     "en": [
-      "[TRADUZIR: parcela]",
-      "[TRADUZIR: financiamento]",
-      "[TRADUZIR: crediário]",
-      "[TRADUZIR: price]",
-      "[TRADUZIR: à vista]"
+      "installment",
+      "financing",
+      "installment credit",
+      "price table method",
+      "cash price"
     ]
   },
   "relacionadas": [],

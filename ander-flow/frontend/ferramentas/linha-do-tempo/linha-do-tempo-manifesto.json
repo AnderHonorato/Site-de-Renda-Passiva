@@ -8,18 +8,18 @@
   "ordem": 140,
   "nome": {
     "pt-BR": "Linha do tempo",
-    "en": "[TRADUZIR: Linha do tempo]"
+    "en": "Timeline"
   },
   "descricao": {
     "pt-BR": "Organiza eventos em ordem cronológica numa linha do tempo visual.",
-    "en": "[TRADUZIR: Organiza eventos em ordem cronológica numa linha do tempo visual.]"
+    "en": "Organizes events in chronological order on a visual timeline."
   },
   "intencoes": {
     "pt-BR": [
       "montar linha do tempo para o trabalho"
     ],
     "en": [
-      "[TRADUZIR: montar linha do tempo para o trabalho]"
+      "build a timeline for a project"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "história"
     ],
     "en": [
-      "[TRADUZIR: linha do tempo]",
-      "[TRADUZIR: cronologia]",
-      "[TRADUZIR: história]"
+      "timeline",
+      "chronology",
+      "history"
     ]
   },
   "relacionadas": [],

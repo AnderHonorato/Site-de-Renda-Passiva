@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Extrair texto do PDF",
-    "en": "[TRADUZIR: Extrair texto do PDF]"
+    "en": "Extract text from PDF"
   },
   "descricao": {
     "pt-BR": "Puxa o texto de um PDF para copiar ou editar, página por página.",
-    "en": "[TRADUZIR: Puxa o texto de um PDF para copiar ou editar, página por página.]"
+    "en": "Pulls the text out of a PDF to copy or edit, page by page."
   },
   "intencoes": {
     "pt-BR": [
       "copiar texto de um pdf"
     ],
     "en": [
-      "[TRADUZIR: copiar texto de um pdf]"
+      "copy text from a pdf"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "pdf para texto"
     ],
     "en": [
-      "[TRADUZIR: extrair texto do pdf]",
-      "[TRADUZIR: pdf para texto]"
+      "extract text from pdf",
+      "pdf to text"
     ]
   },
   "relacionadas": [],

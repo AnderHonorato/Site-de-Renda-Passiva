@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Conversor de moedas",
-    "en": "[TRADUZIR: Conversor de moedas]"
+    "en": "Currency converter"
   },
   "descricao": {
     "pt-BR": "Converte valores entre moedas com a cotação informada por você.",
-    "en": "[TRADUZIR: Converte valores entre moedas com a cotação informada por você.]"
+    "en": "Converts amounts between currencies using an exchange rate you enter."
   },
   "intencoes": {
     "pt-BR": [
       "converter dólar para real"
     ],
     "en": [
-      "[TRADUZIR: converter dólar para real]"
+      "convert dollars to reais"
     ]
   },
   "etiquetas": {
@@ -30,10 +30,10 @@
       "câmbio"
     ],
     "en": [
-      "[TRADUZIR: moeda]",
-      "[TRADUZIR: dólar]",
-      "[TRADUZIR: euro]",
-      "[TRADUZIR: câmbio]"
+      "currency",
+      "dollar",
+      "euro",
+      "exchange rate"
     ]
   },
   "relacionadas": [],

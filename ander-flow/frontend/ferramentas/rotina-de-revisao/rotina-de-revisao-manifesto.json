@@ -8,18 +8,18 @@
   "ordem": 150,
   "nome": {
     "pt-BR": "Rotina de revisão espaçada",
-    "en": "[TRADUZIR: Rotina de revisão espaçada]"
+    "en": "Spaced repetition review schedule"
   },
   "descricao": {
     "pt-BR": "Calcula as datas de revisão de um conteúdo pela repetição espaçada.",
-    "en": "[TRADUZIR: Calcula as datas de revisão de um conteúdo pela repetição espaçada.]"
+    "en": "Calculates review dates for a topic using spaced repetition."
   },
   "intencoes": {
     "pt-BR": [
       "quando devo revisar essa matéria"
     ],
     "en": [
-      "[TRADUZIR: quando devo revisar essa matéria]"
+      "when should I review this subject"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "repetição"
     ],
     "en": [
-      "[TRADUZIR: revisão espaçada]",
-      "[TRADUZIR: memorização]",
-      "[TRADUZIR: repetição]"
+      "spaced repetition",
+      "memorization",
+      "repetition"
     ]
   },
   "relacionadas": [],

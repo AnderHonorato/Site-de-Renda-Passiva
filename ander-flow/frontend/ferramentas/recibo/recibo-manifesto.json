@@ -8,11 +8,11 @@
   "ordem": 130,
   "nome": {
     "pt-BR": "Gerador de recibo",
-    "en": "[TRADUZIR: Gerador de recibo]"
+    "en": "Receipt generator"
   },
   "descricao": {
     "pt-BR": "Recibo de pagamento com valor por extenso, dados das partes e PDF pronto para assinar.",
-    "en": "[TRADUZIR: Recibo de pagamento com valor por extenso, dados das partes e PDF pronto para assinar.]"
+    "en": "Payment receipt with the amount spelled out in words, both parties' details, and a PDF ready to sign."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "comprovante de pagamento"
     ],
     "en": [
-      "[TRADUZIR: fazer um recibo]",
-      "[TRADUZIR: comprovante de pagamento]"
+      "make a receipt",
+      "proof of payment"
     ]
   },
   "etiquetas": {
@@ -32,10 +32,10 @@
       "assinatura"
     ],
     "en": [
-      "[TRADUZIR: recibo]",
-      "[TRADUZIR: pagamento]",
-      "[TRADUZIR: comprovante]",
-      "[TRADUZIR: assinatura]"
+      "receipt",
+      "payment",
+      "proof of payment",
+      "signature"
     ]
   },
   "relacionadas": [],

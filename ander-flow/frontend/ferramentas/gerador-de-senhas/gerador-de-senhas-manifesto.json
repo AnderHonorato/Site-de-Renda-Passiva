@@ -8,11 +8,11 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Gerador de senhas",
-    "en": "[TRADUZIR: Gerador de senhas]"
+    "en": "Password generator"
   },
   "descricao": {
     "pt-BR": "Senhas fortes, PIN, senha de Wi-Fi e frase-senha, com medidor de força real.",
-    "en": "[TRADUZIR: Senhas fortes, PIN, senha de Wi-Fi e frase-senha, com medidor de força real.]"
+    "en": "Strong passwords, PINs, Wi-Fi passwords, and passphrases, with a real strength meter."
   },
   "intencoes": {
     "pt-BR": [
@@ -21,9 +21,9 @@
       "senha do wifi"
     ],
     "en": [
-      "[TRADUZIR: criar senha forte]",
-      "[TRADUZIR: gerar pin]",
-      "[TRADUZIR: senha do wifi]"
+      "create a strong password",
+      "generate a pin",
+      "wifi password"
     ]
   },
   "etiquetas": {
@@ -35,11 +35,11 @@
       "aleatório"
     ],
     "en": [
-      "[TRADUZIR: senha]",
-      "[TRADUZIR: pin]",
-      "[TRADUZIR: wifi]",
+      "password",
+      "pin",
+      "wifi",
       "security",
-      "[TRADUZIR: aleatório]"
+      "random"
     ]
   },
   "relacionadas": [],

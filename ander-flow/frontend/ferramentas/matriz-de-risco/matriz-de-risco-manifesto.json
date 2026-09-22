@@ -8,18 +8,18 @@
   "ordem": 110,
   "nome": {
     "pt-BR": "Matriz de risco",
-    "en": "[TRADUZIR: Matriz de risco]"
+    "en": "Risk matrix"
   },
   "descricao": {
     "pt-BR": "Classifica riscos por probabilidade e impacto, numa grade de calor.",
-    "en": "[TRADUZIR: Classifica riscos por probabilidade e impacto, numa grade de calor.]"
+    "en": "Classifies risks by likelihood and impact on a heat-map grid."
   },
   "intencoes": {
     "pt-BR": [
       "montar matriz de risco do projeto"
     ],
     "en": [
-      "[TRADUZIR: montar matriz de risco do projeto]"
+      "build a project risk matrix"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "probabilidade e impacto"
     ],
     "en": [
-      "[TRADUZIR: matriz de risco]",
-      "[TRADUZIR: probabilidade e impacto]"
+      "risk matrix",
+      "likelihood and impact"
     ]
   },
   "relacionadas": [],

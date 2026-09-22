@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Remover linhas duplicadas",
-    "en": "[TRADUZIR: Remover linhas duplicadas]"
+    "en": "Remove duplicate lines"
   },
   "descricao": {
     "pt-BR": "Remove linhas repetidas de uma lista de texto, mantendo a primeira ocorrência.",
-    "en": "[TRADUZIR: Remove linhas repetidas de uma lista de texto, mantendo a primeira ocorrência.]"
+    "en": "Removes repeated lines from a text list, keeping the first occurrence."
   },
   "intencoes": {
     "pt-BR": [
       "tirar linhas repetidas da lista"
     ],
     "en": [
-      "remove duplicate lines from list"
+      "remove repeated lines from a list"
     ]
   },
   "etiquetas": {

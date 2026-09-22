@@ -8,11 +8,11 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Fluxo de caixa",
-    "en": "[TRADUZIR: Fluxo de caixa]"
+    "en": "Cash flow"
   },
   "descricao": {
     "pt-BR": "Entradas e saídas por período, saldo acumulado e projeção simples.",
-    "en": "[TRADUZIR: Entradas e saídas por período, saldo acumulado e projeção simples.]"
+    "en": "Income and expenses by period, running balance, and a simple projection."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "quando vou ficar no vermelho"
     ],
     "en": [
-      "[TRADUZIR: organizar meu caixa]",
-      "[TRADUZIR: quando vou ficar no vermelho]"
+      "organize my cash flow",
+      "when will I go into the red"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "contas a receber"
     ],
     "en": [
-      "[TRADUZIR: fluxo de caixa]",
-      "[TRADUZIR: contas a pagar]",
-      "[TRADUZIR: contas a receber]"
+      "cash flow",
+      "accounts payable",
+      "accounts receivable"
     ]
   },
   "relacionadas": [],

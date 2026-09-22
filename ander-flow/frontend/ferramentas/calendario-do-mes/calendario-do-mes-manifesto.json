@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Calendário para imprimir",
-    "en": "[TRADUZIR: Calendário para imprimir]"
+    "en": "Printable calendar"
   },
   "descricao": {
     "pt-BR": "Calendário mensal ou anual com feriados e espaço para anotações, em PDF.",
-    "en": "[TRADUZIR: Calendário mensal ou anual com feriados e espaço para anotações, em PDF.]"
+    "en": "Monthly or yearly calendar with holidays and space for notes, in PDF."
   },
   "intencoes": {
     "pt-BR": [
       "calendário para imprimir"
     ],
     "en": [
-      "[TRADUZIR: calendário para imprimir]"
+      "printable calendar"
     ]
   },
   "etiquetas": {
@@ -30,8 +30,8 @@
     ],
     "en": [
       "calendar",
-      "[TRADUZIR: imprimir]",
-      "[TRADUZIR: feriados]"
+      "print",
+      "holidays"
     ]
   },
   "relacionadas": [],

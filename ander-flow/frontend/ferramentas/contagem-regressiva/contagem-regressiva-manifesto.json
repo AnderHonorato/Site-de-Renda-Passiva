@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Contagem regressiva",
-    "en": "[TRADUZIR: Contagem regressiva]"
+    "en": "Countdown"
   },
   "descricao": {
     "pt-BR": "Acompanha quanto falta para uma data importante, com link para compartilhar.",
-    "en": "[TRADUZIR: Acompanha quanto falta para uma data importante, com link para compartilhar.]"
+    "en": "Tracks how much time is left until an important date, with a shareable link."
   },
   "intencoes": {
     "pt-BR": [
       "quanto falta para a data"
     ],
     "en": [
-      "[TRADUZIR: quanto falta para a data]"
+      "how much time is left until the date"
     ]
   },
   "etiquetas": {
@@ -28,7 +28,7 @@
       "prazo"
     ],
     "en": [
-      "[TRADUZIR: contagem regressiva]",
+      "countdown",
       "deadline"
     ]
   },

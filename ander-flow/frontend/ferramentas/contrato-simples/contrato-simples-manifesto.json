@@ -8,18 +8,18 @@
   "ordem": 80,
   "nome": {
     "pt-BR": "Contrato simples de prestação de serviço",
-    "en": "[TRADUZIR: Contrato simples de prestação de serviço]"
+    "en": "Simple service agreement"
   },
   "descricao": {
     "pt-BR": "Monta um contrato curto de prestação de serviço com objeto, valor e prazo.",
-    "en": "[TRADUZIR: Monta um contrato curto de prestação de serviço com objeto, valor e prazo.]"
+    "en": "Builds a short service agreement with scope, price, and deadline."
   },
   "intencoes": {
     "pt-BR": [
       "fazer um contrato simples de serviço"
     ],
     "en": [
-      "[TRADUZIR: fazer um contrato simples de serviço]"
+      "draft a simple service agreement"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "prestação de serviço"
     ],
     "en": [
-      "[TRADUZIR: contrato]",
-      "[TRADUZIR: prestação de serviço]"
+      "contract",
+      "service agreement"
     ]
   },
   "relacionadas": [],

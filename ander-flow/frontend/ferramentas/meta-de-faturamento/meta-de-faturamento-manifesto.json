@@ -8,18 +8,18 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Meta de faturamento",
-    "en": "[TRADUZIR: Meta de faturamento]"
+    "en": "Revenue target"
   },
   "descricao": {
     "pt-BR": "Quanto vender por dia, semana e vendedor para bater a meta do mês.",
-    "en": "[TRADUZIR: Quanto vender por dia, semana e vendedor para bater a meta do mês.]"
+    "en": "How much to sell per day, per week, and per salesperson to hit the month's target."
   },
   "intencoes": {
     "pt-BR": [
       "quanto preciso vender por dia"
     ],
     "en": [
-      "[TRADUZIR: quanto preciso vender por dia]"
+      "how much do I need to sell per day"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "faturamento"
     ],
     "en": [
-      "[TRADUZIR: meta]",
-      "billing"
+      "sales target",
+      "revenue"
     ]
   },
   "relacionadas": [],

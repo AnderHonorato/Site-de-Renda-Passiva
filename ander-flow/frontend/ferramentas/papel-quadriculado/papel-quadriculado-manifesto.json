@@ -8,18 +8,18 @@
   "ordem": 100,
   "nome": {
     "pt-BR": "Papel quadriculado para imprimir",
-    "en": "[TRADUZIR: Papel quadriculado para imprimir]"
+    "en": "Printable graph paper"
   },
   "descricao": {
     "pt-BR": "Gera papel quadriculado em tamanho real, com quadrado de calibração para conferir a impressão.",
-    "en": "[TRADUZIR: Gera papel quadriculado em tamanho real, com quadrado de calibração para conferir a impressão.]"
+    "en": "Generates true-to-scale graph paper, with a calibration square to check the print size."
   },
   "intencoes": {
     "pt-BR": [
       "papel quadriculado para imprimir"
     ],
     "en": [
-      "[TRADUZIR: papel quadriculado para imprimir]"
+      "printable graph paper"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "grade"
     ],
     "en": [
-      "[TRADUZIR: papel quadriculado]",
-      "[TRADUZIR: milimetrado]",
-      "[TRADUZIR: grade]"
+      "graph paper",
+      "grid paper",
+      "grid"
     ]
   },
   "relacionadas": [],

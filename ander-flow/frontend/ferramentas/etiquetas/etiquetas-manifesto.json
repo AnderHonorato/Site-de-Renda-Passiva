@@ -8,18 +8,18 @@
   "ordem": 120,
   "nome": {
     "pt-BR": "Etiquetas para imprimir",
-    "en": "[TRADUZIR: Etiquetas para imprimir]"
+    "en": "Printable labels"
   },
   "descricao": {
     "pt-BR": "Calcula quantas etiquetas de um tamanho cabem numa folha A4 e gera o PDF de corte.",
-    "en": "[TRADUZIR: Calcula quantas etiquetas de um tamanho cabem numa folha A4 e gera o PDF de corte.]"
+    "en": "Calculates how many labels of a given size fit on an A4 sheet and generates the cut-ready PDF."
   },
   "intencoes": {
     "pt-BR": [
       "imprimir etiquetas em folha a4"
     ],
     "en": [
-      "[TRADUZIR: imprimir etiquetas em folha a4]"
+      "print labels on an A4 sheet"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "imprimir"
     ],
     "en": [
-      "[TRADUZIR: etiquetas]",
-      "[TRADUZIR: rótulos]",
-      "[TRADUZIR: imprimir]"
+      "labels",
+      "stickers",
+      "print"
     ]
   },
   "relacionadas": [],

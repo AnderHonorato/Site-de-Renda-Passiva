@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Avaliação de desempenho",
-    "en": "[TRADUZIR: Avaliação de desempenho]"
+    "en": "Performance review"
   },
   "descricao": {
     "pt-BR": "Monta um formulário de avaliação por competências com nota e comentário.",
-    "en": "[TRADUZIR: Monta um formulário de avaliação por competências com nota e comentário.]"
+    "en": "Builds a competency-based review form with scores and comments."
   },
   "intencoes": {
     "pt-BR": [
       "fazer avaliação de desempenho do funcionário"
     ],
     "en": [
-      "[TRADUZIR: fazer avaliação de desempenho do funcionário]"
+      "do an employee performance review"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "feedback"
     ],
     "en": [
-      "[TRADUZIR: avaliação de desempenho]",
-      "[TRADUZIR: competências]",
-      "[TRADUZIR: feedback]"
+      "performance review",
+      "competencies",
+      "feedback"
     ]
   },
   "relacionadas": [],

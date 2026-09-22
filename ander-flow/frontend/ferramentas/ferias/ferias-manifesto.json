@@ -8,11 +8,11 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Cálculo de férias",
-    "en": "[TRADUZIR: Cálculo de férias]"
+    "en": "Vacation pay calculation"
   },
   "descricao": {
     "pt-BR": "Calcula o valor das férias com um terço constitucional e o abono pecuniário.",
-    "en": "[TRADUZIR: Calcula o valor das férias com um terço constitucional e o abono pecuniário.]"
+    "en": "Calculates vacation pay including the one-third constitutional bonus and the cash-out option (abono pecuniário), as set by Brazilian labor law."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "quanto vou receber de férias"
     ],
     "en": [
-      "[TRADUZIR: calcular valor das férias]",
-      "[TRADUZIR: quanto vou receber de férias]"
+      "calculate vacation pay",
+      "how much will I get for vacation"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "um terço"
     ],
     "en": [
-      "[TRADUZIR: férias]",
-      "[TRADUZIR: abono pecuniário]",
-      "[TRADUZIR: um terço]"
+      "vacation pay",
+      "abono pecuniário (cash-out bonus)",
+      "one-third constitutional bonus"
     ]
   },
   "relacionadas": [],

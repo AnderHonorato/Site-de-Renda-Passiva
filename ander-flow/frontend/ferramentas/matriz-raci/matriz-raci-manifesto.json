@@ -8,18 +8,18 @@
   "ordem": 120,
   "nome": {
     "pt-BR": "Matriz RACI",
-    "en": "[TRADUZIR: Matriz RACI]"
+    "en": "RACI matrix"
   },
   "descricao": {
     "pt-BR": "Define quem é responsável, aprovador, consultado e informado em cada atividade.",
-    "en": "[TRADUZIR: Define quem é responsável, aprovador, consultado e informado em cada atividade.]"
+    "en": "Defines who is responsible, accountable, consulted, and informed for each activity."
   },
   "intencoes": {
     "pt-BR": [
       "montar matriz raci"
     ],
     "en": [
-      "[TRADUZIR: montar matriz raci]"
+      "build a raci matrix"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "papéis do projeto"
     ],
     "en": [
-      "[TRADUZIR: raci]",
-      "[TRADUZIR: responsabilidades]",
-      "[TRADUZIR: papéis do projeto]"
+      "raci",
+      "responsibilities",
+      "project roles"
     ]
   },
   "relacionadas": [],

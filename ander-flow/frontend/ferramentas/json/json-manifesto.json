@@ -8,11 +8,11 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "JSON: validar e formatar",
-    "en": "[TRADUZIR: JSON: validar e formatar]"
+    "en": "JSON validator and formatter"
   },
   "descricao": {
     "pt-BR": "Valida, indenta, minifica, ordena chaves e aponta o erro com linha e coluna.",
-    "en": "[TRADUZIR: Valida, indenta, minifica, ordena chaves e aponta o erro com linha e coluna.]"
+    "en": "Validates, indents, minifies, sorts keys, and points out errors by line and column."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,7 +20,7 @@
       "formatar json"
     ],
     "en": [
-      "[TRADUZIR: meu json está inválido]",
+      "my json is invalid",
       "format json"
     ]
   },
@@ -33,9 +33,9 @@
     ],
     "en": [
       "json",
-      "[TRADUZIR: formatar]",
-      "[TRADUZIR: validar]",
-      "[TRADUZIR: api]"
+      "format",
+      "validate",
+      "api"
     ]
   },
   "relacionadas": [],

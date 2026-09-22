@@ -8,11 +8,11 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Número por extenso",
-    "en": "[TRADUZIR: Número por extenso]"
+    "en": "Numbers in words"
   },
   "descricao": {
     "pt-BR": "Escreve números e valores em reais por extenso, para recibos e contratos.",
-    "en": "[TRADUZIR: Escreve números e valores em reais por extenso, para recibos e contratos.]"
+    "en": "Spells out numbers and amounts in reais as words, for receipts and contracts."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "número por extenso"
     ],
     "en": [
-      "[TRADUZIR: escrever valor por extenso]",
-      "[TRADUZIR: número por extenso]"
+      "spell out an amount in words",
+      "numbers in words"
     ]
   },
   "etiquetas": {
@@ -33,11 +33,11 @@
       "reais"
     ],
     "en": [
-      "[TRADUZIR: extenso]",
-      "[TRADUZIR: recibo]",
-      "[TRADUZIR: cheque]",
-      "[TRADUZIR: contrato]",
-      "[TRADUZIR: reais]"
+      "spelled out",
+      "receipt",
+      "check",
+      "contract",
+      "reais"
     ]
   },
   "relacionadas": [],

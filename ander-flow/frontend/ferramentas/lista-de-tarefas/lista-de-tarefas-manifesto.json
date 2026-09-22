@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Lista de tarefas",
-    "en": "[TRADUZIR: Lista de tarefas]"
+    "en": "Task list"
   },
   "descricao": {
     "pt-BR": "Organiza tarefas por prioridade e prazo, com marcação de concluído.",
-    "en": "[TRADUZIR: Organiza tarefas por prioridade e prazo, com marcação de concluído.]"
+    "en": "Organizes tasks by priority and deadline, with a done checkbox."
   },
   "intencoes": {
     "pt-BR": [
       "organizar minhas tarefas do dia"
     ],
     "en": [
-      "[TRADUZIR: organizar minhas tarefas do dia]"
+      "organize my tasks for the day"
     ]
   },
   "etiquetas": {
@@ -30,8 +30,8 @@
     ],
     "en": [
       "task list",
-      "[TRADUZIR: to-do]",
-      "[TRADUZIR: prioridade]"
+      "to-do",
+      "priority"
     ]
   },
   "relacionadas": [],

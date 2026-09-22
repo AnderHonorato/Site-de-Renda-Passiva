@@ -8,18 +8,18 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Estoque mínimo e de segurança",
-    "en": "[TRADUZIR: Estoque mínimo e de segurança]"
+    "en": "Minimum and safety stock"
   },
   "descricao": {
     "pt-BR": "Calcula o estoque mínimo e de segurança a partir do consumo e do prazo de reposição.",
-    "en": "[TRADUZIR: Calcula o estoque mínimo e de segurança a partir do consumo e do prazo de reposição.]"
+    "en": "Calculates minimum and safety stock from consumption rate and lead time."
   },
   "intencoes": {
     "pt-BR": [
       "calcular estoque mínimo"
     ],
     "en": [
-      "[TRADUZIR: calcular estoque mínimo]"
+      "calculate minimum stock level"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "estoque de segurança"
     ],
     "en": [
-      "[TRADUZIR: estoque mínimo]",
-      "[TRADUZIR: estoque de segurança]"
+      "minimum stock",
+      "safety stock"
     ]
   },
   "relacionadas": [],

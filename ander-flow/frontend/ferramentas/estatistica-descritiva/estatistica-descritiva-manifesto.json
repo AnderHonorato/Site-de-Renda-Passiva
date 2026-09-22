@@ -8,18 +8,18 @@
   "ordem": 30,
   "nome": {
     "pt-BR": "Estatística de uma coluna",
-    "en": "[TRADUZIR: Estatística de uma coluna]"
+    "en": "Column statistics"
   },
   "descricao": {
     "pt-BR": "Média, mediana, moda, desvio padrão, quartis e detecção de valores fora da curva.",
-    "en": "[TRADUZIR: Média, mediana, moda, desvio padrão, quartis e detecção de valores fora da curva.]"
+    "en": "Mean, median, mode, standard deviation, quartiles, and outlier detection."
   },
   "intencoes": {
     "pt-BR": [
       "calcular média e desvio"
     ],
     "en": [
-      "[TRADUZIR: calcular média e desvio]"
+      "calculate mean and standard deviation"
     ]
   },
   "etiquetas": {
@@ -30,9 +30,9 @@
       "estatística"
     ],
     "en": [
-      "[TRADUZIR: média]",
-      "[TRADUZIR: mediana]",
-      "[TRADUZIR: desvio padrão]",
+      "mean",
+      "median",
+      "standard deviation",
       "statistics"
     ]
   },

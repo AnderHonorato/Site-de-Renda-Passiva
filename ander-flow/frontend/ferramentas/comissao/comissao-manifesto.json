@@ -8,11 +8,11 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Calculadora de comissão",
-    "en": "[TRADUZIR: Calculadora de comissão]"
+    "en": "Commission calculator"
   },
   "descricao": {
     "pt-BR": "Comissão simples, escalonada por faixa de meta e comissão líquida após descontos.",
-    "en": "[TRADUZIR: Comissão simples, escalonada por faixa de meta e comissão líquida após descontos.]"
+    "en": "Flat commission, tiered by sales target, and net commission after deductions."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "comissão escalonada"
     ],
     "en": [
-      "[TRADUZIR: calcular comissão]",
-      "[TRADUZIR: comissão escalonada]"
+      "calculate commission",
+      "tiered commission"
     ]
   },
   "etiquetas": {
@@ -31,9 +31,9 @@
       "meta"
     ],
     "en": [
-      "[TRADUZIR: comissão]",
-      "[TRADUZIR: vendedor]",
-      "[TRADUZIR: meta]"
+      "commission",
+      "salesperson",
+      "sales target"
     ]
   },
   "relacionadas": [],

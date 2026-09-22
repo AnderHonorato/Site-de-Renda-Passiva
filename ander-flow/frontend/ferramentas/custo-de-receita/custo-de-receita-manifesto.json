@@ -8,11 +8,11 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Custo de receita",
-    "en": "[TRADUZIR: Custo de receita]"
+    "en": "Recipe cost"
   },
   "descricao": {
     "pt-BR": "Calcula o custo total e por unidade de uma receita a partir dos ingredientes.",
-    "en": "[TRADUZIR: Calcula o custo total e por unidade de uma receita a partir dos ingredientes.]"
+    "en": "Calculates the total and per-unit cost of a recipe from its ingredients."
   },
   "intencoes": {
     "pt-BR": [
@@ -20,8 +20,8 @@
       "quanto custa fazer esse doce"
     ],
     "en": [
-      "[TRADUZIR: calcular custo da receita]",
-      "[TRADUZIR: quanto custa fazer esse doce]"
+      "calculate a recipe's cost",
+      "how much does it cost to make this dessert"
     ]
   },
   "etiquetas": {
@@ -36,14 +36,14 @@
       "cozinha"
     ],
     "en": [
-      "[TRADUZIR: custo de receita]",
-      "[TRADUZIR: ficha de custo]",
-      "[TRADUZIR: ingredientes]",
-      "[TRADUZIR: bolo]",
-      "[TRADUZIR: doce]",
-      "[TRADUZIR: salgado]",
-      "[TRADUZIR: confeitaria]",
-      "[TRADUZIR: cozinha]"
+      "recipe cost",
+      "cost sheet",
+      "ingredients",
+      "cake",
+      "dessert",
+      "savory snack",
+      "baking",
+      "cooking"
     ]
   },
   "relacionadas": [],

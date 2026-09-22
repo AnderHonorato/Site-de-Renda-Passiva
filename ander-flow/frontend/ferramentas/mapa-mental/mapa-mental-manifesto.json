@@ -8,18 +8,18 @@
   "ordem": 130,
   "nome": {
     "pt-BR": "Montador de mapa mental",
-    "en": "[TRADUZIR: Montador de mapa mental]"
+    "en": "Mind map builder"
   },
   "descricao": {
     "pt-BR": "Organiza um tema central e seus ramos em um mapa mental visual.",
-    "en": "[TRADUZIR: Organiza um tema central e seus ramos em um mapa mental visual.]"
+    "en": "Organizes a central topic and its branches into a visual mind map."
   },
   "intencoes": {
     "pt-BR": [
       "montar mapa mental para estudar"
     ],
     "en": [
-      "[TRADUZIR: montar mapa mental para estudar]"
+      "build a mind map to study"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "organização de ideias"
     ],
     "en": [
-      "[TRADUZIR: mapa mental]",
-      "[TRADUZIR: organização de ideias]"
+      "mind map",
+      "organizing ideas"
     ]
   },
   "relacionadas": [],

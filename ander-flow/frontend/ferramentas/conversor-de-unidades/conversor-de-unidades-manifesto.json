@@ -8,11 +8,11 @@
   "ordem": 20,
   "nome": {
     "pt-BR": "Conversor de unidades",
-    "en": "[TRADUZIR: Conversor de unidades]"
+    "en": "Unit converter"
   },
   "descricao": {
     "pt-BR": "Massa, comprimento, área, volume, temperatura, velocidade, tempo e dados digitais.",
-    "en": "[TRADUZIR: Massa, comprimento, área, volume, temperatura, velocidade, tempo e dados digitais.]"
+    "en": "Mass, length, area, volume, temperature, speed, time, and digital storage."
   },
   "intencoes": {
     "pt-BR": [
@@ -21,9 +21,9 @@
       "celsius para fahrenheit"
     ],
     "en": [
-      "[TRADUZIR: converter unidades]",
-      "[TRADUZIR: quantos gramas tem uma xícara]",
-      "[TRADUZIR: celsius para fahrenheit]"
+      "convert units",
+      "how many grams in a cup",
+      "celsius to fahrenheit"
     ]
   },
   "etiquetas": {
@@ -37,13 +37,13 @@
       "byte"
     ],
     "en": [
-      "[TRADUZIR: converter]",
-      "[TRADUZIR: metro]",
-      "[TRADUZIR: quilo]",
-      "[TRADUZIR: litro]",
-      "[TRADUZIR: celsius]",
-      "[TRADUZIR: polegada]",
-      "[TRADUZIR: byte]"
+      "convert",
+      "meter",
+      "kilogram",
+      "liter",
+      "celsius",
+      "inch",
+      "byte"
     ]
   },
   "relacionadas": [],

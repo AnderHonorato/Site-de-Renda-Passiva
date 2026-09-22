@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Escala de trabalho",
-    "en": "[TRADUZIR: Escala de trabalho]"
+    "en": "Work schedule"
   },
   "descricao": {
     "pt-BR": "Monta a escala da equipe por turno e folga, incluindo padrões como 12x36 e 6x1.",
-    "en": "[TRADUZIR: Monta a escala da equipe por turno e folga, incluindo padrões como 12x36 e 6x1.]"
+    "en": "Builds the team's shift and day-off schedule, including patterns like 12x36 and 6x1."
   },
   "intencoes": {
     "pt-BR": [
       "montar escala de trabalho da equipe"
     ],
     "en": [
-      "[TRADUZIR: montar escala de trabalho da equipe]"
+      "build the team's work schedule"
     ]
   },
   "etiquetas": {
@@ -30,10 +30,10 @@
       "folga"
     ],
     "en": [
-      "[TRADUZIR: escala]",
-      "[TRADUZIR: turno]",
-      "[TRADUZIR: 12x36]",
-      "[TRADUZIR: folga]"
+      "schedule",
+      "shift",
+      "12x36 shift",
+      "day off"
     ]
   },
   "relacionadas": [],

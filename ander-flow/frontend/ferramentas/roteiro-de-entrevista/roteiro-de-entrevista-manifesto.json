@@ -8,18 +8,18 @@
   "ordem": 70,
   "nome": {
     "pt-BR": "Roteiro de entrevista",
-    "en": "[TRADUZIR: Roteiro de entrevista]"
+    "en": "Interview script"
   },
   "descricao": {
     "pt-BR": "Monta o roteiro de perguntas da entrevista por competência avaliada.",
-    "en": "[TRADUZIR: Monta o roteiro de perguntas da entrevista por competência avaliada.]"
+    "en": "Builds an interview question script organized by the competency being assessed."
   },
   "intencoes": {
     "pt-BR": [
       "roteiro de perguntas para entrevista"
     ],
     "en": [
-      "[TRADUZIR: roteiro de perguntas para entrevista]"
+      "interview question script"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "recrutamento"
     ],
     "en": [
-      "[TRADUZIR: entrevista]",
-      "[TRADUZIR: roteiro]",
-      "[TRADUZIR: recrutamento]"
+      "interview",
+      "script",
+      "recruiting"
     ]
   },
   "relacionadas": [],

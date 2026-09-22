@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Comprimir imagem",
-    "en": "[TRADUZIR: Comprimir imagem]"
+    "en": "Compress image"
   },
   "descricao": {
     "pt-BR": "Reduz o peso da imagem controlando a qualidade, sem trocar o formato.",
-    "en": "[TRADUZIR: Reduz o peso da imagem controlando a qualidade, sem trocar o formato.]"
+    "en": "Reduces image file size by controlling quality, without changing the format."
   },
   "intencoes": {
     "pt-BR": [
       "deixar a imagem mais leve"
     ],
     "en": [
-      "[TRADUZIR: deixar a imagem mais leve]"
+      "make the image smaller"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "peso"
     ],
     "en": [
-      "[TRADUZIR: comprimir imagem]",
-      "[TRADUZIR: otimizar imagem]",
-      "[TRADUZIR: peso]"
+      "compress image",
+      "optimize image",
+      "file size"
     ]
   },
   "relacionadas": [],

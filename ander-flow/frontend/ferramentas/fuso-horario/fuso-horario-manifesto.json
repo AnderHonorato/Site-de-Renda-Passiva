@@ -8,18 +8,18 @@
   "ordem": 50,
   "nome": {
     "pt-BR": "Fuso horário e reunião",
-    "en": "[TRADUZIR: Fuso horário e reunião]"
+    "en": "Time zone and meeting scheduler"
   },
   "descricao": {
     "pt-BR": "Compara horários entre cidades e sugere janelas comuns para reunião.",
-    "en": "[TRADUZIR: Compara horários entre cidades e sugere janelas comuns para reunião.]"
+    "en": "Compares times between cities and suggests common windows for a meeting."
   },
   "intencoes": {
     "pt-BR": [
       "que horas são lá"
     ],
     "en": [
-      "[TRADUZIR: que horas são lá]"
+      "what time is it there"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "horário"
     ],
     "en": [
-      "[TRADUZIR: fuso]",
+      "time zone",
       "meeting",
-      "[TRADUZIR: horário]"
+      "time"
     ]
   },
   "relacionadas": [],

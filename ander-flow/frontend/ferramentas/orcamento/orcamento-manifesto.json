@@ -8,11 +8,11 @@
   "ordem": 10,
   "nome": {
     "pt-BR": "Orçamento e proposta",
-    "en": "[TRADUZIR: Orçamento e proposta]"
+    "en": "Quote and proposal"
   },
   "descricao": {
     "pt-BR": "Monta o orçamento com itens, desconto e validade; exporta PDF, planilha e link para o cliente.",
-    "en": "[TRADUZIR: Monta o orçamento com itens, desconto e validade; exporta PDF, planilha e link para o cliente.]"
+    "en": "Builds a quote with line items, discount, and validity period; exports as PDF, spreadsheet, and a link for the client."
   },
   "intencoes": {
     "pt-BR": [
@@ -21,9 +21,9 @@
       "orçamento em pdf"
     ],
     "en": [
-      "[TRADUZIR: fazer um orçamento]",
-      "[TRADUZIR: mandar proposta para o cliente]",
-      "[TRADUZIR: orçamento em pdf]"
+      "make a quote",
+      "send a proposal to a client",
+      "quote as a pdf"
     ]
   },
   "etiquetas": {
@@ -39,15 +39,15 @@
       "obra"
     ],
     "en": [
-      "[TRADUZIR: orçamento]",
-      "[TRADUZIR: proposta]",
-      "customer",
-      "[TRADUZIR: pdf]",
+      "quote",
+      "proposal",
+      "client",
+      "pdf",
       "excel",
-      "[TRADUZIR: encomenda]",
-      "[TRADUZIR: bolo]",
-      "[TRADUZIR: festa]",
-      "[TRADUZIR: obra]"
+      "custom order",
+      "cake",
+      "party",
+      "construction job"
     ]
   },
   "relacionadas": [],

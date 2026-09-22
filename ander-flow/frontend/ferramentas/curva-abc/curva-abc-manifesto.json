@@ -8,18 +8,18 @@
   "ordem": 40,
   "nome": {
     "pt-BR": "Curva ABC de produtos",
-    "en": "[TRADUZIR: Curva ABC de produtos]"
+    "en": "ABC product classification"
   },
   "descricao": {
     "pt-BR": "Classifica os produtos em A, B e C pela participação no faturamento ou saída.",
-    "en": "[TRADUZIR: Classifica os produtos em A, B e C pela participação no faturamento ou saída.]"
+    "en": "Classifies products into A, B, and C tiers by their share of revenue or sales volume."
   },
   "intencoes": {
     "pt-BR": [
       "fazer curva abc dos produtos"
     ],
     "en": [
-      "[TRADUZIR: fazer curva abc dos produtos]"
+      "run an ABC analysis of products"
     ]
   },
   "etiquetas": {
@@ -28,8 +28,8 @@
       "classificação de produtos"
     ],
     "en": [
-      "[TRADUZIR: curva abc]",
-      "[TRADUZIR: classificação de produtos]"
+      "abc analysis",
+      "product classification"
     ]
   },
   "relacionadas": [],

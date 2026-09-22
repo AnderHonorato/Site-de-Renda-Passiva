@@ -8,18 +8,18 @@
   "ordem": 60,
   "nome": {
     "pt-BR": "Gerador de certificado",
-    "en": "[TRADUZIR: Gerador de certificado]"
+    "en": "Certificate generator"
   },
   "descricao": {
     "pt-BR": "Monta certificados de participação ou conclusão com nome, curso e carga horária.",
-    "en": "[TRADUZIR: Monta certificados de participação ou conclusão com nome, curso e carga horária.]"
+    "en": "Builds certificates of participation or completion with name, course, and hours."
   },
   "intencoes": {
     "pt-BR": [
       "gerar certificado para os alunos"
     ],
     "en": [
-      "[TRADUZIR: gerar certificado para os alunos]"
+      "generate certificates for students"
     ]
   },
   "etiquetas": {
@@ -29,9 +29,9 @@
       "curso"
     ],
     "en": [
-      "[TRADUZIR: certificado]",
-      "[TRADUZIR: participação]",
-      "[TRADUZIR: curso]"
+      "certificate",
+      "participation",
+      "course"
     ]
   },
   "relacionadas": [],
