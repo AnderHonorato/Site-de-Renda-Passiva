@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <title data-texto="margem-de-contribuicao.titulo_pagina"></title>
+  <meta name="description" data-texto-content="margem-de-contribuicao.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/compartilhado/compartilhado-ferramenta.css">
+  <script type="module" src="/estatico/ferramentas/margem-de-contribuicao/margem-de-contribuicao.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo ferramenta">
+    <nav class="migalhas" data-texto-aria-label="compartilhado.ferramenta.migalhas_rotulo">
+      <ol>
+        <li><a href="/ferramentas" data-texto="compartilhado.cabecalho.ferramentas"></a></li>
+        <li><a href="/ferramentas?categoria=dinheiro" data-texto="compartilhado.categorias.dinheiro.nome"></a></li>
+        <li><span aria-current="page" data-texto="margem-de-contribuicao.titulo"></span></li>
+      </ol>
+    </nav>
+
+    <header class="ferramenta__cabecalho">
+      <div class="ferramenta__titulo-linha">
+        <h1 class="titulo-display titulo-display--2" data-texto="margem-de-contribuicao.titulo"></h1>
+        <button type="button" class="botao-icone" data-acao="favoritar">
+          <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-estrela"></use></svg>
+        </button>
+      </div>
+      <p class="texto-2 ferramenta__resumo" data-texto="margem-de-contribuicao.resumo"></p>
+      <p class="nota-local">
+        <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-cadeado"></use></svg>
+        <span data-texto="compartilhado.ferramenta.processamento_local"></span>
+      </p>
+    </header>
+
+    <div class="ferramenta__corpo">
+      <form class="ferramenta__formulario" novalidate>
+        <fieldset class="ferramenta__grupo">
+          <legend class="ferramenta__grupo-titulo" data-texto="margem-de-contribuicao.grupos.venda"></legend>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="margem-de-contribuicao.campos.preco"></span>
+            <span class="campo__controle">
+              <span class="campo__prefixo" aria-hidden="true" data-texto="compartilhado.simbolos.moeda"></span>
+              <input class="campo__entrada" id="campo-preco" type="text" inputmode="decimal" autocomplete="off"
+                     data-texto-aria-label="margem-de-contribuicao.campos.preco">
+            </span>
+            <span class="campo__erro" id="erro-preco" role="alert"></span>
+          </label>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="margem-de-contribuicao.campos.custo_variavel"></span>
+            <span class="campo__controle">
+              <span class="campo__prefixo" aria-hidden="true" data-texto="compartilhado.simbolos.moeda"></span>
+              <input class="campo__entrada" id="campo-custoVariavel" type="text" inputmode="decimal" autocomplete="off"
+                     data-texto-aria-label="margem-de-contribuicao.campos.custo_variavel">
+            </span>
+            <span class="campo__ajuda" data-texto="margem-de-contribuicao.campos.custo_variavel_ajuda"></span>
+            <span class="campo__erro" id="erro-custoVariavel" role="alert"></span>
+          </label>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="margem-de-contribuicao.campos.percentual"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" id="campo-percentualVariavel" type="text" inputmode="decimal" autocomplete="off"
+                     data-texto-aria-label="margem-de-contribuicao.campos.percentual">
+              <span class="campo__sufixo" aria-hidden="true" data-texto="compartilhado.simbolos.percentual"></span>
+            </span>
+            <span class="campo__ajuda" data-texto="margem-de-contribuicao.campos.percentual_ajuda"></span>
+            <span class="campo__erro" id="erro-percentualVariavel" role="alert"></span>
+          </label>
+        </fieldset>
+
+        <fieldset class="ferramenta__grupo">
+          <legend class="ferramenta__grupo-titulo" data-texto="margem-de-contribuicao.grupos.mes"></legend>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="margem-de-contribuicao.campos.quantidade"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" id="campo-quantidade" type="text" inputmode="numeric" autocomplete="off"
+                     data-texto-aria-label="margem-de-contribuicao.campos.quantidade">
+            </span>
+            <span class="campo__ajuda" data-texto="margem-de-contribuicao.campos.quantidade_ajuda"></span>
+            <span class="campo__erro" id="erro-quantidade" role="alert"></span>
+          </label>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="margem-de-contribuicao.campos.custos_fixos"></span>
+            <span class="campo__controle">
+              <span class="campo__prefixo" aria-hidden="true" data-texto="compartilhado.simbolos.moeda"></span>
+              <input class="campo__entrada" id="campo-custosFixos" type="text" inputmode="decimal" autocomplete="off"
+                     data-texto-aria-label="margem-de-contribuicao.campos.custos_fixos">
+            </span>
+            <span class="campo__ajuda" data-texto="margem-de-contribuicao.campos.custos_fixos_ajuda"></span>
+            <span class="campo__erro" id="erro-custosFixos" role="alert"></span>
+          </label>
+        </fieldset>
+
+        <div class="ferramenta__acoes">
+          <button type="submit" class="botao botao--primario" data-texto="margem-de-contribuicao.acoes.calcular"></button>
+          <button type="button" class="botao botao--fantasma" data-acao="exemplo" data-texto="compartilhado.ferramenta.preencher_exemplo"></button>
+        </div>
+      </form>
+
+      <div class="ferramenta__resultado">
+        <div class="resultado superficie--tinta">
+          <p class="resultado__rotulo" data-texto="margem-de-contribuicao.resultado.titulo"></p>
+          <p class="resultado__valor" id="resultado-margem" aria-live="polite">—</p>
+          <div class="resultado__linhas">
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="margem-de-contribuicao.resultado.indice"></span>
+              <span class="resultado__linha-valor" id="resultado-indice">—</span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="margem-de-contribuicao.resultado.total"></span>
+              <span class="resultado__linha-valor" id="resultado-total">—</span>
+            </div>
+            <div class="resultado__linha resultado__linha--destaque">
+              <span class="resultado__linha-rotulo" data-texto="margem-de-contribuicao.resultado.resultado"></span>
+              <span class="resultado__linha-valor" id="resultado-resultado">—</span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="margem-de-contribuicao.resultado.equilibrio"></span>
+              <span class="resultado__linha-valor" id="resultado-equilibrio">—</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="texto-pequeno texto-2" id="aviso-margem-negativa" role="status" hidden data-texto="margem-de-contribuicao.resultado.margem_negativa"></p>
+
+        <div class="ferramenta__exportar">
+          <button type="button" class="botao botao--secundario botao--pequeno" data-acao="copiar">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-copiar"></use></svg>
+            <span data-texto="compartilhado.acoes.copiar"></span>
+          </button>
+          <button type="button" class="botao botao--secundario botao--pequeno" data-acao="pdf">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-pdf"></use></svg>
+            <span data-texto="compartilhado.acoes.pdf"></span>
+          </button>
+          <button type="button" class="botao botao--secundario botao--pequeno so-sessao" data-acao="salvar-trabalho">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-salvos"></use></svg>
+            <span data-texto="compartilhado.ferramenta.salvar_trabalho"></span>
+          </button>
+        </div>
+
+        <div class="conta-formula">
+          <p class="sobretitulo" data-texto="compartilhado.ferramenta.a_conta"></p>
+          <code id="conta-formula-texto"></code>
+          <p class="texto-pequeno texto-2" data-texto="margem-de-contribuicao.conta.nota"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ferramenta__ajuda">
+      <section>
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.como_usar"></h2>
+        <ol class="passos">
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="margem-de-contribuicao.como_usar.um"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="margem-de-contribuicao.como_usar.dois"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="margem-de-contribuicao.como_usar.tres"></p></li>
+        </ol>
+      </section>
+
+      <section class="perguntas">
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.perguntas"></h2>
+        <details>
+          <summary data-texto="margem-de-contribuicao.perguntas.lucro.pergunta"></summary>
+          <p data-texto="margem-de-contribuicao.perguntas.lucro.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="margem-de-contribuicao.perguntas.varios.pergunta"></summary>
+          <p data-texto="margem-de-contribuicao.perguntas.varios.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="margem-de-contribuicao.perguntas.indice.pergunta"></summary>
+          <p data-texto="margem-de-contribuicao.perguntas.indice.resposta"></p>
+        </details>
+      </section>
+
+      <aside class="ferramenta__lateral">
+        <h2 class="sobretitulo" data-texto="compartilhado.ferramenta.relacionadas"></h2>
+        <ul class="relacionadas"></ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

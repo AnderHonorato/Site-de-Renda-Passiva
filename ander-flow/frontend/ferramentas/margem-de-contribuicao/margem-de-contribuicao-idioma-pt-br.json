@@ -1,0 +1,68 @@
+{
+  "margem-de-contribuicao": {
+    "titulo_pagina": "Margem de contribuição — Ander Flow",
+    "descricao_pagina": "Quanto sobra de cada venda para pagar o custo fixo e virar lucro. O cálculo roda no seu navegador.",
+    "titulo": "Margem de contribuição",
+    "resumo": "É o que sobra de cada venda depois do que só existe por causa dela. Esse valor é o que paga o custo fixo do mês — e o que passar disso é lucro.",
+    "grupos": {
+      "venda": "Uma venda",
+      "mes": "O mês inteiro (opcional)"
+    },
+    "campos": {
+      "preco": "Preço de venda",
+      "custo_variavel": "Custo variável por unidade",
+      "custo_variavel_ajuda": "Matéria-prima, embalagem, frete de envio — o que só sai quando vende.",
+      "percentual": "Percentual que sai do preço",
+      "percentual_ajuda": "Taxa de cartão, comissão e imposto somados, em percentual do preço.",
+      "quantidade": "Quantidade vendida no mês",
+      "quantidade_ajuda": "Opcional. Serve para ver o total do mês.",
+      "custos_fixos": "Custos fixos do mês",
+      "custos_fixos_ajuda": "Opcional. Serve para saber se o mês fecha no azul."
+    },
+    "acoes": {
+      "calcular": "Calcular margem"
+    },
+    "resultado": {
+      "titulo": "Sobra por venda",
+      "indice": "Índice de margem",
+      "total": "Margem total no mês",
+      "resultado": "Resultado depois do custo fixo",
+      "equilibrio": "Vendas para empatar no mês",
+      "unidades": "{quantidade} unidades",
+      "margem_negativa": "A margem está negativa: cada venda aumenta o prejuízo. Vender mais não resolve — reveja preço, custo variável ou taxas."
+    },
+    "conta": {
+      "formula": "margem = preço − custo variável − preço × percentual",
+      "linha": "{margem} = {preco} − {custo} − {preco} × {percentual}",
+      "nota": "O índice é a margem dividida pelo preço: quanto de cada real vendido fica para pagar o custo fixo."
+    },
+    "erros": {
+      "numero_invalido": "Informe um número válido.",
+      "valor_negativo": "O valor não pode ser negativo.",
+      "preco_invalido": "Informe o preço de venda para calcular.",
+      "percentual_acima_do_limite": "O percentual que sai do preço precisa ser menor que 100%."
+    },
+    "trabalho": {
+      "titulo_padrao": "Margem de contribuição — {margem} por venda"
+    },
+    "como_usar": {
+      "um": "Comece por **uma** venda: preço, custo variável e o percentual que sai do preço.",
+      "dois": "O que sobra é a margem de contribuição. Ela não é lucro ainda: é o dinheiro que vai pagar o custo fixo.",
+      "tres": "Informe a quantidade do mês e o custo fixo para ver se o mês fecha no azul e quantas vendas empatam a conta."
+    },
+    "perguntas": {
+      "lucro": {
+        "pergunta": "Margem de contribuição é lucro?",
+        "resposta": "Não. É o que sobra da venda antes do custo fixo. Só vira lucro depois que a soma das margens do mês paga aluguel, salários e o resto que não depende de vender."
+      },
+      "varios": {
+        "pergunta": "Tenho vários produtos. Como uso?",
+        "resposta": "Calcule um de cada vez. Comparar a margem de cada produto mostra qual deles realmente sustenta o negócio — às vezes o mais vendido não é o que mais contribui."
+      },
+      "indice": {
+        "pergunta": "Para que serve o índice de margem?",
+        "resposta": "Ele diz quanto de cada real vendido fica com você. É útil para comparar produtos de preços bem diferentes, onde o valor em reais engana."
+      }
+    }
+  }
+}

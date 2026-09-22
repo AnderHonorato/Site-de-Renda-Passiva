@@ -1,0 +1,27 @@
+{
+  "slug": "margem-de-contribuicao",
+  "estado": "pronta",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Margem de contribuição",
+    "en": "Contribution margin"
+  },
+  "descricao": {
+    "pt-BR": "O que sobra de cada venda para pagar o custo fixo e virar lucro.",
+    "en": "What is left from each sale to cover fixed costs and become profit."
+  },
+  "intencoes": {
+    "pt-BR": ["o que sobra por venda", "minha venda dá lucro", "quanto cada produto contribui"],
+    "en": ["what is left per sale", "is this sale profitable", "how much each product contributes"]
+  },
+  "etiquetas": {
+    "pt-BR": ["margem", "contribuição", "lucro por venda"],
+    "en": ["margin", "contribution", "profit per sale"]
+  },
+  "relacionadas": ["ponto-de-equilibrio", "preco-de-venda"],
+  "recursos_plus": []
+}

@@ -1,0 +1,27 @@
+{
+  "slug": "ponto-de-equilibrio",
+  "estado": "pronta",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "grafico",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Ponto de equilíbrio",
+    "en": "Break-even point"
+  },
+  "descricao": {
+    "pt-BR": "Quanto vender no mês para cobrir os custos, em quantidade e em faturamento.",
+    "en": "How much to sell in a month to cover costs, in units and in revenue."
+  },
+  "intencoes": {
+    "pt-BR": ["quanto preciso vender para pagar as despesas", "quando começo a ter lucro", "quanto faturar para cobrir custo fixo"],
+    "en": ["how much do I need to sell to cover expenses", "when do I start making a profit", "revenue needed to cover fixed costs"]
+  },
+  "etiquetas": {
+    "pt-BR": ["ponto de equilíbrio", "custo fixo", "margem de contribuição"],
+    "en": ["break-even", "fixed cost", "contribution margin"]
+  },
+  "relacionadas": ["margem-de-contribuicao", "preco-de-venda"],
+  "recursos_plus": []
+}
