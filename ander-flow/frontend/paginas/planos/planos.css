@@ -1,0 +1,202 @@
+/* planos.css — página de planos (Grátis e Plus). */
+
+.planos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-7);
+  align-items: center;
+  padding-block: var(--espaco-6) var(--espaco-9);
+  text-align: center;
+}
+
+.planos__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  align-items: center;
+  max-width: 62ch;
+}
+
+.planos__resumo {
+  margin: 0;
+  font-size: 17px;
+}
+
+.planos__grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-5);
+  width: 100%;
+  max-width: 760px;
+  align-items: stretch;
+  text-align: left;
+}
+
+.planos__cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  position: relative;
+}
+
+.planos__cartao--plus {
+  padding: var(--espaco-6);
+}
+
+.planos__destaque {
+  position: absolute;
+  top: calc(var(--espaco-2) * -1 - 3px);
+  left: var(--espaco-6);
+  background: var(--cor-destaque);
+  color: var(--cor-sobre-destaque);
+}
+
+.planos__cartao-cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.planos__cartao-nome {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.planos__cartao-preco {
+  display: flex;
+  align-items: baseline;
+  gap: var(--espaco-2);
+  margin: 0;
+}
+
+.planos__cartao-preco-valor {
+  font-family: var(--fonte-display);
+  font-size: 42px;
+  line-height: 1;
+}
+
+.planos__cartao-preco-detalhe {
+  color: var(--cor-texto-2);
+}
+
+.planos__cartao--plus .planos__cartao-preco-detalhe,
+.planos__cartao--plus .planos__cartao-preco-anual {
+  color: var(--cor-sobre-tinta-2);
+}
+
+.planos__cartao-preco-anual {
+  margin: 0;
+}
+
+.planos__cartao-descricao {
+  margin: var(--espaco-1) 0 0;
+  font-size: 14px;
+}
+
+.planos__recursos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  list-style: none;
+  margin: 0;
+  padding: var(--espaco-4) 0 0;
+  border-top: 1px solid var(--cor-linha);
+  font-size: 14.5px;
+}
+
+.planos__cartao--plus .planos__recursos {
+  border-top-color: var(--cor-linha-forte);
+}
+
+.planos__recurso {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+}
+
+.planos__recurso .icone {
+  flex: none;
+  color: var(--cor-salvia);
+  margin-top: 2px;
+}
+
+.planos__cartao--plus .planos__recurso .icone {
+  color: var(--cor-salvia-suave);
+}
+
+.planos__cartao-acao {
+  margin-top: auto;
+}
+
+.planos__cartao-nota {
+  margin: 0;
+  text-align: center;
+  color: var(--cor-sobre-tinta-2);
+}
+
+.planos__nota-local {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  max-width: 720px;
+  padding: var(--espaco-4) var(--espaco-5);
+  border-radius: var(--raio-controle);
+  background: var(--cor-recuo);
+  text-align: left;
+}
+
+.planos__nota-local .icone {
+  flex: none;
+  color: var(--cor-destaque);
+  margin-top: 2px;
+}
+
+.planos__nota-local p {
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--cor-texto-2);
+}
+
+.planos__perguntas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  width: 100%;
+  max-width: 640px;
+  text-align: left;
+}
+
+.planos__lista-perguntas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.planos__pergunta {
+  padding: var(--espaco-3) var(--espaco-4);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+}
+
+.planos__pergunta summary {
+  cursor: pointer;
+  font-weight: 500;
+  min-height: var(--alvo-toque);
+  display: flex;
+  align-items: center;
+}
+
+.planos__pergunta p {
+  margin: var(--espaco-2) 0 0;
+}
+
+@media (max-width: 767px) {
+  .planos {
+    padding-block: var(--espaco-5) var(--espaco-7);
+  }
+
+  .planos__grade {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

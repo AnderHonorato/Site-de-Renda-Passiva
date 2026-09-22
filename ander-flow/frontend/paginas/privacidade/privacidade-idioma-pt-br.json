@@ -1,0 +1,77 @@
+{
+  "privacidade": {
+    "titulo_pagina": "Privacidade — Ander Flow",
+    "descricao_pagina": "O que roda no seu navegador, o que a conta guarda, quais cookies usamos e como exportar ou excluir seus dados.",
+    "sobretitulo": "Transparência",
+    "titulo": "Privacidade",
+    "intro": "A maior parte do Ander Flow calcula tudo dentro do seu navegador: o que você digita numa ferramenta não sai do seu aparelho, a menos que você crie conta e escolha guardar. Esta página explica exatamente o que fica guardado, onde e por quê.",
+    "indice": {
+      "titulo": "Ir para a seção",
+      "navegador": "No navegador",
+      "conta": "Na conta",
+      "sessao": "Sessão e cookies",
+      "aparelho": "Só no aparelho",
+      "uso": "Uso e estatísticas",
+      "trafego": "Bloqueio de tráfego",
+      "rastreador": "Rastreador e anúncio",
+      "direitos": "Seus direitos"
+    },
+    "navegador": {
+      "titulo": "O que roda no seu navegador",
+      "texto": "As ferramentas calculam e transformam arquivos no seu próprio aparelho. Sem conta, nada do que você digita ou envia numa ferramenta chega ao servidor — o resultado nunca sai do navegador."
+    },
+    "conta": {
+      "titulo": "O que a conta guarda",
+      "texto": "Se você cria uma conta, passamos a guardar apenas o necessário para ela funcionar:",
+      "itens": {
+        "identificacao": "E-mail e nome, para identificar a conta e falar com você",
+        "senha": "Um hash da senha (nunca a senha em texto puro — nem nós conseguimos lê-la)",
+        "favoritos": "As ferramentas que você guarda nos favoritos, até {limite_favoritos_gratis} no plano Grátis",
+        "trabalhos": "Os trabalhos que você salva em cada ferramenta, até {limite_trabalhos_gratis} no plano Grátis",
+        "mensagens": "As mensagens trocadas com o administrador pelo site",
+        "preferencias": "Idioma, tema (claro/escuro) e o plano da conta"
+      }
+    },
+    "sessao": {
+      "titulo": "Sessão e cookies",
+      "texto": "Usamos poucos cookies, todos para o próprio funcionamento do site — nenhum para publicidade:",
+      "itens": {
+        "af_sessao": "af_sessao — identifica sua sessão depois de entrar; só o servidor lê (HttpOnly)",
+        "af_csrf": "af_csrf — protege formulários contra requisições falsas de outros sites",
+        "idioma_tema": "idioma e tema — guardam sua preferência de idioma e de aparência"
+      },
+      "registro": "Enquanto a sessão existe, guardamos o IP e o navegador usados para entrar; isso ajuda a proteger sua conta e é apagado quando a sessão termina."
+    },
+    "aparelho": {
+      "titulo": "O que fica só no seu aparelho",
+      "texto": "Estas chaves ficam no armazenamento local do navegador (localStorage) e nunca são enviadas ao servidor:",
+      "chaves": {
+        "tema": "af-tema",
+        "idioma": "af-idioma",
+        "salvos": "af-salvos-locais",
+        "recentes": "af-recentes",
+        "primeira_visita": "af-primeira-visita",
+        "popup": "af-popup-visto-<aviso>",
+        "rascunho": "af-rascunho-<ferramenta>"
+      },
+      "nunca_enviado": "Limpar os dados do navegador apaga tudo isso — inclusive os favoritos e ferramentas recentes de quem não tem conta."
+    },
+    "uso": {
+      "titulo": "Uso e estatísticas",
+      "texto": "Contamos quantas vezes cada ferramenta é usada por dia, sem guardar IP nem o conteúdo processado. Com conta, também somamos o seu uso por ferramenta e por mês, só para mostrar o seu próprio resumo em /conta."
+    },
+    "trafego": {
+      "titulo": "Bloqueio de tráfego",
+      "texto": "Para impedir abuso — como tentar muitas senhas ou fazer requisições demais em pouco tempo —, o servidor guarda temporariamente o IP de quem ultrapassa o limite. Esse registro existe só enquanto o bloqueio dura e é apagado depois."
+    },
+    "rastreador": {
+      "titulo": "Rastreador e anúncio",
+      "texto": "Não usamos rastreador de terceiros, não vendemos dados e não exibimos anúncio de rede publicitária."
+    },
+    "direitos": {
+      "titulo": "Seus direitos (LGPD)",
+      "texto": "Você pode baixar uma cópia de todos os seus dados ou excluir sua conta e tudo relacionado a ela, a qualquer momento, na página da sua conta.",
+      "acao": "Ir para minha conta"
+    }
+  }
+}

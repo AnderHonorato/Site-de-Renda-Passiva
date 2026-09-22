@@ -1,0 +1,78 @@
+/* cookies.css — texto legal em colunas curtas, com tabela de cookies. */
+
+.pagina-legal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-7);
+  max-width: 68ch;
+  padding-block: var(--espaco-6) var(--espaco-9);
+  margin-inline: auto;
+}
+
+.pagina-legal__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.pagina-legal__intro {
+  margin: 0;
+  font-size: 17px;
+}
+
+.pagina-legal__secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  padding-top: var(--espaco-5);
+  border-top: 1px solid var(--cor-linha);
+}
+
+.pagina-legal__secao > p {
+  margin: 0;
+}
+
+.pagina-legal__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin: 0;
+  padding-left: var(--espaco-5);
+  font-size: 15px;
+  color: var(--cor-texto-2);
+}
+
+.pagina-legal__lista--codigo {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+  padding-left: 0;
+  list-style: none;
+}
+
+.pagina-legal__lista--codigo code {
+  display: inline-block;
+  padding: 2px var(--espaco-2);
+  border-radius: var(--raio-etiqueta);
+  background: var(--cor-recuo);
+  font-size: 13px;
+}
+
+.cookies__tabela {
+  width: 100%;
+}
+
+.cookies__tabela code {
+  font-size: 13px;
+}
+
+@media (max-width: 767px) {
+  .pagina-legal {
+    padding-block: var(--espaco-5) var(--espaco-7);
+  }
+
+  .cookies__tabela {
+    display: block;
+    overflow-x: auto;
+  }
+}
