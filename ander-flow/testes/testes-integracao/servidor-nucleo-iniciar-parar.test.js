@@ -11,7 +11,7 @@ import { iniciar } from '../../scripts/scripts-iniciar.js';
 import { parar } from '../../scripts/scripts-parar.js';
 
 const raizProjeto = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const scriptDeMentira = join('testes', 'testes-integracao', 'servidor-nucleo-servidor-de-mentira.js');
+const scriptDeMentira = join('testes', 'testes-integracao', 'testes-integracao-servidor-de-mentira.js');
 const caminhoEstado = join(raizProjeto, '.execucao', 'servidor.json');
 const caminhoPid = join(raizProjeto, '.execucao', 'servidor.pid');
 const caminhoPorta = join(raizProjeto, '.execucao', 'servidor.porta');

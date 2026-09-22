@@ -105,7 +105,8 @@ test('tratador: página (fora de /api/) usa montador.renderizarErro', () => {
 
   assert.equal(chamadas.length, 1);
   assert.equal(chamadas[0].status, 404);
-  assert.equal(chamadas[0].variaveis.codigo, 'pagina_inexistente');
+  assert.equal(chamadas[0].variaveis.codigo_erro, 'pagina_inexistente');
+  assert.equal(chamadas[0].status, 404);
   assert.equal(res.corpoTexto, 'pagina-erro');
 });
 

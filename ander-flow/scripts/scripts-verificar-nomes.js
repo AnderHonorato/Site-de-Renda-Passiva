@@ -9,6 +9,13 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const PASTAS_VERIFICADAS = ['frontend', 'servidor', 'banco', 'scripts', 'testes'];
 const EXCECOES_EXATAS = new Set(['package.json', 'package-lock.json', 'README.md', 'CHECKLIST.md', '.gitignore']);
+// Pastas com arquivo de terceiro ou gerado (fora do git): o nome vem da origem, não do projeto.
+const PASTAS_IGNORADAS = ['frontend/compartilhado/bibliotecas', 'frontend/compartilhado/fontes', 'banco/dados'];
+
+export function pastaIgnorada(caminhoRelativo) {
+  const caminho = caminhoRelativo.split('\\').join('/');
+  return PASTAS_IGNORADAS.some((pasta) => caminho === pasta || caminho.startsWith(pasta + '/'));
+}
 
 function ehExcecao(nome) {
   if (EXCECOES_EXATAS.has(nome)) return true;
@@ -33,7 +40,10 @@ export function nomeValido(nome) {
  * do módulo testado é livre; só é exigido terminar em `.test.js`. Função pura.
  */
 export function prefixadoPelaPastaMae(nomeArquivo, pastasAncestrais) {
-  if (pastasAncestrais.includes('testes')) return nomeArquivo.endsWith('.test.js');
+  if (pastasAncestrais.includes('testes')) {
+    // Teste: nome do módulo testado é livre. Apoio de teste segue a regra do prefixo.
+    if (nomeArquivo.endsWith('.test.js')) return true;
+  }
   const base = nomeArquivo.slice(0, nomeArquivo.length - extname(nomeArquivo).length);
   return pastasAncestrais.some((pasta) => base === pasta || base.startsWith(`${pasta}-`));
 }
@@ -63,6 +73,7 @@ export function verificarNomes(raiz) {
     for (const item of listarTudo(caminhoTopo)) {
       if (ehExcecao(item.nome)) continue;
       const relativoRaiz = relative(raiz, item.caminho).replace(/\\/g, '/');
+      if (pastaIgnorada(relativoRaiz)) continue;
       if (!nomeValido(item.nome)) {
         problemas.push(`${relativoRaiz}: nome inválido (use minúsculas, hífen, sem acento/espaço/underscore)`);
         continue;

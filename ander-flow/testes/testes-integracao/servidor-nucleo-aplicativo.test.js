@@ -149,7 +149,8 @@ test('criarAplicativo: rota inexistente na API devolve 404 JSON, fora da API usa
     assert.equal(respostaPagina.status, 404);
     const corpoPagina = await respostaPagina.json();
     assert.equal(corpoPagina.paginaErro, true);
-    assert.equal(corpoPagina.codigo, 'pagina_inexistente');
+    // O número HTTP é preenchido pelo montador real; aqui o montador é de mentira.
+    assert.equal(corpoPagina.codigo_erro, 'pagina_inexistente');
   } finally {
     servidor.close();
   }

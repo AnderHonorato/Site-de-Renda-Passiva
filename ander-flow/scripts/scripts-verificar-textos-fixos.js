@@ -34,6 +34,10 @@ function listarArquivos(pasta, filtro) {
 
 /** Símbolos soltos aceitos como texto puro no HTML, sem precisar de chave de idioma. */
 const SIMBOLOS_PUROS = /^[\s/·—]*$/;
+// `{{variavel}}` é substituído pelo montador (contrato §3.3): não é texto fixo.
+const SO_VARIAVEIS = /^(?:\s*\{\{[a-z0-9_]+\}\}\s*)+$/i;
+// A vitrine é a demonstração do sistema visual, servida só em desenvolvimento, com valores de exemplo.
+const ARQUIVOS_DE_DEMONSTRACAO = new Set(['vitrine.html']);
 
 /** Devolve os textos soltos (fora de chave de idioma) encontrados entre tags no HTML. Função pura. */
 export function encontrarTextoSolto(html) {
@@ -44,7 +48,7 @@ export function encontrarTextoSolto(html) {
   const encontrados = [];
   for (const pedaco of pedacos) {
     const decodificado = pedaco.replace(/&nbsp;/g, ' ');
-    if (SIMBOLOS_PUROS.test(decodificado)) continue;
+    if (SIMBOLOS_PUROS.test(decodificado) || SO_VARIAVEIS.test(decodificado)) continue;
     const limpo = decodificado.trim();
     if (limpo) encontrados.push(limpo);
   }
@@ -115,7 +119,9 @@ export function verificarTextosFixos(raiz) {
   for (const caminho of listarArquivos(pastaFrontend, (c) => c.endsWith('.html'))) {
     const rotulo = relative(raiz, caminho).replace(/\\/g, '/');
     const conteudo = readFileSync(caminho, 'utf8');
-    for (const texto of encontrarTextoSolto(conteudo)) problemas.push(`${rotulo}: texto solto no HTML: "${texto}"`);
+    if (!ARQUIVOS_DE_DEMONSTRACAO.has(basename(caminho))) {
+      for (const texto of encontrarTextoSolto(conteudo)) problemas.push(`${rotulo}: texto solto no HTML: "${texto}"`);
+    }
     for (const trecho of encontrarScriptInline(conteudo)) problemas.push(`${rotulo}: <script> inline: "${trecho}"`);
     for (const atributo of encontrarAtributosProibidos(conteudo)) problemas.push(`${rotulo}: atributo proibido (${atributo})`);
     for (const cor of encontrarCorLiteral(conteudo)) problemas.push(`${rotulo}: cor literal fora dos tokens (${cor})`);

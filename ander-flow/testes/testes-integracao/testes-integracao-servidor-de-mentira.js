@@ -1,4 +1,4 @@
-// servidor-nucleo-servidor-de-mentira.js — servidor mínimo usado por
+// testes-integracao-servidor-de-mentira.js — servidor mínimo usado por
 // servidor-nucleo-iniciar-parar.test.js para testar scripts-iniciar.js/scripts-parar.js sem
 // depender do servidor.js completo (que ainda tem módulos de outros agentes em falta).
 // Reaproveita o servidor-controle.js real: é exatamente essa rota que estamos testando.
