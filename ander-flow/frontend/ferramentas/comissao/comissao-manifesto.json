@@ -1,0 +1,41 @@
+{
+  "slug": "comissao",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Calculadora de comissão",
+    "en": "[TRADUZIR: Calculadora de comissão]"
+  },
+  "descricao": {
+    "pt-BR": "Comissão simples, escalonada por faixa de meta e comissão líquida após descontos.",
+    "en": "[TRADUZIR: Comissão simples, escalonada por faixa de meta e comissão líquida após descontos.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular comissão",
+      "comissão escalonada"
+    ],
+    "en": [
+      "[TRADUZIR: calcular comissão]",
+      "[TRADUZIR: comissão escalonada]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "comissão",
+      "vendedor",
+      "meta"
+    ],
+    "en": [
+      "[TRADUZIR: comissão]",
+      "[TRADUZIR: vendedor]",
+      "[TRADUZIR: meta]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

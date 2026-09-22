@@ -1,0 +1,41 @@
+{
+  "slug": "ajuste-de-receita",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Ajuste de quantidade e rendimento da receita",
+    "en": "[TRADUZIR: Ajuste de quantidade e rendimento da receita]"
+  },
+  "descricao": {
+    "pt-BR": "Escala a receita para outra quantidade e ajusta o rendimento por perdas de produção.",
+    "en": "[TRADUZIR: Escala a receita para outra quantidade e ajusta o rendimento por perdas de produção.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "aumentar a receita para mais porções",
+      "quanto sobra depois da perda"
+    ],
+    "en": [
+      "[TRADUZIR: aumentar a receita para mais porções]",
+      "[TRADUZIR: quanto sobra depois da perda]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ajuste de receita",
+      "escalar receita",
+      "perda de produção"
+    ],
+    "en": [
+      "[TRADUZIR: ajuste de receita]",
+      "[TRADUZIR: escalar receita]",
+      "[TRADUZIR: perda de produção]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

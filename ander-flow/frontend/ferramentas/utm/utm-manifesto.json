@@ -1,0 +1,39 @@
+{
+  "slug": "utm",
+  "estado": "planejada",
+  "categoria": "marketing",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "megafone",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Montador e leitor de UTM",
+    "en": "[TRADUZIR: Montador e leitor de UTM]"
+  },
+  "descricao": {
+    "pt-BR": "Monta URLs com parâmetros de campanha e lê os parâmetros de uma URL existente.",
+    "en": "[TRADUZIR: Monta URLs com parâmetros de campanha e lê os parâmetros de uma URL existente.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "criar link com utm"
+    ],
+    "en": [
+      "[TRADUZIR: criar link com utm]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "utm",
+      "campanha",
+      "analytics"
+    ],
+    "en": [
+      "[TRADUZIR: utm]",
+      "[TRADUZIR: campanha]",
+      "[TRADUZIR: analytics]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

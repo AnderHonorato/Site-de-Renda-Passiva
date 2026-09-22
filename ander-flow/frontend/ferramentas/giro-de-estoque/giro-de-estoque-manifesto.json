@@ -1,0 +1,37 @@
+{
+  "slug": "giro-de-estoque",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Giro de estoque",
+    "en": "[TRADUZIR: Giro de estoque]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula quantas vezes o estoque girou no período e o tempo médio de permanência.",
+    "en": "[TRADUZIR: Calcula quantas vezes o estoque girou no período e o tempo médio de permanência.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular giro de estoque"
+    ],
+    "en": [
+      "[TRADUZIR: calcular giro de estoque]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "giro de estoque",
+      "estoque médio"
+    ],
+    "en": [
+      "[TRADUZIR: giro de estoque]",
+      "[TRADUZIR: estoque médio]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

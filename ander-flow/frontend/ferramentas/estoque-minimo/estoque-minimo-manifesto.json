@@ -1,0 +1,37 @@
+{
+  "slug": "estoque-minimo",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Estoque mínimo e de segurança",
+    "en": "[TRADUZIR: Estoque mínimo e de segurança]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o estoque mínimo e de segurança a partir do consumo e do prazo de reposição.",
+    "en": "[TRADUZIR: Calcula o estoque mínimo e de segurança a partir do consumo e do prazo de reposição.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular estoque mínimo"
+    ],
+    "en": [
+      "[TRADUZIR: calcular estoque mínimo]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "estoque mínimo",
+      "estoque de segurança"
+    ],
+    "en": [
+      "[TRADUZIR: estoque mínimo]",
+      "[TRADUZIR: estoque de segurança]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "ordenador-de-linhas",
+  "estado": "planejada",
+  "categoria": "texto",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "texto",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Ordenar linhas",
+    "en": "[TRADUZIR: Ordenar linhas]"
+  },
+  "descricao": {
+    "pt-BR": "Ordena as linhas de um texto em ordem alfabética, numérica, reversa ou aleatória.",
+    "en": "[TRADUZIR: Ordena as linhas de um texto em ordem alfabética, numérica, reversa ou aleatória.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "colocar lista em ordem alfabética"
+    ],
+    "en": [
+      "[TRADUZIR: colocar lista em ordem alfabética]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ordenar",
+      "lista alfabética"
+    ],
+    "en": [
+      "[TRADUZIR: ordenar]",
+      "[TRADUZIR: lista alfabética]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

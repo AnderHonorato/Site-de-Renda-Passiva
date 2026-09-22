@@ -1,0 +1,41 @@
+{
+  "slug": "girar-e-numerar-pdf",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Girar e numerar páginas do PDF",
+    "en": "[TRADUZIR: Girar e numerar páginas do PDF]"
+  },
+  "descricao": {
+    "pt-BR": "Gira páginas na orientação certa e adiciona numeração no rodapé.",
+    "en": "[TRADUZIR: Gira páginas na orientação certa e adiciona numeração no rodapé.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "página do pdf está de lado",
+      "numerar páginas do pdf"
+    ],
+    "en": [
+      "[TRADUZIR: página do pdf está de lado]",
+      "[TRADUZIR: numerar páginas do pdf]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "girar pdf",
+      "numerar página",
+      "paginação"
+    ],
+    "en": [
+      "[TRADUZIR: girar pdf]",
+      "[TRADUZIR: numerar página]",
+      "[TRADUZIR: paginação]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

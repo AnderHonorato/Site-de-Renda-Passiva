@@ -1,0 +1,39 @@
+{
+  "slug": "roteiro-de-entrevista",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Roteiro de entrevista",
+    "en": "[TRADUZIR: Roteiro de entrevista]"
+  },
+  "descricao": {
+    "pt-BR": "Monta o roteiro de perguntas da entrevista por competência avaliada.",
+    "en": "[TRADUZIR: Monta o roteiro de perguntas da entrevista por competência avaliada.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "roteiro de perguntas para entrevista"
+    ],
+    "en": [
+      "[TRADUZIR: roteiro de perguntas para entrevista]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "entrevista",
+      "roteiro",
+      "recrutamento"
+    ],
+    "en": [
+      "[TRADUZIR: entrevista]",
+      "[TRADUZIR: roteiro]",
+      "[TRADUZIR: recrutamento]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

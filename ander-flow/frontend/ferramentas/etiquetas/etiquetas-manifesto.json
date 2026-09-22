@@ -1,0 +1,39 @@
+{
+  "slug": "etiquetas",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 120,
+  "nome": {
+    "pt-BR": "Etiquetas para imprimir",
+    "en": "[TRADUZIR: Etiquetas para imprimir]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula quantas etiquetas de um tamanho cabem numa folha A4 e gera o PDF de corte.",
+    "en": "[TRADUZIR: Calcula quantas etiquetas de um tamanho cabem numa folha A4 e gera o PDF de corte.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "imprimir etiquetas em folha a4"
+    ],
+    "en": [
+      "[TRADUZIR: imprimir etiquetas em folha a4]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "etiquetas",
+      "rótulos",
+      "imprimir"
+    ],
+    "en": [
+      "[TRADUZIR: etiquetas]",
+      "[TRADUZIR: rótulos]",
+      "[TRADUZIR: imprimir]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

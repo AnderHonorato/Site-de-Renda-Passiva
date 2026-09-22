@@ -1,0 +1,39 @@
+{
+  "slug": "certificado",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "plus",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Gerador de certificado",
+    "en": "[TRADUZIR: Gerador de certificado]"
+  },
+  "descricao": {
+    "pt-BR": "Monta certificados de participação ou conclusão com nome, curso e carga horária.",
+    "en": "[TRADUZIR: Monta certificados de participação ou conclusão com nome, curso e carga horária.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "gerar certificado para os alunos"
+    ],
+    "en": [
+      "[TRADUZIR: gerar certificado para os alunos]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "certificado",
+      "participação",
+      "curso"
+    ],
+    "en": [
+      "[TRADUZIR: certificado]",
+      "[TRADUZIR: participação]",
+      "[TRADUZIR: curso]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

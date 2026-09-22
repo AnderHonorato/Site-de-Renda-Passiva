@@ -1,0 +1,39 @@
+{
+  "slug": "briefing-criativo",
+  "estado": "planejada",
+  "categoria": "marketing",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "megafone",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Briefing criativo",
+    "en": "[TRADUZIR: Briefing criativo]"
+  },
+  "descricao": {
+    "pt-BR": "Organiza objetivo, público, tom e referências antes de pedir uma peça de conteúdo.",
+    "en": "[TRADUZIR: Organiza objetivo, público, tom e referências antes de pedir uma peça de conteúdo.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer um briefing para o designer"
+    ],
+    "en": [
+      "[TRADUZIR: fazer um briefing para o designer]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "briefing",
+      "conteúdo",
+      "criação"
+    ],
+    "en": [
+      "[TRADUZIR: briefing]",
+      "[TRADUZIR: conteúdo]",
+      "[TRADUZIR: criação]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

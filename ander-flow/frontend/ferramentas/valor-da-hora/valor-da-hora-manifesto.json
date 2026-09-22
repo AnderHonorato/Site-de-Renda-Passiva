@@ -1,0 +1,37 @@
+{
+  "slug": "valor-da-hora",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Valor da hora de trabalho",
+    "en": "[TRADUZIR: Valor da hora de trabalho]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula quanto cobrar por hora de trabalho a partir da renda desejada e das horas disponíveis.",
+    "en": "[TRADUZIR: Calcula quanto cobrar por hora de trabalho a partir da renda desejada e das horas disponíveis.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto cobrar por hora de trabalho"
+    ],
+    "en": [
+      "[TRADUZIR: quanto cobrar por hora de trabalho]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "valor da hora",
+      "precificação de mão de obra"
+    ],
+    "en": [
+      "[TRADUZIR: valor da hora]",
+      "[TRADUZIR: precificação de mão de obra]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

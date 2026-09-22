@@ -1,0 +1,39 @@
+{
+  "slug": "url-e-codificacao",
+  "estado": "planejada",
+  "categoria": "desenvolvimento",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "codigo",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Codificador de URL e HTML",
+    "en": "[TRADUZIR: Codificador de URL e HTML]"
+  },
+  "descricao": {
+    "pt-BR": "Codifica e decodifica URL, parâmetros de consulta e entidades HTML.",
+    "en": "[TRADUZIR: Codifica e decodifica URL, parâmetros de consulta e entidades HTML.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "codificar url"
+    ],
+    "en": [
+      "[TRADUZIR: codificar url]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "url",
+      "encode",
+      "html"
+    ],
+    "en": [
+      "url",
+      "[TRADUZIR: encode]",
+      "html"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

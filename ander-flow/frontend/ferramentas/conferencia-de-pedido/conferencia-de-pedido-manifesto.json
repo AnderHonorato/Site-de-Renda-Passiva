@@ -1,0 +1,39 @@
+{
+  "slug": "conferencia-de-pedido",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 90,
+  "nome": {
+    "pt-BR": "Conferência de pedido",
+    "en": "[TRADUZIR: Conferência de pedido]"
+  },
+  "descricao": {
+    "pt-BR": "Confere os itens separados contra a lista do pedido e aponta o que falta ou sobra.",
+    "en": "[TRADUZIR: Confere os itens separados contra a lista do pedido e aponta o que falta ou sobra.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "conferir pedido antes de despachar"
+    ],
+    "en": [
+      "[TRADUZIR: conferir pedido antes de despachar]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "conferência",
+      "separação de pedido",
+      "picking"
+    ],
+    "en": [
+      "[TRADUZIR: conferência]",
+      "[TRADUZIR: separação de pedido]",
+      "[TRADUZIR: picking]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

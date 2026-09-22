@@ -1,0 +1,39 @@
+{
+  "slug": "avaliacao-de-desempenho",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Avaliação de desempenho",
+    "en": "[TRADUZIR: Avaliação de desempenho]"
+  },
+  "descricao": {
+    "pt-BR": "Monta um formulário de avaliação por competências com nota e comentário.",
+    "en": "[TRADUZIR: Monta um formulário de avaliação por competências com nota e comentário.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer avaliação de desempenho do funcionário"
+    ],
+    "en": [
+      "[TRADUZIR: fazer avaliação de desempenho do funcionário]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "avaliação de desempenho",
+      "competências",
+      "feedback"
+    ],
+    "en": [
+      "[TRADUZIR: avaliação de desempenho]",
+      "[TRADUZIR: competências]",
+      "[TRADUZIR: feedback]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

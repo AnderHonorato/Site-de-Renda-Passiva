@@ -1,0 +1,39 @@
+{
+  "slug": "bingo-de-numeros",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 110,
+  "nome": {
+    "pt-BR": "Bingo de números",
+    "en": "[TRADUZIR: Bingo de números]"
+  },
+  "descricao": {
+    "pt-BR": "Gera cartelas de bingo sem repetição, com lista de sorteio separada para conduzir o jogo.",
+    "en": "[TRADUZIR: Gera cartelas de bingo sem repetição, com lista de sorteio separada para conduzir o jogo.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "gerar cartelas de bingo para a turma"
+    ],
+    "en": [
+      "[TRADUZIR: gerar cartelas de bingo para a turma]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "bingo",
+      "cartela",
+      "sorteio"
+    ],
+    "en": [
+      "[TRADUZIR: bingo]",
+      "[TRADUZIR: cartela]",
+      "[TRADUZIR: sorteio]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

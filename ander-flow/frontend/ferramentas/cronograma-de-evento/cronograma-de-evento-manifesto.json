@@ -1,0 +1,39 @@
+{
+  "slug": "cronograma-de-evento",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 180,
+  "nome": {
+    "pt-BR": "Cronograma do evento",
+    "en": "[TRADUZIR: Cronograma do evento]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o horário de início de cada etapa de preparação a partir do horário da festa.",
+    "en": "[TRADUZIR: Calcula o horário de início de cada etapa de preparação a partir do horário da festa.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar cronograma do evento"
+    ],
+    "en": [
+      "[TRADUZIR: montar cronograma do evento]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cronograma de evento",
+      "organização de festa",
+      "horário"
+    ],
+    "en": [
+      "[TRADUZIR: cronograma de evento]",
+      "[TRADUZIR: organização de festa]",
+      "[TRADUZIR: horário]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

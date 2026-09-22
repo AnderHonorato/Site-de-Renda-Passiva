@@ -1,0 +1,43 @@
+{
+  "slug": "recibo",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 130,
+  "nome": {
+    "pt-BR": "Gerador de recibo",
+    "en": "[TRADUZIR: Gerador de recibo]"
+  },
+  "descricao": {
+    "pt-BR": "Recibo de pagamento com valor por extenso, dados das partes e PDF pronto para assinar.",
+    "en": "[TRADUZIR: Recibo de pagamento com valor por extenso, dados das partes e PDF pronto para assinar.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer um recibo",
+      "comprovante de pagamento"
+    ],
+    "en": [
+      "[TRADUZIR: fazer um recibo]",
+      "[TRADUZIR: comprovante de pagamento]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "recibo",
+      "pagamento",
+      "comprovante",
+      "assinatura"
+    ],
+    "en": [
+      "[TRADUZIR: recibo]",
+      "[TRADUZIR: pagamento]",
+      "[TRADUZIR: comprovante]",
+      "[TRADUZIR: assinatura]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

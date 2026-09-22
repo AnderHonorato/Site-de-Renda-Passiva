@@ -1,0 +1,39 @@
+{
+  "slug": "peso-volumetrico",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Peso volumétrico",
+    "en": "[TRADUZIR: Peso volumétrico]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o peso cubado de um volume e compara com o peso real para o frete.",
+    "en": "[TRADUZIR: Calcula o peso cubado de um volume e compara com o peso real para o frete.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular peso cubado do frete"
+    ],
+    "en": [
+      "[TRADUZIR: calcular peso cubado do frete]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "peso volumétrico",
+      "peso cubado",
+      "frete"
+    ],
+    "en": [
+      "[TRADUZIR: peso volumétrico]",
+      "[TRADUZIR: peso cubado]",
+      "[TRADUZIR: frete]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,41 @@
+{
+  "slug": "calculadora-de-churrasco",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 150,
+  "nome": {
+    "pt-BR": "Calculadora de churrasco e almoço em grupo",
+    "en": "[TRADUZIR: Calculadora de churrasco e almoço em grupo]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula carnes, acompanhamentos e bebidas a partir do número de convidados e do apetite.",
+    "en": "[TRADUZIR: Calcula carnes, acompanhamentos e bebidas a partir do número de convidados e do apetite.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanta carne comprar para o churrasco",
+      "quantidade de comida para o almoço"
+    ],
+    "en": [
+      "[TRADUZIR: quanta carne comprar para o churrasco]",
+      "[TRADUZIR: quantidade de comida para o almoço]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "churrasco",
+      "almoço em grupo",
+      "quantidade de comida"
+    ],
+    "en": [
+      "[TRADUZIR: churrasco]",
+      "[TRADUZIR: almoço em grupo]",
+      "[TRADUZIR: quantidade de comida]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

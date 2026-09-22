@@ -1,0 +1,41 @@
+{
+  "slug": "fluxo-de-caixa",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Fluxo de caixa",
+    "en": "[TRADUZIR: Fluxo de caixa]"
+  },
+  "descricao": {
+    "pt-BR": "Entradas e saídas por período, saldo acumulado e projeção simples.",
+    "en": "[TRADUZIR: Entradas e saídas por período, saldo acumulado e projeção simples.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "organizar meu caixa",
+      "quando vou ficar no vermelho"
+    ],
+    "en": [
+      "[TRADUZIR: organizar meu caixa]",
+      "[TRADUZIR: quando vou ficar no vermelho]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "fluxo de caixa",
+      "contas a pagar",
+      "contas a receber"
+    ],
+    "en": [
+      "[TRADUZIR: fluxo de caixa]",
+      "[TRADUZIR: contas a pagar]",
+      "[TRADUZIR: contas a receber]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

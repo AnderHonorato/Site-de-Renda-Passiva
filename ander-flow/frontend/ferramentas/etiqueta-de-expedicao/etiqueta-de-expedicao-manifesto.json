@@ -1,0 +1,39 @@
+{
+  "slug": "etiqueta-de-expedicao",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Etiqueta de expedição",
+    "en": "[TRADUZIR: Etiqueta de expedição]"
+  },
+  "descricao": {
+    "pt-BR": "Gera etiquetas de volume com remetente, destinatário e numeração da carga.",
+    "en": "[TRADUZIR: Gera etiquetas de volume com remetente, destinatário e numeração da carga.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "gerar etiqueta para a caixa da entrega"
+    ],
+    "en": [
+      "[TRADUZIR: gerar etiqueta para a caixa da entrega]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "etiqueta de expedição",
+      "volume",
+      "transporte"
+    ],
+    "en": [
+      "[TRADUZIR: etiqueta de expedição]",
+      "[TRADUZIR: volume]",
+      "[TRADUZIR: transporte]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

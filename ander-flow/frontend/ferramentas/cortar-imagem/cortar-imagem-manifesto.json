@@ -1,0 +1,43 @@
+{
+  "slug": "cortar-imagem",
+  "estado": "planejada",
+  "categoria": "imagens",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "imagem",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Cortar imagem",
+    "en": "[TRADUZIR: Cortar imagem]"
+  },
+  "descricao": {
+    "pt-BR": "Corta a imagem livremente ou numa proporção pronta para post, story ou capa.",
+    "en": "[TRADUZIR: Corta a imagem livremente ou numa proporção pronta para post, story ou capa.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "cortar imagem para o instagram",
+      "recortar foto"
+    ],
+    "en": [
+      "[TRADUZIR: cortar imagem para o instagram]",
+      "[TRADUZIR: recortar foto]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cortar imagem",
+      "recorte",
+      "redes sociais",
+      "story"
+    ],
+    "en": [
+      "[TRADUZIR: cortar imagem]",
+      "[TRADUZIR: recorte]",
+      "[TRADUZIR: redes sociais]",
+      "[TRADUZIR: story]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

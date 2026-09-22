@@ -1,0 +1,39 @@
+{
+  "slug": "ata-de-reuniao",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Ata de reunião",
+    "en": "[TRADUZIR: Ata de reunião]"
+  },
+  "descricao": {
+    "pt-BR": "Registra pauta, presentes, decisões e ações combinadas numa reunião.",
+    "en": "[TRADUZIR: Registra pauta, presentes, decisões e ações combinadas numa reunião.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer a ata da reunião"
+    ],
+    "en": [
+      "[TRADUZIR: fazer a ata da reunião]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ata de reunião",
+      "decisões",
+      "registro"
+    ],
+    "en": [
+      "[TRADUZIR: ata de reunião]",
+      "[TRADUZIR: decisões]",
+      "[TRADUZIR: registro]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

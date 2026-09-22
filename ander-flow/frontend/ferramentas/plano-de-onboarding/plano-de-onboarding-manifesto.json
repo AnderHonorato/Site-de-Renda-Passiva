@@ -1,0 +1,39 @@
+{
+  "slug": "plano-de-onboarding",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Plano de onboarding",
+    "en": "[TRADUZIR: Plano de onboarding]"
+  },
+  "descricao": {
+    "pt-BR": "Monta o cronograma dos primeiros dias de um novo funcionário, por etapa e responsável.",
+    "en": "[TRADUZIR: Monta o cronograma dos primeiros dias de um novo funcionário, por etapa e responsável.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "planejar integração de novo funcionário"
+    ],
+    "en": [
+      "[TRADUZIR: planejar integração de novo funcionário]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "onboarding",
+      "integração",
+      "novo funcionário"
+    ],
+    "en": [
+      "[TRADUZIR: onboarding]",
+      "[TRADUZIR: integração]",
+      "[TRADUZIR: novo funcionário]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

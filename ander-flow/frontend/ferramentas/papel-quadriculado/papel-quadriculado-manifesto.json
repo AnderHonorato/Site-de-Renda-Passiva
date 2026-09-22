@@ -1,0 +1,39 @@
+{
+  "slug": "papel-quadriculado",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 100,
+  "nome": {
+    "pt-BR": "Papel quadriculado para imprimir",
+    "en": "[TRADUZIR: Papel quadriculado para imprimir]"
+  },
+  "descricao": {
+    "pt-BR": "Gera papel quadriculado em tamanho real, com quadrado de calibração para conferir a impressão.",
+    "en": "[TRADUZIR: Gera papel quadriculado em tamanho real, com quadrado de calibração para conferir a impressão.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "papel quadriculado para imprimir"
+    ],
+    "en": [
+      "[TRADUZIR: papel quadriculado para imprimir]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "papel quadriculado",
+      "milimetrado",
+      "grade"
+    ],
+    "en": [
+      "[TRADUZIR: papel quadriculado]",
+      "[TRADUZIR: milimetrado]",
+      "[TRADUZIR: grade]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

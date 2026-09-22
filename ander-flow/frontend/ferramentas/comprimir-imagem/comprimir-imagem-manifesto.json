@@ -1,0 +1,39 @@
+{
+  "slug": "comprimir-imagem",
+  "estado": "planejada",
+  "categoria": "imagens",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "imagem",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Comprimir imagem",
+    "en": "[TRADUZIR: Comprimir imagem]"
+  },
+  "descricao": {
+    "pt-BR": "Reduz o peso da imagem controlando a qualidade, sem trocar o formato.",
+    "en": "[TRADUZIR: Reduz o peso da imagem controlando a qualidade, sem trocar o formato.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "deixar a imagem mais leve"
+    ],
+    "en": [
+      "[TRADUZIR: deixar a imagem mais leve]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "comprimir imagem",
+      "otimizar imagem",
+      "peso"
+    ],
+    "en": [
+      "[TRADUZIR: comprimir imagem]",
+      "[TRADUZIR: otimizar imagem]",
+      "[TRADUZIR: peso]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,43 @@
+{
+  "slug": "validador-cpf-cnpj",
+  "estado": "planejada",
+  "categoria": "seguranca",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Validador de CPF e CNPJ",
+    "en": "[TRADUZIR: Validador de CPF e CNPJ]"
+  },
+  "descricao": {
+    "pt-BR": "Confere os dígitos verificadores de CPF e CNPJ e formata o número.",
+    "en": "[TRADUZIR: Confere os dígitos verificadores de CPF e CNPJ e formata o número.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "esse cpf é válido",
+      "conferir cnpj"
+    ],
+    "en": [
+      "[TRADUZIR: esse cpf é válido]",
+      "[TRADUZIR: conferir cnpj]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cpf",
+      "cnpj",
+      "validar",
+      "documento"
+    ],
+    "en": [
+      "[TRADUZIR: cpf]",
+      "[TRADUZIR: cnpj]",
+      "[TRADUZIR: validar]",
+      "[TRADUZIR: documento]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

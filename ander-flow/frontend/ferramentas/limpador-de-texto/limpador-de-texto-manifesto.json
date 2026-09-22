@@ -1,0 +1,41 @@
+{
+  "slug": "limpador-de-texto",
+  "estado": "planejada",
+  "categoria": "texto",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "texto",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Limpeza de texto",
+    "en": "[TRADUZIR: Limpeza de texto]"
+  },
+  "descricao": {
+    "pt-BR": "Remove espaços duplicados, linhas vazias e quebras de linha soltas.",
+    "en": "[TRADUZIR: Remove espaços duplicados, linhas vazias e quebras de linha soltas.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "tirar espaço duplo do texto",
+      "limpar texto colado do pdf"
+    ],
+    "en": [
+      "remove double spaces from text",
+      "clean text copied from pdf"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "limpar texto",
+      "espaços",
+      "quebra de linha"
+    ],
+    "en": [
+      "clean text",
+      "spaces",
+      "line break"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "ficha-tecnica",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Ficha técnica de produto",
+    "en": "[TRADUZIR: Ficha técnica de produto]"
+  },
+  "descricao": {
+    "pt-BR": "Documenta ingredientes, modo de preparo, custo e rendimento de um produto artesanal.",
+    "en": "[TRADUZIR: Documenta ingredientes, modo de preparo, custo e rendimento de um produto artesanal.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer a ficha técnica do produto"
+    ],
+    "en": [
+      "[TRADUZIR: fazer a ficha técnica do produto]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ficha técnica",
+      "padronização",
+      "receita"
+    ],
+    "en": [
+      "[TRADUZIR: ficha técnica]",
+      "[TRADUZIR: padronização]",
+      "[TRADUZIR: receita]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

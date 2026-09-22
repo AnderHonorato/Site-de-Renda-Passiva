@@ -1,0 +1,49 @@
+{
+  "slug": "juros",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Calculadora de juros",
+    "en": "[TRADUZIR: Calculadora de juros]"
+  },
+  "descricao": {
+    "pt-BR": "Juros simples e compostos, com aportes mensais e tabela período a período.",
+    "en": "[TRADUZIR: Juros simples e compostos, com aportes mensais e tabela período a período.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto rende meu dinheiro",
+      "juros compostos",
+      "simular poupança",
+      "valor futuro"
+    ],
+    "en": [
+      "[TRADUZIR: quanto rende meu dinheiro]",
+      "[TRADUZIR: juros compostos]",
+      "[TRADUZIR: simular poupança]",
+      "[TRADUZIR: valor futuro]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "juros",
+      "rendimento",
+      "investimento",
+      "poupança",
+      "montante"
+    ],
+    "en": [
+      "[TRADUZIR: juros]",
+      "[TRADUZIR: rendimento]",
+      "[TRADUZIR: investimento]",
+      "[TRADUZIR: poupança]",
+      "[TRADUZIR: montante]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

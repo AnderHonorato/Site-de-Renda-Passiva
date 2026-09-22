@@ -1,0 +1,47 @@
+{
+  "slug": "preco-por-unidade",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Preço por unidade",
+    "en": "[TRADUZIR: Preço por unidade]"
+  },
+  "descricao": {
+    "pt-BR": "Compara embalagens de tamanhos diferentes e mostra qual sai mais barata de verdade.",
+    "en": "[TRADUZIR: Compara embalagens de tamanhos diferentes e mostra qual sai mais barata de verdade.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "qual embalagem compensa",
+      "preço por quilo",
+      "comparar preços de embalagens"
+    ],
+    "en": [
+      "[TRADUZIR: qual embalagem compensa]",
+      "[TRADUZIR: preço por quilo]",
+      "[TRADUZIR: comparar preços de embalagens]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "comparar preço",
+      "embalagem",
+      "custo por kg",
+      "litro",
+      "supermercado"
+    ],
+    "en": [
+      "[TRADUZIR: comparar preço]",
+      "[TRADUZIR: embalagem]",
+      "[TRADUZIR: custo por kg]",
+      "[TRADUZIR: litro]",
+      "[TRADUZIR: supermercado]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

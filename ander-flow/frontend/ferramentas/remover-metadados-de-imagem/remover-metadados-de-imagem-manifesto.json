@@ -1,0 +1,41 @@
+{
+  "slug": "remover-metadados-de-imagem",
+  "estado": "planejada",
+  "categoria": "imagens",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "imagem",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Remover metadados da imagem",
+    "en": "[TRADUZIR: Remover metadados da imagem]"
+  },
+  "descricao": {
+    "pt-BR": "Apaga dados de localização, câmera e data escondidos dentro do arquivo da foto.",
+    "en": "[TRADUZIR: Apaga dados de localização, câmera e data escondidos dentro do arquivo da foto.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "tirar localização da foto",
+      "remover exif"
+    ],
+    "en": [
+      "[TRADUZIR: tirar localização da foto]",
+      "[TRADUZIR: remover exif]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "metadados",
+      "exif",
+      "privacidade da foto"
+    ],
+    "en": [
+      "[TRADUZIR: metadados]",
+      "[TRADUZIR: exif]",
+      "[TRADUZIR: privacidade da foto]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "plano-de-estudos",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Plano de estudos",
+    "en": "[TRADUZIR: Plano de estudos]"
+  },
+  "descricao": {
+    "pt-BR": "Monta uma grade semanal de estudos por disciplina, com minutos por sessão e pausas.",
+    "en": "[TRADUZIR: Monta uma grade semanal de estudos por disciplina, com minutos por sessão e pausas.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar plano de estudos da semana"
+    ],
+    "en": [
+      "[TRADUZIR: montar plano de estudos da semana]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "plano de estudos",
+      "grade semanal",
+      "rotina de estudo"
+    ],
+    "en": [
+      "[TRADUZIR: plano de estudos]",
+      "[TRADUZIR: grade semanal]",
+      "[TRADUZIR: rotina de estudo]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

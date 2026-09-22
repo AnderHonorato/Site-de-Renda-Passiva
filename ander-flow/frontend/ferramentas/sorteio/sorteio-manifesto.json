@@ -1,0 +1,47 @@
+{
+  "slug": "sorteio",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Sorteio",
+    "en": "[TRADUZIR: Sorteio]"
+  },
+  "descricao": {
+    "pt-BR": "Sorteia números, nomes e divide participantes em times, sem repetição quando pedido.",
+    "en": "[TRADUZIR: Sorteia números, nomes e divide participantes em times, sem repetição quando pedido.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer um sorteio",
+      "dividir times",
+      "sortear nomes"
+    ],
+    "en": [
+      "[TRADUZIR: fazer um sorteio]",
+      "[TRADUZIR: dividir times]",
+      "[TRADUZIR: sortear nomes]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "sorteio",
+      "sortear",
+      "times",
+      "amigo secreto",
+      "rifa"
+    ],
+    "en": [
+      "[TRADUZIR: sorteio]",
+      "[TRADUZIR: sortear]",
+      "[TRADUZIR: times]",
+      "[TRADUZIR: amigo secreto]",
+      "[TRADUZIR: rifa]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "contrato-simples",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Contrato simples de prestação de serviço",
+    "en": "[TRADUZIR: Contrato simples de prestação de serviço]"
+  },
+  "descricao": {
+    "pt-BR": "Monta um contrato curto de prestação de serviço com objeto, valor e prazo.",
+    "en": "[TRADUZIR: Monta um contrato curto de prestação de serviço com objeto, valor e prazo.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer um contrato simples de serviço"
+    ],
+    "en": [
+      "[TRADUZIR: fazer um contrato simples de serviço]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "contrato",
+      "prestação de serviço"
+    ],
+    "en": [
+      "[TRADUZIR: contrato]",
+      "[TRADUZIR: prestação de serviço]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

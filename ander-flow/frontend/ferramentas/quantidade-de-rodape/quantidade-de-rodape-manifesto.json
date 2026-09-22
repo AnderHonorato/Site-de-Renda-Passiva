@@ -1,0 +1,39 @@
+{
+  "slug": "quantidade-de-rodape",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Quantidade de rodapé",
+    "en": "[TRADUZIR: Quantidade de rodapé]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula quantas barras de rodapé comprar a partir do perímetro do cômodo e da perda.",
+    "en": "[TRADUZIR: Calcula quantas barras de rodapé comprar a partir do perímetro do cômodo e da perda.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto rodapé comprar"
+    ],
+    "en": [
+      "[TRADUZIR: quanto rodapé comprar]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "rodapé",
+      "reforma",
+      "acabamento"
+    ],
+    "en": [
+      "[TRADUZIR: rodapé]",
+      "[TRADUZIR: reforma]",
+      "[TRADUZIR: acabamento]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

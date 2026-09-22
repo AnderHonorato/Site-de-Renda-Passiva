@@ -1,0 +1,37 @@
+{
+  "slug": "curva-abc",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Curva ABC de produtos",
+    "en": "[TRADUZIR: Curva ABC de produtos]"
+  },
+  "descricao": {
+    "pt-BR": "Classifica os produtos em A, B e C pela participação no faturamento ou saída.",
+    "en": "[TRADUZIR: Classifica os produtos em A, B e C pela participação no faturamento ou saída.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer curva abc dos produtos"
+    ],
+    "en": [
+      "[TRADUZIR: fazer curva abc dos produtos]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "curva abc",
+      "classificação de produtos"
+    ],
+    "en": [
+      "[TRADUZIR: curva abc]",
+      "[TRADUZIR: classificação de produtos]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,43 @@
+{
+  "slug": "gerador-de-formulas",
+  "estado": "planejada",
+  "categoria": "planilhas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "planilha",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Montador de fórmulas de planilha",
+    "en": "[TRADUZIR: Montador de fórmulas de planilha]"
+  },
+  "descricao": {
+    "pt-BR": "Monta PROCV, PROCX, SOMASES, CONT.SES e SE aninhado a partir de perguntas simples.",
+    "en": "[TRADUZIR: Monta PROCV, PROCX, SOMASES, CONT.SES e SE aninhado a partir de perguntas simples.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "como fazer procv"
+    ],
+    "en": [
+      "[TRADUZIR: como fazer procv]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "procv",
+      "procx",
+      "somases",
+      "fórmula",
+      "excel"
+    ],
+    "en": [
+      "[TRADUZIR: procv]",
+      "[TRADUZIR: procx]",
+      "[TRADUZIR: somases]",
+      "[TRADUZIR: fórmula]",
+      "excel"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

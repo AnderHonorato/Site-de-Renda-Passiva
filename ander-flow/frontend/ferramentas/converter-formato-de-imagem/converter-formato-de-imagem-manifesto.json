@@ -1,0 +1,43 @@
+{
+  "slug": "converter-formato-de-imagem",
+  "estado": "planejada",
+  "categoria": "imagens",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "imagem",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Converter formato de imagem",
+    "en": "[TRADUZIR: Converter formato de imagem]"
+  },
+  "descricao": {
+    "pt-BR": "Converte entre JPG, PNG, WebP e outros formatos de imagem.",
+    "en": "[TRADUZIR: Converte entre JPG, PNG, WebP e outros formatos de imagem.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "converter png para jpg",
+      "transformar imagem em webp"
+    ],
+    "en": [
+      "[TRADUZIR: converter png para jpg]",
+      "[TRADUZIR: transformar imagem em webp]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "converter imagem",
+      "jpg",
+      "png",
+      "webp"
+    ],
+    "en": [
+      "[TRADUZIR: converter imagem]",
+      "[TRADUZIR: jpg]",
+      "[TRADUZIR: png]",
+      "[TRADUZIR: webp]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

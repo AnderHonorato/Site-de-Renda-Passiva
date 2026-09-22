@@ -1,0 +1,45 @@
+{
+  "slug": "numero-por-extenso",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Número por extenso",
+    "en": "[TRADUZIR: Número por extenso]"
+  },
+  "descricao": {
+    "pt-BR": "Escreve números e valores em reais por extenso, para recibos e contratos.",
+    "en": "[TRADUZIR: Escreve números e valores em reais por extenso, para recibos e contratos.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "escrever valor por extenso",
+      "número por extenso"
+    ],
+    "en": [
+      "[TRADUZIR: escrever valor por extenso]",
+      "[TRADUZIR: número por extenso]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "extenso",
+      "recibo",
+      "cheque",
+      "contrato",
+      "reais"
+    ],
+    "en": [
+      "[TRADUZIR: extenso]",
+      "[TRADUZIR: recibo]",
+      "[TRADUZIR: cheque]",
+      "[TRADUZIR: contrato]",
+      "[TRADUZIR: reais]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

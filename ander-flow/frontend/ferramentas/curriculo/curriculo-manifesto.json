@@ -1,0 +1,39 @@
+{
+  "slug": "curriculo",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 110,
+  "nome": {
+    "pt-BR": "Gerador de currículo",
+    "en": "[TRADUZIR: Gerador de currículo]"
+  },
+  "descricao": {
+    "pt-BR": "Monta um currículo organizado com experiência, formação e habilidades.",
+    "en": "[TRADUZIR: Monta um currículo organizado com experiência, formação e habilidades.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer um currículo"
+    ],
+    "en": [
+      "[TRADUZIR: fazer um currículo]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "currículo",
+      "emprego",
+      "vaga"
+    ],
+    "en": [
+      "[TRADUZIR: currículo]",
+      "[TRADUZIR: emprego]",
+      "[TRADUZIR: vaga]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

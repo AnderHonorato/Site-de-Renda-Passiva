@@ -1,0 +1,39 @@
+{
+  "slug": "dados-de-teste",
+  "estado": "planejada",
+  "categoria": "planilhas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "planilha",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Gerador de dados de teste",
+    "en": "[TRADUZIR: Gerador de dados de teste]"
+  },
+  "descricao": {
+    "pt-BR": "Gera listas fictícias de pessoas, produtos e pedidos para testar planilhas e sistemas.",
+    "en": "[TRADUZIR: Gera listas fictícias de pessoas, produtos e pedidos para testar planilhas e sistemas.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "gerar dados para teste"
+    ],
+    "en": [
+      "[TRADUZIR: gerar dados para teste]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "dados falsos",
+      "teste",
+      "mock"
+    ],
+    "en": [
+      "[TRADUZIR: dados falsos]",
+      "[TRADUZIR: teste]",
+      "[TRADUZIR: mock]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

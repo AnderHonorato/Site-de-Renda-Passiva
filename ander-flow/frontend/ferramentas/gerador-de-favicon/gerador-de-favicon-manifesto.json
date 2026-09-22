@@ -1,0 +1,37 @@
+{
+  "slug": "gerador-de-favicon",
+  "estado": "planejada",
+  "categoria": "imagens",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "imagem",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Gerador de favicon",
+    "en": "[TRADUZIR: Gerador de favicon]"
+  },
+  "descricao": {
+    "pt-BR": "Gera o favicon do site em vários tamanhos a partir de uma imagem.",
+    "en": "[TRADUZIR: Gera o favicon do site em vários tamanhos a partir de uma imagem.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "gerar favicon do site"
+    ],
+    "en": [
+      "[TRADUZIR: gerar favicon do site]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "favicon",
+      "ícone do site"
+    ],
+    "en": [
+      "[TRADUZIR: favicon]",
+      "[TRADUZIR: ícone do site]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

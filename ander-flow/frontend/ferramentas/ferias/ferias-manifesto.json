@@ -1,0 +1,41 @@
+{
+  "slug": "ferias",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Cálculo de férias",
+    "en": "[TRADUZIR: Cálculo de férias]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o valor das férias com um terço constitucional e o abono pecuniário.",
+    "en": "[TRADUZIR: Calcula o valor das férias com um terço constitucional e o abono pecuniário.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular valor das férias",
+      "quanto vou receber de férias"
+    ],
+    "en": [
+      "[TRADUZIR: calcular valor das férias]",
+      "[TRADUZIR: quanto vou receber de férias]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "férias",
+      "abono pecuniário",
+      "um terço"
+    ],
+    "en": [
+      "[TRADUZIR: férias]",
+      "[TRADUZIR: abono pecuniário]",
+      "[TRADUZIR: um terço]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

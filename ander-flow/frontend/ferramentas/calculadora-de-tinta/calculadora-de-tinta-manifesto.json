@@ -1,0 +1,41 @@
+{
+  "slug": "calculadora-de-tinta",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Calculadora de tinta",
+    "en": "[TRADUZIR: Calculadora de tinta]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula os litros de tinta necessários pela área e demãos, e compara o custo das embalagens.",
+    "en": "[TRADUZIR: Calcula os litros de tinta necessários pela área e demãos, e compara o custo das embalagens.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quantos litros de tinta comprar",
+      "qual lata de tinta compensa mais"
+    ],
+    "en": [
+      "[TRADUZIR: quantos litros de tinta comprar]",
+      "[TRADUZIR: qual lata de tinta compensa mais]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "tinta",
+      "pintura",
+      "rendimento de tinta"
+    ],
+    "en": [
+      "[TRADUZIR: tinta]",
+      "[TRADUZIR: pintura]",
+      "[TRADUZIR: rendimento de tinta]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

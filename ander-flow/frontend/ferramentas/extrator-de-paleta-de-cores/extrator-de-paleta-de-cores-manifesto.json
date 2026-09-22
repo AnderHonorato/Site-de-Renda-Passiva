@@ -1,0 +1,39 @@
+{
+  "slug": "extrator-de-paleta-de-cores",
+  "estado": "planejada",
+  "categoria": "imagens",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "imagem",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Extrair paleta de cores da imagem",
+    "en": "[TRADUZIR: Extrair paleta de cores da imagem]"
+  },
+  "descricao": {
+    "pt-BR": "Identifica as cores predominantes de uma imagem e devolve os códigos hexadecimais.",
+    "en": "[TRADUZIR: Identifica as cores predominantes de uma imagem e devolve os códigos hexadecimais.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "pegar as cores dessa imagem"
+    ],
+    "en": [
+      "[TRADUZIR: pegar as cores dessa imagem]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "paleta de cores",
+      "extrair cor",
+      "hexadecimal"
+    ],
+    "en": [
+      "[TRADUZIR: paleta de cores]",
+      "[TRADUZIR: extrair cor]",
+      "[TRADUZIR: hexadecimal]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

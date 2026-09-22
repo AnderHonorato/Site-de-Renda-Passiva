@@ -1,0 +1,39 @@
+{
+  "slug": "comparador-de-textos",
+  "estado": "planejada",
+  "categoria": "texto",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "texto",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Comparar dois textos",
+    "en": "[TRADUZIR: Comparar dois textos]"
+  },
+  "descricao": {
+    "pt-BR": "Mostra as diferenças entre duas versões de um texto, linha a linha.",
+    "en": "[TRADUZIR: Mostra as diferenças entre duas versões de um texto, linha a linha.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "o que mudou entre essas duas versões"
+    ],
+    "en": [
+      "what changed between these two versions"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "comparar texto",
+      "diff",
+      "diferença"
+    ],
+    "en": [
+      "compare text",
+      "diff",
+      "difference"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

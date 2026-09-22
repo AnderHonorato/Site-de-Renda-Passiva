@@ -1,0 +1,39 @@
+{
+  "slug": "tabuada",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Tabuada para imprimir",
+    "en": "[TRADUZIR: Tabuada para imprimir]"
+  },
+  "descricao": {
+    "pt-BR": "Gera folhas de tabuada por fator, em ordem ou embaralhada, com gabarito separado.",
+    "en": "[TRADUZIR: Gera folhas de tabuada por fator, em ordem ou embaralhada, com gabarito separado.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "folha de tabuada para imprimir"
+    ],
+    "en": [
+      "[TRADUZIR: folha de tabuada para imprimir]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "tabuada",
+      "multiplicação",
+      "matemática"
+    ],
+    "en": [
+      "[TRADUZIR: tabuada]",
+      "[TRADUZIR: multiplicação]",
+      "mathematics"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

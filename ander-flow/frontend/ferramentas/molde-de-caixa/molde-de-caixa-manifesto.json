@@ -1,0 +1,39 @@
+{
+  "slug": "molde-de-caixa",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 120,
+  "nome": {
+    "pt-BR": "Molde de caixa",
+    "en": "[TRADUZIR: Molde de caixa]"
+  },
+  "descricao": {
+    "pt-BR": "Gera o molde de uma caixa retangular simples ou com tampa separada, pelas medidas internas.",
+    "en": "[TRADUZIR: Gera o molde de uma caixa retangular simples ou com tampa separada, pelas medidas internas.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "gerar molde de caixa nas minhas medidas"
+    ],
+    "en": [
+      "[TRADUZIR: gerar molde de caixa nas minhas medidas]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "molde de caixa",
+      "embalagem",
+      "planificação"
+    ],
+    "en": [
+      "[TRADUZIR: molde de caixa]",
+      "[TRADUZIR: embalagem]",
+      "[TRADUZIR: planificação]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "checklist",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 90,
+  "nome": {
+    "pt-BR": "Checklist para imprimir",
+    "en": "[TRADUZIR: Checklist para imprimir]"
+  },
+  "descricao": {
+    "pt-BR": "Monta uma lista de tarefas com caixas de marcar, para qualquer finalidade.",
+    "en": "[TRADUZIR: Monta uma lista de tarefas com caixas de marcar, para qualquer finalidade.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer um checklist para imprimir"
+    ],
+    "en": [
+      "[TRADUZIR: fazer um checklist para imprimir]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "checklist",
+      "lista de tarefas"
+    ],
+    "en": [
+      "[TRADUZIR: checklist]",
+      "task list"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

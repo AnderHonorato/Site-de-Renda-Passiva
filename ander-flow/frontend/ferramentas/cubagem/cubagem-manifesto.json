@@ -1,0 +1,39 @@
+{
+  "slug": "cubagem",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Cálculo de cubagem",
+    "en": "[TRADUZIR: Cálculo de cubagem]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o volume ocupado por uma carga a partir das medidas de cada volume.",
+    "en": "[TRADUZIR: Calcula o volume ocupado por uma carga a partir das medidas de cada volume.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular cubagem da carga"
+    ],
+    "en": [
+      "[TRADUZIR: calcular cubagem da carga]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cubagem",
+      "volume de carga",
+      "m³"
+    ],
+    "en": [
+      "[TRADUZIR: cubagem]",
+      "[TRADUZIR: volume de carga]",
+      "[TRADUZIR: m³]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

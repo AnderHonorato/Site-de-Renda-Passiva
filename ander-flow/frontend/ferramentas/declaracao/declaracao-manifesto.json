@@ -1,0 +1,37 @@
+{
+  "slug": "declaracao",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Gerador de declaração",
+    "en": "[TRADUZIR: Gerador de declaração]"
+  },
+  "descricao": {
+    "pt-BR": "Monta declarações simples (residência, próprio punho, para os fins que couber) em PDF.",
+    "en": "[TRADUZIR: Monta declarações simples (residência, próprio punho, para os fins que couber) em PDF.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer uma declaração de residência"
+    ],
+    "en": [
+      "[TRADUZIR: fazer uma declaração de residência]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "declaração",
+      "documento simples"
+    ],
+    "en": [
+      "[TRADUZIR: declaração]",
+      "[TRADUZIR: documento simples]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

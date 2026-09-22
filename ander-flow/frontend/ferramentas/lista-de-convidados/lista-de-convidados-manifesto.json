@@ -1,0 +1,39 @@
+{
+  "slug": "lista-de-convidados",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 170,
+  "nome": {
+    "pt-BR": "Lista de convidados",
+    "en": "[TRADUZIR: Lista de convidados]"
+  },
+  "descricao": {
+    "pt-BR": "Conta confirmados, pendentes e recusados de um evento, com os nomes salvos no aparelho.",
+    "en": "[TRADUZIR: Conta confirmados, pendentes e recusados de um evento, com os nomes salvos no aparelho.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "controlar confirmação de convidados do evento"
+    ],
+    "en": [
+      "[TRADUZIR: controlar confirmação de convidados do evento]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "lista de convidados",
+      "confirmação de presença",
+      "evento"
+    ],
+    "en": [
+      "[TRADUZIR: lista de convidados]",
+      "[TRADUZIR: confirmação de presença]",
+      "event"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

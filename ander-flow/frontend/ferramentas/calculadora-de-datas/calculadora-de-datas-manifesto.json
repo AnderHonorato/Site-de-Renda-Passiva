@@ -1,0 +1,47 @@
+{
+  "slug": "calculadora-de-datas",
+  "estado": "planejada",
+  "categoria": "datas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "calendario",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Calculadora de datas",
+    "en": "[TRADUZIR: Calculadora de datas]"
+  },
+  "descricao": {
+    "pt-BR": "Diferença entre datas, somar ou subtrair prazos, dias úteis, idade e dia da semana.",
+    "en": "[TRADUZIR: Diferença entre datas, somar ou subtrair prazos, dias úteis, idade e dia da semana.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quantos dias faltam",
+      "calcular prazo em dias úteis",
+      "qual minha idade exata"
+    ],
+    "en": [
+      "[TRADUZIR: quantos dias faltam]",
+      "[TRADUZIR: calcular prazo em dias úteis]",
+      "[TRADUZIR: qual minha idade exata]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "data",
+      "prazo",
+      "dias úteis",
+      "idade",
+      "vencimento"
+    ],
+    "en": [
+      "[TRADUZIR: data]",
+      "deadline",
+      "[TRADUZIR: dias úteis]",
+      "[TRADUZIR: idade]",
+      "[TRADUZIR: vencimento]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

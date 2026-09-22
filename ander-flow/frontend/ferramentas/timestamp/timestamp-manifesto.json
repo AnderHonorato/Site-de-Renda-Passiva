@@ -1,0 +1,39 @@
+{
+  "slug": "timestamp",
+  "estado": "planejada",
+  "categoria": "desenvolvimento",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "codigo",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Conversor de timestamp",
+    "en": "[TRADUZIR: Conversor de timestamp]"
+  },
+  "descricao": {
+    "pt-BR": "Unix, milissegundos e ISO 8601 em data legível, com fuso escolhido.",
+    "en": "[TRADUZIR: Unix, milissegundos e ISO 8601 em data legível, com fuso escolhido.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "converter timestamp"
+    ],
+    "en": [
+      "[TRADUZIR: converter timestamp]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "timestamp",
+      "unix",
+      "iso"
+    ],
+    "en": [
+      "[TRADUZIR: timestamp]",
+      "[TRADUZIR: unix]",
+      "[TRADUZIR: iso]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

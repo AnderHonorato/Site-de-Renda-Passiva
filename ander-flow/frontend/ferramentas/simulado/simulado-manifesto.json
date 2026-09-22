@@ -1,0 +1,39 @@
+{
+  "slug": "simulado",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Montador de simulado",
+    "en": "[TRADUZIR: Montador de simulado]"
+  },
+  "descricao": {
+    "pt-BR": "Monta um simulado a partir de um banco de questões, com correção automática.",
+    "en": "[TRADUZIR: Monta um simulado a partir de um banco de questões, com correção automática.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar um simulado de prova"
+    ],
+    "en": [
+      "[TRADUZIR: montar um simulado de prova]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "simulado",
+      "banco de questões",
+      "correção"
+    ],
+    "en": [
+      "[TRADUZIR: simulado]",
+      "[TRADUZIR: banco de questões]",
+      "[TRADUZIR: correção]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

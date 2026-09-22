@@ -1,0 +1,39 @@
+{
+  "slug": "gerador-de-link-whatsapp",
+  "estado": "planejada",
+  "categoria": "marketing",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "megafone",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Link de WhatsApp",
+    "en": "[TRADUZIR: Link de WhatsApp]"
+  },
+  "descricao": {
+    "pt-BR": "Monta o link wa.me com número e mensagem pronta, mais o QR Code correspondente.",
+    "en": "[TRADUZIR: Monta o link wa.me com número e mensagem pronta, mais o QR Code correspondente.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "criar link do whatsapp"
+    ],
+    "en": [
+      "[TRADUZIR: criar link do whatsapp]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "whatsapp",
+      "link",
+      "wa.me"
+    ],
+    "en": [
+      "[TRADUZIR: whatsapp]",
+      "[TRADUZIR: link]",
+      "[TRADUZIR: wa.me]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

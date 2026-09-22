@@ -1,0 +1,39 @@
+{
+  "slug": "custo-de-material-artesanal",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Custo de material artesanal",
+    "en": "[TRADUZIR: Custo de material artesanal]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o custo dos materiais usados numa peça artesanal a partir do consumo de cada um.",
+    "en": "[TRADUZIR: Calcula o custo dos materiais usados numa peça artesanal a partir do consumo de cada um.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular custo de material da peça artesanal"
+    ],
+    "en": [
+      "[TRADUZIR: calcular custo de material da peça artesanal]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "custo de material",
+      "artesanato",
+      "consumo de insumo"
+    ],
+    "en": [
+      "[TRADUZIR: custo de material]",
+      "[TRADUZIR: artesanato]",
+      "[TRADUZIR: consumo de insumo]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

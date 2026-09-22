@@ -1,0 +1,39 @@
+{
+  "slug": "area-de-paredes",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 110,
+  "nome": {
+    "pt-BR": "Área de paredes e tetos",
+    "en": "[TRADUZIR: Área de paredes e tetos]"
+  },
+  "descricao": {
+    "pt-BR": "Soma a área de paredes e tetos, descontando portas e janelas marcadas.",
+    "en": "[TRADUZIR: Soma a área de paredes e tetos, descontando portas e janelas marcadas.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular área da parede para reforma"
+    ],
+    "en": [
+      "[TRADUZIR: calcular área da parede para reforma]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "área de parede",
+      "metragem",
+      "reforma"
+    ],
+    "en": [
+      "[TRADUZIR: área de parede]",
+      "[TRADUZIR: metragem]",
+      "[TRADUZIR: reforma]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

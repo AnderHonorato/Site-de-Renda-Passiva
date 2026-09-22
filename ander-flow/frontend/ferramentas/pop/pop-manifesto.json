@@ -1,0 +1,39 @@
+{
+  "slug": "pop",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 100,
+  "nome": {
+    "pt-BR": "Procedimento operacional padrão (POP)",
+    "en": "[TRADUZIR: Procedimento operacional padrão (POP)]"
+  },
+  "descricao": {
+    "pt-BR": "Monta um POP com objetivo, materiais, passo a passo e responsável.",
+    "en": "[TRADUZIR: Monta um POP com objetivo, materiais, passo a passo e responsável.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "documentar um processo da empresa"
+    ],
+    "en": [
+      "[TRADUZIR: documentar um processo da empresa]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "pop",
+      "procedimento",
+      "processo"
+    ],
+    "en": [
+      "[TRADUZIR: pop]",
+      "[TRADUZIR: procedimento]",
+      "[TRADUZIR: processo]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

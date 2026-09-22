@@ -1,0 +1,39 @@
+{
+  "slug": "rateio-de-custos",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Rateio de custos",
+    "en": "[TRADUZIR: Rateio de custos]"
+  },
+  "descricao": {
+    "pt-BR": "Distribui um custo comum entre setores, produtos ou pessoas por critério escolhido.",
+    "en": "[TRADUZIR: Distribui um custo comum entre setores, produtos ou pessoas por critério escolhido.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "dividir custo entre setores"
+    ],
+    "en": [
+      "[TRADUZIR: dividir custo entre setores]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "rateio",
+      "custo indireto",
+      "proporcional"
+    ],
+    "en": [
+      "[TRADUZIR: rateio]",
+      "[TRADUZIR: custo indireto]",
+      "[TRADUZIR: proporcional]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

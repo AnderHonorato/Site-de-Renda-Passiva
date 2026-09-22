@@ -1,0 +1,41 @@
+{
+  "slug": "qr-code",
+  "estado": "planejada",
+  "categoria": "imagens",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "imagem",
+  "ordem": 90,
+  "nome": {
+    "pt-BR": "Gerador de QR Code",
+    "en": "[TRADUZIR: Gerador de QR Code]"
+  },
+  "descricao": {
+    "pt-BR": "QR Code de link, texto, Wi-Fi ou contato, com download em PNG e SVG.",
+    "en": "[TRADUZIR: QR Code de link, texto, Wi-Fi ou contato, com download em PNG e SVG.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "gerar qr code"
+    ],
+    "en": [
+      "[TRADUZIR: gerar qr code]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "qr code",
+      "wifi",
+      "link",
+      "contato"
+    ],
+    "en": [
+      "[TRADUZIR: qr code]",
+      "[TRADUZIR: wifi]",
+      "[TRADUZIR: link]",
+      "[TRADUZIR: contato]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "matriz-de-risco",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 110,
+  "nome": {
+    "pt-BR": "Matriz de risco",
+    "en": "[TRADUZIR: Matriz de risco]"
+  },
+  "descricao": {
+    "pt-BR": "Classifica riscos por probabilidade e impacto, numa grade de calor.",
+    "en": "[TRADUZIR: Classifica riscos por probabilidade e impacto, numa grade de calor.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar matriz de risco do projeto"
+    ],
+    "en": [
+      "[TRADUZIR: montar matriz de risco do projeto]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "matriz de risco",
+      "probabilidade e impacto"
+    ],
+    "en": [
+      "[TRADUZIR: matriz de risco]",
+      "[TRADUZIR: probabilidade e impacto]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

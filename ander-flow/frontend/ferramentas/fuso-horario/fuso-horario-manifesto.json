@@ -1,0 +1,39 @@
+{
+  "slug": "fuso-horario",
+  "estado": "planejada",
+  "categoria": "datas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "calendario",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Fuso horário e reunião",
+    "en": "[TRADUZIR: Fuso horário e reunião]"
+  },
+  "descricao": {
+    "pt-BR": "Compara horários entre cidades e sugere janelas comuns para reunião.",
+    "en": "[TRADUZIR: Compara horários entre cidades e sugere janelas comuns para reunião.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "que horas são lá"
+    ],
+    "en": [
+      "[TRADUZIR: que horas são lá]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "fuso",
+      "reunião",
+      "horário"
+    ],
+    "en": [
+      "[TRADUZIR: fuso]",
+      "meeting",
+      "[TRADUZIR: horário]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

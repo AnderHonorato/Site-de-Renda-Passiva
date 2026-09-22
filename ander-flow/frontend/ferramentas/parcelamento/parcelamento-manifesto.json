@@ -1,0 +1,47 @@
+{
+  "slug": "parcelamento",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Simulador de parcelamento",
+    "en": "[TRADUZIR: Simulador de parcelamento]"
+  },
+  "descricao": {
+    "pt-BR": "Parcela pela Tabela Price, custo total do crédito e comparação com o pagamento à vista.",
+    "en": "[TRADUZIR: Parcela pela Tabela Price, custo total do crédito e comparação com o pagamento à vista.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "vale a pena parcelar",
+      "calcular parcela",
+      "quanto fica por mês"
+    ],
+    "en": [
+      "[TRADUZIR: vale a pena parcelar]",
+      "[TRADUZIR: calcular parcela]",
+      "[TRADUZIR: quanto fica por mês]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "parcela",
+      "financiamento",
+      "crediário",
+      "price",
+      "à vista"
+    ],
+    "en": [
+      "[TRADUZIR: parcela]",
+      "[TRADUZIR: financiamento]",
+      "[TRADUZIR: crediário]",
+      "[TRADUZIR: price]",
+      "[TRADUZIR: à vista]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

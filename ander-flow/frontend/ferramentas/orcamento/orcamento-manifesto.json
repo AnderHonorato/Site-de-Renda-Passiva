@@ -1,0 +1,55 @@
+{
+  "slug": "orcamento",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Orçamento e proposta",
+    "en": "[TRADUZIR: Orçamento e proposta]"
+  },
+  "descricao": {
+    "pt-BR": "Monta o orçamento com itens, desconto e validade; exporta PDF, planilha e link para o cliente.",
+    "en": "[TRADUZIR: Monta o orçamento com itens, desconto e validade; exporta PDF, planilha e link para o cliente.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer um orçamento",
+      "mandar proposta para o cliente",
+      "orçamento em pdf"
+    ],
+    "en": [
+      "[TRADUZIR: fazer um orçamento]",
+      "[TRADUZIR: mandar proposta para o cliente]",
+      "[TRADUZIR: orçamento em pdf]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "orçamento",
+      "proposta",
+      "cliente",
+      "pdf",
+      "excel",
+      "encomenda",
+      "bolo",
+      "festa",
+      "obra"
+    ],
+    "en": [
+      "[TRADUZIR: orçamento]",
+      "[TRADUZIR: proposta]",
+      "customer",
+      "[TRADUZIR: pdf]",
+      "excel",
+      "[TRADUZIR: encomenda]",
+      "[TRADUZIR: bolo]",
+      "[TRADUZIR: festa]",
+      "[TRADUZIR: obra]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

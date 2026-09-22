@@ -1,0 +1,37 @@
+{
+  "slug": "follow-up",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Mensagem de follow-up",
+    "en": "[TRADUZIR: Mensagem de follow-up]"
+  },
+  "descricao": {
+    "pt-BR": "Monta a mensagem de retomada de contato a partir do contexto da negociação.",
+    "en": "[TRADUZIR: Monta a mensagem de retomada de contato a partir do contexto da negociação.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "cliente sumiu o que escrevo"
+    ],
+    "en": [
+      "[TRADUZIR: cliente sumiu o que escrevo]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "follow-up",
+      "retomar contato"
+    ],
+    "en": [
+      "[TRADUZIR: follow-up]",
+      "[TRADUZIR: retomar contato]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

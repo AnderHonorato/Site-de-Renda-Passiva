@@ -1,0 +1,37 @@
+{
+  "slug": "ticket-medio",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Ticket médio e conversão",
+    "en": "[TRADUZIR: Ticket médio e conversão]"
+  },
+  "descricao": {
+    "pt-BR": "Ticket médio, taxa de conversão e o efeito de melhorar cada um deles.",
+    "en": "[TRADUZIR: Ticket médio, taxa de conversão e o efeito de melhorar cada um deles.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "melhorar minhas vendas"
+    ],
+    "en": [
+      "[TRADUZIR: melhorar minhas vendas]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ticket médio",
+      "conversão"
+    ],
+    "en": [
+      "[TRADUZIR: ticket médio]",
+      "conversion"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

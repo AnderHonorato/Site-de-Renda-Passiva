@@ -1,0 +1,41 @@
+{
+  "slug": "salario-liquido-estimado",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Salário líquido estimado",
+    "en": "[TRADUZIR: Salário líquido estimado]"
+  },
+  "descricao": {
+    "pt-BR": "Estima o salário líquido a partir do bruto, descontando INSS e IRRF pela tabela vigente.",
+    "en": "[TRADUZIR: Estima o salário líquido a partir do bruto, descontando INSS e IRRF pela tabela vigente.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto sobra do salário depois do desconto"
+    ],
+    "en": [
+      "[TRADUZIR: quanto sobra do salário depois do desconto]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "salário líquido",
+      "inss",
+      "irrf",
+      "holerite"
+    ],
+    "en": [
+      "[TRADUZIR: salário líquido]",
+      "[TRADUZIR: inss]",
+      "[TRADUZIR: irrf]",
+      "[TRADUZIR: holerite]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

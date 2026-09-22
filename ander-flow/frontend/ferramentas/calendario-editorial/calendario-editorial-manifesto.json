@@ -1,0 +1,39 @@
+{
+  "slug": "calendario-editorial",
+  "estado": "planejada",
+  "categoria": "marketing",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "megafone",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Calendário editorial",
+    "en": "[TRADUZIR: Calendário editorial]"
+  },
+  "descricao": {
+    "pt-BR": "Organiza os posts do mês por data, rede social e status de produção.",
+    "en": "[TRADUZIR: Organiza os posts do mês por data, rede social e status de produção.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "planejar postagens do mês"
+    ],
+    "en": [
+      "[TRADUZIR: planejar postagens do mês]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "calendário editorial",
+      "conteúdo",
+      "rede social"
+    ],
+    "en": [
+      "[TRADUZIR: calendário editorial]",
+      "[TRADUZIR: conteúdo]",
+      "[TRADUZIR: rede social]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

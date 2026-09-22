@@ -1,0 +1,47 @@
+{
+  "slug": "divisao-de-contas",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Divisão de contas",
+    "en": "[TRADUZIR: Divisão de contas]"
+  },
+  "descricao": {
+    "pt-BR": "Quem pagou o quê, quanto cada um deve e o menor número de transferências para acertar.",
+    "en": "[TRADUZIR: Quem pagou o quê, quanto cada um deve e o menor número de transferências para acertar.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "rachar a conta",
+      "dividir despesas da viagem",
+      "quem deve pra quem"
+    ],
+    "en": [
+      "[TRADUZIR: rachar a conta]",
+      "[TRADUZIR: dividir despesas da viagem]",
+      "[TRADUZIR: quem deve pra quem]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "rachar",
+      "dividir conta",
+      "rateio",
+      "despesas",
+      "viagem"
+    ],
+    "en": [
+      "[TRADUZIR: rachar]",
+      "[TRADUZIR: dividir conta]",
+      "[TRADUZIR: rateio]",
+      "[TRADUZIR: despesas]",
+      "[TRADUZIR: viagem]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "remover-linhas-duplicadas-de-texto",
+  "estado": "planejada",
+  "categoria": "texto",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "texto",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Remover linhas duplicadas",
+    "en": "[TRADUZIR: Remover linhas duplicadas]"
+  },
+  "descricao": {
+    "pt-BR": "Remove linhas repetidas de uma lista de texto, mantendo a primeira ocorrência.",
+    "en": "[TRADUZIR: Remove linhas repetidas de uma lista de texto, mantendo a primeira ocorrência.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "tirar linhas repetidas da lista"
+    ],
+    "en": [
+      "remove duplicate lines from list"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "duplicadas",
+      "lista",
+      "linhas repetidas"
+    ],
+    "en": [
+      "duplicates",
+      "list",
+      "repeated lines"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

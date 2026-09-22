@@ -1,0 +1,39 @@
+{
+  "slug": "plano-de-acao",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Plano de ação com responsáveis",
+    "en": "[TRADUZIR: Plano de ação com responsáveis]"
+  },
+  "descricao": {
+    "pt-BR": "Lista ações, responsáveis e prazos, com acompanhamento de status.",
+    "en": "[TRADUZIR: Lista ações, responsáveis e prazos, com acompanhamento de status.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "organizar ações e responsáveis da reunião"
+    ],
+    "en": [
+      "[TRADUZIR: organizar ações e responsáveis da reunião]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "plano de ação",
+      "responsáveis",
+      "prazo"
+    ],
+    "en": [
+      "[TRADUZIR: plano de ação]",
+      "[TRADUZIR: responsáveis]",
+      "deadline"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

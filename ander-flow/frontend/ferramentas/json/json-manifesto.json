@@ -1,0 +1,43 @@
+{
+  "slug": "json",
+  "estado": "planejada",
+  "categoria": "desenvolvimento",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "codigo",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "JSON: validar e formatar",
+    "en": "[TRADUZIR: JSON: validar e formatar]"
+  },
+  "descricao": {
+    "pt-BR": "Valida, indenta, minifica, ordena chaves e aponta o erro com linha e coluna.",
+    "en": "[TRADUZIR: Valida, indenta, minifica, ordena chaves e aponta o erro com linha e coluna.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "meu json está inválido",
+      "formatar json"
+    ],
+    "en": [
+      "[TRADUZIR: meu json está inválido]",
+      "format json"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "json",
+      "formatar",
+      "validar",
+      "api"
+    ],
+    "en": [
+      "json",
+      "[TRADUZIR: formatar]",
+      "[TRADUZIR: validar]",
+      "[TRADUZIR: api]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

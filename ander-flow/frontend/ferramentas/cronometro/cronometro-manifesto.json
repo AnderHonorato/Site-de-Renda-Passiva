@@ -1,0 +1,41 @@
+{
+  "slug": "cronometro",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Cronômetro e temporizador",
+    "en": "[TRADUZIR: Cronômetro e temporizador]"
+  },
+  "descricao": {
+    "pt-BR": "Cronômetro com voltas, temporizador regressivo e ciclos de foco.",
+    "en": "[TRADUZIR: Cronômetro com voltas, temporizador regressivo e ciclos de foco.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "marcar o tempo"
+    ],
+    "en": [
+      "[TRADUZIR: marcar o tempo]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cronômetro",
+      "timer",
+      "pomodoro",
+      "foco"
+    ],
+    "en": [
+      "[TRADUZIR: cronômetro]",
+      "[TRADUZIR: timer]",
+      "[TRADUZIR: pomodoro]",
+      "[TRADUZIR: foco]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

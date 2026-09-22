@@ -1,0 +1,39 @@
+{
+  "slug": "descricao-de-vaga",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Descrição de vaga",
+    "en": "[TRADUZIR: Descrição de vaga]"
+  },
+  "descricao": {
+    "pt-BR": "Monta o anúncio da vaga com responsabilidades, requisitos e benefícios.",
+    "en": "[TRADUZIR: Monta o anúncio da vaga com responsabilidades, requisitos e benefícios.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "escrever descrição de vaga"
+    ],
+    "en": [
+      "[TRADUZIR: escrever descrição de vaga]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "vaga",
+      "anúncio de emprego",
+      "recrutamento"
+    ],
+    "en": [
+      "[TRADUZIR: vaga]",
+      "[TRADUZIR: anúncio de emprego]",
+      "[TRADUZIR: recrutamento]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

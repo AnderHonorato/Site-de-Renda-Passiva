@@ -1,0 +1,39 @@
+{
+  "slug": "divisorias-de-caixa",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 140,
+  "nome": {
+    "pt-BR": "Divisórias de caixa",
+    "en": "[TRADUZIR: Divisórias de caixa]"
+  },
+  "descricao": {
+    "pt-BR": "Gera o molde das divisórias internas de uma caixa pelo número de compartimentos.",
+    "en": "[TRADUZIR: Gera o molde das divisórias internas de uma caixa pelo número de compartimentos.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer divisórias para dentro da caixa"
+    ],
+    "en": [
+      "[TRADUZIR: fazer divisórias para dentro da caixa]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "divisórias",
+      "caixa",
+      "organização de embalagem"
+    ],
+    "en": [
+      "[TRADUZIR: divisórias]",
+      "[TRADUZIR: caixa]",
+      "[TRADUZIR: organização de embalagem]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

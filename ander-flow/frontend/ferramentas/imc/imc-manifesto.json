@@ -1,0 +1,39 @@
+{
+  "slug": "imc",
+  "estado": "planejada",
+  "categoria": "calculo",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "IMC e faixa de peso",
+    "en": "[TRADUZIR: IMC e faixa de peso]"
+  },
+  "descricao": {
+    "pt-BR": "Índice de massa corporal, faixa de referência e peso correspondente à faixa.",
+    "en": "[TRADUZIR: Índice de massa corporal, faixa de referência e peso correspondente à faixa.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular imc"
+    ],
+    "en": [
+      "[TRADUZIR: calcular imc]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "imc",
+      "peso",
+      "altura"
+    ],
+    "en": [
+      "[TRADUZIR: imc]",
+      "[TRADUZIR: peso]",
+      "[TRADUZIR: altura]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

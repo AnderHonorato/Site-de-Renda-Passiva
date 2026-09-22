@@ -1,0 +1,39 @@
+{
+  "slug": "linha-do-tempo",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 140,
+  "nome": {
+    "pt-BR": "Linha do tempo",
+    "en": "[TRADUZIR: Linha do tempo]"
+  },
+  "descricao": {
+    "pt-BR": "Organiza eventos em ordem cronológica numa linha do tempo visual.",
+    "en": "[TRADUZIR: Organiza eventos em ordem cronológica numa linha do tempo visual.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar linha do tempo para o trabalho"
+    ],
+    "en": [
+      "[TRADUZIR: montar linha do tempo para o trabalho]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "linha do tempo",
+      "cronologia",
+      "história"
+    ],
+    "en": [
+      "[TRADUZIR: linha do tempo]",
+      "[TRADUZIR: cronologia]",
+      "[TRADUZIR: história]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

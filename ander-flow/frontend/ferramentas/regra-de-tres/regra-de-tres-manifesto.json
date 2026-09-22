@@ -1,0 +1,41 @@
+{
+  "slug": "regra-de-tres",
+  "estado": "planejada",
+  "categoria": "calculo",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Regra de três",
+    "en": "[TRADUZIR: Regra de três]"
+  },
+  "descricao": {
+    "pt-BR": "Proporção direta e inversa, com a conta montada passo a passo.",
+    "en": "[TRADUZIR: Proporção direta e inversa, com a conta montada passo a passo.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "regra de três",
+      "se 3 custam x quanto custam 7"
+    ],
+    "en": [
+      "[TRADUZIR: regra de três]",
+      "[TRADUZIR: se 3 custam x quanto custam 7]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "regra de três",
+      "proporção",
+      "proporcional"
+    ],
+    "en": [
+      "[TRADUZIR: regra de três]",
+      "[TRADUZIR: proporção]",
+      "[TRADUZIR: proporcional]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "previsao-de-vendas",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 110,
+  "nome": {
+    "pt-BR": "Previsão de vendas",
+    "en": "[TRADUZIR: Previsão de vendas]"
+  },
+  "descricao": {
+    "pt-BR": "Projeta as vendas dos próximos meses a partir do histórico e de uma taxa de crescimento.",
+    "en": "[TRADUZIR: Projeta as vendas dos próximos meses a partir do histórico e de uma taxa de crescimento.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "prever vendas dos próximos meses"
+    ],
+    "en": [
+      "forecast sales for the coming months"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "previsão de vendas",
+      "projeção",
+      "tendência"
+    ],
+    "en": [
+      "sales forecast",
+      "projection",
+      "trend"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

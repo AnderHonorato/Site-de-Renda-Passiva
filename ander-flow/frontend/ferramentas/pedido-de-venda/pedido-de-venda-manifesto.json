@@ -1,0 +1,37 @@
+{
+  "slug": "pedido-de-venda",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Pedido de venda",
+    "en": "[TRADUZIR: Pedido de venda]"
+  },
+  "descricao": {
+    "pt-BR": "Pedido com itens, condições e prazo de entrega, pronto para PDF.",
+    "en": "[TRADUZIR: Pedido com itens, condições e prazo de entrega, pronto para PDF.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "registrar pedido do cliente"
+    ],
+    "en": [
+      "[TRADUZIR: registrar pedido do cliente]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "pedido",
+      "venda"
+    ],
+    "en": [
+      "order",
+      "[TRADUZIR: venda]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

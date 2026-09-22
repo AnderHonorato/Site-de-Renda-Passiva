@@ -1,0 +1,37 @@
+{
+  "slug": "contagem-regressiva",
+  "estado": "planejada",
+  "categoria": "datas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "calendario",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Contagem regressiva",
+    "en": "[TRADUZIR: Contagem regressiva]"
+  },
+  "descricao": {
+    "pt-BR": "Acompanha quanto falta para uma data importante, com link para compartilhar.",
+    "en": "[TRADUZIR: Acompanha quanto falta para uma data importante, com link para compartilhar.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto falta para a data"
+    ],
+    "en": [
+      "[TRADUZIR: quanto falta para a data]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "contagem regressiva",
+      "prazo"
+    ],
+    "en": [
+      "[TRADUZIR: contagem regressiva]",
+      "deadline"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "matriz-5w2h",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Plano de ação 5W2H",
+    "en": "[TRADUZIR: Plano de ação 5W2H]"
+  },
+  "descricao": {
+    "pt-BR": "Organiza a ação em o quê, por quê, quem, quando, onde, como e quanto custa.",
+    "en": "[TRADUZIR: Organiza a ação em o quê, por quê, quem, quando, onde, como e quanto custa.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar plano de ação 5w2h"
+    ],
+    "en": [
+      "[TRADUZIR: montar plano de ação 5w2h]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "5w2h",
+      "plano de ação"
+    ],
+    "en": [
+      "[TRADUZIR: 5w2h]",
+      "[TRADUZIR: plano de ação]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

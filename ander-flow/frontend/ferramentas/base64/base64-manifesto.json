@@ -1,0 +1,39 @@
+{
+  "slug": "base64",
+  "estado": "planejada",
+  "categoria": "desenvolvimento",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "codigo",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Base64: codificar e decodificar",
+    "en": "[TRADUZIR: Base64: codificar e decodificar]"
+  },
+  "descricao": {
+    "pt-BR": "Texto e arquivo para Base64 e de volta, com suporte a UTF-8 e URL-safe.",
+    "en": "[TRADUZIR: Texto e arquivo para Base64 e de volta, com suporte a UTF-8 e URL-safe.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "converter para base64"
+    ],
+    "en": [
+      "[TRADUZIR: converter para base64]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "base64",
+      "codificar",
+      "decodificar"
+    ],
+    "en": [
+      "base64",
+      "encode",
+      "decode"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

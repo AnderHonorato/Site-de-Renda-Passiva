@@ -1,0 +1,51 @@
+{
+  "slug": "conversor-de-unidades",
+  "estado": "planejada",
+  "categoria": "calculo",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Conversor de unidades",
+    "en": "[TRADUZIR: Conversor de unidades]"
+  },
+  "descricao": {
+    "pt-BR": "Massa, comprimento, área, volume, temperatura, velocidade, tempo e dados digitais.",
+    "en": "[TRADUZIR: Massa, comprimento, área, volume, temperatura, velocidade, tempo e dados digitais.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "converter unidades",
+      "quantos gramas tem uma xícara",
+      "celsius para fahrenheit"
+    ],
+    "en": [
+      "[TRADUZIR: converter unidades]",
+      "[TRADUZIR: quantos gramas tem uma xícara]",
+      "[TRADUZIR: celsius para fahrenheit]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "converter",
+      "metro",
+      "quilo",
+      "litro",
+      "celsius",
+      "polegada",
+      "byte"
+    ],
+    "en": [
+      "[TRADUZIR: converter]",
+      "[TRADUZIR: metro]",
+      "[TRADUZIR: quilo]",
+      "[TRADUZIR: litro]",
+      "[TRADUZIR: celsius]",
+      "[TRADUZIR: polegada]",
+      "[TRADUZIR: byte]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

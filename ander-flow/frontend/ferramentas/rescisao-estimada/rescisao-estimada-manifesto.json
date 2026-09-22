@@ -1,0 +1,39 @@
+{
+  "slug": "rescisao-estimada",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Estimativa de rescisão",
+    "en": "[TRADUZIR: Estimativa de rescisão]"
+  },
+  "descricao": {
+    "pt-BR": "Estima o valor da rescisão por tipo de desligamento, com aviso, férias e décimo terceiro.",
+    "en": "[TRADUZIR: Estima o valor da rescisão por tipo de desligamento, com aviso, férias e décimo terceiro.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto vou receber de rescisão"
+    ],
+    "en": [
+      "[TRADUZIR: quanto vou receber de rescisão]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "rescisão",
+      "demissão",
+      "aviso prévio"
+    ],
+    "en": [
+      "[TRADUZIR: rescisão]",
+      "[TRADUZIR: demissão]",
+      "[TRADUZIR: aviso prévio]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "caca-palavras",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Caça-palavras",
+    "en": "[TRADUZIR: Caça-palavras]"
+  },
+  "descricao": {
+    "pt-BR": "Monta um caça-palavras com as palavras escolhidas, com gabarito em página separada.",
+    "en": "[TRADUZIR: Monta um caça-palavras com as palavras escolhidas, com gabarito em página separada.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar caça-palavras para imprimir"
+    ],
+    "en": [
+      "[TRADUZIR: montar caça-palavras para imprimir]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "caça-palavras",
+      "atividade escolar"
+    ],
+    "en": [
+      "[TRADUZIR: caça-palavras]",
+      "[TRADUZIR: atividade escolar]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

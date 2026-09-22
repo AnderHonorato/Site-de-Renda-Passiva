@@ -1,0 +1,39 @@
+{
+  "slug": "escala-e-proporcao",
+  "estado": "planejada",
+  "categoria": "calculo",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Escala e proporção",
+    "en": "[TRADUZIR: Escala e proporção]"
+  },
+  "descricao": {
+    "pt-BR": "Redimensiona medidas mantendo proporção e converte escalas de planta.",
+    "en": "[TRADUZIR: Redimensiona medidas mantendo proporção e converte escalas de planta.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "redimensionar mantendo proporção"
+    ],
+    "en": [
+      "[TRADUZIR: redimensionar mantendo proporção]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "escala",
+      "proporção",
+      "planta"
+    ],
+    "en": [
+      "[TRADUZIR: escala]",
+      "[TRADUZIR: proporção]",
+      "[TRADUZIR: planta]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

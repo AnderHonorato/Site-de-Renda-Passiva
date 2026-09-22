@@ -1,0 +1,39 @@
+{
+  "slug": "calendario-do-mes",
+  "estado": "planejada",
+  "categoria": "datas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "calendario",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Calendário para imprimir",
+    "en": "[TRADUZIR: Calendário para imprimir]"
+  },
+  "descricao": {
+    "pt-BR": "Calendário mensal ou anual com feriados e espaço para anotações, em PDF.",
+    "en": "[TRADUZIR: Calendário mensal ou anual com feriados e espaço para anotações, em PDF.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calendário para imprimir"
+    ],
+    "en": [
+      "[TRADUZIR: calendário para imprimir]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "calendário",
+      "imprimir",
+      "feriados"
+    ],
+    "en": [
+      "calendar",
+      "[TRADUZIR: imprimir]",
+      "[TRADUZIR: feriados]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

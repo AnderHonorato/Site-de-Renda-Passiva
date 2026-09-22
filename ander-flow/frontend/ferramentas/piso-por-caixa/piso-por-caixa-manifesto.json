@@ -1,0 +1,39 @@
+{
+  "slug": "piso-por-caixa",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Piso por caixa",
+    "en": "[TRADUZIR: Piso por caixa]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula quantas caixas de piso ou revestimento comprar a partir da área e da margem de corte.",
+    "en": "[TRADUZIR: Calcula quantas caixas de piso ou revestimento comprar a partir da área e da margem de corte.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quantas caixas de piso comprar"
+    ],
+    "en": [
+      "[TRADUZIR: quantas caixas de piso comprar]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "piso",
+      "revestimento",
+      "reforma"
+    ],
+    "en": [
+      "[TRADUZIR: piso]",
+      "[TRADUZIR: revestimento]",
+      "[TRADUZIR: reforma]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

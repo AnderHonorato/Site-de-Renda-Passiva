@@ -1,0 +1,37 @@
+{
+  "slug": "meta-de-faturamento",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Meta de faturamento",
+    "en": "[TRADUZIR: Meta de faturamento]"
+  },
+  "descricao": {
+    "pt-BR": "Quanto vender por dia, semana e vendedor para bater a meta do mês.",
+    "en": "[TRADUZIR: Quanto vender por dia, semana e vendedor para bater a meta do mês.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto preciso vender por dia"
+    ],
+    "en": [
+      "[TRADUZIR: quanto preciso vender por dia]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "meta",
+      "faturamento"
+    ],
+    "en": [
+      "[TRADUZIR: meta]",
+      "billing"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

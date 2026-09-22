@@ -1,0 +1,39 @@
+{
+  "slug": "matriz-eisenhower",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Matriz de Eisenhower",
+    "en": "[TRADUZIR: Matriz de Eisenhower]"
+  },
+  "descricao": {
+    "pt-BR": "Separa as tarefas em urgente, importante, nenhum dos dois ou ambos.",
+    "en": "[TRADUZIR: Separa as tarefas em urgente, importante, nenhum dos dois ou ambos.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "priorizar tarefas urgentes e importantes"
+    ],
+    "en": [
+      "[TRADUZIR: priorizar tarefas urgentes e importantes]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "matriz de eisenhower",
+      "prioridade",
+      "urgente e importante"
+    ],
+    "en": [
+      "[TRADUZIR: matriz de eisenhower]",
+      "[TRADUZIR: prioridade]",
+      "[TRADUZIR: urgente e importante]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

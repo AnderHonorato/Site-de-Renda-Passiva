@@ -1,0 +1,41 @@
+{
+  "slug": "conversor-de-moedas",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Conversor de moedas",
+    "en": "[TRADUZIR: Conversor de moedas]"
+  },
+  "descricao": {
+    "pt-BR": "Converte valores entre moedas com a cotação informada por você.",
+    "en": "[TRADUZIR: Converte valores entre moedas com a cotação informada por você.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "converter dólar para real"
+    ],
+    "en": [
+      "[TRADUZIR: converter dólar para real]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "moeda",
+      "dólar",
+      "euro",
+      "câmbio"
+    ],
+    "en": [
+      "[TRADUZIR: moeda]",
+      "[TRADUZIR: dólar]",
+      "[TRADUZIR: euro]",
+      "[TRADUZIR: câmbio]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

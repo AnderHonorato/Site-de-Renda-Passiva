@@ -1,0 +1,41 @@
+{
+  "slug": "escala-de-trabalho",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Escala de trabalho",
+    "en": "[TRADUZIR: Escala de trabalho]"
+  },
+  "descricao": {
+    "pt-BR": "Monta a escala da equipe por turno e folga, incluindo padrões como 12x36 e 6x1.",
+    "en": "[TRADUZIR: Monta a escala da equipe por turno e folga, incluindo padrões como 12x36 e 6x1.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar escala de trabalho da equipe"
+    ],
+    "en": [
+      "[TRADUZIR: montar escala de trabalho da equipe]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "escala",
+      "turno",
+      "12x36",
+      "folga"
+    ],
+    "en": [
+      "[TRADUZIR: escala]",
+      "[TRADUZIR: turno]",
+      "[TRADUZIR: 12x36]",
+      "[TRADUZIR: folga]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

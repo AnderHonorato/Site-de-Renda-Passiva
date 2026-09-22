@@ -1,0 +1,39 @@
+{
+  "slug": "pauta-de-reuniao",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 90,
+  "nome": {
+    "pt-BR": "Pauta de reunião",
+    "en": "[TRADUZIR: Pauta de reunião]"
+  },
+  "descricao": {
+    "pt-BR": "Organiza os assuntos da reunião com tempo estimado para cada um.",
+    "en": "[TRADUZIR: Organiza os assuntos da reunião com tempo estimado para cada um.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar pauta da reunião"
+    ],
+    "en": [
+      "[TRADUZIR: montar pauta da reunião]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "pauta de reunião",
+      "roteiro",
+      "tempo de reunião"
+    ],
+    "en": [
+      "[TRADUZIR: pauta de reunião]",
+      "[TRADUZIR: roteiro]",
+      "[TRADUZIR: tempo de reunião]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

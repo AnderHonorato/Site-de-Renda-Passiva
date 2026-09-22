@@ -1,0 +1,41 @@
+{
+  "slug": "protecao-de-pdf",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "plus",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Marca d'água e senha no PDF",
+    "en": "[TRADUZIR: Marca d'água e senha no PDF]"
+  },
+  "descricao": {
+    "pt-BR": "Adiciona marca d'água de texto ou protege o PDF com senha de abertura.",
+    "en": "[TRADUZIR: Adiciona marca d'água de texto ou protege o PDF com senha de abertura.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "colocar marca d'água no pdf",
+      "proteger pdf com senha"
+    ],
+    "en": [
+      "[TRADUZIR: colocar marca d'água no pdf]",
+      "[TRADUZIR: proteger pdf com senha]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "marca d'água",
+      "proteger pdf",
+      "senha no pdf"
+    ],
+    "en": [
+      "[TRADUZIR: marca d'água]",
+      "[TRADUZIR: proteger pdf]",
+      "[TRADUZIR: senha no pdf]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

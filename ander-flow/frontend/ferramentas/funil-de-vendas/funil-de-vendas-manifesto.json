@@ -1,0 +1,39 @@
+{
+  "slug": "funil-de-vendas",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Funil de vendas",
+    "en": "[TRADUZIR: Funil de vendas]"
+  },
+  "descricao": {
+    "pt-BR": "Acompanha quantos leads passam por cada etapa até virar venda, com taxa de conversão.",
+    "en": "[TRADUZIR: Acompanha quantos leads passam por cada etapa até virar venda, com taxa de conversão.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar funil de vendas"
+    ],
+    "en": [
+      "[TRADUZIR: montar funil de vendas]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "funil de vendas",
+      "conversão",
+      "leads"
+    ],
+    "en": [
+      "[TRADUZIR: funil de vendas]",
+      "conversion",
+      "[TRADUZIR: leads]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

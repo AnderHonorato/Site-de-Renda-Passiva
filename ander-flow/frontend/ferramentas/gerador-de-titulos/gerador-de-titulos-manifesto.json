@@ -1,0 +1,39 @@
+{
+  "slug": "gerador-de-titulos",
+  "estado": "planejada",
+  "categoria": "marketing",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "megafone",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Gerador de títulos",
+    "en": "[TRADUZIR: Gerador de títulos]"
+  },
+  "descricao": {
+    "pt-BR": "Sugere variações de título para post, anúncio ou e-mail a partir do assunto.",
+    "en": "[TRADUZIR: Sugere variações de título para post, anúncio ou e-mail a partir do assunto.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "sugestão de título para o post"
+    ],
+    "en": [
+      "[TRADUZIR: sugestão de título para o post]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "título",
+      "headline",
+      "copywriting"
+    ],
+    "en": [
+      "title",
+      "[TRADUZIR: headline]",
+      "[TRADUZIR: copywriting]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

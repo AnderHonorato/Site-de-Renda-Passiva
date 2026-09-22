@@ -1,0 +1,39 @@
+{
+  "slug": "cronograma-de-projeto",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 100,
+  "nome": {
+    "pt-BR": "Cronograma de projeto",
+    "en": "[TRADUZIR: Cronograma de projeto]"
+  },
+  "descricao": {
+    "pt-BR": "Organiza as etapas de um projeto em uma linha do tempo com datas e responsáveis.",
+    "en": "[TRADUZIR: Organiza as etapas de um projeto em uma linha do tempo com datas e responsáveis.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar cronograma do projeto"
+    ],
+    "en": [
+      "[TRADUZIR: montar cronograma do projeto]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cronograma",
+      "projeto",
+      "linha do tempo"
+    ],
+    "en": [
+      "schedule",
+      "project",
+      "[TRADUZIR: linha do tempo]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

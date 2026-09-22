@@ -1,0 +1,51 @@
+{
+  "slug": "custo-de-receita",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Custo de receita",
+    "en": "[TRADUZIR: Custo de receita]"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o custo total e por unidade de uma receita a partir dos ingredientes.",
+    "en": "[TRADUZIR: Calcula o custo total e por unidade de uma receita a partir dos ingredientes.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular custo da receita",
+      "quanto custa fazer esse doce"
+    ],
+    "en": [
+      "[TRADUZIR: calcular custo da receita]",
+      "[TRADUZIR: quanto custa fazer esse doce]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "custo de receita",
+      "ficha de custo",
+      "ingredientes",
+      "bolo",
+      "doce",
+      "salgado",
+      "confeitaria",
+      "cozinha"
+    ],
+    "en": [
+      "[TRADUZIR: custo de receita]",
+      "[TRADUZIR: ficha de custo]",
+      "[TRADUZIR: ingredientes]",
+      "[TRADUZIR: bolo]",
+      "[TRADUZIR: doce]",
+      "[TRADUZIR: salgado]",
+      "[TRADUZIR: confeitaria]",
+      "[TRADUZIR: cozinha]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

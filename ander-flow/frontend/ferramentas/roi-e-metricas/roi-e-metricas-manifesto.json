@@ -1,0 +1,43 @@
+{
+  "slug": "roi-e-metricas",
+  "estado": "planejada",
+  "categoria": "marketing",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "megafone",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "ROI, ROAS, CAC e LTV",
+    "en": "[TRADUZIR: ROI, ROAS, CAC e LTV]"
+  },
+  "descricao": {
+    "pt-BR": "Retorno de investimento, retorno de anúncio, custo de aquisição e valor do cliente.",
+    "en": "[TRADUZIR: Retorno de investimento, retorno de anúncio, custo de aquisição e valor do cliente.]"
+  },
+  "intencoes": {
+    "pt-BR": [
+      "a campanha deu retorno"
+    ],
+    "en": [
+      "[TRADUZIR: a campanha deu retorno]"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "roi",
+      "roas",
+      "cac",
+      "ltv",
+      "campanha"
+    ],
+    "en": [
+      "[TRADUZIR: roi]",
+      "[TRADUZIR: roas]",
+      "[TRADUZIR: cac]",
+      "[TRADUZIR: ltv]",
+      "[TRADUZIR: campanha]"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}
