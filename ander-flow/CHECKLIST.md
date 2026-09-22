@@ -10,24 +10,27 @@ Legenda: `[x]` feito e testado · `[~]` em andamento · `[ ]` falta · `[!]` pro
 - [!] Playwright usa o Edge instalado (sem baixar Chromium) — ver decisões 7
 - [x] Esquema do banco (migração 001) escrito
 - [x] Verificador de propriedade
-- [ ] Servidor com porta livre automática (4870–4889, nunca 3000 etc.), PID e parar seguro
-- [ ] Montador de páginas com inclusões, tradução no servidor e acesso por página
-- [ ] Catálogo gerado dos manifestos; contagens calculadas
-- [ ] Banco: conexão, migrador, sementes, `admin:criar` sem senha padrão
-- [ ] Sistema visual: tokens claro/escuro, fontes locais, componentes, ícones em sprite
-- [ ] Idioma PT-BR/EN no servidor e no navegador, sem piscar
-- [ ] Tema claro/escuro sem piscar, botão acessível
-- [ ] Verificadores: nomes, idiomas, textos fixos, propriedade
+- [x] Servidor com porta livre automática (4870–4889, nunca 3000 etc.), PID e parar seguro
+- [x] Montador de páginas com inclusões, tradução no servidor e acesso por página
+- [x] Catálogo gerado dos manifestos; contagens calculadas
+- [x] Banco: conexão, migrador, sementes, `admin:criar` sem senha padrão
+- [x] Sistema visual: tokens claro/escuro, fontes locais, componentes, ícones em sprite
+- [~] Idioma PT-BR/EN no servidor e no navegador, sem piscar
+- [x] Tema claro/escuro sem piscar, botão acessível
+- [~] Verificadores: nomes, idiomas, textos fixos, propriedade
+
+- [!] Página de erro ainda não existe → arquivo estático ausente responde 500 em vez de 404 (corrigir na Onda 2: página erro + reserva sem página)
+- [!] Worktrees automáticos nasceram num commit antigo; agentes corrigiram ou foram refeitos em worktree criado pelo orquestrador
 
 ## Segurança
-- [ ] CSP estrita sem `unsafe-inline`/`unsafe-eval`, cabeçalhos
-- [ ] Limite de tráfego por grupo + bloqueio progressivo persistido (1 min → 24 h)
-- [ ] 429 com `Retry-After` e página traduzida
-- [ ] CSRF duplo em toda rota que altera
-- [ ] Sessão HttpOnly/SameSite/Secure, token com hash, expiração e revogação
-- [ ] scrypt nativo; nenhuma senha padrão
-- [ ] Corpo máx. 100 kB, timeouts, tamanho de cabeçalho
-- [ ] Plano e admin verificados no servidor
+- [x] CSP estrita sem `unsafe-inline`/`unsafe-eval`, cabeçalhos
+- [x] Limite de tráfego por grupo + bloqueio progressivo persistido (1 min → 24 h)
+- [~] 429 com `Retry-After` e página traduzida
+- [x] CSRF duplo em toda rota que altera
+- [x] Sessão HttpOnly/SameSite/Secure, token com hash, expiração e revogação
+- [x] scrypt nativo; nenhuma senha padrão
+- [x] Corpo máx. 100 kB, timeouts, tamanho de cabeçalho
+- [~] Plano e admin verificados no servidor
 
 ## Funcionalidades (Onda 2)
 - [ ] Autenticação: criar conta, entrar, sair, recuperar e redefinir senha
@@ -42,7 +45,7 @@ Legenda: `[x]` feito e testado · `[~]` em andamento · `[ ]` falta · `[!]` pro
 - [ ] Admin: ferramentas, usuários, avisos e mensagens, bloqueios de tráfego
 
 ## Acabamento (Onda 3)
-- [ ] Manifestos das ferramentas planejadas
+- [x] Manifestos das ferramentas planejadas
 - [ ] Inglês completo (paridade de chaves)
 - [ ] Testes de unidade, integração e visuais
 - [ ] README completo
