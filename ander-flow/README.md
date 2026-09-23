@@ -151,11 +151,14 @@ Textos visíveis (botões, títulos, ajuda) vêm de arquivos JSON de idioma. Cad
 
 ### Adicionar um idioma novo
 
-1. Copie todos os pares `-idioma-pt-br.json` para `-idioma-<novo>.json` com o mesmo conteúdo
-2. Tradua linha por linha
-3. Atualize `servidor/servidor-idioma.js` para registrar o novo código (ex.: `'es'`)
-4. Atualize `frontend/compartilhado/compartilhado-idioma.js` para incluir botão de troca
-5. Rode `npm run verificar:idiomas` para conferir paridade
+Hoje o projeto conhece só `pt-BR` e `en`, e esses dois códigos estão escritos em alguns lugares. Para um terceiro idioma (ex.: `es`):
+
+1. Copie cada `-idioma-pt-br.json` para `-idioma-es.json` e traduza linha por linha, mantendo as chaves e as variáveis `{…}`
+2. Em `servidor/servidor-idioma.js`, acrescente o código em `IDIOMAS_SUPORTADOS` e ajuste as funções que hoje só reconhecem `'en'`
+3. Em `frontend/compartilhado/compartilhado-idioma.js`, ajuste `idiomaAtual()`, que hoje só distingue `en` de `pt-BR`
+4. Em `frontend/compartilhado/compartilhado-cabecalho.html`, acrescente o botão `data-acao="trocar-idioma" data-idioma="es"`, com as chaves `compartilhado.idioma.es` e `compartilhado.idioma.sigla_es`
+5. Em `scripts/scripts-verificar-idiomas.js`, inclua o novo arquivo na comparação (hoje ele compara só `-pt-br` com `-en`)
+6. Rode `npm run verificar` — ele reprova se faltar alguma chave
 
 ## Como criar uma ferramenta nova
 
@@ -247,6 +250,16 @@ Há dois planos: **Grátis** e **Plus**. Pagamento **não está integrado**: o a
 Funcionalidades Plus ficam em rotas `/plus/<slug>/<recurso>`, exigindo sessão ativa + plano Plus. **Aviso importante:** O bloqueio acontece no servidor (verifica a sessão e o plano), mas o código está no navegador. Quem reescrever o JavaScript localmente consegue contornar — isto é inevitável com lógica no cliente. Use Plus como um modelo de honra para usuários que valorizam o projeto.
 
 ## Problemas comuns
+
+### "Filename too long" ao clonar no Windows
+
+Alguns manifestos têm nome longo (ex.: `redimensionar-imagens-em-lote-manifesto.json`). Se a pasta onde você clona já for funda, o caminho completo passa de 260 caracteres e o Git do Windows recusa. Ligue caminhos longos antes de clonar:
+
+```powershell
+git config --global core.longpaths true
+```
+
+Se já clonou e faltaram arquivos, rode `git config core.longpaths true` dentro do repositório e depois `git checkout -f`. Outra saída é clonar numa pasta curta, como `C:projetos`.
 
 ### Porta já está em uso
 
