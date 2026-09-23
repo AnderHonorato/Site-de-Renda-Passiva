@@ -1,0 +1,74 @@
+{
+  "preco-de-venda": {
+    "titulo_pagina": "Selling price — Ander Flow",
+    "descricao_pagina": "Work out the selling price from your cost, with margin on the sale, card fee and tax. The calculation runs in your browser.",
+    "titulo": "Selling price",
+    "resumo": "Enter your cost and where the money goes. The tool gives you the break-even price, the price with the margin you want and how much you keep.",
+    "grupos": {
+      "gastos": "What you spend",
+      "saidas": "What comes out of the price"
+    },
+    "campos": {
+      "custo": "Product cost",
+      "despesa": "Fixed cost shared per unit",
+      "despesa_ajuda": "Divide your monthly fixed cost by the quantity you usually sell.",
+      "taxa": "Card fee",
+      "imposto": "Sales tax",
+      "margem": "Margin you want on the sale",
+      "margem_ajuda": "Margin on the sale, not a markup on the cost — the maths is different."
+    },
+    "acoes": {
+      "calcular": "Calculate price"
+    },
+    "resultado": {
+      "titulo": "Suggested price",
+      "custo_total": "Total cost per unit",
+      "taxa_imposto": "Fee and tax",
+      "sobra": "Left per sale",
+      "minimo": "Break-even price, no profit",
+      "nota_plus": "Exporting the spreadsheet with every scenario is a Plus feature. The calculation, the copy and the PDF stay free.",
+      "copiado": "Result copied",
+      "pdf_pronto": "PDF downloaded",
+      "xlsx_pronto": "Scenario spreadsheet downloaded",
+      "resumo_copia": "Suggested price {preco} · total cost {custo} · fee and tax {taxa} · left {sobra} · break-even price {minimo}"
+    },
+    "conta": {
+      "formula": "price = cost ÷ (1 − margin − fee − tax)",
+      "linha": "{preco} = {custo} ÷ (1 − {margem} − {taxa} − {imposto})",
+      "nota": "A zero or negative denominator is refused: with those percentages no price is possible."
+    },
+    "erros": {
+      "numero_invalido": "Enter a valid number.",
+      "valor_negativo": "The value cannot be negative.",
+      "custo_zerado": "Enter the product cost to calculate.",
+      "margem_acima_do_limite": "Margin + fee + tax go over 100%. No price can close that equation — bring the margin below {limite}."
+    },
+    "plus": {
+      "titulo": "The scenario spreadsheet is a Plus feature",
+      "texto": "Plus exports the table with the price for each margin, from 10% to 50%. The calculation and the PDF stay free."
+    },
+    "trabalho": {
+      "titulo_padrao": "Selling price — cost {custo}"
+    },
+    "como_usar": {
+      "um": "Add up everything you pay to get the product ready — raw material, packaging, inbound shipping. That is the **cost**.",
+      "dois": "Divide your monthly fixed cost by the quantity you usually sell and enter the value per unit.",
+      "tres": "Enter the card fee and the tax as a percentage **of the final price**, which is how they are charged.",
+      "quatro": "Adjust the margin and watch what is left per sale. If it goes negative, the price does not cover the cost."
+    },
+    "perguntas": {
+      "margem_markup": {
+        "pergunta": "Is a 30% margin the same as a 30% markup?",
+        "resposta": "No. A 30% margin means R$ 30 out of every R$ 100 sold stays with you. A 30% markup adds 30% to the cost — and gives a lower price. This tool works with margin on the sale."
+      },
+      "minimo": {
+        "pergunta": "Why is the break-even price not just cost + fee?",
+        "resposta": "Because the fee and the tax fall on the price, not on the cost. Adding them straight underestimates the value — that is why the maths divides instead of multiplying."
+      },
+      "servico": {
+        "pergunta": "Can I use it for a service?",
+        "resposta": "Yes. Instead of the product cost, enter your hourly cost multiplied by the hours of the service."
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "termos": {
+    "titulo_pagina": "Terms of use — Ander Flow",
+    "descricao_pagina": "The rules for using Ander Flow: what the service does, what is expected from whoever uses it and how the plans work.",
+    "sobretitulo": "Transparency",
+    "titulo": "Terms of use",
+    "intro": "These terms explain what Ander Flow offers and what we expect from whoever uses the site. If anything here does not match what the site actually does, that is a mistake on our side — tell us through the account messages.",
+    "indice": {
+      "titulo": "Go to section",
+      "servico": "The service",
+      "conta": "Account",
+      "uso": "Acceptable use",
+      "planos": "Plans",
+      "calculos": "Calculations",
+      "disponibilidade": "Availability",
+      "encerramento": "Closing the account",
+      "mudancas": "Changes"
+    },
+    "servico": {
+      "titulo": "What Ander Flow is",
+      "texto": "Ander Flow brings together calculation and file tools for everyday work. Most of them work without an account, with the processing running in your browser. Some tools and larger features belong to the Plus plan."
+    },
+    "conta": {
+      "titulo": "Your account",
+      "texto": "When creating an account, you confirm that the e-mail and name you provided are true and you are responsible for keeping the password secret. Tell the administrator if you suspect your account is being misused."
+    },
+    "uso": {
+      "titulo": "Acceptable use",
+      "texto": "By using Ander Flow, you agree not to:",
+      "itens": {
+        "abuso": "Overload the service on purpose or try to get around the protections against abuse",
+        "limite": "Try to get around the Free plan limits using several accounts or other means",
+        "terceiros": "Use the tools to violate the rights of others or the law"
+      }
+    },
+    "planos": {
+      "titulo": "Plans",
+      "texto": "The Free plan has no end date. The Plus plan unlocks bigger batches, your own branding on documents and history across devices.",
+      "pagamento": "Today, payment for Plus is not automatic: you arrange it with the administrator outside the site and, once confirmed, they enable the plan manually on your account. This may change in the future, and this page will be updated when it does.",
+      "link": "See the plans"
+    },
+    "calculos": {
+      "titulo": "The calculations in the tools",
+      "texto": "The tools help you calculate and organize information, but you are responsible for confirming the numbers before any important decision — Ander Flow does not replace professional advice on accounting, legal or tax matters."
+    },
+    "disponibilidade": {
+      "titulo": "Availability",
+      "texto": "We do what we can to keep the site up, but we do not guarantee continuous availability or a minimum response time. Maintenance and instability can happen."
+    },
+    "encerramento": {
+      "titulo": "Closing the account",
+      "texto": "You can delete your account whenever you want, with no need to explain why; that erases the account and the data related to it. We may also suspend accounts that violate these terms.",
+      "acao": "Go to my account"
+    },
+    "mudancas": {
+      "titulo": "Changes to these terms",
+      "texto": "We may update these terms as the service evolves. Important changes will be announced on the notices page of the site."
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "limpar-planilha": {
+    "titulo_pagina": "Clean spreadsheet — Ander Flow",
+    "descricao_pagina": "Remove duplicate and empty rows, trim spaces and standardize e-mail in a CSV or Excel spreadsheet. Everything runs in your browser.",
+    "titulo": "Clean spreadsheet",
+    "resumo": "Upload a CSV or Excel file, choose what counts as a duplicate and download a clean copy. The original file is never changed.",
+    "etapas": {
+      "enviar": "Upload",
+      "configurar": "Configure",
+      "revisar": "Review",
+      "exportar": "Export"
+    },
+    "enviar": {
+      "titulo": "Upload the spreadsheet",
+      "arraste_titulo": "Drag the file here",
+      "arraste_texto": "or pick it from your device — CSV, XLSX or XLS, up to 20 MB",
+      "botao_selecionar": "Choose file",
+      "formatos_aceitos": "Accepted formats: .csv, .xlsx, .xls",
+      "lendo": "Reading the file…",
+      "trocar_arquivo": "Change file",
+      "resumo_arquivo": "{nome} · {linhas} rows · {colunas} columns · read in your browser"
+    },
+    "erros": {
+      "arquivo_ausente": "Choose a file to continue.",
+      "arquivo_grande_demais": "The file is over 20 MB. Shrink the spreadsheet and try again.",
+      "formato_nao_suportado": "Format not accepted. Upload a .csv, .xlsx or .xls file.",
+      "planilha_vazia": "We found no columns in that spreadsheet. Check the file and try again.",
+      "biblioteca_indisponivel": "We could not load the Excel reader right now. Try again in a moment."
+    },
+    "configurar": {
+      "titulo": "What to do with the {duplicadas} duplicates?",
+      "duplicidade_titulo": "Treat as duplicate when these repeat",
+      "nenhuma_coluna_selecionada": "Tick at least one column to detect duplicates.",
+      "qual_linha_titulo": "Which row stays",
+      "opcao_primeira": "The first one in the spreadsheet",
+      "opcao_mais_recente": "The most recent one",
+      "opcao_mais_completa": "The most complete one",
+      "coluna_data_rotulo": "Date column (optional)",
+      "coluna_data_nenhuma": "No date column — uses the last occurrence",
+      "padronizar_email": "Standardize e-mail in lowercase",
+      "aparar_espacos": "Trim extra spaces at the start, at the end and between words",
+      "remover_vazias": "Remove completely empty rows",
+      "titulo_uma": "What to do with the duplicate?",
+      "titulo_nenhuma": "No duplicates with those columns"
+    },
+    "revisar": {
+      "titulo": "Review before exporting",
+      "previa_titulo": "Preview · {mostradas} of {total}",
+      "coluna_acao": "Action",
+      "mantem": "keeps",
+      "remove": "removes",
+      "nota_local": "Nothing is written now. The original spreadsheet stays untouched — the download is a new file.",
+      "linhas_continuam": "{quantidade} rows stay in the spreadsheet",
+      "resumo_contagens": "{total} rows · {duplicadas} duplicates · {vazias} empty rows removed",
+      "linhas_continuam_uma": "1 row stays in the spreadsheet"
+    },
+    "exportar": {
+      "titulo": "Download the clean spreadsheet",
+      "texto": "Choose the format of the new file. The original stays where it was, with no change at all.",
+      "botao_csv": "Download CSV",
+      "botao_xlsx": "Download XLSX",
+      "pronto_csv": "CSV downloaded",
+      "pronto_xlsx": "XLSX downloaded",
+      "nova_limpeza": "Clean another spreadsheet"
+    },
+    "acoes": {
+      "continuar": "Continue",
+      "continuar_configurar": "Continue to configure",
+      "revisar_tudo": "Review everything",
+      "continuar_exportar": "Continue to export"
+    },
+    "trabalho": {
+      "titulo_padrao": "Clean spreadsheet — {nome}"
+    },
+    "como_usar": {
+      "um": "Upload the CSV, XLSX or XLS file. It is read in your browser and never leaves your device.",
+      "dois": "Tick the columns that define a duplicate row (e-mail, for example) and choose which row stays when there is a repeat.",
+      "tres": "Review the preview with what stays and what goes before exporting — nothing is written until you download.",
+      "quatro": "Download the new file as CSV or XLSX. The original file stays exactly as it was."
+    },
+    "perguntas": {
+      "original": {
+        "pergunta": "Is the original spreadsheet changed?",
+        "resposta": "No. The cleanup creates a new file to download; the file you uploaded is never modified and never leaves your browser."
+      },
+      "criterio": {
+        "pergunta": "How does the tool decide which row is the duplicate?",
+        "resposta": "Two rows are treated as the same when the values of the ticked columns match, ignoring upper and lower case and spaces at the ends. You choose which of the two stays: the first, the most recent or the most complete."
+      },
+      "limite": {
+        "pergunta": "Is there a size limit?",
+        "resposta": "The uploaded file can be up to 20 MB. Bigger spreadsheets need to be split first."
+      }
+    }
+  }
+}
