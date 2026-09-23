@@ -48,10 +48,15 @@ Legenda: `[x]` feito e testado · `[~]` em andamento · `[ ]` falta · `[!]` pro
 - [x] Manifestos das ferramentas planejadas
 - [x] Inglês completo (paridade de chaves, 22 arquivos)
 - [~] Testes de unidade e integração: 379 (378 passam, 1 pulado). Visuais: A13
-- [~] README completo: A14
+- [x] README completo (15 seções; comando inventado `verificar:idiomas` removido na revisão; caminho longo no Windows documentado)
 
 ## Integração, debate e entrega (Ondas 4–6)
-- [ ] Instalação limpa, migração, subida, todas as telas abertas
+- [x] Instalação limpa num clone novo: `npm install` (14 s), migrar, semear, verificar e testar sem falhas
+- [x] Porta: com a 4870 ocupada, subiu na 4871 e avisou no terminal
+- [x] `npm run parar` derrubou só o próprio processo; o outro servidor continuou respondendo
+- [x] Todas as telas abertas nos dois servidores: públicas 200, /trabalho e /conta 302 para /entrar, /admin 403, planejada e rota inexistente 404
+- [x] Dois links internos quebrados corrigidos (/criar-conta, /conta/avisos) + teste que segue todo link interno
+- [!] Clonar numa pasta funda no Windows estoura 260 caracteres → `git config core.longpaths true` (no README)
 - [ ] Debate dos críticos — rodada 1
 - [ ] Correções e rodada 2 (se houver ALTA)
 - [ ] Verificação final (§13 do prompt)
