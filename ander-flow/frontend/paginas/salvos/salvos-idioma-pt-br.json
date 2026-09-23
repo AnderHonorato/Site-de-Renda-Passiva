@@ -1,0 +1,27 @@
+{
+  "salvos": {
+    "titulo_pagina": "Salvos — Ander Flow",
+    "descricao_pagina": "As ferramentas que você guardou para usar de novo.",
+    "titulo": "Salvos",
+    "resumo_zero": "Nenhuma ferramenta salva ainda.",
+    "resumo_um": "1 ferramenta salva.",
+    "resumo": "{quantidade} ferramentas salvas.",
+    "juntar": {
+      "titulo": "Juntar os salvos deste aparelho",
+      "texto_um": "Você tinha 1 ferramenta salva neste aparelho antes de entrar. Juntar com os salvos da conta?",
+      "texto": "Você tinha {quantidade} ferramentas salvas neste aparelho antes de entrar. Juntar com os salvos da conta?",
+      "confirmar": "Juntar agora",
+      "juntado": "Salvos juntados com a sua conta",
+      "parcial": "{quantidade} não couberam no limite do seu plano"
+    },
+    "vazio": {
+      "titulo": "Você ainda não salvou nenhuma ferramenta",
+      "texto_conta": "A estrela ao lado do nome guarda a ferramenta aqui, na sua conta.",
+      "texto_local": "A estrela ao lado do nome guarda a ferramenta aqui, neste aparelho. São até {limite}."
+    },
+    "favorito": {
+      "tirar": "Tirar {nome} dos salvos",
+      "removido": "{nome} foi removido dos salvos"
+    }
+  }
+}

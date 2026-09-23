@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/trabalho">
+  <meta name="af-acesso" content="sessao">
+  <title data-texto="trabalho.titulo_pagina"></title>
+  <meta name="description" data-texto-content="trabalho.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/trabalho/trabalho.css">
+  <script type="module" src="/estatico/paginas/trabalho/trabalho.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo trabalho">
+    <div class="trabalho__corpo">
+      <div class="trabalho__principal">
+        <header class="trabalho__cabecalho">
+          <h1 class="titulo-display titulo-display--2 trabalho__data"></h1>
+          <p class="texto-2 trabalho__resumo"></p>
+        </header>
+
+        <section class="trabalho__secao">
+          <div class="trabalho__secao-cabecalho">
+            <h2 class="trabalho__subtitulo" data-texto="trabalho.em_aberto.titulo"></h2>
+          </div>
+
+          <div class="estado estado--carregando trabalho__carregando">
+            <p class="estado__titulo" data-texto="compartilhado.estados.carregando"></p>
+          </div>
+
+          <ul class="trabalho__lista" hidden></ul>
+
+          <div class="estado estado--vazio trabalho__vazio" hidden>
+            <p class="estado__titulo" data-texto="trabalho.em_aberto.vazio_titulo"></p>
+            <p class="estado__texto" data-texto="trabalho.em_aberto.vazio_texto"></p>
+            <a class="botao botao--secundario estado__acao" href="/ferramentas" data-texto="compartilhado.acoes.ir_para_catalogo"></a>
+          </div>
+
+          <div class="estado estado--erro trabalho__erro" hidden>
+            <p class="estado__titulo" data-texto="compartilhado.estados.erro_titulo"></p>
+            <p class="estado__texto" data-texto="compartilhado.estados.erro_texto"></p>
+            <button type="button" class="botao botao--secundario estado__acao trabalho__recarregar" data-texto="compartilhado.acoes.tentar_de_novo"></button>
+          </div>
+        </section>
+
+        <section class="trabalho__secao">
+          <div class="trabalho__secao-cabecalho">
+            <h2 class="trabalho__subtitulo" data-texto="trabalho.salvos.titulo"></h2>
+            <a class="trabalho__link" href="/salvos" data-texto="trabalho.salvos.organizar"></a>
+          </div>
+          <ul class="lista-densa trabalho__salvos-lista" hidden></ul>
+          <p class="texto-2 texto-pequeno trabalho__salvos-vazio" hidden data-texto="trabalho.salvos.vazio"></p>
+        </section>
+      </div>
+
+      <aside class="trabalho__lateral">
+        <section class="superficie superficie--recuo trabalho__mes">
+          <h2 class="sobretitulo" data-texto="trabalho.mes.titulo"></h2>
+          <div class="trabalho__mes-linha">
+            <span class="texto-2" data-texto="trabalho.mes.documentos"></span>
+            <span class="trabalho__mes-valor trabalho__mes-documentos"></span>
+          </div>
+          <div class="trabalho__mes-linha">
+            <span class="texto-2" data-texto="trabalho.mes.ferramentas_usadas"></span>
+            <span class="trabalho__mes-valor trabalho__mes-ferramentas"></span>
+          </div>
+          <div class="trabalho__mes-linha">
+            <span class="texto-2" data-texto="trabalho.mes.lote_titulo"></span>
+            <span class="texto-2 texto-pequeno trabalho__mes-lote"></span>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>
