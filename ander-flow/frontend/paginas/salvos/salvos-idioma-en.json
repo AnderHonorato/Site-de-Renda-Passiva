@@ -1,0 +1,27 @@
+{
+  "salvos": {
+    "titulo_pagina": "Saved — Ander Flow",
+    "descricao_pagina": "The tools you kept to use again.",
+    "titulo": "Saved",
+    "resumo_zero": "No tool saved yet.",
+    "resumo_um": "1 tool saved.",
+    "resumo": "{quantidade} tools saved.",
+    "juntar": {
+      "titulo": "Merge the items saved on this device",
+      "texto_um": "You had 1 tool saved on this device before signing in. Merge it with the ones in your account?",
+      "texto": "You had {quantidade} tools saved on this device before signing in. Merge them with the ones in your account?",
+      "confirmar": "Merge now",
+      "juntado": "Saved items merged with your account",
+      "parcial": "{quantidade} did not fit within your plan limit"
+    },
+    "vazio": {
+      "titulo": "You have not saved any tool yet",
+      "texto_conta": "The star next to the name keeps the tool here, in your account.",
+      "texto_local": "The star next to the name keeps the tool here, on this device. Up to {limite}."
+    },
+    "favorito": {
+      "tirar": "Remove {nome} from saved",
+      "removido": "{nome} was removed from saved"
+    }
+  }
+}

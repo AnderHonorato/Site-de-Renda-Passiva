@@ -1,0 +1,35 @@
+{
+  "erro": {
+    "404": {
+      "titulo_pagina": "This page does not exist — Ander Flow",
+      "etiqueta": "Page not found",
+      "titulo": "This one does not exist.",
+      "texto": "It may be an old link — some tools changed names when the catalog was reorganized. Searching is faster than going back."
+    },
+    "403": {
+      "titulo_pagina": "No permission — Ander Flow",
+      "etiqueta": "No permission",
+      "titulo": "This part is not yours.",
+      "texto": "Your account does not have permission to open this page. If you think it should, talk to the administrator on the notices screen."
+    },
+    "429": {
+      "titulo_pagina": "Too many attempts — Ander Flow",
+      "etiqueta": "Too many attempts",
+      "titulo": "You knocked on the door too fast.",
+      "texto": "To protect the site, attempts are blocked for a few minutes. Try again in {minutos} minutes — the tools keep working in your browser."
+    },
+    "500": {
+      "titulo_pagina": "Something went wrong — Ander Flow",
+      "etiqueta": "Server error",
+      "titulo": "Something went wrong on our side.",
+      "texto": "The problem was not you. Try again in a moment; if it keeps happening, search and the catalog usually come back first."
+    },
+    "acoes": {
+      "buscar": "Search",
+      "ir_para_inicio": "Back to the home page"
+    },
+    "mais_usadas": {
+      "titulo": "The most used"
+    }
+  }
+}

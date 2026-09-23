@@ -1,0 +1,33 @@
+{
+  "entrar": {
+    "titulo_pagina": "Sign in — Ander Flow",
+    "descricao_pagina": "Sign in to your account or create a new one to sync saved tools and history across devices.",
+    "abas_rotulo": "Sign in or create account",
+    "abas": {
+      "entrar": "Sign in",
+      "criar": "Create account"
+    },
+    "campos": {
+      "nome": "Name",
+      "email": "E-mail",
+      "senha": "Password",
+      "senha_ajuda": "At least 10 characters."
+    },
+    "formulario_entrar": {
+      "legenda": "The account only syncs saved tools and history across devices. The tools keep working without it.",
+      "enviar": "Sign in",
+      "enviando": "Signing in…",
+      "esqueci": "I forgot my password"
+    },
+    "formulario_criar": {
+      "legenda": "Free, no card. We only ask for an e-mail and a password.",
+      "enviar": "Create free account",
+      "enviando": "Creating account…",
+      "termos_antes": "By creating the account you accept the ",
+      "termos_link": "terms of use",
+      "termos_meio": " and the ",
+      "termos_privacidade_link": "privacy policy",
+      "termos_depois": ". No file processed by the tools is sent to the server."
+    }
+  }
+}

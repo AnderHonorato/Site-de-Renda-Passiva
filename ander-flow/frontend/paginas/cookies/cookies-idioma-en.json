@@ -1,0 +1,57 @@
+{
+  "cookies": {
+    "titulo_pagina": "Cookies — Ander Flow",
+    "descricao_pagina": "The few cookies Ander Flow uses, what stays in your browser and how to erase everything.",
+    "sobretitulo": "Transparency",
+    "titulo": "Cookies",
+    "intro": "We use few cookies, all of them for the site to work. None of them is for tracking or advertising.",
+    "usados": {
+      "titulo": "Cookies we use",
+      "coluna_nome": "Cookie",
+      "coluna_para_que": "What it is for",
+      "coluna_duracao": "Duration",
+      "af_sessao": {
+        "nome": "af_sessao",
+        "para_que": "Identifies your session after you sign in; only the server reads it, never the page JavaScript",
+        "duracao": "While the session is active"
+      },
+      "af_csrf": {
+        "nome": "af_csrf",
+        "para_que": "Protects forms and account actions against fake requests from other sites",
+        "duracao": "While you browse the site"
+      },
+      "idioma": {
+        "nome": "idioma",
+        "para_que": "Keeps whether the site should show up in Portuguese or English",
+        "duracao": "Until you switch language or clear the cookies"
+      },
+      "tema": {
+        "nome": "tema",
+        "para_que": "Keeps whether the site should show up in the light or dark theme",
+        "duracao": "Until you switch theme or clear the cookies"
+      }
+    },
+    "armazenamento": {
+      "titulo": "Browser local storage",
+      "texto": "Besides the cookies, some preferences and lists are kept in the browser local storage (localStorage) and never sent to the server:",
+      "chaves": {
+        "tema": "af-tema",
+        "idioma": "af-idioma",
+        "salvos": "af-salvos-locais",
+        "recentes": "af-recentes",
+        "primeira_visita": "af-primeira-visita",
+        "popup": "af-popup-visto-<aviso>",
+        "rascunho": "af-rascunho-<ferramenta>"
+      }
+    },
+    "terceiros": {
+      "titulo": "Third-party cookies",
+      "texto": "We do not use tracking, advertising or third-party social network cookies."
+    },
+    "gerenciar": {
+      "titulo": "How to erase or block",
+      "texto": "You can erase the cookies and the local storage in your own browser settings, at any time.",
+      "consequencia": "If you erase everything, you are signed out (if you were signed in) and lose the language and theme preferences saved only on the device."
+    }
+  }
+}

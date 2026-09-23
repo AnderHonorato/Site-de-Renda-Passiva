@@ -1,0 +1,31 @@
+{
+  "recuperar-senha": {
+    "titulo_pagina": "Recover password — Ander Flow",
+    "descricao_pagina": "Ask for a link to create a new password for your Ander Flow account.",
+    "pedido": {
+      "titulo": "Recover password",
+      "legenda": "Enter your account e-mail. If it exists, we send a link to create a new password.",
+      "campo_email": "E-mail",
+      "enviar": "Send link",
+      "enviando": "Sending…",
+      "sucesso_titulo": "If that e-mail exists, the link has arrived",
+      "sucesso_texto": "Check your inbox. The link is valid for 1 hour.",
+      "voltar": "Back to sign in"
+    },
+    "redefinir": {
+      "titulo": "New password",
+      "legenda": "Choose a new password with at least 10 characters.",
+      "campo_senha": "New password",
+      "campo_confirmar": "Confirm new password",
+      "enviar": "Save new password",
+      "enviando": "Saving…",
+      "sucesso_titulo": "Password changed",
+      "sucesso_texto": "Your password was changed. Sign in with it to continue.",
+      "ir_para_entrar": "Go to sign in",
+      "pedir_novo": "Link expired? Ask for a new one"
+    },
+    "erros": {
+      "senha_nao_confere": "The passwords are not the same."
+    }
+  }
+}

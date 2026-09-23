@@ -1,0 +1,57 @@
+{
+  "conta": {
+    "titulo_pagina": "My account — Ander Flow",
+    "descricao_pagina": "See and change the details, preferences, plan and security of your Ander Flow account.",
+    "titulo": "My account",
+    "perfil": {
+      "titulo": "Profile",
+      "nome": "Name",
+      "email": "E-mail",
+      "salvar": "Save name",
+      "salvo": "Name updated"
+    },
+    "preferencias": {
+      "titulo": "Preferences",
+      "idioma": "Language",
+      "tema": "Theme",
+      "tema_sistema": "Follow the system",
+      "tema_claro": "Light",
+      "tema_escuro": "Dark"
+    },
+    "plano": {
+      "titulo": "Plan and usage",
+      "favoritos": "Favorites",
+      "trabalhos": "Saved work",
+      "de_limite": "{usado} of {limite}",
+      "ver_planos": "See the plans"
+    },
+    "senha": {
+      "titulo": "Change password",
+      "atual": "Current password",
+      "nova": "New password",
+      "confirmar": "Confirm new password",
+      "enviar": "Change password",
+      "enviando": "Changing…",
+      "sucesso": "Password changed. The other sessions were ended."
+    },
+    "dados": {
+      "titulo": "My data",
+      "legenda": "Download a copy of everything we keep about your account.",
+      "exportar": "Export my data"
+    },
+    "excluir": {
+      "titulo": "Delete account",
+      "legenda": "Erases the account and all associated data. It cannot be undone.",
+      "abrir": "Delete my account",
+      "campo_senha": "Confirm your password",
+      "confirmar": "Delete account",
+      "cancelar": "Cancel",
+      "titulo_confirmacao": "Delete your account?",
+      "texto_confirmacao": "This erases your account and all associated data forever. It cannot be undone.",
+      "botao_confirmacao": "Delete forever"
+    },
+    "erros": {
+      "senha_nao_confere": "The passwords are not the same."
+    }
+  }
+}

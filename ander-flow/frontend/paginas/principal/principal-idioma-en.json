@@ -1,0 +1,40 @@
+{
+  "principal": {
+    "titulo_pagina": "Ander Flow — tools that get the task done",
+    "descricao_pagina": "There are {ferramentas_total} work tools. The calculation runs in your browser and the file never leaves your device.",
+    "busca": {
+      "titulo": "What do you need to solve?",
+      "chamada": "Write the task in your own words. There are {ferramentas_total} tools — search finds them by intent, not by technical name.",
+      "enviar": "Search",
+      "resolvem": "{quantidade} tools solve this",
+      "resolve_uma": "1 tool solves this",
+      "dica_teclado": "Enter opens the first one · ↑ ↓ to navigate",
+      "ver_todos": "See all",
+      "sugestoes_titulo": "Examples of what you can ask for"
+    },
+    "sugestoes": {
+      "um": "how much do I need to sell to cover my expenses",
+      "dois": "how much to charge for my product",
+      "tres": "merge several PDFs into one",
+      "quatro": "remove duplicate rows from a spreadsheet",
+      "cinco": "count the words in a text"
+    },
+    "retomar": {
+      "titulo": "Where you left off",
+      "limpar": "Clear",
+      "limpo": "History on this device erased",
+      "em_aberto": "open"
+    },
+    "plano": {
+      "titulo": "Free to use",
+      "texto": "{ferramentas_prontas} tools already work without an account and without sending files to a server. Plus unlocks bigger batches, history in your account and spreadsheet export.",
+      "link": "See what changes"
+    },
+    "categorias": {
+      "titulo": "Where people start",
+      "ver_catalogo": "Full catalog · {ferramentas_total}",
+      "nota": "{quantidade} more categories in the catalog.",
+      "contagem_rotulo": "{quantidade} tools"
+    }
+  }
+}

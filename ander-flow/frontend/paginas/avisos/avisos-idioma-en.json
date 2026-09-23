@@ -1,0 +1,26 @@
+{
+  "avisos": {
+    "titulo_pagina": "Notices — Ander Flow",
+    "descricao_pagina": "System notices and messages with the administrator.",
+    "titulo": "Notices",
+    "abas": {
+      "rotulo": "Notices and messages",
+      "sistema": "System notices",
+      "mensagens": "Messages"
+    },
+    "sistema": {
+      "vazio_texto": "No notices right now.",
+      "explicacao": "A system notice is informative. A message is a conversation with the administrator.",
+      "marcar_todos": "Mark everything as read",
+      "marcados": "Notices marked as read"
+    },
+    "mensagens": {
+      "convite_titulo": "Sign in to talk to the administrator",
+      "convite_texto": "Messages are kept in your account and answered by an administrator.",
+      "vazio_titulo": "No messages yet",
+      "vazio_texto": "Write your first message to the administrator.",
+      "campo_rotulo": "Your message",
+      "campo_placeholder": "Write your message"
+    }
+  }
+}

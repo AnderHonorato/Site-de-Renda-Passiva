@@ -1,0 +1,33 @@
+{
+  "trabalho": {
+    "titulo_pagina": "Work — Ander Flow",
+    "descricao_pagina": "Your open work, your saved tools and the usage for this month.",
+    "resumo_zero": "No open work right now.",
+    "resumo_um": "1 open work item.",
+    "resumo": "{quantidade} open work items.",
+    "em_aberto": {
+      "titulo": "Open",
+      "meta": "{ferramenta} · updated {tempo}",
+      "retomar": "Resume",
+      "excluir_rotulo": "Delete {titulo}",
+      "confirmar_titulo": "Delete this work?",
+      "confirmar_texto": "\"{titulo}\" will be erased and cannot be recovered.",
+      "excluido": "Work deleted",
+      "vazio_titulo": "Nothing open here",
+      "vazio_texto": "Start a tool and the draft shows up here for you to pick up later."
+    },
+    "salvos": {
+      "titulo": "Saved",
+      "organizar": "Organize",
+      "vazio": "You have not saved any tool yet."
+    },
+    "mes": {
+      "titulo": "Your month",
+      "documentos": "Documents generated",
+      "ferramentas_usadas": "Tools used",
+      "lote_titulo": "Batch on your plan",
+      "lote_gratis": "Up to {limite_lote_gratis} files at a time on Free",
+      "lote_plus": "Up to {limite_lote_plus} files at a time on Plus"
+    }
+  }
+}
