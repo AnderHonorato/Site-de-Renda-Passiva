@@ -41,9 +41,13 @@ export function substituirVariaveis(texto, variaveis = {}) {
   });
 }
 
-/** Navega `dicionario` pela chave com pontos e devolve o texto (ou a própria chave, se não achar). Função pura. */
+/**
+ * Navega `dicionario` pela chave com pontos e devolve o texto (ou a própria chave, se não achar).
+ * A variável na própria chave é substituída antes da busca — `erro.{codigo}.titulo` vira
+ * `erro.404.titulo` —, igual ao que o montador faz no servidor. Função pura.
+ */
 export function traduzirComDicionario(dicionario, chave, variaveis = {}) {
-  const partes = String(chave).split('.');
+  const partes = substituirVariaveis(String(chave), variaveis).split('.');
   let atual = dicionario;
   for (const parte of partes) {
     if (atual == null || typeof atual !== 'object' || !(parte in atual)) return chave;

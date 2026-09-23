@@ -20,6 +20,12 @@ test('traduzirComDicionario aplica variável numa chave aninhada', () => {
   assert.equal(traduzirComDicionario(dicionario, 'compartilhado.rodape.direitos', { ano: 2026 }), '© 2026 Ander Flow.');
 });
 
+test('traduzirComDicionario resolve variável dentro da própria chave, como o montador faz', () => {
+  const dicionario = { erro: { 404: { titulo: 'Essa não existe.' }, 429: { titulo: 'Rápido demais.' } } };
+  assert.equal(traduzirComDicionario(dicionario, 'erro.{codigo}.titulo', { codigo: 404 }), 'Essa não existe.');
+  assert.equal(traduzirComDicionario(dicionario, 'erro.{codigo}.titulo', { codigo: 429 }), 'Rápido demais.');
+});
+
 test('traduzirComDicionario cai para a própria chave quando ela não existe', () => {
   const dicionario = { compartilhado: { rodape: {} } };
   assert.equal(traduzirComDicionario(dicionario, 'compartilhado.rodape.chave_inexistente'), 'compartilhado.rodape.chave_inexistente');

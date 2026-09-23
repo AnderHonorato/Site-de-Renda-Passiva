@@ -222,6 +222,21 @@ test('renderizar() monta inclusões aninhadas, traduz em pt-BR, aplica negrito, 
   assert.ok(html.includes('id="af-variaveis"'));
 });
 
+test('af-variaveis leva também as variáveis da própria página, não só as globais', () => {
+  const montador = criarMontador({ raiz, idioma, catalogo, configuracao });
+  const { res, estado } = criarFakeRes();
+  const req = { cookies: { idioma: 'pt-BR' }, usuario: null, originalUrl: '/pagina-teste' };
+
+  montador.renderizar(req, res, 'pagina-teste', { nome: 'Ana' });
+
+  const bloco = /id="af-variaveis">([^<]*)</.exec(estado.corpo)?.[1];
+  const variaveis = JSON.parse(bloco.replace(/\\u003c/gi, '<'));
+  // Sem isso, o navegador reaplica `data-texto` com chave sem variável (ex.: erro.{codigo}.titulo)
+  // e apaga o texto que o servidor já tinha montado.
+  assert.equal(variaveis.nome, 'Ana');
+  assert.equal(variaveis.ferramentas_total, 0, 'as globais continuam indo junto');
+});
+
 test('renderizar() em en cai para pt-BR nas chaves ausentes', () => {
   const montador = criarMontador({ raiz, idioma, catalogo, configuracao });
   const { res, estado } = criarFakeRes();

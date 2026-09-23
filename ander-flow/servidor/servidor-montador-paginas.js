@@ -250,7 +250,9 @@ export function criarMontador({ raiz, idioma, catalogo, configuracao }) {
 
     html = aplicarTraducoes(html, dicionario, variaveisFinal, ambiente);
     html = reescreverTagHtml(html, atributosHtml(req, idiomaCodigo, nome));
-    html = injetarBlocosJson(html, dicionario, globais);
+    // Vão as variáveis finais, não só as globais: o navegador reaplica `data-texto` e precisa
+    // resolver chaves com variável, como `erro.{codigo}.titulo`, sem apagar o texto do servidor.
+    html = injetarBlocosJson(html, dicionario, variaveisFinal);
 
     res
       .status(statusCode)
