@@ -35,7 +35,7 @@ Legenda: `[x]` feito e testado · `[~]` em andamento · `[ ]` falta · `[!]` pro
 ## Funcionalidades (Onda 2)
 - [x] Autenticação: criar conta, entrar, sair, recuperar e redefinir senha
 - [x] Conta: dados, idioma/tema, senha, exportar dados, excluir conta (LGPD)
-- [~] Favoritos/Salvos e Trabalhos funcionando; `/api/favoritos/juntar` ainda sem teste (A13)
+- [x] Favoritos/Salvos (local e conta, juntar sem substituir, limite do plano) e Trabalhos
 - [x] Avisos do sistema, popup administrável, mensagens com o admin
 - [x] Planos (Grátis e Plus, pagamento "em breve"; admin libera o Plus manualmente)
 - [x] Páginas: Início, Catálogo, Planos, Privacidade, Termos, Cookies, 404/403/429/500
@@ -47,7 +47,8 @@ Legenda: `[x]` feito e testado · `[~]` em andamento · `[ ]` falta · `[!]` pro
 ## Acabamento (Onda 3)
 - [x] Manifestos das ferramentas planejadas
 - [x] Inglês completo (paridade de chaves, 22 arquivos)
-- [~] Testes de unidade e integração: 379 (378 passam, 1 pulado). Visuais: A13
+- [x] Testes de unidade e integração: 387 (386 passam, 1 pulado)
+- [x] Testes visuais: 96 combinações (12 telas × 1440/390 × claro/escuro × pt-BR/en) sem erro de console, CSP, 5xx ou chave crua + 5 de teclado — 101/101
 - [x] README completo (15 seções; comando inventado `verificar:idiomas` removido na revisão; caminho longo no Windows documentado)
 
 ## Integração, debate e entrega (Ondas 4–6)

@@ -1,9 +1,9 @@
 // teclado.test.js — teste de teclado (docs/contratos.md §14): em /, /ferramentas/preco-de-venda
 // e /entrar, navegando só com Tab, o foco precisa chegar ao campo principal e ao botão de ação,
-// e o elemento efetivamente focado precisa ter contorno visível (outline ou box-shadow
-// computado diferente de "none"). Não corrige nada no site — ver ACHADOS no relatório para os
-// dois casos em que este teste aponta um defeito real (frontend/compartilhado/
-// compartilhado-componentes.css:166), marcados com test.todo em vez de afrouxados.
+// e o foco precisa ter indicador visível (outline ou box-shadow computado diferente de "none").
+// Campo de texto não tem borda própria: quem desenha a caixa é o `.campo__controle` que o envolve,
+// e é nele que o contorno de foco aparece (compartilhado-componentes.css:161-164, via :has()).
+// Por isso o indicador conta se estiver no elemento focado ou no `.campo__controle` dele.
 
 import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
@@ -48,10 +48,14 @@ async function tabularAte(pagina, seletores, maxTabs = 80) {
       if (!ativo || ativo === document.body) return null;
       const seletorCasado = seletoresAvaliados.find((seletor) => ativo.matches(seletor));
       if (!seletorCasado) return null;
-      const estilo = getComputedStyle(ativo);
-      const temOutline = estilo.outlineStyle !== 'none' && estilo.outlineStyle !== '';
-      const temBoxShadow = estilo.boxShadow !== 'none';
-      return { seletor: seletorCasado, contornoVisivel: temOutline || temBoxShadow, outlineStyle: estilo.outlineStyle, boxShadow: estilo.boxShadow };
+      const temIndicador = (elemento) => {
+        if (!elemento) return false;
+        const estilo = getComputedStyle(elemento);
+        const temOutline = estilo.outlineStyle !== 'none' && estilo.outlineStyle !== '' && parseFloat(estilo.outlineWidth) > 0;
+        return temOutline || estilo.boxShadow !== 'none';
+      };
+      const contornoVisivel = temIndicador(ativo) || temIndicador(ativo.closest('.campo__controle'));
+      return { seletor: seletorCasado, contornoVisivel };
     }, seletores);
     if (info && !achados.has(info.seletor)) achados.set(info.seletor, info);
   }
@@ -92,15 +96,8 @@ test('foco por teclado em /entrar alcança o botão "Entrar" com contorno visív
   }
 });
 
-// ACHADO: o campo de e-mail de /entrar usa `.campo__entrada`, cuja regra
-// `frontend/compartilhado/compartilhado-componentes.css:166` (`.campo__entrada:focus-visible {
-// outline: none; }`) tira o contorno do próprio elemento focado — o indicador visível fica só no
-// `.campo__controle` ancestral, via `:has()` (linhas 161-164). O elemento que de fato recebe o
-// foco (o <input>) tem outline "none" e box-shadow "none", falhando a checagem estrita do
-// contrato ("o elemento focado tem contorno visível"). Verificado ao vivo com Playwright: veja
-// RELATÓRIO/ACHADOS. Mantido como test.todo (não afrouxado) até o site corrigir.
-test.todo(
-  'foco por teclado em /entrar: o campo de e-mail tem contorno visível (ACHADO: outline fica só no ancestral .campo__controle, não no <input> focado — compartilhado-componentes.css:161-166)',
+test(
+  'foco por teclado em /entrar: o campo de e-mail tem contorno visível no controle que o envolve',
   async () => {
     const SELETOR_CAMPO = '#entrar-campo-email';
     const { pagina, fechar } = await abrirPagina('/entrar');
@@ -126,9 +123,8 @@ test('foco por teclado em /ferramentas/preco-de-venda alcança o botão "Calcula
   }
 });
 
-// Mesmo ACHADO do teste de /entrar, agora no campo "Custo do produto" (também `.campo__entrada`).
-test.todo(
-  'foco por teclado em /ferramentas/preco-de-venda: o campo "Custo" tem contorno visível (ACHADO: mesma causa de /entrar — compartilhado-componentes.css:161-166)',
+test(
+  'foco por teclado em /ferramentas/preco-de-venda: o campo "Custo" tem contorno visível no controle que o envolve',
   async () => {
     const SELETOR_CAMPO = '#campo-custo';
     const { pagina, fechar } = await abrirPagina('/ferramentas/preco-de-venda');

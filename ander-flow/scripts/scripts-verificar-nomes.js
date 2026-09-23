@@ -10,7 +10,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const PASTAS_VERIFICADAS = ['frontend', 'servidor', 'banco', 'scripts', 'testes'];
 const EXCECOES_EXATAS = new Set(['package.json', 'package-lock.json', 'README.md', 'CHECKLIST.md', '.gitignore']);
 // Pastas com arquivo de terceiro ou gerado (fora do git): o nome vem da origem, não do projeto.
-const PASTAS_IGNORADAS = ['frontend/compartilhado/bibliotecas', 'frontend/compartilhado/fontes', 'banco/dados'];
+const PASTAS_IGNORADAS = ['frontend/compartilhado/bibliotecas', 'frontend/compartilhado/fontes', 'banco/dados', 'testes/testes-visuais/capturas']; // todas geradas ou locais, fora do git
 
 export function pastaIgnorada(caminhoRelativo) {
   const caminho = caminhoRelativo.split('\\').join('/');
