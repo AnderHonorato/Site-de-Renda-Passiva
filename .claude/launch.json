@@ -2,9 +2,23 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "ander-flow",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "ander-flow/scripts/scripts-iniciar.js",
+        "--desenvolver"
+      ],
+      "port": 4870
+    },
+    {
       "name": "portal",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["portal/ferramentas/servir.mjs", "portal", "--porta", "4400"],
+      "runtimeArgs": [
+        "portal/ferramentas/servir.mjs",
+        "portal",
+        "--porta",
+        "4400"
+      ],
       "port": 4400
     }
   ]
