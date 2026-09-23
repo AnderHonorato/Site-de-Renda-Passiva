@@ -15,40 +15,40 @@ Legenda: `[x]` feito e testado · `[~]` em andamento · `[ ]` falta · `[!]` pro
 - [x] Catálogo gerado dos manifestos; contagens calculadas
 - [x] Banco: conexão, migrador, sementes, `admin:criar` sem senha padrão
 - [x] Sistema visual: tokens claro/escuro, fontes locais, componentes, ícones em sprite
-- [~] Idioma PT-BR/EN no servidor e no navegador, sem piscar
+- [x] Idioma PT-BR/EN no servidor e no navegador, sem piscar
 - [x] Tema claro/escuro sem piscar, botão acessível
-- [~] Verificadores: nomes, idiomas, textos fixos, propriedade
+- [x] Verificadores: nomes, idiomas, textos fixos, propriedade (os três de conteúdo APROVADO)
 
-- [!] Página de erro ainda não existe → arquivo estático ausente responde 500 em vez de 404 (corrigir na Onda 2: página erro + reserva sem página)
+- [x] Página de erro 404/403/429/500 traduzida; chave `erro.{codigo}.*` resolvida também no navegador (corrigido na Onda 3)
 - [!] Worktrees automáticos nasceram num commit antigo; agentes corrigiram ou foram refeitos em worktree criado pelo orquestrador
 
 ## Segurança
 - [x] CSP estrita sem `unsafe-inline`/`unsafe-eval`, cabeçalhos
 - [x] Limite de tráfego por grupo + bloqueio progressivo persistido (1 min → 24 h)
-- [~] 429 com `Retry-After` e página traduzida
+- [x] 429 com `Retry-After` e página traduzida (pt-BR e en)
 - [x] CSRF duplo em toda rota que altera
 - [x] Sessão HttpOnly/SameSite/Secure, token com hash, expiração e revogação
 - [x] scrypt nativo; nenhuma senha padrão
 - [x] Corpo máx. 100 kB, timeouts, tamanho de cabeçalho
-- [~] Plano e admin verificados no servidor
+- [x] Plano e admin verificados no servidor (403 sem admin; cotas e recurso Plus recusados pela API)
 
 ## Funcionalidades (Onda 2)
-- [ ] Autenticação: criar conta, entrar, sair, recuperar e redefinir senha
-- [ ] Conta: dados, idioma/tema, senha, exportar dados, excluir conta (LGPD)
-- [ ] Favoritos/Salvos (local e conta, juntar sem substituir), Trabalhos
-- [ ] Avisos do sistema, popup administrável, mensagens com o admin
-- [ ] Planos (Grátis e Plus, pagamento "em breve")
-- [ ] Páginas: Início, Catálogo, Planos, Privacidade, Termos, Cookies, 404/403/429/500
-- [ ] Páginas: Entrar/Criar conta, Recuperar senha, Conta, Avisos, Trabalho, Salvos
-- [ ] Ferramentas: Preço de venda, Ponto de equilíbrio, Margem de contribuição, Contador de texto
-- [ ] Ferramentas: Juntar PDF, Limpar planilha (em etapas)
-- [ ] Admin: ferramentas, usuários, avisos e mensagens, bloqueios de tráfego
+- [x] Autenticação: criar conta, entrar, sair, recuperar e redefinir senha
+- [x] Conta: dados, idioma/tema, senha, exportar dados, excluir conta (LGPD)
+- [~] Favoritos/Salvos e Trabalhos funcionando; `/api/favoritos/juntar` ainda sem teste (A13)
+- [x] Avisos do sistema, popup administrável, mensagens com o admin
+- [x] Planos (Grátis e Plus, pagamento "em breve"; admin libera o Plus manualmente)
+- [x] Páginas: Início, Catálogo, Planos, Privacidade, Termos, Cookies, 404/403/429/500
+- [x] Páginas: Entrar/Criar conta, Recuperar senha, Conta, Avisos, Trabalho, Salvos
+- [x] Ferramentas: Preço de venda (74,41), Ponto de equilíbrio (200 un.), Margem de contribuição (38,40), Contador de texto
+- [x] Ferramentas: Juntar PDF, Limpar planilha (em etapas)
+- [x] Admin: ferramentas, usuários, avisos e mensagens, bloqueios de tráfego (troca de plano gravada em registros_admin)
 
 ## Acabamento (Onda 3)
 - [x] Manifestos das ferramentas planejadas
-- [ ] Inglês completo (paridade de chaves)
-- [ ] Testes de unidade, integração e visuais
-- [ ] README completo
+- [x] Inglês completo (paridade de chaves, 22 arquivos)
+- [~] Testes de unidade e integração: 379 (378 passam, 1 pulado). Visuais: A13
+- [~] README completo: A14
 
 ## Integração, debate e entrega (Ondas 4–6)
 - [ ] Instalação limpa, migração, subida, todas as telas abertas
