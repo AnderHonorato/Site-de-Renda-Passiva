@@ -239,10 +239,7 @@ function ligarLimparRecentes() {
   });
 }
 
-async function carregar() {
-  montarSugestoes();
-  ligarTeclado();
-  ligarLimparRecentes();
+async function carregarFerramentas() {
   try {
     const resposta = await chamarApi('/api/ferramentas');
     ferramentas = resposta?.ferramentas ?? [];
@@ -263,6 +260,13 @@ async function carregar() {
     aviso.append(titulo, texto);
     gradeCategorias.append(aviso);
   }
+}
+
+async function carregar() {
+  montarSugestoes();
+  ligarTeclado();
+  ligarLimparRecentes();
+  await carregarFerramentas();
 
   const consultaInicial = new URLSearchParams(window.location.search).get('busca');
   if (consultaInicial) {
@@ -271,10 +275,11 @@ async function carregar() {
   }
 }
 
-aoTrocarIdioma(() => {
+aoTrocarIdioma(async () => {
   montarSugestoes();
-  montarCategorias();
-  carregarRetomar();
+  // Busca /api/ferramentas de novo para que categorias e "Onde você parou" venham no idioma
+  // novo sem precisar recarregar a página.
+  await carregarFerramentas();
   if (campo.value) mostrarResultados(campo.value);
 });
 

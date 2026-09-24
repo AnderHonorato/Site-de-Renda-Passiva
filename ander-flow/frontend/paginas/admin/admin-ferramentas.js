@@ -9,34 +9,50 @@ import { calcularFaixaPaginacao, statusFerramentaAdmin, temProximaPagina } from 
 
 const POR_PAGINA = 20;
 
+/**
+ * Ferramenta planejada não tem página própria: o interruptor "Ferramenta ativa" não pode
+ * parecer ligado e clicável (docs/debate-criticos.md P5). Função pura, testável sem DOM.
+ */
+export function deveDesabilitarAtiva(ferramenta) {
+  return ferramenta?.estado === 'planejada';
+}
+
 function avisarResumoDesatualizado() {
   document.dispatchEvent(new CustomEvent('admin:atualizar-resumo'));
 }
 
-function criarInterruptor({ marcado, rotulo, aoAlternar }) {
+function criarInterruptor({ marcado, rotulo, desabilitado = false, aoAlternar }) {
   const envolvente = document.createElement('span');
   envolvente.className = 'marcador';
 
   const interruptor = document.createElement('span');
   interruptor.className = 'interruptor';
   interruptor.setAttribute('role', 'switch');
-  interruptor.setAttribute('tabindex', '0');
   interruptor.setAttribute('aria-checked', marcado ? 'true' : 'false');
   interruptor.setAttribute('aria-label', rotulo);
 
-  function alternar() {
-    const novoValor = interruptor.getAttribute('aria-checked') !== 'true';
-    interruptor.setAttribute('aria-checked', novoValor ? 'true' : 'false');
-    aoAlternar(novoValor, () => interruptor.setAttribute('aria-checked', novoValor ? 'false' : 'true'));
-  }
+  if (desabilitado) {
+    // Ferramenta planejada: sem página própria, então o interruptor não pode parecer
+    // clicável nem disparar ação (docs/debate-criticos.md P5).
+    interruptor.setAttribute('aria-disabled', 'true');
+    interruptor.setAttribute('tabindex', '-1');
+  } else {
+    interruptor.setAttribute('tabindex', '0');
 
-  interruptor.addEventListener('click', alternar);
-  interruptor.addEventListener('keydown', (evento) => {
-    if (evento.key === ' ' || evento.key === 'Enter') {
-      evento.preventDefault();
-      alternar();
-    }
-  });
+    const alternar = () => {
+      const novoValor = interruptor.getAttribute('aria-checked') !== 'true';
+      interruptor.setAttribute('aria-checked', novoValor ? 'true' : 'false');
+      aoAlternar(novoValor, () => interruptor.setAttribute('aria-checked', novoValor ? 'false' : 'true'));
+    };
+
+    interruptor.addEventListener('click', alternar);
+    interruptor.addEventListener('keydown', (evento) => {
+      if (evento.key === ' ' || evento.key === 'Enter') {
+        evento.preventDefault();
+        alternar();
+      }
+    });
+  }
 
   envolvente.append(interruptor);
   return envolvente;
@@ -112,6 +128,7 @@ function montarLinha(ferramenta, acoes) {
     criarInterruptor({
       marcado: ferramenta.ativa,
       rotulo: t('admin.ferramentas.ativa_rotulo', { nome: ferramenta.nome }),
+      desabilitado: deveDesabilitarAtiva(ferramenta),
       aoAlternar: (novoValor, desfazer) => acoes.trocarAtiva(ferramenta, novoValor, desfazer),
     }),
   );
