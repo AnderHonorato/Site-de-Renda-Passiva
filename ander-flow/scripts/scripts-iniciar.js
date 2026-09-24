@@ -6,6 +6,7 @@ import { randomBytes } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { parar } from './scripts-parar.js';
 
 const raizProjeto = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const pastaExecucao = join(raizProjeto, '.execucao');
@@ -47,7 +48,14 @@ export async function iniciar({ desenvolver = false, script = join('servidor', '
   const filho = spawn(process.execPath, argumentosNode, {
     cwd: raizProjeto,
     stdio: 'inherit',
-    env: { ...process.env, TOKEN_CONTROLE: token },
+    env: {
+      ...process.env,
+      TOKEN_CONTROLE: token,
+      // Avisa servidor.js que, sob `--watch`, o processo real do servidor é filho de um
+      // supervisor de watch que não cai sozinho — ele precisa avisar esse pai ao desligar
+      // de forma limpa (ver avisarSupervisorDeWatch() em servidor/servidor.js, T1).
+      ...(desenvolver ? { AF_SOB_NODE_WATCH: '1' } : {}),
+    },
   });
 
   let encerrandoPeloSupervisor = false;
@@ -63,11 +71,24 @@ export async function iniciar({ desenvolver = false, script = join('servidor', '
     }
   };
 
-  const encerrarFilho = (sinal) => {
+  // Ctrl+C (ou outro SIGINT/SIGTERM recebido pelo supervisor): pede o mesmo desligamento limpo
+  // que `npm run parar` usa (rota de controle com token; só recorre a matar o processo — nunca
+  // por porta — se a rota não responder a tempo). Reaproveita parar() em vez de duplicar essa
+  // lógica (T1).
+  const encerrarFilho = async (sinal) => {
     if (encerrandoPeloSupervisor) return;
     encerrandoPeloSupervisor = true;
-    limpar();
-    if (!filho.killed) filho.kill(sinal);
+
+    await parar().catch(() => {
+      // parar() não deveria lançar, mas se lançar seguimos para a rede de segurança abaixo.
+    });
+
+    // Rede de segurança: se por algum motivo o filho ainda estiver vivo (ex.: o supervisor
+    // recebeu o sinal antes de .execucao/servidor.json existir), força por PID mesmo assim.
+    if (filho.exitCode === null && filho.signalCode === null && !filho.killed) {
+      limpar();
+      filho.kill(sinal);
+    }
   };
 
   const aoEncerrar = new Promise((resolver) => {

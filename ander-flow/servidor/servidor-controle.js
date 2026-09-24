@@ -1,8 +1,21 @@
 // servidor-controle.js — rota interna POST /__controle/desligar, usada por scripts-parar.js.
 // Só aceita de 127.0.0.1/::1 e só com o token certo. Fica fora do CSRF (o caminho não começa com /api/).
 // Ver docs/contratos.md §8.5.
+import { createHash, timingSafeEqual } from 'node:crypto';
 
 const ENDERECOS_LOCAIS = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1']);
+
+/**
+ * Compara duas strings em tempo constante independente do tamanho, comparando o hash de
+ * cada uma (mesma técnica de seguranca-csrf.js — evita o vazamento de tamanho que
+ * `timingSafeEqual` teria com buffers desiguais).
+ */
+function compararTempoConstante(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  const hashA = createHash('sha256').update(a).digest();
+  const hashB = createHash('sha256').update(b).digest();
+  return timingSafeEqual(hashA, hashB);
+}
 
 /**
  * Regra pura de autorização — testável sem soquete real.
@@ -11,7 +24,7 @@ const ENDERECOS_LOCAIS = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1']);
  */
 export function autorizadoParaDesligar({ enderecoRemoto, tokenRecebido, tokenEsperado }) {
   if (!ENDERECOS_LOCAIS.has(enderecoRemoto)) return false;
-  if (!tokenRecebido || tokenRecebido !== tokenEsperado) return false;
+  if (!tokenRecebido || !compararTempoConstante(tokenRecebido, tokenEsperado)) return false;
   return true;
 }
 
