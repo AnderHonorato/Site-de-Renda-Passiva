@@ -58,6 +58,8 @@ Legenda: `[x]` feito e testado · `[~]` em andamento · `[ ]` falta · `[!]` pro
 - [x] Todas as telas abertas nos dois servidores: públicas 200, /trabalho e /conta 302 para /entrar, /admin 403, planejada e rota inexistente 404
 - [x] Dois links internos quebrados corrigidos (/criar-conta, /conta/avisos) + teste que segue todo link interno
 - [!] Clonar numa pasta funda no Windows estoura 260 caracteres → `git config core.longpaths true` (no README)
-- [ ] Debate dos críticos — rodada 1
-- [ ] Correções e rodada 2 (se houver ALTA)
-- [ ] Verificação final (§13 do prompt)
+- [x] Debate dos críticos — rodada 1 + réplica: 1 ALTA, 7 MÉDIA, 4 BAIXA (`docs/debate-criticos.md`)
+- [x] Correções (C1 front, C2 servidor; T1 devolvido uma vez) e rodada 2: tudo RESOLVIDO; pendências T4, T6 e resíduo de P5 documentadas
+- [x] Verificação final (§13) num clone limpo: npm install, migrar, semear, verificar (3 APROVADO), testar (402 testes, 401 passam, 1 pulado), testar:visual 101/101, desenvolver com porta ocupada → porta seguinte, parar derruba só o próprio processo
+- [x] Achados da verificação final corrigidos: package-lock sem "hasInstallScript" (instalação limpa sujava a árvore); caminho de força do `parar` nunca encerrava nada e mentia; testes apagavam o `.execucao/` de servidor ligado (causa dos órfãos)
+- [!] Pendência BAIXA: depois de um `parar` limpo no modo desenvolver, o `npm run desenvolver` termina com código 1 (o --watch é encerrado por sinal)
