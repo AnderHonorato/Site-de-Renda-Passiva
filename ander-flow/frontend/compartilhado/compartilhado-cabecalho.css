@@ -108,6 +108,7 @@
 
 .cabecalho__conta-inicial {
   position: relative;
+  isolation: isolate; /* o círculo do ::before (z-index -1) fica preso atrás do texto, dentro do botão */
   width: var(--alvo-toque);
   height: var(--alvo-toque);
   border-radius: 50%;
