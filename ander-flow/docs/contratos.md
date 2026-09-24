@@ -454,7 +454,11 @@ Todos os motores usam as peças da §6 (`.ferramenta__*`, `.campo`, `.resultado`
   "conta": true
 }
 ```
-Tipos de campo: `numero`, `inteiro`, `moeda`, `percentual`, `texto`, `area-texto`, `opcao`, `marcador`, `data`, `hora`. Formatos de resultado: `numero`, `inteiro`, `moeda`, `percentual`, `texto`, `data`, `duracao`, `lista`. Motores além da calculadora acrescentam chaves próprias, documentadas no cabeçalho do motor.
+Tipos de campo: `numero`, `inteiro`, `moeda`, `percentual`, `texto`, `area-texto`, `opcao`, `marcador`, `data`, `hora`.
+
+**Campo ou grupo condicional:** `"mostrar_se": { "campo": "<id de um campo opcao>", "valores": ["<valor>"] }`. Escondido (atributo `hidden`), o campo não é validado e não entra nas `entradas`; trocar a opção limpa o resultado.
+
+**Itens repetíveis** (orçamento, pedido, comissão por item, frete por volume): não são campo da calculadora — ficam no motor `documento`/`tabela` como seção `"itens": { "colunas": [...], "minimo": 1, "maximo": 200 }`, com totais calculados pela função pura. Formatos de resultado: `numero`, `inteiro`, `moeda`, `percentual`, `texto`, `data`, `duracao`, `lista`. Motores além da calculadora acrescentam chaves próprias, documentadas no cabeçalho do motor.
 
 ### 15.4 `<slug>-calculo.js`
 `export function calcular(entradas)` recebe os valores **já lidos** pelo motor (números como `Number`, percentuais como fração 0–1, datas como `Date`) e devolve `{ ok: true, resultados: { <id>: valor }, conta: { <variavel>: valor } }` ou `{ ok: false, erro: '<codigo>', campo: '<id>', extras: {} }`. O código de erro é traduzido por `<slug>.erros.<codigo>`. Nenhum número inventado: fórmulas, tabelas e limites vêm de `docs/catalogo/`; tabela oficial (INSS, IRRF…) traz a fonte e a data no comentário.
