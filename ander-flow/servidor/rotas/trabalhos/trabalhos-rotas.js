@@ -21,7 +21,7 @@ function paraApi(linha) {
 }
 
 export default function registrarRotas(app, contexto) {
-  const { banco, configuracao, sessao } = contexto;
+  const { banco, catalogo, configuracao, sessao } = contexto;
   const { exigirSessao } = sessao;
 
   const buscarTrabalhos = banco.prepare(
@@ -71,6 +71,11 @@ export default function registrarRotas(app, contexto) {
       const { campos } = validarNovoTrabalho(corpo);
       if (Object.keys(campos).length) {
         return next(criarErro(400, 'dados_invalidos', { campos }));
+      }
+
+      const ferramenta = catalogo.obter(corpo.ferramenta_slug, { idioma: 'pt-BR' });
+      if (!ferramenta || ferramenta.estado !== 'pronta') {
+        return next(criarErro(404, 'ferramenta_inexistente'));
       }
 
       const limite = limiteDoUsuario(req.usuario);

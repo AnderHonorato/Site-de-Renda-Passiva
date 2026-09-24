@@ -167,6 +167,34 @@ test('trabalho de outro usuário responde 404 ao editar, apagar ou ver', async (
   assert.equal(apagarAlheio.status, 404);
 });
 
+test('slug de ferramenta inexistente responde 404 ferramenta_inexistente', async (t) => {
+  const ambiente = await subirServidor();
+  t.after(() => ambiente.fechar());
+  const usuario = await criarUsuario(ambiente.base, 'trabalhos-f@teste.dev');
+
+  const resposta = await usuario.chamar('/api/trabalhos', {
+    metodo: 'POST',
+    corpo: { ferramenta_slug: 'ferramenta-que-nao-existe', titulo: 'Teste', dados: {} },
+  });
+  assert.equal(resposta.status, 404);
+  assert.equal(resposta.corpo.erro, 'ferramenta_inexistente');
+});
+
+test('slug de ferramenta planejada (sem página pronta) responde 404 ferramenta_inexistente', async (t) => {
+  const ambiente = await subirServidor();
+  t.after(() => ambiente.fechar());
+  const usuario = await criarUsuario(ambiente.base, 'trabalhos-g@teste.dev');
+
+  // 'ajuste-de-receita' existe no catálogo (frontend/ferramentas/ajuste-de-receita), mas o
+  // manifesto está com estado "planejada" — não tem página pronta.
+  const resposta = await usuario.chamar('/api/trabalhos', {
+    metodo: 'POST',
+    corpo: { ferramenta_slug: 'ajuste-de-receita', titulo: 'Teste', dados: {} },
+  });
+  assert.equal(resposta.status, 404);
+  assert.equal(resposta.corpo.erro, 'ferramenta_inexistente');
+});
+
 test('sem sessão responde 401 e POST sem CSRF responde 403', async (t) => {
   const ambiente = await subirServidor();
   t.after(() => ambiente.fechar());

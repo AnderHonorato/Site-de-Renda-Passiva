@@ -14,6 +14,7 @@ import { criarErro } from './servidor-erros.js';
 import { escutarComTentativas } from './servidor-porta.js';
 import { registrarControle } from './servidor-controle.js';
 import { criarTratadorErros } from './servidor-tratador-erros.js';
+import { chaveIp } from './seguranca/seguranca-limite-trafego.js';
 
 const NIVEIS_LOG = ['debug', 'info', 'aviso', 'erro'];
 
@@ -29,10 +30,6 @@ export function criarRegistrador(configuracao) {
     if (nivel === 'erro') console.error(linha);
     else console.log(linha);
   };
-}
-
-function chaveIpPadrao(req) {
-  return req.ip ?? req.socket?.remoteAddress ?? 'desconhecido';
 }
 
 function criarLeitorCorpoJson(configuracao) {
@@ -169,7 +166,7 @@ export async function criarAplicativo({ configuracao, banco, modulos = {}, contr
 
   app.use((req, res, next) => {
     const grupo = req.path.startsWith('/api/') ? 'api' : 'paginas';
-    limitador.middleware(grupo, { chave: chaveIpPadrao })(req, res, next);
+    limitador.middleware(grupo, { chave: chaveIp })(req, res, next);
   });
 
   const middlewareCsrf =
@@ -193,6 +190,22 @@ export async function criarAplicativo({ configuracao, banco, modulos = {}, contr
   app.use(criarTratadorErros(contexto));
 
   return { app, contexto };
+}
+
+// Quando `scripts-iniciar.js --desenvolver` sobe o servidor sob `node --watch`, este processo
+// (o que roda servidor.js) é filho de um processo "supervisor de watch" que o Node cria e que
+// NÃO encerra sozinho quando este processo termina — ele fica vivo esperando um arquivo mudar.
+// Por isso, terminando de forma limpa, também avisamos esse processo pai (só ele — nunca por
+// porta, nunca um processo de outro projeto) para não deixar nada pendurado (§8.5, T1).
+function avisarSupervisorDeWatch() {
+  if (process.env.AF_SOB_NODE_WATCH !== '1') return;
+  const pidPai = process.ppid;
+  if (!pidPai || pidPai === process.pid) return;
+  try {
+    process.kill(pidPai, 'SIGTERM');
+  } catch {
+    // processo pai já pode ter saído — sem problema.
+  }
 }
 
 async function desligarComLimpeza({ referenciaServidor, banco, configuracao, registrarLog }) {
@@ -230,6 +243,7 @@ async function desligarComLimpeza({ referenciaServidor, banco, configuracao, reg
     // limpeza best-effort.
   }
 
+  avisarSupervisorDeWatch();
   process.exit(0);
 }
 
