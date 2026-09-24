@@ -185,5 +185,29 @@
   ],
   "A14-readme": [
     "README.md"
+  ],
+  "C1-correcoes-front": [
+    "frontend/compartilhado/compartilhado-formatar.js",
+    "frontend/compartilhado/compartilhado-cabecalho.js",
+    "frontend/compartilhado/compartilhado-cabecalho.css",
+    "frontend/paginas/principal/principal.js",
+    "frontend/paginas/admin/admin-ferramentas.js",
+    "frontend/paginas/admin/admin.css",
+    "testes/testes-unidade/compartilhado-*",
+    "testes/testes-unidade/principal-*",
+    "testes/testes-unidade/admin-tela-*"
+  ],
+  "C2-correcoes-servidor": [
+    "servidor/servidor.js",
+    "servidor/servidor-controle.js",
+    "scripts/scripts-iniciar.js",
+    "scripts/scripts-parar.js",
+    "servidor/seguranca/seguranca-limite-trafego.js",
+    "servidor/rotas/trabalhos/**",
+    "testes/testes-unidade/servidor-nucleo-*",
+    "testes/testes-integracao/servidor-nucleo-*",
+    "testes/testes-unidade/seguranca-*",
+    "testes/testes-integracao/seguranca-*",
+    "testes/testes-integracao/trabalhos-*"
   ]
 }
