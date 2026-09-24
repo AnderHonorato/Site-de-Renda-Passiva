@@ -60,3 +60,43 @@ Verificado sem achado: tokens de cor, raios 6/10/14, fontes locais e ausência d
 Houve correção **ALTA** (P1), então haverá **rodada 2**, só sobre os pontos corrigidos.
 
 Correções agrupadas em dois agentes, cada um restrito à união dos escopos dos donos originais (`.orquestracao/propriedade.json`): **C1-correcoes-front** (P1–P5: A3, A4, A7a, A10b) e **C2-correcoes-servidor** (T1, T2, T3, T5, O1: A1a, A5, A6b).
+
+## Correções (Onda 6)
+
+- **C1 (front)** corrigiu P1–P5. O orquestrador conferiu a regra nova de `lerNumero` nos dois idiomas, confirmou que `R$ 74,41` já era `NaN` antes (o "R$" fica fora do campo) e blindou o círculo do avatar com `isolation: isolate`.
+- **C2 (servidor)** corrigiu T1, T2, T3, T5 e O1. A primeira versão do T1 foi **devolvida**: o servidor avisava o `node --watch` pai também ao receber SIGTERM, que é o sinal que o `--watch` usa para reiniciar a cada arquivo salvo no Linux/macOS — o auto-reload morreria a cada edição (no Windows o tratador nem roda, por isso o teste passou). Segunda versão: `decidirAvisoAoSupervisor` só avisa no desligamento pedido pela rota de controle; sinal nunca avisa. O agente provou dois recarregamentos reais mantendo a porta.
+- **Achado novo do orquestrador na conferência (O2, MÉDIA):** `aria-pressed` dos botões PT/EN vinha fixo do HTML com PT marcado e nunca mudava — em toda página em inglês o PT aparecia pressionado e o leitor de tela anunciava "Português, pressionado". Nenhum crítico pegou. Corrigido em `compartilhado-cabecalho.js`; a matriz visual passou a conferir o botão pressionado nas 96 combinações e **reprova as 48 em inglês com o cabeçalho antigo**.
+
+## Rodada 2 (só os pontos corrigidos)
+
+### Crítico T
+
+| # | Resultado | Evidência |
+|---|---|---|
+| T1 | RESOLVIDO | `desenvolver` + edição em `servidor/servidor-erros.js` → "Restarting" e voltou na mesma porta (200); `parar` → "Servidor desligado." sem "forçado", `.execucao/` vazia |
+| T2 | RESOLVIDO | `servidor.js:169` usa `chaveIp` |
+| T3 | RESOLVIDO | `trabalhos-rotas.js:76-79`: inexistente ou não pronta → 404 `ferramenta_inexistente` |
+| T5 | RESOLVIDO | `servidor-controle.js:27` usa `compararTempoConstante` |
+| O1 | RESOLVIDO | `file` → "JavaScript source, Unicode text, UTF-8 text" |
+| — | sem regressão | `npm run testar` → 400 testes, 399 passam, 1 pulado |
+
+### Crítico P
+
+O agente parou no limite de gastos da conta depois de confirmar o P2 (Início e catálogo). O orquestrador concluiu a rodada no servidor real:
+
+| # | Resultado | Evidência |
+|---|---|---|
+| P1 | RESOLVIDO | Ponto de equilíbrio em EN: `5.000,00 / 50,00 / 20,00 / 10` e `5,000.00 / 50.00 / 20.00 / 10` → os dois "200 units / R$10,000.00" (antes: "1 units / R$10.00") |
+| P2 | RESOLVIDO | Crítico P (Início e catálogo) + `aria-current` só em `/` na Início |
+| P3 | RESOLVIDO | Trocar EN → PT na Início: categoria "Money and pricing" → "Dinheiro e preços" na mesma página, sem navegação nova |
+| P4 | RESOLVIDO | botões PT/EN 44×44 e avatar 44×44 (`getBoundingClientRect`); círculo `#A05134` visível, `isolation: isolate` |
+| P5 | RESOLVIDO, com resíduo | planejada: `aria-disabled="true"`, `tabindex=-1`, cursor `not-allowed`; clique, Espaço e Enter não fazem nenhuma requisição. Resíduo cosmético: continua desenhado como "ligado" (apagado) |
+| O2 | RESOLVIDO | matriz visual: só o botão do idioma da página fica pressionado, nas 96 combinações |
+
+## Veredito final
+
+Nenhum ALTA em aberto. Todos os achados corrigidos foram confirmados na rodada 2. Pendências documentadas (não corrigidas por decisão):
+
+- **T4** — busca de usuários do admin com `LIKE '%termo%'` sem índice: irrelevante na base atual; revisitar com milhares de contas (FTS5).
+- **T6** — `/api/ferramentas` tem ~62 KB (gzip aplicado): revisitar se o catálogo planejado crescer muito.
+- **P5 (resíduo)** — interruptor desabilitado de ferramenta planejada ainda aparece "ligado" e apagado.
