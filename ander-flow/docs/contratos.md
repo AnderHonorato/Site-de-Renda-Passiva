@@ -403,3 +403,64 @@ Cada ferramenta: `<slug>.html`, `<slug>.css`, `<slug>.js` (interface), `<slug>-c
 
 ## 14. Testes visuais
 Playwright com o navegador já instalado: `chromium.launch({ channel: process.env.NAVEGADOR_TESTES ?? 'msedge' })`. Matriz: 1440×900 e 390×844 × claro e escuro × `pt-BR` e `en`, nas telas principais; capturas em `testes/testes-visuais/capturas/` (fora do git). Falha em erro de console ou violação de CSP.
+
+## 15. Ferramentas em escala: motores e definição (Onda 7)
+
+As 145 ferramentas planejadas não são escritas à mão como as 6 primeiras. Cada uma é uma **definição** mais a **lógica pura**; o HTML e o JS de página são **gerados**.
+
+### 15.1 Arquivos por ferramenta
+| Arquivo | Quem escreve | Conteúdo |
+|---|---|---|
+| `<slug>-manifesto.json` | já existe | `estado` passa de `planejada` para `pronta` quando a ferramenta funciona e tem testes |
+| `<slug>-definicao.json` | agente | motor, grupos, campos, resultados, exportação, exemplo (15.3) |
+| `<slug>-calculo.js` | agente | funções puras, sem DOM, testáveis no Node (15.4) |
+| `<slug>-idioma-pt-br.json` / `-en.json` | agente | todos os textos, com paridade (15.5) |
+| `testes/testes-unidade/<slug>-calculo.test.js` | agente | casos do catálogo (`docs/catalogo/`) |
+| `<slug>.html`, `<slug>.js`, `<slug>.css` | **gerados** por `npm run ferramentas:gerar` | não editar à mão; começam com o comentário `gerado por scripts-gerar-ferramentas.js` |
+
+Exceção justificada (motor `interativo`): quando o comportamento não cabe em nenhum motor, a ferramenta tem `<slug>.js` próprio e a definição diz `"motor": "interativo"`; o HTML continua gerado.
+
+### 15.2 Motores (`frontend/compartilhado/compartilhado-motor-<nome>.js` + `.css`)
+| Motor | Para quê | Entrada → saída |
+|---|---|---|
+| `calculadora` | fórmula com campos | campos → resultados + "A conta" |
+| `transformador` | texto → texto | área de texto (+ opções) → saída ao digitar, copiar/baixar |
+| `documento` | documento preenchido | campos → pré-visualização formatada → imprimir/PDF/copiar |
+| `tabela` | listas e matrizes | linhas editáveis, colunas tipadas, colunas calculadas e totais → CSV/PDF |
+| `folha` | material para imprimir | parâmetros → folha (SVG/HTML) → imprimir/PDF/SVG |
+| `arquivo` | arquivo local | arquivo(s) do aparelho → processamento no navegador → download |
+| `interativo` | o resto (cronômetro, sorteio, quadro) | JS próprio da ferramenta |
+
+Todos os motores usam as peças da §6 (`.ferramenta__*`, `.campo`, `.resultado`, estados), `lerNumero`/`formatar*` (§12), `ligarFormularioDeFerramenta` quando couber, e as funções de `compartilhado-ferramenta.js` (uso, trabalho, copiar, baixar, PDF, Plus). Nada de texto fixo, `innerHTML` ou estilo em linha.
+
+### 15.3 `<slug>-definicao.json`
+```json
+{
+  "motor": "calculadora",
+  "grupos": [
+    { "id": "valores", "campos": [
+      { "id": "valor", "tipo": "moeda", "obrigatorio": true, "min": 0 },
+      { "id": "taxa", "tipo": "percentual", "obrigatorio": true, "min": 0, "max": 100 },
+      { "id": "meses", "tipo": "inteiro", "obrigatorio": true, "min": 1, "max": 600 },
+      { "id": "regime", "tipo": "opcao", "opcoes": ["simples", "composto"], "padrao": "composto" }
+    ] }
+  ],
+  "resultados": [
+    { "id": "montante", "formato": "moeda", "destaque": true },
+    { "id": "juros", "formato": "moeda" }
+  ],
+  "exportar": ["copiar", "pdf"],
+  "exemplo": { "valor": "1.000,00", "taxa": "1", "meses": "12", "regime": "composto" },
+  "conta": true
+}
+```
+Tipos de campo: `numero`, `inteiro`, `moeda`, `percentual`, `texto`, `area-texto`, `opcao`, `marcador`, `data`, `hora`. Formatos de resultado: `numero`, `inteiro`, `moeda`, `percentual`, `texto`, `data`, `duracao`, `lista`. Motores além da calculadora acrescentam chaves próprias, documentadas no cabeçalho do motor.
+
+### 15.4 `<slug>-calculo.js`
+`export function calcular(entradas)` recebe os valores **já lidos** pelo motor (números como `Number`, percentuais como fração 0–1, datas como `Date`) e devolve `{ ok: true, resultados: { <id>: valor }, conta: { <variavel>: valor } }` ou `{ ok: false, erro: '<codigo>', campo: '<id>', extras: {} }`. O código de erro é traduzido por `<slug>.erros.<codigo>`. Nenhum número inventado: fórmulas, tabelas e limites vêm de `docs/catalogo/`; tabela oficial (INSS, IRRF…) traz a fonte e a data no comentário.
+
+### 15.5 Chaves de idioma
+`<slug>.titulo_pagina`, `.descricao_pagina`, `.titulo`, `.resumo`, `.grupos.<id>`, `.campos.<id>`, `.campos.<id>_ajuda` (opcional), `.opcoes.<campo>.<valor>`, `.resultado.titulo`, `.resultado.<id>`, `.conta.formula`, `.conta.linha` (com `{variavel}`), `.acoes.calcular`, `.erros.<codigo>`, `.como_usar.<n>`, `.perguntas.<id>.pergunta/resposta` (só perguntas plausíveis, §29 do prompt V2).
+
+### 15.6 Catálogo de especificação
+`docs/catalogo/catalogo-<categoria>.md`: uma entrada por ferramenta — motor, problema resolvido, entradas (id, tipo, limites), processamento (fórmula exata), saídas, exportação, plano, comportamento no celular, viabilidade no navegador (biblioteca nova? limite honesto?) e **casos de teste com números**. É a fonte que os agentes de implementação seguem.
