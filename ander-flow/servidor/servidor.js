@@ -195,10 +195,26 @@ export async function criarAplicativo({ configuracao, banco, modulos = {}, contr
 // Quando `scripts-iniciar.js --desenvolver` sobe o servidor sob `node --watch`, este processo
 // (o que roda servidor.js) é filho de um processo "supervisor de watch" que o Node cria e que
 // NÃO encerra sozinho quando este processo termina — ele fica vivo esperando um arquivo mudar.
-// Por isso, terminando de forma limpa, também avisamos esse processo pai (só ele — nunca por
-// porta, nunca um processo de outro projeto) para não deixar nada pendurado (§8.5, T1).
+// Por isso, num desligamento PEDIDO (rota de controle — `npm run parar`/Ctrl+C do
+// scripts-iniciar.js), também avisamos esse processo pai (só ele — nunca por porta, nunca um
+// processo de outro projeto) para não deixar nada pendurado (§8.5, T1).
+//
+// Mas um SIGINT/SIGTERM recebido diretamente pelo processo NUNCA deve avisar o pai: é assim que
+// o próprio `node --watch` reinicia o filho a cada arquivo salvo (SIGTERM). No Windows isso é
+// TerminateProcess e o tratador nem chega a rodar; no Linux/macOS o sinal é entregue de verdade,
+// o tratador roda, e avisar o pai mataria o `--watch` a cada salvamento — quebrando o
+// auto-reload do modo desenvolver. Ctrl+C no terminal já entrega SIGINT ao grupo inteiro, então
+// o `--watch` sai por conta própria nesse caso, sem precisarmos avisá-lo.
+/**
+ * Regra pura — testável sem depender de `node --watch` de verdade.
+ * @param {{ motivo: 'controle' | 'sinal', sobWatch: boolean }} dados
+ * @returns {boolean}
+ */
+export function decidirAvisoAoSupervisor({ motivo, sobWatch }) {
+  return motivo === 'controle' && Boolean(sobWatch);
+}
+
 function avisarSupervisorDeWatch() {
-  if (process.env.AF_SOB_NODE_WATCH !== '1') return;
   const pidPai = process.ppid;
   if (!pidPai || pidPai === process.pid) return;
   try {
@@ -208,7 +224,7 @@ function avisarSupervisorDeWatch() {
   }
 }
 
-async function desligarComLimpeza({ referenciaServidor, banco, configuracao, registrarLog }) {
+async function desligarComLimpeza({ referenciaServidor, banco, configuracao, registrarLog, motivo }) {
   registrarLog?.('info', 'desligando', {});
 
   await new Promise((resolver) => {
@@ -243,7 +259,9 @@ async function desligarComLimpeza({ referenciaServidor, banco, configuracao, reg
     // limpeza best-effort.
   }
 
-  avisarSupervisorDeWatch();
+  if (decidirAvisoAoSupervisor({ motivo, sobWatch: process.env.AF_SOB_NODE_WATCH === '1' })) {
+    avisarSupervisorDeWatch();
+  }
   process.exit(0);
 }
 
@@ -266,7 +284,8 @@ async function iniciarDiretamente() {
     modulos: { registrarLog },
     controle: {
       token,
-      desligar: () => desligarComLimpeza({ referenciaServidor, banco, configuracao, registrarLog }),
+      desligar: () =>
+        desligarComLimpeza({ referenciaServidor, banco, configuracao, registrarLog, motivo: 'controle' }),
     },
   });
 
@@ -280,7 +299,7 @@ async function iniciarDiretamente() {
   const tratarSinal = () => {
     if (desligando) return;
     desligando = true;
-    desligarComLimpeza({ referenciaServidor, banco, configuracao, registrarLog });
+    desligarComLimpeza({ referenciaServidor, banco, configuracao, registrarLog, motivo: 'sinal' });
   };
   process.on('SIGINT', tratarSinal);
   process.on('SIGTERM', tratarSinal);
