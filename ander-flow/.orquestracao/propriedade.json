@@ -209,5 +209,46 @@
     "testes/testes-unidade/seguranca-*",
     "testes/testes-integracao/seguranca-*",
     "testes/testes-integracao/trabalhos-*"
+  ],
+  "A15-motores": [
+    "frontend/compartilhado/compartilhado-motor-*",
+    "scripts/scripts-gerar-ferramentas.js",
+    "package.json",
+    "frontend/ferramentas/porcentagem/**",
+    "frontend/ferramentas/regra-de-tres/**",
+    "frontend/ferramentas/juros/**",
+    "frontend/ferramentas/transformador-de-caixa/**",
+    "frontend/ferramentas/removedor-de-acentos/**",
+    "frontend/ferramentas/base64/**",
+    "testes/testes-unidade/compartilhado-motor-*",
+    "testes/testes-unidade/scripts-gerar-*",
+    "testes/testes-unidade/porcentagem-*",
+    "testes/testes-unidade/regra-de-tres-*",
+    "testes/testes-unidade/juros-*",
+    "testes/testes-unidade/transformador-de-caixa-*",
+    "testes/testes-unidade/removedor-de-acentos-*",
+    "testes/testes-unidade/base64-*"
+  ],
+  "E1-especificacao": [
+    "docs/catalogo/catalogo-dinheiro.md",
+    "docs/catalogo/catalogo-calculo.md",
+    "docs/catalogo/catalogo-datas.md",
+    "docs/catalogo/catalogo-vendas.md",
+    "docs/catalogo/catalogo-operacoes.md",
+    "docs/catalogo/catalogo-marketing.md"
+  ],
+  "E2-especificacao": [
+    "docs/catalogo/catalogo-trabalho.md",
+    "docs/catalogo/catalogo-oficio.md",
+    "docs/catalogo/catalogo-produtividade.md",
+    "docs/catalogo/catalogo-estudos.md"
+  ],
+  "E3-especificacao": [
+    "docs/catalogo/catalogo-documentos.md",
+    "docs/catalogo/catalogo-texto.md",
+    "docs/catalogo/catalogo-planilhas.md",
+    "docs/catalogo/catalogo-imagens.md",
+    "docs/catalogo/catalogo-desenvolvimento.md",
+    "docs/catalogo/catalogo-seguranca.md"
   ]
 }
