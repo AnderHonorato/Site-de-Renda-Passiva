@@ -19,3 +19,9 @@ test('deveMarcarAtual devolve false sem os dois valores', () => {
   assert.equal(deveMarcarAtual('', 'conta'), false);
   assert.equal(deveMarcarAtual('conta', ''), false);
 });
+
+test('deveMarcarAtual na Início marca só "inicio", nunca "ferramentas"', () => {
+  assert.equal(deveMarcarAtual('inicio', 'principal'), true);
+  assert.equal(deveMarcarAtual('ferramentas', 'principal'), false);
+  assert.equal(deveMarcarAtual('conta', 'principal'), false);
+});

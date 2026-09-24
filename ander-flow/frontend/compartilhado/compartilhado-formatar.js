@@ -76,12 +76,48 @@ export function formatarTempoRelativo(iso, agora = Date.now()) {
   return t('compartilhado.tempo.dias', { quantidade: dias });
 }
 
-/** Aceita "1.234,56" (pt-BR) e "1234.56" (en) conforme idioma; inválido → NaN. */
+/**
+ * Decide, a partir do próprio texto, qual separador de `corpo` (só dígitos, "." e ",") é o
+ * decimal e qual é o de milhar, e devolve o corpo normalizado com "." como decimal:
+ * - com "," e "." presentes: o separador que aparece por último é o decimal;
+ * - só um tipo de separador, repetido ("1.234.567"): é de milhar;
+ * - só um separador, uma vez, seguido de 1, 2 ou mais de 3 dígitos: é decimal;
+ * - só um separador, uma vez, seguido de exatamente 3 dígitos ("1.234", "1,234"): ambíguo —
+ *   vale a convenção do idioma (pt-BR: "." milhar/"," decimal; en: "," milhar/"." decimal).
+ */
+function normalizarCorpoNumerico(corpo, idioma) {
+  const temVirgula = corpo.includes(',');
+  const temPonto = corpo.includes('.');
+
+  if (temVirgula && temPonto) {
+    const decimalEhVirgula = corpo.lastIndexOf(',') > corpo.lastIndexOf('.');
+    return decimalEhVirgula ? corpo.replace(/\./g, '').replace(',', '.') : corpo.replace(/,/g, '');
+  }
+
+  if (!temVirgula && !temPonto) return corpo;
+
+  const separador = temVirgula ? ',' : '.';
+  const partes = corpo.split(separador);
+  if (partes.length > 2) return partes.join('');
+
+  const [inteiro, decimais] = partes;
+  if (decimais.length === 3) {
+    const separadorEhDecimalNoIdioma = idioma === 'en' ? separador === '.' : separador === ',';
+    return separadorEhDecimalNoIdioma ? `${inteiro}.${decimais}` : `${inteiro}${decimais}`;
+  }
+  return `${inteiro}.${decimais}`;
+}
+
+/** Aceita "1.234,56" (pt-BR) e "1234.56" (en), decidindo o separador pelo próprio texto
+ *  (ver `normalizarCorpoNumerico`); inválido → NaN. */
 export function lerNumero(texto, idioma = idiomaSeguro()) {
   if (typeof texto !== 'string') return NaN;
   const limpo = texto.trim();
   if (!limpo) return NaN;
-  const normalizado = idioma === 'en' ? limpo.replace(/,/g, '') : limpo.replace(/\./g, '').replace(',', '.');
-  if (!/^-?\d+(\.\d+)?$/.test(normalizado)) return NaN;
-  return Number(normalizado);
+  const negativo = limpo.startsWith('-');
+  const corpo = negativo ? limpo.slice(1) : limpo;
+  if (!/^\d+([.,]\d+)*$/.test(corpo)) return NaN;
+  const normalizado = normalizarCorpoNumerico(corpo, idioma);
+  if (!/^\d+(\.\d+)?$/.test(normalizado)) return NaN;
+  return Number(negativo ? `-${normalizado}` : normalizado);
 }

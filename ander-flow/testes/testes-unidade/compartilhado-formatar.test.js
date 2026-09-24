@@ -53,3 +53,23 @@ test('lerNumero devolve NaN para texto inválido', () => {
   assert.ok(Number.isNaN(lerNumero('abc', 'pt-BR')));
   assert.ok(Number.isNaN(lerNumero('', 'pt-BR')));
 });
+
+test('lerNumero decide o separador pelo texto, igual nos dois idiomas', () => {
+  for (const idioma of ['pt-BR', 'en']) {
+    assert.equal(lerNumero('50,00', idioma), 50);
+    assert.equal(lerNumero('5.000,00', idioma), 5000);
+    assert.equal(lerNumero('50.00', idioma), 50);
+    assert.equal(lerNumero('1,234.56', idioma), 1234.56);
+    assert.equal(lerNumero('1.234,56', idioma), 1234.56);
+    assert.equal(lerNumero('1.234.567', idioma), 1234567);
+    assert.equal(lerNumero('38,4', idioma), 38.4);
+    assert.equal(lerNumero('0,5', idioma), 0.5);
+  }
+});
+
+test('lerNumero com um separador seguido de 3 dígitos usa a convenção do idioma', () => {
+  assert.equal(lerNumero('1,234', 'en'), 1234);
+  assert.equal(lerNumero('1,234', 'pt-BR'), 1.234);
+  assert.equal(lerNumero('1.234', 'pt-BR'), 1234);
+  assert.equal(lerNumero('1.234', 'en'), 1.234);
+});

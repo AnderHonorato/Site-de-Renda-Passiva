@@ -13,10 +13,12 @@ const PAGINAS_CONHECIDAS = new Set([
 
 /**
  * Decide se o item de navegação `dataNav` deve ficar marcado como atual para `dataPagina`.
- * Ferramentas (páginas fora da lista conhecida) marcam o item "ferramentas". Função pura.
+ * A Início usa `data-pagina="principal"` e marca só o item "inicio". Ferramentas (páginas fora
+ * da lista conhecida) marcam o item "ferramentas". Função pura.
  */
 export function deveMarcarAtual(dataNav, dataPagina) {
   if (!dataNav || !dataPagina) return false;
+  if (dataPagina === 'principal') return dataNav === 'inicio';
   if (dataNav === dataPagina) return true;
   return dataNav === 'ferramentas' && !PAGINAS_CONHECIDAS.has(dataPagina);
 }
