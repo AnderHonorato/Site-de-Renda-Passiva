@@ -9,10 +9,14 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parar } from './scripts-parar.js';
 
 const raizProjeto = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const pastaExecucao = join(raizProjeto, '.execucao');
+// AF_PASTA_EXECUCAO existe só para os testes rodarem numa pasta temporária sem apagar o estado de
+// um servidor de verdade que esteja ligado. Lida na hora do uso, não no carregamento do módulo.
+function obterPastaExecucao() {
+  return process.env.AF_PASTA_EXECUCAO || join(raizProjeto, '.execucao');
+}
 
 function caminhoExecucao(nome) {
-  return join(pastaExecucao, nome);
+  return join(obterPastaExecucao(), nome);
 }
 
 async function esperarArquivoPorta(tempoLimiteMs = 15000, intervaloMs = 50) {
@@ -38,13 +42,16 @@ async function esperarArquivoPorta(tempoLimiteMs = 15000, intervaloMs = 50) {
  * @returns {Promise<{ pid: number, pidFilho: number, porta: number, token: string, filho: import('node:child_process').ChildProcess, aoEncerrar: Promise<number> }>}
  */
 export async function iniciar({ desenvolver = false, script = join('servidor', 'servidor.js') } = {}) {
-  mkdirSync(pastaExecucao, { recursive: true });
+  mkdirSync(obterPastaExecucao(), { recursive: true });
 
   const token = randomBytes(32).toString('base64url');
   const caminhoServidorPorta = caminhoExecucao('servidor.porta');
   if (existsSync(caminhoServidorPorta)) rmSync(caminhoServidorPorta);
 
-  const argumentosNode = desenvolver ? ['--watch', script] : [script];
+  // Caminho absoluto de propósito: é por ele que `npm run parar` reconhece, na linha de comando,
+  // que o processo é deste projeto antes de encerrá-lo à força (comandoContemProjeto).
+  const scriptAbsoluto = resolve(raizProjeto, script);
+  const argumentosNode = desenvolver ? ['--watch', scriptAbsoluto] : [scriptAbsoluto];
   const filho = spawn(process.execPath, argumentosNode, {
     cwd: raizProjeto,
     stdio: 'inherit',

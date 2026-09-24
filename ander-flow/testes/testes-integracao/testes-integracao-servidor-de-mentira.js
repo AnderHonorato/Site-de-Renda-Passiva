@@ -10,7 +10,7 @@ import express from 'express';
 import { registrarControle } from '../../servidor/servidor-controle.js';
 
 const raizProjeto = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const pastaExecucao = join(raizProjeto, '.execucao');
+const pastaExecucao = process.env.AF_PASTA_EXECUCAO || join(raizProjeto, '.execucao');
 const caminhoPorta = join(pastaExecucao, 'servidor.porta');
 
 mkdirSync(pastaExecucao, { recursive: true });
@@ -28,7 +28,12 @@ function limparArquivoPorta() {
   }
 }
 
+// Com AF_MENTIRA_IGNORA_DESLIGAR=1 o servidor finge estar travado: ignora a rota de controle e o
+// SIGTERM, para o teste exercitar o caminho de força de scripts-parar.js.
+const ignoraDesligar = process.env.AF_MENTIRA_IGNORA_DESLIGAR === '1';
+
 function desligar() {
+  if (ignoraDesligar) return;
   servidorHttp.close(() => {
     limparArquivoPorta();
     process.exit(0);

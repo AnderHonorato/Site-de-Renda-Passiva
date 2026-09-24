@@ -1,6 +1,8 @@
 // Testa a cadeia de middlewares de criarAplicativo() com substitutos simples (sem depender
 // de módulos que outros agentes ainda vão escrever — catalogo, idioma, montador, seguranca/*).
 import assert from 'node:assert/strict';
+import { mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
@@ -23,7 +25,8 @@ function configuracaoDeTeste(extra = {}) {
     urlPublica: 'http://localhost:4870',
     emailModo: 'arquivo',
     logNivel: 'erro',
-    pastaExecucao: join(raizProjeto, '.execucao'),
+    // Pasta própria: o servidor grava e apaga servidor.porta ali, e a real pode ser de um servidor ligado.
+    pastaExecucao: mkdtempSync(join(tmpdir(), 'ander-flow-execucao-')),
     limiteCorpo: extra.limiteCorpo ?? '100kb',
     planos: { moeda: 'BRL', pagamento_integrado: false, planos: [] },
   });

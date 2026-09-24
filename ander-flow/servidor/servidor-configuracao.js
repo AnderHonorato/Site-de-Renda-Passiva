@@ -70,7 +70,8 @@ export function carregarConfiguracao(ambiente = process.env) {
     urlPublica,
     emailModo,
     logNivel,
-    pastaExecucao: join(raizProjeto, '.execucao'),
+    // AF_PASTA_EXECUCAO: só para testes (ver scripts/scripts-iniciar.js).
+    pastaExecucao: ambiente.AF_PASTA_EXECUCAO || join(raizProjeto, '.execucao'),
     limiteCorpo: '100kb',
     planos,
   });

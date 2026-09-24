@@ -3,18 +3,23 @@
 // outros agentes vão escrever em paralelo.
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { existsSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import { iniciar } from '../../scripts/scripts-iniciar.js';
-import { parar } from '../../scripts/scripts-parar.js';
+import { comandoContemProjeto, parar, processoVivo } from '../../scripts/scripts-parar.js';
 
 const raizProjeto = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const scriptDeMentira = join('testes', 'testes-integracao', 'testes-integracao-servidor-de-mentira.js');
-const caminhoEstado = join(raizProjeto, '.execucao', 'servidor.json');
-const caminhoPid = join(raizProjeto, '.execucao', 'servidor.pid');
-const caminhoPorta = join(raizProjeto, '.execucao', 'servidor.porta');
+// Pasta de execução própria: sem isso, rodar a suíte com um servidor de verdade ligado apagava o
+// .execucao/ dele e o deixava órfão, fora do alcance de `npm run parar`.
+const pastaExecucao = mkdtempSync(join(tmpdir(), 'ander-flow-execucao-'));
+process.env.AF_PASTA_EXECUCAO = pastaExecucao;
+const caminhoEstado = join(pastaExecucao, 'servidor.json');
+const caminhoPid = join(pastaExecucao, 'servidor.pid');
+const caminhoPorta = join(pastaExecucao, 'servidor.porta');
 
 function subirProcessoIndependente() {
   return new Promise((resolver, rejeitar) => {
@@ -91,7 +96,7 @@ test(
     // Usa o servidor.js real (não o de mentira): é o wrapper `node --watch` dele — e só dele —
     // que fica pendurado depois de um process.exit() interno, e é isso que este teste prova
     // que não acontece mais. Porta e banco isolados para não colidir com outra execução real.
-    const bancoTemp = join(raizProjeto, '.execucao', 'teste-t1-desenvolver.sqlite');
+    const bancoTemp = join(pastaExecucao, 'teste-t1-desenvolver.sqlite');
     for (const sufixo of ['', '-wal', '-shm']) {
       const caminho = bancoTemp + sufixo;
       if (existsSync(caminho)) rmSync(caminho);
@@ -155,4 +160,36 @@ test('parar(): derruba só o processo gerenciado — outro node escutando contin
   } finally {
     independente.processo.kill();
   }
+});
+
+test('iniciar(): o processo disparado leva o caminho do projeto na linha de comando', async () => {
+  // É por esse caminho que parar() reconhece o processo antes de encerrá-lo à força. Com caminho
+  // relativo a checagem nunca passava, e o caminho de força não encerrava nada.
+  const resultado = await iniciar({ script: scriptDeMentira });
+  try {
+    assert.equal(comandoContemProjeto(resultado.pidFilho, raizProjeto), true);
+  } finally {
+    await parar();
+    await resultado.aoEncerrar;
+  }
+});
+
+test('parar(): servidor travado é encerrado à força e o estado só some depois que ele morre', async () => {
+  process.env.AF_MENTIRA_IGNORA_DESLIGAR = '1';
+  let resultado;
+  try {
+    resultado = await iniciar({ script: scriptDeMentira });
+  } finally {
+    delete process.env.AF_MENTIRA_IGNORA_DESLIGAR;
+  }
+  assert.equal(processoVivo(resultado.pidFilho), true, 'o servidor de mentira precisa ter subido');
+
+  const saida = await parar();
+
+  assert.equal(saida.forcado, true, 'a rota de controle foi ignorada, então só a força resolve');
+  assert.notEqual(saida.falhou, true, 'o processo precisa ter sido encerrado de verdade');
+  assert.equal(processoVivo(resultado.pidFilho), false, 'o processo não pode continuar vivo');
+  assert.equal(existsSync(caminhoEstado), false);
+  assert.equal(existsSync(caminhoPid), false);
+  await resultado.aoEncerrar;
 });

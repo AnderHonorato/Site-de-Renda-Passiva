@@ -1,5 +1,7 @@
 // Testa a rota POST /__controle/desligar já ligada na cadeia real de criarAplicativo().
 import assert from 'node:assert/strict';
+import { mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
@@ -21,7 +23,8 @@ function configuracaoDeTeste() {
     urlPublica: 'http://localhost:4870',
     emailModo: 'arquivo',
     logNivel: 'erro',
-    pastaExecucao: join(raizProjeto, '.execucao'),
+    // Pasta própria: o servidor grava e apaga servidor.porta ali, e a real pode ser de um servidor ligado.
+    pastaExecucao: mkdtempSync(join(tmpdir(), 'ander-flow-execucao-')),
     limiteCorpo: '100kb',
     planos: { moeda: 'BRL', pagamento_integrado: false, planos: [] },
   });
