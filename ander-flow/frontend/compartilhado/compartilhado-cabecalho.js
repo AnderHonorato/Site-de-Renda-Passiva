@@ -2,7 +2,7 @@
 // destaque do item de navegação atual e o atalho "/" para a busca).
 
 import { alternarTema, temaAtual } from './compartilhado-tema.js';
-import { trocarIdioma, t, aoTrocarIdioma } from './compartilhado-idioma.js';
+import { trocarIdioma, t, aoTrocarIdioma, idiomaAtual } from './compartilhado-idioma.js';
 import { chamarApi } from './compartilhado-api.js';
 
 const PAGINAS_CONHECIDAS = new Set([
@@ -37,6 +37,14 @@ function ligarBotoesDeTema() {
       await alternarTema();
       atualizarBotaoTema(botao);
     });
+  }
+}
+
+/** O botão do idioma em que a página está fica pressionado; o HTML chega sempre com pt-BR marcado. */
+function marcarIdiomaAtivo() {
+  const atual = idiomaAtual();
+  for (const botao of document.querySelectorAll('[data-acao="trocar-idioma"]')) {
+    botao.setAttribute('aria-pressed', String(botao.dataset.idioma === atual));
   }
 }
 
@@ -102,11 +110,13 @@ export function iniciarCabecalho() {
   if (typeof document === 'undefined') return;
   ligarBotoesDeTema();
   ligarBotoesDeIdioma();
+  marcarIdiomaAtivo();
   ligarBotaoSair();
   ligarMenuDaConta();
   marcarNavegacaoAtual();
   ligarAtalhoDeBusca();
   aoTrocarIdioma(() => {
+    marcarIdiomaAtivo();
     for (const botao of document.querySelectorAll('[data-acao="alternar-tema"]')) atualizarBotaoTema(botao);
   });
 }

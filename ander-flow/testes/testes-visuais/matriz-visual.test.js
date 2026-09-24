@@ -80,6 +80,9 @@ for (const rota of ROTAS) {
           const temaHtml = await pagina.evaluate(() => document.documentElement.getAttribute('data-tema'));
           assert.equal(langHtml, idioma, `<html lang> deveria ser "${idioma}"`);
           assert.equal(temaHtml, tema, `<html data-tema> deveria ser "${tema}"`);
+          const idiomasPressionados = await pagina.evaluate(() =>
+            [...document.querySelectorAll('[data-acao="trocar-idioma"][aria-pressed="true"]')].map((botao) => botao.dataset.idioma));
+          assert.deepEqual(idiomasPressionados, [idioma], `só o botão "${idioma}" deveria estar pressionado`);
 
           const textoPrincipal = await pagina.evaluate(() => document.querySelector('main')?.innerText ?? '');
           const chaveCrua = REGEX_CHAVE_CRUA.exec(textoPrincipal);
