@@ -28,6 +28,8 @@ Consulta feita em **24/09/2026**. Todo valor de INSS, IRRF, aviso prévio, FGTS,
 
 ## 1. `ferias` — Cálculo de férias
 
+- **Valores brutos (obrigatório na tela):** o resultado é o valor **antes** de INSS e IRRF — férias e o 1/3 são tributados; o abono pecuniário e o 1/3 dele não são. O rótulo do destaque é "Total bruto de férias", nunca "a receber", e a tela aponta o Salário líquido estimado para a noção de desconto.
+
 - **Motor:** `calculadora` — é uma fórmula fechada a partir de poucos campos, sem geração de documento nem lista de linhas; cabe integralmente no motor padrão, com "A conta" mostrando a fórmula.
 - **Problema resolvido:** quem vai tirar férias quer saber, antes de sair, quanto vai cair na conta.
 - **Entradas** (grupo `valores`):
@@ -56,6 +58,8 @@ Consulta feita em **24/09/2026**. Todo valor de INSS, IRRF, aviso prévio, FGTS,
   3. **Erro:** `dias_ferias=25`, `dias_abono=10` (soma 35 > 30) → `{ ok: false, erro: 'dias_invalidos', campo: 'dias_abono' }`.
 
 ## 2. `rescisao-estimada` — Estimativa de rescisão
+
+- **Valores brutos (obrigatório na tela):** o resultado é o valor **antes** de INSS e IRRF (saldo de salário e 13º são tributados; férias indenizadas, 1/3 e aviso indenizado seguem regras próprias). O rótulo do destaque é "Total bruto estimado", e a tela diz que o valor final depende do termo de rescisão e dos descontos.
 
 - **Motor:** `calculadora` — mesmo padrão de campos → resultados + "A conta", mesmo com várias parcelas.
 - **Problema resolvido:** quem foi (ou vai ser) desligado quer uma ideia do total antes de ir até o RH ou o sindicato.
@@ -118,7 +122,7 @@ Consulta feita em **24/09/2026**. Todo valor de INSS, IRRF, aviso prévio, FGTS,
   - `salario_bruto` — `moeda`, obrigatório, min `0.01`.
   - `dependentes` — `inteiro`, opcional, min `0`, max `20`, padrão `0` (dependentes legais para fins de IRRF).
   - `outros_descontos` — `moeda`, opcional, min `0`, padrão `0` (descontos que não passam pela base do IRRF nem do INSS — vale‑transporte, adiantamentos, mensalidade de convênio já líquida etc.; a ajuda do campo deve dizer isso, para não sugerir que reduz o imposto).
-  - `usar_desconto_simplificado` — `marcador`, opcional, padrão `false` (troca a dedução de INSS + dependentes, só para o cálculo do IRRF, por um valor único de R$ 607,20 — vale quando é mais vantajoso ao trabalhador; a ferramenta não decide automaticamente qual é melhor, o campo é uma escolha explícita, igual à escolha que existe na folha de pagamento real).
+  - (sem campo de escolha do desconto simplificado: a ferramenta usa sozinha a dedução mais vantajosa, como a Receita faz nos exemplos oficiais — ver passo 2.)
 - **Processamento:**
   1. **INSS** (Portaria Interministerial MPS/MF nº 13/2026, Anexo II): `S = min(salario_bruto, 8475.55)`.
      | Faixa de `S` | Alíquota | Parcela a deduzir |
@@ -129,11 +133,10 @@ Consulta feita em **24/09/2026**. Todo valor de INSS, IRRF, aviso prévio, FGTS,
      | 4.354,28 até 8.475,55 | 14% | 198,49 |
      (As parcelas a deduzir de 24,32 / 111,40 / 198,49 são calculadas por continuidade a partir das faixas oficiais da Portaria — o Anexo II só publica alíquota por faixa, não a parcela; o valor foi conferido batendo com o desconto mínimo oficial de R$ 121,58 no salário mínimo e o teto oficial de R$ 988,09 no limite de R$ 8.475,55.)
      `inss = arred2(S × aliquota − deducao)`.
-  2. **Base do IRRF:**
-     - `baseCompleta = salario_bruto − inss − (dependentes × 189,59)`.
-     - `baseSimplificada = salario_bruto − 607,20`.
-     - `base = usar_desconto_simplificado ? baseSimplificada : baseCompleta` (mínimo `0`).
-  3. **IRRF antes da redução** (Lei 15.191/2025, tabela vigente a partir de jan/2026):
+  2. **Base do IRRF — dedução mais vantajosa** (como nos exemplos oficiais da Receita, em que João usa o desconto simplificado e Rita, a "dedução legal preferida ao desconto simplificado"):
+     - `deducaoLegal = inss + dependentes × 189,59`; `deducao = max(deducaoLegal, 607,20)`; `deducaoUsada = deducaoLegal >= 607,20 ? 'legal' : 'simplificado'`.
+     - `base = max(0, salario_bruto − deducao)`.
+  3. **IRRF pela tabela progressiva** (Lei 15.191/2025, vigente desde jan/2026) sobre `base`:
      | Faixa de `base` | Alíquota | Parcela a deduzir |
      |---|---|---|
      | até 2.428,80 | isento | — |
@@ -141,24 +144,31 @@ Consulta feita em **24/09/2026**. Todo valor de INSS, IRRF, aviso prévio, FGTS,
      | 2.826,66 até 3.751,05 | 15% | 394,16 |
      | 3.751,06 até 4.664,68 | 22,5% | 675,49 |
      | acima de 4.664,68 | 27,5% | 908,73 |
-     `irrfBruto = base ≤ 2428,80 ? 0 : arred2(base × aliquota − deducao)`.
-  4. **Redução do art. 3º‑A da Lei 9.250/1995** (incluído pela Lei 15.270/2025, vigente desde jan/2026 — aplicada mensalmente na retenção na fonte, inclusive no 13º):
-     - `base ≤ 5000,00`: `reducao = min(irrfBruto, 312,89)`.
-     - `5000,00 < base ≤ 7350,00`: `reducao = max(0, min(irrfBruto, 978,62 − 0,133145 × base))`.
-     - `base > 7350,00`: `reducao = 0`.
-     - **Nota de interpretação:** a lei fala em "rendimentos tributáveis sujeitos à incidência mensal"; o §1º do art. 3º‑A limita a redução ao "imposto determinado conforme a tabela progressiva mensal e o art. 4º" (o mesmo artigo que autoriza as deduções de INSS, dependentes e pensão alimentícia) — por isso esta especificação usa a mesma `base` já deduzida, e não o salário bruto. Se o agente de implementação encontrar uma Instrução Normativa da Receita Federal que contradiga essa leitura, a fórmula deve ser ajustada e a mudança registrada aqui.
+     `irrfBruto = base ≤ 2428,80 ? 0 : arred2(base × aliquota − deducao_da_faixa)`.
+  4. **Redução do art. 3º‑A da Lei 9.250/1995** (Lei 15.270/2025), calculada sobre o **rendimento tributável bruto do mês** (`salario_bruto`), **não** sobre a base — é o que a tabela oficial diz ("0,133145 × rendimentos tributáveis sujeitos à incidência mensal") e o que o Exemplo 4 da Receita faz (rendimento 6.000,00 → redução 978,62 − 0,133145 × 6.000,00 = 179,75, com base 5.350,40):
+     - `salario_bruto ≤ 5000,00`: `reducao = min(irrfBruto, 312,89)`.
+     - `5000,00 < salario_bruto ≤ 7350,00`: `reducao = max(0, min(irrfBruto, arred2(978,62 − 0,133145 × salario_bruto)))`.
+     - `salario_bruto > 7350,00`: `reducao = 0`.
      `irrf = arred2(max(0, irrfBruto − reducao))`.
+     Implementar como função pura exportada `calcularIrrfMensal({ rendimento, base })` → `{ irrfBruto, reducao, irrf }`, testada contra os exemplos oficiais (casos 4–6 abaixo). Fonte da correção: <https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/exemplos-de-aplicacao-da-lei-15-270-2025> e <https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2026>, consultadas em 24/09/2026.
+  **Arredondamento:** `arred2` arredonda meio para cima em centavos sem erro de ponto flutuante — `Math.round(Number((x * 100).toPrecision(12))) / 100`. Sem isso, `1621 × 0,075` vira 121,57 em vez de 121,58.
   5. `salarioLiquido = arred2(salario_bruto − inss − irrf − outros_descontos)`.
   - Erros: `salario_invalido` (`salario_bruto ≤ 0`); `dependentes_invalido` (`dependentes < 0`).
-- **Saídas:** `salarioLiquido` (`moeda`, destaque), `inss`, `irrf`, `base` (todos `moeda`, exceto talvez exibir `base` como auxiliar). "A conta" mostra `S`, faixa de INSS aplicada, `base`, faixa de IRRF aplicada, `irrfBruto`, `reducao`.
+- **Saídas:** `salarioLiquido` (`moeda`, destaque), `inss`, `irrf`, `base` (todos `moeda`, exceto talvez exibir `base` como auxiliar). "A conta" mostra `S`, faixa de INSS aplicada, a dedução usada (legal ou simplificada) e o valor, `base`, faixa de IRRF aplicada, `irrfBruto`, `reducao`. A tela avisa que é estimativa: não considera pensão alimentícia, previdência privada, outros rendimentos nem regras de acordo coletivo.
 - **Exportação e Plus:** `copiar`, `pdf` — grátis.
 - **Celular (390px):** campos empilhados; resultado com `salarioLiquido` em destaque e `inss`/`irrf` como dois valores secundários lado a lado (ou em lista, se não couber).
 - **Viabilidade:** 100% local, tabelas fixas no código-fonte (comentário com a fonte e a data de consulta, conforme §15.4 dos contratos); nenhuma biblioteca nova.
 - **Sobreposição:** nenhuma com outra ferramenta desta onda.
 - **Casos de teste:**
-  1. **Sucesso:** `salario_bruto=3500,00`, `dependentes=1`, `outros_descontos=0`, `usar_desconto_simplificado=false` → `inss=308,60`; `base = 3500 − 308,60 − 189,59 = 3001,81` (arredondado a partir de `3001,81`); `irrfBruto = 3001,81×0,15−394,16=56,11`; como `base ≤ 5000`, `reducao = min(56,11; 312,89) = 56,11`; `irrf=0,00`; **`salarioLiquido=3191,40`**.
-  2. **Sucesso:** `salario_bruto=6000,00`, `dependentes=0`, `outros_descontos=0`, `usar_desconto_simplificado=false` → `inss=641,51`; `base=5358,49`; `irrfBruto=5358,49×0,225−675,49=564,85`; como `5000 < base ≤ 7350`, `reducao = 978,62 − 0,133145×5358,49 = 265,16`; `irrf=299,69`; **`salarioLiquido=5058,80`**.
-  3. **Erro:** `salario_bruto=0` → `{ ok: false, erro: 'salario_invalido', campo: 'salario_bruto' }`.
+  1. **Sucesso:** `salario_bruto=3500,00`, `dependentes=1` → `inss=308,60`; dedução legal 308,60 + 189,59 = 498,19 < 607,20 → **simplificado**; `base=2892,80`; `irrfBruto = 2892,80×0,15 − 394,16 = 39,76`; bruto ≤ 5000 → `reducao=39,76`; `irrf=0,00`; **`salarioLiquido=3191,40`**.
+  2. **Sucesso:** `salario_bruto=6000,00`, `dependentes=0` → `inss=641,51` (legal 641,51 > 607,20 → **legal**); `base=5358,49`; `irrfBruto = 5358,49×0,275 − 908,73 = 564,85`; `reducao = 978,62 − 0,133145×6000 = 179,75`; `irrf=385,10`; **`salarioLiquido=4973,39`**.
+  3. **Sucesso (limite da isenção):** `salario_bruto=5000,00`, `dependentes=0` → `inss=501,51` (< 607,20 → **simplificado**); `base=4392,80`; `irrfBruto=312,89`; `reducao=312,89`; `irrf=0,00`; **`salarioLiquido=4498,49`**.
+  4. **Oficial (Receita, Exemplo 4 — Rita):** `calcularIrrfMensal({ rendimento: 6000, base: 5350.40 })` → `{ irrfBruto: 562,63, reducao: 179,75, irrf: 382,88 }`.
+  5. **Oficial (Receita, Exemplo 2 — José):** `calcularIrrfMensal({ rendimento: 4000, base: 3392.80 })` → `{ irrfBruto: 114,76, reducao: 114,76, irrf: 0 }`.
+  6. **Oficial (Receita, Exemplo 5 — Vera):** `calcularIrrfMensal({ rendimento: 7607.20, base: 7000 })` → `{ irrfBruto: 1016,27, reducao: 0, irrf: 1016,27 }`.
+  7. **Arredondamento:** `salario_bruto=1621,00` → `inss=121,58` (não 121,57).
+  8. **Acima da faixa de transição:** `salario_bruto=7607,20`, `dependentes=0` → `inss=866,52`; `base=6740,68`; `irrfBruto=944,96`; `reducao=0`; **`salarioLiquido=5795,72`**.
+  9. **Erro:** `salario_bruto=0` → `{ ok: false, erro: 'salario_invalido', campo: 'salario_bruto' }`.
 
 ## 4. `escala-de-trabalho` — Escala de trabalho
 
