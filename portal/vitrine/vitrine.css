@@ -1,0 +1,123 @@
+/* portal/vitrine/vitrine.css
+   Vitrine animada do portal. Proporção 16:9 no computador e 9:16 no celular;
+   o canvas se encaixa em qualquer proporção sem cortar conteúdo. */
+
+.vitrine {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin: 14px 0 52px;
+  border-radius: 30px;
+  overflow: hidden;
+  background: #f8eee3;
+  box-shadow: 0 18px 50px rgba(91, 55, 43, 0.11);
+  isolation: isolate;
+}
+
+.vitrine__tela {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.vitrine__controle {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #dfcec5;
+  border-radius: 999px;
+  background: rgba(255, 250, 245, 0.92);
+  color: #8f2d4a;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* O display acima anula o [hidden] do navegador ("reduzir movimento" esconde o botão), e sem
+   JavaScript o botão não faz nada: ele só aparece depois que a vitrine monta (data-estado). */
+.vitrine__controle[hidden],
+.vitrine__controle:not([data-estado]) { display: none; }
+
+.vitrine:hover .vitrine__controle,
+.vitrine--pausada .vitrine__controle,
+.vitrine__controle:focus-visible { opacity: 1; }
+
+.vitrine__controle:focus-visible {
+  outline: 3px solid #8f2d4a;
+  outline-offset: 3px;
+}
+
+.vitrine__controle:active { transform: scale(0.94); }
+
+/* ícone: duas barras (pausar) ou triângulo (tocar) */
+.vitrine__controle::before {
+  content: "";
+  width: 14px;
+  height: 16px;
+  background: linear-gradient(90deg, currentColor 0 35%, transparent 35% 65%, currentColor 65%);
+}
+
+.vitrine__controle[data-estado="pausado"]::before {
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  background: none;
+  border-style: solid;
+  border-width: 9px 0 9px 15px;
+  border-color: transparent transparent transparent currentColor;
+}
+
+@media (max-width: 640px) {
+  .vitrine {
+    aspect-ratio: 9 / 16;
+    max-height: 88svh;
+    margin-inline: auto; /* com pouca altura o max-height estreita a caixa: centraliza em vez de colar à esquerda */
+    border-radius: 22px;
+  }
+}
+
+/* página de prévia e renderização (vitrine.html) */
+.pagina-vitrine {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #2f2522;
+}
+
+.pagina-vitrine .vitrine {
+  width: min(100vw, calc(100vh * 16 / 9));
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.pagina-vitrine[data-formato="retrato"] .vitrine {
+  aspect-ratio: 9 / 16;
+  width: min(100vw, calc(100vh * 9 / 16));
+  max-height: none;
+}
+
+.pagina-vitrine[data-render] .vitrine {
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: auto;
+  max-height: none;
+}
+
+.pagina-vitrine[data-render] .vitrine__controle { display: none; }
+
+/* sem JavaScript: capa estática no lugar do canvas */
+.vitrine__capa {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

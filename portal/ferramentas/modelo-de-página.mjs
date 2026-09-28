@@ -108,10 +108,12 @@ export function montarPágina({
   título, descrição, base = '', atual = '', conteúdo,
   scripts = [], estilos = [], canônica, semÍndice = false,
 }) {
+  // Caminho começando com "./" é relativo à raiz do site (ex.: a vitrine), não a estilos/ ou scripts/.
+  const caminho = (pasta, arquivo) => (arquivo.startsWith('./') ? `${base || './'}${arquivo.slice(2)}` : `${base}${pasta}/${arquivo}`);
   const folhas = ['núcleo.css', 'fontes.css', 'layout.css', 'componentes.css', 'páginas.css', ...estilos]
-    .map((f) => `  <link rel="stylesheet" href="${base}estilos/${f}">`).join('\n');
+    .map((f) => `  <link rel="stylesheet" href="${caminho('estilos', f)}">`).join('\n');
   const módulos = scripts
-    .map((s) => `  <script type="module" src="${base}scripts/${s}"></script>`).join('\n');
+    .map((s) => `  <script type="module" src="${caminho('scripts', s)}"></script>`).join('\n');
 
   return `<!doctype html>
 <html lang="pt-BR">

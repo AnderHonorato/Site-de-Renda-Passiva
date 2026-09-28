@@ -1,0 +1,71 @@
+// portal/vitrine/vitrine-textos.js
+// Textos da vitrine. As chaves precisam existir nos dois idiomas.
+
+export const textos = {
+  'pt-BR': {
+    descrição: 'Animação de 15 segundos do portal Ferramentas do Ander: 49 ferramentas grátis em seis áreas, uma calculadora de preço de venda em uso e a assinatura da marca.',
+    pausar: 'Pausar animação',
+    tocar: 'Tocar animação',
+    número: '49',
+    ferramentas: 'ferramentas',
+    anotaçãoGrátis: 'grátis, direto no navegador',
+    tituloÁreas: 'Seis áreas, uma busca só.',
+    áreas: ['Confeitaria', 'Educação', 'Crochê e artesanato', 'Churrasco e festas', 'Pintura e reforma', 'Caixas e embalagens'],
+    contaEducação: '7 × 8 = 56',
+    áreaDaFerramenta: 'Confeitaria',
+    nomeDaFerramenta: 'Preço de venda',
+    campoCusto: 'Custo da receita',
+    valorCusto: 'R$ 42,00',
+    campoMargem: 'Margem sobre a venda',
+    valorMargem: '40%',
+    botão: 'Calcular preço',
+    linhaCusto: 'Custo',
+    linhaMargem: 'Margem',
+    preçoFinal: 70,
+    moeda: (v) => 'R$ ' + v.toFixed(2).replace('.', ','),
+    etiqueta: 'preço sugerido',
+    notas: ['sem cadastro', 'sem instalar', 'no celular e no PC'],
+    tituloGrátis: 'Grátis pra quem usa.',
+    subtituloGrátis: 'Mantido por anúncios discretos e apoio via Pix.',
+    nós: ['Você usa de graça', 'Anúncio discreto', 'Apoio via Pix, se quiser'],
+    marca: 'Ferramentas',
+    porAnder: 'por Ander',
+    lema: 'feito para ser simples antes de ser enfeitado',
+  },
+  en: {
+    descrição: '15-second animation of the Ferramentas do Ander portal: 49 free tools across six areas, a selling price calculator in use and the brand sign-off.',
+    pausar: 'Pause animation',
+    tocar: 'Play animation',
+    número: '49',
+    ferramentas: 'tools',
+    anotaçãoGrátis: 'free, right in your browser',
+    tituloÁreas: 'Six areas, one search.',
+    áreas: ['Baking', 'Education', 'Crochet & crafts', 'BBQ & parties', 'Painting & renovation', 'Boxes & packaging'],
+    contaEducação: '7 × 8 = 56',
+    áreaDaFerramenta: 'Baking',
+    nomeDaFerramenta: 'Selling price',
+    campoCusto: 'Recipe cost',
+    valorCusto: 'R$ 42.00',
+    campoMargem: 'Margin on sale',
+    valorMargem: '40%',
+    botão: 'Calculate price',
+    linhaCusto: 'Cost',
+    linhaMargem: 'Margin',
+    preçoFinal: 70,
+    moeda: (v) => 'R$ ' + v.toFixed(2),
+    etiqueta: 'suggested price',
+    notas: ['no sign-up', 'nothing to install', 'on phone and PC'],
+    tituloGrátis: 'Free for everyone who uses it.',
+    subtituloGrátis: 'Kept running by discreet ads and optional Pix support.',
+    nós: ['You use it for free', 'Discreet ad', 'Pix support, if you like'],
+    marca: 'Ferramentas',
+    porAnder: 'by Ander',
+    lema: 'made to be simple before being fancy',
+  },
+};
+
+export function obterTextos(idioma) {
+  if (idioma && textos[idioma]) return textos[idioma];
+  if (idioma && idioma.toLowerCase().startsWith('en')) return textos.en;
+  return textos['pt-BR'];
+}

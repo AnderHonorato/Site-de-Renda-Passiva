@@ -84,7 +84,9 @@ for (const arquivo of [...scripts, ...dados, join(RAIZ, 'ferramentas', 'gerar.mj
 }
 
 /* ------------------------------------- 5. páginas geradas: links e estrutura */
-const páginas = await listar(RAIZ, (c) => c.endsWith('.html'));
+// Prévia interna da vitrine animada (noindex, não gerada pelo catálogo): fica fora das regras de página.
+const PRÉVIAS = ['vitrine/vitrine.html'];
+const páginas = await listar(RAIZ, (c) => c.endsWith('.html') && !PRÉVIAS.includes(relative(RAIZ, c).replace(/\\/g, '/')));
 const títulos = new Map();
 
 for (const página of páginas) {

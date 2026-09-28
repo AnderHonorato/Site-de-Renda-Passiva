@@ -67,6 +67,19 @@ function páginaInicial() {
       </div>
     </section>
 
+    <div class="largura">
+      <section class="vitrine" data-vitrine data-idioma="pt-BR" aria-label="Apresentação animada do portal">
+        <canvas class="vitrine__tela"></canvas>
+        <button class="vitrine__controle" type="button" data-vitrine-controle aria-label="Pausar animação"></button>
+        <noscript>
+          <picture>
+            <source media="(max-width: 640px)" srcset="./vitrine/imagens/vitrine-capa-retrato.webp">
+            <img class="vitrine__capa" src="./vitrine/imagens/vitrine-capa-paisagem.webp" alt="Ferramentas por Ander: 49 ferramentas grátis em seis áreas." width="1280" height="720">
+          </picture>
+        </noscript>
+      </section>
+    </div>
+
     <section class="largura seção" id="recentes" hidden>
       <div class="seção__topo">
         <h2>${ícone('relógio')} Continue de onde parou</h2>
@@ -109,7 +122,8 @@ function páginaInicial() {
     descrição: `Portal com ${prontas} ferramentas prontas para calcular, criar e organizar. Funciona no navegador, sem cadastro e sem enviar seus dados.`,
     atual: 'início',
     conteúdo,
-    scripts: ['páginas/início.js'],
+    estilos: ['./vitrine/vitrine.css'],
+    scripts: ['páginas/início.js', './vitrine/vitrine.js'],
   });
 }
 

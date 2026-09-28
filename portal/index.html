@@ -14,8 +14,10 @@
   <link rel="stylesheet" href="estilos/layout.css">
   <link rel="stylesheet" href="estilos/componentes.css">
   <link rel="stylesheet" href="estilos/páginas.css">
+  <link rel="stylesheet" href="./vitrine/vitrine.css">
   <script src="scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="scripts/páginas/início.js"></script>
+  <script type="module" src="./vitrine/vitrine.js"></script>
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -90,6 +92,19 @@
         </aside>
       </div>
     </section>
+
+    <div class="largura">
+      <section class="vitrine" data-vitrine data-idioma="pt-BR" aria-label="Apresentação animada do portal">
+        <canvas class="vitrine__tela"></canvas>
+        <button class="vitrine__controle" type="button" data-vitrine-controle aria-label="Pausar animação"></button>
+        <noscript>
+          <picture>
+            <source media="(max-width: 640px)" srcset="./vitrine/imagens/vitrine-capa-retrato.webp">
+            <img class="vitrine__capa" src="./vitrine/imagens/vitrine-capa-paisagem.webp" alt="Ferramentas por Ander: 49 ferramentas grátis em seis áreas." width="1280" height="720">
+          </picture>
+        </noscript>
+      </section>
+    </div>
 
     <section class="largura seção" id="recentes" hidden>
       <div class="seção__topo">
