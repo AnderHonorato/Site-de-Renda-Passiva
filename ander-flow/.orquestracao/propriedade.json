@@ -305,5 +305,14 @@
     "testes/testes-unidade/anuncios-*",
     "testes/testes-integracao/anuncios-*",
     "testes/testes-visuais/anuncios-*"
+  ],
+  "A18-vitrine-animada": [
+    "frontend/compartilhado/compartilhado-vitrine-animada*",
+    "frontend/paginas/principal/**",
+    "scripts/scripts-copiar-bibliotecas.js",
+    "package.json",
+    "package-lock.json",
+    "testes/testes-unidade/compartilhado-vitrine-animada-*",
+    "testes/testes-visuais/vitrine-animada-*"
   ]
 }
