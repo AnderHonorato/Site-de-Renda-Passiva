@@ -39,6 +39,17 @@ function contagemDeReserva(texto) {
 }
 
 /**
+ * Caracteres como a pessoa vê: "ação" tem 4 mesmo quando o acento veio
+ * separado da letra, e um emoji composto conta como um.
+ * @param {string} texto
+ * @returns {number}
+ */
+export function contarCaracteres(texto) {
+  const conteúdo = String(texto ?? '');
+  return contarSegmentos(conteúdo, 'grapheme') ?? [...conteúdo].length;
+}
+
+/**
  * Conta caracteres, palavras, frases, parágrafos e linhas, e estima os tempos.
  * @param {string} texto
  * @returns {{
@@ -69,6 +80,30 @@ export function contarTexto(texto = '') {
     segundosDeFala: Math.round((palavras / PALAVRAS_POR_MINUTO_DE_FALA) * 60),
     palavrasPorFrase: frases ? Math.round((palavras / frases) * 10) / 10 : 0,
   };
+}
+
+/**
+ * Começo de um texto para mostrar na tela, com reticências quando encurtado.
+ * Corta por caractere visível, então nunca parte um emoji ou uma letra
+ * acentuada ao meio. O texto curto volta intacto.
+ * @param {string} texto
+ * @param {number} tamanho máximo de caracteres visíveis
+ * @returns {string}
+ */
+export function préviaDoTexto(texto, tamanho) {
+  const conteúdo = String(texto ?? '');
+  if (conteúdo.length <= tamanho) return conteúdo; // cada caractere visível ocupa ao menos uma posição
+  const pedaços = typeof Intl?.Segmenter === 'function'
+    ? new Intl.Segmenter(IDIOMA, { granularity: 'grapheme' }).segment(conteúdo)
+    : Array.from(conteúdo, (segment) => ({ segment }));
+  let prévia = '';
+  let contados = 0;
+  for (const { segment } of pedaços) {
+    if (contados === tamanho) return `${prévia}…`;
+    prévia += segment;
+    contados++;
+  }
+  return conteúdo;
 }
 
 /**
@@ -127,6 +162,30 @@ export function medirSms(texto = '') {
   const porParte = gsm ? 153 : 67;
   const partes = usados === 0 ? 0 : usados <= limite ? 1 : Math.ceil(usados / porParte);
   return { codificação: gsm ? 'gsm' : 'unicode', usados, limite, partes };
+}
+
+/* ------------------------------------------------------------- limites */
+
+/**
+ * Limites de onde o texto costuma ser colado, contados em caracteres como a
+ * pessoa vê. O do X é o do post comum; título e descrição são a referência de
+ * corte no resultado de busca, que na verdade é medido em pixels.
+ */
+export const LIMITES_DE_DESTINO = Object.freeze([
+  Object.freeze({ chave: 'x', nome: 'Post no X', máximo: 280 }),
+  Object.freeze({ chave: 'descrição', nome: 'Descrição no Google', máximo: 160 }),
+  Object.freeze({ chave: 'título', nome: 'Título de página', máximo: 60 }),
+]);
+
+/**
+ * Compara uma quantidade de caracteres com um limite.
+ * @param {number} caracteres
+ * @param {number} máximo
+ * @returns {{cabe: boolean, restam: number, passou: number}}
+ */
+export function situaçãoNoLimite(caracteres, máximo) {
+  const diferença = máximo - caracteres;
+  return { cabe: diferença >= 0, restam: Math.max(0, diferença), passou: Math.max(0, -diferença) };
 }
 
 /* ------------------------------------------------------- maiúsculas etc. */
@@ -215,8 +274,19 @@ export function estáTodoEmMaiúsculas(texto) {
 
 /* ------------------------------------------------------------- acentos */
 
+/** Sinais combinantes (acento, til, cedilha…) escritos por código, não colados. */
 const SINAIS_COMBINANTES = /[̀-ͯ]/g;
+/** `\w` é só ASCII: com a pontuação desligada, sobra texto que qualquer sistema antigo aceita. */
 const NEM_LETRA_NEM_NÚMERO_NEM_ESPAÇO = /[^\w\s]/g;
+
+/**
+ * Quantos sinais de acento, til ou cedilha o texto tem.
+ * @param {string} texto
+ * @returns {number}
+ */
+export function contarAcentos(texto) {
+  return (String(texto ?? '').normalize('NFD').match(SINAIS_COMBINANTES) ?? []).length;
+}
 
 /**
  * Remove acentos, til e cedilha.

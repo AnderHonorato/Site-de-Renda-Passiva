@@ -26,6 +26,9 @@
   <url><loc>https://exemplo.invalid/portal/f/limpar-planilha/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/csv-e-json/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/sorteio/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/contador-de-texto/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/transformador-de-caixa/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/removedor-de-acentos/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/custo-de-receita/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/valor-da-hora/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/calculadora-de-tinta/</loc></url>
