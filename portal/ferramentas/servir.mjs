@@ -1,14 +1,17 @@
 // Servidor local de desenvolvimento e de pré-visualização do pacote publicado.
-// Escuta somente em 127.0.0.1, decodifica caminhos UTF-8 (acentos), bloqueia saída da
-// pasta servida e envia os mesmos cabeçalhos de segurança do perfil sem anúncios.
-// Uso: node ferramentas/servir.mjs [pasta] --porta 4311
+// Escuta no PC e na rede local (para abrir no celular); com --local, só em 127.0.0.1.
+// Decodifica caminhos UTF-8 (acentos), bloqueia saída da pasta servida e envia os mesmos
+// cabeçalhos de segurança do perfil sem anúncios.
+// Uso: node ferramentas/servir.mjs [pasta] --porta 4311 [--local]
 import fs from 'node:fs';
 import http from 'node:http';
+import os from 'node:os';
 import path from 'node:path';
 
 const argumentos = process.argv.slice(2);
 const índiceDaPorta = argumentos.indexOf('--porta');
 const porta = índiceDaPorta >= 0 ? Number(argumentos[índiceDaPorta + 1]) : 4311;
+const sóLocal = argumentos.includes('--local');
 const pastaInformada = argumentos.find((argumento, índice) => !argumento.startsWith('--') && argumentos[índice - 1] !== '--porta') ?? '.';
 const raiz = path.resolve(pastaInformada);
 
@@ -98,6 +101,19 @@ servidor.on('error', (erro) => {
   process.exit(1);
 });
 
-servidor.listen(porta, '127.0.0.1', () => {
-  console.log(`Servindo ${raiz}\nAbra http://127.0.0.1:${porta}/  (Ctrl+C para encerrar)`);
+/** Endereços IPv4 desta máquina na rede local (os que o celular consegue alcançar). */
+function endereçosDaRede() {
+  return Object.values(os.networkInterfaces()).flat()
+    .filter((interface_) => interface_ && interface_.family === 'IPv4' && !interface_.internal)
+    .map((interface_) => interface_.address);
+}
+
+servidor.listen(porta, sóLocal ? '127.0.0.1' : '0.0.0.0', () => {
+  const linhas = [`Servindo ${raiz}`, `No PC:      http://127.0.0.1:${porta}/`];
+  if (!sóLocal) {
+    for (const endereço of endereçosDaRede()) linhas.push(`Na rede:    http://${endereço}:${porta}/`);
+    linhas.push('Atenção: a porta fica aberta para a rede em que o PC estiver. Em Wi-Fi público, use --local.');
+  }
+  linhas.push('(Ctrl+C para encerrar)');
+  console.log(linhas.join('\n'));
 });
