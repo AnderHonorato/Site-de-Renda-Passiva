@@ -265,9 +265,16 @@ function páginaDeFerramenta(f) {
   const exporta = f.exporta.length
     ? f.exporta.map((e) => RÓTULO_DE_EXPORTAÇÃO[e] ?? e).join(', ')
     : 'resultado na tela';
-  const relacionadas = ferramentas
-    .filter((o) => o.slug !== f.slug && (o.cat === f.cat || o.tarefas.some((t) => f.tarefas.includes(t))))
-    .sort((a, b) => (a.status === b.status ? 0 : a.status === 'pronta' ? -1 : 1))
+  // As relações declaradas no catálogo vêm primeiro, na ordem escrita; o resto
+  // das cinco vagas é completado pela mesma categoria ou tarefa, prontas antes.
+  const declaradas = (f.relacionadas ?? [])
+    .map((slug) => ferramentas.find((o) => o.slug === slug))
+    .filter((o) => o && o.slug !== f.slug);
+  const semelhantes = ferramentas
+    .filter((o) => o.slug !== f.slug && !declaradas.includes(o)
+      && (o.cat === f.cat || o.tarefas.some((t) => f.tarefas.includes(t))))
+    .sort((a, b) => (a.status === b.status ? 0 : a.status === 'pronta' ? -1 : 1));
+  const relacionadas = [...declaradas, ...semelhantes]
     .slice(0, 5)
     .map((o) => `<a href="${o.status === 'pronta' ? `../${o.slug}/` : `../../ferramentas.html#${o.slug}`}">${ícone(o.ícone)}${escapar(o.nome)}</a>`)
     .join('');

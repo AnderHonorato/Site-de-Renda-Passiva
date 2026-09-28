@@ -1,0 +1,175 @@
+/**
+ * Custos, margem de contribuição e ponto de equilíbrio.
+ *
+ * As duas ferramentas partem da mesma conta: quanto sobra de cada venda depois
+ * do que só existe por causa dela. Essa sobra é a margem de contribuição
+ *
+ *   margem = preço − custo variável − preço × percentual que sai do preço
+ *
+ * e é ela que paga o custo fixo do mês. O ponto de equilíbrio é só o número de
+ * vendas cujas margens somadas cobrem o custo fixo (e o lucro desejado).
+ *
+ * Todo dinheiro entra e sai em **centavos inteiros**. A margem exata pode ter
+ * fração de centavo (R$ 19,99 com 4,99% de taxa), então as contas usam o valor
+ * exato e só arredondam o que vai para a tela — arredondar a margem antes de
+ * dividir mudaria a quantidade de equilíbrio em casos de fronteira.
+ *
+ * O percentual é escrito como na tela: 10 significa 10%.
+ */
+
+/** Mês comercial usado para a média por dia, como no restante do portal. */
+export const DIAS_DO_MÊS = 30;
+
+/**
+ * Folga contra erro de ponto flutuante ao arredondar para cima: 5000 ÷ 25 pode
+ * sair 200,00000000000003 e virar 201 unidades sem ela.
+ */
+const FOLGA = 1e-9;
+
+/**
+ * Cria a recusa de uma regra de negócio apontando o dado culpado.
+ * A interface usa `campo` para mostrar a mensagem no campo certo.
+ * @param {string} mensagem
+ * @param {string} campo nome da propriedade de entrada que precisa ser corrigida
+ */
+function recusa(mensagem, campo) {
+  const erro = new Error(mensagem);
+  erro.campo = campo;
+  return erro;
+}
+
+/** Centavos inteiros, arredondando metade para longe do zero (padrão comercial). */
+function centavos(valor) {
+  return Math.sign(valor) * Math.round(Math.abs(valor)) || 0;
+}
+
+function exigirCentavos(valor, campo, rótulo) {
+  if (!Number.isInteger(valor)) throw recusa(`${rótulo}: o valor precisa estar em centavos inteiros.`, campo);
+  if (!Number.isSafeInteger(valor)) throw recusa(`${rótulo}: valor grande demais para calcular com precisão.`, campo);
+  if (valor < 0) throw recusa(`${rótulo}: o valor não pode ser negativo.`, campo);
+}
+
+/**
+ * Valida o que as duas contas têm em comum e devolve a margem exata.
+ * @returns {number} margem de contribuição por unidade, em centavos, sem arredondar
+ */
+function margemExata({ preçoCentavos, custoVariávelCentavos, percentual }) {
+  exigirCentavos(preçoCentavos, 'preçoCentavos', 'Preço de venda');
+  if (preçoCentavos === 0) throw recusa('Informe o preço de venda para calcular.', 'preçoCentavos');
+  exigirCentavos(custoVariávelCentavos, 'custoVariávelCentavos', 'Custo variável');
+  if (!Number.isFinite(percentual)) throw recusa('O percentual precisa ser um número.', 'percentual');
+  if (percentual < 0) throw recusa('O percentual que sai do preço não pode ser negativo.', 'percentual');
+  if (percentual >= 100) throw recusa('O percentual que sai do preço precisa ser menor que 100%.', 'percentual');
+  return preçoCentavos - custoVariávelCentavos - (preçoCentavos * percentual) / 100;
+}
+
+/**
+ * Margem de contribuição de uma venda e, opcionalmente, do mês.
+ *
+ * Margem negativa não é recusada: ela é um diagnóstico (cada venda aumenta o
+ * prejuízo) e precisa aparecer, não ser escondida atrás de um erro.
+ *
+ * @param {{preçoCentavos: number, custoVariávelCentavos?: number, percentual?: number, quantidade?: number, custosFixosCentavos?: number}} entrada
+ * @returns {{
+ *   margemCentavos: number, margemExataCentavos: number, índice: number,
+ *   percentualCentavos: number, totalCentavos: number, resultadoCentavos: number,
+ *   quantidadeDeEquilíbrio: number|null, margemNegativa: boolean
+ * }}
+ */
+export function margemDeContribuição({
+  preçoCentavos,
+  custoVariávelCentavos = 0,
+  percentual = 0,
+  quantidade = 0,
+  custosFixosCentavos = 0,
+}) {
+  const margem = margemExata({ preçoCentavos, custoVariávelCentavos, percentual });
+  if (!Number.isFinite(quantidade)) throw recusa('A quantidade precisa ser um número.', 'quantidade');
+  if (quantidade < 0) throw recusa('A quantidade não pode ser negativa.', 'quantidade');
+  exigirCentavos(custosFixosCentavos, 'custosFixosCentavos', 'Custos fixos');
+
+  const total = margem * quantidade;
+  return {
+    margemCentavos: centavos(margem),
+    margemExataCentavos: margem,
+    índice: margem / preçoCentavos,
+    percentualCentavos: centavos((preçoCentavos * percentual) / 100),
+    totalCentavos: centavos(total),
+    resultadoCentavos: centavos(total - custosFixosCentavos),
+    // Quantidade que zera o resultado: só existe com margem positiva e custo fixo a pagar.
+    quantidadeDeEquilíbrio: margem > 0 && custosFixosCentavos > 0
+      ? Math.ceil(custosFixosCentavos / margem - FOLGA)
+      : null,
+    margemNegativa: margem <= 0,
+  };
+}
+
+/**
+ * Ponto de equilíbrio: quantas vendas e quanto de faturamento pagam o custo
+ * fixo do mês e, se informado, o lucro desejado.
+ *
+ * A quantidade sobe para o inteiro seguinte, porque não se vende 200,4
+ * unidades. O faturamento é o valor exato (custo fixo + lucro) ÷ índice.
+ *
+ * @param {{custosFixosCentavos: number, preçoCentavos: number, custoVariávelCentavos?: number, percentual?: number, lucroDesejadoCentavos?: number}} entrada
+ * @returns {{
+ *   margemCentavos: number, margemExataCentavos: number, índice: number,
+ *   alvoCentavos: number, quantidade: number, quantidadeExata: number,
+ *   receitaCentavos: number, receitaDaQuantidadeInteiraCentavos: number, porDia: number
+ * }}
+ */
+export function pontoDeEquilíbrio({
+  custosFixosCentavos,
+  preçoCentavos,
+  custoVariávelCentavos = 0,
+  percentual = 0,
+  lucroDesejadoCentavos = 0,
+}) {
+  exigirCentavos(custosFixosCentavos, 'custosFixosCentavos', 'Custos fixos');
+  exigirCentavos(lucroDesejadoCentavos, 'lucroDesejadoCentavos', 'Lucro desejado');
+  const margem = margemExata({ preçoCentavos, custoVariávelCentavos, percentual });
+  if (margem <= 0) {
+    throw recusa(
+      'Cada venda não deixa nada: o custo variável mais o percentual chegam ao preço. '
+      + 'Aumente o preço ou reduza o custo.',
+      'custoVariávelCentavos',
+    );
+  }
+
+  const alvo = custosFixosCentavos + lucroDesejadoCentavos;
+  const índice = margem / preçoCentavos;
+  const quantidadeExata = alvo / margem;
+  const quantidade = Math.max(0, Math.ceil(quantidadeExata - FOLGA));
+
+  return {
+    margemCentavos: centavos(margem),
+    margemExataCentavos: margem,
+    índice,
+    alvoCentavos: alvo,
+    quantidade,
+    quantidadeExata,
+    receitaCentavos: centavos(alvo / índice),
+    receitaDaQuantidadeInteiraCentavos: quantidade * preçoCentavos,
+    porDia: Math.ceil(quantidade / DIAS_DO_MÊS),
+  };
+}
+
+/**
+ * Quanto sobra (ou falta) no mês vendendo uma quantidade escolhida.
+ * @param {Parameters<typeof pontoDeEquilíbrio>[0]} entrada
+ * @param {number} quantidade vendas no mês
+ * @returns {ReturnType<typeof pontoDeEquilíbrio> & {margemTotalCentavos: number, resultadoCentavos: number, faltamUnidades: number}}
+ */
+export function resultadoNaQuantidade(entrada, quantidade) {
+  const base = pontoDeEquilíbrio(entrada);
+  if (!Number.isFinite(quantidade)) throw recusa('A quantidade precisa ser um número.', 'quantidade');
+  if (quantidade < 0) throw recusa('A quantidade não pode ser negativa.', 'quantidade');
+  const margemTotal = base.margemExataCentavos * quantidade;
+  return {
+    ...base,
+    margemTotalCentavos: centavos(margemTotal),
+    // Só o custo fixo entra aqui: o lucro desejado é meta, não despesa.
+    resultadoCentavos: centavos(margemTotal - entrada.custosFixosCentavos),
+    faltamUnidades: Math.max(0, Math.ceil(base.quantidade - quantidade - FOLGA)),
+  };
+}
