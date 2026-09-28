@@ -21,12 +21,6 @@
 export const DIAS_DO_MÊS = 30;
 
 /**
- * Folga contra erro de ponto flutuante ao arredondar para cima: 5000 ÷ 25 pode
- * sair 200,00000000000003 e virar 201 unidades sem ela.
- */
-const FOLGA = 1e-9;
-
-/**
  * Cria a recusa de uma regra de negócio apontando o dado culpado.
  * A interface usa `campo` para mostrar a mensagem no campo certo.
  * @param {string} mensagem
@@ -41,6 +35,19 @@ function recusa(mensagem, campo) {
 /** Centavos inteiros, arredondando metade para longe do zero (padrão comercial). */
 function centavos(valor) {
   return Math.sign(valor) * Math.round(Math.abs(valor)) || 0;
+}
+
+/**
+ * Arredonda para cima sem cair no erro de ponto flutuante: 148362 ÷ 1483,62
+ * sai 100,00000000000001 e viraria 101 vendas. A folga é relativa ao tamanho
+ * do número, porque o erro da divisão cresce junto com ele.
+ * @param {number} valor
+ * @returns {number}
+ */
+function paraCima(valor) {
+  const inteiro = Math.round(valor);
+  if (Math.abs(valor - inteiro) <= Math.max(1, Math.abs(valor)) * 1e-12) return inteiro;
+  return Math.ceil(valor);
 }
 
 function exigirCentavos(valor, campo, rótulo) {
@@ -89,6 +96,10 @@ export function margemDeContribuição({
   exigirCentavos(custosFixosCentavos, 'custosFixosCentavos', 'Custos fixos');
 
   const total = margem * quantidade;
+  if (!Number.isSafeInteger(Math.round(total - custosFixosCentavos)) || !Number.isSafeInteger(Math.round(total))) {
+    throw recusa('A quantidade é grande demais para calcular com precisão.', 'quantidade');
+  }
+
   return {
     margemCentavos: centavos(margem),
     margemExataCentavos: margem,
@@ -98,7 +109,7 @@ export function margemDeContribuição({
     resultadoCentavos: centavos(total - custosFixosCentavos),
     // Quantidade que zera o resultado: só existe com margem positiva e custo fixo a pagar.
     quantidadeDeEquilíbrio: margem > 0 && custosFixosCentavos > 0
-      ? Math.ceil(custosFixosCentavos / margem - FOLGA)
+      ? paraCima(custosFixosCentavos / margem)
       : null,
     margemNegativa: margem <= 0,
   };
@@ -137,39 +148,32 @@ export function pontoDeEquilíbrio({
   }
 
   const alvo = custosFixosCentavos + lucroDesejadoCentavos;
-  const índice = margem / preçoCentavos;
+  if (!Number.isSafeInteger(alvo)) {
+    throw recusa('Custos fixos e lucro somados passam do que dá para calcular com precisão.', 'custosFixosCentavos');
+  }
   const quantidadeExata = alvo / margem;
-  const quantidade = Math.max(0, Math.ceil(quantidadeExata - FOLGA));
+  const quantidade = paraCima(quantidadeExata);
+  const receitaDaQuantidadeInteira = quantidade * preçoCentavos;
+  if (!Number.isSafeInteger(quantidade) || !Number.isSafeInteger(receitaDaQuantidadeInteira)) {
+    // Margem de fração de centavo diante de um custo fixo alto: o número de
+    // vendas deixa de ser algo que alguém consiga planejar.
+    throw recusa(
+      'A sobra de cada venda é pequena demais para cobrir esse custo. Revise preço, custo variável ou percentual.',
+      'custoVariávelCentavos',
+    );
+  }
 
   return {
     margemCentavos: centavos(margem),
     margemExataCentavos: margem,
-    índice,
+    índice: margem / preçoCentavos,
     alvoCentavos: alvo,
     quantidade,
     quantidadeExata,
-    receitaCentavos: centavos(alvo / índice),
-    receitaDaQuantidadeInteiraCentavos: quantidade * preçoCentavos,
+    // alvo ÷ (margem ÷ preço), escrito sem a divisão intermediária para não
+    // acumular erro de ponto flutuante.
+    receitaCentavos: centavos((alvo * preçoCentavos) / margem),
+    receitaDaQuantidadeInteiraCentavos: receitaDaQuantidadeInteira,
     porDia: Math.ceil(quantidade / DIAS_DO_MÊS),
-  };
-}
-
-/**
- * Quanto sobra (ou falta) no mês vendendo uma quantidade escolhida.
- * @param {Parameters<typeof pontoDeEquilíbrio>[0]} entrada
- * @param {number} quantidade vendas no mês
- * @returns {ReturnType<typeof pontoDeEquilíbrio> & {margemTotalCentavos: number, resultadoCentavos: number, faltamUnidades: number}}
- */
-export function resultadoNaQuantidade(entrada, quantidade) {
-  const base = pontoDeEquilíbrio(entrada);
-  if (!Number.isFinite(quantidade)) throw recusa('A quantidade precisa ser um número.', 'quantidade');
-  if (quantidade < 0) throw recusa('A quantidade não pode ser negativa.', 'quantidade');
-  const margemTotal = base.margemExataCentavos * quantidade;
-  return {
-    ...base,
-    margemTotalCentavos: centavos(margemTotal),
-    // Só o custo fixo entra aqui: o lucro desejado é meta, não despesa.
-    resultadoCentavos: centavos(margemTotal - entrada.custosFixosCentavos),
-    faltamUnidades: Math.max(0, Math.ceil(base.quantidade - quantidade - FOLGA)),
   };
 }
