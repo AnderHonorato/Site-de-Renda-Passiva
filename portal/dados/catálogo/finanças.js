@@ -249,12 +249,12 @@ export const ferramentas = [
   {
     // Id seguinte ao último do catálogo inteiro (F150), não ao último deste arquivo.
     id: 'F151', slug: 'margem-de-contribuicao', nome: 'Margem de contribuição', cat: 'dinheiro',
-    ícone: 'dinheiro', tarefas: ['calcular', 'analisar'], status: 'planejada',
+    ícone: 'dinheiro', tarefas: ['calcular', 'analisar'], status: 'pronta',
     resumo: 'O que sobra de cada venda para pagar o custo fixo e virar lucro, por unidade e no mês.',
     problema: 'Saber quanto cada venda realmente deixa no caixa depois do custo variável, das taxas e do imposto.',
     entra: 'Preço de venda, custo variável por unidade, percentual que sai do preço e, se quiser, quantidade vendida e custos fixos do mês.',
     processa: 'Margem = preço − custo variável − preço × percentual; índice = margem ÷ preço; resultado do mês = margem × quantidade − custos fixos.',
-    sai: 'Sobra por venda, índice de margem, margem total e resultado do mês e vendas para empatar.',
+    sai: 'Sobra por venda e índice de margem; com os dados do mês, margem total, resultado depois do custo fixo e vendas para empatar.',
     exporta: ['copiar', 'pdf'], plano: 'gratuito', local: true,
     unifica: ['Margem de contribuição unitária', 'Margem de contribuição total', 'Índice de margem de contribuição'],
     tags: ['margem de contribuição', 'contribuição', 'lucro por venda', 'custo variável', 'índice de margem', 'sobra por venda'],

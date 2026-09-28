@@ -14,6 +14,7 @@
   <url><loc>https://exemplo.invalid/portal/f/numero-por-extenso/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/orcamento/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/recibo/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/ponto-de-equilibrio/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/regra-de-tres/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/conversor-de-unidades/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/calculadora-de-datas/</loc></url>
@@ -35,4 +36,5 @@
   <url><loc>https://exemplo.invalid/portal/f/area-de-rejunte/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/area-de-paredes/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/calculadora-de-churrasco/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/margem-de-contribuicao/</loc></url>
 </urlset>
