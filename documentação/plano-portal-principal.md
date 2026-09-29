@@ -329,6 +329,8 @@ Esforço em dias de trabalho de um agente: P ≤ 1, M = 2–3, G = 4–6. Cada o
 
 ### Onda 2: API na mesma origem, entrar, criar conta e recuperar senha (G)
 
+- **Também nesta onda (decisão 30):** saudação com o nome na página inicial, "Olá, {primeiro nome}! O que vamos trabalhar hoje?", em pt e en e com animação de entrada. O nome é lido da sessão e escrito com `textContent`. Sem sessão ou com a API fora do ar, fica o título normal. Na conta, o campo "Como quer ser chamado". Teste: com sessão aparece o nome; sem sessão ou com a API em 503 aparece o título normal, sem erro no console.
+
 - **O dono vê:** o botão "Entrar". O cadastro, a entrada, a saída e a recuperação de senha funcionam; o e-mail de recuperação é gravado em arquivo em desenvolvimento. A página "Minha conta" permite trocar nome, senha, idioma e tema. **Com a API desligada, todas as ferramentas continuam funcionando.**
 - **Arquivos:**
   - `portal/servidor/`: cópia do servidor sem o montador, catálogo do portal, cookies neutros, verificação de `Origin`, erros sempre em JSON, link de recuperação com `#token`;
