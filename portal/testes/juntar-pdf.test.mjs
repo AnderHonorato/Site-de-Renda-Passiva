@@ -65,6 +65,26 @@ test('cancelamento interrompe de verdade', async () => {
   assert.equal(r.erro, 'cancelado');
 });
 
+test('o clique em cancelar, que chega por fora enquanto a junção roda, é atendido', async () => {
+  // O "Cancelar" da tela é um evento: só é atendido se a junção devolver a vez
+  // ao navegador de tempos em tempos. Um laço sem folga terminaria antes.
+  const arquivos = [
+    { nome: 'a.pdf', bytes: await pdfDeTeste(30) },
+    { nome: 'b.pdf', bytes: await pdfDeTeste(30) },
+  ];
+  let cancelar = false;
+  const passos = [];
+  const junção = juntarPdfs(arquivos, {
+    biblioteca,
+    cancelado: () => cancelar,
+    aoProgredir: ({ página }) => passos.push(página),
+  });
+  setTimeout(() => { cancelar = true; }, 0);
+  const r = await junção;
+  assert.equal(r.erro, 'cancelado');
+  assert.ok(passos.length < 60, `copiou ${passos.length} de 60 páginas antes de parar`);
+});
+
 test('arquivo que não é PDF é recusado pelo conteúdo, não pela extensão', async () => {
   const bytes = new TextEncoder().encode('isto aqui é um texto qualquer');
   assert.equal(pareceArquivoPdf(bytes), false);

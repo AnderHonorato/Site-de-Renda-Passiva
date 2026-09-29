@@ -23,6 +23,21 @@ const SETA_PARA_CIMA = ícone('seta-baixo')
   .replace('focusable="false">', 'focusable="false"><g transform="rotate(180 12 12)">')
   .replace('</svg>', '</g></svg>');
 
+/**
+ * Nome de arquivo com pontos de quebra (<wbr>) depois de ".", "_" e "-" e a
+ * cada 12 letras de um trecho sem espaço. No celular, os botões da linha tomam
+ * boa parte da largura, e "RG_escaneado_2024.pdf" era cortado no meio.
+ * @param {string} nome
+ * @returns {string} HTML já escapado
+ */
+function nomeQuebrável(nome) {
+  return nome.split(' ').map((palavra) => {
+    const pedaços = palavra.match(/[^._-]*[._-]?/g).filter(Boolean)
+      .flatMap((pedaço) => pedaço.match(/.{1,12}/gu));
+    return pedaços.map(escapar).join('<wbr>');
+  }).join(' ');
+}
+
 let bibliotecaCarregando;
 /** Carrega a pdf-lib uma vez só; a primeira escolha de arquivo já adianta o download. */
 function carregarBiblioteca() {
@@ -72,6 +87,8 @@ export default {
     let progresso;
     let botãoJuntar;
     let botãoCancelar;
+    /** Liga e desliga a edição da lista: durante a junção, a ordem não pode mudar. */
+    let travarLista = () => {};
 
     montarFerramenta(raiz, ferramenta, {
       rótuloDaAção: 'Juntar PDFs',
@@ -91,6 +108,7 @@ export default {
         cancelar = false;
         botãoJuntar.disabled = true;
         botãoCancelar.hidden = false;
+        travarLista(true);
         try {
           progresso.andar(4, 'Preparando o leitor de PDF…');
           let biblioteca;
@@ -129,6 +147,7 @@ export default {
         } finally {
           botãoJuntar.disabled = false;
           botãoCancelar.hidden = true;
+          travarLista(false);
         }
       },
 
@@ -152,8 +171,10 @@ export default {
         entrada.after(botãoEscolher);
         botãoEscolher.addEventListener('click', () => entrada.click());
 
-        const lista = document.createElement('ul');
+        // Lista sem <ul>: o recuo padrão da lista roubava 40px da linha no celular.
+        const lista = document.createElement('div');
         lista.className = 'lista-ferramentas t-2';
+        lista.setAttribute('role', 'list');
         lista.setAttribute('aria-label', 'PDFs escolhidos, na ordem da junção');
         const vazio = document.createElement('p');
         vazio.className = 'vazio t-2';
@@ -169,15 +190,22 @@ export default {
         botãoCancelar.addEventListener('click', () => { cancelar = true; });
         formulário.querySelector('.ações').append(botãoCancelar);
 
+        let juntando = false;
+        travarLista = (travada) => {
+          lista.inert = travada;
+          botãoEscolher.disabled = travada;
+          juntando = travada;
+        };
+
         function desenhar() {
           lista.innerHTML = escolhidos.map((a, i) => {
             const nome = escapar(a.nome);
             const botão = (ação, conteúdo, rótulo, desligado) => `<button type="button" class="ícone-botão${desligado ? ' campo--inativo' : ''}"`
               + ` data-ação="${ação}" data-índice="${i}" aria-label="${rótulo}: ${nome}"${desligado ? ' disabled' : ''}>${conteúdo}</button>`;
-            return `<li class="ferramenta-linha">
+            return `<div class="ferramenta-linha" role="listitem">
               <span class="ferramenta-linha__ícone">${ícone('documento')}</span>
               <span class="ferramenta-linha__texto">
-                <span class="ferramenta-linha__nome">${i + 1}. ${nome}</span>
+                <span class="ferramenta-linha__nome" title="${nome}">${i + 1}. ${nomeQuebrável(a.nome)}</span>
                 <span class="ferramenta-linha__resumo">${escapar(formatarTamanho(a.tamanho))}</span>
               </span>
               <span class="ferramenta-linha__fim">
@@ -185,7 +213,7 @@ export default {
                 ${botão('descer', ícone('seta-baixo'), 'Descer', i === escolhidos.length - 1)}
                 ${botão('remover', ícone('lixeira'), 'Remover', false)}
               </span>
-            </li>`;
+            </div>`;
           }).join('');
           lista.hidden = escolhidos.length === 0;
           vazio.hidden = escolhidos.length > 0;
@@ -198,6 +226,7 @@ export default {
         }
 
         async function adicionar(arquivos) {
+          if (juntando) return;
           limparErros(formulário);
           const recusas = [];
           for (const arquivo of arquivos) {

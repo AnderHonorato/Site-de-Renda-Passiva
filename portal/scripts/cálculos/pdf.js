@@ -72,6 +72,14 @@ export function formatarTamanho(bytes) {
   return `${Math.max(1, Math.round(bytes / 1024)).toLocaleString('pt-BR')} kB`;
 }
 
+/**
+ * Páginas copiadas entre uma folga e outra para a página respirar. Sem a folga,
+ * o laço de cópia roda de uma vez só: a barra de progresso não se mexe e o
+ * clique em "Cancelar" só é atendido quando já não há o que cancelar.
+ */
+const PÁGINAS_POR_FOLGA = 10;
+const folga = () => new Promise((resolver) => { setTimeout(resolver, 0); });
+
 function classificarFalha(erro) {
   return /encrypt/i.test(String(erro?.message ?? erro)) ? 'pdf_protegido' : 'pdf_corrompido';
 }
@@ -116,16 +124,21 @@ export async function juntarPdfs(arquivos, { biblioteca, aoProgredir, cancelado,
   const juntado = await PDFDocument.create();
   let página = 0;
   for (const { nome, documento } of documentos) {
+    await folga();
+    if (cancelado?.()) return { ok: false, erro: 'cancelado' };
     const cópias = await juntado.copyPages(documento, documento.getPageIndices());
     for (const cópia of cópias) {
       if (cancelado?.()) return { ok: false, erro: 'cancelado' };
       juntado.addPage(cópia);
       página++;
       aoProgredir?.({ página, total: totalDePáginas, arquivo: nome });
+      if (página % PÁGINAS_POR_FOLGA === 0) await folga();
     }
   }
 
   const bytes = await juntado.save();
+  // Cancelado enquanto gravava: o arquivo pronto é descartado, como prometido.
+  if (cancelado?.()) return { ok: false, erro: 'cancelado' };
   return {
     ok: true,
     bytes,
