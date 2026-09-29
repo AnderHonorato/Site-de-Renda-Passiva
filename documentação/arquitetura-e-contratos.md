@@ -4,7 +4,7 @@ Versão do contrato: 1.0.0 — 14/09/2026. Responsável pela integração: orque
 
 ## 1. Decisão geral
 
-Os seis produtos são **sites estáticos multipágina**. Toda ferramenta roda no navegador. Não há backend de aplicação, banco, cadastro, chat ou feedback em servidor (ver `decisão-sobre-cadastro-e-servidor.md`). O HTML é **gerado previamente** por um script local a partir de fragmentos; o JavaScript usa **módulos ES nativos**, sem framework e sem dependências em tempo de execução, exceto o gerador de QR Code (MIT) incorporado ao pacote.
+Os seis produtos são **sites estáticos multipágina**. Toda ferramenta roda no navegador. Não há backend de aplicação, banco, cadastro, chat ou feedback em servidor (ver `decisão-sobre-cadastro-e-servidor.md`). O HTML é **gerado previamente** por um script local a partir de fragmentos; o JavaScript usa **módulos ES nativos**, sem framework e sem dependências em tempo de execução, exceto o gerador de QR Code (MIT) incorporado ao pacote e, no portal, a pdf-lib (MIT) usada só pela ferramenta Juntar PDF e carregada por import dinâmico.
 
 Uma etapa de empacotamento (bundler) não foi adotada: ela exigiria dependência adicional e o ganho medido não compensa para páginas pequenas servidas por HTTP/2. Cada página carrega apenas os módulos que importa. A decisão pode ser revista se as medições de desempenho indicarem necessidade.
 

@@ -17,7 +17,7 @@ Escopo: seis sites estáticos, sem backend de aplicação. Esta análise lista a
 | URLs perigosas na configuração | Portfólio e contato só `https:` ou `mailto:`; `javascript:`, `data:`, `http:` e credenciais em URL são recusados | `validação/validar-url-externa.js`; testes |
 | Publicidade antes do consentimento | Nenhum script de anúncio é carregado sem configuração completa **e** aceite; carregamento único; falha de rede recolhe os espaços | `publicidade/*.js`; teste no navegador (0 scripts carregados após recusa) |
 | Enquadramento (clickjacking), MIME sniffing, vazamento de referência | `frame-ancestors 'none'` e `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin` via cabeçalho HTTP | `.htaccess` gerado em `publicação/`, `hospedagem/nginx-exemplo.conf`, `ferramentas/servir.mjs` |
-| Dependências | Uma única biblioteca em tempo de execução (qrcode-generator, MIT), carregada sob demanda; versões fixadas; `npm audit` sem vulnerabilidades na instalação | `package.json`, `licenças-de-terceiros.md` |
+| Dependências | Duas bibliotecas em tempo de execução, cada uma carregada sob demanda só na página que a usa: qrcode-generator (MIT, QR Code) e pdf-lib (MIT, Juntar PDF; build ES module sem `eval`, compatível com a CSP); versões fixadas; `npm audit` sem vulnerabilidades na instalação | `package.json`, `licenças-de-terceiros.md` |
 | Segredos no pacote | Não há segredos: a configuração é pública por definição; o construtor recusa arquivos de teste, `.env`, mapas de código e referências fora do produto | `ferramentas/construir.mjs` |
 
 ## Política de segurança de conteúdo (CSP)
