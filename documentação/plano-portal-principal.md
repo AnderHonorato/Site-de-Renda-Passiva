@@ -292,6 +292,12 @@ Esforço em dias de trabalho de um agente: P ≤ 1, M = 2–3, G = 4–6. Cada o
 ### Onda 0: base limpa e nome global (M)
 
 - **Também nesta onda (decisão 28): erro não se espalha.** Um `isolarBloco(nome, montar)` no núcleo monta cada parte da página (cabeçalho, busca, vitrine, listas, ferramenta) separada, com `try/catch` e captura de promessa rejeitada. Em caso de falha, só aquela parte mostra a mensagem com o desenho e "tentar de novo". Os `import()` dinâmicos e as bibliotecas (pdf-lib etc.) são tratados por quem os carrega, e há um tratador global discreto. Teste Playwright: forçar falha na vitrine, numa ferramenta e na busca, uma de cada vez, e conferir que o resto da página responde.
+- **Também nesta onda (decisão 29): animações reais.**
+  - `estilos/movimento.css` com tokens de tempo e curva, classes de entrada em cascata e `@keyframes` das ilustrações.
+  - `scripts/núcleo/movimento.js` com as curvas e a mola da vitrine, contagem até o valor e observador de tela.
+  - Aplicado já na página inicial (cartões e busca), no resultado das ferramentas pelo montador, em copiar, favoritos, tema e menu, nos toasts e na 404 com a ilustração animada.
+  - As ondas seguintes aplicam o módulo nas telas novas (conta, admin, pop-ups, carrossel de boas-vindas, anúncios, que só aparecem com fade).
+  - Teste: com `reducedMotion: 'reduce'` nada se mexe, e nenhuma animação gera deslocamento de layout (CLS).
 - **Também nesta onda (decisão 27):** o conjunto inicial de ilustrações amigáveis em `recursos/ilustrações/` (erro 404, erro do servidor, serviço indisponível, sem conexão, acesso negado, estado vazio, boas-vindas) e a página 404 já com o desenho ao lado do texto. As ondas 2, 5, 6, 7 e 8 usam o mesmo conjunto nas suas telas de erro, pop-ups e estados vazios.
 
 - **O dono vê:** o nome sai de um lugar só. A vitrine mostra os números reais (30 prontas, sem "49" e sem "seis áreas") e deixa de falar em Pix. A página 404 aparece de verdade.
