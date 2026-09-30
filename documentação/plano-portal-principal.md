@@ -512,3 +512,22 @@ Esforço em dias de trabalho de um agente: P ≤ 1, M = 2–3, G = 4–6. Cada o
 13. **`main` do GitHub e push.** *Recomendo* substituir o `main` pelo `ander-flow/v1` quando você aprovar, sem merge do `origin/main`, e autorizar o push do branch local.
 14. **Futuro da pasta `ander-flow/`.** *Recomendo* congelar como referência até a última ferramenta ser portada e depois arquivar, sem apagar sem pedido seu.
 15. **Atualizar a documentação da raiz** (README, arquitetura, matriz da seção 18, dados a preencher). *Recomendo* fazer junto com a Onda 0.
+
+---
+
+## Habilidades usadas em cada onda (varredura de 29/09)
+
+Os agentes carregam estas habilidades pelo `Skill` antes de começar a parte correspondente:
+
+| Habilidade | Para quê | Ondas |
+|---|---|---|
+| `frontend-design:frontend-design` | telas novas com acabamento, sem cara de modelo genérico, dentro do visual do portal | 0, 2, 4, 5, 7 |
+| `consistent-ui:consistent-ui` | conferir que cada tela nova usa os mesmos componentes e tokens do portal | todas |
+| `agentic-council:artisan-motion-design` | linguagem de movimento (decisão 29): tempos, curvas, coreografia, alternativa com "reduzir movimento" | 0, depois cada onda |
+| `anidoodle:anidoodle` | só a régua de qualidade (`references/craft-bar.md`), os estilos e o guia `references/workflows/interactive.md`, aplicados às ilustrações amigáveis (decisão 27). A saída é SVG + CSS leve, não vídeo nem canvas | 0, 7 |
+| `design-skills:ux-writing` | textos de erro, estado vazio, boas-vindas e saudação (decisões 27, 28 e 30) | 0, 2, 7 |
+| `agentic-council:skeptic-failure-mode-analysis` | mapear onde cada bloco pode falhar, para o erro não se espalhar (decisão 28) | 0, 2, 8 |
+| `agentic-council:advocate-i18n-review` | português e inglês | 1, 9 |
+| `agentic-council:guardian-compliance-review` | LGPD e consentimento | 3, 8 |
+| `security-review` e `code-review` | revisão de cada onda antes de juntar | todas |
+| `fairmind-design:a11y-audit` e `design-skills:accessibility-audit` | acessibilidade (teclado, leitor de tela, contraste) na conferência | todas |
