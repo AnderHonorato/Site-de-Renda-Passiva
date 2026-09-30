@@ -10,7 +10,7 @@ import assert from 'node:assert/strict';
 
 import { pontoDeEquilíbrio } from '../scripts/cálculos/custos.js';
 import { calcularPontoNaTela } from '../scripts/ferramentas/ponto-de-equilibrio.js';
-import { pdfDoResumo } from '../scripts/ferramentas/auxiliares/resumo-de-custos.js';
+import { arquivoBaixado, textosDoPdf, espaçosComuns } from './auxiliares/pdf-baixado.mjs';
 import { ErroDeEntrada } from '../scripts/núcleo/montador.js';
 import { formatarMoeda } from '../scripts/comum/formatação/formatar-moeda.js';
 
@@ -129,7 +129,31 @@ test('a tela mostra o caso do contrato com os números formatados', () => {
   assert.equal(linhas['Índice de margem'], '50,0%');
   assert.equal(linhas['Média por dia (mês de 30 dias)'], '7 unidades');
   assert.match(saída.resumo, /cobrir R\$\s5\.000,00 de custos fixos, faturando R\$\s10\.000,00/);
-  assert.ok(saída.observações.some((o) => o.includes(`200 unidades = ${formatarMoeda(5000)} ÷ ${formatarMoeda(25)}`)));
+  assert.ok(saída.observações.some((o) => o.includes(`= ${formatarMoeda(5000)} ÷ ${formatarMoeda(25)} = 200 unidades.`)));
+});
+
+test('com margem de fração de centavo, a conta escrita usa a margem exata e reproduz o resultado', () => {
+  // R$ 19,90 com 4,99%: margem exata de R$ 18,90699, que a tela arredonda para R$ 18,91.
+  // 1.891,00 ÷ 18,91 daria 100 exatas; com a margem exata são 100,02 → 101.
+  const saída = calcularPontoNaTela({ custosFixos: '1.891,00', lucro: '', preço: '19,90', custoVariável: '', percentual: '4,99' });
+  assert.equal(saída.valor, '101 unidades');
+  assert.equal(Object.fromEntries(saída.linhas)['Margem de contribuição por unidade'], formatarMoeda(18.91));
+  const [conta, aviso] = saída.observações;
+  assert.ok(conta.includes('= R$\u00a01.891,00 ÷ R$\u00a018,90699 = 100,02; arredondando para cima, 101 unidades.'), conta);
+  assert.match(aviso, /sobra exata de cada venda é R\$\s18,90699; os resultados mostram R\$\s18,91/);
+});
+
+test('margem de fração de centavo não aparece como R$ 0,00 na conta nem como índice 0,0%', () => {
+  const saída = calcularPontoNaTela({ custosFixos: '1.000,00', lucro: '', preço: '0,01', custoVariável: '', percentual: '99,99' });
+  assert.equal(saída.valor, '1.000.000.000 unidades');
+  assert.equal(Object.fromEntries(saída.linhas)['Índice de margem'], '0,01%');
+  assert.ok(saída.observações[0].includes('÷ R$\u00a00,000001 ='), saída.observações[0]);
+  assert.ok(!saída.observações[0].includes('÷ R$\u00a00,00 '));
+});
+
+test('o percentual aparece como foi digitado, sem arredondar', () => {
+  const saída = calcularPontoNaTela({ ...TELA_DO_CONTRATO, percentual: '12,345' });
+  assert.ok(saída.texto.includes('Percentual que sai do preço: 12,345%'));
 });
 
 test('campos opcionais vazios valem zero e o lucro muda o resumo', () => {
@@ -163,6 +187,11 @@ test('cada recusa chega ao campo que a pessoa precisa corrigir', () => {
     [{ ...TELA_DO_CONTRATO, custoVariável: '60,00' }, 'custoVariável', /não deixa nada/],
     [{ ...TELA_DO_CONTRATO, lucro: '1e5' }, 'lucro', /precisa ser um número/],
     [{ ...TELA_DO_CONTRATO, custosFixos: '999999999999999999' }, 'custosFixos', /grande demais/],
+    // Valor positivo que arredonda para zero centavo: a recusa diz o mínimo, não "informe".
+    [{ ...TELA_DO_CONTRATO, preço: '0,004' }, 'preço', /menor valor acima de zero é R\$ 0,01/],
+    [{ ...TELA_DO_CONTRATO, custoVariável: '0,004' }, 'custoVariável', /menor valor acima de zero é R\$ 0,01/],
+    [{ ...TELA_DO_CONTRATO, custosFixos: '0,001' }, 'custosFixos', /menor valor acima de zero é R\$ 0,01/],
+    [{ ...TELA_DO_CONTRATO, lucro: '0,004' }, 'lucro', /menor valor acima de zero é R\$ 0,01/],
   ];
   for (const [dados, campo, mensagem] of casos) {
     const erro = recusaDe(() => calcularPontoNaTela(dados));
@@ -183,21 +212,34 @@ test('o texto copiado leva resultado, dados usados e a conta', () => {
   assert.ok(texto.includes('A conta:'));
 });
 
-test('o PDF é um documento válido com o resultado escrito', () => {
-  const saída = calcularPontoNaTela(TELA_DO_CONTRATO);
+test('o PDF baixado pelo botão tem o resultado, o subtítulo, todos os dados e a conta legível', async () => {
+  const saída = calcularPontoNaTela({ ...TELA_DO_CONTRATO, lucro: '2.500,00' });
   assert.equal(saída.arquivos.length, 1);
   assert.equal(saída.arquivos[0].rótulo, 'Baixar resumo em PDF');
 
-  const bytes = pdfDoResumo({
-    título: 'Ponto de equilíbrio',
-    destaque: ['Você precisa vender', saída.valor],
-    resultados: saída.linhas,
-    dados: [['Custos fixos do mês', formatarMoeda(5000)]],
-    conta: saída.observações,
-  });
-  const conteúdo = typeof bytes === 'string' ? bytes : new TextDecoder('latin1').decode(bytes);
-  assert.ok(conteúdo.startsWith('%PDF-1.4'));
-  assert.ok(conteúdo.trimEnd().endsWith('%%EOF'));
-  assert.ok(conteúdo.includes('(200 unidades)'));
-  assert.ok(conteúdo.includes('Faturamento necess'));
+  const { nome, tipo, bytes } = await arquivoBaixado(saída.arquivos[0].gerar);
+  assert.equal(nome, 'ponto-de-equilibrio-300-unidades.pdf');
+  assert.equal(tipo, 'application/pdf');
+  const bruto = new TextDecoder('latin1').decode(bytes);
+  assert.ok(bruto.startsWith('%PDF-1.4'));
+  assert.ok(bruto.trimEnd().endsWith('%%EOF'));
+
+  const textos = textosDoPdf(bytes);
+  const tudo = espaçosComuns(textos.join(' '));
+  assert.ok(textos.includes('300 unidades no mês'), 'subtítulo');
+  assert.ok(textos.includes('300 unidades'), 'destaque');
+  for (const [rótulo, valor] of saída.linhas) {
+    assert.ok(textos.includes(rótulo) && textos.includes(valor), `resultado ${rótulo}`);
+  }
+  for (const [rótulo, valor] of [
+    ['Custos fixos do mês', formatarMoeda(5000)], ['Lucro desejado no mês', formatarMoeda(2500)],
+    ['Preço de venda por unidade', formatarMoeda(50)], ['Custo variável por unidade', formatarMoeda(20)],
+    ['Percentual que sai do preço', '10%'],
+  ]) {
+    assert.ok(textos.includes(rótulo) && textos.includes(valor), `dado ${rótulo}`);
+  }
+  // Nenhum símbolo da conta pode virar "?" na codificação do PDF.
+  assert.ok(!tudo.includes('?'), `caractere trocado por "?" no PDF: ${textos.filter((t) => t.includes('?')).join(' | ')}`);
+  assert.ok(tudo.includes('A conta:'));
+  assert.ok(tudo.includes(espaçosComuns(`= ${formatarMoeda(7500)} ÷ ${formatarMoeda(25)} = 300 unidades.`)));
 });

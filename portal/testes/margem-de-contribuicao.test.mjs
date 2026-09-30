@@ -10,7 +10,7 @@ import assert from 'node:assert/strict';
 
 import { margemDeContribuição, pontoDeEquilíbrio } from '../scripts/cálculos/custos.js';
 import { calcularMargemNaTela } from '../scripts/ferramentas/margem-de-contribuicao.js';
-import { pdfDoResumo } from '../scripts/ferramentas/auxiliares/resumo-de-custos.js';
+import { arquivoBaixado, textosDoPdf, espaçosComuns } from './auxiliares/pdf-baixado.mjs';
 import { ErroDeEntrada } from '../scripts/núcleo/montador.js';
 import { formatarMoeda } from '../scripts/comum/formatação/formatar-moeda.js';
 
@@ -100,6 +100,21 @@ test('margem e ponto de equilíbrio concordam sobre as vendas para empatar', () 
   const entrada = { preçoCentavos: 5000, custoVariávelCentavos: 2000, percentual: 10, custosFixosCentavos: 500000 };
   assert.equal(margemDeContribuição(entrada).quantidadeDeEquilíbrio, pontoDeEquilíbrio(entrada).quantidade);
   assert.equal(margemDeContribuição(entrada).margemCentavos, pontoDeEquilíbrio(entrada).margemCentavos);
+  assert.equal(margemDeContribuição(entrada).equilíbrioForaDeAlcance, false);
+});
+
+test('com margem minúscula as duas ferramentas concordam: nenhuma mostra número fora da precisão', () => {
+  // R$ 10,00 com 99,99999% de taxa diante de R$ 5 bilhões de custo fixo: quase 5 quatrilhões de vendas.
+  const casos = [
+    { preçoCentavos: 1000, custoVariávelCentavos: 0, percentual: 99.99999, custosFixosCentavos: 500_000_000_000 },
+    { preçoCentavos: 1, custoVariávelCentavos: 0, percentual: 99.9999, custosFixosCentavos: 9e15 },
+  ];
+  for (const entrada of casos) {
+    assert.equal(recusaDe(() => pontoDeEquilíbrio(entrada)).campo, 'custoVariávelCentavos');
+    const r = margemDeContribuição(entrada);
+    assert.equal(r.quantidadeDeEquilíbrio, null, JSON.stringify(entrada));
+    assert.equal(r.equilíbrioForaDeAlcance, true);
+  }
 });
 
 /* ------------------------------------------------------------------ tela */
@@ -117,9 +132,39 @@ test('a tela mostra o caso do contrato com os números formatados', () => {
   assert.equal(linhas['Vendas para empatar no mês'], '105 unidades');
   assert.match(saída.resumo, /De cada R\$\s80,00 vendido, R\$\s38,40 \(48,0%\) ficam/);
   assert.ok(saída.observações[0].includes(
-    `${formatarMoeda(38.4)} = ${formatarMoeda(80)} − ${formatarMoeda(32)} − ${formatarMoeda(80)} × 12%`,
+    `= ${formatarMoeda(80)} − ${formatarMoeda(32)} − ${formatarMoeda(80)} × 12% = ${formatarMoeda(38.4)}.`,
   ));
   assert.ok(saída.observações.some((o) => o.includes(`sobram ${formatarMoeda(1760)}`)));
+  assert.ok(saída.observações.some((o) => o.includes(
+    `${formatarMoeda(4000)} ÷ ${formatarMoeda(38.4)} = 104,17; arredondando para cima, 105 unidades.`,
+  )));
+});
+
+test('com margem de fração de centavo, a conta escrita usa a margem exata e reproduz os totais', () => {
+  // R$ 19,90 com 4,99%: margem exata R$ 18,90699; a tela mostra R$ 18,91 e o total de 100 vendas é R$ 1.890,70.
+  const saída = calcularMargemNaTela({ preço: '19,90', custoVariável: '', percentual: '4,99', quantidade: '100', custosFixos: '1.891,00' });
+  const linhas = Object.fromEntries(saída.linhas);
+  assert.equal(linhas['Sobra por venda'], formatarMoeda(18.91));
+  assert.equal(linhas['Margem total no mês'], formatarMoeda(1890.70));
+  assert.equal(linhas['Resultado depois do custo fixo'], formatarMoeda(-0.30));
+  assert.ok(saída.observações[0].endsWith('× 4,99% = R$\u00a018,90699.'), saída.observações[0]);
+  assert.match(saída.observações[1], /sobra exata de cada venda é R\$\s18,90699; os resultados mostram R\$\s18,91/);
+  assert.ok(saída.observações.some((o) => o.includes(`somam ${formatarMoeda(1890.7)} (100 × R$\u00a018,90699)`)));
+});
+
+test('sem fração de centavo não aparece aviso de arredondamento', () => {
+  const saída = calcularMargemNaTela(TELA_DO_CONTRATO);
+  assert.ok(!saída.observações.some((o) => o.includes('sobra exata')));
+});
+
+test('margem minúscula: a tela explica em vez de mostrar vendas para empatar fora da precisão', () => {
+  const saída = calcularMargemNaTela({ preço: '10,00', custoVariável: '0', percentual: '99,99999', quantidade: '', custosFixos: '5.000.000.000,00' });
+  const linhas = Object.fromEntries(saída.linhas);
+  assert.equal(linhas['Vendas para empatar no mês'], undefined);
+  assert.equal(linhas['Índice de margem'], 'menos de 0,01%');
+  assert.ok(saída.observações.some((o) => o.includes('passam do que dá para calcular com precisão')));
+  // O percentual aparece como foi digitado: arredondado, viraria 100%, que a ferramenta recusa.
+  assert.ok(saída.observações[0].includes('× 99,99999% = R$\u00a00,000001.'), saída.observações[0]);
 });
 
 test('só a venda: sem quantidade nem custo fixo, a tela não inventa total do mês', () => {
@@ -173,6 +218,10 @@ test('cada recusa chega ao campo que a pessoa precisa corrigir', () => {
     [{ ...TELA_DO_CONTRATO, quantidade: '1000000000000000' }, 'quantidade', /grande demais/],
     [{ ...TELA_DO_CONTRATO, custosFixos: '999999999999999999' }, 'custosFixos', /grande demais/],
     [{ ...TELA_DO_CONTRATO, preço: '999999999999999999' }, 'preço', /grande demais/],
+    // Valor positivo que arredonda para zero centavo: a recusa diz o mínimo, não "informe".
+    [{ ...TELA_DO_CONTRATO, preço: '0,004' }, 'preço', /menor valor acima de zero é R\$ 0,01/],
+    [{ ...TELA_DO_CONTRATO, custoVariável: '0,004' }, 'custoVariável', /menor valor acima de zero é R\$ 0,01/],
+    [{ ...TELA_DO_CONTRATO, custosFixos: '0,001' }, 'custosFixos', /menor valor acima de zero é R\$ 0,01/],
   ];
   for (const [dados, campo, mensagem] of casos) {
     const erro = recusaDe(() => calcularMargemNaTela(dados));
@@ -196,21 +245,33 @@ test('o texto copiado leva resultado, dados usados e a conta', () => {
   assert.equal(texto.split('Sobra por venda:').length, 2);
 });
 
-test('o PDF é um documento válido com o resultado escrito', () => {
+test('o PDF baixado pelo botão tem o resultado, o subtítulo, todos os dados e a conta legível', async () => {
   const saída = calcularMargemNaTela(TELA_DO_CONTRATO);
   assert.equal(saída.arquivos.length, 1);
   assert.equal(saída.arquivos[0].rótulo, 'Baixar resumo em PDF');
 
-  const bytes = pdfDoResumo({
-    título: 'Margem de contribuição',
-    destaque: ['Sobra por venda', formatarMoeda(38.4)],
-    resultados: saída.linhas.slice(1),
-    dados: [['Preço de venda por unidade', formatarMoeda(80)]],
-    conta: saída.observações,
-  });
-  const conteúdo = typeof bytes === 'string' ? bytes : new TextDecoder('latin1').decode(bytes);
-  assert.ok(conteúdo.startsWith('%PDF-1.4'));
-  assert.ok(conteúdo.trimEnd().endsWith('%%EOF'));
-  assert.ok(conteúdo.includes('Sobra por venda'));
-  assert.ok(conteúdo.includes('(105 unidades)'));
+  const { nome, tipo, bytes } = await arquivoBaixado(saída.arquivos[0].gerar);
+  assert.equal(nome, 'margem-de-contribuicao.pdf');
+  assert.equal(tipo, 'application/pdf');
+  const bruto = new TextDecoder('latin1').decode(bytes);
+  assert.ok(bruto.startsWith('%PDF-1.4'));
+  assert.ok(bruto.trimEnd().endsWith('%%EOF'));
+
+  const textos = textosDoPdf(bytes);
+  const tudo = espaçosComuns(textos.join(' '));
+  assert.ok(textos.includes(`${formatarMoeda(38.4)} por venda`), 'subtítulo');
+  for (const [rótulo, valor] of saída.linhas) {
+    assert.ok(textos.includes(rótulo) && textos.includes(valor), `resultado ${rótulo}`);
+  }
+  for (const [rótulo, valor] of [
+    ['Preço de venda por unidade', formatarMoeda(80)], ['Custo variável por unidade', formatarMoeda(32)],
+    ['Percentual que sai do preço', '12%'], ['Quantidade vendida no mês', '150 unidades'],
+    ['Custos fixos do mês', formatarMoeda(4000)],
+  ]) {
+    assert.ok(textos.includes(rótulo) && textos.includes(valor), `dado ${rótulo}`);
+  }
+  // Os sinais de menos são a própria conta: nenhum pode virar "?" no PDF.
+  assert.ok(!tudo.includes('?'), `caractere trocado por "?" no PDF: ${textos.filter((t) => t.includes('?')).join(' | ')}`);
+  assert.ok(tudo.includes('A conta:'));
+  assert.ok(tudo.includes(espaçosComuns(`= ${formatarMoeda(80)} – ${formatarMoeda(32)} – ${formatarMoeda(80)} × 12% = ${formatarMoeda(38.4)}.`)));
 });

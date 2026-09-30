@@ -45,9 +45,37 @@ function centavos(valor) {
  * @returns {number}
  */
 function paraCima(valor) {
-  const inteiro = Math.round(valor);
-  if (Math.abs(valor - inteiro) <= Math.max(1, Math.abs(valor)) * 1e-12) return inteiro;
-  return Math.ceil(valor);
+  return éQuaseInteiro(valor) ? Math.round(valor) : Math.ceil(valor);
+}
+
+/**
+ * Diz se a divisão deu um inteiro, descontado o erro de ponto flutuante. A tela
+ * usa para decidir se precisa explicar o arredondamento para cima.
+ * @param {number} valor
+ */
+export function éQuaseInteiro(valor) {
+  return Math.abs(valor - Math.round(valor)) <= Math.max(1, Math.abs(valor)) * 1e-12;
+}
+
+/**
+ * Vendas que cobrem um valor-alvo com a margem exata de cada venda.
+ *
+ * Devolve `null` quando a quantidade (ou o faturamento dela) passa da precisão
+ * segura do JavaScript: com margem de fração de centavo diante de um custo
+ * alto, o número deixa de ser algo que alguém consiga planejar, e mostrar
+ * "4.999.999.995.570.761 unidades" seria inventar precisão. As duas
+ * ferramentas usam esta mesma regra para nunca discordarem.
+ * @param {number} alvoCentavos inteiro, maior que zero
+ * @param {number} margem margem exata por venda, em centavos, maior que zero
+ * @param {number} preçoCentavos
+ * @returns {{quantidade: number, quantidadeExata: number, receitaDaQuantidadeInteira: number}|null}
+ */
+function vendasParaCobrir(alvoCentavos, margem, preçoCentavos) {
+  const quantidadeExata = alvoCentavos / margem;
+  const quantidade = paraCima(quantidadeExata);
+  const receitaDaQuantidadeInteira = quantidade * preçoCentavos;
+  if (!Number.isSafeInteger(quantidade) || !Number.isSafeInteger(receitaDaQuantidadeInteira)) return null;
+  return { quantidade, quantidadeExata, receitaDaQuantidadeInteira };
 }
 
 function exigirCentavos(valor, campo, rótulo) {
@@ -80,7 +108,8 @@ function margemExata({ preçoCentavos, custoVariávelCentavos, percentual }) {
  * @returns {{
  *   margemCentavos: number, margemExataCentavos: number, índice: number,
  *   percentualCentavos: number, totalCentavos: number, resultadoCentavos: number,
- *   quantidadeDeEquilíbrio: number|null, margemNegativa: boolean
+ *   quantidadeDeEquilíbrio: number|null, quantidadeExataDeEquilíbrio: number|null,
+ *   equilíbrioForaDeAlcance: boolean, margemNegativa: boolean
  * }}
  */
 export function margemDeContribuição({
@@ -96,6 +125,9 @@ export function margemDeContribuição({
   exigirCentavos(custosFixosCentavos, 'custosFixosCentavos', 'Custos fixos');
 
   const total = margem * quantidade;
+  const equilíbrio = margem > 0 && custosFixosCentavos > 0
+    ? vendasParaCobrir(custosFixosCentavos, margem, preçoCentavos)
+    : null;
   if (!Number.isSafeInteger(Math.round(total - custosFixosCentavos)) || !Number.isSafeInteger(Math.round(total))) {
     throw recusa('A quantidade é grande demais para calcular com precisão.', 'quantidade');
   }
@@ -108,9 +140,11 @@ export function margemDeContribuição({
     totalCentavos: centavos(total),
     resultadoCentavos: centavos(total - custosFixosCentavos),
     // Quantidade que zera o resultado: só existe com margem positiva e custo fixo a pagar.
-    quantidadeDeEquilíbrio: margem > 0 && custosFixosCentavos > 0
-      ? paraCima(custosFixosCentavos / margem)
-      : null,
+    quantidadeDeEquilíbrio: equilíbrio ? equilíbrio.quantidade : null,
+    quantidadeExataDeEquilíbrio: equilíbrio ? equilíbrio.quantidadeExata : null,
+    // Margem positiva e custo fixo informado, mas a quantidade passa da precisão:
+    // a tela explica em vez de mostrar um número que ninguém consegue planejar.
+    equilíbrioForaDeAlcance: margem > 0 && custosFixosCentavos > 0 && equilíbrio === null,
     margemNegativa: margem <= 0,
   };
 }
@@ -151,18 +185,15 @@ export function pontoDeEquilíbrio({
   if (!Number.isSafeInteger(alvo)) {
     throw recusa('Custos fixos e lucro somados passam do que dá para calcular com precisão.', 'custosFixosCentavos');
   }
-  const quantidadeExata = alvo / margem;
-  const quantidade = paraCima(quantidadeExata);
-  const receitaDaQuantidadeInteira = quantidade * preçoCentavos;
-  if (!Number.isSafeInteger(quantidade) || !Number.isSafeInteger(receitaDaQuantidadeInteira)) {
-    // Margem de fração de centavo diante de um custo fixo alto: o número de
-    // vendas deixa de ser algo que alguém consiga planejar.
+  const vendas = vendasParaCobrir(alvo, margem, preçoCentavos);
+  if (!vendas) {
     throw recusa(
       'A sobra de cada venda é pequena demais para cobrir esse custo. Revise preço, custo variável ou percentual.',
       'custoVariávelCentavos',
     );
   }
 
+  const { quantidade, quantidadeExata, receitaDaQuantidadeInteira } = vendas;
   return {
     margemCentavos: centavos(margem),
     margemExataCentavos: margem,

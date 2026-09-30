@@ -1,10 +1,11 @@
 /** Margem de contribuição: o que sobra de cada venda para pagar o custo fixo e virar lucro. */
 import { montarFerramenta, número, baixar, nomeDeArquivo } from '../núcleo/montador.js';
-import { margemDeContribuição } from '../cálculos/custos.js';
-import { emCentavos } from '../cálculos/dinheiro.js';
+import { margemDeContribuição, éQuaseInteiro } from '../cálculos/custos.js';
 import { formatarMoeda } from '../comum/formatação/formatar-moeda.js';
+import { formatarNúmero } from '../comum/formatação/formatar-número.js';
 import {
-  noCampoCerto, formatarÍndice, formatarPercentual, unidades, textoDoResumo, pdfDoResumo,
+  noCampoCerto, centavosDoCampo, formatarÍndice, formatarPercentual, unidades, reaisExatos,
+  avisoDeMargemArredondada, textoDoResumo, pdfDoResumo,
 } from './auxiliares/resumo-de-custos.js';
 
 const TÍTULO = 'Margem de contribuição';
@@ -29,13 +30,13 @@ export function calcularMargemNaTela(dados) {
   const comQuantidade = preenchido(dados, 'quantidade');
   const comCustosFixos = preenchido(dados, 'custosFixos');
 
-  // `número` já garantiu valores finitos; a conversão para centavos não falha aqui.
+  // `número` já garantiu valores finitos; a conversão só recusa fração de centavo que viraria zero.
   const entrada = {
-    preçoCentavos: emCentavos(preço),
-    custoVariávelCentavos: emCentavos(custoVariável),
+    preçoCentavos: centavosDoCampo(preço, 'preço', 'Preço de venda'),
+    custoVariávelCentavos: centavosDoCampo(custoVariável, 'custoVariável', 'Custo variável'),
     percentual,
     quantidade,
-    custosFixosCentavos: emCentavos(custosFixos),
+    custosFixosCentavos: centavosDoCampo(custosFixos, 'custosFixos', 'Custos fixos do mês'),
   };
   const r = noCampoCerto(() => margemDeContribuição(entrada));
 
@@ -56,21 +57,36 @@ export function calcularMargemNaTela(dados) {
   if (comQuantidade) dadosUsados.push(['Quantidade vendida no mês', unidades(quantidade)]);
   if (comCustosFixos) dadosUsados.push(['Custos fixos do mês', reais(entrada.custosFixosCentavos)]);
 
+  // A conta escrita usa a margem exata, a mesma do cálculo: refeita à mão, dá o número mostrado.
+  const margemExata = reaisExatos(r.margemExataCentavos);
   const conta = [
-    'A conta: margem = preço − custo variável − preço × percentual → '
-      + `${reais(r.margemCentavos)} = ${reais(entrada.preçoCentavos)} − ${reais(entrada.custoVariávelCentavos)} `
-      + `− ${reais(entrada.preçoCentavos)} × ${formatarPercentual(percentual)}.`,
+    'A conta: margem = preço − custo variável − preço × percentual = '
+      + `${reais(entrada.preçoCentavos)} − ${reais(entrada.custoVariávelCentavos)} `
+      + `− ${reais(entrada.preçoCentavos)} × ${formatarPercentual(percentual)} = ${margemExata}.`,
+    ...avisoDeMargemArredondada(r.margemExataCentavos, reais(r.margemCentavos)),
     'O índice é a margem dividida pelo preço: quanto de cada real vendido fica para pagar o custo fixo.',
   ];
-  if (comQuantidade && comCustosFixos) {
-    conta.push(r.resultadoCentavos >= 0
-      ? `Com ${unidades(quantidade)} no mês, as margens somam ${reais(r.totalCentavos)}: pagam `
-        + `${reais(entrada.custosFixosCentavos)} de custo fixo e sobram ${reais(r.resultadoCentavos)}.`
-      : `Com ${unidades(quantidade)} no mês, as margens somam ${reais(r.totalCentavos)}: faltam `
-        + `${reais(-r.resultadoCentavos)} para pagar ${reais(entrada.custosFixosCentavos)} de custo fixo.`);
+  if (comQuantidade) {
+    const soma = `Com ${unidades(quantidade)} no mês, as margens somam ${reais(r.totalCentavos)} `
+      + `(${formatarNúmero(quantidade, { casas: 0 })} × ${margemExata})`;
+    if (!comCustosFixos) conta.push(`${soma}.`);
+    else if (r.resultadoCentavos >= 0) {
+      conta.push(`${soma}: pagam ${reais(entrada.custosFixosCentavos)} de custo fixo e sobram ${reais(r.resultadoCentavos)}.`);
+    } else {
+      conta.push(`${soma}: faltam ${reais(-r.resultadoCentavos)} para pagar ${reais(entrada.custosFixosCentavos)} de custo fixo.`);
+    }
   }
   if (r.quantidadeDeEquilíbrio !== null) {
-    conta.push('As vendas para empatar são o custo fixo dividido pela sobra de cada venda, arredondado para cima.');
+    const exata = r.quantidadeExataDeEquilíbrio;
+    const quociente = éQuaseInteiro(exata)
+      ? unidades(r.quantidadeDeEquilíbrio)
+      : `${formatarNúmero(exata, { casas: 2 })}; arredondando para cima, ${unidades(r.quantidadeDeEquilíbrio)}`;
+    conta.push('As vendas para empatar são o custo fixo dividido pela sobra de cada venda: '
+      + `${reais(entrada.custosFixosCentavos)} ÷ ${margemExata} = ${quociente}.`);
+  }
+  if (r.equilíbrioForaDeAlcance) {
+    conta.push('Com uma sobra tão pequena por venda, as vendas para empatar esse custo fixo passam do que dá '
+      + 'para calcular com precisão. Revise preço, custo variável ou percentual.');
   }
   if (!comQuantidade && !comCustosFixos && !r.margemNegativa) {
     conta.push('Informe a quantidade vendida e os custos fixos do mês para ver se o mês fecha no azul.');

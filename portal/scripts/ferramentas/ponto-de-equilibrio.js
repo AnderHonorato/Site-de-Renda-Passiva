@@ -1,10 +1,11 @@
 /** Ponto de equilíbrio: quanto vender no mês para cobrir os custos, em quantidade e em faturamento. */
 import { montarFerramenta, número, baixar, nomeDeArquivo } from '../núcleo/montador.js';
-import { pontoDeEquilíbrio, DIAS_DO_MÊS } from '../cálculos/custos.js';
-import { emCentavos } from '../cálculos/dinheiro.js';
+import { pontoDeEquilíbrio, DIAS_DO_MÊS, éQuaseInteiro } from '../cálculos/custos.js';
 import { formatarMoeda } from '../comum/formatação/formatar-moeda.js';
+import { formatarNúmero } from '../comum/formatação/formatar-número.js';
 import {
-  noCampoCerto, formatarÍndice, formatarPercentual, unidades, textoDoResumo, pdfDoResumo,
+  noCampoCerto, centavosDoCampo, formatarÍndice, formatarPercentual, unidades, reaisExatos,
+  avisoDeMargemArredondada, textoDoResumo, pdfDoResumo,
 } from './auxiliares/resumo-de-custos.js';
 
 const TÍTULO = 'Ponto de equilíbrio';
@@ -22,12 +23,12 @@ export function calcularPontoNaTela(dados) {
   const custoVariável = número(dados, 'custoVariável', { rótulo: 'Custo variável', mín: 0, obrigatório: false, padrão: 0 });
   const percentual = número(dados, 'percentual', { rótulo: 'Percentual que sai do preço', mín: 0, obrigatório: false, padrão: 0 });
 
-  // `número` já garantiu valores finitos; a conversão para centavos não falha aqui.
+  // `número` já garantiu valores finitos; a conversão só recusa fração de centavo que viraria zero.
   const entrada = {
-    custosFixosCentavos: emCentavos(custosFixos),
-    lucroDesejadoCentavos: emCentavos(lucro),
-    preçoCentavos: emCentavos(preço),
-    custoVariávelCentavos: emCentavos(custoVariável),
+    custosFixosCentavos: centavosDoCampo(custosFixos, 'custosFixos', 'Custos fixos do mês'),
+    lucroDesejadoCentavos: centavosDoCampo(lucro, 'lucro', 'Lucro desejado'),
+    preçoCentavos: centavosDoCampo(preço, 'preço', 'Preço de venda'),
+    custoVariávelCentavos: centavosDoCampo(custoVariável, 'custoVariável', 'Custo variável'),
     percentual,
   };
   const r = noCampoCerto(() => pontoDeEquilíbrio(entrada));
@@ -47,9 +48,17 @@ export function calcularPontoNaTela(dados) {
     ['Percentual que sai do preço', formatarPercentual(percentual)],
   ];
 
+  // A conta escrita usa a margem exata, a mesma do cálculo: refeita à mão, dá o número mostrado.
+  let quociente = unidades(r.quantidade);
+  if (!éQuaseInteiro(r.quantidadeExata)) {
+    const exata = formatarNúmero(r.quantidadeExata, { casas: 2 });
+    const pareceInteira = !exata.includes(',');
+    quociente = `${pareceInteira ? 'pouco mais de ' : ''}${exata}; arredondando para cima, ${unidades(r.quantidade)}`;
+  }
   const conta = [
-    `A conta: quantidade = (custos fixos + lucro) ÷ margem de contribuição por unidade → `
-      + `${unidades(r.quantidade)} = ${reais(r.alvoCentavos)} ÷ ${reais(r.margemCentavos)}.`,
+    'A conta: quantidade = (custos fixos + lucro) ÷ margem de contribuição por unidade = '
+      + `${reais(r.alvoCentavos)} ÷ ${reaisExatos(r.margemExataCentavos)} = ${quociente}.`,
+    ...avisoDeMargemArredondada(r.margemExataCentavos, reais(r.margemCentavos)),
     'A margem por unidade já desconta o custo variável e o percentual que sai do preço. '
       + 'A quantidade é arredondada para cima, porque não se vende parte de uma unidade.',
   ];
