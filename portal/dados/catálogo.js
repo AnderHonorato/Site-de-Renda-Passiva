@@ -37,6 +37,8 @@ function normalizar(bruta) {
     tags: Object.freeze(bruta.tags ?? []),
     intenções: Object.freeze(bruta.intenções ?? []),
     unifica: Object.freeze(bruta.unifica ?? []),
+    // Slugs mostrados primeiro em "Ferramentas relacionadas"; o resto é completado pela categoria.
+    relacionadas: Object.freeze(bruta.relacionadas ?? []),
     plano: bruta.plano ?? 'gratuito',
     local: bruta.local !== false,
     // Toda ferramenta do portal é projetada para o celular: não existe exceção.
@@ -88,6 +90,14 @@ export function conferirCatálogo() {
     }
     if (f.resumo.length > 130) {
       problemas.push(`${f.id}: resumo longo demais para uma linha (${f.resumo.length} caracteres)`);
+    }
+  }
+  // Relação declarada precisa apontar para outra ferramenta que existe.
+  const slugs = new Set(ferramentas.map((f) => f.slug));
+  for (const f of ferramentas) {
+    for (const outra of f.relacionadas) {
+      if (outra === f.slug) problemas.push(`${f.id}: relacionada consigo mesma`);
+      else if (!slugs.has(outra)) problemas.push(`${f.id}: relacionada desconhecida: ${outra}`);
     }
   }
   return problemas;
