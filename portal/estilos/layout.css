@@ -4,7 +4,7 @@
 .topo {
   position: sticky; top: 0; z-index: 60;
   background: color-mix(in srgb, var(--fundo) 88%, transparent);
-  backdrop-filter: saturate(160%) blur(10px);
+  backdrop-filter: saturate(160%) blur(18px);
   border-bottom: 1px solid var(--borda);
 }
 .topo__interior {
@@ -13,36 +13,44 @@
 }
 .marca {
   display: inline-flex; align-items: center; gap: 9px;
-  text-decoration: none; color: var(--tinta); font-weight: 700;
+  text-decoration: none; color: var(--tinta); font-weight: 600;
   padding: 4px; margin-left: -4px; border-radius: var(--raio-p);
 }
 .marca__selo {
   width: 30px; height: 30px; flex: 0 0 30px;
-  border-radius: 9px; display: grid; place-items: center;
-  background: var(--marca); color: var(--marca-contraste);
+  border-radius: 10px; display: grid; place-items: center;
+  background: var(--tinta); color: var(--fundo);
 }
 .marca__selo svg { width: 19px; height: 19px; }
 .marca__nome { display: flex; flex-direction: column; line-height: 1.05; }
 .marca__nome b { font-size: .95rem; letter-spacing: -.01em; }
-.marca__nome span { font-size: .68rem; color: var(--tinta-suave); font-weight: 600; }
+.marca__nome span { font-size: var(--t-xs); color: var(--tinta-suave); font-weight: 500; }
 
 .topo__nav { display: flex; align-items: center; gap: 2px; margin-left: 8px; }
 .topo__nav a, .topo__nav > button {
   display: inline-flex; align-items: center; gap: 6px;
-  height: 34px; padding: 0 10px; border-radius: var(--raio-p);
+  height: 36px; padding: 0 14px; border-radius: var(--raio-pílula);
   background: none; border: 0; cursor: pointer;
-  color: var(--tinta-média); font-size: var(--t-sm); font-weight: 600;
+  color: var(--tinta-média); font-size: var(--t-sm); font-weight: 500;
   text-decoration: none; white-space: nowrap;
 }
 .topo__nav a:hover, .topo__nav > button:hover { background: var(--superfície-3); color: var(--tinta); }
 .topo__nav a[aria-current="page"] { color: var(--marca); background: var(--marca-fraca); }
+/* O botão de categorias fica dentro de um <span>, então o seletor acima não o alcança. */
+.menu-categorias > button {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 14px; border-radius: var(--raio-pílula);
+  background: none; border: 0; cursor: pointer;
+  color: var(--tinta-média); font-size: var(--t-sm); font-weight: 500; white-space: nowrap;
+}
+.menu-categorias > button:hover, .menu-categorias > button[aria-expanded="true"] { background: var(--superfície-3); color: var(--tinta); }
 .topo__espaço { flex: 1 1 auto; }
 .topo__fim { display: flex; align-items: center; gap: 6px; }
 
 .ícone-botão {
-  width: 34px; height: 34px; flex: 0 0 34px;
+  width: 36px; height: 36px; flex: 0 0 36px;
   display: grid; place-items: center;
-  border: 1px solid var(--borda); border-radius: var(--raio-p);
+  border: 1px solid var(--borda-forte); border-radius: var(--raio-pílula);
   background: var(--superfície); color: var(--tinta-média); cursor: pointer;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
@@ -53,7 +61,7 @@
 .menu-categorias { position: relative; }
 .menu-categorias__painel {
   position: absolute; left: 0; top: calc(100% + 8px); z-index: 70;
-  width: min(620px, calc(100vw - 32px));
+  width: min(720px, calc(100vw - 32px));
   background: var(--superfície); border: 1px solid var(--borda);
   border-radius: var(--raio-g); box-shadow: var(--sombra-3);
   padding: 12px;
@@ -63,12 +71,13 @@
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px;
 }
 .menu-categorias__grade a {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px 9px; border-radius: var(--raio-p);
-  text-decoration: none; color: var(--tinta); font-size: var(--t-sm); font-weight: 600;
+  /* height e white-space desfazem o que `.topo__nav a` (mais acima) aplica aos links do painel: sem isso o resumo não quebra e invade a coluna do lado. */
+  display: flex; align-items: flex-start; gap: 10px;
+  height: auto; white-space: normal; padding: 10px 12px; border-radius: var(--raio-p);
+  text-decoration: none; color: var(--tinta); font-size: var(--t-sm); font-weight: 500;
 }
 .menu-categorias__grade a:hover { background: var(--superfície-3); }
-.menu-categorias__grade svg { width: 17px; height: 17px; color: var(--marca); flex: 0 0 17px; }
+.menu-categorias__grade svg { width: 17px; height: 17px; color: var(--marca); flex: 0 0 17px; margin-top: 2px; }
 .menu-categorias__grade small { display: block; font-weight: 400; color: var(--tinta-suave); font-size: var(--t-xs); }
 .menu-categorias__rodapé {
   margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--borda);
@@ -78,17 +87,18 @@
 
 /* ---------- Faixa de avisos ---------- */
 .avisos {
-  background: var(--marca); color: var(--marca-contraste);
+  background: var(--marca-fraca); color: var(--tinta);
+  border-bottom: 1px solid var(--borda);
   font-size: var(--t-sm);
 }
 .avisos__interior { display: flex; align-items: center; gap: 10px; min-height: 34px; }
 .avisos__texto { flex: 1 1 auto; margin: 0; }
-.avisos__texto a { color: inherit; }
+.avisos__texto a { color: var(--marca); font-weight: 500; }
 .avisos button {
   background: none; border: 0; color: inherit; cursor: pointer;
   width: 26px; height: 26px; display: grid; place-items: center; border-radius: 6px; opacity: .8;
 }
-.avisos button:hover { opacity: 1; background: rgba(255, 255, 255, .15); }
+.avisos button:hover { opacity: 1; background: rgba(26, 26, 26, .08); }
 .avisos svg { width: 15px; height: 15px; }
 
 /* ---------- Divisória ondulada ---------- */
@@ -98,22 +108,27 @@
 
 /* ---------- Rodapé ---------- */
 .rodapé {
-  margin-top: 40px; border-top: 1px solid var(--borda);
-  background: var(--superfície-2);
+  margin-top: 40px;
+  background: var(--rodapé-fundo); color: var(--rodapé-texto);
   padding-bottom: calc(var(--altura-barra-inferior) + 12px);
 }
 .rodapé__interior {
   display: grid; gap: 18px; padding-block: 22px;
   grid-template-columns: minmax(200px, 1fr) repeat(3, minmax(0, auto));
 }
-.rodapé h4 { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--tinta-suave); margin-bottom: 8px; }
+.rodapé h4 { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; color: var(--rodapé-suave); margin-bottom: 8px; }
+.rodapé .marca { color: var(--rodapé-texto); }
+.rodapé .marca__selo { background: var(--rodapé-texto); color: var(--rodapé-fundo); }
+.rodapé .marca__nome span, .rodapé .suave { color: var(--rodapé-suave); }
 .rodapé ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
-.rodapé a { color: var(--tinta-média); text-decoration: none; font-size: var(--t-sm); }
-.rodapé a:hover { color: var(--marca); text-decoration: underline; }
+.rodapé a { color: var(--rodapé-suave); text-decoration: none; font-size: var(--t-sm); }
+.rodapé a:hover { color: var(--rodapé-texto); text-decoration: underline; }
+.rodapé .marca:hover { text-decoration: none; }
+.rodapé :focus-visible { outline-color: var(--rodapé-texto); }
 .rodapé__legal {
-  border-top: 1px solid var(--borda); padding-block: 12px;
+  border-top: 1px solid rgba(245, 242, 237, .14); padding-block: 14px;
   display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between;
-  font-size: var(--t-xs); color: var(--tinta-suave);
+  font-size: var(--t-xs); color: var(--rodapé-suave);
 }
 
 /* ---------- Barra inferior (celular) ---------- */
@@ -129,7 +144,7 @@
   flex: 1 1 0; min-height: var(--altura-barra-inferior);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   background: none; border: 0; cursor: pointer;
-  color: var(--tinta-suave); font-size: .68rem; font-weight: 600; text-decoration: none;
+  color: var(--tinta-suave); font-size: var(--t-xs); font-weight: 500; text-decoration: none;
 }
 .barra-inferior svg { width: 20px; height: 20px; }
 .barra-inferior [aria-current="page"] { color: var(--marca); }

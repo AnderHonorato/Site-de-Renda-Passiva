@@ -1,81 +1,100 @@
-/* Núcleo: variáveis, reset e tipografia do portal. */
+/* Núcleo: variáveis, reset e tipografia do portal.
+
+   Identidade visual: marfim quente, tinta preta, terracota e areia; Inter; cantos
+   arredondados por hierarquia (pílula nos controles, 14 px nas linhas, 24 px nos
+   painéis); profundidade por linha de 1 px antes de sombra, e sombra sempre suave.
+
+   Regra de contraste: o terracota de preenchimento (--acento) leva texto de tinta
+   (5,6:1). Terracota usado como TEXTO ou ícone sobre fundo claro é o --marca, uma
+   versão mais escura (5,2:1 sobre o marfim). Branco sobre --acento dá 3,1:1 e não
+   passa; por isso nenhum botão usa texto branco. */
 
 :root {
   color-scheme: light;
 
   /* Superfícies e profundidade — quatro níveis, não uma cor só. */
-  --fundo: #f6f1ea;
-  --fundo-fundo: #efe7dd;
-  --superfície: #fffdfa;
-  --superfície-2: #f9f3ec;
-  --superfície-3: #f1e8de;
-  --borda: #e2d5c7;
-  --borda-forte: #cdb9a6;
+  --fundo: #f5f2ed;
+  --fundo-fundo: #ebe4da;
+  --superfície: #fffdf9;
+  --superfície-2: #f9f6f1;
+  --superfície-3: #ede7df;
+  --borda: #e2dbd1;
+  --borda-forte: #cfc6b9;
 
   /* Texto */
-  --tinta: #241c18;
-  --tinta-média: #5c4a41;
-  --tinta-suave: #68574f;
+  --tinta: #1a1a1a;
+  --tinta-média: #46433f;
+  --tinta-suave: #5c6270;
 
-  /* Marca */
-  --marca: #9a3d28;
-  --marca-viva: #c1552f;
-  --marca-fraca: #f3e2da;
-  --marca-contraste: #ffffff;
+  /* Terracota: preenchimento (--acento) e texto/ícone (--marca) */
+  --acento: #d97757;
+  --acento-forte: #c96846;
+  --acento-sobre: #1a1a1a;
+  --marca: #a8472a;
+  --marca-viva: #8f3b20;
+  --marca-fraca: #f6e3da;
+  --marca-contraste: var(--acento-sobre);
+
+  /* Rodapé escuro nos dois temas */
+  --rodapé-fundo: #1a1a1a;
+  --rodapé-texto: #f5f2ed;
+  --rodapé-suave: #b6b0a8;
 
   /* Semânticas */
   --ok: #2c6a4c;
   --ok-fraca: #dcece3;
-  --atenção: #8a5a06;
+  --atenção: #7a4f05;
   --atenção-fraca: #f7ecd5;
   --erro: #a32b23;
   --erro-fraca: #f7e0dd;
   --info: #2a5580;
   --info-fraca: #dee9f4;
 
-  /* Profundidade */
-  --sombra-1: 0 1px 2px rgba(60, 38, 28, .06);
-  --sombra-2: 0 2px 6px rgba(60, 38, 28, .08), 0 1px 2px rgba(60, 38, 28, .05);
-  --sombra-3: 0 10px 28px rgba(60, 38, 28, .12), 0 2px 6px rgba(60, 38, 28, .06);
+  /* Profundidade — sombras suaves, com pouca opacidade */
+  --sombra-1: 0 1px 2px rgba(26, 26, 26, .05);
+  --sombra-2: 0 8px 24px rgba(26, 26, 26, .06);
+  --sombra-3: 0 24px 60px rgba(36, 29, 23, .12);
 
-  /* Medidas — densidade alta e previsível */
-  --raio-p: 8px;
-  --raio: 12px;
-  --raio-g: 18px;
+  /* Medidas */
+  --raio-p: 10px;
+  --raio: 14px;
+  --raio-g: 24px;
+  --raio-pílula: 999px;
   --largura: 1200px;
   --gutter: 16px;
-  --altura-topo: 56px;
+  --altura-topo: 60px;
   --altura-barra-inferior: 60px;
   --toque: 44px;
 
-  /* Tipografia */
-  --fonte: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --fonte-título: "Caprasimo", Georgia, serif;
-  --fonte-nota: "Caveat", "Segoe Script", cursive;
+  /* Tipografia: uma família só, com três pesos (400, 500, 600). */
+  --fonte: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --fonte-título: var(--fonte);
+  --fonte-nota: var(--fonte);
   --t-xs: .75rem;
-  --t-sm: .8125rem;
-  --t-base: .9375rem;
-  --t-md: 1.0625rem;
-  --t-lg: 1.375rem;
-  --t-xl: 1.75rem;
+  --t-sm: .875rem;
+  --t-base: 1rem;
+  --t-md: 1.125rem;
+  --t-lg: 1.5rem;
+  --t-xl: 2rem;
 }
 
 :root[data-tema="escuro"] {
   color-scheme: dark;
-  --fundo: #15110f;
-  --fundo-fundo: #100d0b;
-  --superfície: #1e1815;
-  --superfície-2: #251d19;
-  --superfície-3: #2e241f;
-  --borda: #3a2e28;
-  --borda-forte: #52413a;
-  --tinta: #f3ebe4;
-  --tinta-média: #c3b2a8;
-  --tinta-suave: #9c8a80;
-  --marca: #e08055;
-  --marca-viva: #f0966a;
-  --marca-fraca: #37231b;
-  --marca-contraste: #1a120e;
+  --fundo: #171717;
+  --fundo-fundo: #111111;
+  --superfície: #1f1e1c;
+  --superfície-2: #22201e;
+  --superfície-3: #2b2926;
+  --borda: #34312e;
+  --borda-forte: #4a4642;
+  --tinta: #f5f2ed;
+  --tinta-média: #d2cdc5;
+  --tinta-suave: #b6b0a8;
+  --acento-forte: #e48b6c;
+  --marca: #ea8f70;
+  --marca-viva: #f5a98f;
+  --marca-fraca: #3a2a23;
+  --rodapé-fundo: #101010;
   --ok: #6bbd92;
   --ok-fraca: #1c2f26;
   --atenção: #dfa63f;
@@ -85,27 +104,28 @@
   --info: #7fb0e0;
   --info-fraca: #1b2733;
   --sombra-1: 0 1px 2px rgba(0, 0, 0, .35);
-  --sombra-2: 0 2px 6px rgba(0, 0, 0, .4);
-  --sombra-3: 0 12px 30px rgba(0, 0, 0, .5);
+  --sombra-2: 0 8px 24px rgba(0, 0, 0, .35);
+  --sombra-3: 0 24px 60px rgba(0, 0, 0, .5);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-tema="claro"]) {
     color-scheme: dark;
-    --fundo: #15110f;
-    --fundo-fundo: #100d0b;
-    --superfície: #1e1815;
-    --superfície-2: #251d19;
-    --superfície-3: #2e241f;
-    --borda: #3a2e28;
-    --borda-forte: #52413a;
-    --tinta: #f3ebe4;
-    --tinta-média: #c3b2a8;
-    --tinta-suave: #9c8a80;
-    --marca: #e08055;
-    --marca-viva: #f0966a;
-    --marca-fraca: #37231b;
-    --marca-contraste: #1a120e;
+    --fundo: #171717;
+    --fundo-fundo: #111111;
+    --superfície: #1f1e1c;
+    --superfície-2: #22201e;
+    --superfície-3: #2b2926;
+    --borda: #34312e;
+    --borda-forte: #4a4642;
+    --tinta: #f5f2ed;
+    --tinta-média: #d2cdc5;
+    --tinta-suave: #b6b0a8;
+    --acento-forte: #e48b6c;
+    --marca: #ea8f70;
+    --marca-viva: #f5a98f;
+    --marca-fraca: #3a2a23;
+    --rodapé-fundo: #101010;
     --ok: #6bbd92;
     --ok-fraca: #1c2f26;
     --atenção: #dfa63f;
@@ -115,8 +135,8 @@
     --info: #7fb0e0;
     --info-fraca: #1b2733;
     --sombra-1: 0 1px 2px rgba(0, 0, 0, .35);
-    --sombra-2: 0 2px 6px rgba(0, 0, 0, .4);
-    --sombra-3: 0 12px 30px rgba(0, 0, 0, .5);
+    --sombra-2: 0 8px 24px rgba(0, 0, 0, .35);
+    --sombra-3: 0 24px 60px rgba(0, 0, 0, .5);
   }
 }
 
@@ -131,23 +151,28 @@ body {
   color: var(--tinta);
   font-family: var(--fonte);
   font-size: var(--t-base);
-  line-height: 1.5;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -.011em;
   -webkit-font-smoothing: antialiased;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-h1, h2, h3, h4 { margin: 0; line-height: 1.2; letter-spacing: -.015em; font-weight: 700; }
-h1 { font-size: var(--t-xl); }
-h2 { font-size: var(--t-lg); }
+::selection { background: var(--acento); color: var(--acento-sobre); }
+
+h1, h2, h3, h4 { margin: 0; line-height: 1.2; letter-spacing: -.025em; font-weight: 600; }
+h1 { font-size: var(--t-xl); letter-spacing: -.04em; line-height: 1.1; }
+h2 { font-size: var(--t-lg); letter-spacing: -.03em; }
 h3 { font-size: var(--t-md); }
 h4 { font-size: var(--t-base); }
 p { margin: 0 0 .6em; }
 p:last-child { margin-bottom: 0; }
+strong, b { font-weight: 600; }
 
-a { color: var(--marca); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a { color: var(--marca); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { color: var(--marca-viva); }
 
-button, input, select, textarea { font: inherit; color: inherit; }
+button, input, select, textarea { font: inherit; letter-spacing: inherit; color: inherit; }
 button { touch-action: manipulation; }
 
 img, svg { max-width: 100%; }
@@ -167,8 +192,8 @@ svg { display: block; }
 
 .pular {
   position: fixed; left: 8px; top: -80px; z-index: 200;
-  background: var(--marca); color: var(--marca-contraste);
-  padding: 10px 14px; border-radius: var(--raio); font-weight: 600;
+  background: var(--acento); color: var(--acento-sobre);
+  padding: 10px 16px; border-radius: var(--raio-pílula); font-weight: 600;
   text-decoration: none; transition: top .15s ease;
 }
 .pular:focus { top: 8px; }
@@ -180,11 +205,11 @@ svg { display: block; }
   padding-inline: var(--gutter);
 }
 
-.nota { font-family: var(--fonte-nota); font-size: 1.15rem; color: var(--marca); }
+.nota { font-family: var(--fonte-nota); font-size: var(--t-sm); font-weight: 500; color: var(--marca); }
 .suave { color: var(--tinta-suave); }
 .pequeno { font-size: var(--t-sm); }
 .rótulo {
-  font-size: var(--t-xs); font-weight: 700; letter-spacing: .08em;
+  font-size: var(--t-xs); font-weight: 600; letter-spacing: .08em;
   text-transform: uppercase; color: var(--tinta-suave); margin: 0;
 }
 

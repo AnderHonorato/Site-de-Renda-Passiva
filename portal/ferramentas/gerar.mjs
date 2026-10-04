@@ -359,8 +359,8 @@ function manifesto() {
     start_url: './',
     scope: './',
     display: 'standalone',
-    background_color: '#f6f1ea',
-    theme_color: '#9a3d28',
+    background_color: '#f5f2ed',
+    theme_color: '#f5f2ed',
     lang: 'pt-BR',
     icons: [{ src: 'recursos/ícone.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' }],
     shortcuts: ferramentasProntas.slice(0, 4).map((f) => ({
@@ -371,8 +371,8 @@ function manifesto() {
 
 function íconeDoSite() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-  <rect width="24" height="24" rx="6" fill="#9a3d28"/>
-  <g fill="none" stroke="#fffdfa" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+  <rect width="24" height="24" rx="6" fill="#1a1a1a"/>
+  <g fill="none" stroke="#f5f2ed" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 4.5 6 7.5v4.4c0 3.6 2.5 6.3 6 7.2 3.5-.9 6-3.6 6-7.2V7.5l-6-3Z"/>
     <path d="m9.6 12 1.7 1.8L15 10"/>
   </g>

@@ -4,9 +4,7 @@ Todas as dependências são gratuitas, com versão fixada em `package.json` e li
 
 | Componente | Versão | Licença | Uso | Vai para o site publicado? |
 |---|---|---|---|---|
-| Caprasimo (via @fontsource/caprasimo) | 5.3.0 | SIL Open Font License 1.1 | Títulos | Sim — `recursos/fontes/` + `recursos/fontes/licenças/OFL-caprasimo.txt` |
-| Figtree (via @fontsource/figtree) | 5.3.0 | SIL Open Font License 1.1 | Texto | Sim — idem, `OFL-figtree.txt` |
-| Caveat (via @fontsource/caveat) | 5.3.0 | SIL Open Font License 1.1 | Logotipo | Sim — idem, `OFL-caveat.txt` |
+| Inter variável (via @fontsource-variable/inter) | 5.3.0 | SIL Open Font License 1.1 | Interface, títulos e vitrine animada | Sim — `recursos/fontes/` e `vitrine/fontes/`, com `OFL-inter.txt` em cada `licenças/` |
 | Lucide (lucide-static) | 1.46.0 | ISC | Ícones (somente os usados, em sprite) | Sim — `recursos/ícones/ícones.svg` + `LICENÇA-lucide.txt` |
 | qrcode-generator (Kazuhiko Arase) | 2.0.4 | MIT | Gerar o QR Code do Pix | Sim — `recursos/bibliotecas/qrcode.mjs` + `LICENSE-qrcode-generator.txt` |
 | jsQR | 1.4.0 | Apache-2.0 | Leitura independente do QR nos testes | Não — só desenvolvimento |

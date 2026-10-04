@@ -3,23 +3,22 @@
 /* ---------- Botões ---------- */
 .botão {
   display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-  min-height: 38px; padding: 0 14px;
-  border: 1px solid transparent; border-radius: var(--raio-p);
+  min-height: 40px; padding: 0 18px;
+  border: 1px solid transparent; border-radius: var(--raio-pílula);
   font-size: var(--t-sm); font-weight: 600; line-height: 1;
   cursor: pointer; text-decoration: none; white-space: nowrap;
-  background: var(--marca); color: var(--marca-contraste);
-  box-shadow: var(--sombra-1);
-  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .1s ease;
+  background: var(--acento); color: var(--acento-sobre);
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
 }
-.botão:hover { background: var(--marca-viva); color: var(--marca-contraste); }
-.botão:active { transform: translateY(1px); }
+.botão:hover { background: var(--acento-forte); color: var(--acento-sobre); transform: translateY(-1px); }
+.botão:active { transform: translateY(0); }
 .botão[disabled], .botão[aria-disabled="true"] { opacity: .5; cursor: not-allowed; transform: none; }
 .botão svg { width: 16px; height: 16px; }
 .botão--linha { background: var(--superfície); color: var(--tinta); border-color: var(--borda-forte); }
-.botão--linha:hover { background: var(--superfície-3); color: var(--tinta); border-color: var(--marca); }
+.botão--linha:hover { background: var(--superfície-3); color: var(--tinta); border-color: var(--tinta); }
 .botão--texto { background: none; color: var(--marca); box-shadow: none; padding: 0 8px; }
 .botão--texto:hover { background: var(--marca-fraca); color: var(--marca); }
-.botão--g { min-height: 44px; padding: 0 20px; font-size: var(--t-base); }
+.botão--g { min-height: 48px; padding: 0 24px; font-size: var(--t-base); }
 .botão--bloco { width: 100%; }
 
 .ações { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -28,7 +27,7 @@
 .etiqueta {
   display: inline-flex; align-items: center; gap: 5px;
   padding: 2px 8px; border-radius: 999px;
-  font-size: var(--t-xs); font-weight: 600; line-height: 1.6;
+  font-size: var(--t-xs); font-weight: 500; line-height: 1.6;
   background: var(--superfície-3); color: var(--tinta-média); border: 1px solid var(--borda);
 }
 .etiqueta--marca { background: var(--marca-fraca); color: var(--marca); border-color: transparent; }
@@ -52,37 +51,37 @@
 .pílulas::-webkit-scrollbar { display: none; }
 .pílulas button {
   display: inline-flex; align-items: center; gap: 6px;
-  height: 32px; padding: 0 11px; white-space: nowrap;
+  height: 34px; padding: 0 14px; white-space: nowrap;
   border: 1px solid var(--borda); border-radius: 999px;
   background: var(--superfície); color: var(--tinta-média);
-  font-size: var(--t-sm); font-weight: 600; cursor: pointer;
+  font-size: var(--t-sm); font-weight: 500; cursor: pointer;
 }
 .pílulas button:hover { border-color: var(--borda-forte); color: var(--tinta); }
 .pílulas button[aria-pressed="true"] {
-  background: var(--marca); border-color: var(--marca); color: var(--marca-contraste);
+  background: var(--tinta); border-color: var(--tinta); color: var(--fundo);
 }
 .pílulas svg { width: 14px; height: 14px; }
 
 /* ---------- Busca ---------- */
 .busca { position: relative; display: flex; align-items: center; }
 .busca > svg:first-child {
-  position: absolute; left: 12px; width: 18px; height: 18px;
+  position: absolute; left: 16px; width: 18px; height: 18px;
   color: var(--tinta-suave); pointer-events: none;
 }
 .busca input {
-  width: 100%; height: 46px; padding: 0 78px 0 38px;
-  border: 1px solid var(--borda-forte); border-radius: var(--raio);
+  width: 100%; height: 50px; padding: 0 78px 0 46px;
+  border: 1px solid var(--borda-forte); border-radius: var(--raio-pílula);
   background: var(--superfície); font-size: 16px; outline: none;
   box-shadow: var(--sombra-1);
 }
 .busca input::-webkit-search-cancel-button { display: none; }
 .busca input:focus {
   border-color: var(--marca);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--marca) 18%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--acento) 28%, transparent);
 }
 .busca kbd {
-  position: absolute; right: 12px;
-  padding: 2px 7px; border: 1px solid var(--borda); border-radius: 6px;
+  position: absolute; right: 16px;
+  padding: 2px 8px; border: 1px solid var(--borda); border-radius: 8px;
   background: var(--superfície-3); color: var(--tinta-suave);
   font-family: var(--fonte); font-size: var(--t-xs); font-weight: 600;
 }
@@ -99,7 +98,7 @@
   display: grid;
   grid-template-columns: 36px minmax(0, 1fr) auto;
   align-items: center; gap: 12px;
-  padding: 9px 12px; min-height: 56px;
+  padding: 10px 14px; min-height: 60px;
   background: var(--superfície); border: 1px solid var(--borda);
   border-radius: var(--raio); text-decoration: none; color: inherit;
   transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
@@ -123,14 +122,14 @@
   box-shadow: var(--sombra-2); color: inherit;
 }
 .ferramenta-linha__ícone {
-  width: 36px; height: 36px; flex: 0 0 36px; border-radius: 10px;
+  width: 38px; height: 38px; flex: 0 0 38px; border-radius: 12px;
   display: grid; place-items: center;
   background: var(--marca-fraca); color: var(--marca);
 }
 .ferramenta-linha__ícone svg { width: 18px; height: 18px; }
 .ferramenta-linha__texto { display: block; min-width: 0; overflow: hidden; }
 .ferramenta-linha__nome {
-  margin: 0; font-size: var(--t-base); font-weight: 600; letter-spacing: -.01em;
+  margin: 0; font-size: var(--t-base); font-weight: 600; letter-spacing: -.015em;
   display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
 }
 .ferramenta-linha__resumo {
@@ -155,7 +154,7 @@
 
 .favorito {
   width: 30px; height: 30px; display: grid; place-items: center;
-  border: 0; border-radius: 8px; background: none; cursor: pointer;
+  border: 0; border-radius: var(--raio-pílula); background: none; cursor: pointer;
   color: var(--tinta-suave);
 }
 .favorito:hover { background: var(--superfície-3); color: var(--marca); }
@@ -184,13 +183,14 @@
   display: grid; place-items: center; background: var(--marca-fraca); color: var(--marca);
 }
 .categoria-cartão__ícone svg { width: 17px; height: 17px; }
-.categoria-cartão b { display: block; font-size: var(--t-sm); font-weight: 600; }
+.categoria-cartão b { display: block; font-size: var(--t-sm); font-weight: 600; letter-spacing: -.01em; }
 .categoria-cartão small { color: var(--tinta-suave); font-size: var(--t-xs); }
 
 /* ---------- Painel / seção ---------- */
 .painel {
   background: var(--superfície); border: 1px solid var(--borda);
-  border-radius: var(--raio-g); padding: 16px;
+  border-radius: var(--raio-g); padding: 20px;
+  box-shadow: var(--sombra-1);
 }
 .seção { margin-block: 26px; }
 .seção__topo {
@@ -202,11 +202,12 @@
 /* ---------- Formulário ---------- */
 .campos { display: grid; gap: 12px; }
 .campos--2 { grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); }
-.campo { display: grid; gap: 4px; min-width: 0; }
+/* align-content: start impede que a linha da grade, esticada pelo campo vizinho com dica, afaste o campo de entrada do rótulo. */
+.campo { display: grid; gap: 4px; min-width: 0; align-content: start; }
 .campo > label { font-size: var(--t-sm); font-weight: 600; }
 .campo__dica { font-size: var(--t-xs); color: var(--tinta-suave); }
 .campo input, .campo select, .campo textarea {
-  width: 100%; min-height: 40px; padding: 8px 10px;
+  width: 100%; min-height: 44px; padding: 8px 12px;
   border: 1px solid var(--borda-forte); border-radius: var(--raio-p);
   background: var(--superfície); font-size: 16px; outline: none;
 }
@@ -216,7 +217,7 @@
 .campo textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
 .campo input:focus, .campo select:focus, .campo textarea:focus {
   border-color: var(--marca);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--marca) 18%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--acento) 28%, transparent);
 }
 .campo input[aria-invalid="true"], .campo textarea[aria-invalid="true"] { border-color: var(--erro); }
 .campo__erro { font-size: var(--t-xs); color: var(--erro); font-weight: 600; }
@@ -228,12 +229,12 @@
 
 /* ---------- Resultado ---------- */
 .resultado {
-  border: 1px solid var(--borda); border-left: 3px solid var(--marca);
-  border-radius: var(--raio); background: var(--superfície-2); padding: 14px;
+  border: 1px solid var(--borda); border-left: 4px solid var(--acento);
+  border-radius: var(--raio); background: var(--superfície-2); padding: 18px;
 }
 .resultado[hidden] { display: none; }
 .resultado__valor {
-  font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.1;
+  font-size: 2rem; font-weight: 600; letter-spacing: -.045em; line-height: 1.1;
   color: var(--tinta); margin: 0 0 4px;
 }
 .resultado__linhas { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 5px; }
@@ -253,7 +254,7 @@
 }
 .progresso__barra {
   height: 100%; width: 0%; border-radius: 999px;
-  background: linear-gradient(90deg, var(--marca), var(--marca-viva));
+  background: var(--acento);
   transition: width .25s ease;
 }
 .progresso[data-estado="concluído"] .progresso__texto { color: var(--ok); }
@@ -290,7 +291,7 @@ dialog.diálogo {
   box-shadow: var(--sombra-3);
   width: min(560px, calc(100vw - 24px)); max-height: 86vh;
 }
-dialog.diálogo::backdrop { background: rgba(28, 18, 14, .5); backdrop-filter: blur(3px); }
+dialog.diálogo::backdrop { background: rgba(26, 26, 26, .5); backdrop-filter: blur(4px); }
 .diálogo__topo {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 14px 16px; border-bottom: 1px solid var(--borda);
@@ -307,7 +308,7 @@ dialog.diálogo::backdrop { background: rgba(28, 18, 14, .5); backdrop-filter: b
   position: fixed; left: 50%; bottom: calc(var(--altura-barra-inferior) + 16px);
   transform: translateX(-50%) translateY(12px);
   z-index: 120; max-width: min(420px, calc(100vw - 24px));
-  padding: 11px 15px; border-radius: var(--raio);
+  padding: 12px 18px; border-radius: var(--raio-pílula);
   background: var(--tinta); color: var(--fundo);
   box-shadow: var(--sombra-3); font-size: var(--t-sm); font-weight: 600;
   opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease;
