@@ -4,6 +4,7 @@
 // Texto é gravado como string inline escapada: nunca vira fórmula ao abrir.
 import { escaparXml } from '../validação/escapar-xml.js';
 import { compactarZip } from './compactar-zip.js';
+import { site } from '../../../dados/site.js';
 
 const ESTILOS = { normal: 0, negrito: 1, moeda: 2, moedaNegrito: 3, decimal: 4, cabeçalho: 5 };
 
@@ -27,10 +28,10 @@ function célulaXml(célula, referência) {
 }
 
 function corArgb(hexadecimal) {
-  return /^#[0-9a-f]{6}$/i.test(hexadecimal ?? '') ? `FF${hexadecimal.slice(1).toUpperCase()}` : 'FF8C491A';
+  return /^#[0-9a-f]{6}$/i.test(hexadecimal ?? '') ? `FF${hexadecimal.slice(1).toUpperCase()}` : 'FF1A1A1A';
 }
 
-export function gerarPlanilhaXlsx({ nomeDaAba = 'Planilha', linhas, largurasDasColunas = [], corDoCabeçalho = '#8c491a', título = 'Planilha', autor = 'Anderson' }) {
+export function gerarPlanilhaXlsx({ nomeDaAba = 'Planilha', linhas, largurasDasColunas = [], corDoCabeçalho = '#1a1a1a', título = 'Planilha', autor = site.autor }) {
   const aba = escaparXml(String(nomeDaAba).replace(/[\\/?*[\]:]/g, ' ').slice(0, 31) || 'Planilha');
   const colunas = largurasDasColunas.length
     ? `<cols>${largurasDasColunas.map((largura, índice) => `<col min="${índice + 1}" max="${índice + 1}" width="${largura}" customWidth="1"/>`).join('')}</cols>`

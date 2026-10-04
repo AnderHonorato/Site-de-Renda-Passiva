@@ -116,7 +116,7 @@ export default {
           documento.campo('Custo por unidade', formatarMoeda(r.porUnidadeCentavos / 100));
           documento.espaço(4);
           documento.parágrafo('Custo de ingrediente apenas. Embalagem, energia e mão de obra entram na formação do preço.',
-            { tamanho: 8.5, cor: '#6d5d55' });
+            { tamanho: 8.5, cor: '#5c6270' });
           baixar(documento.gerarBytes(), `${nomeDeArquivo(`custo-${nomeDaReceita}`)}.pdf`, 'application/pdf');
         };
 

@@ -172,6 +172,6 @@ export function pdfDoResumo({ título, subtítulo = '', destaque, resultados, da
   documento.seção('A conta');
   for (const linha of conta) documento.parágrafo(pdf(linha), { tamanho: 9.5 });
   documento.espaço(4);
-  documento.parágrafo('Calculado no seu navegador. Nenhum dado foi enviado.', { tamanho: 8, cor: '#6d5d55' });
+  documento.parágrafo('Calculado no seu navegador. Nenhum dado foi enviado.', { tamanho: 8, cor: '#5c6270' });
   return documento.gerarBytes();
 }

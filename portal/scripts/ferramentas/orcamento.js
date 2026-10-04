@@ -174,7 +174,7 @@ export default {
           }
           documento.espaço(4);
           documento.parágrafo('Este orçamento é uma proposta de preço e não constitui documento fiscal.',
-            { tamanho: 8.5, cor: '#6d5d55' });
+            { tamanho: 8.5, cor: '#5c6270' });
           baixar(documento.gerarBytes(), `${nomeDeArquivo(`orcamento-${númeroDoOrçamento}-${cliente}`)}.pdf`, 'application/pdf');
         };
 

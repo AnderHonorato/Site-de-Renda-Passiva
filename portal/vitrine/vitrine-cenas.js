@@ -2,11 +2,11 @@
 // Roteiro de 15 s em cinco cenas. Linguagem visual: papel recortado — sombra sólida
 // deslocada, peças que caem, quicam e balançam como papel de verdade.
 //
-//  0,00–2,55  O ponto        ponto cai, vira o selo "A", contador 0→49 e "ferramentas"
-//  2,30–6,10  Seis áreas     o selo se abre em seis cartões animados; clique em Confeitaria
+//  0,00–2,55  O ponto        ponto cai, vira o selo "A", contador até o número de ferramentas prontas
+//  2,30–6,10  Áreas          o selo se abre em seis cartões animados; clique em "Receitas e preços"
 //  5,90–9,55  Na hora        o cartão vira a calculadora real de preço de venda; etiqueta balança
-//  9,30–12,3  Como se mantém grátis para quem usa, anúncio discreto, apoio via Pix
-// 12,00–15,0  Assinatura     selo, "Ferramentas por Ander", lema; volta ao ponto (loop contínuo)
+//  9,30–12,3  Grátis         sem cadastro, documentos e PDF, QR Code
+// 12,00–15,0  Assinatura     selo, nome do site e assinatura (dados/site.js), lema; volta ao ponto (loop contínuo)
 
 import {
   cores, categorias, limitar, progresso, misturar, curva, mola, pêndulo,
@@ -175,7 +175,7 @@ function desenharSelo(ctx, { x, y, tamanho, giro = 0, raio = 0.245, preenchiment
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.save();
     ctx.scale(letra, letra);
-    ctx.fillStyle = misturarCor(cores.papel, cores.vinho, 1 - preenchimento);
+    ctx.fillStyle = misturarCor(cores.tinta, cores.vinho, 1 - preenchimento);
     ctx.fillText('A', 0, tamanho * 0.03);
     ctx.restore();
   }
@@ -772,7 +772,7 @@ function cenaFerramenta(ctx, c, tx) {
     ctx.globalAlpha = surgir(6.55);
     caminhoArredondado(ctx, bx + 4, by + 10, bl, ba, 46); ctx.fillStyle = cores.vinhoEscuro; ctx.fill();
     caminhoArredondado(ctx, bx + 4 * aperto, by + 8 * aperto, bl, ba, 46); ctx.fillStyle = cores.vinho; ctx.fill();
-    fonte(ctx, 'corpo', 34, 700); ctx.fillStyle = cores.papel; ctx.textAlign = 'center';
+    fonte(ctx, 'corpo', 34, 700); ctx.fillStyle = cores.tinta; ctx.textAlign = 'center';
     ctx.fillText(tx.botão, bx + bl / 2 + 4 * aperto, by + 58 + 8 * aperto);
     ctx.textAlign = 'left';
     const onda = progresso(t, 7.56, 7.95);
@@ -927,7 +927,6 @@ function cenaGrátis(ctx, c, tx) {
       ctx.strokeStyle = cores.rosa; ctx.lineWidth = 4;
       caminhoArredondado(ctx, -sl / 2, -sa / 2, sl, sa, 16); ctx.stroke();
       ctx.restore();
-      fonte(ctx, 'corpo', 22, 600); ctx.fillStyle = cores.suave; ctx.fillText('Ad', -sl / 2 + 16, -sa / 2 + 32);
       [0.78, 0.62, 0.45].forEach((f, k) => {
         const p = curva.saidaCubica(progresso(t, 10.6 + k * 0.08, 10.9 + k * 0.08));
         ctx.fillStyle = cores.borda;

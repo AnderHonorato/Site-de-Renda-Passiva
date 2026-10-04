@@ -97,7 +97,7 @@ export function baixarPlanilha(linhas, nome, { aba = 'Dados', larguras = [], tí
     nomeDaAba: aba,
     linhas,
     largurasDasColunas: larguras,
-    corDoCabeçalho: '#9a3d28',
+    corDoCabeçalho: '#1a1a1a',
     título: título ?? nome,
     autor: 'Portal de Ferramentas',
   });

@@ -84,7 +84,7 @@ export default {
           );
           documento.espaço(4);
           documento.parágrafo('Quantidades estimadas a partir de consumo médio por pessoa. Ajuste ao seu grupo.',
-            { tamanho: 8.5, cor: '#6d5d55' });
+            { tamanho: 8.5, cor: '#5c6270' });
           baixar(documento.gerarBytes(), `${nomeDeArquivo(`lista-${dados.tipo}`)}.pdf`, 'application/pdf');
         };
 

@@ -13,6 +13,7 @@ import { montarPágina, escapar } from './modelo-de-página.mjs';
 import { ícone } from '../scripts/núcleo/ícones.js';
 import { ferramentas, ferramentasProntas, conferirCatálogo } from '../dados/catálogo.js';
 import { categorias, tarefas } from '../dados/categorias.js';
+import { site } from '../dados/site.js';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -118,7 +119,7 @@ function páginaInicial() {
     </section>`;
 
   return montarPágina({
-    título: 'Ferramentas do Ander — resolva a tarefa, não procure o botão',
+    título: `${site.nome} — resolva a tarefa, não procure o botão`,
     descrição: `Portal com ${prontas} ferramentas prontas para calcular, criar e organizar. Funciona no navegador, sem cadastro e sem enviar seus dados.`,
     atual: 'início',
     conteúdo,
@@ -162,7 +163,7 @@ function páginaDeCatálogo() {
     </section>`;
 
   return montarPágina({
-    título: 'Todas as ferramentas — Ferramentas do Ander',
+    título: `Todas as ferramentas — ${site.nome}`,
     descrição: `Catálogo completo com ${ferramentas.length} ferramentas organizadas por categoria e tipo de tarefa.`,
     atual: 'ferramentas',
     conteúdo,
@@ -195,7 +196,7 @@ function páginaDeSalvos() {
     </section>`;
 
   return montarPágina({
-    título: 'Meus salvos — Ferramentas do Ander',
+    título: `Meus salvos — ${site.nome}`,
     descrição: 'Favoritos e histórico das ferramentas que você usa, guardados no seu próprio navegador.',
     atual: 'salvos',
     conteúdo,
@@ -210,7 +211,7 @@ function páginaDeTexto({ título, descrição, atual, corpo, arquivo }) {
   return {
     arquivo,
     html: montarPágina({
-      título: `${título} — Ferramentas do Ander`,
+      título: `${título} — ${site.nome}`,
       descrição, atual,
       conteúdo: `    <section class="largura prosa topo-página">\n      <h1>${escapar(título)}</h1>\n${corpo}\n    </section>`,
     }),
@@ -347,7 +348,7 @@ function páginaDeFerramenta(f) {
     </div>`;
 
   return montarPágina({
-    título: `${f.nome} — Ferramentas do Ander`,
+    título: `${f.nome} — ${site.nome}`,
     descrição: f.resumo,
     base: '../../',
     atual: 'ferramentas',
@@ -360,9 +361,9 @@ function páginaDeFerramenta(f) {
 
 function manifesto() {
   return JSON.stringify({
-    name: 'Ferramentas do Ander',
-    short_name: 'Ferramentas',
-    description: 'Ferramentas para calcular, criar e organizar, direto no navegador.',
+    name: site.nome,
+    short_name: site.nomeCurto,
+    description: site.descrição,
     start_url: './',
     scope: './',
     display: 'standalone',
@@ -374,6 +375,13 @@ function manifesto() {
       name: f.nome, url: `f/${f.slug}/`,
     })),
   }, null, 2);
+}
+
+/** Números que a vitrine mostra. Saem do catálogo, nunca são digitados à mão. */
+function númerosDaVitrine() {
+  return `// Gerado por ferramentas/gerar.mjs a partir do catálogo. Não edite à mão.
+export const números = Object.freeze({ prontas: ${ferramentasProntas.length}, catálogo: ${ferramentas.length}, categorias: ${categorias.length} });
+`;
 }
 
 function íconeDoSite() {
@@ -396,7 +404,7 @@ function sitemap(base = 'https://exemplo.invalid/portal/') {
 
 function página404() {
   return montarPágina({
-    título: 'Página não encontrada — Ferramentas do Ander',
+    título: `Página não encontrada — ${site.nome}`,
     descrição: 'O endereço pedido não existe no portal.',
     semÍndice: true,
     conteúdo: `    <section class="largura prosa topo-página--folgado">
@@ -436,6 +444,7 @@ async function principal() {
     ['404.html', página404()],
     ['manifesto.webmanifest', manifesto()],
     ['recursos/ícone.svg', íconeDoSite()],
+    ['vitrine/vitrine-números.js', númerosDaVitrine()],
     ['sitemap.xml', sitemap()],
     ['robots.txt', 'User-agent: *\nAllow: /\nDisallow: /salvos.html\n'],
     ...páginasInstitucionais().map((p) => [p.arquivo, p.html]),

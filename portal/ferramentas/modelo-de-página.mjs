@@ -7,6 +7,7 @@
  */
 import { ícone } from '../scripts/núcleo/ícones.js';
 import { categorias } from '../dados/categorias.js';
+import { site } from '../dados/site.js';
 
 const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 const escapar = (valor) => String(valor ?? '').replace(/[&<>"']/g, (c) => ESCAPES[c]);
@@ -30,9 +31,9 @@ function cabeçalho(base, atual) {
 
   return `<header class="topo">
   <div class="largura topo__interior">
-    <a class="marca" href="${base || './'}" aria-label="Ferramentas do Ander, início">
+    <a class="marca" href="${base || './'}" aria-label="${escapar(site.nome)}, início">
       <span class="marca__selo">${ícone('marca')}</span>
-      <span class="marca__nome"><b>Ferramentas</b><span>do Ander</span></span>
+      <span class="marca__nome"><b>${escapar(site.destaque)}</b><span>${escapar(site.complemento)}</span></span>
     </a>
     <nav class="topo__nav" aria-label="Navegação principal">
       <span class="menu-categorias">
@@ -74,7 +75,7 @@ function rodapé(base) {
   return `<footer class="rodapé">
   <div class="largura rodapé__interior">
     <div>
-      <a class="marca" href="${base || './'}"><span class="marca__selo">${ícone('marca')}</span><span class="marca__nome"><b>Ferramentas</b><span>do Ander</span></span></a>
+      <a class="marca" href="${base || './'}"><span class="marca__selo">${ícone('marca')}</span><span class="marca__nome"><b>${escapar(site.destaque)}</b><span>${escapar(site.complemento)}</span></span></a>
       <p class="pequeno suave t-1 medida-curta">Ferramentas para calcular, criar e organizar. Rodam no seu navegador, sem cadastro.</p>
     </div>
     <div><h4>Categorias</h4><ul>${porCategoria}</ul></div>
@@ -89,7 +90,7 @@ function rodapé(base) {
     </ul></div>
   </div>
   <div class="largura rodapé__legal">
-    <span>Criado por Anderson · 2026</span>
+    <span>Criado por ${escapar(site.autor)} · 2026</span>
     <span>Seus dados ficam neste aparelho.</span>
   </div>
 </footer>`;

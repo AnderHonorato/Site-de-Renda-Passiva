@@ -6,20 +6,22 @@
  * que não corta linha no meio, rodapé numerado e tipografia legível.
  */
 import { criarDocumentoPdf } from '../pdf/criar-documento-pdf.js';
+import { site } from '../../../dados/site.js';
 import { quebrarTextoEmLinhas } from '../pdf/quebrar-texto-em-linhas.js';
 
 const MARGEM = 18;
 const LARGURA = 210;
 const ALTURA = 297;
-const COR_MARCA = '#9a3d28';
-const COR_TEXTO = '#241c18';
-const COR_SUAVE = '#6d5d55';
+const COR_FAIXA = '#1a1a1a';
+const COR_MARCA = '#a8472a';
+const COR_TEXTO = '#1a1a1a';
+const COR_SUAVE = '#5c6270';
 
 /**
  * Cria um documento com cabeçalho de marca, controle de página e rodapé.
  * @param {{título: string, subtítulo?: string, marca?: string, autor?: string}} opções
  */
-export function montarDocumentoPdf({ título, subtítulo = '', marca = 'Ferramentas do Ander', autor = 'Anderson' }) {
+export function montarDocumentoPdf({ título, subtítulo = '', marca = site.nome, autor = site.autor }) {
   const pdf = criarDocumentoPdf({ título, autor, largura: LARGURA, altura: ALTURA });
   let y = 0;
   let página = 1;
@@ -32,11 +34,11 @@ export function montarDocumentoPdf({ título, subtítulo = '', marca = 'Ferramen
   }
 
   function cabeçalho() {
-    pdf.retângulo(0, 0, LARGURA, 26, { preenchimento: COR_MARCA, contorno: false });
+    pdf.retângulo(0, 0, LARGURA, 26, { preenchimento: COR_FAIXA, contorno: false });
     pdf.texto(MARGEM, 11, marca, { tamanho: 9, cor: '#ffffff', negrito: true });
     pdf.texto(MARGEM, 19, título, { tamanho: 14, cor: '#ffffff', negrito: true });
     if (subtítulo) {
-      pdf.texto(LARGURA - MARGEM, 19, subtítulo, { tamanho: 9, cor: '#f6e3dc', alinhamento: 'direita' });
+      pdf.texto(LARGURA - MARGEM, 19, subtítulo, { tamanho: 9, cor: '#ddd6cc', alinhamento: 'direita' });
     }
     y = 38;
   }
@@ -138,7 +140,7 @@ export function montarDocumentoPdf({ título, subtítulo = '', marca = 'Ferramen
     /** Caixa de destaque, usada para o total. */
     destaque(rótulo, valor) {
       reservar(18);
-      pdf.retângulo(MARGEM, y - 3, LARGURA - MARGEM * 2, 14, { preenchimento: '#f6e3dc', contorno: false });
+      pdf.retângulo(MARGEM, y - 3, LARGURA - MARGEM * 2, 14, { preenchimento: '#f6e3da', contorno: false });
       pdf.texto(MARGEM + 4, y + 5, rótulo, { tamanho: 10, negrito: true, cor: COR_MARCA });
       pdf.texto(LARGURA - MARGEM - 4, y + 5, String(valor), {
         tamanho: 13, negrito: true, cor: COR_MARCA, alinhamento: 'direita',

@@ -4,6 +4,7 @@
 // folhas de atividades, moldes com linhas de corte/dobra e documentos simples.
 import { codificarWinAnsi } from './codificar-winansi.js';
 import { medirTextoHelvetica } from './medir-texto-helvetica.js';
+import { site } from '../../../dados/site.js';
 
 const PONTOS_POR_MM = 72 / 25.4;
 
@@ -44,7 +45,7 @@ function textoUtf16Hexadecimal(texto) {
   return `<${resultado.toUpperCase()}>`;
 }
 
-export function criarDocumentoPdf({ título = 'Documento', autor = 'Anderson', largura = 210, altura = 297 } = {}) {
+export function criarDocumentoPdf({ título = 'Documento', autor = site.autor, largura = 210, altura = 297 } = {}) {
   const páginas = [];
   let atual = null;
   let substituídos = 0;
