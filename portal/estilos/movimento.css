@@ -1,0 +1,85 @@
+/* Movimento: tempos, curvas e entradas do portal.
+ *
+ * Regras da casa:
+ * - só `opacity` e `transform` se mexem; nada empurra o texto (sem salto de layout);
+ * - o estado final de toda animação é o estado natural do elemento: se o CSS do movimento
+ *   não carregar, ou se a pessoa pedir menos movimento, a página fica igual, só parada;
+ * - cada entrada tem uma razão: mostrar o que apareceu ou confirmar o que a pessoa fez.
+ *   Nada se mexe sem motivo e nada em laço, fora as ilustrações dos estados de erro.
+ * O bloco `prefers-reduced-motion` de núcleo.css já reduz tudo a um quadro só. */
+
+:root {
+  --mov-rápido: 140ms;
+  --mov-médio: 280ms;
+  --mov-lento: 520ms;
+  --curva-saída: cubic-bezier(.22, 1, .36, 1);
+  --curva-mola: cubic-bezier(.34, 1.56, .64, 1);
+  --curva-suave: cubic-bezier(.4, 0, .2, 1);
+  --desloca-entrada: 12px;
+}
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(var(--desloca-entrada)); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes surgir { from { opacity: 0; } to { opacity: 1; } }
+@keyframes descer {
+  from { opacity: 0; transform: translateY(-6px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes saltar {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+@keyframes virar {
+  from { opacity: 0; transform: rotate(-80deg) scale(.55); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes revelar-resultado {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes erguer-valor {
+  from { opacity: .35; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Uma peça que entra. O atraso vem das classes .atraso-1 a .atraso-4. */
+.entra { animation: entrar var(--mov-lento) var(--curva-saída) both; animation-delay: var(--atraso, 0ms); }
+.atraso-1 { --atraso: 70ms; }
+.atraso-2 { --atraso: 140ms; }
+.atraso-3 { --atraso: 210ms; }
+.atraso-4 { --atraso: 280ms; }
+
+/* Filhos que entram em cascata, um depois do outro (até 12; do 13º em diante entram juntos). */
+.cascata > * { animation: entrar var(--mov-lento) var(--curva-saída) both; animation-delay: 540ms; }
+.cascata > :nth-child(1) { animation-delay: 0ms; }
+.cascata > :nth-child(2) { animation-delay: 45ms; }
+.cascata > :nth-child(3) { animation-delay: 90ms; }
+.cascata > :nth-child(4) { animation-delay: 135ms; }
+.cascata > :nth-child(5) { animation-delay: 180ms; }
+.cascata > :nth-child(6) { animation-delay: 225ms; }
+.cascata > :nth-child(7) { animation-delay: 270ms; }
+.cascata > :nth-child(8) { animation-delay: 315ms; }
+.cascata > :nth-child(9) { animation-delay: 360ms; }
+.cascata > :nth-child(10) { animation-delay: 405ms; }
+.cascata > :nth-child(11) { animation-delay: 450ms; }
+.cascata > :nth-child(12) { animation-delay: 495ms; }
+
+/* Confirmações: o botão responde ao toque. */
+.pulso { animation: saltar var(--mov-médio) var(--curva-mola); }
+.virada { animation: virar var(--mov-médio) var(--curva-mola); }
+
+/* Resultado da ferramenta: aparece da primeira vez; nas atualizações só o valor se ergue. */
+.resultado[data-novo="sim"] { animation: revelar-resultado var(--mov-médio) var(--curva-saída); }
+.resultado[data-atualizado="sim"] .resultado__valor { animation: erguer-valor var(--mov-rápido) var(--curva-saída); }
+
+/* Menu de categorias abre descendo do botão. */
+.menu-categorias__painel:not([hidden]) { animation: descer var(--mov-médio) var(--curva-saída); transform-origin: top left; }
+
+/* Mensagem de bloco que falhou entra suave, sem desviar a atenção do resto da página. */
+.bloco-falhou { animation: surgir var(--mov-médio) var(--curva-suave) both; }
+
+/* Ilustrações de erro: vêm de arquivos SVG com a própria animação, que já respeita o movimento reduzido. */
+.ilustração { display: block; width: min(100%, 320px); height: auto; }

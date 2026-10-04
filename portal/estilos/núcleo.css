@@ -213,6 +213,9 @@ svg { display: block; }
   text-transform: uppercase; color: var(--tinta-suave); margin: 0;
 }
 
+/* O atributo hidden vale mesmo quando uma regra define display. */
+[hidden] { display: none !important; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;

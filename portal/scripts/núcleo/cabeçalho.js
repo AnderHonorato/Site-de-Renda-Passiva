@@ -1,6 +1,8 @@
 /** Comportamento do cabeçalho: menu de categorias, tema e atalho de busca. */
 import { alternarTema, lerTema } from './preferências.js';
 import { ícone } from './ícones.js';
+import { isolarBloco, instalarTratadorGlobal } from './isolar-bloco.js';
+import { tocar } from './movimento.js';
 
 function ligarMenuDeCategorias() {
   const gatilho = document.getElementById('abrir-categorias');
@@ -40,7 +42,7 @@ function ligarTema() {
   };
 
   pintarÍcone();
-  botão.addEventListener('click', () => { alternarTema(); pintarÍcone(); });
+  botão.addEventListener('click', () => { alternarTema(); pintarÍcone(); tocar(botão, 'virada'); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', pintarÍcone);
 }
 
@@ -70,6 +72,8 @@ function ligarAtalhoDeBusca() {
   });
 }
 
-ligarMenuDeCategorias();
-ligarTema();
-ligarAtalhoDeBusca();
+// Cada comportamento do cabeçalho é isolado: se um falhar, os outros continuam.
+instalarTratadorGlobal();
+isolarBloco('menu-de-categorias', ligarMenuDeCategorias);
+isolarBloco('tema', ligarTema);
+isolarBloco('atalho-de-busca', ligarAtalhoDeBusca);

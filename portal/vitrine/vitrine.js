@@ -57,6 +57,23 @@ export function montarVitrine(elemento, { idioma } = {}) {
   return vitrine;
 }
 
+/**
+ * Monta uma vitrine quando ela chega perto da tela e devolve uma promessa: resolve quando montou
+ * e rejeita se a fonte ou o desenho falharem (a página inicial usa isso com isolarBloco).
+ */
+export function montarQuandoPerto(elemento) {
+  return new Promise((resolver, rejeitar) => {
+    const montar = () => carregarFontes(1500).then(() => { montarVitrine(elemento); resolver(); }).catch(rejeitar);
+    if (!('IntersectionObserver' in window)) { montar(); return; }
+    const observador = new IntersectionObserver((entradas) => {
+      if (!entradas.some((e) => e.isIntersecting)) return;
+      observador.disconnect();
+      montar();
+    }, { rootMargin: '400px 0px' });
+    observador.observe(elemento);
+  });
+}
+
 // Monta só quando a vitrine chega perto da tela: no celular ela fica abaixo da dobra,
 // então fontes (~106 KB) e desenho não disputam o carregamento inicial da página.
 function montarTodas() {

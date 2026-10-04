@@ -9,6 +9,8 @@ import { ferramentaPorSlug } from '../../dados/catálogo.js';
 import { registrarUso, éFavorito, alternarFavorito } from './preferências.js';
 import { escapar } from './texto.js';
 import { avisar } from './interface.js';
+import { isolarBloco, carregarBloco } from './isolar-bloco.js';
+import { pulsar } from './movimento.js';
 
 const raiz = document.getElementById('ferramenta');
 const slug = raiz?.dataset.slug;
@@ -26,6 +28,7 @@ function ligarFavorito() {
     const { favoritado, limiteAtingido } = alternarFavorito(slug);
     if (limiteAtingido) { avisar('Limite de favoritos atingido.'); return; }
     pintar(favoritado);
+    pulsar(botão);
     avisar(favoritado ? 'Salvo nos favoritos.' : 'Removido dos favoritos.');
   });
 }
@@ -64,18 +67,17 @@ function escreverInstruções(instruções = {}) {
 
 async function iniciar() {
   if (!raiz || !ferramenta) return;
-  ligarFavorito();
+  isolarBloco('favorito', ligarFavorito);
   registrarUso(slug);
-  try {
-    const módulo = await import(`../ferramentas/${slug}.js`);
+  // A ferramenta é um bloco à parte: se o módulo dela não carregar ou quebrar ao montar, só a
+  // área dela mostra a mensagem (com "Tentar de novo"); o cabeçalho e o resto da página seguem.
+  await isolarBloco('ferramenta', async (tentativa) => {
+    const módulo = await carregarBloco(new URL(`../ferramentas/${slug}.js`, import.meta.url).href, tentativa);
     const definição = módulo.default;
+    raiz.replaceChildren();
     definição.montar(raiz, ferramenta);
     escreverInstruções(definição.instruções);
-  } catch (erro) {
-    console.error(erro);
-    raiz.innerHTML = '<p class="vazio">Não foi possível carregar esta ferramenta. '
-      + 'Recarregue a página; se continuar, o problema está no portal e não nos seus dados.</p>';
-  }
+  }, { alvo: raiz });
 }
 
 await iniciar();

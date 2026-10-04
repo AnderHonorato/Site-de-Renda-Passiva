@@ -45,9 +45,10 @@ function páginaInicial() {
 
   const conteúdo = `    <section class="largura abertura">
       <div class="abertura__grade">
-        <div>
+        <div class="cascata">
           <h1 class="abertura__título">O que você precisa <em>resolver</em> agora?</h1>
-          <p class="abertura__linha">Escreva a tarefa, não o nome da ferramenta. ${prontas} ferramentas prontas, sem cadastro, rodando no seu navegador.</p>
+          <p class="abertura__linha">Escreva a tarefa, não o nome da ferramenta. <b data-conta="${prontas}">${prontas}</b> ferramentas prontas, sem cadastro, rodando no seu navegador.</p>
+          <div id="bloco-busca">
           <div class="busca">
             ${ícone('busca')}
             <input id="busca" type="search" autocomplete="off" enterkeyhint="search"
@@ -60,22 +61,23 @@ function páginaInicial() {
             <p class="rótulo">Pessoas costumam pedir</p>
             <div class="intenções__lista" id="intenções"></div>
           </div>
+          </div>
         </div>
-        <aside class="acesso-rápido" aria-label="Acesso rápido">
+        <aside class="acesso-rápido entra atraso-3" aria-label="Acesso rápido">
           <p class="acesso-rápido__título">Comece por aqui</p>
           ${atalhos}
         </aside>
       </div>
     </section>
 
-    <div class="largura">
-      <section class="vitrine" data-vitrine data-idioma="pt-BR" aria-label="Apresentação animada do portal">
+    <div class="largura" id="bloco-vitrine">
+      <section class="vitrine" data-vitrine data-vitrine-manual data-idioma="pt-BR" aria-label="Apresentação animada do portal">
         <canvas class="vitrine__tela"></canvas>
         <button class="vitrine__controle" type="button" data-vitrine-controle aria-label="Pausar animação"></button>
         <noscript>
           <picture>
             <source media="(max-width: 640px)" srcset="./vitrine/imagens/vitrine-capa-retrato.webp">
-            <img class="vitrine__capa" src="./vitrine/imagens/vitrine-capa-paisagem.webp" alt="Ferramentas por Ander: 49 ferramentas grátis em seis áreas." width="1280" height="720">
+            <img class="vitrine__capa" src="./vitrine/imagens/vitrine-capa-paisagem.webp" alt="${escapar(site.nome)}: ${prontas} ferramentas grátis." width="1280" height="720">
           </picture>
         </noscript>
       </section>
@@ -124,7 +126,7 @@ function páginaInicial() {
     atual: 'início',
     conteúdo,
     estilos: ['./vitrine/vitrine.css'],
-    scripts: ['páginas/início.js', './vitrine/vitrine.js'],
+    scripts: ['páginas/início.js'],
   });
 }
 
@@ -409,13 +411,16 @@ function página404() {
     // Raiz absoluta: o servidor entrega esta página em qualquer caminho inexistente (/a/b/c).
     base: '/',
     semÍndice: true,
-    conteúdo: `    <section class="largura prosa topo-página--folgado">
-      <h1>Esta página não existe</h1>
-      <p>O endereço pode ter mudado ou a ferramenta ainda não foi publicada.</p>
-      <p class="ações t-3">
-        <a class="botão" href="/">Ir para o início</a>
-        <a class="botão botão--linha" href="/ferramentas.html">Ver o catálogo</a>
-      </p>
+    conteúdo: `    <section class="largura topo-página--folgado página-de-erro">
+      <img class="ilustração entra atraso-1" src="/recursos/ilustrações/erro-404.svg" alt="" width="320" height="240">
+      <div class="prosa cascata">
+        <h1>Esta página não existe</h1>
+        <p>O endereço pode ter mudado ou a ferramenta ainda não foi publicada.</p>
+        <p class="ações t-3">
+          <a class="botão" href="/">Ir para o início</a>
+          <a class="botão botão--linha" href="/ferramentas.html">Ver o catálogo</a>
+        </p>
+      </div>
     </section>`,
   });
 }

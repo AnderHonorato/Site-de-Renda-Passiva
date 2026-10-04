@@ -265,6 +265,17 @@
 .girando { animation: girar 1s linear infinite; }
 @keyframes girar { to { transform: rotate(360deg); } }
 
+/* ---------- Bloco que falhou (isolarBloco) ---------- */
+.bloco-falhou {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;
+  padding: 20px; border: 1px solid var(--borda); border-radius: var(--raio-g);
+  background: var(--superfície); box-shadow: var(--sombra-1);
+}
+.bloco-falhou__desenho { width: 160px; height: auto; flex: none; }
+.bloco-falhou__título { margin: 0 0 4px; font-weight: 600; }
+.bloco-falhou p { margin: 0 0 8px; }
+.bloco-falhou .ações { margin: 8px 0 0; display: flex; gap: 8px; flex-wrap: wrap; }
+
 /* ---------- Estado vazio ---------- */
 .vazio {
   padding: 26px 18px; text-align: center; color: var(--tinta-suave);
@@ -272,6 +283,7 @@
   background: var(--superfície-2);
 }
 .vazio svg { width: 28px; height: 28px; margin: 0 auto 8px; color: var(--borda-forte); }
+.vazio__desenho { display: block; width: 160px; height: auto; margin: 0 auto 6px; }
 .vazio[hidden] { display: none; }
 
 /* ---------- Tabela ---------- */
@@ -311,7 +323,7 @@ dialog.diálogo::backdrop { background: rgba(26, 26, 26, .5); backdrop-filter: b
   padding: 12px 18px; border-radius: var(--raio-pílula);
   background: var(--tinta); color: var(--fundo);
   box-shadow: var(--sombra-3); font-size: var(--t-sm); font-weight: 600;
-  opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease;
+  opacity: 0; pointer-events: none; transition: opacity var(--mov-médio) var(--curva-saída), transform var(--mov-médio) var(--curva-mola);
 }
 .notificação[data-visível="sim"] { opacity: 1; transform: translateX(-50%) translateY(0); }
 @media (min-width: 861px) {

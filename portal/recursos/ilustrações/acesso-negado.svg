@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" role="img" aria-labelledby="t">
+  <title id="t">Um cadeado fechado que balança de leve</title>
+  <style>
+    :root { --tinta: #1a1a1a; --sombra: #1a1a1a; --sombra-alfa: .07; }
+    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --sombra: #000; --sombra-alfa: .4; } }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    ellipse[opacity] { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .cadeado { animation: negar 4.4s ease-in-out infinite; transform-origin: 160px 192px; }
+    @keyframes negar { 0%, 70%, 100% { transform: rotate(0deg); } 74% { transform: rotate(-5deg); } 78% { transform: rotate(5deg); } 82% { transform: rotate(-3deg); } 86% { transform: rotate(2deg); } }
+    @media (prefers-reduced-motion: reduce) { .cadeado { animation: none; } }
+  </style>
+  <ellipse cx="160" cy="214" rx="86" ry="11" fill="#1a1a1a" opacity=".07"/>
+  <g class="cadeado">
+    <path d="M126 112V88a34 34 0 0 1 68 0v24" fill="none" stroke="#1a1a1a" stroke-width="12" stroke-linecap="round"/>
+    <path d="M126 112V88a34 34 0 0 1 68 0v24" fill="none" stroke="#c9b89b" stroke-width="5" stroke-linecap="round"/>
+    <rect x="104" y="108" width="112" height="90" rx="20" fill="#d97757" stroke="#1a1a1a" stroke-width="3"/>
+    <circle cx="160" cy="148" r="11" fill="#1a1a1a"/>
+    <rect x="155.5" y="152" width="9" height="24" rx="4.5" fill="#1a1a1a"/>
+    <path d="M122 126h20" stroke="#fffdf9" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+  </g>
+</svg>

@@ -11,6 +11,7 @@ import { escapar, paraNúmero } from './texto.js';
 import { ícone } from './ícones.js';
 import { criarProgresso, mostrarErro, limparErros, lerFormulário, avisar } from './interface.js';
 import { copiar, baixar, baixarCsv, baixarPlanilha, nomeDeArquivo } from './exportar.js';
+import { marcarResultado, pulsar } from './movimento.js';
 
 /** Erro de entrada: a mensagem vai para o campo indicado, não para o console. */
 export class ErroDeEntrada extends Error {
@@ -198,11 +199,14 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       ${tabela}
       ${observações}
       ${botões.length ? `<div class="ações t-3">${botões.join('')}</div>` : ''}`;
+    const primeiraVez = caixaDeResultado.hidden;
     caixaDeResultado.hidden = false;
+    marcarResultado(caixaDeResultado, primeiraVez);
 
-    caixaDeResultado.querySelector('[data-copiar]')?.addEventListener('click', async () => {
+    caixaDeResultado.querySelector('[data-copiar]')?.addEventListener('click', async (evento) => {
       const conteúdo = saída.texto ?? [saída.valor, ...(saída.linhas ?? []).map(([r, v]) => `${r}: ${v}`)].join('\n');
       const situação = await copiar(conteúdo);
+      if (situação === 'copiado') pulsar(evento.currentTarget);
       avisar(situação === 'copiado' ? 'Copiado.' : 'Seu navegador bloqueou a cópia automática. Selecione o texto e copie.');
     });
 

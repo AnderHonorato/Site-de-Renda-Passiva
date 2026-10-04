@@ -188,3 +188,10 @@ body[data-modo="cliente"] .ferramenta-topo { padding-block: 14px 10px; }
   table.tabela { page-break-inside: auto; }
   table.tabela tr { page-break-inside: avoid; }
 }
+
+/* Página de erro: desenho ao lado do texto no computador, em cima no celular. */
+.página-de-erro { display: grid; gap: 24px; align-items: center; justify-items: start; }
+.página-de-erro .ilustração { width: min(100%, 300px); }
+@media (min-width: 761px) {
+  .página-de-erro { grid-template-columns: minmax(220px, 320px) minmax(0, 1fr); gap: 40px; }
+}

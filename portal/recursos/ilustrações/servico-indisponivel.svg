@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" role="img" aria-labelledby="t">
+  <title id="t">Um servidor dormindo, com os olhos fechados e letras Z subindo</title>
+  <style>
+    :root { --tinta: #1a1a1a; --sombra: #1a1a1a; --sombra-alfa: .07; }
+    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --sombra: #000; --sombra-alfa: .4; } }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    ellipse[opacity] { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .z { animation: subir 3.6s ease-in-out infinite; opacity: 0; }
+    .z2 { animation-delay: 1.2s; }
+    .z3 { animation-delay: 2.4s; }
+    @keyframes subir { 0% { transform: translate(0, 12px) scale(.7); opacity: 0; } 25% { opacity: 1; } 100% { transform: translate(14px, -26px) scale(1.05); opacity: 0; } }
+    .respira { animation: respirar 3.6s ease-in-out infinite; transform-origin: 160px 190px; }
+    @keyframes respirar { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.025); } }
+    @media (prefers-reduced-motion: reduce) { .z { animation: none; opacity: 1; } .respira { animation: none; } }
+  </style>
+  <ellipse cx="160" cy="214" rx="96" ry="11" fill="#1a1a1a" opacity=".07"/>
+  <g class="respira">
+    <rect x="96" y="76" width="128" height="114" rx="26" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3"/>
+    <rect x="116" y="96" width="88" height="10" rx="5" fill="#b8a88a"/>
+    <path d="M128 140q9 9 18 0M174 140q9 9 18 0" fill="none" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M152 160q8 5 16 0" fill="none" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="116" cy="154" r="7" fill="#e8a58d" opacity=".8"/><circle cx="204" cy="154" r="7" fill="#e8a58d" opacity=".8"/>
+  </g>
+  <g fill="none" stroke="#d97757" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path class="z z1" d="M236 74h18l-18 20h18"/>
+    <path class="z z2" d="M250 56h13l-13 14h13"/>
+    <path class="z z3" d="M262 42h9l-9 10h9"/>
+  </g>
+</svg>

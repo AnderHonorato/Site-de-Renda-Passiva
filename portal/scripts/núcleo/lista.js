@@ -74,7 +74,7 @@ function fichaDaPlanejada(f) {
 export function desenharLista(contêiner, lista, { base = '', vazio = 'Nenhuma ferramenta encontrada.' } = {}) {
   const favoritos = new Set(lerFavoritos());
   if (lista.length === 0) {
-    contêiner.innerHTML = `<p class="vazio">${ícone('busca')}${escapar(vazio)}</p>`;
+    contêiner.innerHTML = `<p class="vazio"><img class="vazio__desenho" src="${base}recursos/ilustrações/estado-vazio.svg" alt="" width="160" height="120">${escapar(vazio)}</p>`;
     return;
   }
   contêiner.innerHTML = lista
