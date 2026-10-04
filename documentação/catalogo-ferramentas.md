@@ -3,7 +3,7 @@
 Gerado por `portal/ferramentas/gerar-documentos.mjs` a partir de `portal/dados/catálogo.js`.
 Não edite este arquivo à mão: edite o catálogo e gere de novo.
 
-**150 ferramentas únicas · 30 prontas · 120 planejadas**
+**150 ferramentas únicas · 34 prontas · 116 planejadas**
 
 ## Como ler a situação
 
@@ -142,30 +142,30 @@ Diferenças, prazos, dias úteis e carga horária.
 | F049 | Contagem regressiva | `contagem-regressiva` | Acompanhar um prazo sem ficar contando no calendário. | Data e título do evento. | Tempo restante e link compartilhável. | link | gratuito | navegador | planejada | — |
 | F050 | Fuso horário e reunião | `fuso-horario` | Marcar reunião com gente em outro fuso sem errar a hora. | Cidades e faixa de horário aceitável. | Horários equivalentes e janelas comuns. | copiar | gratuito | navegador | planejada | — |
 
-### Texto (0/9 prontas)
+### Texto (3/9 prontas)
 
 Contar, limpar, padronizar, comparar e transformar.
 
 | ID | Nome | Slug | Problema resolvido | Entrada | Saída | Exporta | Plano | Processa | Situação | Unificação |
 |---|---|---|---|---|---|---|---|---|---|---|
-| F051 | Contador de texto | `contador-de-texto` | Saber se um texto cabe no limite de caracteres ou quanto tempo leva para ler. | Texto colado ou digitado. | Contagens e tempo estimado de leitura e de fala. | copiar | gratuito | navegador | planejada | — |
+| F051 | Contador de texto | `contador-de-texto` | Saber se um texto cabe no limite de caracteres ou quanto tempo leva para ler. | Texto colado ou digitado. | Contagens, tempo estimado de leitura e de fala e se o texto cabe no post, no SMS, no título e na descrição. | copiar | gratuito | navegador | **pronta** | — |
 | F052 | Limpeza de texto | `limpador-de-texto` | Colar um texto de outro lugar e ele vir cheio de espaços e linhas quebradas. | Texto colado. | Texto limpo pronto para copiar. | copiar | gratuito | navegador | planejada | unifica 3 |
 | F053 | Comparar dois textos | `comparador-de-textos` | Achar o que mudou entre duas versões de um contrato ou parágrafo. | Dois textos. | Texto com as diferenças destacadas. | copiar | gratuito | navegador | planejada | — |
-| F054 | Maiúsculas e minúsculas | `transformador-de-caixa` | Corrigir um texto digitado em CAIXA ALTA por engano. | Texto. | Texto convertido. | copiar | gratuito | navegador | planejada | unifica 4 |
-| F055 | Remover acentos | `removedor-de-acentos` | Gerar um texto sem acento para um sistema que não aceita. | Texto. | Texto sem acentos. | copiar | gratuito | navegador | planejada | — |
+| F054 | Maiúsculas e minúsculas | `transformador-de-caixa` | Corrigir um texto digitado em CAIXA ALTA por engano. | Texto e o formato desejado. | Texto convertido. | copiar, baixar | gratuito | navegador | **pronta** | unifica 4 |
+| F055 | Remover acentos | `removedor-de-acentos` | Gerar um texto sem acento para um sistema que não aceita. | Texto. | Texto sem acentos. | copiar, baixar | gratuito | navegador | **pronta** | — |
 | F056 | Remover linhas duplicadas | `remover-linhas-duplicadas-de-texto` | Limpar uma lista colada que tem itens repetidos. | Texto com uma linha por item. | Lista sem duplicadas e a contagem de linhas removidas. | copiar | gratuito | navegador | planejada | — |
 | F057 | Ordenar linhas | `ordenador-de-linhas` | Colocar uma lista em ordem sem copiar para uma planilha. | Texto com uma linha por item. | Lista ordenada. | copiar | gratuito | navegador | planejada | — |
 | F058 | Modelo de mensagem | `modelo-de-mensagem` | Escrever uma mensagem comum do dia a dia sem começar do zero. | Tipo de mensagem e os dados a preencher. | Mensagem pronta para copiar. | copiar | gratuito | navegador | planejada | — |
 | F059 | Extrair e-mails e telefones de um texto | `extrator-de-contatos-em-texto` | Puxar contatos de um texto colado sem procurar um por um. | Texto. | Listas separadas de e-mails, telefones e links encontrados. | copiar, csv | gratuito | navegador | planejada | — |
 
-### Documentos e PDF (1/14 prontas)
+### Documentos e PDF (2/14 prontas)
 
 Gerar, converter, organizar e assinar documentos.
 
 | ID | Nome | Slug | Problema resolvido | Entrada | Saída | Exporta | Plano | Processa | Situação | Unificação |
 |---|---|---|---|---|---|---|---|---|---|---|
 | F009 | Gerador de recibo | `recibo` | Emitir um recibo correto sem modelo do Word. | Quem recebeu, quem pagou, valor, referência, cidade e data. | Recibo em PDF com linha de assinatura e segunda via opcional. | pdf, imprimir | gratuito | navegador | **pronta** | unifica 2 |
-| F060 | Juntar PDF | `juntar-pdf` | Mandar um só PDF em vez de vários arquivos soltos. | Dois ou mais arquivos PDF. | Um PDF único para baixar. | baixar | gratuito | navegador | planejada | — |
+| F060 | Juntar PDF | `juntar-pdf` | Mandar um só PDF em vez de vários arquivos soltos. | De dois a três arquivos PDF por vez, com até 100 MB cada. | Um PDF único para baixar. | baixar | gratuito | navegador | **pronta** | — |
 | F061 | Dividir PDF e extrair páginas | `dividir-pdf` | Tirar algumas páginas de um PDF grande sem mexer no resto. | Arquivo PDF e o intervalo de páginas. | PDF com as páginas extraídas ou vários arquivos divididos. | baixar | gratuito | navegador | planejada | unifica 2 |
 | F062 | Girar e numerar páginas do PDF | `girar-e-numerar-pdf` | Corrigir páginas escaneadas de lado e numerar um documento longo. | Arquivo PDF, páginas a girar e formato da numeração. | PDF corrigido e numerado. | baixar | gratuito | navegador | planejada | unifica 2 |
 | F063 | Marca d'água e senha no PDF | `protecao-de-pdf` | Identificar um PDF como rascunho ou impedir que qualquer um abra o arquivo. | Arquivo PDF, texto da marca d'água ou senha desejada. | PDF com marca d'água ou protegido por senha. | baixar | plus | servidor | planejada | unifica 2 |

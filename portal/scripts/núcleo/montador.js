@@ -142,7 +142,7 @@ function markupDeCampo(campo) {
  *     arquivos?: { rótulo: string, ícone?: string, gerar: () => void }[]
  *   },
  *   demorada?: boolean,
- *   aoMontar?: (raiz: HTMLElement, recalcular: () => void) => void
+ *   aoMontar?: (raiz: HTMLElement, recalcular: (opções?: {focar?: boolean}) => Promise<void>) => void
  * }} definição
  */
 export function montarFerramenta(raiz, ferramenta, definição) {
@@ -227,7 +227,13 @@ export function montarFerramenta(raiz, ferramenta, definição) {
     }
   }
 
-  async function executar() {
+  /**
+   * Valida, calcula e desenha. `focar: false` serve às ferramentas que
+   * recalculam enquanto a pessoa digita: o foco fica no campo, e não salta
+   * para o resultado (o que fecharia o teclado do celular a cada letra).
+   * @param {{focar?: boolean}} [opções]
+   */
+  async function executar({ focar = true } = {}) {
     limparErros(formulário);
     const dados = lerFormulário(formulário);
     if (demorada) progresso.iniciar('Calculando…');
@@ -236,7 +242,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       desenharResultado(saída);
       if (demorada) progresso.concluir('Pronto');
       else progresso.esconder();
-      caixaDeResultado.focus({ preventScroll: true });
+      if (focar) caixaDeResultado.focus({ preventScroll: true });
     } catch (erro) {
       caixaDeResultado.hidden = true;
       if (erro instanceof ErroDeEntrada) {
@@ -244,7 +250,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
         const campo = erro.campo && formulário.querySelector(`[data-campo="${CSS.escape(erro.campo)}"]`);
         if (campo) {
           mostrarErro(campo, erro.message);
-          campo.querySelector('input, select, textarea')?.focus();
+          if (focar) campo.querySelector('input, select, textarea')?.focus();
         } else {
           avisar(erro.message);
         }
