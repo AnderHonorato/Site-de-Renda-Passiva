@@ -9,7 +9,7 @@ Já está ligada em `portal/index.html`, logo abaixo do topo da página.
 | Recurso | Tamanho |
 |---|---|
 | JavaScript (4 módulos usados pelo site) | ~66 KB, ~19 KB com gzip |
-| Fontes (Caprasimo, Figtree 400/600/700, Caveat) | ~106 KB |
+| Fonte (Inter variável, um arquivo) | ~48 KB |
 | CSS | ~3 KB |
 | MP4 equivalente, para comparação | ~6 MB |
 

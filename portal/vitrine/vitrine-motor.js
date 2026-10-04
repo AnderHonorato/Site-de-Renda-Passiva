@@ -5,25 +5,31 @@
 
 export const DURAÇÃO = 15;
 
+// Paleta da identidade: marfim, tinta, terracota e areia. Os nomes antigos (vinho, girassol…)
+// ficaram para não mexer nas cenas: "vinho" é o terracota que serve de texto sobre o marfim
+// (3,5:1, só em texto grande), "vinhoEscuro" é o terracota fechado das sombras e "girassol"
+// é o terracota vivo dos destaques.
 export const cores = {
-  fundo: '#f8eee3',
-  papel: '#fffaf5',
-  tinta: '#2f2522',
-  suave: '#7c6961',
-  borda: '#dfcec5',
-  vinho: '#8f2d4a',
-  vinhoEscuro: '#6a1f36',
-  rosa: '#b85c6b',
-  girassol: '#d99a1e',
+  fundo: '#f5f2ed',
+  papel: '#fffdf9',
+  tinta: '#1a1a1a',
+  suave: '#5c6270',
+  borda: '#ddd6cc',
+  vinho: '#c9633f',
+  vinhoEscuro: '#8f3b20',
+  rosa: '#e3a68e',
+  girassol: '#d97757',
 };
 
+// Seis áreas na paleta da identidade. `texto` é a cor do nome escrito sobre o cartão: creme nos
+// fundos escuros e tinta nos claros (areia, arena e terracota suave não sustentam texto claro).
 export const categorias = [
-  { id: 'confeitaria', cor: '#c8434d', sombra: '#8e2a33' },
-  { id: 'educacao', cor: '#4d78b8', sombra: '#2f5285' },
-  { id: 'artesanato', cor: '#8872bf', sombra: '#5d4a91' },
-  { id: 'festas', cor: '#df6a52', sombra: '#a8452f' },
-  { id: 'reforma', cor: '#6f9078', sombra: '#4a6752' },
-  { id: 'embalagens', cor: '#1f6f7a', sombra: '#12474f' },
+  { id: 'confeitaria', cor: '#d97757', sombra: '#a8472a', texto: '#1a1a1a' },
+  { id: 'educacao', cor: '#3d4451', sombra: '#262b34', texto: '#fffdf9' },
+  { id: 'artesanato', cor: '#c9b89b', sombra: '#9a8b70', texto: '#1a1a1a' },
+  { id: 'festas', cor: '#e8a58d', sombra: '#b96e55', texto: '#1a1a1a' },
+  { id: 'reforma', cor: '#6b7280', sombra: '#4b5260', texto: '#fffdf9' },
+  { id: 'embalagens', cor: '#b8a88a', sombra: '#8a7b5e', texto: '#1a1a1a' },
 ];
 
 // ---------- matemática de tempo ----------
@@ -80,7 +86,7 @@ export function caminhoArredondado(ctx, x, y, l, a, r) {
 }
 
 // Papel recortado: sombra sólida deslocada + preenchimento. Centro em (cx, cy).
-export function papel(ctx, { cx, cy, l, a, raio = 24, cor, sombra = 'rgba(47,37,34,.16)', desvio = 10, giro = 0, escala = 1, contorno = null, larguraContorno = 0 }) {
+export function papel(ctx, { cx, cy, l, a, raio = 24, cor, sombra = 'rgba(26,26,26,.14)', desvio = 10, giro = 0, escala = 1, contorno = null, larguraContorno = 0 }) {
   if (escala <= 0.001) return;
   ctx.save();
   ctx.translate(cx, cy);
@@ -107,13 +113,21 @@ export function traçar(ctx, desenharCaminho, p, comprimento) {
   ctx.restore();
 }
 
+// Uma família só (Inter), com três pesos e espaçamento mais fechado nos títulos grandes.
+// As cenas pedem "titulo", "corpo" ou "mao" (a nota escrita à mão do desenho antigo); as três
+// viram Inter, cada uma com o peso e o espaçamento do seu papel.
 export function fonte(ctx, família, tamanho, peso = 400) {
-  const pilhas = {
-    titulo: '"Vitrine Caprasimo", "Georgia", serif',
-    corpo: '"Vitrine Figtree", "Arial", sans-serif',
-    mao: '"Vitrine Caveat", "Comic Sans MS", cursive',
+  const papéis = {
+    titulo: { peso: 600, espaço: '-0.04em' },
+    corpo: { peso: peso >= 600 ? 600 : peso >= 500 ? 500 : 400, espaço: '-0.01em' },
+    mao: { peso: 500, espaço: '-0.02em' },
   };
-  ctx.font = `${peso} ${tamanho}px ${pilhas[família]}`;
+  const p = papéis[família];
+  // A letra manuscrita antiga era bem mais estreita que a Inter: sem este fator, as notas
+  // vazam das etiquetas e dos papéis onde foram desenhadas.
+  const escala = família === 'mao' ? 0.8 : 1;
+  ctx.font = `${p.peso} ${tamanho * escala}px "Vitrine Inter", system-ui, "Segoe UI", Arial, sans-serif`;
+  if ('letterSpacing' in ctx) ctx.letterSpacing = p.espaço;
 }
 
 // ---------- ciclo de vida ----------

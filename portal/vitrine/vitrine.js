@@ -11,12 +11,9 @@ import { desenharQuadro } from './vitrine-cenas.js';
 import { obterTextos } from './vitrine-textos.js';
 
 // Só os arquivos "latin": cobrem todo o português (á, ã, ç, ê, õ, ×).
+// Inter variável: um arquivo cobre os pesos 400, 500 e 600.
 const FONTES = [
-  ['Vitrine Caprasimo', 'caprasimo-latin-400-normal.woff2', '400'],
-  ['Vitrine Figtree', 'figtree-latin-400-normal.woff2', '400'],
-  ['Vitrine Figtree', 'figtree-latin-600-normal.woff2', '600'],
-  ['Vitrine Figtree', 'figtree-latin-700-normal.woff2', '700'],
-  ['Vitrine Caveat', 'caveat-latin-700-normal.woff2', '700'],
+  ['Vitrine Inter', 'inter-latin-wght-normal.woff2', '100 900'],
 ];
 
 let fontesProntas = null;

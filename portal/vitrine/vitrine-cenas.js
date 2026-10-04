@@ -391,7 +391,7 @@ function ilustração(ctx, id, t, l, a, cor, sombra, tx) {
       const y = misturar(-a * 1.3, alvo, p);
       ctx.fillStyle = cores.papel;
       caminhoArredondado(ctx, -largura / 2, y, largura, altura, 14); ctx.fill();
-      ctx.fillStyle = '#f4b8b6';
+      ctx.fillStyle = '#f0c3b2';
       ctx.beginPath();
       ctx.moveTo(-largura / 2 + 6, y + 4);
       const gotas = 5;
@@ -407,7 +407,7 @@ function ilustração(ctx, id, t, l, a, cor, sombra, tx) {
     const dtCereja = t - 0.62;
     if (dtCereja > 0) {
       const y = misturar(-a * 1.2, base - 20, mola(dtCereja, 2.4, 8));
-      ctx.strokeStyle = '#4a6752'; ctx.lineWidth = 5;
+      ctx.strokeStyle = '#3d4451'; ctx.lineWidth = 5;
       ctx.beginPath(); ctx.moveTo(0, y - 16); ctx.quadraticCurveTo(8, y - 40, 22, y - 46); ctx.stroke();
       ctx.fillStyle = cores.vinhoEscuro;
       ctx.beginPath(); ctx.arc(0, y, 20, 0, Math.PI * 2); ctx.fill();
@@ -421,7 +421,7 @@ function ilustração(ctx, id, t, l, a, cor, sombra, tx) {
     ctx.scale(entrada, entrada);
     ctx.fillStyle = cores.papel;
     caminhoArredondado(ctx, -fl / 2, -fa / 2, fl, fa, 10); ctx.fill();
-    ctx.strokeStyle = 'rgba(77,120,184,.28)'; ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(61,68,81,.28)'; ctx.lineWidth = 2;
     const passo = 26;
     const linhas = Math.floor(fa / passo), colunas = Math.floor(fl / passo);
     for (let i = 1; i < linhas; i++) {
@@ -501,7 +501,7 @@ function ilustração(ctx, id, t, l, a, cor, sombra, tx) {
         const vx = Math.cos(ângulo) * v, vy = Math.sin(ângulo) * v;
         const x = vx * dtC, y = a * 0.4 + vy * dtC + 0.5 * 1500 * dtC * dtC;
         const giro = aleatório() * 6 + dtC * (aleatório() * 14 - 7);
-        const cor = [cores.papel, cores.girassol, '#ffd0c4', '#8fd0b4'][k % 4];
+        const cor = [cores.papel, cores.girassol, '#f3d2c4', '#d8cdb9'][k % 4];
         const alfa = 1 - progresso(dtC, 1.3, 1.9);
         ctx.save();
         ctx.globalAlpha = alfa;
@@ -518,7 +518,7 @@ function ilustração(ctx, id, t, l, a, cor, sombra, tx) {
     ctx.fillStyle = 'rgba(255,250,245,.18)';
     caminhoArredondado(ctx, x0, -faixaA / 2, x1 - x0, faixaA, 12); ctx.fill();
     if (p > 0) {
-      ctx.fillStyle = '#f2e6c9';
+      ctx.fillStyle = '#ede7df';
       ctx.beginPath();
       ctx.moveTo(x0, -faixaA / 2);
       for (let i = 0; i <= 24; i++) { const s = i / 24; ctx.lineTo(misturar(x0, rx, s), -faixaA / 2 + Math.sin(s * 19) * 3); }
@@ -562,7 +562,7 @@ function ilustração(ctx, id, t, l, a, cor, sombra, tx) {
       traçar(ctx, () => caminhoArredondado(ctx, -q / 2, -q / 2, q, q, 6), limitar(desenho * 4 - k * 0.6), q * 4.2);
       ctx.restore();
     });
-    ctx.fillStyle = dobra > 0 ? misturarCor('#1f6f7a', cores.papel, 0.25 + dobra * 0.75) : 'rgba(255,250,245,.1)';
+    ctx.fillStyle = dobra > 0 ? misturarCor('#3d4451', cores.papel, 0.25 + dobra * 0.75) : 'rgba(255,250,245,.1)';
     caminhoArredondado(ctx, -q / 2, -q / 2, q, q, 6); ctx.fill();
     ctx.save();
     ctx.setLineDash([10, 9]);
@@ -640,7 +640,7 @@ function cenaÁreas(ctx, c, tx) {
     ilustração(ctx, k.id, t - (t0 + 0.42), l * 0.72, a * 0.54, k.cor, k.sombra, tx);
     ctx.restore();
     fonte(ctx, 'corpo', c.retrato ? 32 : 34, 700);
-    ctx.fillStyle = cores.papel;
+    ctx.fillStyle = k.texto || cores.papel;
     ctx.textBaseline = 'alphabetic';
     ctx.fillText(k.nome, -l / 2 + 30, a / 2 - 30);
     ctx.restore();
@@ -715,7 +715,7 @@ function cenaFerramenta(ctx, c, tx) {
   if (t >= 6.05) {
     ctx.save();
     ctx.fillStyle = VERMELHO; ctx.fillRect(visível.x0, visível.y0, visível.x1 - visível.x0, visível.y1 - visível.y0);
-    ctx.strokeStyle = 'rgba(106,20,30,.09)'; ctx.lineWidth = 34;
+    ctx.strokeStyle = 'rgba(143,59,32,.09)'; ctx.lineWidth = 34;
     const deslocamento = (t * 40) % 110;
     for (let x = visível.x0 - 2200; x < visível.x1 + 200; x += 110) {
       ctx.beginPath(); ctx.moveTo(x + deslocamento, visível.y1 + 20); ctx.lineTo(x + deslocamento + 2200, visível.y0 - 20); ctx.stroke();
@@ -750,7 +750,7 @@ function cenaFerramenta(ctx, c, tx) {
       fonte(ctx, 'corpo', 29, 600); ctx.fillStyle = cores.tinta; ctx.fillText(rótulo, esquerda, topo + y);
       const focado = t > foco[0] && t < foco[1];
       caminhoArredondado(ctx, esquerda, topo + y + 22, P.l - 128, 88, 20);
-      ctx.fillStyle = '#ffffff'; ctx.fill();
+      ctx.fillStyle = '#fffdf9'; ctx.fill();
       ctx.lineWidth = focado ? 4 : 2.5; ctx.strokeStyle = focado ? cores.rosa : cores.borda; ctx.stroke();
       if (focado) { ctx.save(); ctx.globalAlpha *= 0.14; ctx.lineWidth = 14; ctx.strokeStyle = cores.rosa; ctx.stroke(); ctx.restore(); }
       const letras = Math.floor(limitar((t - digitar[0]) / (digitar[1] - digitar[0])) * valor.length);
@@ -819,7 +819,7 @@ function cenaFerramenta(ctx, c, tx) {
     fonte(ctx, 'mao', 50, 700);
     const nl = larguraTexto(ctx, texto) + 64;
     const escala = mola(dt, 1.6, 6);
-    papel(ctx, { cx: nx, cy: ny, l: nl, a: 104, raio: 10, cor: i === 1 ? cores.papel : '#ffe3a1', sombra: VERMELHO_SOMBRA, desvio: 10, giro: ng + (1 - escala) * 0.6, escala });
+    papel(ctx, { cx: nx, cy: ny, l: nl, a: 104, raio: 10, cor: i === 1 ? cores.papel : '#efe3cf', sombra: VERMELHO_SOMBRA, desvio: 10, giro: ng + (1 - escala) * 0.6, escala });
     ctx.save();
     ctx.translate(nx, ny); ctx.rotate(ng + (1 - escala) * 0.6); ctx.scale(escala, escala);
     ctx.fillStyle = cores.tinta; ctx.textAlign = 'center';
@@ -903,7 +903,7 @@ function cenaGrátis(ctx, c, tx) {
     if (dt <= 0) return;
     const e = mola(dt, 1.5, 6.5);
     const giro = [-0.03, 0.02, -0.015][i] + (1 - e) * 0.4;
-    papel(ctx, { cx: nx, cy: ny, l: cl, a: ca, raio: 30, cor: i === 2 ? cores.vinho : cores.fundo, sombra: 'rgba(143,45,74,.2)', desvio: 14, giro, escala: e });
+    papel(ctx, { cx: nx, cy: ny, l: cl, a: ca, raio: 30, cor: i === 2 ? cores.vinho : cores.fundo, sombra: 'rgba(168,71,42,.2)', desvio: 14, giro, escala: e });
     ctx.save();
     ctx.translate(nx, ny); ctx.rotate(giro); ctx.scale(e, e);
     if (i === 0) {
@@ -954,7 +954,7 @@ function cenaGrátis(ctx, c, tx) {
       }
       const varre = progresso(t, 11.55, 11.95);
       if (varre > 0 && varre < 1) {
-        ctx.fillStyle = 'rgba(184,92,107,.85)';
+        ctx.fillStyle = 'rgba(201,99,63,.85)';
         ctx.fillRect(-lado / 2 - 10, -lado / 2 + lado * curva.entradaSaidaCubica(varre) - 3, lado + 20, 6);
       }
     }
