@@ -11,7 +11,10 @@
     "verificar": "node ferramentas/verificar.mjs",
     "testar": "node --test \"testes/*.test.mjs\"",
     "servir": "node ferramentas/servir.mjs . --porta 4400",
+    "publicar": "node ferramentas/publicar.mjs",
+    "construir": "npm run conferir && npm run publicar",
     "conferir": "npm run gerar && npm run testar && npm run verificar",
+    "vitrine:capas": "node vitrine/ferramentas/vitrine-gerar-capas.mjs",
     "vitrine:video": "node vitrine/ferramentas/vitrine-renderizar-video.mjs"
   }
 }

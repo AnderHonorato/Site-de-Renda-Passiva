@@ -106,7 +106,7 @@ export function importarTudo(conteúdo) {
   let importadas = 0;
   let ignoradas = 0;
   for (const [chave, valor] of Object.entries(dados)) {
-    if (CHAVES_PROIBIDAS.has(chave) || !/^[\w.\-]{1,60}$/.test(chave)) { ignoradas += 1; continue; }
+    if (CHAVES_PROIBIDAS.has(chave) || !/^[\p{L}\p{N}_.\-]{1,60}$/u.test(chave)) { ignoradas += 1; continue; }
     if (gravar(chave, valor)) importadas += 1; else ignoradas += 1;
   }
   return { importadas, ignoradas };

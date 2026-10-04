@@ -406,13 +406,15 @@ function página404() {
   return montarPágina({
     título: `Página não encontrada — ${site.nome}`,
     descrição: 'O endereço pedido não existe no portal.',
+    // Raiz absoluta: o servidor entrega esta página em qualquer caminho inexistente (/a/b/c).
+    base: '/',
     semÍndice: true,
     conteúdo: `    <section class="largura prosa topo-página--folgado">
       <h1>Esta página não existe</h1>
       <p>O endereço pode ter mudado ou a ferramenta ainda não foi publicada.</p>
       <p class="ações t-3">
-        <a class="botão" href="./">Ir para o início</a>
-        <a class="botão botão--linha" href="./ferramentas.html">Ver o catálogo</a>
+        <a class="botão" href="/">Ir para o início</a>
+        <a class="botão botão--linha" href="/ferramentas.html">Ver o catálogo</a>
       </p>
     </section>`,
   });

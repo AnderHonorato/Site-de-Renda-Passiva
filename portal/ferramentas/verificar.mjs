@@ -12,6 +12,8 @@ import { join, dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ferramentas, ferramentasProntas, conferirCatálogo } from '../dados/catálogo.js';
 import { nomesDeÍcone } from '../scripts/núcleo/ícones.js';
+import { site } from '../dados/site.js';
+import { ARQUIVO_DO_RESUMO, calcularResumoDaCapa } from './resumo-da-capa.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const problemas = [];
@@ -110,7 +112,8 @@ for (const página of páginas) {
   for (const [, destino] of html.matchAll(/(?:href|src)="([^"#?:]+)(?:[#?][^"]*)?"/g)) {
     if (destino.startsWith('http') || destino.startsWith('//') || destino.startsWith('data:')) continue;
     const alvo = destino.endsWith('/') ? join(destino, 'index.html') : destino;
-    const caminhoAbsoluto = resolve(dirname(página), decodeURI(alvo));
+    // "/estilos/…" é raiz do site (a 404 usa isso); o resto é relativo à página.
+    const caminhoAbsoluto = destino.startsWith('/') ? join(RAIZ, decodeURI(alvo)) : resolve(dirname(página), decodeURI(alvo));
     if (!await existe(caminhoAbsoluto)) {
       reclamar(`${relativo} aponta para "${destino}", que não existe.`);
     }
@@ -134,6 +137,37 @@ for (const arquivo of [...scripts, ...dados, ...páginas]) {
       reclamar(`${relative(RAIZ, arquivo).replace(/\\/g, '/')} contém ${motivo}.`);
     }
   }
+}
+
+/* ------------------------------ 8. nome do site e vitrine em dia com o catálogo */
+// O nome só pode estar escrito em dados/site.js; o resto lê de lá.
+const NOME_COMPLETO = `${site.destaque} ${site.complemento}`;
+const códigoDoSite = [
+  ...await listar(join(RAIZ, 'dados'), (c) => c.endsWith('.js')),
+  ...await listar(join(RAIZ, 'scripts'), (c) => /\.(js|mjs)$/.test(c)),
+  ...await listar(join(RAIZ, 'vitrine'), (c) => /\.(js|mjs|css)$/.test(c) && !c.includes(join('vitrine', 'ferramentas'))),
+  ...await listar(join(RAIZ, 'estilos'), (c) => c.endsWith('.css')),
+  join(RAIZ, 'ferramentas', 'gerar.mjs'), join(RAIZ, 'ferramentas', 'modelo-de-página.mjs'),
+];
+for (const arquivo of códigoDoSite) {
+  const relativo = relative(RAIZ, arquivo).replace(/\\/g, '/');
+  if (relativo === 'dados/site.js') continue;
+  if ((await readFile(arquivo, 'utf8')).includes(NOME_COMPLETO)) {
+    reclamar(`${relativo} escreve o nome do site à mão; leia de dados/site.js.`);
+  }
+}
+
+// vitrine-números.js é gerado: se o catálogo mudou e ninguém rodou "npm run gerar", está velho.
+const númerosDaVitrine = await readFile(join(RAIZ, 'vitrine', 'vitrine-números.js'), 'utf8').catch(() => '');
+if (!númerosDaVitrine.includes(`prontas: ${ferramentasProntas.length},`)) {
+  reclamar('vitrine/vitrine-números.js está desatualizado em relação ao catálogo. Rode "npm run gerar".');
+}
+
+// As capas estáticas da vitrine (quem não tem JavaScript ou anda sem movimento vê só elas) são
+// desenhadas pelo mesmo código da animação. Se esse código mudou depois da última capa, a capa mente.
+const resumoDaCapa = (await readFile(join(RAIZ, ARQUIVO_DO_RESUMO), 'utf8').catch(() => '')).trim();
+if (resumoDaCapa !== await calcularResumoDaCapa(RAIZ)) {
+  reclamar('As capas da vitrine estão desatualizadas em relação ao código da animação. Rode "npm run vitrine:capas".');
 }
 
 /* -------------------------------------- 7. nomes de arquivo normalizados */
