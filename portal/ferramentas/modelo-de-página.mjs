@@ -122,8 +122,8 @@ export function montarPágina({
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>${escapar(título)}</title>
   <meta name="description" content="${escapar(descrição)}">
-  <meta name="theme-color" content="#f6f1ea" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#15110f" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f5f2ed" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#171717" media="(prefers-color-scheme: dark)">
 ${semÍndice ? '  <meta name="robots" content="noindex,follow">\n' : ''}${canônica ? `  <link rel="canonical" href="${escapar(canônica)}">\n` : ''}  <link rel="icon" href="${base}recursos/ícone.svg" type="image/svg+xml">
   <link rel="manifest" href="${base}manifesto.webmanifest">
 ${folhas}
