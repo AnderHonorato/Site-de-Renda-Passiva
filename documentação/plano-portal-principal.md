@@ -19,7 +19,12 @@
 - favoritos sincronizados;
 - LGPD (exportar e excluir dados);
 - idioma pt-BR/en;
-- uso por ferramenta e ajustes de ferramenta pelo admin.
+- uso por ferramenta e ajustes de ferramenta pelo admin;
+- **(04/10) novidades em carrossel** no cartão de boas-vindas (decisão 31);
+- **(04/10) admin edita todo texto e elemento do site** (decisão 32);
+- **(04/10) perfil, @usuário, nível evolutivo, amizade e bloqueio** (decisão 34);
+- **(04/10) chat global** para quem tem conta (decisão 33);
+- **(04/10) botão de tema em pílula com transição de tela inteira** (decisão 35, já feito).
 
 Quando os dois já têm a mesma coisa, fica a versão do portal: busca, catálogo, página e ficha de ferramenta, montador, favoritos e recentes locais, tema, "Meus salvos", toast, orçamento compartilhado pelo `#` e as 30 ferramentas prontas.
 
@@ -408,15 +413,16 @@ Esforço em dias de trabalho de um agente: P ≤ 1, M = 2–3, G = 4–6. Cada o
   - o aviso respeita o público e o idioma;
   - o teste de XSS é repetido.
 
-### Onda 7: boas-vindas com carrossel (M)
+### Onda 7: boas-vindas e novidades em carrossel (M) — atualizada em 04/10 (decisão 31)
 
-- **O dono vê** no admin um editor de 1 a 10 slides em pt e en, com imagem, pré-visualização e publicação, além de público, páginas, frequência, atraso e troca automática. O pop-up aparece para o visitante.
-- **Arquivos:** migração 002 e rotas do A16 adaptadas, `scripts/núcleo/boas-vindas.js` sobre o `dialog.diálogo`, página `admin/boas-vindas`, lista de páginas permitidas gerada.
+- **O dono vê:** na primeira visita, um cartão grande e flutuante com botão de fechar: animação à esquerda, mensagem à direita. Com mais de uma novidade, seta para a direita (e para a esquerda a partir da segunda) e uma barra discreta de segmentos mostrando quantas há. No admin, uma tela para adicionar, editar, reordenar, agendar e remover novidades em pt e en.
+- **Arquivos:** migração 002 e rotas do A16 adaptadas (tabela `novidades`), `scripts/núcleo/novidades.js` sobre o `dialog.diálogo`, página `admin/novidades`, cookie `visto_novidades` declarado na faixa de consentimento e na privacidade.
 - **Pronto quando:**
-  - o pop-up nunca abre em página de ferramenta;
-  - só abre depois da faixa de consentimento e aparece no máximo uma vez por página vista;
-  - a troca automática fica desligada com "reduzir movimento";
-  - um SVG enviado é recusado e um PNG de mais de 1 MB também;
+  - o cartão nunca abre em página de ferramenta, só depois da faixa de consentimento e no máximo uma vez por página vista;
+  - depois de fechado, só volta se houver novidade publicada depois da última vista;
+  - sem seta e sem barra quando há um item só; a troca automática fica desligada com "reduzir movimento";
+  - o teclado navega (setas, Esc fecha, foco preso no cartão) e o leitor de tela lê "item 2 de 5";
+  - um SVG enviado é recusado e um PNG de mais de 1 MB também; textos entram só como texto;
   - os 28 testes do A16 passam e o teste de tabelas é atualizado.
 
 ### Onda 8: anúncios (G)
@@ -447,6 +453,53 @@ Esforço em dias de trabalho de um agente: P ≤ 1, M = 2–3, G = 4–6. Cada o
 
 - **Entrega:** domínio com HTTPS, Nginx, a API como serviço, backup do SQLite com **restauração testada**, sitemap real (hoje `https://exemplo.invalid/portal/` em `gerar.mjs:383`), contato de privacidade e SMTP ou o procedimento de recuperação de senha definido na decisão 8.6.
 - **Pronto quando:** uma restauração de backup é feita num ambiente de teste, o teste de resiliência passa no servidor real, e o dono autoriza por escrito (R01.36).
+
+---
+
+### Onda 11: admin edita o site inteiro (G) — decisão 32. Depende das Ondas 2 e 5
+
+- **O dono vê:** no admin, "Textos do site" (busca por chave ou por página, edição em pt e en, histórico e "voltar ao original"), ferramentas (nome, resumo, destaque, ligar e desligar), categorias, planos e limites, e as regras de pontos e níveis. O nome do site também é editável.
+- **Arquivos:** migração (`conteudos`, `conteudos_historico`), `scripts/núcleo/textos-editaveis.js` (troca `[data-texto]` por `textContent`), `gerar.mjs` marcando cada texto editável com a chave, `dados/textos-padrão.js` gerado, página `admin/textos`.
+- **Pronto quando:**
+  - toda alteração aparece em `registros_admin` e pode ser desfeita;
+  - com a API fora do ar, o texto padrão aparece e nada quebra;
+  - texto com `<img onerror>` aparece como texto, sem executar;
+  - um teste lista todo texto visível das páginas geradas e falha se algum não tiver chave (nada fica fora do alcance do admin, salvo os marcados como técnicos).
+- **Cuidado:** o texto editado chega depois do HTML. Para o mecanismo de busca, vale o texto padrão; mudanças importantes de texto devem ser refletidas no padrão com `npm run gerar`. O painel mostra um aviso quando o texto editado difere do padrão.
+
+### Onda 12: @usuário, perfil e nível (G) — decisão 34 (a, b, c). Depende das Ondas 2 e 4
+
+- **O dono vê:** no cadastro, o @usuario obrigatório com verificação ao vivo e até 3 sugestões; a página "Meu perfil" com biografia, idade, de onde é, avatar, ferramentas recomendadas (só as já usadas) e as mais usadas, calculadas sozinhas; o nível subindo com o uso e o modal animado de subida de nível; o ícone de nível evolutivo infinito.
+- **Arquivos:** migração (`usuarios.arroba`, `perfis`, `uso_por_ferramenta`, `pontos`, `niveis_vistos`), `scripts/núcleo/ícone-de-nível.js` (SVG gerado a partir do número), `scripts/núcleo/subir-de-nível.js` (modal), `estilos/nível.css`, rotas `/api/arroba/disponivel`, `/api/perfil`.
+- **Pronto quando:**
+  - dois cadastros ao mesmo tempo com o mesmo @usuario: só um passa (índice único sem diferenciar maiúscula);
+  - a verificação ao vivo tem limite de tentativas e não revela mais do que "livre" ou "ocupado";
+  - recomendar ferramenta que nunca usou é recusado no servidor;
+  - os pontos têm teto diário e um teste tenta forçá-los;
+  - o ícone de nível do 1, do 10, do 100 e do 1000 são diferentes entre si, e o do 100000 ainda é gerado sem erro;
+  - com "reduzir movimento", o modal mostra só o quadro final.
+
+### Onda 13: amizades, seguir e bloqueio (M) — decisão 34 (d, e). Depende da Onda 12
+
+- **O dono vê:** "Adicionar aos amigos" no perfil, a confirmação do outro lado (com aviso na conta), "Seguindo" enquanto não aceitar, e "Bloquear".
+- **Pronto quando:**
+  - pedido sem aceite vira só "seguindo", sem acesso a mais nada;
+  - um bloqueio, nos dois sentidos, faz o perfil devolver **a mesma resposta e o mesmo tempo** de uma conta inexistente, com o texto exato da decisão 34;
+  - quem bloqueia não recebe mensagens, menções nem pedidos do bloqueado;
+  - apagar a conta remove amizades, seguidores e bloqueios.
+
+### Onda 14: chat global (G) — decisões 33 e 36. Depende das Ondas 12 e 13 e das condições da decisão 36
+
+- **O dono vê:** a bolha animada no canto inferior direito; o painel com a tela de uso e privacidade na primeira vez; as salas por categoria e por ferramenta; as conversas diretas entre amigos; a própria pessoa à direita, as outras à esquerda; o admin com o nome destacado e animado; avatar, cargo, tempo no site e nível em cada mensagem; clique abre o perfil; aviso pequeno e clicável de subida de nível no cabeçalho da sala global; denúncia, silenciar e banir no admin.
+- **Arquivos:** migração (`salas`, `mensagens`, `denuncias`, `silenciados`), rotas `/api/chat/*` com Server-Sent Events, `scripts/núcleo/chat/*`, `estilos/chat.css`, ilustração e ícone animado da bolha, página `admin/chat`.
+- **Pronto quando:**
+  - um visitante sem conta não vê a bolha nem consegue chamar a API;
+  - mensagens de bloqueados não chegam a quem bloqueou, nem pelo tempo real;
+  - o limite de envio, o tamanho máximo e o bloqueio de links para contas novas funcionam no servidor;
+  - mensagem com `<img onerror>` aparece como texto;
+  - com a API fora do ar a bolha some e as ferramentas seguem iguais;
+  - a primeira abertura exige o aceite e o grava; com "reduzir movimento" nenhuma animação do chat se mexe;
+  - exportar e excluir dados incluem as mensagens.
 
 ---
 
@@ -501,9 +554,9 @@ Esforço em dias de trabalho de um agente: P ≤ 1, M = 2–3, G = 4–6. Cada o
 2. **Premium: limites e recursos.** Hoje existem Grátis 10/3/3 e Plus 500/500/100, sem Premium (`servidor-planos.json`). *Recomendo* Premium = Plus + processamento no servidor + cotas maiores, com números definidos por você antes da Onda 4.
 3. **Mostrar preço dos planos?** O arquivo tem R$ 14,90 e R$ 149 para o Plus. *Recomendo* não mostrar preço enquanto a liberação for manual e escrever "peça pela sua conta".
 4. **Consentimento: o que faz "Só o essencial"?** Mostrar anúncio não personalizado (decisão 22) ou não carregar nada (doc raiz)? E a CMP do Google para EEE, Reino Unido e Suíça? *Recomendo* seguir a decisão 22 e usar a mensagem de consentimento gratuita do próprio Google para essas regiões.
-5. **Nome editável no admin?** *Recomendo* não: um arquivo e `npm run gerar`.
+5. **Nome editável no admin?** Resolvido em 04/10 (decisão 32): sim, com `dados/site.js` como valor padrão.
 6. **Recuperação de senha em produção.** Existe SMTP gratuito já disponível? *Recomendo* que, sem SMTP, o admin gere o link de redefinição pelo painel.
-7. **Chat e botão de feedback** (seção 18.2 e 18.3 do prompt mestre). *Recomendo* deixar formalmente de fora; as mensagens da conta cobrem o feedback.
+7. **Chat (decisão 33, pedido do dono em 04/10).** Antes era "deixar de fora"; agora entra, na Onda 14, e só abre com as condições da decisão 36. O botão de feedback segue de fora: as mensagens da conta cobrem.
 8. **Inglês:** os mesmos slugs em `/en/` e R$ com as regras brasileiras também no inglês? *Recomendo* sim nos dois casos, e indexar as páginas em inglês.
 9. **Páginas escolares e infantis sem anúncio?** *Recomendo* que sim.
 10. **Favoritos acima da cota no primeiro login.** *Recomendo* que o excedente fique só no aparelho, com aviso.
@@ -512,6 +565,11 @@ Esforço em dias de trabalho de um agente: P ≤ 1, M = 2–3, G = 4–6. Cada o
 13. **`main` do GitHub e push.** *Recomendo* substituir o `main` pelo `ander-flow/v1` quando você aprovar, sem merge do `origin/main`, e autorizar o push do branch local.
 14. **Futuro da pasta `ander-flow/`.** *Recomendo* congelar como referência até a última ferramenta ser portada e depois arquivar, sem apagar sem pedido seu.
 15. **Atualizar a documentação da raiz** (README, arquitetura, matriz da seção 18, dados a preencher). *Recomendo* fazer junto com a Onda 0.
+16. **Idade mínima do chat.** *Recomendo* 13 anos, com declaração no cadastro, e perfil sem idade visível por padrão.
+17. **Moderadores além do admin.** *Recomendo* só o admin no começo; papel de moderador depois.
+18. **Retenção das mensagens.** *Recomendo* 90 dias.
+19. **Foto de perfil enviada pela pessoa.** *Recomendo* não por enquanto (biblioteca de avatares ilustrados), por causa de moderação de imagem.
+20. **Campos do perfil visíveis a quem?** *Recomendo* visíveis só a quem tem conta, cada campo com seu interruptor, e idade e local desligados por padrão.
 
 ---
 
