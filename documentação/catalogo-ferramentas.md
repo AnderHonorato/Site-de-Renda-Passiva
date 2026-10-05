@@ -3,7 +3,7 @@
 Gerado por `portal/ferramentas/gerar-documentos.mjs` a partir de `portal/dados/catálogo.js`.
 Não edite este arquivo à mão: edite o catálogo e gere de novo.
 
-**150 ferramentas únicas · 34 prontas · 116 planejadas**
+**208 ferramentas únicas · 42 prontas · 166 planejadas**
 
 ## Como ler a situação
 
@@ -12,7 +12,7 @@ Não edite este arquivo à mão: edite o catálogo e gere de novo.
 
 Toda ferramenta é projetada para funcionar no celular; por isso não existe coluna "mobile": seria sempre "sim".
 
-## Ferramentas que absorveram outras (30)
+## Ferramentas que absorveram outras (29)
 
 Em vez de criar variações artificiais, estas reúnem num lugar só o que seria várias ferramentas quase iguais:
 
@@ -25,6 +25,7 @@ Em vez de criar variações artificiais, estas reúnem num lugar só o que seria
 - **Número por extenso** (`numero-por-extenso`) reúne: Valor por extenso · Número por extenso
 - **Orçamento e proposta** (`orcamento`) reúne: Orçamento de doces · Orçamento artesanal · Orçamento de festa · Orçamento de reforma · Proposta comercial
 - **Gerador de recibo** (`recibo`) reúne: Recibo de pagamento · Recibo de aluguel
+- **Ponto de equilíbrio** (`ponto-de-equilibrio`) reúne: Break-even · Faturamento mínimo · Vendas para o lucro desejado
 - **Regra de três** (`regra-de-tres`) reúne: Regra de três simples · Regra de três inversa
 - **Conversor de unidades** (`conversor-de-unidades`) reúne: Conversor de medidas · Conversor de temperatura · Conversor de bytes
 - **Calculadora de datas** (`calculadora-de-datas`) reúne: Diferença entre datas · Dias úteis · Calculadora de idade · Dia da semana · Dia do ano
@@ -38,14 +39,12 @@ Em vez de criar variações artificiais, estas reúnem num lugar só o que seria
 - **Sorteio** (`sorteio`) reúne: Sorteador de números · Sorteador de nomes · Sorteador de times · Amigo secreto
 - **Limpeza de texto** (`limpador-de-texto`) reúne: Remover espaços extras · Padronizar quebras de linha · Remover linhas vazias
 - **Maiúsculas e minúsculas** (`transformador-de-caixa`) reúne: Texto em maiúsculas · Texto em minúsculas · Primeira letra maiúscula · Título
-- **Dividir PDF e extrair páginas** (`dividir-pdf`) reúne: Dividir PDF · Extrair páginas do PDF
-- **Girar e numerar páginas do PDF** (`girar-e-numerar-pdf`) reúne: Girar páginas do PDF · Numerar páginas do PDF
-- **Marca d'água e senha no PDF** (`protecao-de-pdf`) reúne: Marca d'água em PDF · Proteger PDF com senha
 - **Cortar imagem** (`cortar-imagem`) reúne: Cortar imagem · Imagem para redes sociais
 - **Ajuste de quantidade e rendimento da receita** (`ajuste-de-receita`) reúne: Ajuste de quantidade · Rendimento com perdas
 - **Calculadora de tinta** (`calculadora-de-tinta`) reúne: Quantidade de tinta · Comparador de embalagens de tinta
 - **Molde de caixa** (`molde-de-caixa`) reúne: Caixa retangular · Caixa com tampa
 - **Calculadora de churrasco e almoço em grupo** (`calculadora-de-churrasco`) reúne: Calculadora de churrasco · Quantidade para almoço ou encontro
+- **Margem de contribuição** (`margem-de-contribuicao`) reúne: Margem de contribuição unitária · Margem de contribuição total · Índice de margem de contribuição
 
 ## Ferramentas cuja lógica será portada dos seis sites existentes (28)
 
@@ -82,7 +81,7 @@ Estas já funcionam nas pastas numeradas da raiz do repositório e serão trazid
 
 ## Catálogo por categoria
 
-### Dinheiro e preços (6/10 prontas)
+### Dinheiro e preços (8/13 prontas)
 
 Preço, margem, juros, parcelas e divisão de contas.
 
@@ -94,19 +93,22 @@ Preço, margem, juros, parcelas e divisão de contas.
 | F005 | Divisão de contas | `divisao-de-contas` | Acertar as contas de um grupo sem planilha e sem discussão. | Participantes, o que cada um pagou e pesos opcionais. | Saldo por pessoa e lista de quem paga para quem. | copiar, pdf | gratuito | navegador | **pronta** | unifica 3 |
 | F006 | Preço por unidade | `preco-por-unidade` | Descobrir qual embalagem compensa quando os tamanhos e preços são diferentes. | Preço, quantidade e unidade de cada embalagem. | Custo por unidade de cada opção, a mais barata e a economia percentual. | copiar | gratuito | navegador | **pronta** | unifica 3 |
 | F007 | Número por extenso | `numero-por-extenso` | Escrever o valor por extenso sem errar centavos, plural e concordância. | Um número, com a opção de tratar como dinheiro. | Texto por extenso pronto para copiar. | copiar | gratuito | navegador | **pronta** | unifica 2 |
-| F011 | Ponto de equilíbrio | `ponto-de-equilibrio` | Saber a partir de qual faturamento o negócio começa a dar lucro. | Custos fixos, custo variável unitário e preço de venda. | Ponto de equilíbrio em unidades e em reais, com margem de contribuição. | copiar | gratuito | navegador | planejada | — |
+| F011 | Ponto de equilíbrio | `ponto-de-equilibrio` | Saber a partir de qual faturamento o negócio começa a dar lucro. | Custos fixos do mês, preço de venda, custo variável por unidade, percentual que sai do preço e lucro desejado opcional. | Vendas necessárias no mês, faturamento necessário, margem por unidade, índice de margem e média por dia. | copiar, pdf | gratuito | navegador | **pronta** | unifica 3 |
 | F012 | Fluxo de caixa | `fluxo-de-caixa` | Enxergar quando o caixa fica negativo antes de acontecer. | Lançamentos com data, descrição, tipo e valor. | Saldo por período, saldo acumulado e alerta de caixa negativo. | xlsx, pdf | gratuito | navegador | planejada | — |
 | F013 | Conversor de moedas | `conversor-de-moedas` | Converter valores sem depender de cotação inventada pelo site. | Valor, moeda de origem, moeda de destino e cotação. | Valor convertido com a cotação e a data usadas. | copiar | gratuito | navegador | planejada | — |
 | F015 | Rateio de custos | `rateio-de-custos` | Dividir um custo compartilhado de forma justa e defensável. | Valor total, itens e o peso de cada um. | Valor rateado por item, com total conferido. | copiar, xlsx | gratuito | navegador | planejada | — |
+| F151 | Margem de contribuição | `margem-de-contribuicao` | Saber quanto cada venda realmente deixa no caixa depois do custo variável, das taxas e do imposto. | Preço de venda, custo variável por unidade, percentual que sai do preço e, se quiser, quantidade vendida e custos fixos do mês. | Sobra por venda e índice de margem; com os dados do mês, margem total, resultado depois do custo fixo e vendas para empatar. | copiar, pdf | gratuito | navegador | **pronta** | unifica 3 |
+| F203 | Simulador de financiamento | `simulador-de-financiamento` | Saber quanto vai pagar de verdade em um financiamento de imóvel, carro ou empréstimo, e qual sistema compensa. | Valor do bem, entrada, prazo, taxa de juros, seguros, tarifas e, se quiser, amortizações extras. | Primeira e última parcelas, total pago, juros totais, CET e a tabela mês a mês das duas opções. | copiar, xlsx, pdf | gratuito | navegador | planejada | — |
+| F204 | Calculadora do MEI e do DAS | `calculadora-mei-das` | Saber quanto pagar de imposto como MEI e se está perto de estourar o limite de faturamento. | Atividade (comércio, indústria, serviços ou ambos), faturamento do ano até agora e mês de início. | Valor do DAS, limite anual, margem restante e o aviso sobre o desenquadramento e a diferença a pagar. | copiar | gratuito | navegador | planejada | — |
 
-### Vendas e propostas (1/11 prontas)
+### Vendas e propostas (3/11 prontas)
 
 Orçamento, proposta, comissão e acompanhamento.
 
 | ID | Nome | Slug | Problema resolvido | Entrada | Saída | Exporta | Plano | Processa | Situação | Unificação |
 |---|---|---|---|---|---|---|---|---|---|---|
 | F008 | Orçamento e proposta | `orcamento` | Enviar um orçamento apresentável sem abrir editor de texto nem planilha. | Dados do emissor, do cliente, itens com quantidade e preço, desconto e condições. | Orçamento pronto, PDF, planilha .xlsx e link compartilhável. | pdf, xlsx, link, imprimir | gratuito | navegador | **pronta** | unifica 5 |
-| F010 | Calculadora de comissão | `comissao` | Calcular a comissão certa quando existem faixas e descontos. | Vendas do período, faixas de comissão e descontos. | Comissão bruta, descontos e comissão líquida por vendedor. | copiar, xlsx | gratuito | navegador | planejada | — |
+| F010 | Calculadora de comissão | `comissao` | Calcular a comissão certa quando existem faixas e descontos. | Vendas do período, faixas de comissão e descontos. | Comissão bruta, descontos e comissão líquida por vendedor. | copiar, pdf, csv, xlsx | gratuito | navegador | **pronta** | — |
 | F016 | Pedido de venda | `pedido-de-venda` | Registrar o pedido do cliente sem sistema de gestão. | Cliente, itens, condição de pagamento e prazo. | Pedido em PDF e planilha. | pdf, xlsx | gratuito | navegador | planejada | — |
 | F017 | Ficha de cliente | `ficha-de-cliente` | Guardar contatos e histórico sem contratar um CRM. | Nome, contato, observações e histórico de compras. | Lista pesquisável e arquivo de backup. | xlsx, json | gratuito | navegador | planejada | — |
 | F018 | Mensagem de follow-up | `follow-up` | Escrever a cobrança educada de resposta sem soar insistente. | Cliente, assunto, data do último contato e tom desejado. | Mensagem pronta para copiar. | copiar | gratuito | navegador | planejada | — |
@@ -114,10 +116,10 @@ Orçamento, proposta, comissão e acompanhamento.
 | F020 | Ticket médio e conversão | `ticket-medio` | Descobrir se compensa mais vender para mais gente ou vender mais por pessoa. | Faturamento, número de vendas e número de atendimentos. | Ticket médio, conversão e simulação de ganho. | copiar | gratuito | navegador | planejada | — |
 | F114 | Funil de vendas | `funil-de-vendas` | Ver em qual etapa o funil está perdendo mais gente. | Número de leads em cada etapa do funil. | Funil visual com as taxas de conversão de cada etapa. | png, xlsx | gratuito | navegador | planejada | — |
 | F115 | Script de abordagem | `script-de-abordagem` | Ter um roteiro para não travar na hora de abordar o cliente. | Produto, público e objeções comuns. | Script pronto para copiar ou imprimir. | copiar, pdf | gratuito | navegador | planejada | — |
-| F116 | Calculadora de NPS | `calculadora-de-nps` | Transformar as respostas da pesquisa de satisfação num número comparável. | Lista de notas de 0 a 10. | NPS, percentual de cada grupo e classificação da zona. | copiar, xlsx | gratuito | navegador | planejada | — |
+| F116 | Calculadora de NPS | `calculadora-de-nps` | Transformar as respostas da pesquisa de satisfação num número comparável. | Lista de notas de 0 a 10. | NPS, percentual de cada grupo e classificação da zona. | copiar, xlsx | gratuito | navegador | **pronta** | — |
 | F117 | Previsão de vendas | `previsao-de-vendas` | Ter uma estimativa de vendas futuras para planejar compra e caixa. | Vendas dos últimos meses e taxa de crescimento esperada. | Projeção mês a mês e gráfico de tendência. | xlsx, copiar | gratuito | navegador | planejada | — |
 
-### Cálculo e conversão (3/6 prontas)
+### Cálculo e conversão (4/6 prontas)
 
 Porcentagem, regra de três e unidades de medida.
 
@@ -126,7 +128,7 @@ Porcentagem, regra de três e unidades de medida.
 | F001 | Calculadora de porcentagem | `porcentagem` | Resolver qualquer conta de porcentagem sem precisar lembrar a fórmula certa. | Dois números e a operação desejada. | Resultado, valor da diferença e a fórmula usada. | copiar | gratuito | navegador | **pronta** | unifica 4 |
 | F021 | Regra de três | `regra-de-tres` | Resolver proporções sem trocar a ordem dos termos. | Três valores conhecidos e o tipo de proporção. | Valor procurado e a conta montada. | copiar | gratuito | navegador | **pronta** | unifica 2 |
 | F022 | Conversor de unidades | `conversor-de-unidades` | Converter medidas entre sistemas sem procurar tabela. | Valor, grandeza e as duas unidades. | Valor convertido e equivalências úteis da mesma grandeza. | copiar | gratuito | navegador | **pronta** | unifica 3 |
-| F045 | IMC e faixa de peso | `imc` | Situar o peso em relação à altura com a referência adulta da OMS. | Peso e altura. | IMC, faixa e intervalo de peso da faixa saudável, com aviso de que não substitui avaliação profissional. | copiar | gratuito | navegador | planejada | — |
+| F045 | IMC e faixa de peso | `imc` | Situar o peso em relação à altura com a referência adulta da OMS. | Peso e altura. | IMC, faixa e intervalo de peso da faixa saudável, com aviso de que não substitui avaliação profissional. | copiar | gratuito | navegador | **pronta** | — |
 | F046 | Números romanos | `numeros-romanos` | Ler ou escrever um número romano sem errar a regra de subtração. | Número decimal ou romano. | Número convertido. | copiar | gratuito | navegador | planejada | — |
 | F047 | Escala e proporção | `escala-e-proporcao` | Redimensionar sem distorcer e ler medidas de uma planta em escala. | Medidas originais, medida desejada ou escala. | Medidas finais e o fator aplicado. | copiar | gratuito | navegador | planejada | — |
 
@@ -142,35 +144,73 @@ Diferenças, prazos, dias úteis e carga horária.
 | F049 | Contagem regressiva | `contagem-regressiva` | Acompanhar um prazo sem ficar contando no calendário. | Data e título do evento. | Tempo restante e link compartilhável. | link | gratuito | navegador | planejada | — |
 | F050 | Fuso horário e reunião | `fuso-horario` | Marcar reunião com gente em outro fuso sem errar a hora. | Cidades e faixa de horário aceitável. | Horários equivalentes e janelas comuns. | copiar | gratuito | navegador | planejada | — |
 
-### Texto (3/9 prontas)
+### Texto (5/12 prontas)
 
 Contar, limpar, padronizar, comparar e transformar.
 
 | ID | Nome | Slug | Problema resolvido | Entrada | Saída | Exporta | Plano | Processa | Situação | Unificação |
 |---|---|---|---|---|---|---|---|---|---|---|
 | F051 | Contador de texto | `contador-de-texto` | Saber se um texto cabe no limite de caracteres ou quanto tempo leva para ler. | Texto colado ou digitado. | Contagens, tempo estimado de leitura e de fala e se o texto cabe no post, no SMS, no título e na descrição. | copiar | gratuito | navegador | **pronta** | — |
-| F052 | Limpeza de texto | `limpador-de-texto` | Colar um texto de outro lugar e ele vir cheio de espaços e linhas quebradas. | Texto colado. | Texto limpo pronto para copiar. | copiar | gratuito | navegador | planejada | unifica 3 |
+| F052 | Limpeza de texto | `limpador-de-texto` | Colar um texto de outro lugar e ele vir cheio de espaços e linhas quebradas. | Texto colado. | Texto limpo pronto para copiar. | copiar, baixar | gratuito | navegador | **pronta** | unifica 3 |
 | F053 | Comparar dois textos | `comparador-de-textos` | Achar o que mudou entre duas versões de um contrato ou parágrafo. | Dois textos. | Texto com as diferenças destacadas. | copiar | gratuito | navegador | planejada | — |
 | F054 | Maiúsculas e minúsculas | `transformador-de-caixa` | Corrigir um texto digitado em CAIXA ALTA por engano. | Texto e o formato desejado. | Texto convertido. | copiar, baixar | gratuito | navegador | **pronta** | unifica 4 |
 | F055 | Remover acentos | `removedor-de-acentos` | Gerar um texto sem acento para um sistema que não aceita. | Texto. | Texto sem acentos. | copiar, baixar | gratuito | navegador | **pronta** | — |
-| F056 | Remover linhas duplicadas | `remover-linhas-duplicadas-de-texto` | Limpar uma lista colada que tem itens repetidos. | Texto com uma linha por item. | Lista sem duplicadas e a contagem de linhas removidas. | copiar | gratuito | navegador | planejada | — |
+| F056 | Remover linhas duplicadas | `remover-linhas-duplicadas-de-texto` | Limpar uma lista colada que tem itens repetidos. | Texto com uma linha por item. | Lista sem duplicadas e a contagem de linhas removidas. | copiar, baixar | gratuito | navegador | **pronta** | — |
 | F057 | Ordenar linhas | `ordenador-de-linhas` | Colocar uma lista em ordem sem copiar para uma planilha. | Texto com uma linha por item. | Lista ordenada. | copiar | gratuito | navegador | planejada | — |
 | F058 | Modelo de mensagem | `modelo-de-mensagem` | Escrever uma mensagem comum do dia a dia sem começar do zero. | Tipo de mensagem e os dados a preencher. | Mensagem pronta para copiar. | copiar | gratuito | navegador | planejada | — |
 | F059 | Extrair e-mails e telefones de um texto | `extrator-de-contatos-em-texto` | Puxar contatos de um texto colado sem procurar um por um. | Texto. | Listas separadas de e-mails, telefones e links encontrados. | copiar, csv | gratuito | navegador | planejada | — |
+| F195 | Traduzir texto | `traduzir-texto` | Entender ou escrever em outra língua sem mandar o texto para um serviço desconhecido. | Um texto (até 10.000 caracteres) e o par de idiomas. | Texto traduzido, para copiar, com o aviso de que a tradução automática erra expressões e termos técnicos. | copiar, baixar | gratuito | navegador | planejada | — |
+| F196 | Corrigir gramática e ortografia | `corrigir-texto` | Revisar um e-mail, currículo ou texto importante antes de enviar. | Um texto em português (até 20.000 caracteres). | Texto com cada problema marcado, a explicação e as sugestões, com um clique para aplicar. | copiar | gratuito | servidor | planejada | — |
+| F197 | Resumir texto com IA | `resumir-texto` | Pegar a ideia de um artigo, e-mail ou relatório sem ler tudo. | Um texto (até 30.000 caracteres), o tamanho do resumo e o formato (tópicos ou parágrafo). | Resumo em tópicos ou parágrafo, para copiar. | copiar | plus | servidor | planejada | — |
 
-### Documentos e PDF (2/14 prontas)
+### PDF (1/34 prontas)
 
-Gerar, converter, organizar e assinar documentos.
+Juntar, dividir, comprimir, converter, proteger e assinar arquivos PDF.
+
+| ID | Nome | Slug | Problema resolvido | Entrada | Saída | Exporta | Plano | Processa | Situação | Unificação |
+|---|---|---|---|---|---|---|---|---|---|---|
+| F060 | Juntar PDF | `juntar-pdf` | Mandar um só PDF em vez de vários arquivos soltos. | De dois a três arquivos PDF por vez, com até 100 MB cada. | Um PDF único para baixar. | baixar | gratuito | navegador | **pronta** | — |
+| F061 | Dividir PDF | `dividir-pdf` | Separar um PDF grande em partes menores, como capítulos, contratos ou notas de uma remessa. | Um PDF e a regra de divisão: intervalos (1-3, 4-10), a cada N páginas ou cada página sozinha. | Vários PDFs, em um ZIP quando passam de um. | baixar | gratuito | navegador | planejada | — |
+| F062 | Girar PDF | `girar-pdf` | Corrigir páginas escaneadas de lado ou de cabeça para baixo. | Um PDF, as páginas a girar (todas, pares, ímpares ou uma lista) e o ângulo. | PDF com as páginas na orientação corrigida. | baixar | gratuito | navegador | planejada | — |
+| F063 | Proteger PDF com senha | `proteger-pdf` | Impedir que qualquer pessoa abra ou altere um documento sensível que você vai enviar. | Um PDF, a senha de abertura e as permissões que continuam liberadas (imprimir, copiar, editar). | PDF protegido por senha. | baixar | gratuito | servidor | planejada | — |
+| F064 | Comprimir PDF | `comprimir-pdf` | Enviar um PDF grande por e-mail ou formulário com limite de tamanho. | Um PDF (até 100 MB) e o nível: leve, equilibrado ou máximo. | PDF menor, com o tamanho antes e depois. | baixar | plus | servidor | planejada | — |
+| F065 | Extrair texto do PDF | `extrair-texto-de-pdf` | Copiar o conteúdo de um PDF sem digitar tudo de novo. | Um PDF e, se quiser, as páginas desejadas. | Texto extraído por página, com aviso quando o PDF é uma imagem escaneada sem texto. | copiar, baixar | gratuito | navegador | planejada | — |
+| F152 | Remover páginas do PDF | `remover-paginas-do-pdf` | Tirar a folha de rosto, a página em branco ou o anexo errado de um PDF sem refazer o arquivo. | Um PDF e as páginas a remover, marcadas na miniatura ou digitadas (1, 3-5, 9). | PDF sem as páginas removidas e a contagem de páginas antes e depois. | baixar | gratuito | navegador | planejada | — |
+| F153 | Extrair páginas do PDF | `extrair-paginas-do-pdf` | Mandar apenas as páginas que importam de um PDF grande, sem expor o resto. | Um PDF e as páginas desejadas, marcadas na miniatura ou digitadas (2, 4-7, 10). | PDF com as páginas extraídas. | baixar | gratuito | navegador | planejada | — |
+| F154 | Organizar PDF | `organizar-pdf` | Arrumar a ordem das páginas de um PDF olhando cada uma, em vez de adivinhar pelo número. | Um PDF; as miniaturas das páginas aparecem para arrastar, girar, apagar ou duplicar. | PDF com as páginas na nova ordem e orientação. | baixar | gratuito | navegador | planejada | — |
+| F155 | Digitalizar e transformar em PDF | `digitalizar-para-pdf` | Escanear papéis sem scanner nem aplicativo: foto torta, com sombra e fundo, vira página limpa. | Fotos tiradas na hora com a câmera ou imagens escolhidas do aparelho, uma por página. | PDF de várias páginas, em cores, tons de cinza ou preto e branco. | baixar | gratuito | navegador | planejada | — |
+| F156 | Reparar PDF | `reparar-pdf` | Um PDF baixado pela metade ou corrompido que o leitor recusa abrir. | Um PDF danificado (até 100 MB). | PDF reconstruído, com o relato do que foi salvo e do que se perdeu. | baixar | gratuito | servidor | planejada | — |
+| F157 | OCR de PDF | `ocr-pdf` | PDF feito de fotos de páginas, em que não se consegue buscar uma palavra nem copiar um trecho. | Um PDF escaneado (até 20 páginas por vez) e o idioma do texto. | PDF pesquisável, com o aspecto original da página. | baixar | gratuito | navegador | planejada | — |
+| F158 | JPG para PDF | `jpg-para-pdf` | Mandar várias fotos de documentos como um arquivo só. | Imagens JPG ou PNG, a ordem, o tamanho da página (A4, carta ou o da imagem) e a margem. | Um PDF com uma página por imagem. | baixar | gratuito | navegador | planejada | — |
+| F159 | Word para PDF | `word-para-pdf` | Mandar um documento que qualquer um abre igual, sem depender do Word. | Um arquivo DOC, DOCX, ODT ou RTF (até 50 MB). | PDF do documento, apagado do servidor logo depois. | baixar | plus | servidor | planejada | — |
+| F160 | PowerPoint para PDF | `powerpoint-para-pdf` | Enviar uma apresentação que abra igual em qualquer aparelho, ou imprimir os slides. | Um arquivo PPT, PPTX ou ODP (até 50 MB). | PDF com um slide por página. | baixar | plus | servidor | planejada | — |
+| F161 | Excel para PDF | `excel-para-pdf` | Mandar um arquivo do Excel para quem não deve editá-la, ou imprimi-la sem a tabela sair cortada. | Um arquivo XLS, XLSX, ODS ou CSV (até 50 MB) e a orientação da página. | PDF com as abas da planilha. | baixar | plus | servidor | planejada | — |
+| F162 | HTML para PDF | `html-para-pdf` | Gerar um PDF fiel a partir de uma página que você montou, como relatório, fatura ou convite. | HTML colado ou arquivo .html (com CSS embutido), o tamanho de papel e a margem. | PDF com o layout da página. | baixar | plus | servidor | planejada | — |
+| F163 | PDF para JPG | `pdf-para-jpg` | Usar uma página de PDF como imagem em um post, slide ou formulário que não aceita PDF. | Um PDF, as páginas desejadas, o formato (JPG ou PNG) e a resolução (72 a 300 dpi). | Uma imagem por página, ou um ZIP com todas. | baixar, png | gratuito | navegador | planejada | — |
+| F164 | PDF para Word | `pdf-para-word` | Editar o texto de um PDF que você só tem em PDF. | Um PDF com texto selecionável (até 50 MB). PDF escaneado precisa passar pelo OCR antes. | Arquivo DOCX e um aviso do que provavelmente precisa de revisão. | baixar | plus | servidor | planejada | — |
+| F165 | PDF para PowerPoint | `pdf-para-powerpoint` | Levar um PDF para dentro de uma apresentação sem refazer cada slide. | Um PDF e a proporção do slide (16:9 ou 4:3). | Arquivo PPTX com um slide por página. | baixar | gratuito | navegador | planejada | — |
+| F166 | PDF para Excel | `pdf-para-excel` | Aproveitar os números de um extrato ou relatório em PDF sem digitar célula por célula. | Um PDF com texto selecionável e as páginas onde estão as tabelas. | Planilha XLSX ou CSV, com a pré-visualização das tabelas achadas. | xlsx, csv, copiar | gratuito | navegador | planejada | — |
+| F167 | PDF para PDF/A | `pdf-para-pdfa` | Atender a um sistema, cartório ou edital que exige PDF/A. | Um PDF (até 100 MB) e o nível desejado (PDF/A-1b, 2b ou 3b). | PDF/A e o relatório de conformidade. | baixar | plus | servidor | planejada | — |
+| F168 | Editar PDF | `editar-pdf` | Escrever em cima de um PDF, completar um campo, carimbar ou acrescentar uma observação. | Um PDF; na página, você insere texto, imagem, retângulo, linha ou desenho à mão livre. | PDF com as inclusões gravadas nas páginas. | baixar | gratuito | navegador | planejada | — |
+| F169 | Números de página no PDF | `numerar-paginas-do-pdf` | Numerar um documento longo, um processo ou uma apostila que veio sem numeração. | Um PDF, a posição (canto ou centro), o formato (1, Página 1 de 10, i, ii) e a página inicial. | PDF numerado. | baixar | gratuito | navegador | planejada | — |
+| F170 | Marca d'água no PDF | `marca-dagua-no-pdf` | Identificar um PDF como rascunho, cópia ou confidencial antes de compartilhar. | Um PDF e um texto ou imagem para a marca d'água, o ângulo, o tamanho e a opacidade. | PDF com a marca d'água em todas as páginas ou só nas que você escolher. | baixar | gratuito | navegador | planejada | — |
+| F171 | Recortar PDF | `recortar-pdf` | Tirar margens brancas, cabeçalhos ou deixar só um gráfico ou uma tabela da página. | Um PDF; você desenha o retângulo de corte na primeira página e aplica a todas ou a algumas. | PDF com a nova área visível. | baixar | gratuito | navegador | planejada | — |
+| F172 | Preencher formulário em PDF | `preencher-formulario-pdf` | Preencher um formulário em PDF sem imprimir, escrever à mão e escanear de volta. | Um PDF com campos de formulário; a tela lista cada campo para você preencher. | PDF preenchido, com a opção de achatar os campos para ninguém mais editar. | baixar | gratuito | navegador | planejada | — |
+| F173 | Desbloquear PDF | `desbloquear-pdf` | Deixar de digitar a senha todo dia, ou poder imprimir e copiar um PDF seu que veio travado. | Um PDF protegido; se ele pede senha para abrir, você a digita. | PDF sem senha e sem restrições de uso. | baixar | gratuito | servidor | planejada | — |
+| F174 | Assinar PDF | `assinar-pdf` | Assinar um documento sem imprimir e escanear. | Um PDF e a assinatura (desenhada com o dedo ou mouse, digitada ou uma imagem), além da página e posição. | PDF assinado, com a assinatura visível. | baixar | gratuito | navegador | planejada | — |
+| F175 | Ocultar informações do PDF | `ocultar-informacoes-do-pdf` | Compartilhar um documento escondendo dados pessoais sem que dê para copiar o texto de baixo da tarja. | Um PDF; você desenha as tarjas sobre o que quer esconder, página por página. | PDF em que o conteúdo tarjado não existe mais. | baixar | gratuito | navegador | planejada | — |
+| F176 | Comparar PDF | `comparar-pdf` | Descobrir o que foi alterado entre duas versões de um contrato ou relatório sem ler tudo de novo. | Dois PDFs: o original e o novo. | Lista de diferenças por página e imagem das páginas com as mudanças marcadas. | copiar, baixar | gratuito | navegador | planejada | — |
+| F177 | Resumir PDF com IA | `resumir-pdf` | Entender um relatório, contrato ou artigo grande antes de decidir se vale ler inteiro. | Um PDF com texto (até 100 páginas), o tamanho do resumo e, se quiser, uma pergunta. | Resumo em tópicos e respostas, com a página de origem de cada trecho. | copiar, baixar | plus | servidor | planejada | — |
+| F178 | Traduzir PDF | `traduzir-pdf` | Ler um manual, contrato ou artigo escrito em outra língua. | Um PDF com texto, o idioma de origem e o de destino. | Texto traduzido, para copiar ou baixar em DOCX ou PDF simples. | copiar, baixar | plus | servidor | planejada | — |
+| F179 | PDF para Markdown | `pdf-para-markdown` | Levar o conteúdo de um PDF para um texto limpo e estruturado, sem a bagunça de colar direto. | Um PDF com texto selecionável e as páginas desejadas. | Texto em Markdown, para copiar ou baixar como .md. | copiar, baixar | gratuito | navegador | planejada | — |
+
+### Documentos (1/9 prontas)
+
+Gerar, converter e organizar declarações, contratos, currículos e outros documentos.
 
 | ID | Nome | Slug | Problema resolvido | Entrada | Saída | Exporta | Plano | Processa | Situação | Unificação |
 |---|---|---|---|---|---|---|---|---|---|---|
 | F009 | Gerador de recibo | `recibo` | Emitir um recibo correto sem modelo do Word. | Quem recebeu, quem pagou, valor, referência, cidade e data. | Recibo em PDF com linha de assinatura e segunda via opcional. | pdf, imprimir | gratuito | navegador | **pronta** | unifica 2 |
-| F060 | Juntar PDF | `juntar-pdf` | Mandar um só PDF em vez de vários arquivos soltos. | De dois a três arquivos PDF por vez, com até 100 MB cada. | Um PDF único para baixar. | baixar | gratuito | navegador | **pronta** | — |
-| F061 | Dividir PDF e extrair páginas | `dividir-pdf` | Tirar algumas páginas de um PDF grande sem mexer no resto. | Arquivo PDF e o intervalo de páginas. | PDF com as páginas extraídas ou vários arquivos divididos. | baixar | gratuito | navegador | planejada | unifica 2 |
-| F062 | Girar e numerar páginas do PDF | `girar-e-numerar-pdf` | Corrigir páginas escaneadas de lado e numerar um documento longo. | Arquivo PDF, páginas a girar e formato da numeração. | PDF corrigido e numerado. | baixar | gratuito | navegador | planejada | unifica 2 |
-| F063 | Marca d'água e senha no PDF | `protecao-de-pdf` | Identificar um PDF como rascunho ou impedir que qualquer um abra o arquivo. | Arquivo PDF, texto da marca d'água ou senha desejada. | PDF com marca d'água ou protegido por senha. | baixar | plus | servidor | planejada | unifica 2 |
-| F064 | Comprimir PDF | `comprimir-pdf` | Enviar um PDF grande por e-mail ou formulário com limite de tamanho. | Arquivo PDF. | PDF menor, com o tamanho antes e depois. | baixar | plus | navegador | planejada | — |
-| F065 | Extrair texto do PDF | `extrair-texto-de-pdf` | Copiar o conteúdo de um PDF sem digitar tudo de novo. | Arquivo PDF. | Texto extraído, com aviso quando o PDF é uma imagem escaneada sem texto. | copiar, baixar | gratuito | navegador | planejada | — |
 | F066 | Gerador de declaração | `declaracao` | Escrever uma declaração formal sem lembrar a estrutura certa. | Tipo de declaração, dados das partes e finalidade. | Declaração em PDF com linha de assinatura. | pdf, imprimir | gratuito | navegador | planejada | — |
 | F067 | Gerador de procuração | `procuracao` | Redigir uma procuração sem contratar um advogado para um ato simples. | Dados de quem outorga, de quem recebe e os poderes concedidos. | Procuração em PDF com linha de assinatura e aviso de que não substitui orientação jurídica. | pdf, imprimir | gratuito | navegador | planejada | — |
 | F068 | Contrato simples de prestação de serviço | `contrato-simples` | Formalizar um acordo simples sem abrir um editor de texto do zero. | Partes, objeto do serviço, valor, forma de pagamento e prazo. | Contrato em PDF com linha de assinatura das partes. | pdf, imprimir | gratuito | navegador | planejada | — |
@@ -178,8 +218,9 @@ Gerar, converter, organizar e assinar documentos.
 | F070 | Procedimento operacional padrão (POP) | `pop` | Documentar um processo da empresa de um jeito padronizado. | Nome do processo, objetivo, materiais, etapas e responsáveis. | POP em PDF pronto para treinar a equipe. | pdf, imprimir | gratuito | navegador | planejada | — |
 | F071 | Gerador de currículo | `curriculo` | Ter um currículo com boa formatação sem brigar com o editor de texto. | Dados pessoais, experiências, formação e habilidades. | Currículo em PDF pronto para enviar. | pdf, imprimir | gratuito | navegador | planejada | — |
 | F072 | Etiquetas para imprimir | `etiquetas` | Imprimir etiquetas de endereço ou de produto numa folha sem desperdiçar espaço. | Tamanho da etiqueta, margens e o texto de cada uma. | PDF com as etiquetas posicionadas e linhas de corte. | pdf, imprimir | gratuito | navegador | planejada | — |
+| F198 | Converter documento | `converter-documento` | Abrir ou enviar um documento em um formato que o outro lado não lê. | Um documento (até 50 MB) e o formato de saída. | Documento no formato escolhido. | baixar | plus | servidor | planejada | — |
 
-### Planilhas e dados (2/6 prontas)
+### Planilhas e dados (2/8 prontas)
 
 Limpar, comparar, converter e analisar tabelas.
 
@@ -191,10 +232,12 @@ Limpar, comparar, converter e analisar tabelas.
 | F033 | Estatística de uma coluna | `estatistica-descritiva` | Entender um conjunto de números sem abrir o Excel. | Lista de números colada ou coluna de um CSV. | Resumo estatístico e distribuição. | copiar, xlsx | gratuito | navegador | planejada | — |
 | F034 | Montador de fórmulas de planilha | `gerador-de-formulas` | Escrever a fórmula certa sem decorar a ordem dos argumentos. | Intervalos, critérios e o que se quer obter. | Fórmula pronta nas duas sintaxes, com explicação de cada argumento. | copiar | gratuito | navegador | planejada | — |
 | F035 | Gerador de dados de teste | `dados-de-teste` | Testar um sistema sem usar dados reais de pessoas. | Colunas desejadas e quantidade de linhas. | Tabela pronta em CSV, XLSX ou JSON. | csv, xlsx, json | gratuito | navegador | planejada | — |
+| F199 | Converter planilha | `converter-planilha` | Abrir uma planilha em outro programa, ou levá-la para um sistema que só lê CSV. | Uma planilha (até 20 MB), o formato de saída e, no CSV, o separador e a codificação. | Planilha no formato escolhido. | xlsx, csv, baixar | gratuito | navegador | planejada | — |
+| F200 | Criador de gráficos | `criador-de-graficos` | Transformar números em um gráfico bonito para relatório, slide ou post, sem abrir uma planilha. | Uma tabela colada ou um CSV/XLSX, o tipo de gráfico e as colunas de cada eixo. | Gráfico em tela, em PNG para baixar. | png, baixar | gratuito | navegador | planejada | — |
 
-### Imagens (1/9 prontas)
+### Imagens, áudio e vídeo (1/24 prontas)
 
-Redimensionar, converter, comprimir e inspecionar.
+Redimensionar, converter, comprimir, cortar e transcrever imagens, áudio e vídeo.
 
 | ID | Nome | Slug | Problema resolvido | Entrada | Saída | Exporta | Plano | Processa | Situação | Unificação |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -207,8 +250,23 @@ Redimensionar, converter, comprimir e inspecionar.
 | F078 | Remover metadados da imagem | `remover-metadados-de-imagem` | Publicar uma foto sem revelar onde e com qual aparelho ela foi tirada. | Imagem. | Imagem limpa e a lista do que foi removido. | baixar | gratuito | navegador | planejada | — |
 | F079 | Extrair paleta de cores da imagem | `extrator-de-paleta-de-cores` | Descobrir as cores exatas de uma imagem para usar no design. | Imagem. | Paleta de cores com os códigos hexadecimais e RGB. | copiar, png | gratuito | navegador | planejada | — |
 | F080 | Verificador de contraste de cores | `verificador-de-contraste` | Saber se um texto vai ficar legível em cima de determinada cor de fundo. | Cor do texto e cor do fundo. | Razão de contraste e se passa nos níveis AA e AAA. | copiar | gratuito | navegador | planejada | — |
+| F180 | Remover fundo de imagem | `remover-fundo-de-imagem` | Tirar o fundo de uma foto de produto, de perfil ou de documento sem editor nem enviar a imagem para terceiros. | Uma foto JPG, PNG ou WebP (até 12 megapixels). | PNG com fundo transparente, ou com uma cor sólida que você escolher. | baixar, png | gratuito | navegador | planejada | — |
+| F181 | Texto da imagem (OCR) | `ocr-de-imagem` | Copiar o texto de uma foto, de um print ou de um documento fotografado, sem digitar. | Uma imagem (JPG, PNG, WebP) e o idioma do texto. | Texto reconhecido, para revisar, copiar ou baixar em .txt. | copiar, baixar | gratuito | navegador | planejada | — |
+| F182 | HEIC para JPG | `heic-para-jpg` | Fotos do iPhone que o computador, o site ou o formulário não aceitam. | Uma ou várias fotos HEIC ou HEIF e a qualidade do JPG. | Imagens JPG ou PNG, com a data e a orientação da foto mantidas. | baixar | gratuito | navegador | planejada | — |
+| F183 | Ampliar imagem | `ampliar-imagem` | Usar uma imagem pequena ou antiga em tamanho maior sem ela ficar embaçada ou quadriculada. | Uma imagem (até 2 megapixels de entrada) e o fator de ampliação. | Imagem ampliada em PNG ou JPG. | baixar, png | gratuito | navegador | planejada | — |
+| F184 | Editor de fotos | `editor-de-fotos` | Dar um acerto rápido em uma foto sem instalar editor nem subir a imagem para um site. | Uma foto e os ajustes: brilho, contraste, saturação, temperatura, nitidez, giro, recorte e filtros. | Imagem editada em JPG, PNG ou WebP, com antes e depois lado a lado. | baixar, png | gratuito | navegador | planejada | — |
+| F185 | Criar GIF | `criar-gif` | Fazer uma animação curta para mensagem, post ou e-mail a partir de fotos ou prints. | De 2 a 60 imagens, a ordem, o tempo de cada quadro e a largura final. | GIF animado, com o tamanho do arquivo. | baixar | gratuito | navegador | planejada | — |
+| F186 | Ler QR Code | `scanner-de-qr-code` | Saber o que um QR Code contém, e se o link é seguro, antes de acessá-lo. | A câmera do aparelho ou uma imagem com o QR Code (foto, print ou arquivo). | Conteúdo decodificado, com o endereço completo destacado e o tipo (link, Wi-Fi, contato, texto). | copiar | gratuito | navegador | planejada | — |
+| F187 | Converter vídeo | `converter-video` | Um vídeo que o aparelho, o site ou o aplicativo não reconhece, ou que precisa virar GIF. | Um vídeo (até 500 MB), o formato de saída e a qualidade. | Vídeo ou GIF no formato escolhido. | baixar | plus | servidor | planejada | — |
+| F188 | Comprimir vídeo | `comprimir-video` | Enviar um vídeo que passa do limite de tamanho do e-mail, do formulário ou do aplicativo. | Um vídeo (até 500 MB) e o alvo: tamanho máximo ou nível de qualidade. | Vídeo menor, com o tamanho antes e depois. | baixar | plus | servidor | planejada | — |
+| F189 | Cortar vídeo e áudio | `cortar-video-e-audio` | Tirar o silêncio inicial, um trecho ruim ou deixar só o pedaço que importa. | Um vídeo ou áudio (até 300 MB) e o ponto inicial e final do trecho, marcados na linha do tempo. | Arquivo cortado no mesmo formato do original. | baixar | gratuito | navegador | planejada | — |
+| F190 | Extrair áudio de vídeo | `extrair-audio-de-video` | Guardar só o som de uma aula, entrevista ou reunião gravada. | Um vídeo (até 300 MB) e o formato do áudio. | Arquivo de áudio. | baixar | gratuito | navegador | planejada | — |
+| F191 | Converter áudio | `converter-audio` | Um áudio que o aparelho, o editor ou o site não aceita no formato atual. | Um ou mais áudios (até 200 MB cada), o formato de saída e a qualidade. | Áudio no formato escolhido. | baixar | gratuito | navegador | planejada | — |
+| F192 | Transcrever áudio em texto | `transcrever-audio` | Escrever a ata de uma reunião, uma entrevista ou um áudio de WhatsApp sem digitar tudo. | Um áudio ou vídeo (até 60 minutos) e o idioma da fala. | Texto com marcação de tempo, para copiar ou baixar em TXT ou SRT (legenda). | copiar, baixar | plus | servidor | planejada | — |
+| F193 | Texto para fala | `texto-para-fala` | Ouvir um texto longo, conferir a leitura de um roteiro ou apoiar quem tem dificuldade para ler. | Um texto, a voz em português (as que o aparelho tiver), a velocidade e o tom. | Áudio tocado na hora, com pausa e retomada por parágrafo. | copiar | gratuito | navegador | planejada | — |
+| F194 | Gravador de tela e de áudio | `gravador-de-tela-e-audio` | Registrar uma demonstração, uma reunião ou um recado de voz sem instalar programa. | A escolha entre tela (com ou sem som do computador e do microfone) e só áudio; você autoriza o navegador. | Vídeo ou áudio gravado, com prévia antes de baixar. | baixar | gratuito | navegador | planejada | — |
 
-### Desenvolvimento (2/6 prontas)
+### Desenvolvimento (2/8 prontas)
 
 JSON, códigos, conversores e utilitários técnicos.
 
@@ -220,8 +278,10 @@ JSON, códigos, conversores e utilitários técnicos.
 | F038 | Testador de expressão regular | `regex` | Ajustar uma expressão regular vendo o efeito em tempo real. | Expressão, sinalizadores e texto de teste. | Correspondências destacadas, grupos capturados e resultado da substituição. | copiar | gratuito | navegador | planejada | — |
 | F039 | Conversor de timestamp | `timestamp` | Ler uma data que veio como número num log ou API. | Timestamp ou data. | Data legível, ISO e timestamp. | copiar | gratuito | navegador | planejada | — |
 | F040 | Codificador de URL e HTML | `url-e-codificacao` | Montar ou ler URLs com acentos e caracteres especiais. | Texto ou URL. | Texto convertido e a lista de parâmetros da URL. | copiar | gratuito | navegador | planejada | — |
+| F207 | Formatar SQL e código | `formatador-de-codigo` | Ler uma consulta ou um trecho de código colado em uma linha só, sem quebra nem recuo. | O código e a linguagem (SQL com o dialeto, JavaScript, CSS, HTML). | Código formatado, com opção de minificar, para copiar ou baixar. | copiar, baixar | gratuito | navegador | planejada | — |
+| F208 | Diagramas por texto (Mermaid) | `diagramas-mermaid` | Desenhar um fluxo ou processo sem arrastar caixinhas, e poder mudar o desenho só editando o texto. | O texto do diagrama na sintaxe Mermaid, com exemplos prontos para começar. | Diagrama em SVG ou PNG, mais o texto para guardar. | svg, png, copiar | gratuito | navegador | planejada | — |
 
-### Senhas e segurança (2/3 prontas)
+### Senhas e segurança (2/4 prontas)
 
 Gerar segredos, validar documentos e conferir dados.
 
@@ -230,6 +290,7 @@ Gerar segredos, validar documentos e conferir dados.
 | F027 | Gerador de senhas | `gerador-de-senhas` | Criar segredos fortes sem inventar padrões previsíveis. | Tamanho, conjuntos de caracteres e quantidade. | Senhas geradas, entropia em bits e tempo estimado de quebra. | copiar | gratuito | navegador | **pronta** | unifica 3 |
 | F028 | Validador de CPF e CNPJ | `validador-cpf-cnpj` | Saber se um documento foi digitado errado antes de usar no cadastro. | CPF ou CNPJ, com ou sem pontuação. | Válido ou inválido, com o número formatado e o motivo da recusa. | copiar | gratuito | navegador | **pronta** | unifica 2 |
 | F036 | Gerador de hash | `hash` | Conferir se um arquivo baixado é igual ao original. | Texto ou arquivo. | Hash em hexadecimal, com comparação contra um valor esperado. | copiar | gratuito | navegador | planejada | — |
+| F206 | Consulta de CNPJ | `consulta-de-cnpj` | Conferir se uma empresa existe e está ativa antes de fechar negócio ou pagar um fornecedor. | Um CNPJ, com ou sem pontuação. | Razão social, nome fantasia, situação, data de abertura, atividade principal, porte e endereço. | copiar, csv | gratuito | servidor | planejada | — |
 
 ### RH e trabalho (0/9 prontas)
 
@@ -247,13 +308,13 @@ Jornada, férias, currículo, escala e avaliação.
 | F092 | Plano de onboarding | `plano-de-onboarding` | Receber um novo funcionário sem improvisar o primeiro dia. | Cargo, data de início e as etapas de integração. | Plano de onboarding em PDF ou planilha. | pdf, xlsx | gratuito | navegador | planejada | — |
 | F093 | Gerador de organograma | `organograma` | Visualizar quem responde para quem sem desenhar no papel. | Cargos e a quem cada um responde. | Organograma em imagem e PDF. | png, pdf | gratuito | navegador | planejada | — |
 
-### Estoque e logística (0/10 prontas)
+### Estoque e logística (1/11 prontas)
 
 Estoque, reposição, frete, cubagem e conferência.
 
 | ID | Nome | Slug | Problema resolvido | Entrada | Saída | Exporta | Plano | Processa | Situação | Unificação |
 |---|---|---|---|---|---|---|---|---|---|---|
-| F094 | Estoque mínimo e de segurança | `estoque-minimo` | Saber a partir de quantas unidades é hora de repor, sem faltar nem sobrar. | Consumo médio, prazo de reposição e variação da demanda. | Estoque mínimo, estoque de segurança e ponto de atenção. | copiar, xlsx | gratuito | navegador | planejada | — |
+| F094 | Estoque mínimo e de segurança | `estoque-minimo` | Saber a partir de quantas unidades é hora de repor, sem faltar nem sobrar. | Consumo médio, prazo de reposição e variação da demanda. | Estoque mínimo, estoque de segurança e ponto de atenção. | copiar, pdf | gratuito | navegador | **pronta** | — |
 | F095 | Ponto de reposição | `ponto-de-reposicao` | Saber a hora certa de repor sem esperar o produto acabar. | Consumo médio diário, prazo de entrega do fornecedor e estoque de segurança. | Ponto de reposição em unidades. | copiar | gratuito | navegador | planejada | — |
 | F096 | Giro de estoque | `giro-de-estoque` | Saber se o dinheiro parado em estoque está girando rápido o suficiente. | Custo das vendas do período e estoque médio. | Giro de estoque no período e dias médios de estoque. | copiar | gratuito | navegador | planejada | — |
 | F097 | Curva ABC de produtos | `curva-abc` | Descobrir quais produtos merecem mais atenção no estoque e nas compras. | Lista de produtos com valor ou quantidade vendida. | Lista classificada em A, B e C, com o percentual acumulado. | xlsx, csv | gratuito | navegador | planejada | — |
@@ -263,8 +324,9 @@ Estoque, reposição, frete, cubagem e conferência.
 | F101 | Etiqueta de expedição | `etiqueta-de-expedicao` | Identificar cada volume de uma expedição com informação legível. | Dados do remetente, do destinatário e a numeração dos volumes. | Etiquetas em PDF, uma por volume, prontas para imprimir e colar. | pdf, imprimir | gratuito | navegador | planejada | — |
 | F102 | Conferência de pedido | `conferencia-de-pedido` | Evitar que um pedido saia errado da separação. | Lista do pedido e os itens conferidos na separação. | Lista de itens conferidos, faltantes e excedentes. | csv, copiar | gratuito | navegador | planejada | — |
 | F103 | Calculadora de frete | `calculadora-de-frete` | Comparar propostas de frete diferentes antes de fechar com uma transportadora. | Peso, medidas, distância e a tabela de cada transportadora. | Valor estimado por transportadora e a mais barata. | copiar, xlsx | gratuito | navegador | planejada | — |
+| F205 | Consulta de CEP | `consulta-de-cep` | Preencher um endereço de entrega ou cadastro sem errar rua, bairro ou número de CEP. | Um CEP (8 dígitos) ou o estado, a cidade e parte do nome da rua. | Logradouro, bairro, cidade, estado e o código do IBGE, para copiar. | copiar, csv | gratuito | servidor | planejada | — |
 
-### Marketing (0/7 prontas)
+### Marketing (0/8 prontas)
 
 Campanha, métricas, UTM e materiais de conteúdo.
 
@@ -277,8 +339,9 @@ Campanha, métricas, UTM e materiais de conteúdo.
 | F082 | Gerador de títulos | `gerador-de-titulos` | Testar várias formas de chamar a atenção sem travar na primeira ideia. | Assunto, público e objetivo do título. | Lista de títulos sugeridos para escolher e ajustar. | copiar | gratuito | navegador | planejada | — |
 | F083 | Gerador de descrição de produto | `gerador-de-descricao-de-produto` | Escrever a descrição do produto para o anúncio ou a loja sem enrolar. | Nome do produto, características, benefícios e tom desejado. | Descrição pronta para copiar. | copiar | gratuito | navegador | planejada | — |
 | F084 | Briefing criativo | `briefing-criativo` | Passar um pedido de criação sem esquecer informação importante. | Objetivo, público-alvo, tom de voz, prazo e referências. | Briefing em PDF pronto para enviar ao criador ou à equipe. | pdf, copiar | gratuito | navegador | planejada | — |
+| F202 | Encurtador de links com estatística | `encurtador-de-links` | Medir quantas pessoas clicam em um link divulgado e deixá-lo curto para mensagens e QR Codes. | Um endereço completo (https), um apelido opcional e uma data de validade opcional. | Link curto, QR Code e painel de cliques por dia, país e aparelho. | copiar, csv, link | plus | servidor | planejada | — |
 
-### Produtividade (1/12 prontas)
+### Produtividade (1/13 prontas)
 
 Tarefas, reuniões, planejamento e acompanhamento.
 
@@ -296,6 +359,7 @@ Tarefas, reuniões, planejamento e acompanhamento.
 | F111 | Cronograma de projeto | `cronograma-de-projeto` | Ver as etapas do projeto e os prazos de cada uma num só lugar. | Etapas, data de início, duração e responsável. | Cronograma visual e em planilha. | xlsx, pdf | gratuito | navegador | planejada | — |
 | F112 | Matriz de risco | `matriz-de-risco` | Priorizar quais riscos do projeto merecem atenção primeiro. | Riscos, probabilidade e impacto de cada um. | Matriz de risco visual e lista ordenada por severidade. | png, xlsx | gratuito | navegador | planejada | — |
 | F113 | Matriz RACI | `matriz-raci` | Acabar com a confusão de quem faz o quê num projeto com várias pessoas. | Atividades e o papel de cada pessoa em cada uma. | Matriz RACI em planilha ou PDF. | xlsx, pdf | gratuito | navegador | planejada | — |
+| F201 | ZIP: compactar e descompactar | `zip` | Mandar vários arquivos como um só, ou abrir um ZIP sem programa instalado. | Vários arquivos para compactar, ou um ZIP para abrir (até 500 MB no total). | Um ZIP para baixar, ou os arquivos extraídos, um a um ou em lote. | baixar | gratuito | navegador | planejada | — |
 
 ### Estudos (0/15 prontas)
 
