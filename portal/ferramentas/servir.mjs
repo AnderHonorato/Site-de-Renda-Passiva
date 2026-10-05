@@ -52,8 +52,10 @@ function responder(resposta, status, arquivo, método) {
   fs.createReadStream(arquivo).pipe(resposta);
 }
 
-function responderNãoEncontrado(resposta, método) {
-  const página = path.join(raiz, '404.html');
+/** A 404 do idioma do endereço pedido: /en/... recebe a página em inglês; o resto, a em português. */
+function responderNãoEncontrado(resposta, método, caminho = '/') {
+  const noInglês = caminho === '/en' || caminho.startsWith('/en/');
+  const página = path.join(raiz, noInglês ? 'en' : '', '404.html');
   if (fs.existsSync(página)) return responder(resposta, 404, página, método);
   resposta.writeHead(404, { ...CABEÇALHOS, 'Content-Type': 'text/plain; charset=utf-8' });
   return resposta.end('Página não encontrada.');
@@ -78,14 +80,14 @@ const servidor = http.createServer((requisição, resposta) => {
   }
   let alvo = path.resolve(raiz, `.${path.posix.normalize(caminho)}`);
   const relativo = path.relative(raiz, alvo);
-  if (relativo.startsWith('..') || path.isAbsolute(relativo)) return responderNãoEncontrado(resposta, método);
+  if (relativo.startsWith('..') || path.isAbsolute(relativo)) return responderNãoEncontrado(resposta, método, caminho);
   // Pastas de desenvolvimento, arquivos de projeto e pontos-arquivo parecem não existir.
-  if (caminhoÉPrivado(relativo)) return responderNãoEncontrado(resposta, método);
+  if (caminhoÉPrivado(relativo)) return responderNãoEncontrado(resposta, método, caminho);
   try {
     if (fs.statSync(alvo).isDirectory()) alvo = path.join(alvo, 'index.html');
-    if (!fs.statSync(alvo).isFile()) return responderNãoEncontrado(resposta, método);
+    if (!fs.statSync(alvo).isFile()) return responderNãoEncontrado(resposta, método, caminho);
   } catch {
-    return responderNãoEncontrado(resposta, método);
+    return responderNãoEncontrado(resposta, método, caminho);
   }
   return responder(resposta, 200, alvo, método);
 });

@@ -19,8 +19,10 @@ function nomeDaColuna(índice) {
   return nome;
 }
 
-function célulaXml(célula, referência) {
-  if (célula === null || célula === undefined) return '';
+function célulaXml(entrada, referência) {
+  if (entrada === null || entrada === undefined) return '';
+  // Texto e número soltos valem como célula: antes, só objetos {texto}/{número} eram lidos e o resto saía vazio.
+  const célula = typeof entrada === 'object' ? entrada : (typeof entrada === 'number' ? { número: entrada } : { texto: String(entrada) });
   const estilo = ESTILOS[célula.estilo ?? (célula.formato === 'moeda' ? 'moeda' : célula.formato === 'decimal' ? 'decimal' : 'normal')] ?? 0;
   if (célula.fórmula) return `<c r="${referência}" s="${estilo}"><f>${escaparXml(célula.fórmula)}</f></c>`;
   if (typeof célula.número === 'number' && Number.isFinite(célula.número)) return `<c r="${referência}" s="${estilo}"><v>${célula.número}</v></c>`;

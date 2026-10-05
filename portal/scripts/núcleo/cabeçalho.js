@@ -2,6 +2,7 @@
 import { alternarTema, lerTema } from './preferências.js';
 import { isolarBloco, instalarTratadorGlobal } from './isolar-bloco.js';
 import { ligarÍconesVivos } from './ícone-animado.js';
+import { raizDoIdioma } from './idioma.js';
 import { trocarTemaComTransição } from './transição-de-tema.js';
 
 function ligarMenuDeCategorias() {
@@ -68,7 +69,7 @@ function ligarAtalhoDeBusca() {
   };
 
   document.getElementById('ir-para-busca')?.addEventListener('click', () => {
-    if (!irParaBusca()) location.href = new URL('ferramentas.html', location.href).href;
+    if (!irParaBusca()) location.href = new URL(`${raizDoIdioma}ferramentas.html`, location.href).href;
   });
 
   document.addEventListener('keydown', (evento) => {

@@ -106,7 +106,20 @@ for (const página of páginas) {
   if (!/<meta name="description" content="[^"]{20,}"/.test(html)) {
     reclamar(`${relativo} está sem descrição útil no <meta name="description">.`);
   }
-  if (!html.includes('lang="pt-BR"')) reclamar(`${relativo} não declara lang="pt-BR".`);
+  // O idioma da página precisa bater com a pasta: en/ é inglês, o resto é português.
+  const esperado = relativo.startsWith('en/') ? 'en' : 'pt-BR';
+  if (!html.includes(`<html lang="${esperado}"`)) reclamar(`${relativo} deveria declarar <html lang="${esperado}">.`);
+  // hreflang recíproco: a página equivalente existe e aponta de volta para esta.
+  const resolverPar = (de, destino) => resolve(dirname(de), destino === './' ? 'index.html' : destino.endsWith('/') ? join(destino, 'index.html') : destino);
+  for (const [, código, destino] of html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g)) {
+    if (código === 'x-default') continue;
+    const alvoDoPar = resolverPar(página, destino);
+    if (!await existe(alvoDoPar)) { reclamar(`${relativo}: o hreflang ${código} aponta para "${destino}", que não existe.`); continue; }
+    const volta = await readFile(alvoDoPar, 'utf8');
+    const apontaDeVolta = [...volta.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g)]
+      .some(([, c, d]) => c !== 'x-default' && resolverPar(alvoDoPar, d) === página);
+    if (!apontaDeVolta) reclamar(`${relativo}: a página "${destino}" não aponta de volta (hreflang recíproco).`);
+  }
 
   // Links internos precisam existir no disco.
   for (const [, destino] of html.matchAll(/(?:href|src)="([^"#?:]+)(?:[#?][^"]*)?"/g)) {

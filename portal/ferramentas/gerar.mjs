@@ -10,11 +10,13 @@ import { mkdir, writeFile, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { montarPágina, escapar } from './modelo-de-página.mjs';
+import { contextoPt, contextoEn } from './contexto-de-idioma.mjs';
+import { arteDaCategoria, páginaInicial, páginaDeCatálogo, páginaDeSalvos, páginasInstitucionais, página404 } from './páginas.mjs';
 import { ícone } from '../scripts/núcleo/ícones.js';
 import { ferramentas, ferramentasProntas, conferirCatálogo } from '../dados/catálogo.js';
 import { categorias, tarefas } from '../dados/categorias.js';
 import { site } from '../dados/site.js';
-import { íconeVivo, imagemDoTema, arteViva } from '../scripts/núcleo/ícone-animado.js';
+import { íconeVivo, arteViva } from '../scripts/núcleo/ícone-animado.js';
 import { gerarÍconesAnimados } from './ícones-animados.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -23,267 +25,6 @@ const RÓTULO_DE_EXPORTAÇÃO = {
   copiar: 'copiar', baixar: 'baixar arquivo', pdf: 'PDF', xlsx: 'planilha Excel',
   csv: 'CSV', json: 'JSON', png: 'PNG', svg: 'SVG', link: 'link para compartilhar', imprimir: 'impressão',
 };
-
-/** Caminho (sem extensão) da ilustração animada de uma categoria; "mini" é o recorte para cartões pequenos. */
-function arteDaCategoria(id, mini = false) {
-  return `recursos/ilustrações/categorias/${mini ? 'mini/' : ''}${id.normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`;
-}
-
-/** Divisória ondulada — evita a linha reta em toda seção. */
-function onda(invertida = false) {
-  const caminho = invertida
-    ? 'M0,28 C240,0 480,28 720,14 C960,0 1200,24 1440,10 L1440,0 L0,0 Z'
-    : 'M0,0 C240,28 480,0 720,14 C960,28 1200,4 1440,18 L1440,28 L0,28 Z';
-  return `<div class="onda" aria-hidden="true"><svg viewBox="0 0 1440 28" preserveAspectRatio="none"><path d="${caminho}" fill="currentColor"/></svg></div>`;
-}
-
-/* ---------------------------------------------------------------- início */
-
-function páginaInicial() {
-  const prontas = ferramentasProntas.length;
-  const atalhos = ferramentasProntas.slice(0, 5)
-    .map((f) => `<a class="categoria-cartão" href="f/${f.slug}/"><span class="categoria-cartão__ícone">${ícone(f.ícone)}</span><span><b>${escapar(f.nome)}</b><small>${escapar(f.categoriaNome)}</small></span></a>`)
-    .join('');
-
-  const grade = categorias.map((c) => `<a class="categoria-cartão" href="ferramentas.html?categoria=${encodeURIComponent(c.id)}">
-      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
-        <span class="categoria-cartão__ícone">${ícone(c.ícone)}</span>
-        ${arteViva(arteDaCategoria(c.id, true), { classe: 'ícone-vivo__animado', largura: 300, altura: 200 })}
-      </span>
-      <span><b>${escapar(c.nome)}</b><small data-contagem="${escapar(c.id)}"></small></span>
-    </a>`).join('');
-
-  const conteúdo = `    <section class="largura abertura">
-      <div class="abertura__grade">
-        <div class="cascata">
-          <h1 class="abertura__título">O que você precisa <em>resolver</em> agora?</h1>
-          <p class="abertura__linha">Escreva a tarefa, não o nome da ferramenta. <b data-conta="${prontas}">${prontas}</b> ferramentas prontas, sem cadastro, rodando no seu navegador.</p>
-          <div id="bloco-busca">
-          <div class="busca">
-            ${ícone('busca')}
-            <input id="busca" type="search" autocomplete="off" enterkeyhint="search"
-              placeholder="Ex.: preciso saber quanto cobrar" aria-label="Buscar ferramenta"
-              role="combobox" aria-expanded="false" aria-controls="sugestões" aria-autocomplete="list">
-            <kbd>/</kbd>
-            <div class="sugestões" id="sugestões" role="listbox" aria-label="Sugestões" hidden></div>
-          </div>
-          <div class="intenções">
-            <p class="rótulo">Pessoas costumam pedir</p>
-            <div class="intenções__lista" id="intenções"></div>
-          </div>
-          </div>
-        </div>
-        <aside class="acesso-rápido entra atraso-3" aria-label="Acesso rápido">
-          <p class="acesso-rápido__título">Comece por aqui</p>
-          ${atalhos}
-        </aside>
-      </div>
-    </section>
-
-    <div class="largura" id="bloco-vitrine">
-      <section class="vitrine" data-vitrine data-vitrine-manual data-idioma="pt-BR" aria-label="Apresentação animada do portal">
-        <canvas class="vitrine__tela"></canvas>
-        <button class="vitrine__controle" type="button" data-vitrine-controle aria-label="Pausar animação"></button>
-        <noscript>
-          <picture>
-            <source media="(max-width: 640px)" srcset="./vitrine/imagens/vitrine-capa-retrato.webp">
-            <img class="vitrine__capa" src="./vitrine/imagens/vitrine-capa-paisagem.webp" alt="${escapar(site.nome)}: ${prontas} ferramentas grátis." width="1280" height="720">
-          </picture>
-        </noscript>
-      </section>
-    </div>
-
-    <section class="largura seção" id="recentes" hidden>
-      <div class="seção__topo">
-        <h2>${ícone('relógio')} Continue de onde parou</h2>
-        <button class="botão botão--texto" type="button" id="limpar-recentes">Limpar</button>
-      </div>
-      <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-recentes"></div>
-    </section>
-
-    ${onda()}
-    <div class="faixa-fundo">
-      <section class="largura seção">
-        <div class="seção__topo">
-          <h2>${ícone('grade')} Categorias</h2>
-          <a class="botão botão--texto" href="ferramentas.html">Ver tudo ${ícone('seta', { tamanho: 14 })}</a>
-        </div>
-        <div class="grade-categorias">${grade}</div>
-      </section>
-    </div>
-    ${onda(true)}
-
-    <section class="largura seção">
-      <div class="seção__topo">
-        <h2>${ícone('confere-círculo')} Prontas para usar</h2>
-        <p class="filtros__contagem">${prontas} de ${ferramentas.length} ferramentas do catálogo</p>
-      </div>
-      <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-prontas"></div>
-      <p class="pequeno suave t-2">As demais estão no catálogo com a ficha completa do que farão. Nenhuma abre uma tela vazia.</p>
-    </section>
-
-    <section class="largura seção prosa">
-      <h2>Perguntas de quem chega agora</h2>
-      <details><summary>Preciso criar conta?</summary><p>Não. Todas as ferramentas do portal funcionam sem cadastro. Favoritos e histórico ficam guardados no seu próprio navegador.</p></details>
-      <details><summary>Meus arquivos são enviados para algum servidor?</summary><p>Não. O portal é um site estático: o processamento acontece no seu navegador. Cada ferramenta informa isso na ficha, e se alguma vier a precisar de servidor, o aviso aparecerá antes de você enviar qualquer coisa.</p></details>
-      <details><summary>Por que algumas ferramentas aparecem como "planejada"?</summary><p>Porque ainda não estão implementadas. Preferimos mostrar a ficha do que elas vão fazer a abrir uma tela vazia. Só recebe o selo de pronta a ferramenta que abre, valida a entrada, calcula, trata erro, exporta o que promete e tem teste automático.</p></details>
-      <details><summary>Posso usar no celular?</summary><p>Sim. O portal foi desenhado primeiro para a tela pequena, com navegação inferior e campos que o teclado não cobre.</p></details>
-    </section>`;
-
-  return montarPágina({
-    título: `${site.nome} — resolva a tarefa, não procure o botão`,
-    descrição: `Portal com ${prontas} ferramentas prontas para calcular, criar e organizar. Funciona no navegador, sem cadastro e sem enviar seus dados.`,
-    atual: 'início',
-    conteúdo,
-    estilos: ['./vitrine/vitrine.css'],
-    scripts: ['páginas/início.js'],
-  });
-}
-
-/* -------------------------------------------------------------- catálogo */
-
-function páginaDeCatálogo() {
-  const pílulasCategorias = [{ id: 'todas', nome: 'Todas', ícone: 'grade' }, ...categorias]
-    .map((c, i) => `<button type="button" data-categoria="${escapar(c.id)}" aria-pressed="${i === 0}">${ícone(c.ícone ?? 'grade', { tamanho: 14 })}${escapar(c.nome)}</button>`)
-    .join('');
-  const opçõesTarefa = ['<option value="todas">Qualquer tarefa</option>',
-    ...tarefas.map((t) => `<option value="${escapar(t.id)}">${escapar(t.nome)}</option>`)].join('');
-
-  const conteúdo = `    <section class="largura topo-página">
-      <h1 class="b-1">Catálogo de ferramentas</h1>
-      <p class="suave b-2">${ferramentas.length} ferramentas no catálogo, ${ferramentasProntas.length} já prontas para usar.</p>
-      <div class="busca b-2">
-        ${ícone('busca')}
-        <input id="busca" type="search" autocomplete="off" placeholder="Busque por tarefa, nome ou categoria" aria-label="Buscar no catálogo">
-        <kbd>/</kbd>
-      </div>
-      <div class="filtros">
-        <div class="pílulas" id="pílulas-categorias" role="group" aria-label="Filtrar por categoria">${pílulasCategorias}</div>
-        <div class="filtros__linha">
-          <label class="sr-só" for="filtro-tarefa">Tipo de tarefa</label>
-          <select id="filtro-tarefa">${opçõesTarefa}</select>
-          <label class="sr-só" for="filtro-status">Situação</label>
-          <select id="filtro-status">
-            <option value="todas">Prontas e planejadas</option>
-            <option value="pronta">Só as prontas</option>
-            <option value="favoritas">Só os favoritos</option>
-          </select>
-          <p class="filtros__contagem" id="contagem" role="status" aria-live="polite"></p>
-        </div>
-      </div>
-      <div class="lista-ferramentas lista-ferramentas--colunas" id="lista"></div>
-    </section>`;
-
-  return montarPágina({
-    título: `Todas as ferramentas — ${site.nome}`,
-    descrição: `Catálogo completo com ${ferramentas.length} ferramentas organizadas por categoria e tipo de tarefa.`,
-    atual: 'ferramentas',
-    conteúdo,
-    scripts: ['páginas/catálogo.js'],
-  });
-}
-
-/* ---------------------------------------------------------------- salvos */
-
-function páginaDeSalvos() {
-  const conteúdo = `    <section class="largura topo-página">
-      <h1 class="b-1">Meus salvos</h1>
-      <p class="suave b-3">Favoritos e histórico ficam guardados neste navegador. Nada é enviado para servidor. Exporte uma cópia antes de limpar os dados do navegador.</p>
-      <div class="ações b-4">
-        <button class="botão botão--linha" type="button" id="exportar-cópia">${ícone('baixar')}Exportar cópia</button>
-        <label class="botão botão--linha" for="importar-cópia">${ícone('pasta')}Importar cópia</label>
-        <input class="sr-só" id="importar-cópia" type="file" accept="application/json,.json">
-      </div>
-      <div class="seção">
-        <div class="seção__topo"><h2>${ícone('marcador')} Favoritos</h2></div>
-        <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-favoritos"></div>
-      </div>
-      <div class="seção">
-        <div class="seção__topo">
-          <h2>${ícone('relógio')} Abertas recentemente</h2>
-          <button class="botão botão--texto" type="button" id="limpar-recentes">Limpar histórico</button>
-        </div>
-        <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-recentes"></div>
-      </div>
-    </section>`;
-
-  return montarPágina({
-    título: `Meus salvos — ${site.nome}`,
-    descrição: 'Favoritos e histórico das ferramentas que você usa, guardados no seu próprio navegador.',
-    atual: 'salvos',
-    conteúdo,
-    scripts: ['páginas/salvos.js'],
-    semÍndice: true,
-  });
-}
-
-/* ------------------------------------------------------ páginas de texto */
-
-function páginaDeTexto({ título, descrição, atual, corpo, arquivo }) {
-  return {
-    arquivo,
-    html: montarPágina({
-      título: `${título} — ${site.nome}`,
-      descrição, atual,
-      conteúdo: `    <section class="largura prosa topo-página">\n      <h1>${escapar(título)}</h1>\n${corpo}\n    </section>`,
-    }),
-  };
-}
-
-function páginasInstitucionais() {
-  return [
-    páginaDeTexto({
-      arquivo: 'ajuda.html', título: 'Como usar o portal', atual: 'ajuda',
-      descrição: 'Como encontrar a ferramenta certa, usar no celular, exportar resultados e guardar seus favoritos.',
-      corpo: `      <p class="suave">Três passos e um princípio: você sempre vê o que vai acontecer antes de baixar qualquer coisa.</p>
-      <h2>1. Descreva a tarefa</h2>
-      <p>A busca entende intenção. Você pode escrever <em>“quanto preciso vender para pagar as despesas”</em> em vez de procurar por “ponto de equilíbrio”. Pressione <kbd>/</kbd> em qualquer página para ir direto para o campo de busca.</p>
-      <h2>2. Preencha e confira as premissas</h2>
-      <p>Cada ferramenta mostra, acima da dobra, o que ela faz, o que você precisa informar, o que vai receber, se existe limite e onde seus dados ficam. Quando o resultado depende de uma suposição — arredondamento, taxa, perda —, a suposição aparece escrita junto do resultado.</p>
-      <h2>3. Leve o resultado</h2>
-      <p>Copiar, baixar em PDF ou planilha, imprimir ou gerar um link para enviar ao cliente. O que cada ferramenta exporta está escrito na ficha dela.</p>
-      <h2>Favoritos e histórico</h2>
-      <p>O marcador ao lado de cada ferramenta salva o atalho neste navegador. A página <a href="salvos.html">Meus salvos</a> reúne favoritos e histórico, e permite exportar uma cópia em arquivo. Se você limpar os dados do navegador, essa lista se perde — por isso existe a exportação.</p>
-      <h2>No celular</h2>
-      <p>A navegação fica na barra inferior: Início, Ferramentas, Salvos e Ajuda. Os campos numéricos abrem o teclado numérico, e nenhum botão de ação fica escondido atrás do teclado.</p>
-      <h2>Acessibilidade</h2>
-      <p>Todo o portal funciona por teclado, os campos têm rótulo associado, os erros são anunciados por leitores de tela e as cores foram conferidas para contraste mínimo de 4,5:1. Se o seu sistema pede menos movimento, as animações são desligadas.</p>`,
-    }),
-    páginaDeTexto({
-      arquivo: 'privacidade.html', título: 'Política de privacidade', atual: '',
-      descrição: 'O que o portal guarda, onde guarda e como apagar. Sem cadastro e sem envio de arquivos.',
-      corpo: `      <p class="suave">Última revisão: 19 de setembro de 2026.</p>
-      <h2>O que o portal não faz</h2>
-      <ul>
-        <li>não pede cadastro, e-mail ou telefone;</li>
-        <li>não envia os arquivos nem os números que você digita para nenhum servidor;</li>
-        <li>não usa medição de audiência, rastreadores de terceiros nem anúncios nesta versão;</li>
-        <li>não compartilha dados com terceiros, porque não coleta dados para compartilhar.</li>
-      </ul>
-      <h2>O que fica guardado</h2>
-      <p>Só no armazenamento local do seu navegador, sob o prefixo <code>portal.</code>: favoritos, histórico das ferramentas abertas, preferência de tema e os rascunhos que você escolher salvar dentro de uma ferramenta. Esses dados não saem do aparelho e não são legíveis por outros sites.</p>
-      <h2>Como apagar</h2>
-      <p>Em <a href="salvos.html">Meus salvos</a> você limpa o histórico e remove favoritos. Limpar os dados do site pelo próprio navegador apaga tudo de uma vez. Antes disso, use a exportação de cópia se quiser guardar.</p>
-      <h2>Hospedagem</h2>
-      <p>O servidor que entrega as páginas pode registrar, por padrão, endereço de IP e data do acesso — é um registro técnico do provedor de hospedagem, não uma coleta do portal. Quando o endereço definitivo de publicação for escolhido, esta seção passará a nomear o provedor.</p>
-      <h2>Direitos</h2>
-      <p>Como não existe cadastro nem base de dados pessoal do lado do portal, não há dados seus para acessar, corrigir ou excluir em nosso poder. O controle é integralmente seu, no seu navegador. Dúvidas sobre este texto podem ser enviadas ao contato publicado no rodapé quando o endereço definitivo estiver no ar.</p>`,
-    }),
-    páginaDeTexto({
-      arquivo: 'termos.html', título: 'Termos de uso', atual: '',
-      descrição: 'Condições de uso das ferramentas, limites de responsabilidade e direitos sobre o conteúdo.',
-      corpo: `      <p class="suave">Última revisão: 19 de setembro de 2026.</p>
-      <h2>Uso das ferramentas</h2>
-      <p>As ferramentas são oferecidas gratuitamente, no estado em que se encontram, para uso pessoal e profissional. Você pode usar os resultados livremente, inclusive comercialmente.</p>
-      <h2>Conferência dos resultados</h2>
-      <p>Os cálculos são testados, mas o resultado depende do que você informa. Para decisões financeiras, trabalhistas, fiscais ou de obra, confira com o profissional responsável. As ferramentas não substituem contador, advogado, engenheiro ou profissional de saúde, e nenhuma delas emite documento fiscal.</p>
-      <h2>Disponibilidade</h2>
-      <p>O portal pode sair do ar para manutenção, e ferramentas podem mudar de comportamento quando um erro é corrigido. Mudanças que alteram resultados são registradas no histórico de versões do projeto.</p>
-      <h2>Conteúdo</h2>
-      <p>O código, os textos, os ícones e o desenho do portal são de autoria de Anderson. Componentes de terceiros mantêm suas próprias licenças, listadas na documentação do projeto. O conteúdo que você digita continua seu.</p>`,
-    }),
-  ];
-}
 
 /* --------------------------------------------------- página de ferramenta */
 
@@ -361,9 +102,13 @@ function páginaDeFerramenta(f) {
     </div>`;
 
   return montarPágina({
+    ctx: contextoPt,
     título: `${f.nome} — ${site.nome}`,
     descrição: f.resumo,
     base: '../../',
+    raiz: '../../',
+    // As ferramentas ainda não têm versão em inglês (Onda 9): o seletor mostra EN desligado.
+    alternativas: { 'pt-BR': '', en: null },
     atual: 'ferramentas',
     conteúdo,
     scripts: ['núcleo/página-de-ferramenta.js'],
@@ -409,34 +154,26 @@ function íconeDoSite() {
 }
 
 function sitemap(base = 'https://exemplo.invalid/portal/') {
-  const urls = ['', 'ferramentas.html', 'ajuda.html', 'privacidade.html', 'termos.html',
+  const páginasDoIdioma = ['', 'ferramentas.html', 'ajuda.html', 'privacidade.html', 'termos.html'];
+  const urls = [...páginasDoIdioma, ...páginasDoIdioma.map((u) => `en/${u}`),
     ...ferramentasProntas.map((f) => `f/${f.slug}/`)];
   const corpo = urls.map((u) => `  <url><loc>${base}${u}</loc></url>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${corpo}\n</urlset>\n`;
 }
 
-function página404() {
-  return montarPágina({
-    título: `Página não encontrada — ${site.nome}`,
-    descrição: 'O endereço pedido não existe no portal.',
-    // Raiz absoluta: o servidor entrega esta página em qualquer caminho inexistente (/a/b/c).
-    base: '/',
-    semÍndice: true,
-    conteúdo: `    <section class="largura topo-página--folgado página-de-erro">
-      ${imagemDoTema('/recursos/ilustrações/erro-404', { classe: 'ilustração entra atraso-1', largura: 320, altura: 240, carregar: 'eager' })}
-      <div class="prosa cascata">
-        <h1>Esta página não existe</h1>
-        <p>O endereço pode ter mudado ou a ferramenta ainda não foi publicada.</p>
-        <p class="ações t-3">
-          <a class="botão" href="/">Ir para o início</a>
-          <a class="botão botão--linha" href="/ferramentas.html">Ver o catálogo</a>
-        </p>
-      </div>
-    </section>`,
-  });
-}
-
 /* ------------------------------------------------------------- execução */
+
+/** Todas as páginas de um idioma: português na raiz, inglês em en/. */
+function páginasDoIdioma(ctx) {
+  const pasta = ctx.idioma.pasta;
+  return [
+    [`${pasta}index.html`, páginaInicial(ctx)],
+    [`${pasta}ferramentas.html`, páginaDeCatálogo(ctx)],
+    [`${pasta}salvos.html`, páginaDeSalvos(ctx)],
+    [`${pasta}404.html`, página404(ctx)],
+    ...páginasInstitucionais(ctx).map((p) => [`${pasta}${p.arquivo}`, p.html]),
+  ];
+}
 
 async function escrever(caminhoRelativo, conteúdo) {
   const destino = join(RAIZ, caminhoRelativo);
@@ -454,19 +191,17 @@ async function principal() {
   }
 
   await rm(join(RAIZ, 'f'), { recursive: true, force: true });
+  await rm(join(RAIZ, 'en'), { recursive: true, force: true });
   await gerarÍconesAnimados();
 
   const arquivos = [
-    ['index.html', páginaInicial()],
-    ['ferramentas.html', páginaDeCatálogo()],
-    ['salvos.html', páginaDeSalvos()],
-    ['404.html', página404()],
+    ...páginasDoIdioma(contextoPt),
+    ...páginasDoIdioma(contextoEn),
     ['manifesto.webmanifest', manifesto()],
     ['recursos/ícone.svg', íconeDoSite()],
     ['vitrine/vitrine-números.js', númerosDaVitrine()],
     ['sitemap.xml', sitemap()],
     ['robots.txt', 'User-agent: *\nAllow: /\nDisallow: /salvos.html\n'],
-    ...páginasInstitucionais().map((p) => [p.arquivo, p.html]),
     ...ferramentasProntas.map((f) => [`f/${f.slug}/index.html`, páginaDeFerramenta(f)]),
   ];
 

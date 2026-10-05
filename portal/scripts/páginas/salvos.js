@@ -5,6 +5,7 @@ import { lerFavoritos, lerRecentes, limparRecentes } from '../núcleo/preferênc
 import { exportarTudo, importarTudo, armazenamentoAtivo } from '../núcleo/armazenamento.js';
 import { baixar } from '../núcleo/exportar.js';
 import { avisar } from '../núcleo/interface.js';
+import { t } from '../núcleo/idioma.js';
 
 const listaFavoritos = document.getElementById('lista-favoritos');
 const listaRecentes = document.getElementById('lista-recentes');
@@ -16,11 +17,11 @@ function porSlugs(slugs) {
 function desenharTudo() {
   desenharLista(listaFavoritos, porSlugs(lerFavoritos()), {
     vazio: armazenamentoAtivo
-      ? 'Nenhum favorito ainda. Use o marcador ao lado do nome de qualquer ferramenta.'
-      : 'Este navegador está bloqueando o armazenamento local, então favoritos não podem ser guardados.',
+      ? t('salvos.nenhumFavorito')
+      : t('salvos.armazenamentoBloqueado'),
   });
   desenharLista(listaRecentes, porSlugs(lerRecentes()), {
-    vazio: 'Nenhuma ferramenta aberta ainda neste navegador.',
+    vazio: t('salvos.nenhumaRecente'),
   });
 }
 
@@ -31,14 +32,14 @@ ligarLista(listaRecentes, ferramentas, desenharTudo);
 document.getElementById('limpar-recentes')?.addEventListener('click', () => {
   limparRecentes();
   desenharTudo();
-  avisar('Histórico limpo.');
+  avisar(t('salvos.históricoLimpo'));
 });
 
 document.getElementById('exportar-cópia')?.addEventListener('click', () => {
   const cópia = exportarTudo();
   const data = new Date().toISOString().slice(0, 10);
   baixar(JSON.stringify(cópia, null, 2), `ferramentas-do-ander-${data}.json`, 'application/json');
-  avisar('Cópia baixada.');
+  avisar(t('salvos.cópiaBaixada'));
 });
 
 document.getElementById('importar-cópia')?.addEventListener('change', async (evento) => {
@@ -47,16 +48,16 @@ document.getElementById('importar-cópia')?.addEventListener('change', async (ev
   if (!arquivo) return;
   // Limite de tamanho: uma cópia legítima tem alguns kilobytes.
   if (arquivo.size > 512 * 1024) {
-    avisar('Arquivo grande demais para ser uma cópia do portal.');
+    avisar(t('salvos.arquivoGrande'));
     entrada.value = '';
     return;
   }
   try {
     const { importadas, ignoradas } = importarTudo(JSON.parse(await arquivo.text()));
     desenharTudo();
-    avisar(`${importadas} item(ns) importado(s)${ignoradas ? `, ${ignoradas} ignorado(s)` : ''}.`);
+    avisar(t('salvos.importados', { importadas, ignoradas: ignoradas ? t('salvos.ignorados', { ignoradas }) : '' }));
   } catch (erro) {
-    avisar(erro instanceof Error ? erro.message : 'Não foi possível ler o arquivo.');
+    avisar(erro instanceof Error ? erro.message : t('salvos.nãoLeu'));
   } finally {
     entrada.value = '';
   }

@@ -191,3 +191,46 @@ test('ícone animado lento mostra o estático; ícone que falha deixa o estátic
   assert.deepEqual(depois, { estado: 'falhou', estático: '1', animado: 'none' });
   await quebrado.contexto.close();
 });
+
+/* ------------------------------------------------------------------ inglês */
+
+test('a página em inglês mostra tudo em inglês e leva às ferramentas em português com aviso', { skip: pular }, async () => {
+  const { contexto, página, erros } = await abrir();
+  await página.goto(`${BASE}/en/`, { waitUntil: 'networkidle' });
+  assert.equal(await página.evaluate(() => document.documentElement.lang), 'en');
+  assert.match(await página.locator('h1').innerText(), /What do you need to solve right now\?/);
+  // Lista de prontas em inglês, com o aviso de que a ferramenta é em português.
+  const primeira = página.locator('#lista-prontas .ferramenta-linha').first();
+  assert.match(await primeira.locator('.ferramenta-linha__nome').innerText(), /Percentage calculator/);
+  assert.match(await primeira.locator('.ferramenta-linha__nome').innerText(), /In Portuguese/);
+  assert.equal(await primeira.locator('a.ferramenta-linha__alvo').getAttribute('href'), '../f/porcentagem/');
+  // Categorias e contagem em inglês.
+  assert.match(await página.locator('.categoria-cartão small[data-contagem="dinheiro"]').innerText(), /\d+ of \d+ ready/);
+  assert.ok((await página.locator('.grade-categorias b').allInnerTexts()).includes('Money and pricing'));
+  // O seletor volta ao português na mesma página; EN é o atual.
+  assert.equal(await página.locator('.idioma--topo [aria-current="true"]').innerText(), 'EN');
+  assert.equal(await página.locator('.idioma--topo a[hreflang="pt-BR"]').getAttribute('href'), '../');
+  // A busca fala inglês e encontra pela palavra em inglês.
+  await página.fill('#busca', 'discount');
+  await página.waitForSelector('#sugestões:not([hidden]) .sugestões__item');
+  assert.match(await página.locator('.sugestões__item b').first().innerText(), /Percentage calculator|Selling price/);
+  assert.deepEqual(erros, []);
+  await contexto.close();
+});
+
+test('na página de ferramenta o EN aparece desligado, com o motivo escrito', { skip: pular }, async () => {
+  const { contexto, página } = await abrir();
+  await página.goto(`${BASE}/f/juros/`, { waitUntil: 'networkidle' });
+  const desligado = página.locator('.idioma--topo .idioma__item--desligado');
+  assert.equal(await desligado.getAttribute('aria-disabled'), 'true');
+  assert.match(await desligado.getAttribute('title'), /not available yet/);
+  await contexto.close();
+});
+
+test('um endereço inexistente em /en/ devolve a 404 em inglês', { skip: pular }, async () => {
+  const { contexto, página } = await abrir();
+  const resposta = await página.goto(`${BASE}/en/nao/existe`, { waitUntil: 'networkidle' });
+  assert.equal(resposta.status(), 404);
+  assert.equal(await página.locator('h1').innerText(), 'This page does not exist');
+  await contexto.close();
+});

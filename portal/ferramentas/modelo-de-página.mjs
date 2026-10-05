@@ -170,6 +170,8 @@ export function montarPágina({
   if (padrão !== null && padrão !== undefined && hreflangs.length > 1) {
     hreflangs.push(`  <link rel="alternate" hreflang="x-default" href="${escapar(padrão || './')}">`);
   }
+  // Uma página sem equivalente em outro idioma (a 404, a de ferramenta) não declara hreflang nenhum.
+  if (hreflangs.length < 2) hreflangs.length = 0;
 
   return `<!doctype html>
 <html lang="${ctx.código}" data-raiz="${escapar(raiz)}" data-raiz-idioma="${escapar(base)}">

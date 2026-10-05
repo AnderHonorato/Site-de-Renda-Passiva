@@ -2,6 +2,7 @@
 import { ferramentas, ferramentasProntas } from '../../../dados/catálogo.js';
 import { categorias } from '../../../dados/categorias.js';
 import { contarAté } from '../../núcleo/movimento.js';
+import { t } from '../../núcleo/idioma.js';
 
 export function montar() {
   for (const c of categorias) {
@@ -9,7 +10,7 @@ export function montar() {
     if (!alvo) continue;
     const total = ferramentas.filter((f) => f.cat === c.id).length;
     const prontas = ferramentasProntas.filter((f) => f.cat === c.id).length;
-    alvo.textContent = `${prontas} de ${total} prontas`;
+    alvo.textContent = t('início.contagemCategoria', { prontas, total });
   }
 
   // O número do topo conta até o valor real (o HTML já traz o valor final, para quem não tem JavaScript).

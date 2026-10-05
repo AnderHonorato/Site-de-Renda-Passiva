@@ -5,6 +5,11 @@
   <url><loc>https://exemplo.invalid/portal/ajuda.html</loc></url>
   <url><loc>https://exemplo.invalid/portal/privacidade.html</loc></url>
   <url><loc>https://exemplo.invalid/portal/termos.html</loc></url>
+  <url><loc>https://exemplo.invalid/portal/en/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/en/ferramentas.html</loc></url>
+  <url><loc>https://exemplo.invalid/portal/en/ajuda.html</loc></url>
+  <url><loc>https://exemplo.invalid/portal/en/privacidade.html</loc></url>
+  <url><loc>https://exemplo.invalid/portal/en/termos.html</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/porcentagem/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/preco-de-venda/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/juros/</loc></url>
@@ -14,6 +19,7 @@
   <url><loc>https://exemplo.invalid/portal/f/numero-por-extenso/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/orcamento/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/recibo/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/comissao/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/ponto-de-equilibrio/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/regra-de-tres/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/conversor-de-unidades/</loc></url>
@@ -27,10 +33,15 @@
   <url><loc>https://exemplo.invalid/portal/f/limpar-planilha/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/csv-e-json/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/sorteio/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/imc/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/contador-de-texto/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/limpador-de-texto/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/transformador-de-caixa/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/removedor-de-acentos/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/remover-linhas-duplicadas-de-texto/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/juntar-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/estoque-minimo/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/calculadora-de-nps/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/custo-de-receita/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/valor-da-hora/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/calculadora-de-tinta/</loc></url>

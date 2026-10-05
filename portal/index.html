@@ -1,12 +1,15 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-raiz="" data-raiz-idioma="">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Ferramentas do Ander — resolva a tarefa, não procure o botão</title>
-  <meta name="description" content="Portal com 36 ferramentas prontas para calcular, criar e organizar. Funciona no navegador, sem cadastro e sem enviar seus dados.">
+  <meta name="description" content="Portal com 42 ferramentas prontas para calcular, criar e organizar. Funciona no navegador, sem cadastro e sem enviar seus dados.">
   <meta name="theme-color" content="#f5f2ed" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#171717" media="(prefers-color-scheme: dark)">
+  <link rel="alternate" hreflang="pt-BR" href="./">
+  <link rel="alternate" hreflang="en" href="en/">
+  <link rel="alternate" hreflang="x-default" href="./">
   <link rel="icon" href="recursos/ícone.svg" type="image/svg+xml">
   <link rel="manifest" href="manifesto.webmanifest">
   <link rel="stylesheet" href="estilos/núcleo.css">
@@ -62,6 +65,7 @@
     </nav>
     <span class="topo__espaço"></span>
     <div class="topo__fim">
+      <div class="idioma idioma--topo" role="group" aria-label="Idioma"><span class="idioma__item" lang="pt-BR" aria-current="true" title="Português">PT</span><a class="idioma__item" href="en/" hreflang="en" lang="en" title="English">EN</a></div>
       <button class="ícone-botão" type="button" id="ir-para-busca" aria-label="Buscar ferramenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg></button>
       <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="Tema escuro">
         <span class="tema-pílula__estrelas" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -79,7 +83,7 @@
       <div class="abertura__grade">
         <div class="cascata">
           <h1 class="abertura__título">O que você precisa <em>resolver</em> agora?</h1>
-          <p class="abertura__linha">Escreva a tarefa, não o nome da ferramenta. <b data-conta="36">36</b> ferramentas prontas, sem cadastro, rodando no seu navegador.</p>
+          <p class="abertura__linha">Escreva a tarefa, não o nome da ferramenta. <b data-conta="42">42</b> ferramentas prontas, sem cadastro, rodando no seu navegador.</p>
           <div id="bloco-busca">
           <div class="busca">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg>
@@ -108,8 +112,8 @@
         <button class="vitrine__controle" type="button" data-vitrine-controle aria-label="Pausar animação"></button>
         <noscript>
           <picture>
-            <source media="(max-width: 640px)" srcset="./vitrine/imagens/vitrine-capa-retrato.webp">
-            <img class="vitrine__capa" src="./vitrine/imagens/vitrine-capa-paisagem.webp" alt="Ferramentas do Ander: 36 ferramentas grátis." width="1280" height="720">
+            <source media="(max-width: 640px)" srcset="vitrine/imagens/vitrine-capa-retrato.webp">
+            <img class="vitrine__capa" src="vitrine/imagens/vitrine-capa-paisagem.webp" alt="Ferramentas do Ander: 42 ferramentas grátis." width="1280" height="720">
           </picture>
         </noscript>
       </section>
@@ -234,7 +238,7 @@
     <section class="largura seção">
       <div class="seção__topo">
         <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="m8.4 12.2 2.6 2.6 4.6-5"/></svg> Prontas para usar</h2>
-        <p class="filtros__contagem">36 de 151 ferramentas do catálogo</p>
+        <p class="filtros__contagem">42 de 151 ferramentas do catálogo</p>
       </div>
       <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-prontas"></div>
       <p class="pequeno suave t-2">As demais estão no catálogo com a ficha completa do que farão. Nenhuma abre uma tela vazia.</p>
@@ -244,7 +248,7 @@
       <h2>Perguntas de quem chega agora</h2>
       <details><summary>Preciso criar conta?</summary><p>Não. Todas as ferramentas do portal funcionam sem cadastro. Favoritos e histórico ficam guardados no seu próprio navegador.</p></details>
       <details><summary>Meus arquivos são enviados para algum servidor?</summary><p>Não. O portal é um site estático: o processamento acontece no seu navegador. Cada ferramenta informa isso na ficha, e se alguma vier a precisar de servidor, o aviso aparecerá antes de você enviar qualquer coisa.</p></details>
-      <details><summary>Por que algumas ferramentas aparecem como "planejada"?</summary><p>Porque ainda não estão implementadas. Preferimos mostrar a ficha do que elas vão fazer a abrir uma tela vazia. Só recebe o selo de pronta a ferramenta que abre, valida a entrada, calcula, trata erro, exporta o que promete e tem teste automático.</p></details>
+      <details><summary>Por que algumas ferramentas aparecem como &quot;planejada&quot;?</summary><p>Porque ainda não estão implementadas. Preferimos mostrar a ficha do que elas vão fazer a abrir uma tela vazia. Só recebe o selo de pronta a ferramenta que abre, valida a entrada, calcula, trata erro, exporta o que promete e tem teste automático.</p></details>
       <details><summary>Posso usar no celular?</summary><p>Sim. O portal foi desenhado primeiro para a tela pequena, com navegação inferior e campos que o teclado não cobre.</p></details>
     </section>
   </main>
@@ -267,6 +271,7 @@
   </div>
   <div class="largura rodapé__legal">
     <span>Criado por Anderson · 2026</span>
+    <div class="idioma idioma--rodapé" role="group" aria-label="Idioma"><span class="idioma__item" lang="pt-BR" aria-current="true" title="Português">PT</span><a class="idioma__item" href="en/" hreflang="en" lang="en" title="English">EN</a></div>
     <span>Seus dados ficam neste aparelho.</span>
   </div>
 </footer>
