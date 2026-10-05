@@ -2,7 +2,9 @@
  * Categorias do portal. Cada uma tem ícone próprio e um verbo de tarefa dominante.
  * A ordem aqui é a ordem mostrada no menu e na página inicial.
  */
-export const categorias = Object.freeze([
+import { normalizarIdioma } from './idiomas.js';
+
+const CATEGORIAS_PT = Object.freeze([
   { id: 'dinheiro', nome: 'Dinheiro e preços', ícone: 'dinheiro', resumo: 'Preço, margem, juros, parcelas e divisão de contas.' },
   { id: 'vendas', nome: 'Vendas e propostas', ícone: 'vendas', resumo: 'Orçamento, proposta, comissão e acompanhamento.' },
   { id: 'cálculo', nome: 'Cálculo e conversão', ícone: 'cálculo', resumo: 'Porcentagem, regra de três e unidades de medida.' },
@@ -21,15 +23,10 @@ export const categorias = Object.freeze([
   { id: 'ofício', nome: 'Ofício, casa e obra', ícone: 'martelo', resumo: 'Produção artesanal, reforma, festas e embalagens.' },
 ]);
 
-/** Índice por id, para consultas rápidas. */
-export const categoriaPorId = Object.freeze(
-  Object.fromEntries(categorias.map((c) => [c.id, c])),
-);
-
 /**
  * Tipos de tarefa usados como filtro transversal ("o que você quer fazer").
  */
-export const tarefas = Object.freeze([
+const TAREFAS_PT = Object.freeze([
   { id: 'calcular', nome: 'Calcular' },
   { id: 'converter', nome: 'Converter' },
   { id: 'criar', nome: 'Criar' },
@@ -39,3 +36,32 @@ export const tarefas = Object.freeze([
   { id: 'analisar', nome: 'Analisar' },
   { id: 'exportar', nome: 'Exportar' },
 ]);
+
+/**
+ * Categorias e tarefas num idioma. Sem tradução (português), devolve os originais; com a tradução
+ * de dados/traduções/en/categorias.js, troca só nome e resumo e mantém ids, ícones e ordem.
+ * @param {{categorias: Record<string, {nome: string, resumo: string}>, tarefas: Record<string, string>} | null} traduções
+ */
+export function categoriasDoIdioma(traduções = null) {
+  const categorias = traduções
+    ? Object.freeze(CATEGORIAS_PT.map((c) => Object.freeze({ ...c, ...traduções.categorias[c.id] })))
+    : CATEGORIAS_PT;
+  const tarefas = traduções
+    ? Object.freeze(TAREFAS_PT.map((t) => Object.freeze({ ...t, nome: traduções.tarefas[t.id] })))
+    : TAREFAS_PT;
+  const categoriaPorId = Object.freeze(Object.fromEntries(categorias.map((c) => [c.id, c])));
+  return Object.freeze({ categorias, categoriaPorId, tarefas });
+}
+
+/** Idioma da página (no navegador, o lang do <html>; no Node, português). */
+const idiomaAtivo = normalizarIdioma(typeof document !== 'undefined' ? document.documentElement.lang : '');
+
+/** Só a página em inglês baixa a tradução; a em português não carrega uma linha de inglês. */
+const ATIVAS = categoriasDoIdioma(idiomaAtivo === 'en' ? (await import('./traduções/en/categorias.js')).default : null);
+
+export const categorias = ATIVAS.categorias;
+
+/** Índice por id, para consultas rápidas. */
+export const categoriaPorId = ATIVAS.categoriaPorId;
+
+export const tarefas = ATIVAS.tarefas;
