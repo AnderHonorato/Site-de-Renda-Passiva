@@ -374,7 +374,7 @@ export const ferramentas = [
   },
   {
     id: 'F116', slug: 'calculadora-de-nps', nome: 'Calculadora de NPS', cat: 'vendas',
-    ícone: 'gráfico', tarefas: ['calcular', 'analisar'], status: 'planejada',
+    ícone: 'gráfico', tarefas: ['calcular', 'analisar'], status: 'pronta',
     resumo: 'Calcula o Net Promoter Score a partir das notas de 0 a 10 dadas pelos clientes.',
     problema: 'Transformar as respostas da pesquisa de satisfação num número comparável.',
     entra: 'Lista de notas de 0 a 10.',
