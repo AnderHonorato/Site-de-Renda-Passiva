@@ -40,6 +40,17 @@ export default Object.freeze({
     verCatálogoCompleto: 'Ver o catálogo completo',
     contagemCategoria: '{prontas} de {total} prontas',
   },
+  boasVindas: {
+    slides: [
+      'Bem-vindo|Ferramentas prontas para calcular, criar e organizar. Sem cadastro, e o que você digita fica no seu aparelho.',
+      'Descreva a tarefa|Escreva na busca o que você quer resolver, como “quanto devo cobrar”. Ela entende intenção. Aperte / em qualquer página para buscar.',
+      'O catálogo está crescendo|Estamos acrescentando ferramentas de PDF e outras mais avançadas. As que ainda não abriram aparecem marcadas como planejadas.',
+    ],
+    fechar: 'Fechar',
+    pular: 'Pular',
+    próximo: 'Próximo',
+    começar: 'Começar',
+  },
   catálogo: {
     ferramentas: '{n} ferramenta|{n} ferramentas',
     nenhumFavorito: 'Você ainda não salvou nenhuma ferramenta. Use o marcador ao lado do nome.',

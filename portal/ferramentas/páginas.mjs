@@ -91,6 +91,7 @@ export function páginaInicial(ctx) {
             <p class="rótulo">${escapar(t('início.pedem'))}</p>
             <div class="intenções__lista" id="intenções"></div>
           </div>
+          <p class="apresentação"><button class="botão botão--texto" type="button" id="ver-apresentação">${ícone('estrela', { tamanho: 15 })} ${escapar(t('início.verApresentação'))}</button></p>
           </div>
         </div>
         <aside class="acesso-rápido entra atraso-3" aria-label="${escapar(t('início.acessoRápido'))}">
@@ -99,19 +100,6 @@ export function páginaInicial(ctx) {
         </aside>
       </div>
     </section>
-
-    <div class="largura" id="bloco-vitrine">
-      <section class="vitrine" data-vitrine data-vitrine-manual data-idioma="${ctx.código}" aria-label="${escapar(t('início.vitrineRótulo'))}">
-        <canvas class="vitrine__tela"></canvas>
-        <button class="vitrine__controle" type="button" data-vitrine-controle aria-label="${escapar(t('início.vitrinePausar'))}"></button>
-        <noscript>
-          <picture>
-            <source media="(max-width: 640px)" srcset="${raiz}vitrine/imagens/vitrine-capa-retrato.webp">
-            <img class="vitrine__capa" src="${raiz}vitrine/imagens/vitrine-capa-paisagem.webp" alt="${escapar(t('início.vitrineCapa', { prontas }))}" width="1280" height="720">
-          </picture>
-        </noscript>
-      </section>
-    </div>
 
     <section class="largura seção" id="recentes" hidden>
       <div class="seção__topo">

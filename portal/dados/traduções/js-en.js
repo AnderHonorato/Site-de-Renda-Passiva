@@ -36,6 +36,17 @@ export default Object.freeze({
     verCatálogoCompleto: 'See the full catalog',
     contagemCategoria: '{prontas} of {total} ready',
   },
+  boasVindas: {
+    slides: [
+      'Welcome|Ready-made tools to calculate, create and organize. No sign-up, and what you type stays on your device.',
+      'Describe the task|Type what you want to solve in the search, like “how much should I charge”. It understands intent. Press / on any page to search.',
+      'The catalog is growing|We are adding PDF tools and more advanced ones. Tools that are not open yet are marked as planned.',
+    ],
+    fechar: 'Close',
+    pular: 'Skip',
+    próximo: 'Next',
+    começar: 'Get started',
+  },
   catálogo: {
     ferramentas: '{n} tool|{n} tools',
     nenhumFavorito: 'You have not saved any tool yet. Use the bookmark next to the name.',

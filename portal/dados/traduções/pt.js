@@ -55,6 +55,7 @@ export default Object.freeze({
     buscaRótulo: 'Buscar ferramenta',
     sugestões: 'Sugestões',
     pedem: 'Pessoas costumam pedir',
+    verApresentação: 'Ver a apresentação',
     acessoRápido: 'Acesso rápido',
     comeceAqui: 'Comece por aqui',
     vitrineRótulo: 'Apresentação animada do portal',

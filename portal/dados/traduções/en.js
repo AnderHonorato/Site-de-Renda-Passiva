@@ -49,6 +49,7 @@ export default Object.freeze({
     buscaRótulo: 'Search tools',
     sugestões: 'Suggestions',
     pedem: 'What people usually ask for',
+    verApresentação: 'Watch the intro',
     acessoRápido: 'Quick access',
     comeceAqui: 'Start here',
     vitrineRótulo: 'Animated presentation of the portal',

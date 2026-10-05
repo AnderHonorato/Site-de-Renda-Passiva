@@ -376,3 +376,41 @@ dialog.diálogo::backdrop { background: rgba(26, 26, 26, .5); backdrop-filter: b
 .qr-prévia svg { width: 200px; height: auto; border-radius: 8px; }
 .campo--inativo { opacity: .5; }
 .ferramenta-linha--destacada { border-color: var(--marca); box-shadow: var(--sombra-2); }
+
+/* ---------- Popup de boas-vindas (animação à esquerda, carrossel à direita) ---------- */
+.boas-vindas {
+  width: min(860px, calc(100vw - 24px)); max-height: calc(100svh - 24px); padding: 0; border: 1px solid var(--borda);
+  border-radius: var(--raio-g); background: var(--superfície); color: var(--tinta); box-shadow: var(--sombra-3);
+  overflow: hidden; animation: bv-entra .38s var(--curva-mola, ease) both;
+}
+.boas-vindas[open] { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+.boas-vindas::backdrop { background: rgba(26, 26, 26, .5); animation: bv-fundo .3s ease both; }
+.boas-vindas--saindo { animation: bv-sai .22s ease both; }
+.boas-vindas__arte { position: relative; min-height: 380px; background: #f5f2ed; isolation: isolate; }
+.boas-vindas--sem-arte .boas-vindas__arte { display: none; }
+.boas-vindas--sem-arte[open] { grid-template-columns: minmax(0, 1fr); }
+.boas-vindas__texto { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 40px 32px 24px; }
+.boas-vindas__fechar { position: absolute; top: 12px; right: 12px; }
+.boas-vindas__slides { flex: 1 1 auto; }
+.boas-vindas__slide { animation: bv-slide .3s ease both; }
+.boas-vindas__slide h2 { margin: 0 0 10px; font-size: var(--t-xl, 1.5rem); line-height: 1.2; }
+.boas-vindas__slide p { margin: 0; color: var(--tinta-média); line-height: 1.6; }
+.boas-vindas__barra { height: 3px; border-radius: 3px; background: var(--borda); overflow: hidden; }
+.boas-vindas__barra i { display: block; height: 100%; background: var(--marca); transform-origin: left; transition: transform .35s var(--curva-mola, ease); }
+.boas-vindas__ações { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.boas-vindas__próximo svg { transition: transform .2s ease; }
+.boas-vindas__próximo:hover svg { transform: translateX(3px); }
+@keyframes bv-entra { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+@keyframes bv-sai { to { opacity: 0; transform: translateY(8px) scale(.98); } }
+@keyframes bv-fundo { from { opacity: 0; } }
+@keyframes bv-slide { from { opacity: 0; transform: translateX(10px); } }
+@media (max-width: 640px) {
+  .boas-vindas[open] { grid-template-columns: minmax(0, 1fr); grid-template-rows: 200px auto; overflow-y: auto; }
+  .boas-vindas__arte { min-height: 0; }
+  .boas-vindas__texto { padding: 22px 20px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .boas-vindas, .boas-vindas::backdrop, .boas-vindas__slide, .boas-vindas--saindo { animation: none; }
+  .boas-vindas__barra i { transition: none; }
+}
+.apresentação { margin: 14px 0 0; }
