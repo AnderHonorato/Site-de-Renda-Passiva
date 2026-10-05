@@ -2,7 +2,6 @@
   <title id="t">Barras de lucro crescendo ao lado de uma moeda girando</title>
   <style>
     :root { --tinta: #1a1a1a; --fundo: #f6e3da; --sombra: #1a1a1a; --sombra-alfa: .08; }
-    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --fundo: #2e2521; --sombra: #000; --sombra-alfa: .4; } }
     [stroke="#1a1a1a"] { stroke: var(--tinta); }
     [fill="#1a1a1a"] { fill: var(--tinta); }
     .fundo { fill: var(--fundo); }
@@ -10,7 +9,6 @@
     .o { transform-box: fill-box; transform-origin: center; }
     .b { transform-box: fill-box; transform-origin: bottom; }
     .e { transform-box: fill-box; transform-origin: left; }
-
     .barra { animation: cresce 4s ease-in-out infinite; }
     .b2 { animation-delay: .3s; } .b3 { animation-delay: .6s; }
     @keyframes cresce { 0%, 100% { transform: scaleY(.3); } 45%, 75% { transform: scaleY(1); } }
@@ -21,7 +19,6 @@
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
   </style>
   <rect class="fundo" width="480" height="200"/>
-
   <ellipse class="chão" cx="240" cy="176" rx="140" ry="9"/>
   <rect class="barra b b1" x="128" y="118" width="32" height="46" rx="7" fill="#3d4451" stroke="#1a1a1a" stroke-width="3"/>
   <rect class="barra b b2" x="172" y="94" width="32" height="70" rx="7" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3"/>

@@ -1,6 +1,7 @@
 /** Desenho da lista de ferramentas — o componente mais reaproveitado do portal. */
 import { escapar } from './texto.js';
 import { ícone } from './ícones.js';
+import { íconeVivo, imagemDoTema, conferirÍconesVivos } from './ícone-animado.js';
 import { lerFavoritos, alternarFavorito } from './preferências.js';
 import { avisar } from './interface.js';
 
@@ -32,7 +33,7 @@ export function linhaDeFerramenta(f, { base = '', favoritada = false } = {}) {
     : `<a class="ferramenta-linha__nome ferramenta-linha__alvo" href="${escapar(`${base}f/${f.slug}/`)}">${escapar(f.nome)}${selo}</a>`;
 
   return `<div class="ferramenta-linha" data-status="${f.status}" data-slug="${escapar(f.slug)}">
-  <span class="ferramenta-linha__ícone">${ícone(f.ícone)}</span>
+  <span class="ferramenta-linha__ícone">${planejada ? ícone(f.ícone) : íconeVivo(f.ícone, { base, tamanho: 23 })}</span>
   <span class="ferramenta-linha__texto">
     ${alvo}
     <span class="ferramenta-linha__resumo">${escapar(f.resumo)}</span>
@@ -74,12 +75,13 @@ function fichaDaPlanejada(f) {
 export function desenharLista(contêiner, lista, { base = '', vazio = 'Nenhuma ferramenta encontrada.' } = {}) {
   const favoritos = new Set(lerFavoritos());
   if (lista.length === 0) {
-    contêiner.innerHTML = `<p class="vazio"><img class="vazio__desenho" src="${base}recursos/ilustrações/estado-vazio.svg" alt="" width="160" height="120">${escapar(vazio)}</p>`;
+    contêiner.innerHTML = `<p class="vazio">${imagemDoTema(`${base}recursos/ilustrações/estado-vazio`, { classe: 'vazio__desenho', largura: 160, altura: 120 })}${escapar(vazio)}</p>`;
     return;
   }
   contêiner.innerHTML = lista
     .map((f) => linhaDeFerramenta(f, { base, favoritada: favoritos.has(f.slug) }))
     .join('');
+  conferirÍconesVivos(contêiner);
 }
 
 /**

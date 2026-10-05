@@ -63,7 +63,14 @@
     <span class="topo__espaço"></span>
     <div class="topo__fim">
       <button class="ícone-botão" type="button" id="ir-para-busca" aria-label="Buscar ferramenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg></button>
-      <button class="ícone-botão" type="button" id="alternar-tema" aria-label="Alternar tema claro e escuro"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19.5 13.8A7.7 7.7 0 0 1 10.2 4.5a7.8 7.8 0 1 0 9.3 9.3Z"/></svg></button>
+      <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="Tema escuro">
+        <span class="tema-pílula__estrelas" aria-hidden="true"><i></i><i></i><i></i></span>
+        <svg class="tema-pílula__astro" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <g class="astro__raios"><path d="M12 2.2v2.6M12 19.2v2.6M2.2 12h2.6M19.2 12h2.6M5.1 5.1 7 7M17 17l1.9 1.9M5.1 18.9 7 17M17 7l1.9-1.9"/></g>
+          <circle class="astro__núcleo" cx="12" cy="12" r="5.2"/>
+          <circle class="astro__corte" cx="17" cy="8" r="4.6"/>
+        </svg>
+      </button>
     </div>
   </div>
 </header>
@@ -123,102 +130,102 @@
           <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg> Categorias</h2>
           <a class="botão botão--texto" href="ferramentas.html">Ver tudo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h13"/><path d="m12.5 6.5 6 5.5-6 5.5"/></svg></a>
         </div>
-        <div class="grade-categorias"><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=dinheiro">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/dinheiro.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+        <div class="grade-categorias"><a class="categoria-cartão" href="ferramentas.html?categoria=dinheiro">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.3c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.5.8-2.5 2s1 1.8 2.5 2 2.5.6 2.5 2-1 2-2.5 2c-1.1 0-2-.5-2.5-1.3"/><path d="M12 6.3v1.7M12 16v1.7"/></svg></span>
-        <span><b>Dinheiro e preços</b><small data-contagem="dinheiro"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/dinheiro.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/dinheiro.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=vendas">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/vendas.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Dinheiro e preços</b><small data-contagem="dinheiro"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=vendas">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 6.5h2.3l2 10.2a1.5 1.5 0 0 0 1.5 1.2h7.4a1.5 1.5 0 0 0 1.5-1.2l1.3-6.4H6.3"/><circle cx="10" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg></span>
-        <span><b>Vendas e propostas</b><small data-contagem="vendas"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/vendas.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/vendas.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=c%C3%A1lculo">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/calculo.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Vendas e propostas</b><small data-contagem="vendas"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=c%C3%A1lculo">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.7 12h.01M12 12h.01M15.3 12h.01M8.7 16h.01M12 16h.01M15.3 16h.01"/></svg></span>
-        <span><b>Cálculo e conversão</b><small data-contagem="cálculo"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/calculo.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/calculo.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=datas">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/datas.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Cálculo e conversão</b><small data-contagem="cálculo"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=datas">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M3.5 10h17"/><path d="M8 3.5v4M16 3.5v4"/></svg></span>
-        <span><b>Datas e horas</b><small data-contagem="datas"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/datas.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/datas.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=texto">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/texto.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Datas e horas</b><small data-contagem="datas"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=texto">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></svg></span>
-        <span><b>Texto</b><small data-contagem="texto"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/texto.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/texto.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=documentos">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/documentos.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Texto</b><small data-contagem="texto"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=documentos">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8l-4.5-4.5Z"/><path d="M14 3.5V8h4.5"/><path d="M9 13h6M9 16.5h4"/></svg></span>
-        <span><b>Documentos e PDF</b><small data-contagem="documentos"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/documentos.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/documentos.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=planilhas">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/planilhas.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Documentos e PDF</b><small data-contagem="documentos"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=planilhas">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 4.5v15M15 4.5v15"/></svg></span>
-        <span><b>Planilhas e dados</b><small data-contagem="planilhas"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/planilhas.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/planilhas.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=imagens">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/imagens.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Planilhas e dados</b><small data-contagem="planilhas"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=imagens">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.8" cy="9.5" r="1.6"/><path d="m4.5 17 4.3-4.3 3.4 3.4 3-3 4.3 4.3"/></svg></span>
-        <span><b>Imagens</b><small data-contagem="imagens"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/imagens.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/imagens.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=desenvolvimento">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/desenvolvimento.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Imagens</b><small data-contagem="imagens"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=desenvolvimento">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m8.5 8-4 4 4 4"/><path d="m15.5 8 4 4-4 4"/><path d="m13.5 5.5-3 13"/></svg></span>
-        <span><b>Desenvolvimento</b><small data-contagem="desenvolvimento"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/desenvolvimento.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/desenvolvimento.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=seguran%C3%A7a">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/seguranca.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Desenvolvimento</b><small data-contagem="desenvolvimento"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=seguran%C3%A7a">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="8" cy="12" r="4"/><path d="M12 12h8"/><path d="M17 12v3M20 12v2.2"/></svg></span>
-        <span><b>Senhas e segurança</b><small data-contagem="segurança"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/seguranca.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/seguranca.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=trabalho">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/trabalho.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Senhas e segurança</b><small data-contagem="segurança"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=trabalho">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg></span>
-        <span><b>RH e trabalho</b><small data-contagem="trabalho"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/trabalho.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/trabalho.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=opera%C3%A7%C3%B5es">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/operacoes.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>RH e trabalho</b><small data-contagem="trabalho"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=opera%C3%A7%C3%B5es">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 4 7.5v9l8 4 8-4v-9l-8-4Z"/><path d="m4 7.5 8 4 8-4"/><path d="M12 11.5v9"/></svg></span>
-        <span><b>Estoque e logística</b><small data-contagem="operações"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/operacoes.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/operacoes.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=marketing">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/marketing.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Estoque e logística</b><small data-contagem="operações"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=marketing">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2"/></svg></span>
-        <span><b>Marketing</b><small data-contagem="marketing"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/marketing.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/marketing.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=produtividade">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/produtividade.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Marketing</b><small data-contagem="marketing"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=produtividade">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/></svg></span>
-        <span><b>Produtividade</b><small data-contagem="produtividade"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/produtividade.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/produtividade.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=estudos">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/estudos.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Produtividade</b><small data-contagem="produtividade"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=estudos">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 5a1.5 1.5 0 0 1 1.5-1.5h5V20H6a1.5 1.5 0 0 1-1.5-1.5V5Z"/><path d="M19.5 5A1.5 1.5 0 0 0 18 3.5h-5V20h5a1.5 1.5 0 0 0 1.5-1.5V5Z"/></svg></span>
-        <span><b>Estudos</b><small data-contagem="estudos"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/estudos.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/estudos.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
-    </a><a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=of%C3%ADcio">
-      <img class="categoria-cartão__arte" src="recursos/ilustrações/categorias/oficio.svg" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+      <span><b>Estudos</b><small data-contagem="estudos"></small></span>
+    </a><a class="categoria-cartão" href="ferramentas.html?categoria=of%C3%ADcio">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14.5 6.5 3 3"/><path d="M10.5 10.5 4.8 16.2a2 2 0 0 0 2.8 2.8l5.7-5.7"/><path d="M12.6 4.4a2 2 0 0 1 2.8 0l4.2 4.2a2 2 0 0 1 0 2.8l-1.4 1.4-7-7 1.4-1.4Z"/></svg></span>
-        <span><b>Ofício, casa e obra</b><small data-contagem="ofício"></small></span>
+        <img class="só-claro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/oficio.svg" alt="" width="300" height="200" loading="lazy" decoding="async"><img class="só-escuro ícone-vivo__animado" src="recursos/ilustrações/categorias/mini/oficio.escuro.svg" alt="" width="300" height="200" loading="lazy" decoding="async">
       </span>
+      <span><b>Ofício, casa e obra</b><small data-contagem="ofício"></small></span>
     </a></div>
       </section>
     </div>

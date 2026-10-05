@@ -2,7 +2,6 @@
   <title id="t">Uma foto com montanhas e sol e uma linha de leitura passando</title>
   <style>
     :root { --tinta: #1a1a1a; --fundo: #f6e3da; --sombra: #1a1a1a; --sombra-alfa: .08; }
-    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --fundo: #2e2521; --sombra: #000; --sombra-alfa: .4; } }
     [stroke="#1a1a1a"] { stroke: var(--tinta); }
     [fill="#1a1a1a"] { fill: var(--tinta); }
     .fundo { fill: var(--fundo); }
@@ -10,7 +9,6 @@
     .o { transform-box: fill-box; transform-origin: center; }
     .b { transform-box: fill-box; transform-origin: bottom; }
     .e { transform-box: fill-box; transform-origin: left; }
-
     .sol { animation: sobe 4.4s ease-in-out infinite; }
     @keyframes sobe { 0%, 100% { transform: translateY(8px); } 50% { transform: translateY(-6px); } }
     .varre { animation: varre 3.8s ease-in-out infinite; }
@@ -20,7 +18,6 @@
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
   </style>
   <rect class="fundo" width="480" height="200"/>
-
   <ellipse class="chão" cx="240" cy="182" rx="140" ry="9"/>
   <rect x="136" y="28" width="208" height="146" rx="14" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
   <clipPath id="q"><rect x="148" y="40" width="184" height="122" rx="8"/></clipPath>

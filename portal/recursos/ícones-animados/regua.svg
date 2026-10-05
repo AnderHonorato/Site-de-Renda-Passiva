@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i { transform-box: view-box; transform-origin: 12px 12px; animation: mede 2.6s ease-in-out infinite; }
+    @keyframes mede { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+    #i > :nth-child(2) { animation: marcas 2.6s ease-in-out infinite; }
+    @keyframes marcas { 0%, 100% { opacity: .4; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><rect x="2.5" y="8.5" width="19" height="7" rx="2"/><path d="M7 8.5v3M11 8.5v4M15 8.5v3M19 8.5v4"/></g>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i { transform-box: view-box; transform-origin: 12px 18px; animation: treme 2.2s ease-in-out infinite; }
+    @keyframes treme { 0%, 55%, 100% { transform: rotate(0deg); } 62% { transform: rotate(-8deg); } 70% { transform: rotate(8deg); } 78% { transform: rotate(-5deg); } 86% { transform: rotate(3deg); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><path d="M12 4.5 3.8 19a1 1 0 0 0 .9 1.5h14.6a1 1 0 0 0 .9-1.5L12 4.5Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></g>
+</svg>

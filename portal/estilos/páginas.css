@@ -196,17 +196,15 @@ body[data-modo="cliente"] .ferramenta-topo { padding-block: 14px 10px; }
   .página-de-erro { grid-template-columns: minmax(220px, 320px) minmax(0, 1fr); gap: 40px; }
 }
 
-/* Ilustração animada da categoria no topo da ferramenta: retângulo ao lado do nome. */
+/* Retângulo animado da categoria, à direita do nome da ferramenta. O texto fica onde está e ocupa o resto da linha. */
+.ferramenta-topo > div:nth-child(2) { flex: 1 1 auto; min-width: 0; }
 .ferramenta-topo__arte {
-  flex: 0 0 clamp(240px, 26vw, 330px); width: clamp(240px, 26vw, 330px); height: auto; aspect-ratio: 12 / 5;
+  flex: 0 0 clamp(250px, 27vw, 340px); width: clamp(250px, 27vw, 340px); height: auto; aspect-ratio: 12 / 5;
   object-fit: cover; border-radius: var(--raio); border: 1px solid var(--borda); box-shadow: var(--sombra-1);
 }
-.ferramenta-topo > div:nth-child(2) { flex: 1 1 auto; min-width: 0; }
 @media (max-width: 720px) {
-  .ferramenta-topo__arte { flex: 0 0 96px; width: 96px; border-radius: 10px; }
+  .ferramenta-topo__arte { flex-basis: 96px; width: 96px; border-radius: 10px; }
 }
-@media (max-width: 560px) {
-  .ferramenta-topo__arte { display: none; }
-}
-@media print { .ferramenta-topo__arte { display: none; } }
-body[data-modo="cliente"] .ferramenta-topo__arte { display: none; }
+@media (max-width: 560px) { .ferramenta-topo__arte { display: none !important; } }
+@media print { .ferramenta-topo__arte { display: none !important; } }
+body[data-modo="cliente"] .ferramenta-topo__arte { display: none !important; }

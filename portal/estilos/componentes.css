@@ -126,7 +126,7 @@
   display: grid; place-items: center;
   background: var(--marca-fraca); color: var(--marca);
 }
-.ferramenta-linha__ícone svg { width: 18px; height: 18px; }
+.ferramenta-linha__ícone svg { width: 23px; height: 23px; }
 .ferramenta-linha__texto { display: block; min-width: 0; overflow: hidden; }
 .ferramenta-linha__nome {
   margin: 0; font-size: var(--t-base); font-weight: 600; letter-spacing: -.015em;
@@ -164,8 +164,8 @@
 
 /* ---------- Cartão de categoria (compacto) ---------- */
 .grade-categorias {
-  display: grid; gap: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(min(228px, 100%), 1fr));
+  display: grid; gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(min(236px, 100%), 1fr));
 }
 .categoria-cartão {
   display: flex; align-items: center; gap: 10px;
@@ -184,10 +184,9 @@
 }
 .categoria-cartão__ícone svg { width: 17px; height: 17px; }
 
-/* Cartão com ilustração animada própria da categoria. */
-.categoria-cartão--ilustrado { flex-direction: column; align-items: stretch; gap: 0; padding: 0; overflow: hidden; }
-.categoria-cartão__arte { display: block; width: 100%; height: auto; aspect-ratio: 12 / 5; object-fit: cover; border-bottom: 1px solid var(--borda); }
-.categoria-cartão__texto { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+/* Animação própria da categoria, pequena, ao lado do nome (maior que um ícone, menor que um cartão). */
+.categoria-cartão { padding-left: 10px; min-height: 68px; }
+.categoria-cartão__arte { flex: 0 0 72px; width: 72px; height: 48px; border-radius: 10px; overflow: hidden; background: var(--superfície-3); }
 .categoria-cartão b { display: block; font-size: var(--t-sm); font-weight: 600; letter-spacing: -.01em; }
 .categoria-cartão small { color: var(--tinta-suave); font-size: var(--t-xs); }
 
@@ -269,6 +268,17 @@
 
 .girando { animation: girar 1s linear infinite; }
 @keyframes girar { to { transform: rotate(360deg); } }
+
+/* ---------- Ícone animado, com o estático como segunda alternativa ---------- */
+.ícone-vivo { position: relative; display: grid; place-items: center; }
+.ícone-vivo > :first-child { transition: opacity var(--mov-médio, .28s) ease; }
+.ícone-vivo__animado {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+  opacity: 0; transition: opacity var(--mov-médio, .28s) ease;
+}
+.ícone-vivo[data-estado="pronto"] .ícone-vivo__animado { opacity: 1; }
+.ícone-vivo[data-estado="pronto"] > :first-child { opacity: 0; }
+.ícone-vivo[data-estado="falhou"] .ícone-vivo__animado { display: none; }
 
 /* ---------- Bloco que falhou (isolarBloco) ---------- */
 .bloco-falhou {

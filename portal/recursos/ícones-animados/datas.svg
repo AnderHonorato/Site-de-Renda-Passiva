@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i > :nth-child(3) { animation: argola 1.8s ease-in-out infinite; }
+    @keyframes argola { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.8px); } }
+    #i > :nth-child(2) { transform-origin: center; animation: faixa 1.8s ease-in-out infinite; }
+    @keyframes faixa { 0%, 100% { transform: scaleX(.6); } 50% { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M3.5 10h17"/><path d="M8 3.5v4M16 3.5v4"/></g>
+</svg>

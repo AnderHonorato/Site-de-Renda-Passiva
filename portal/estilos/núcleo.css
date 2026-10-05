@@ -213,6 +213,16 @@ svg { display: block; }
   text-transform: uppercase; color: var(--tinta-suave); margin: 0;
 }
 
+/* Ilustrações em SVG usadas como imagem só enxergam o tema do sistema, não o do botão do site.
+   Por isso cada uma existe em dois arquivos e o CSS mostra a que combina com o tema atual. */
+.só-escuro { display: none; }
+:root[data-tema="escuro"] .só-claro { display: none; }
+:root[data-tema="escuro"] .só-escuro { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) .só-claro { display: none; }
+  :root:not([data-tema="claro"]) .só-escuro { display: block; }
+}
+
 /* O atributo hidden vale mesmo quando uma regra define display. */
 [hidden] { display: none !important; }
 

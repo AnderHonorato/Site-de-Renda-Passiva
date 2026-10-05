@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i > :nth-child(2) { transform-origin: left center; animation: cresce 2.4s ease-in-out infinite; }
+    @keyframes cresce { 0%, 100% { transform: scaleX(.3); } 50% { transform: scaleX(1); } }
+    #i > :nth-child(3) { animation: pisca 1.2s steps(1, end) infinite; }
+    @keyframes pisca { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.7 12h.01M12 12h.01M15.3 12h.01M8.7 16h.01M12 16h.01M15.3 16h.01"/></g>
+</svg>

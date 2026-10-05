@@ -2,7 +2,6 @@
   <title id="t">Duas folhas se juntando em um só documento PDF</title>
   <style>
     :root { --tinta: #1a1a1a; --fundo: #f1ebe1; --sombra: #1a1a1a; --sombra-alfa: .08; }
-    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --fundo: #292623; --sombra: #000; --sombra-alfa: .4; } }
     [stroke="#1a1a1a"] { stroke: var(--tinta); }
     [fill="#1a1a1a"] { fill: var(--tinta); }
     .fundo { fill: var(--fundo); }
@@ -10,7 +9,6 @@
     .o { transform-box: fill-box; transform-origin: center; }
     .b { transform-box: fill-box; transform-origin: bottom; }
     .e { transform-box: fill-box; transform-origin: left; }
-
     .esq { animation: juntaE 4.4s ease-in-out infinite; }
     .dir { animation: juntaD 4.4s ease-in-out infinite; }
     @keyframes juntaE { 0%, 15%, 100% { transform: translateX(-34px) rotate(-6deg); } 45%, 75% { transform: translateX(0) rotate(0deg); } }
@@ -20,7 +18,6 @@
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
   </style>
   <rect class="fundo" width="480" height="200"/>
-
   <ellipse class="chão" cx="240" cy="180" rx="130" ry="9"/>
   <g class="esq o"><path d="M178 36h74l26 26v104a8 8 0 0 1-8 8h-92a8 8 0 0 1-8-8V44a8 8 0 0 1 8-8z" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
     <rect x="192" y="82" width="64" height="8" rx="4" fill="#ddd6cc"/><rect x="192" y="102" width="48" height="8" rx="4" fill="#ddd6cc"/></g>

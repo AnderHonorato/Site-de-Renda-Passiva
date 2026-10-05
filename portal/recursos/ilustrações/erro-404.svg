@@ -2,11 +2,9 @@
   <title id="t">Uma folha com um espaço vazio e uma lupa procurando</title>
   <style>
     :root { --tinta: #1a1a1a; --sombra: #1a1a1a; --sombra-alfa: .07; }
-    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --sombra: #000; --sombra-alfa: .4; } }
     [stroke="#1a1a1a"] { stroke: var(--tinta); }
     [fill="#1a1a1a"] { fill: var(--tinta); }
     ellipse[opacity] { fill: var(--sombra); opacity: var(--sombra-alfa); }
-    @media (prefers-color-scheme: dark) { [stroke="#3d4451"] { stroke: #9aa3b2; } circle[fill="#3d4451"] { fill: #9aa3b2; } }
     .lupa { animation: procurar 4s ease-in-out infinite; transform-origin: 214px 126px; }
     @keyframes procurar { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-30px, 14px) rotate(-10deg); } }
     .ponto { animation: pulsar 1.6s ease-in-out infinite; }

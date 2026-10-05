@@ -12,7 +12,8 @@
  */
 import { avisar } from './interface.js';
 
-const DESENHO = new URL('../../recursos/ilustrações/erro-do-servidor.svg', import.meta.url).href;
+const DESENHO_CLARO = new URL('../../recursos/ilustrações/erro-do-servidor.svg', import.meta.url).href;
+const DESENHO_ESCURO = new URL('../../recursos/ilustrações/erro-do-servidor.escuro.svg', import.meta.url).href;
 
 /**
  * Carrega um módulo por `import()`. A partir da segunda tentativa troca o endereço
@@ -39,7 +40,8 @@ function criar(tag, atributos = {}, texto = '') {
  * @param {number} falhas quantas vezes já falhou
  */
 function mostrarFalha(alvo, nome, tentarDeNovo, falhas) {
-  const imagem = criar('img', { src: DESENHO, alt: '', width: '160', height: '120', class: 'bloco-falhou__desenho' });
+  const imagem = criar('img', { src: DESENHO_CLARO, alt: '', width: '160', height: '120', class: 'só-claro bloco-falhou__desenho' });
+  const imagemEscura = criar('img', { src: DESENHO_ESCURO, alt: '', width: '160', height: '120', class: 'só-escuro bloco-falhou__desenho' });
   const título = criar('p', { class: 'bloco-falhou__título' }, falhas > 1 ? 'Ainda não deu.' : 'Esta parte não carregou.');
   const texto = criar('p', { class: 'pequeno suave' }, falhas > 1
     ? 'Se a conexão estiver instável, recarregar a página costuma resolver. O resto continua funcionando.'
@@ -56,7 +58,7 @@ function mostrarFalha(alvo, nome, tentarDeNovo, falhas) {
   const conteúdo = criar('div');
   conteúdo.append(título, texto, ações);
   const caixa = criar('div', { class: 'bloco-falhou', role: 'alert', 'data-bloco': nome });
-  caixa.append(imagem, conteúdo);
+  caixa.append(imagem, imagemEscura, conteúdo);
   // Esconde o que estava no alvo (em vez de apagar) para poder restaurar se a nova tentativa der certo.
   for (const filho of alvo.children) {
     if (filho.hidden) continue;

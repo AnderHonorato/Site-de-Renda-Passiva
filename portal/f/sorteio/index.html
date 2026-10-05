@@ -62,7 +62,14 @@
     <span class="topo__espaço"></span>
     <div class="topo__fim">
       <button class="ícone-botão" type="button" id="ir-para-busca" aria-label="Buscar ferramenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg></button>
-      <button class="ícone-botão" type="button" id="alternar-tema" aria-label="Alternar tema claro e escuro"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19.5 13.8A7.7 7.7 0 0 1 10.2 4.5a7.8 7.8 0 1 0 9.3 9.3Z"/></svg></button>
+      <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="Tema escuro">
+        <span class="tema-pílula__estrelas" aria-hidden="true"><i></i><i></i><i></i></span>
+        <svg class="tema-pílula__astro" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <g class="astro__raios"><path d="M12 2.2v2.6M12 19.2v2.6M2.2 12h2.6M19.2 12h2.6M5.1 5.1 7 7M17 17l1.9 1.9M5.1 18.9 7 17M17 7l1.9-1.9"/></g>
+          <circle class="astro__núcleo" cx="12" cy="12" r="5.2"/>
+          <circle class="astro__corte" cx="17" cy="8" r="4.6"/>
+        </svg>
+      </button>
     </div>
   </div>
 </header>
@@ -75,7 +82,7 @@
       </nav>
 
       <header class="ferramenta-topo">
-        <span class="ferramenta-topo__ícone"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 4 2.5 5.1 5.5.8-4 3.9.9 5.6-4.9-2.6-4.9 2.6.9-5.6-4-3.9 5.5-.8L12 4Z"/></svg></span>
+        <span class="ferramenta-topo__ícone"><span class="ícone-vivo" data-estado="carregando"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 4 2.5 5.1 5.5.8-4 3.9.9 5.6-4.9-2.6-4.9 2.6.9-5.6-4-3.9 5.5-.8L12 4Z"/></svg><img class="ícone-vivo__animado" src="../../recursos/ícones-animados/estrela.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span></span>
         <div>
           <h1>Sorteio</h1>
           <p>Sorteia números, nomes e divide participantes em times, sem repetição quando pedido.</p>
@@ -83,7 +90,7 @@
         <div class="ferramenta-topo__ações">
           <button class="ícone-botão favorito" type="button" data-favorito="sorteio" aria-pressed="false" aria-label="Salvar nos favoritos"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 4.5h11a1 1 0 0 1 1 1V20l-6.5-3.8L5.5 20V5.5a1 1 0 0 1 1-1Z"/></svg></button>
         </div>
-        <img class="ferramenta-topo__arte" src="../../recursos/ilustrações/categorias/produtividade.svg" alt="" width="480" height="200" decoding="async">
+        <img class="só-claro ferramenta-topo__arte" src="../../recursos/ilustrações/categorias/produtividade.svg" alt="" width="480" height="200" loading="eager" decoding="async"><img class="só-escuro ferramenta-topo__arte" src="../../recursos/ilustrações/categorias/produtividade.escuro.svg" alt="" width="480" height="200" loading="eager" decoding="async">
       </header>
 
       <div class="ferramenta-área">

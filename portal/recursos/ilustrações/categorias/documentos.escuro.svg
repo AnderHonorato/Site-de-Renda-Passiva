@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" role="img" aria-labelledby="t">
+  <title id="t">Duas folhas se juntando em um só documento PDF</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #f1ebe1; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    :root { --tinta: #e9e4dc; --fundo: #292623; --sombra: #000; --sombra-alfa: .4; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .esq { animation: juntaE 4.4s ease-in-out infinite; }
+    .dir { animation: juntaD 4.4s ease-in-out infinite; }
+    @keyframes juntaE { 0%, 15%, 100% { transform: translateX(-34px) rotate(-6deg); } 45%, 75% { transform: translateX(0) rotate(0deg); } }
+    @keyframes juntaD { 0%, 15%, 100% { transform: translateX(34px) rotate(6deg); } 45%, 75% { transform: translateX(0) rotate(0deg); } }
+    .selo { animation: surge 4.4s ease-in-out infinite; }
+    @keyframes surge { 0%, 40%, 100% { transform: scale(0) rotate(-20deg); } 55%, 80% { transform: scale(1) rotate(0deg); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="180" rx="130" ry="9"/>
+  <g class="esq o"><path d="M178 36h74l26 26v104a8 8 0 0 1-8 8h-92a8 8 0 0 1-8-8V44a8 8 0 0 1 8-8z" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="192" y="82" width="64" height="8" rx="4" fill="#ddd6cc"/><rect x="192" y="102" width="48" height="8" rx="4" fill="#ddd6cc"/></g>
+  <g class="dir o"><path d="M222 28h74l26 26v104a8 8 0 0 1-8 8h-92a8 8 0 0 1-8-8V36a8 8 0 0 1 8-8z" fill="#f6e3da" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="236" y="74" width="64" height="8" rx="4" fill="#e0c5b8"/><rect x="236" y="94" width="52" height="8" rx="4" fill="#e0c5b8"/><rect x="236" y="114" width="60" height="8" rx="4" fill="#e0c5b8"/></g>
+  <g class="selo o"><rect x="262" y="132" width="62" height="34" rx="10" fill="#d97757" stroke="#1a1a1a" stroke-width="3"/>
+    <path d="M276 144h34M276 154h22" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round"/></g>
+</svg>

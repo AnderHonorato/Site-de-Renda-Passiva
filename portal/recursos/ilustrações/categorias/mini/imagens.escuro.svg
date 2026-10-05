@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="90 0 300 200" role="img" aria-labelledby="t">
+  <title id="t">Uma foto com montanhas e sol e uma linha de leitura passando</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #f6e3da; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    :root { --tinta: #e9e4dc; --fundo: #2e2521; --sombra: #000; --sombra-alfa: .4; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .sol { animation: sobe 4.4s ease-in-out infinite; }
+    @keyframes sobe { 0%, 100% { transform: translateY(8px); } 50% { transform: translateY(-6px); } }
+    .varre { animation: varre 3.8s ease-in-out infinite; }
+    @keyframes varre { 0% { transform: translateX(0); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translateX(196px); opacity: 0; } }
+    .alça { animation: alça 2.4s ease-in-out infinite; }
+    @keyframes alça { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.35); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="182" rx="140" ry="9"/>
+  <rect x="136" y="28" width="208" height="146" rx="14" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+  <clipPath id="q"><rect x="148" y="40" width="184" height="122" rx="8"/></clipPath>
+  <g clip-path="url(#q)">
+    <rect x="148" y="40" width="184" height="122" fill="#f6e3da"/>
+    <circle class="sol o" cx="290" cy="76" r="18" fill="#d97757" stroke="#1a1a1a" stroke-width="3"/>
+    <path d="M148 162l56-62 40 44 30-30 58 48z" fill="#3d4451" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M148 162l30-30 26 30z" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+    <rect class="varre" x="148" y="40" width="5" height="122" fill="#d97757" opacity=".85"/>
+  </g>
+  <g fill="#d97757" stroke="#1a1a1a" stroke-width="2.5"><rect class="alça o" x="129" y="21" width="14" height="14" rx="3"/><rect class="alça o" x="337" y="21" width="14" height="14" rx="3"/><rect class="alça o" x="129" y="167" width="14" height="14" rx="3"/><rect class="alça o" x="337" y="167" width="14" height="14" rx="3"/></g>
+</svg>

@@ -134,3 +134,62 @@ test('a página 404 mostra o desenho ao lado do texto', { skip: pular }, async (
   assert.equal(await página.locator('h1').innerText(), 'Esta página não existe');
   await contexto.close();
 });
+
+/* ----------------------------------------- botão de tema e ícones animados */
+
+test('o botão de tema vira a pílula, troca o tema com a tela coberta e não deixa camada para trás', { skip: pular }, async () => {
+  const { contexto, página } = await abrir({ colorScheme: 'light' });
+  await página.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+  assert.equal(await página.getAttribute('#alternar-tema', 'aria-checked'), 'false');
+  await página.click('#alternar-tema');
+  await página.waitForSelector('.transição-tema', { timeout: 2000 });
+  assert.equal(await página.getAttribute('#alternar-tema', 'aria-checked'), 'true', 'a pílula responde ao clique na hora');
+  await página.waitForSelector('.transição-tema', { state: 'detached', timeout: 4000 });
+  assert.equal(await página.evaluate(() => document.documentElement.getAttribute('data-tema')), 'escuro');
+  // No tema escolhido no botão, a variante escura das ilustrações aparece mesmo com o sistema claro.
+  const visíveis = await página.evaluate(() => ({
+    claro: [...document.querySelectorAll('.só-claro')].every((i) => getComputedStyle(i).display === 'none'),
+    escuro: [...document.querySelectorAll('.só-escuro')].every((i) => getComputedStyle(i).display !== 'none'),
+  }));
+  assert.deepEqual(visíveis, { claro: true, escuro: true });
+  await página.click('#alternar-tema');
+  await página.waitForSelector('.transição-tema', { timeout: 2000 }); // a cobertura começa depois da pílula
+  await página.waitForSelector('.transição-tema', { state: 'detached', timeout: 5000 });
+  assert.equal(await página.evaluate(() => document.documentElement.getAttribute('data-tema')), 'claro');
+  assert.equal(await página.getAttribute('#alternar-tema', 'aria-checked'), 'false');
+  await contexto.close();
+});
+
+test('com movimento reduzido a troca de tema é imediata e sem camada', { skip: pular }, async () => {
+  const { contexto, página } = await abrir({ reducedMotion: 'reduce' });
+  await página.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+  await página.click('#alternar-tema');
+  await página.waitForFunction(() => document.documentElement.getAttribute('data-tema') === 'escuro', null, { timeout: 1000 });
+  assert.equal(await página.locator('.transição-tema').count(), 0);
+  await contexto.close();
+});
+
+test('ícone animado lento mostra o estático; ícone que falha deixa o estático', { skip: pular }, async () => {
+  const lento = await abrir();
+  await lento.página.route(/%C3%ADcones-animados/, async (rota) => { await new Promise((r) => setTimeout(r, 1500)); await rota.continue(); });
+  await lento.página.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await lento.página.waitForSelector('#lista-prontas .ícone-vivo');
+  const durante = await lento.página.evaluate(() => {
+    const caixa = document.querySelector('#lista-prontas .ícone-vivo');
+    return { estado: caixa.dataset.estado, estático: getComputedStyle(caixa.firstElementChild).opacity };
+  });
+  assert.equal(durante.estado, 'carregando');
+  assert.equal(durante.estático, '1', 'o estático aparece enquanto a animada demora');
+  await lento.página.waitForFunction(() => document.querySelector('#lista-prontas .ícone-vivo')?.dataset.estado === 'pronto', null, { timeout: 8000 });
+  await lento.contexto.close();
+
+  const quebrado = await abrir();
+  await quebrado.página.route(/%C3%ADcones-animados/, (rota) => rota.abort());
+  await quebrado.página.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+  const depois = await quebrado.página.evaluate(() => {
+    const caixa = document.querySelector('#lista-prontas .ícone-vivo');
+    return { estado: caixa.dataset.estado, estático: getComputedStyle(caixa.firstElementChild).opacity, animado: getComputedStyle(caixa.querySelector('img')).display };
+  });
+  assert.deepEqual(depois, { estado: 'falhou', estático: '1', animado: 'none' });
+  await quebrado.contexto.close();
+});

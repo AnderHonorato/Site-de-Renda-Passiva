@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="130 0 300 200" role="img" aria-labelledby="t">
+  <title id="t">Uma janela de terminal com linhas de código aparecendo e o cursor piscando</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #e3e6ec; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .código { animation: digita 5.2s ease-in-out infinite; }
+    .k2 { animation-delay: .5s; } .k3 { animation-delay: 1s; } .k4 { animation-delay: 1.5s; } .k5 { animation-delay: 2s; }
+    @keyframes digita { 0% { transform: scaleX(0); } 22%, 85% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+    .cursor { animation: pisca 1s steps(1, end) infinite; }
+    @keyframes pisca { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+    .tag { animation: flutua 3.4s ease-in-out infinite; }
+    @keyframes flutua { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-10px) rotate(4deg); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="180" rx="150" ry="9"/>
+  <rect x="116" y="28" width="250" height="144" rx="14" fill="#2a2f38" stroke="#1a1a1a" stroke-width="3"/>
+  <path d="M116 42a14 14 0 0 1 14-14h222a14 14 0 0 1 14 14v12H116z" fill="#3d4451" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="134" cy="41" r="4.5" fill="#d97757"/><circle cx="150" cy="41" r="4.5" fill="#c9b89b"/><circle cx="166" cy="41" r="4.5" fill="#6b7280"/>
+  <rect class="código e k1" x="134" y="70" width="72" height="9" rx="4.5" fill="#d97757"/>
+  <rect class="código e k2" x="150" y="88" width="132" height="9" rx="4.5" fill="#c9b89b"/>
+  <rect class="código e k3" x="150" y="106" width="96" height="9" rx="4.5" fill="#e8e1d6"/>
+  <rect class="código e k4" x="150" y="124" width="150" height="9" rx="4.5" fill="#c9b89b"/>
+  <rect class="código e k5" x="134" y="142" width="40" height="9" rx="4.5" fill="#d97757"/>
+  <rect class="cursor" x="182" y="138" width="6" height="16" rx="2" fill="#e8e1d6"/>
+  <g class="tag o" fill="none" stroke="#d97757" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M402 70l-24 26 24 26M432 70l24 26-24 26"/><path d="M425 62l-16 68" stroke-width="5"/></g>
+</svg>

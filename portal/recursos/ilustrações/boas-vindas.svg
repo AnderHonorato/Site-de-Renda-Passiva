@@ -2,7 +2,6 @@
   <title id="t">O sol nascendo atrás de uma colina, com confetes no ar</title>
   <style>
     :root { --tinta: #1a1a1a; --sombra: #1a1a1a; --sombra-alfa: .07; }
-    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --sombra: #000; --sombra-alfa: .4; } }
     [stroke="#1a1a1a"] { stroke: var(--tinta); }
     [fill="#1a1a1a"] { fill: var(--tinta); }
     ellipse[opacity] { fill: var(--sombra); opacity: var(--sombra-alfa); }

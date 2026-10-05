@@ -159,3 +159,57 @@
   .rodapé__interior { grid-template-columns: 1fr; }
   .marca__nome span { display: none; }
 }
+
+/* ---------- Botão de tema em pílula (sol e lua) ---------- */
+:root {
+  --p-trilho: #f6e3da; --p-borda: var(--borda-forte); --p-x: 0px; --p-giro: 0deg;
+  --p-raios: 1; --p-corte: 0; --p-núcleo: #d97757; --p-estrelas: 0;
+}
+:root[data-tema="escuro"] {
+  --p-trilho: #2a2f38; --p-borda: #4a505c; --p-x: 28px; --p-giro: 360deg;
+  --p-raios: 0; --p-corte: 1; --p-núcleo: #f5f2ed; --p-estrelas: 1;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    --p-trilho: #2a2f38; --p-borda: #4a505c; --p-x: 28px; --p-giro: 360deg;
+    --p-raios: 0; --p-corte: 1; --p-núcleo: #f5f2ed; --p-estrelas: 1;
+  }
+}
+/* Durante a troca, a pílula obedece ao clique, e não ao tema (que só muda com a tela coberta). */
+.tema-pílula[data-forçar="escuro"] {
+  --p-trilho: #2a2f38; --p-borda: #4a505c; --p-x: 28px; --p-giro: 360deg;
+  --p-raios: 0; --p-corte: 1; --p-núcleo: #f5f2ed; --p-estrelas: 1;
+}
+.tema-pílula[data-forçar="claro"] {
+  --p-trilho: #f6e3da; --p-borda: var(--borda-forte); --p-x: 0px; --p-giro: 0deg;
+  --p-raios: 1; --p-corte: 0; --p-núcleo: #d97757; --p-estrelas: 0;
+}
+.tema-pílula {
+  position: relative; flex: none; width: 60px; height: 34px; padding: 0; overflow: hidden;
+  border: 1px solid var(--p-borda); border-radius: var(--raio-pílula); background: var(--p-trilho);
+  cursor: pointer; transition: background var(--mov-lento, .5s) var(--curva-suave, ease), border-color var(--mov-lento, .5s) ease;
+}
+.tema-pílula:hover { border-color: var(--marca); }
+.tema-pílula__astro {
+  position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; overflow: visible;
+  transform: translateX(var(--p-x)) rotate(var(--p-giro));
+  transition: transform var(--mov-lento, .5s) var(--curva-mola, ease);
+}
+.astro__raios {
+  fill: none; stroke: #d97757; stroke-width: 1.9; stroke-linecap: round;
+  transform-box: view-box; transform-origin: 12px 12px;
+  transform: scale(calc(.4 + var(--p-raios) * .6)); opacity: var(--p-raios);
+  transition: transform var(--mov-lento, .5s) var(--curva-saída, ease), opacity var(--mov-médio, .3s) ease;
+}
+.astro__núcleo { fill: var(--p-núcleo); transition: fill var(--mov-lento, .5s) ease; }
+.astro__corte {
+  fill: var(--p-trilho); transform-box: view-box; transform-origin: 12px 12px;
+  transform: translate(calc((1 - var(--p-corte)) * 11px), calc((1 - var(--p-corte)) * -11px));
+  transition: transform var(--mov-lento, .5s) var(--curva-saída, ease), fill var(--mov-lento, .5s) ease;
+}
+.tema-pílula__estrelas { position: absolute; inset: 0; opacity: var(--p-estrelas); transition: opacity var(--mov-lento, .5s) ease; pointer-events: none; }
+.tema-pílula__estrelas i { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #f5f2ed; animation: pisca-estrela 1.8s ease-in-out infinite alternate; }
+.tema-pílula__estrelas i:nth-child(1) { left: 11px; top: 9px; }
+.tema-pílula__estrelas i:nth-child(2) { left: 20px; top: 20px; width: 2px; height: 2px; animation-delay: .5s; }
+.tema-pílula__estrelas i:nth-child(3) { left: 31px; top: 11px; width: 2px; height: 2px; animation-delay: 1s; }
+@keyframes pisca-estrela { from { opacity: .25; } to { opacity: 1; } }

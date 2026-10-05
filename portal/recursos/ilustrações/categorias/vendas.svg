@@ -2,7 +2,6 @@
   <title id="t">Uma etiqueta de preço balançando ao lado de uma proposta aprovada</title>
   <style>
     :root { --tinta: #1a1a1a; --fundo: #ece5d8; --sombra: #1a1a1a; --sombra-alfa: .08; }
-    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --fundo: #2a2723; --sombra: #000; --sombra-alfa: .4; } }
     [stroke="#1a1a1a"] { stroke: var(--tinta); }
     [fill="#1a1a1a"] { fill: var(--tinta); }
     .fundo { fill: var(--fundo); }
@@ -10,7 +9,6 @@
     .o { transform-box: fill-box; transform-origin: center; }
     .b { transform-box: fill-box; transform-origin: bottom; }
     .e { transform-box: fill-box; transform-origin: left; }
-
     .etiqueta { transform-origin: 196px 30px; animation: balanca 3.4s ease-in-out infinite; }
     @keyframes balanca { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(9deg); } }
     .visto { animation: surge 4s ease-in-out infinite; }
@@ -18,7 +16,6 @@
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
   </style>
   <rect class="fundo" width="480" height="200"/>
-
   <ellipse class="chão" cx="240" cy="178" rx="150" ry="9"/>
   <g class="etiqueta">
     <path d="M196 30v36" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" fill="none"/>

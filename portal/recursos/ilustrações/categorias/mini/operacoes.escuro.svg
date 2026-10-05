@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="90 0 300 200" role="img" aria-labelledby="t">
+  <title id="t">Caixas deslizando por uma esteira, passando por um leitor</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #f1ebe1; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    :root { --tinta: #e9e4dc; --fundo: #292623; --sombra: #000; --sombra-alfa: .4; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .caixa { animation: esteira 6s linear infinite; }
+    .x2 { animation-delay: -2s; } .x3 { animation-delay: -4s; }
+    @keyframes esteira { from { transform: translateX(0); } to { transform: translateX(380px); } }
+    .roda { animation: gira 1.6s linear infinite; }
+    @keyframes gira { to { transform: rotate(360deg); } }
+    .laser { animation: pisca 1.2s ease-in-out infinite; }
+    @keyframes pisca { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="182" rx="170" ry="8"/>
+  <rect x="62" y="140" width="356" height="22" rx="11" fill="#3d4451" stroke="#1a1a1a" stroke-width="3"/>
+  <g stroke="#1a1a1a" stroke-width="2.5"><circle class="roda o" cx="86" cy="151" r="7" fill="#6b7280"/><circle class="roda o" cx="160" cy="151" r="7" fill="#6b7280"/><circle class="roda o" cx="234" cy="151" r="7" fill="#6b7280"/><circle class="roda o" cx="308" cy="151" r="7" fill="#6b7280"/><circle class="roda o" cx="394" cy="151" r="7" fill="#6b7280"/></g>
+  <g class="caixa"><rect x="40" y="100" width="42" height="40" rx="6" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3"/><path d="M61 100v14" stroke="#d97757" stroke-width="6"/></g>
+  <g class="caixa x2"><rect x="40" y="88" width="50" height="52" rx="6" fill="#d9c8a8" stroke="#1a1a1a" stroke-width="3"/><path d="M65 88v16" stroke="#d97757" stroke-width="6"/></g>
+  <g class="caixa x3"><rect x="40" y="108" width="38" height="32" rx="6" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3"/><path d="M59 108v12" stroke="#d97757" stroke-width="6"/></g>
+  <rect x="232" y="34" width="16" height="42" rx="6" fill="#3d4451" stroke="#1a1a1a" stroke-width="3"/>
+  <path d="M240 76v60" class="laser" stroke="#d97757" stroke-width="3" stroke-dasharray="4 5" stroke-linecap="round"/>
+</svg>

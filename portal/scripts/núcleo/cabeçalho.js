@@ -1,8 +1,8 @@
 /** Comportamento do cabeçalho: menu de categorias, tema e atalho de busca. */
 import { alternarTema, lerTema } from './preferências.js';
-import { ícone } from './ícones.js';
 import { isolarBloco, instalarTratadorGlobal } from './isolar-bloco.js';
-import { tocar } from './movimento.js';
+import { ligarÍconesVivos } from './ícone-animado.js';
+import { trocarTemaComTransição } from './transição-de-tema.js';
 
 function ligarMenuDeCategorias() {
   const gatilho = document.getElementById('abrir-categorias');
@@ -33,17 +33,26 @@ function ligarTema() {
   const botão = document.getElementById('alternar-tema');
   if (!botão) return;
 
-  const pintarÍcone = () => {
+  const éEscuro = () => {
     const tema = lerTema();
-    const escuro = tema === 'escuro'
-      || (tema === 'sistema' && matchMedia('(prefers-color-scheme: dark)').matches);
-    botão.innerHTML = ícone(escuro ? 'sol' : 'lua');
-    botão.setAttribute('aria-label', escuro ? 'Usar tema claro' : 'Usar tema escuro');
+    return tema === 'escuro' || (tema === 'sistema' && matchMedia('(prefers-color-scheme: dark)').matches);
   };
+  // aria-checked = tema escuro ligado. O visual da pílula acompanha o tema da página; no clique
+  // ela muda na hora (data-forçar) e entrega o comando ao tema quando a troca termina.
+  const sincronizar = () => botão.setAttribute('aria-checked', String(éEscuro()));
 
-  pintarÍcone();
-  botão.addEventListener('click', () => { alternarTema(); pintarÍcone(); tocar(botão, 'virada'); });
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', pintarÍcone);
+  sincronizar();
+  botão.addEventListener('click', () => {
+    if (botão.dataset.forçar) return; // já está trocando
+    const paraEscuro = !éEscuro();
+    botão.dataset.forçar = paraEscuro ? 'escuro' : 'claro';
+    botão.setAttribute('aria-checked', String(paraEscuro));
+    trocarTemaComTransição(() => { alternarTema(); }, paraEscuro).finally(() => {
+      sincronizar();
+      delete botão.dataset.forçar;
+    });
+  });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sincronizar);
 }
 
 function ligarAtalhoDeBusca() {
@@ -74,6 +83,7 @@ function ligarAtalhoDeBusca() {
 
 // Cada comportamento do cabeçalho é isolado: se um falhar, os outros continuam.
 instalarTratadorGlobal();
+isolarBloco('ícones-animados', ligarÍconesVivos);
 isolarBloco('menu-de-categorias', ligarMenuDeCategorias);
 isolarBloco('tema', ligarTema);
 isolarBloco('atalho-de-busca', ligarAtalhoDeBusca);

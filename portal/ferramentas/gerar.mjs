@@ -14,6 +14,8 @@ import { ícone } from '../scripts/núcleo/ícones.js';
 import { ferramentas, ferramentasProntas, conferirCatálogo } from '../dados/catálogo.js';
 import { categorias, tarefas } from '../dados/categorias.js';
 import { site } from '../dados/site.js';
+import { íconeVivo, imagemDoTema } from '../scripts/núcleo/ícone-animado.js';
+import { gerarÍconesAnimados } from './ícones-animados.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -22,9 +24,9 @@ const RÓTULO_DE_EXPORTAÇÃO = {
   csv: 'CSV', json: 'JSON', png: 'PNG', svg: 'SVG', link: 'link para compartilhar', imprimir: 'impressão',
 };
 
-/** Arquivo da ilustração animada de uma categoria (nome do arquivo sem acento). */
-function arteDaCategoria(id) {
-  return `recursos/ilustrações/categorias/${id.normalize('NFD').replace(/[\u0300-\u036f]/g, '')}.svg`;
+/** Caminho (sem extensão) da ilustração animada de uma categoria; "mini" é o recorte para cartões pequenos. */
+function arteDaCategoria(id, mini = false) {
+  return `recursos/ilustrações/categorias/${mini ? 'mini/' : ''}${id.normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`;
 }
 
 /** Divisória ondulada — evita a linha reta em toda seção. */
@@ -43,12 +45,12 @@ function páginaInicial() {
     .map((f) => `<a class="categoria-cartão" href="f/${f.slug}/"><span class="categoria-cartão__ícone">${ícone(f.ícone)}</span><span><b>${escapar(f.nome)}</b><small>${escapar(f.categoriaNome)}</small></span></a>`)
     .join('');
 
-  const grade = categorias.map((c) => `<a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=${encodeURIComponent(c.id)}">
-      <img class="categoria-cartão__arte" src="${arteDaCategoria(c.id)}" alt="" width="480" height="200" loading="lazy" decoding="async">
-      <span class="categoria-cartão__texto">
+  const grade = categorias.map((c) => `<a class="categoria-cartão" href="ferramentas.html?categoria=${encodeURIComponent(c.id)}">
+      <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone">${ícone(c.ícone)}</span>
-        <span><b>${escapar(c.nome)}</b><small data-contagem="${escapar(c.id)}"></small></span>
+        ${imagemDoTema(arteDaCategoria(c.id, true), { classe: 'ícone-vivo__animado', largura: 300, altura: 200 })}
       </span>
+      <span><b>${escapar(c.nome)}</b><small data-contagem="${escapar(c.id)}"></small></span>
     </a>`).join('');
 
   const conteúdo = `    <section class="largura abertura">
@@ -316,7 +318,7 @@ function páginaDeFerramenta(f) {
       </nav>
 
       <header class="ferramenta-topo">
-        <span class="ferramenta-topo__ícone">${ícone(f.ícone)}</span>
+        <span class="ferramenta-topo__ícone">${íconeVivo(f.ícone, { base: '../../', tamanho: 22 })}</span>
         <div>
           <h1>${escapar(f.nome)}</h1>
           <p>${escapar(f.resumo)}</p>
@@ -324,7 +326,7 @@ function páginaDeFerramenta(f) {
         <div class="ferramenta-topo__ações">
           <button class="ícone-botão favorito" type="button" data-favorito="${escapar(f.slug)}" aria-pressed="false" aria-label="Salvar nos favoritos">${ícone('marcador')}</button>
         </div>
-        <img class="ferramenta-topo__arte" src="../../${arteDaCategoria(f.cat)}" alt="" width="480" height="200" decoding="async">
+        ${imagemDoTema(`../../${arteDaCategoria(f.cat)}`, { classe: 'ferramenta-topo__arte', largura: 480, altura: 200, carregar: 'eager' })}
       </header>
 
       <div class="ferramenta-área">
@@ -421,7 +423,7 @@ function página404() {
     base: '/',
     semÍndice: true,
     conteúdo: `    <section class="largura topo-página--folgado página-de-erro">
-      <img class="ilustração entra atraso-1" src="/recursos/ilustrações/erro-404.svg" alt="" width="320" height="240">
+      ${imagemDoTema('/recursos/ilustrações/erro-404', { classe: 'ilustração entra atraso-1', largura: 320, altura: 240, carregar: 'eager' })}
       <div class="prosa cascata">
         <h1>Esta página não existe</h1>
         <p>O endereço pode ter mudado ou a ferramenta ainda não foi publicada.</p>
@@ -452,6 +454,7 @@ async function principal() {
   }
 
   await rm(join(RAIZ, 'f'), { recursive: true, force: true });
+  await gerarÍconesAnimados();
 
   const arquivos = [
     ['index.html', páginaInicial()],

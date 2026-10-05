@@ -2,11 +2,9 @@
   <title id="t">O símbolo de sinal sem conexão, cortado por um traço</title>
   <style>
     :root { --tinta: #1a1a1a; --sombra: #1a1a1a; --sombra-alfa: .07; }
-    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --sombra: #000; --sombra-alfa: .4; } }
     [stroke="#1a1a1a"] { stroke: var(--tinta); }
     [fill="#1a1a1a"] { fill: var(--tinta); }
     ellipse[opacity] { fill: var(--sombra); opacity: var(--sombra-alfa); }
-    @media (prefers-color-scheme: dark) { [stroke="#3d4451"] { stroke: #9aa3b2; } circle[fill="#3d4451"] { fill: #9aa3b2; } }
     .arco { animation: buscar 2.4s ease-in-out infinite; }
     .a2 { animation-delay: .3s; }
     .a3 { animation-delay: .6s; }
