@@ -1,0 +1,66 @@
+/**
+ * Texts that the browser JavaScript writes on screen, in English. Same keys and {parameters}
+ * as js-pt.js (testes/idioma.test.mjs checks this).
+ */
+export default Object.freeze({
+  lista: {
+    planejada: 'Planned',
+    plus: 'Plus',
+    nenhuma: 'No tools found.',
+    removerFavorito: 'Remove from favorites',
+    salvarFavorito: 'Save to favorites',
+    favoritoComNome: '{ação}: {nome}',
+    limiteFavoritos: 'Favorites limit reached. Remove one before saving another.',
+    salvoNosFavoritos: 'Saved to favorites.',
+    removidoDosFavoritos: 'Removed from favorites.',
+    fichaTítulo: 'Not implemented yet',
+    fichaParaQueServe: 'What it is for',
+    fichaVocêInformará: 'You will enter',
+    fichaVocêReceberá: 'You will get',
+    fichaComoVaiCalcular: 'How it will calculate',
+    fichaNota: 'It appears in the catalog because it is planned and its scope is defined. When it opens, it will have validation, error handling and an automated test, like the others.',
+    versãoSóEmPortuguês: 'In Portuguese',
+  },
+  início: {
+    intenções: [
+      'how much should I charge',
+      'split the bill',
+      'how many days are left',
+      'which package is the better deal',
+      'add up hours worked',
+      'make a quote',
+      'clean my spreadsheet',
+      'create a strong password',
+    ],
+    nadaEncontrado: 'Nothing found for “{consulta}”.',
+    verCatálogoCompleto: 'See the full catalog',
+    contagemCategoria: '{prontas} of {total} ready',
+  },
+  catálogo: {
+    ferramentas: '{n} tool|{n} tools',
+    nenhumFavorito: 'You have not saved any tool yet. Use the bookmark next to the name.',
+    nenhumFiltro: 'No tool matches these filters.',
+  },
+  salvos: {
+    nenhumFavorito: 'No favorites yet. Use the bookmark next to the name of any tool.',
+    armazenamentoBloqueado: 'This browser is blocking local storage, so favorites cannot be kept.',
+    nenhumaRecente: 'No tool opened yet in this browser.',
+    históricoLimpo: 'History cleared.',
+    cópiaBaixada: 'Copy downloaded.',
+    arquivoGrande: 'File too large to be a copy from the portal.',
+    importados: '{importadas} item(s) imported{ignoradas}.',
+    ignorados: ', {ignoradas} ignored',
+    nãoLeu: 'The file could not be read.',
+    arquivoInválido: 'Invalid file.',
+    nãoÉCópia: 'This file is not a copy from the portal.',
+  },
+  bloco: {
+    falhou: 'This part did not load.',
+    aindaNãoDeu: 'Still not working.',
+    restoFunciona: 'The rest of the page keeps working. You can try again.',
+    recarregarAjuda: 'If the connection is unstable, reloading the page usually fixes it. The rest keeps working.',
+    tentarDeNovo: 'Try again',
+    recarregar: 'Reload the page',
+    algoDeuErrado: 'Something did not work as it should. If a part stops responding, reload the page.',
+  },
+});
