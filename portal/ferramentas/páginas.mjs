@@ -12,18 +12,11 @@ import { imagemDoTema } from '../scripts/núcleo/ícone-animado.js';
 import { site } from '../dados/site.js';
 import { blocosEmHtml, emLinha } from '../scripts/núcleo/texto-rico.js';
 import { montarPágina, escapar } from './modelo-de-página.mjs';
+import { faixa } from './ondas.mjs';
 
 /** Caminho (sem extensão) da ilustração animada de uma categoria; "mini" é o recorte para cartões pequenos. */
 export function arteDaCategoria(id, mini = false) {
   return `recursos/ilustrações/categorias/${mini ? 'mini/' : ''}${id.normalize('NFD').replace(/[̀-ͯ]/g, '')}`;
-}
-
-/** Divisória ondulada — evita a linha reta em toda seção. */
-function onda(invertida = false) {
-  const caminho = invertida
-    ? 'M0,28 C240,0 480,28 720,14 C960,0 1200,24 1440,10 L1440,0 L0,0 Z'
-    : 'M0,0 C240,28 480,0 720,14 C960,28 1200,4 1440,18 L1440,28 L0,28 Z';
-  return `<div class="onda" aria-hidden="true"><svg viewBox="0 0 1440 28" preserveAspectRatio="none"><path d="${caminho}" fill="currentColor"/></svg></div>`;
 }
 
 /**
@@ -109,26 +102,22 @@ export function páginaInicial(ctx) {
       <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-recentes"></div>
     </section>
 
-    ${onda()}
-    <div class="faixa-fundo">
-      <section class="largura seção">
-        <div class="seção__topo">
-          <h2>${ícone('grade')} ${escapar(t('início.categoriasTítulo'))}</h2>
-          <a class="botão botão--texto" href="${base}ferramentas.html">${escapar(t('início.verTudo'))} ${ícone('seta', { tamanho: 14 })}</a>
-        </div>
-        <div class="grade-categorias">${grade}</div>
-      </section>
-    </div>
-    ${onda(true)}
-
     <section class="largura seção">
       <div class="seção__topo">
-        <h2>${ícone('confere-círculo')} ${escapar(t('início.prontasTítulo'))}</h2>
-        <p class="filtros__contagem">${escapar(t('início.prontasContagem', { prontas, total: ctx.ferramentas.length }))}</p>
+        <h2>${ícone('grade')} ${escapar(t('início.categoriasTítulo'))}</h2>
+        <a class="botão botão--texto" href="${base}ferramentas.html">${escapar(t('início.verTudo'))} ${ícone('seta', { tamanho: 14 })}</a>
       </div>
-      <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-prontas"></div>
-      <p class="pequeno suave t-2">${escapar(t('início.prontasNota'))}</p>
+      <div class="grade-categorias">${grade}</div>
     </section>
+
+    ${faixa(`        <div class="seção">
+          <div class="seção__topo">
+            <h2>${ícone('confere-círculo')} ${escapar(t('início.prontasTítulo'))}</h2>
+            <p class="filtros__contagem">${escapar(t('início.prontasContagem', { prontas, total: ctx.ferramentas.length }))}</p>
+          </div>
+          <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-prontas"></div>
+          <p class="pequeno suave t-2">${escapar(t('início.prontasNota'))}</p>
+        </div>`)}
 
     <section class="largura seção prosa">
       <h2>${escapar(t('início.faqTítulo'))}</h2>
@@ -182,8 +171,8 @@ export function páginaDeCatálogo(ctx) {
           <p class="filtros__contagem" id="contagem" role="status" aria-live="polite"></p>
         </div>
       </div>
-      <div class="lista-ferramentas lista-ferramentas--colunas" id="lista"></div>
-    </section>`;
+    </section>
+    ${faixa(`        <div class="lista-ferramentas lista-ferramentas--colunas" id="lista"></div>`)}`;
 
   return montarPágina({
     ctx,
@@ -211,18 +200,18 @@ export function páginaDeSalvos(ctx) {
         <label class="botão botão--linha" for="importar-cópia">${ícone('pasta')}${escapar(t('salvos.importar'))}</label>
         <input class="sr-só" id="importar-cópia" type="file" accept="application/json,.json">
       </div>
-      <div class="seção">
-        <div class="seção__topo"><h2>${ícone('marcador')} ${escapar(t('salvos.favoritos'))}</h2></div>
-        <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-favoritos"></div>
-      </div>
-      <div class="seção">
-        <div class="seção__topo">
-          <h2>${ícone('relógio')} ${escapar(t('salvos.abertas'))}</h2>
-          <button class="botão botão--texto" type="button" id="limpar-recentes">${escapar(t('salvos.limparHistórico'))}</button>
+    </section>
+    ${faixa(`        <div class="seção">
+          <div class="seção__topo"><h2>${ícone('marcador')} ${escapar(t('salvos.favoritos'))}</h2></div>
+          <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-favoritos"></div>
         </div>
-        <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-recentes"></div>
-      </div>
-    </section>`;
+        <div class="seção">
+          <div class="seção__topo">
+            <h2>${ícone('relógio')} ${escapar(t('salvos.abertas'))}</h2>
+            <button class="botão botão--texto" type="button" id="limpar-recentes">${escapar(t('salvos.limparHistórico'))}</button>
+          </div>
+          <div class="lista-ferramentas lista-ferramentas--colunas" id="lista-recentes"></div>
+        </div>`)}`;
 
   return montarPágina({
     ctx,

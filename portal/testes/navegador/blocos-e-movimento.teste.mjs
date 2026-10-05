@@ -42,8 +42,10 @@ after(async () => {
   servidor?.kill();
 });
 
-async function abrir(opções = {}) {
+/** Por padrão a pessoa já viu o popup de boas-vindas (ele cobre a página); `primeiraVisita: true` mostra o popup. */
+async function abrir({ primeiraVisita = false, ...opções } = {}) {
   const contexto = await navegador.newContext({ viewport: { width: 1280, height: 800 }, ...opções });
+  if (!primeiraVisita) await contexto.addCookies([{ name: 'visto_novidades', value: '1', url: BASE }]);
   const página = await contexto.newPage();
   const erros = [];
   página.on('pageerror', (e) => erros.push(String(e)));
@@ -65,11 +67,37 @@ test('falha na busca: só a busca mostra a mensagem; listas, cabeçalho e vitrin
   await contexto.close();
 });
 
-test('falha na vitrine: só ela mostra a mensagem; a busca continua respondendo', { skip: pular }, async () => {
-  const { contexto, página } = await abrir();
+test('popup de boas-vindas: aparece na primeira visita, lembra pelo cookie e o botão reabre', { skip: pular }, async () => {
+  const { contexto, página, erros } = await abrir({ primeiraVisita: true });
+  await página.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+  await página.waitForSelector('dialog.boas-vindas[open]', { timeout: 8000 });
+  assert.equal(await página.locator('[data-vitrine]').count(), 1, 'a animação está dentro do popup');
+  assert.equal(await página.locator('#bloco-vitrine').count(), 0, 'a vitrine saiu da página');
+  await página.click('[data-bv="próximo"]');
+  await página.click('[data-bv="próximo"]');
+  await página.click('[data-bv="próximo"]');
+  await página.waitForTimeout(500); // a saída é animada
+  assert.equal(await página.locator('dialog.boas-vindas').count(), 0, 'concluir fecha o popup');
+  assert.ok((await contexto.cookies()).some((c) => c.name === 'visto_novidades'), 'a escolha fica no cookie');
+  await página.reload({ waitUntil: 'networkidle' });
+  await página.waitForTimeout(3500);
+  assert.equal(await página.locator('dialog.boas-vindas').count(), 0, 'na segunda visita não abre sozinho');
+  await página.click('#ver-apresentação');
+  assert.equal(await página.locator('dialog.boas-vindas[open]').count(), 1, 'o botão reabre');
+  await página.keyboard.press('Escape');
+  await página.waitForTimeout(500);
+  assert.equal(await página.locator('dialog.boas-vindas').count(), 0, 'Esc fecha');
+  assert.deepEqual(erros, []);
+  await contexto.close();
+});
+
+test('falha na animação do popup: o popup continua útil sem ela e a busca responde', { skip: pular }, async () => {
+  const { contexto, página } = await abrir({ primeiraVisita: true });
   await bloquear(página, 'vitrine/vitrine-cenas.js');
   await página.goto(`${BASE}/`, { waitUntil: 'networkidle' });
-  assert.equal(await página.locator('#bloco-vitrine > .bloco-falhou').count(), 1);
+  await página.waitForSelector('dialog.boas-vindas--sem-arte[open]', { timeout: 8000 });
+  assert.equal(await página.locator('.boas-vindas__slide:not([hidden])').count(), 1, 'o texto continua lá');
+  await página.click('[data-bv="fechar"] >> nth=1');
   await página.fill('#busca', 'juros');
   await página.waitForSelector('#sugestões:not([hidden]) .sugestões__item');
   assert.ok(await página.locator('.sugestões__item').count() > 0, 'a busca devolve sugestões');

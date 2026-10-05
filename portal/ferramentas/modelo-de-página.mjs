@@ -15,6 +15,8 @@ import { ícone } from '../scripts/núcleo/ícones.js';
 import { site } from '../dados/site.js';
 import { códigosDeIdioma, idiomas } from '../dados/idiomas.js';
 import { contextoPt } from './contexto-de-idioma.mjs';
+import { onda } from './ondas.mjs';
+import { arteDoRodapé } from './arte-do-rodapé.mjs';
 
 const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 const escapar = (valor) => String(valor ?? '').replace(/[&<>"']/g, (c) => ESCAPES[c]);
@@ -118,7 +120,9 @@ function rodapé(ctx, base, alternativas) {
   const { t } = ctx;
   const porCategoria = ctx.categorias.slice(0, 6).map((c) =>
     `<li><a href="${base}ferramentas.html?categoria=${encodeURIComponent(c.id)}">${escapar(c.nome)}</a></li>`).join('');
-  return `<footer class="rodapé">
+  return `${onda(false, 'onda--rodapé')}
+<footer class="rodapé">
+  ${arteDoRodapé()}
   <div class="largura rodapé__interior">
     <div>
       <a class="marca" href="${base || './'}"><span class="marca__selo">${ícone('marca')}</span><span class="marca__nome"><b>${escapar(site.destaque)}</b><span>${escapar(site.complemento)}</span></span></a>

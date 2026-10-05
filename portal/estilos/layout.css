@@ -138,10 +138,13 @@
 .onda { display: block; width: 100%; height: 28px; color: var(--fundo-fundo); }
 .onda svg { width: 100%; height: 100%; }
 .faixa-fundo { background: var(--fundo-fundo); }
+.faixa-fundo__interior { padding-block: 6px 10px; }
+.onda { margin-top: -1px; margin-bottom: -1px; } /* sem fresta de 1px entre a onda e a faixa */
+.onda--rodapé { color: var(--rodapé-fundo); margin-top: 28px; }
 
 /* ---------- Rodapé ---------- */
 .rodapé {
-  margin-top: 40px;
+  position: relative; margin-top: 0;
   background: var(--rodapé-fundo); color: var(--rodapé-texto);
   padding-bottom: calc(var(--altura-barra-inferior) + 12px);
 }
@@ -246,3 +249,30 @@
 .tema-pílula__estrelas i:nth-child(2) { left: 20px; top: 20px; width: 2px; height: 2px; animation-delay: .5s; }
 .tema-pílula__estrelas i:nth-child(3) { left: 31px; top: 11px; width: 2px; height: 2px; animation-delay: 1s; }
 @keyframes pisca-estrela { from { opacity: .25; } to { opacity: 1; } }
+
+/* ---------- Desenho do rodapé: bancada de ferramentas ---------- */
+.rodapé__arte { max-width: 1100px; margin: 0 auto; padding: 14px 16px 0; }
+.rodapé__arte svg { display: block; width: 100%; height: auto; max-height: 104px; }
+.rd-traço { stroke: var(--rodapé-suave); color: var(--rodapé-suave); }
+.rd-traço .rd-cor { stroke: var(--acento); }
+.rd-traço .rd-cor--cheio { fill: var(--acento); fill-opacity: .22; }
+.rd-chão { stroke-width: 2.4; opacity: .55; }
+.rd-chão--pontos { stroke-dasharray: 2 9; stroke-width: 2.6; opacity: .35; }
+.rd-brilho { fill: var(--acento); opacity: .16; transform-box: fill-box; transform-origin: center; animation: rd-brilha 3.2s ease-in-out infinite; }
+.rd-gira { transform-box: view-box; transform-origin: 0 0; animation: rd-gira 16s linear infinite; }
+.rd-faísca { stroke: var(--acento); transform-box: fill-box; transform-origin: center; animation: rd-pisca 3.4s ease-in-out infinite; }
+.rd-faísca:nth-child(1) { animation-delay: .2s; } .rd-faísca:nth-child(2) { animation-delay: 1.1s; }
+.rd-faísca:nth-child(3) { animation-delay: 1.9s; } .rd-faísca:nth-child(4) { animation-delay: 2.6s; }
+/* Cada ferramenta dá um pulinho quando o mouse passa, saindo do lugar onde apoia (o chão). */
+.rd-item { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .35s var(--curva-mola, ease); cursor: default; }
+.rd-item:hover { transform: translateY(-7px) rotate(-3deg); }
+.rd-item--grande:hover { transform: translateY(-5px) scale(1.04); }
+.rd-item:hover .rd-gira { animation-duration: 2.4s; }
+@keyframes rd-gira {
+  from { transform: translate(600px, 56px) scale(2.9) rotate(0deg) translate(-12px, -12px); }
+  to { transform: translate(600px, 56px) scale(2.9) rotate(360deg) translate(-12px, -12px); }
+}
+@keyframes rd-brilha { 50% { opacity: .38; transform: scale(1.12); } }
+@keyframes rd-pisca { 0%, 100% { opacity: 0; transform: scale(.4); } 45%, 55% { opacity: 1; transform: scale(1); } }
+@media (max-width: 640px) { .rodapé__arte { padding-inline: 8px; } }
+@media (prefers-reduced-motion: reduce) { .rd-gira, .rd-brilho, .rd-faísca { animation: none; } .rd-faísca { opacity: .8; } .rd-item { transition: none; } }
