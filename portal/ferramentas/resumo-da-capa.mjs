@@ -9,9 +9,13 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-/** Arquivos que, se mudarem, podem mudar o desenho da capa (caminhos relativos a vitrine/). */
+/**
+ * Arquivos que, se mudarem, podem mudar o desenho da capa (caminhos relativos a vitrine/).
+ * vitrine-números.js fica de fora de propósito: a capa é o quadro final (a assinatura) e não mostra
+ * a contagem de ferramentas; incluí-lo faria cada ferramenta nova acusar a capa como velha.
+ */
 export const FONTES_DA_CAPA = Object.freeze([
-  'vitrine-cenas.js', 'vitrine-motor.js', 'vitrine-textos.js', 'vitrine-números.js', '../dados/site.js',
+  'vitrine-cenas.js', 'vitrine-motor.js', 'vitrine-textos.js', '../dados/site.js',
 ]);
 
 export async function calcularResumoDaCapa(raiz) {
