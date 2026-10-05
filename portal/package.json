@@ -10,7 +10,7 @@
     "gerar": "node ferramentas/gerar.mjs",
     "verificar": "node ferramentas/verificar.mjs",
     "testar": "node --test \"testes/*.test.mjs\"",
-    "testar:navegador": "node --test testes/navegador/*.teste.mjs",
+    "testar:navegador": "node --test --test-concurrency=1 testes/navegador/*.teste.mjs",
     "no-ar": "node ferramentas/manter-no-ar.mjs --porta 4400",
     "servir": "node ferramentas/servir.mjs . --porta 4400",
     "publicar": "node ferramentas/publicar.mjs",
