@@ -416,8 +416,10 @@ test('a tela mostra o caso da especificação com a conta feita', () => {
   assert.equal(linhas['Margem de erro (95%)'], 'não calculada (menos de 30 respostas)');
   assert.equal(saída.observações[0], 'A conta: NPS = (promotores − detratores) ÷ total × 100 = (5 − 2) ÷ 10 × 100 = 30.');
   assert.equal(saída.tabela.linhas.length, 11);
-  assert.deepEqual(saída.tabela.linhas[10], ['10', '3', '30,0%', 'promotores']);
-  assert.deepEqual(saída.tabela.linhas[0], ['0', '0', '0,0%', 'detratores']);
+  assert.deepEqual(saída.tabela.cabeçalho, ['Nota', 'Qtd', '%']);
+  assert.deepEqual(saída.tabela.linhas[10], ['10 promotor', '3', '30,0%']);
+  assert.deepEqual(saída.tabela.linhas[0], ['0 detrator', '0', '0,0%']);
+  assert.deepEqual(saída.tabela.linhas[7], ['7 neutro', '1', '10,0%']);
 });
 
 test('a conta escrita mostra o valor exato antes de arredondar', () => {

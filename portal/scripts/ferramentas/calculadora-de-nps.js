@@ -14,6 +14,8 @@ const GRUPOS = {
   detratores: 'Detratores (notas 0 a 6)',
 };
 
+const GRUPO_NA_TABELA = { promotores: 'promotor', neutros: 'neutro', detratores: 'detrator' };
+
 const inteiro = (n) => formatarNúmero(n, { casas: 0 });
 const percentual = (p) => `${formatarNúmero(p, { casas: 1, casasMínimas: 1 })}%`;
 const respostas = (n) => `${inteiro(n)} ${plural(n, 'resposta', 'respostas')}`;
@@ -147,8 +149,9 @@ export function calcularNpsNaTela(dados) {
     linhas,
     tabela: {
       semExportação: true,
-      cabeçalho: ['Nota', 'Respostas', '%', 'Grupo'],
-      linhas: r.porNota.map((l) => [String(l.nota), inteiro(l.respostas), percentual(l.percentual), l.grupo]),
+      // Três colunas: o grupo vai junto da nota para a tabela caber em 320 px sem rolar.
+      cabeçalho: ['Nota', 'Qtd', '%'],
+      linhas: r.porNota.map((l) => [`${l.nota} ${GRUPO_NA_TABELA[l.grupo]}`, inteiro(l.respostas), percentual(l.percentual)]),
     },
     observações,
     texto: textoParaCopiar(r, conta),
