@@ -123,13 +123,13 @@ export const ferramentas = [
   },
   {
     id: 'F010', slug: 'comissao', nome: 'Calculadora de comissão', cat: 'vendas',
-    ícone: 'vendas', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'vendas', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Comissão simples, escalonada por faixa de meta e comissão líquida após descontos.',
     problema: 'Calcular a comissão certa quando existem faixas e descontos.',
     entra: 'Vendas do período, faixas de comissão e descontos.',
     processa: 'Aplica a faixa correspondente a cada parte do valor e abate os descontos.',
     sai: 'Comissão bruta, descontos e comissão líquida por vendedor.',
-    exporta: ['copiar', 'xlsx'], plano: 'gratuito', local: true,
+    exporta: ['copiar', 'pdf', 'csv', 'xlsx'], plano: 'gratuito', local: true,
     tags: ['comissão', 'vendedor', 'meta'], intenções: ['calcular comissão', 'comissão escalonada'],
   },
   {
