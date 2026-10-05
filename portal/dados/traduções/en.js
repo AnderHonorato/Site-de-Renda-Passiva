@@ -15,6 +15,7 @@ export default Object.freeze({
     menuRodapé: 'Processed in your browser',
     menuVerCatálogo: 'See the full catalog',
     buscar: 'Search tools',
+    buscaTopoMarcador: 'Search tools…',
     temaRótulo: 'Dark theme',
     navPrincipal: 'Main navigation',
     navCelular: 'Mobile navigation',

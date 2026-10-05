@@ -21,7 +21,14 @@
   border-radius: 10px; display: grid; place-items: center;
   background: var(--tinta); color: var(--fundo);
 }
-.marca__selo svg { width: 19px; height: 19px; }
+.marca__selo svg { width: 21px; height: 21px; overflow: visible; }
+/* A engrenagem gira devagar; o visto no meio fica parado e em terracota. Passando o mouse, ela acelera. */
+.marca__selo svg > path:first-child { transform-box: view-box; transform-origin: 12px 12px; animation: marca-gira 18s linear infinite; }
+.marca__selo svg > path:nth-child(2) { stroke: var(--acento); }
+.marca:hover .marca__selo svg > path:first-child { animation-duration: 3s; }
+.marca:hover .marca__selo { transform: rotate(-4deg) scale(1.05); }
+.marca__selo { transition: transform var(--mov-médio, .28s) var(--curva-mola, ease); }
+@keyframes marca-gira { to { transform: rotate(360deg); } }
 .marca__nome { display: flex; flex-direction: column; line-height: 1.05; }
 .marca__nome b { font-size: .95rem; letter-spacing: -.01em; }
 .marca__nome span { font-size: var(--t-xs); color: var(--tinta-suave); font-weight: 500; }
@@ -56,6 +63,32 @@
 }
 .ícone-botão:hover { background: var(--superfície-3); color: var(--tinta); border-color: var(--borda-forte); }
 .ícone-botão svg { width: 17px; height: 17px; }
+
+/* ---------- Busca do cabeçalho: a lupa abre o campo ali mesmo ---------- */
+.busca-topo { position: relative; display: flex; align-items: center; height: 36px; margin: 0; }
+.busca-topo__campo {
+  width: 0; height: 36px; padding: 0; margin-right: 0; opacity: 0; border: 1px solid transparent;
+  border-radius: var(--raio-pílula); background: var(--superfície); color: var(--tinta);
+  font: inherit; font-size: var(--t-sm); outline: none; pointer-events: none;
+  transition: width .32s var(--curva-mola, ease), opacity .18s ease, padding .32s var(--curva-mola, ease), border-color .18s ease;
+}
+.busca-topo__campo::-webkit-search-cancel-button { display: none; }
+.busca-topo[data-aberta="sim"] .busca-topo__campo {
+  width: min(280px, 38vw); margin-right: -36px; padding: 0 42px 0 16px; opacity: 1; pointer-events: auto; border-color: var(--marca);
+  box-shadow: 0 0 0 3px var(--marca-fraca);
+}
+/* A lupa fica sobre a ponta do campo; os dois ocupam o mesmo lugar do botão antigo. */
+.busca-topo__botão { position: relative; z-index: 1; order: 2; }
+.busca-topo__campo { order: 1; }
+.busca-topo[data-aberta="sim"] .busca-topo__botão { border-color: transparent; background: none; color: var(--marca); }
+.busca-topo__sugestões { left: auto; right: 0; width: min(380px, calc(100vw - 24px)); }
+@media (max-width: 720px) {
+  /* No celular o campo cobre a barra inteira do cabeçalho. */
+  .busca-topo[data-aberta="sim"] { position: absolute; left: 12px; right: 12px; top: 50%; transform: translateY(-50%); z-index: 60; }
+  .busca-topo[data-aberta="sim"] .busca-topo__campo { width: 100%; }
+  .busca-topo__sugestões { left: 0; right: 0; width: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .busca-topo__campo { transition: none; } }
 
 /* ---------- Menu de categorias ---------- */
 .menu-categorias { position: relative; }

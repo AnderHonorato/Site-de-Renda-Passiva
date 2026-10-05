@@ -20,6 +20,11 @@
         "4400"
       ],
       "port": 4400
+    },
+    {
+      "name": "portal-no-ar",
+      "url": "http://localhost:4400",
+      "port": 4400
     }
   ]
 }

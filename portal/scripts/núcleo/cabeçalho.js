@@ -2,8 +2,8 @@
 import { alternarTema, lerTema } from './preferências.js';
 import { isolarBloco, instalarTratadorGlobal } from './isolar-bloco.js';
 import { ligarÍconesVivos } from './ícone-animado.js';
-import { raizDoIdioma } from './idioma.js';
 import { trocarTemaComTransição } from './transição-de-tema.js';
+import { ligarBuscaDoTopo } from './busca-do-topo.js';
 
 function ligarMenuDeCategorias() {
   const gatilho = document.getElementById('abrir-categorias');
@@ -68,10 +68,8 @@ function ligarAtalhoDeBusca() {
     return false;
   };
 
-  document.getElementById('ir-para-busca')?.addEventListener('click', () => {
-    if (!irParaBusca()) location.href = new URL(`${raizDoIdioma}ferramentas.html`, location.href).href;
-  });
-
+  // A lupa do cabeçalho abre o campo no próprio cabeçalho (busca-do-topo.js). Aqui fica só a
+  // tecla "/" nas páginas que já têm o campo grande de busca.
   document.addEventListener('keydown', (evento) => {
     const alvo = evento.target;
     const digitando = alvo instanceof HTMLElement
@@ -88,3 +86,4 @@ isolarBloco('ícones-animados', ligarÍconesVivos);
 isolarBloco('menu-de-categorias', ligarMenuDeCategorias);
 isolarBloco('tema', ligarTema);
 isolarBloco('atalho-de-busca', ligarAtalhoDeBusca);
+isolarBloco('busca-do-topo-ligar', ligarBuscaDoTopo);

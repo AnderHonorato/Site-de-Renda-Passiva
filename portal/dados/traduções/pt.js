@@ -21,6 +21,7 @@ export default Object.freeze({
     menuRodapé: 'Processamento no seu navegador',
     menuVerCatálogo: 'Ver o catálogo completo',
     buscar: 'Buscar ferramenta',
+    buscaTopoMarcador: 'Buscar ferramenta…',
     temaRótulo: 'Tema escuro',
     navPrincipal: 'Navegação principal',
     navCelular: 'Navegação no celular',
