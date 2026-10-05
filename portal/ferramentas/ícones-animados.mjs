@@ -104,8 +104,8 @@ const ANIMAÇÕES = {
     #i { ${GIRO} transform-origin: 8px 12px; animation: gira 2.4s ease-in-out infinite; }
     @keyframes gira { 0%, 100% { transform: rotate(-18deg); } 50% { transform: rotate(18deg); } }`,
   'confere-círculo': `
-    ${K(2)} { stroke-dasharray: 14; animation: marca 2.4s ease-in-out infinite; }
-    @keyframes marca { 0% { stroke-dashoffset: 14; } 45%, 100% { stroke-dashoffset: 0; } }
+    ${K(2)} { transform-origin: left center; animation: marca 2.4s ease-in-out infinite; }
+    @keyframes marca { 0% { transform: scaleX(0); opacity: .3; } 45%, 100% { transform: scaleX(1); opacity: 1; } }
     ${K(1)} { animation: respira 2.4s ease-in-out infinite; }
     @keyframes respira { 0%, 100% { transform: scale(.94); } 50% { transform: scale(1.04); } }`,
   grade: `
@@ -113,8 +113,8 @@ const ANIMAÇÕES = {
     ${K(2)} { animation-delay: .25s; } ${K(4)} { animation-delay: .5s; } ${K(3)} { animation-delay: .75s; }
     @keyframes pulsa { 0%, 100% { transform: scale(.78); } 50% { transform: scale(1.04); } }`,
   planilha: `
-    ${K(2)} { stroke-dasharray: 80; animation: traça 3s ease-in-out infinite; }
-    @keyframes traça { 0% { stroke-dashoffset: 80; } 50%, 100% { stroke-dashoffset: 0; } }
+    ${K(2)} { transform-origin: left center; animation: traça 3s ease-in-out infinite; }
+    @keyframes traça { 0% { transform: scaleX(0); } 50%, 100% { transform: scaleX(1); } }
     ${K(1)} { animation: respira 3s ease-in-out infinite; }
     @keyframes respira { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }`,
   busca: `

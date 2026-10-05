@@ -98,7 +98,7 @@ test('os arquivos dos ícones animados existem, são seguros e respeitam movimen
 test('o nome do arquivo é o mesmo no gerador e no navegador, e o HTML aponta para ele', () => {
   for (const nome of nomesComAnimação) assert.equal(slugNoNavegador(nome), slugNoGerador(nome));
   const html = íconeVivo('relógio', { base: '../../', tamanho: 22 });
-  assert.match(html, /src="\.\.\/\.\.\/recursos\/ícones-animados\/relogio\.svg"/);
+  assert.match(html, /data-fonte="\.\.\/\.\.\/recursos\/ícones-animados\/relogio\.svg"/, 'o endereço fica em data-fonte; quem põe o src é o controle');
   assert.match(html, /data-estado="carregando"/, 'começa mostrando o estático');
   assert.match(html, /<svg[^>]*width="22"/, 'o ícone estático está no mesmo HTML, como segunda alternativa');
   const par = imagemDoTema('recursos/x', { classe: 'k', largura: 10, altura: 5 });
@@ -112,8 +112,8 @@ test('a página inicial mostra a animação pequena de cada categoria ao lado do
   const html = await ler(join(RAIZ, 'index.html'));
   for (const c of categorias) {
     const slug = semAcento(c.id);
-    assert.ok(html.includes(`src="recursos/ilustrações/categorias/mini/${slug}.svg"`), `falta o recorte claro de ${c.id}`);
-    assert.ok(html.includes(`src="recursos/ilustrações/categorias/mini/${slug}.escuro.svg"`), `falta o recorte escuro de ${c.id}`);
+    assert.ok(html.includes(`data-fonte-claro="recursos/ilustrações/categorias/mini/${slug}.svg"`), `falta o recorte claro de ${c.id}`);
+    assert.ok(html.includes(`data-fonte-escuro="recursos/ilustrações/categorias/mini/${slug}.escuro.svg"`), `falta o recorte escuro de ${c.id}`);
   }
   assert.equal((html.match(/class="ícone-vivo categoria-cartão__arte" data-estado="carregando"/g) ?? []).length, categorias.length);
   const grade = html.slice(html.indexOf('grade-categorias'), html.indexOf('</section>', html.indexOf('grade-categorias')));
@@ -124,8 +124,8 @@ test('toda página de ferramenta pronta traz o retângulo animado da categoria n
   for (const f of ferramentasProntas) {
     const html = await ler(join(RAIZ, 'f', f.slug, 'index.html'));
     const slug = semAcento(f.cat);
-    assert.ok(html.includes(`src="../../recursos/ilustrações/categorias/${slug}.svg"`), `${f.slug}: falta o retângulo claro`);
-    assert.ok(html.includes(`src="../../recursos/ilustrações/categorias/${slug}.escuro.svg"`), `${f.slug}: falta o retângulo escuro`);
+    assert.ok(html.includes(`data-fonte-claro="../../recursos/ilustrações/categorias/${slug}.svg"`), `${f.slug}: falta o retângulo claro`);
+    assert.ok(html.includes(`data-fonte-escuro="../../recursos/ilustrações/categorias/${slug}.escuro.svg"`), `${f.slug}: falta o retângulo escuro`);
     const cabeçalho = html.slice(html.indexOf('<header class="ferramenta-topo">'), html.indexOf('</header>', html.indexOf('<header class="ferramenta-topo">')));
     assert.ok(cabeçalho.includes('ferramenta-topo__arte'), `${f.slug}: o retângulo fica no cabeçalho, ao lado do nome`);
     assert.ok(cabeçalho.includes(`recursos/ícones-animados/${slugNoGerador(f.ícone)}.svg`), `${f.slug}: o ícone do nome é animado`);

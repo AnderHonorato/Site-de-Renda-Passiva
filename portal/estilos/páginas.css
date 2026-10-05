@@ -201,6 +201,7 @@ body[data-modo="cliente"] .ferramenta-topo { padding-block: 14px 10px; }
 .ferramenta-topo__arte {
   flex: 0 0 clamp(250px, 27vw, 340px); width: clamp(250px, 27vw, 340px); height: auto; aspect-ratio: 12 / 5;
   object-fit: cover; border-radius: var(--raio); border: 1px solid var(--borda); box-shadow: var(--sombra-1);
+  background: var(--superfície-3); /* o espaço já aparece pintado enquanto a ilustração animada não chega */
 }
 @media (max-width: 720px) {
   .ferramenta-topo__arte { flex-basis: 96px; width: 96px; border-radius: 10px; }

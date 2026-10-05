@@ -279,6 +279,8 @@
 .ícone-vivo[data-estado="pronto"] .ícone-vivo__animado { opacity: 1; }
 .ícone-vivo[data-estado="pronto"] > :first-child { opacity: 0; }
 .ícone-vivo[data-estado="falhou"] .ícone-vivo__animado { display: none; }
+/* Fora do orçamento de animações: a imagem fica baixada, mas escondida, e o navegador para de animá-la. */
+.ícone-vivo__animado[data-pausada] { visibility: hidden; }
 
 /* ---------- Bloco que falhou (isolarBloco) ---------- */
 .bloco-falhou {
