@@ -164,8 +164,8 @@
 
 /* ---------- Cartão de categoria (compacto) ---------- */
 .grade-categorias {
-  display: grid; gap: 8px;
-  grid-template-columns: repeat(auto-fill, minmax(min(168px, 100%), 1fr));
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(min(228px, 100%), 1fr));
 }
 .categoria-cartão {
   display: flex; align-items: center; gap: 10px;
@@ -183,6 +183,11 @@
   display: grid; place-items: center; background: var(--marca-fraca); color: var(--marca);
 }
 .categoria-cartão__ícone svg { width: 17px; height: 17px; }
+
+/* Cartão com ilustração animada própria da categoria. */
+.categoria-cartão--ilustrado { flex-direction: column; align-items: stretch; gap: 0; padding: 0; overflow: hidden; }
+.categoria-cartão__arte { display: block; width: 100%; height: auto; aspect-ratio: 12 / 5; object-fit: cover; border-bottom: 1px solid var(--borda); }
+.categoria-cartão__texto { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
 .categoria-cartão b { display: block; font-size: var(--t-sm); font-weight: 600; letter-spacing: -.01em; }
 .categoria-cartão small { color: var(--tinta-suave); font-size: var(--t-xs); }
 

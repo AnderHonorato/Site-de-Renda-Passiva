@@ -22,6 +22,11 @@ const RÓTULO_DE_EXPORTAÇÃO = {
   csv: 'CSV', json: 'JSON', png: 'PNG', svg: 'SVG', link: 'link para compartilhar', imprimir: 'impressão',
 };
 
+/** Arquivo da ilustração animada de uma categoria (nome do arquivo sem acento). */
+function arteDaCategoria(id) {
+  return `recursos/ilustrações/categorias/${id.normalize('NFD').replace(/[\u0300-\u036f]/g, '')}.svg`;
+}
+
 /** Divisória ondulada — evita a linha reta em toda seção. */
 function onda(invertida = false) {
   const caminho = invertida
@@ -38,9 +43,12 @@ function páginaInicial() {
     .map((f) => `<a class="categoria-cartão" href="f/${f.slug}/"><span class="categoria-cartão__ícone">${ícone(f.ícone)}</span><span><b>${escapar(f.nome)}</b><small>${escapar(f.categoriaNome)}</small></span></a>`)
     .join('');
 
-  const grade = categorias.map((c) => `<a class="categoria-cartão" href="ferramentas.html?categoria=${encodeURIComponent(c.id)}">
-      <span class="categoria-cartão__ícone">${ícone(c.ícone)}</span>
-      <span><b>${escapar(c.nome)}</b><small data-contagem="${escapar(c.id)}"></small></span>
+  const grade = categorias.map((c) => `<a class="categoria-cartão categoria-cartão--ilustrado" href="ferramentas.html?categoria=${encodeURIComponent(c.id)}">
+      <img class="categoria-cartão__arte" src="${arteDaCategoria(c.id)}" alt="" width="480" height="200" loading="lazy" decoding="async">
+      <span class="categoria-cartão__texto">
+        <span class="categoria-cartão__ícone">${ícone(c.ícone)}</span>
+        <span><b>${escapar(c.nome)}</b><small data-contagem="${escapar(c.id)}"></small></span>
+      </span>
     </a>`).join('');
 
   const conteúdo = `    <section class="largura abertura">
@@ -316,6 +324,7 @@ function páginaDeFerramenta(f) {
         <div class="ferramenta-topo__ações">
           <button class="ícone-botão favorito" type="button" data-favorito="${escapar(f.slug)}" aria-pressed="false" aria-label="Salvar nos favoritos">${ícone('marcador')}</button>
         </div>
+        <img class="ferramenta-topo__arte" src="../../${arteDaCategoria(f.cat)}" alt="" width="480" height="200" decoding="async">
       </header>
 
       <div class="ferramenta-área">

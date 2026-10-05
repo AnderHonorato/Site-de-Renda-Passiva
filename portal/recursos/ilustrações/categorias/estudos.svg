@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" role="img" aria-labelledby="t">
+  <title id="t">Um livro aberto com uma página virando e uma lâmpada acesa de ideia</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #f1ebe1; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    @media (prefers-color-scheme: dark) { :root { --tinta: #e9e4dc; --fundo: #292623; --sombra: #000; --sombra-alfa: .4; } }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+
+    .vira { transform-origin: 240px 120px; animation: vira 4.6s ease-in-out infinite; }
+    @keyframes vira { 0%, 10% { transform: scaleX(1); } 50% { transform: scaleX(-1); } 90%, 100% { transform: scaleX(-1); } }
+    .brilho { animation: brilha 2.6s ease-in-out infinite; }
+    @keyframes brilha { 0%, 100% { opacity: .35; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.1); } }
+    .raio { animation: brilha 2.6s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+
+  <ellipse class="chão" cx="240" cy="184" rx="140" ry="9"/>
+  <path d="M240 82c-34-16-80-16-112-2v90c32-12 78-12 112 4z" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M240 82c34-16 80-16 112-2v90c-32-12-78-12-112 4z" fill="#f6efe3" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <g fill="#ddd6cc"><rect x="150" y="104" width="68" height="7" rx="3.5"/><rect x="150" y="122" width="52" height="7" rx="3.5"/><rect x="150" y="140" width="62" height="7" rx="3.5"/>
+    <rect x="262" y="104" width="68" height="7" rx="3.5"/><rect x="262" y="122" width="56" height="7" rx="3.5"/></g>
+  <g class="vira"><path d="M240 82c34-16 80-16 112-2v90c-32-12-78-12-112 4z" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/><rect x="262" y="104" width="62" height="7" rx="3.5" fill="#ddd6cc"/></g>
+  <g class="brilho o"><circle cx="240" cy="44" r="18" fill="#d97757" stroke="#1a1a1a" stroke-width="3"/><rect x="232" y="60" width="16" height="9" rx="3" fill="#c9b89b" stroke="#1a1a1a" stroke-width="2.5"/></g>
+  <g class="raio" fill="none" stroke="#d97757" stroke-width="4" stroke-linecap="round"><path d="M204 44h-12M276 44h12M214 18l-8-8M266 18l8-8"/></g>
+</svg>
