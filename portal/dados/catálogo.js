@@ -10,7 +10,8 @@ import { ferramentas as dadosETécnica } from './catálogo/dados-e-técnica.js';
 import { ferramentas as conteúdo } from './catálogo/conteúdo.js';
 import { ferramentas as trabalhoEOperações } from './catálogo/trabalho-e-operações.js';
 import { ferramentas as ofícioEEstudos } from './catálogo/ofício-e-estudos.js';
-import { categoriaPorId } from './categorias.js';
+import { categoriaPorId as categoriaPorIdAtiva, categoriasDoIdioma } from './categorias.js';
+import { normalizarIdioma } from './idiomas.js';
 
 const BRUTAS = [
   ...finanças,
@@ -25,7 +26,7 @@ const BRUTAS = [
  * @param {object} bruta entrada como escrita no arquivo de categoria
  * @returns {Readonly<object>} ferramenta normalizada
  */
-function normalizar(bruta) {
+function normalizar(bruta, categoriaPorId = categoriaPorIdAtiva) {
   const categoria = categoriaPorId[bruta.cat];
   if (!categoria) throw new Error(`Categoria desconhecida em ${bruta.id}: ${bruta.cat}`);
   return Object.freeze({
@@ -48,20 +49,44 @@ function normalizar(bruta) {
   });
 }
 
+/**
+ * O catálogo num idioma. Em inglês, nome, resumo, palavras de busca e intenções vêm de
+ * dados/traduções/en/catálogo.js e o nome da categoria, da tradução das categorias; o resto
+ * (ficha, cálculo, exportação) segue em português até a Onda 9. Sem tradução, é o catálogo de sempre.
+ * @param {Record<string, {nome: string, resumo: string, tags: string[], intenções: string[]}> | null} traduções
+ * @param {{categorias: object, tarefas: object} | null} traduçõesDeCategorias
+ */
+export function catálogoDoIdioma(traduções = null, traduçõesDeCategorias = null) {
+  const { categoriaPorId } = categoriasDoIdioma(traduçõesDeCategorias);
+  const todas = BRUTAS.map((bruta) => {
+    const t = traduções?.[bruta.id];
+    if (traduções && !t) throw new Error(`Sem tradução para ${bruta.id}`);
+    return normalizar(t ? { ...bruta, nome: t.nome, resumo: t.resumo, tags: t.tags, intenções: t.intenções } : bruta, categoriaPorId);
+  });
+  const ferramentas = Object.freeze(todas.sort((a, b) => a.id.localeCompare(b.id, 'pt-BR')));
+  return Object.freeze({
+    ferramentas,
+    ferramentasProntas: Object.freeze(ferramentas.filter((f) => f.status === 'pronta')),
+    ferramentaPorSlug: Object.freeze(Object.fromEntries(ferramentas.map((f) => [f.slug, f]))),
+  });
+}
+
+/** Idioma da página (no navegador, o lang do <html>; no Node, português). */
+const idiomaAtivo = normalizarIdioma(typeof document !== 'undefined' ? document.documentElement.lang : '');
+
+/** Só a página em inglês baixa a tradução do catálogo. */
+const ATIVO = idiomaAtivo === 'en'
+  ? catálogoDoIdioma((await import('./traduções/en/catálogo.js')).default, (await import('./traduções/en/categorias.js')).default)
+  : catálogoDoIdioma();
+
 /** Todas as ferramentas, em ordem de id. */
-export const ferramentas = Object.freeze(
-  BRUTAS.map(normalizar).sort((a, b) => a.id.localeCompare(b.id, 'pt-BR')),
-);
+export const ferramentas = ATIVO.ferramentas;
 
 /** Só as que já abrem, calculam, validam, exportam e têm teste. */
-export const ferramentasProntas = Object.freeze(
-  ferramentas.filter((f) => f.status === 'pronta'),
-);
+export const ferramentasProntas = ATIVO.ferramentasProntas;
 
 /** Índice por slug. */
-export const ferramentaPorSlug = Object.freeze(
-  Object.fromEntries(ferramentas.map((f) => [f.slug, f])),
-);
+export const ferramentaPorSlug = ATIVO.ferramentaPorSlug;
 
 /**
  * Verifica as regras que o catálogo precisa respeitar.
