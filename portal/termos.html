@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-raiz="" data-raiz-idioma="">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -7,6 +7,9 @@
   <meta name="description" content="Condições de uso das ferramentas, limites de responsabilidade e direitos sobre o conteúdo.">
   <meta name="theme-color" content="#f5f2ed" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#171717" media="(prefers-color-scheme: dark)">
+  <link rel="alternate" hreflang="pt-BR" href="termos.html">
+  <link rel="alternate" hreflang="en" href="en/termos.html">
+  <link rel="alternate" hreflang="x-default" href="termos.html">
   <link rel="icon" href="recursos/ícone.svg" type="image/svg+xml">
   <link rel="manifest" href="manifesto.webmanifest">
   <link rel="stylesheet" href="estilos/núcleo.css">
@@ -61,6 +64,7 @@
     </nav>
     <span class="topo__espaço"></span>
     <div class="topo__fim">
+      <div class="idioma idioma--topo" role="group" aria-label="Idioma"><span class="idioma__item" lang="pt-BR" aria-current="true" title="Português">PT</span><a class="idioma__item" href="en/termos.html" hreflang="en" lang="en" title="English">EN</a></div>
       <button class="ícone-botão" type="button" id="ir-para-busca" aria-label="Buscar ferramenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg></button>
       <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="Tema escuro">
         <span class="tema-pílula__estrelas" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -84,7 +88,7 @@
       <h2>Disponibilidade</h2>
       <p>O portal pode sair do ar para manutenção, e ferramentas podem mudar de comportamento quando um erro é corrigido. Mudanças que alteram resultados são registradas no histórico de versões do projeto.</p>
       <h2>Conteúdo</h2>
-      <p>O código, os textos, os ícones e o desenho do portal são de autoria de Anderson. Componentes de terceiros mantêm suas próprias licenças, listadas na documentação do projeto. O conteúdo que você digita continua seu.</p>
+      <p>O código, os textos, os ícones e o desenho do portal são de autoria de {autor}. Componentes de terceiros mantêm suas próprias licenças, listadas na documentação do projeto. O conteúdo que você digita continua seu.</p>
     </section>
   </main>
 <footer class="rodapé">
@@ -106,6 +110,7 @@
   </div>
   <div class="largura rodapé__legal">
     <span>Criado por Anderson · 2026</span>
+    <div class="idioma idioma--rodapé" role="group" aria-label="Idioma"><span class="idioma__item" lang="pt-BR" aria-current="true" title="Português">PT</span><a class="idioma__item" href="en/termos.html" hreflang="en" lang="en" title="English">EN</a></div>
     <span>Seus dados ficam neste aparelho.</span>
   </div>
 </footer>

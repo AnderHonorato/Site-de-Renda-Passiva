@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-raiz="../../" data-raiz-idioma="../../">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -61,6 +61,7 @@
     </nav>
     <span class="topo__espaço"></span>
     <div class="topo__fim">
+      <div class="idioma idioma--topo" role="group" aria-label="Idioma"><span class="idioma__item" lang="pt-BR" aria-current="true" title="Português">PT</span><span class="idioma__item idioma__item--desligado" lang="en" aria-disabled="true" title="English version not available yet">EN</span></div>
       <button class="ícone-botão" type="button" id="ir-para-busca" aria-label="Buscar ferramenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg></button>
       <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="Tema escuro">
         <span class="tema-pílula__estrelas" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -112,7 +113,7 @@
             <p class="pequeno t-1">Conta caracteres (com e sem espaço), palavras, frases e parágrafos como aparecem na tela, enquanto você digita. Leitura a 200 palavras por minuto e fala a 130; o SMS considera o alfabeto de 7 bits (160) ou o de acentos (70).</p>
             
           </div>
-          <div class="painel"><p class="rótulo b-2">Ferramentas relacionadas</p><div class="relacionadas"><a href="../transformador-de-caixa/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>Maiúsculas e minúsculas</a><a href="../removedor-de-acentos/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>Remover acentos</a><a href="../margem-de-contribuicao/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.3c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.5.8-2.5 2s1 1.8 2.5 2 2.5.6 2.5 2-1 2-2.5 2c-1.1 0-2-.5-2.5-1.3"/><path d="M12 6.3v1.7M12 16v1.7"/></svg>Margem de contribuição</a><a href="../../ferramentas.html#fluxo-de-caixa"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 19.5h15"/><rect x="6" y="11" width="3.2" height="6"/><rect x="11.4" y="7" width="3.2" height="10"/><rect x="16.8" y="13.5" width="3.2" height="3.5"/></svg>Fluxo de caixa</a><a href="../../ferramentas.html#estatistica-descritiva"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 19.5h15"/><rect x="6" y="11" width="3.2" height="6"/><rect x="11.4" y="7" width="3.2" height="10"/><rect x="16.8" y="13.5" width="3.2" height="3.5"/></svg>Estatística de uma coluna</a></div></div>
+          <div class="painel"><p class="rótulo b-2">Ferramentas relacionadas</p><div class="relacionadas"><a href="../limpador-de-texto/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>Limpeza de texto</a><a href="../transformador-de-caixa/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>Maiúsculas e minúsculas</a><a href="../removedor-de-acentos/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>Remover acentos</a><a href="../remover-linhas-duplicadas-de-texto/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/></svg>Remover linhas duplicadas</a><a href="../calculadora-de-nps/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 19.5h15"/><rect x="6" y="11" width="3.2" height="6"/><rect x="11.4" y="7" width="3.2" height="10"/><rect x="16.8" y="13.5" width="3.2" height="3.5"/></svg>Calculadora de NPS</a></div></div>
         </aside>
       </div>
 
@@ -143,6 +144,7 @@
   </div>
   <div class="largura rodapé__legal">
     <span>Criado por Anderson · 2026</span>
+    <div class="idioma idioma--rodapé" role="group" aria-label="Idioma"><span class="idioma__item" lang="pt-BR" aria-current="true" title="Português">PT</span><span class="idioma__item idioma__item--desligado" lang="en" aria-disabled="true" title="English version not available yet">EN</span></div>
     <span>Seus dados ficam neste aparelho.</span>
   </div>
 </footer>
