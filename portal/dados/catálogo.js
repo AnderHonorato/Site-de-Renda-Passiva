@@ -10,6 +10,8 @@ import { ferramentas as dadosETécnica } from './catálogo/dados-e-técnica.js';
 import { ferramentas as conteúdo } from './catálogo/conteúdo.js';
 import { ferramentas as trabalhoEOperações } from './catálogo/trabalho-e-operações.js';
 import { ferramentas as ofícioEEstudos } from './catálogo/ofício-e-estudos.js';
+import { ferramentas as pdf } from './catálogo/pdf.js';
+import { ferramentas as avançadas } from './catálogo/avançadas.js';
 import { categoriaPorId as categoriaPorIdAtiva, categoriasDoIdioma } from './categorias.js';
 import { normalizarIdioma } from './idiomas.js';
 
@@ -19,6 +21,8 @@ const BRUTAS = [
   ...conteúdo,
   ...trabalhoEOperações,
   ...ofícioEEstudos,
+  ...pdf,
+  ...avançadas,
 ];
 
 /**

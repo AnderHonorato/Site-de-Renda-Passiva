@@ -8,7 +8,10 @@
  * Regra de verificação (testes/idioma.test.mjs): toda ferramenta do catálogo tem entrada aqui,
  * com os quatro campos preenchidos.
  */
-export default Object.freeze({
+import pdf from './catálogo-pdf.js';
+import avançadas from './catálogo-avançadas.js';
+
+const base = {
   F001: { nome: 'Percentage calculator', resumo: 'Percentage of a value, increase, discount, percentage difference and what share A is of B.', tags: ['percentage', 'discount', 'increase', 'markup', 'change'], intenções: ['calculate a discount', 'what percent increase', 'what is 15% of a value', 'percentage difference between two values'] },
   F002: { nome: 'Selling price', resumo: 'Price from cost, with margin on sale, markup, fees and taxes.', tags: ['price', 'margin', 'markup', 'profit', 'fee', 'tax', 'cake', 'sweets', 'snack', 'product', 'how much to charge'], intenções: ['how much should I sell for', 'calculate profit margin', 'set a selling price', 'markup'] },
   F003: { nome: 'Interest calculator', resumo: 'Simple and compound interest, with monthly contributions and a period-by-period table.', tags: ['interest', 'yield', 'investment', 'savings', 'final amount'], intenções: ['how much does my money earn', 'compound interest', 'simulate savings', 'future value'] },
@@ -69,11 +72,6 @@ export default Object.freeze({
   F058: { nome: 'Message template', resumo: 'Fills in templates for notices, payment reminders and thank-you notes with your details.', tags: ['message template', 'notice', 'payment reminder'], intenções: ['write a polite payment reminder', 'notice template'] },
   F059: { nome: 'Extract emails and phones from text', resumo: 'Finds and lists emails, phone numbers and loose links inside a text.', tags: ['extract email', 'extract phone', 'links'], intenções: ['get the emails out of this text', 'find phone numbers in the text'] },
   F060: { nome: 'Merge PDF', resumo: 'Joins several PDF files into a single document, in the order you choose.', tags: ['merge pdf', 'join pdf', 'combine'], intenções: ['merge several pdfs into one'] },
-  F061: { nome: 'Split PDF and extract pages', resumo: 'Splits a PDF into parts or extracts only the pages you choose.', tags: ['split pdf', 'extract pages', 'separate pdf'], intenções: ['take just one page from the pdf', 'split a pdf into parts'] },
-  F062: { nome: 'Rotate and number PDF pages', resumo: 'Rotates pages to the right orientation and adds page numbers in the footer.', tags: ['rotate pdf', 'number pages', 'pagination'], intenções: ['pdf page is sideways', 'number the pdf pages'] },
-  F063: { nome: 'PDF watermark and password', resumo: 'Adds a text watermark or protects the PDF with an opening password.', tags: ['watermark', 'protect pdf', 'pdf password'], intenções: ['put a watermark on the pdf', 'protect a pdf with a password'] },
-  F064: { nome: 'Compress PDF', resumo: 'Reduces the PDF file size by recompressing the images inside.', tags: ['compress pdf', 'reduce size'], intenções: ['make the pdf smaller'] },
-  F065: { nome: 'Extract text from PDF', resumo: 'Pulls the text out of a PDF to copy or edit, page by page.', tags: ['extract pdf text', 'pdf to text'], intenções: ['copy text from a pdf'] },
   F066: { nome: 'Statement generator', resumo: 'Builds simple statements (residence, handwritten, for whatever purpose) as a PDF.', tags: ['statement', 'simple document'], intenções: ['make a residence statement'] },
   F067: { nome: 'Power of attorney generator', resumo: 'Builds a simple power of attorney with grantor, grantee and the powers granted.', tags: ['power of attorney', 'powers'], intenções: ['make a simple power of attorney'] },
   F068: { nome: 'Simple service contract', resumo: 'Builds a short service contract with scope, price and deadline.', tags: ['contract', 'service agreement'], intenções: ['make a simple service contract'] },
@@ -160,4 +158,6 @@ export default Object.freeze({
   F149: { nome: 'Guest list', resumo: 'Counts confirmed, pending and declined guests of an event, with names saved on the device.', tags: ['guest list', 'rsvp', 'event'], intenções: ['track event guest confirmations'] },
   F150: { nome: 'Event schedule', resumo: 'Calculates the start time of each preparation step from the party time.', tags: ['event schedule', 'party planning', 'time'], intenções: ['build the event schedule'] },
   F151: { nome: 'Contribution margin', resumo: 'What is left from each sale to pay fixed costs and become profit, per unit and for the month.', tags: ['contribution margin', 'contribution', 'profit per sale', 'variable cost', 'margin ratio', 'left per sale'], intenções: ['what is left per sale', 'does my sale make a profit', 'how much each product contributes', 'contribution margin'] },
-});
+};
+
+export default Object.freeze({ ...base, ...pdf, ...avançadas });
