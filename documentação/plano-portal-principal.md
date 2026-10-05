@@ -501,6 +501,15 @@ Esforço em dias de trabalho de um agente: P ≤ 1, M = 2–3, G = 4–6. Cada o
   - a primeira abertura exige o aceite e o grava; com "reduzir movimento" nenhuma animação do chat se mexe;
   - exportar e excluir dados incluem as mensagens.
 
+### Ondas 15 a 17: ferramentas avançadas (05/10) — detalhe em `documentação/catalogo-ampliado.md`
+
+O catálogo passou de 151 para 208 ferramentas: o conjunto completo do iLovePDF (categoria nova `pdf`) e 29 ferramentas avançadas, todas `planejada`. O documento novo traz, para cada uma, o motor (navegador ou servidor), a tecnologia, a licença, o tamanho do download, a dificuldade, o plano e as dependências, e lista o que depende de decisão do dono. Aqui só a divisão em ondas:
+
+- **Onda 15: PDF no navegador (G).** As 21 ferramentas de PDF que rodam no aparelho (pdf-lib, PDF.js e, em duas, tesseract.js e OpenCV.js). Cria a política de CSP **por página** (`'wasm-unsafe-eval'` só onde há WebAssembly, se o dono aprovar) e o teste de fumaça do PDF.js sob a CSP real (decisão 20d). Sem servidor.
+- **Onda 16: serviço de arquivos no servidor e conversões (G).** Depende das Ondas 2 e 4 (API, contas e planos). Cria o serviço de arquivos (envio, fila, contêiner descartável sem rede, apagar em até 1 hora, limites por plano, "Serviço indisponível" pela decisão 21) e as 11 ferramentas que precisam dele: Proteger, Desbloquear, Reparar, Comprimir, PDF/A, Word/PowerPoint/Excel/HTML para PDF, PDF para Word e Converter documento. Há uma decisão do dono sobre AGPL (Ghostscript e PyMuPDF).
+- **Onda 17: mídia, IA e demais (G, por família).** Imagem com modelos no navegador, áudio e vídeo (cortes no navegador; conversão e compressão de vídeo e transcrição no servidor), as três ferramentas de IA, consultas de CEP e CNPJ, encurtador de links, finanças e utilitários de desenvolvimento. Depende da Onda 16 para vídeo e das decisões do dono sobre IA, custo de vídeo e patentes.
+- **Pronto quando:** cada ferramenta cumpre o `guia-nova-ferramenta.md` (e, as de servidor, o teste de resiliência da decisão 21). As ondas 15 a 17 podem andar em paralelo com as de 3 a 14 depois da Onda 2, porque só tocam catálogo, módulos de ferramenta e o serviço de arquivos.
+
 ---
 
 ## 6. Contradições com a documentação antiga e como ficam

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="100 0 300 200" role="img" aria-labelledby="t">
-  <title id="t">Duas folhas se juntando em um só documento PDF</title>
+  <title id="t">Duas folhas se juntando em um só documento</title>
   <style>
     :root { --tinta: #1a1a1a; --fundo: #f1ebe1; --sombra: #1a1a1a; --sombra-alfa: .08; }
     [stroke="#1a1a1a"] { stroke: var(--tinta); }

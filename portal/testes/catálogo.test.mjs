@@ -16,11 +16,11 @@ test('o catálogo respeita as próprias regras', () => {
   assert.deepEqual(conferirCatálogo(), []);
 });
 
-test('o catálogo tem 151 ferramentas únicas', () => {
-  assert.equal(ferramentas.length, 151);
-  assert.equal(new Set(ferramentas.map((f) => f.slug)).size, 151);
-  assert.equal(new Set(ferramentas.map((f) => f.id)).size, 151);
-  assert.equal(new Set(ferramentas.map((f) => f.nome.toLowerCase())).size, 151);
+test('o catálogo tem 208 ferramentas únicas', () => {
+  assert.equal(ferramentas.length, 208);
+  assert.equal(new Set(ferramentas.map((f) => f.slug)).size, 208);
+  assert.equal(new Set(ferramentas.map((f) => f.id)).size, 208);
+  assert.equal(new Set(ferramentas.map((f) => f.nome.toLowerCase())).size, 208);
 });
 
 test('nenhuma ferramenta usa nome de variação artificial', () => {
@@ -118,7 +118,7 @@ test('ferramenta pronta aparece antes da planejada quando empatam', () => {
 
 test('busca vazia devolve as prontas primeiro', () => {
   const todas = buscar(ferramentas, '');
-  assert.equal(todas.length, 151);
+  assert.equal(todas.length, 208);
   assert.equal(todas.slice(0, ferramentasProntas.length).every((f) => f.status === 'pronta'), true);
 });
 
