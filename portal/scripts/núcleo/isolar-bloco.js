@@ -11,6 +11,7 @@
  * `isolarBloco`, e só o que é obrigatório para a página existir é importado de forma estática.
  */
 import { avisar } from './interface.js';
+import { t } from './idioma.js';
 
 const DESENHO_CLARO = new URL('../../recursos/ilustrações/erro-do-servidor.svg', import.meta.url).href;
 const DESENHO_ESCURO = new URL('../../recursos/ilustrações/erro-do-servidor.escuro.svg', import.meta.url).href;
@@ -42,16 +43,14 @@ function criar(tag, atributos = {}, texto = '') {
 function mostrarFalha(alvo, nome, tentarDeNovo, falhas) {
   const imagem = criar('img', { src: DESENHO_CLARO, alt: '', width: '160', height: '120', class: 'só-claro bloco-falhou__desenho' });
   const imagemEscura = criar('img', { src: DESENHO_ESCURO, alt: '', width: '160', height: '120', class: 'só-escuro bloco-falhou__desenho' });
-  const título = criar('p', { class: 'bloco-falhou__título' }, falhas > 1 ? 'Ainda não deu.' : 'Esta parte não carregou.');
-  const texto = criar('p', { class: 'pequeno suave' }, falhas > 1
-    ? 'Se a conexão estiver instável, recarregar a página costuma resolver. O resto continua funcionando.'
-    : 'O resto da página continua funcionando. Você pode tentar de novo.');
-  const botão = criar('button', { type: 'button', class: 'botão botão--linha' }, 'Tentar de novo');
+  const título = criar('p', { class: 'bloco-falhou__título' }, falhas > 1 ? t('bloco.aindaNãoDeu') : t('bloco.falhou'));
+  const texto = criar('p', { class: 'pequeno suave' }, falhas > 1 ? t('bloco.recarregarAjuda') : t('bloco.restoFunciona'));
+  const botão = criar('button', { type: 'button', class: 'botão botão--linha' }, t('bloco.tentarDeNovo'));
   botão.addEventListener('click', () => { botão.disabled = true; tentarDeNovo(); });
   const ações = criar('p', { class: 'ações' });
   ações.append(botão);
   if (falhas > 1) {
-    const recarregar = criar('button', { type: 'button', class: 'botão botão--texto' }, 'Recarregar a página');
+    const recarregar = criar('button', { type: 'button', class: 'botão botão--texto' }, t('bloco.recarregar'));
     recarregar.addEventListener('click', () => location.reload());
     ações.append(recarregar);
   }
@@ -117,7 +116,7 @@ export function instalarTratadorGlobal() {
     const agora = Date.now();
     if (agora - últimoAviso < 20000) return;
     últimoAviso = agora;
-    avisar('Algo não funcionou como deveria. Se uma parte parar de responder, recarregue a página.', { duração: 5000 });
+    avisar(t('bloco.algoDeuErrado'), { duração: 5000 });
   };
   window.addEventListener('error', (evento) => {
     // Erros de scripts de outra origem (extensões) chegam sem detalhe e não são do portal.

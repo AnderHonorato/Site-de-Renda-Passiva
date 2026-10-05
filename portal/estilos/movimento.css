@@ -84,40 +84,39 @@
 /* Ilustrações de erro: vêm de arquivos SVG com a própria animação, que já respeita o movimento reduzido. */
 .ilustração { display: block; width: min(100%, 320px); height: auto; }
 
-/* ---------- Troca de tema: a tela inteira vira o céu e o tempo passa ----------
-   Duração igual a DURAÇÃO em scripts/núcleo/transição-de-tema.js (1600 ms). */
-.transição-tema { position: fixed; inset: 0; z-index: 2000; overflow: hidden; pointer-events: all; animation: tt-cobre 1600ms linear both; }
-@keyframes tt-cobre { 0% { opacity: 0; } 22% { opacity: 1; } 72% { opacity: 1; } 100% { opacity: 0; } }
-.tt__dia, .tt__noite { position: absolute; inset: 0; }
-.tt__dia { background: linear-gradient(180deg, #f6e3da 0%, #eba184 52%, #d97757 100%); }
-.tt__noite { background: linear-gradient(180deg, #0f1115 0%, #1b1e25 60%, #2a2f38 100%); opacity: 0; }
-
-.transição-tema[data-direção="escurecer"] .tt__noite { animation: tt-escurece 1600ms linear both; }
-@keyframes tt-escurece { 0%, 20% { opacity: 0; } 60%, 100% { opacity: 1; } }
-.transição-tema[data-direção="clarear"] .tt__noite { opacity: 1; }
-.transição-tema[data-direção="clarear"] .tt__dia {
-  z-index: 1; opacity: 0; background: linear-gradient(180deg, #fbe9df 0%, #f6cdb6 55%, #f5f2ed 100%);
-  animation: tt-amanhece 1600ms linear both;
+/* ---------- Troca de tema: um rolo de pintura desce pela tela ----------
+   Os tempos e o trajeto ficam em scripts/núcleo/transição-de-tema.js (Web Animations). Aqui só a
+   aparência: a camada de tinta (cor do tema novo), o rolo com textura que gira, o cabo e as gotas. */
+.transição-tema {
+  position: fixed; inset: 0; z-index: 2000; overflow: hidden; pointer-events: all;
+  --tt-tinta: #171717; --tt-borda: #6b7280; --tt-brilho: rgba(255, 255, 255, .16); --tt-linha: #1a1a1a;
 }
-@keyframes tt-amanhece { 0%, 20% { opacity: 0; } 60%, 100% { opacity: 1; } }
+/* Escurecendo, o rolo leva tinta grafite sobre a página clara; clareando, tinta marfim sobre a escura. */
+.transição-tema[data-direção="clarear"] { --tt-tinta: #f5f2ed; --tt-borda: #c9b89b; --tt-brilho: rgba(255, 255, 255, .75); --tt-linha: #e9e4dc; }
 
-.tt__estrela { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; animation: tt-pisca 900ms ease-in-out infinite alternate; }
-.tt__estrela--grande { width: 5px; height: 5px; }
-@keyframes tt-pisca { from { opacity: .2; } to { opacity: 1; } }
+.tt__tinta { position: absolute; inset: 0; background: var(--tt-tinta); clip-path: inset(0 0 100% 0); }
 
-.tt__sol, .tt__lua { position: absolute; left: 0; top: 0; z-index: 2; border-radius: 50%; will-change: transform; }
-.tt__sol { width: 96px; height: 96px; background: radial-gradient(circle at 40% 40%, #ffe6cf, #f0a070 60%, #d97757); box-shadow: 0 0 80px 30px rgba(217, 119, 87, .45); }
-.tt__lua { width: 76px; height: 76px; background: #f5f2ed; box-shadow: 0 0 50px 12px rgba(245, 242, 237, .3); }
-.tt__cratera { position: absolute; border-radius: 50%; background: rgba(120, 125, 135, .28); }
-.tt__cratera--a { width: 18px; height: 18px; left: 16px; top: 18px; }
-.tt__cratera--b { width: 11px; height: 11px; left: 44px; top: 42px; }
-.tt__colina { position: absolute; z-index: 3; left: -20vw; right: -20vw; bottom: -16vh; height: 34vh; border-radius: 50% 50% 0 0; background: #2a2f38; }
+.rolo { position: absolute; left: 0; top: 0; width: 100%; height: 64px; transform: translateY(-120px); will-change: transform; }
+.rolo__corpo {
+  position: absolute; left: -26px; top: 8px; width: calc(100% - 96px); height: 48px;
+  border: 3px solid var(--tt-borda); border-radius: 26px; background-color: var(--tt-tinta);
+  /* 1º: brilho de cima e sombra de baixo (cilindro); 2º: a trama da lã, que gira com o rolo. */
+  background-image:
+    linear-gradient(180deg, var(--tt-brilho) 0%, rgba(255, 255, 255, 0) 30%, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, .28) 100%),
+    repeating-linear-gradient(180deg, rgba(120, 120, 120, .22) 0 3px, rgba(120, 120, 120, 0) 3px 11px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .25);
+}
+.rolo__cabo { position: absolute; right: 0; top: 0; width: 130px; height: 120px; overflow: visible; transform-origin: 0 32px; animation: tt-mão 520ms ease-in-out infinite alternate; }
+.rolo__arame { fill: none; stroke: #4a505c; stroke-width: 6; stroke-linecap: round; }
+.rolo__tampa { fill: #4a505c; stroke: var(--tt-linha); stroke-width: 3; }
+.rolo__punho { fill: #d97757; stroke: var(--tt-linha); stroke-width: 3; }
+.rolo__costelas { fill: none; stroke: var(--tt-linha); stroke-width: 2.5; stroke-linecap: round; opacity: .45; }
+@keyframes tt-mão { from { transform: rotate(-2.4deg); } to { transform: rotate(2.4deg); } }
 
-.transição-tema[data-direção="escurecer"] .tt__sol { animation: tt-sol-poente 1600ms ease-in both; }
-.transição-tema[data-direção="escurecer"] .tt__lua { animation: tt-lua-nasce 1600ms ease-out both; }
-.transição-tema[data-direção="clarear"] .tt__sol { animation: tt-sol-nasce 1600ms ease-out both; }
-.transição-tema[data-direção="clarear"] .tt__lua { animation: tt-lua-poente 1600ms ease-in both; }
-@keyframes tt-sol-poente { 0% { transform: translate(12vw, 14vh); } 100% { transform: translate(72vw, 108vh); } }
-@keyframes tt-lua-nasce { 0%, 25% { transform: translate(14vw, 110vh); opacity: 0; } 45% { opacity: 1; } 100% { transform: translate(64vw, 16vh); opacity: 1; } }
-@keyframes tt-sol-nasce { 0%, 20% { transform: translate(8vw, 110vh); } 100% { transform: translate(44vw, 14vh); } }
-@keyframes tt-lua-poente { 0% { transform: translate(60vw, 14vh); } 100% { transform: translate(88vw, 108vh); } }
+/* Gotas que escorrem da borda de baixo do rolo, cada uma no seu tempo. */
+.rolo__gota {
+  position: absolute; top: calc(100% - 5px); width: 9px; height: 20px; margin-left: -4px;
+  border-radius: 50% 50% 50% 50% / 28% 28% 72% 72%; background: var(--tt-tinta);
+  transform-origin: top center; animation: tt-gota 640ms ease-in-out infinite alternate;
+}
+@keyframes tt-gota { from { transform: scaleY(.45); } to { transform: scaleY(1.25); } }

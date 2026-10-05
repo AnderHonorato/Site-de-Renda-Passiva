@@ -3,7 +3,7 @@ import { ferramentas } from '../../dados/catálogo.js';
 import { buscar } from '../núcleo/busca.js';
 import { desenharLista, ligarLista } from '../núcleo/lista.js';
 import { lerFavoritos } from '../núcleo/preferências.js';
-import { plural } from '../núcleo/texto.js';
+import { t } from '../núcleo/idioma.js';
 
 const campoDeBusca = document.getElementById('busca');
 const pílulas = document.getElementById('pílulas-categorias');
@@ -59,12 +59,12 @@ function aplicar({ empilhar = false } = {}) {
 
   desenharLista(lista, resultado, {
     vazio: estado.status === 'favoritas'
-      ? 'Você ainda não salvou nenhuma ferramenta. Use o marcador ao lado do nome.'
-      : 'Nenhuma ferramenta combina com esses filtros.',
+      ? t('catálogo.nenhumFavorito')
+      : t('catálogo.nenhumFiltro'),
   });
 
   const total = resultado.length;
-  contagem.textContent = `${total} ${plural(total, 'ferramenta', 'ferramentas')}`;
+  contagem.textContent = t('catálogo.ferramentas', { n: total });
   for (const botão of pílulas.querySelectorAll('[data-categoria]')) {
     botão.setAttribute('aria-pressed', String(botão.dataset.categoria === estado.categoria));
   }
