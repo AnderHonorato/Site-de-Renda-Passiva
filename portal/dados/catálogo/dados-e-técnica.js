@@ -276,7 +276,7 @@ export const ferramentas = [
   },
   {
     id: 'F045', slug: 'imc', nome: 'IMC e faixa de peso', cat: 'cálculo',
-    ícone: 'pessoas', tarefas: ['calcular'], status: 'planejada',
+    ícone: 'pessoas', tarefas: ['calcular'], status: 'pronta',
     resumo: 'Índice de massa corporal, faixa de referência e peso correspondente à faixa.',
     problema: 'Situar o peso em relação à altura com a referência adulta da OMS.',
     entra: 'Peso e altura.', processa: 'Calcula peso ÷ altura² e localiza a faixa.',
