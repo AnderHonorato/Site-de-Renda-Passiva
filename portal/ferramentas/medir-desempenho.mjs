@@ -389,9 +389,9 @@ async function principal() {
       for (const caminho of páginas) {
         const lista = [];
         for (let r = 0; r < rodadas; r += 1) {
-          lista.push(await umaRodada({ navegador, sessãoDoNavegador, base, caminho, reduzido: cenário === 'reduzido', comTema: comTema && r === 0 }));
+          lista.push(await umaRodada({ navegador, sessãoDoNavegador, base, caminho, reduzido: cenário === 'reduzido', comTema }));
         }
-        // O tema só foi medido numa rodada; as demais ficam sem ele e a mediana ignora os nulos.
+        // A mediana de cada número vem das rodadas.
         (resultados[caminho] ??= {})[cenário] = medianaDeObjetos(lista);
         const erros = [...new Set(lista.flatMap((x) => x.erros))];
         if (erros.length) console.error(`Erros de página em ${caminho}: ${erros.join(' | ')}`);

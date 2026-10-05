@@ -182,6 +182,7 @@ export function montarPágina({
   <meta name="theme-color" content="#171717" media="(prefers-color-scheme: dark)">
 ${semÍndice ? '  <meta name="robots" content="noindex,follow">\n' : ''}${canônica ? `  <link rel="canonical" href="${escapar(canônica)}">\n` : ''}${hreflangs.length ? `${hreflangs.join('\n')}\n` : ''}  <link rel="icon" href="${raiz}recursos/ícone.svg" type="image/svg+xml">
   <link rel="manifest" href="${raiz}manifesto.webmanifest">
+  <link rel="preload" href="${raiz}recursos/fontes/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 ${folhas}
   <script src="${raiz}scripts/núcleo/tema-inicial.js"></script>
 ${módulos}

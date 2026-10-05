@@ -213,3 +213,13 @@
 .tema-pílula__estrelas i:nth-child(2) { left: 20px; top: 20px; width: 2px; height: 2px; animation-delay: .5s; }
 .tema-pílula__estrelas i:nth-child(3) { left: 31px; top: 11px; width: 2px; height: 2px; animation-delay: 1s; }
 @keyframes pisca-estrela { from { opacity: .25; } to { opacity: 1; } }
+/* As estrelas só piscam quando aparecem (tema escuro). Piscando escondidas no tema claro, mantinham a animação
+   rodando na thread principal o tempo todo (medido: ~8 ms de estilo por quadro numa página grande). */
+.tema-pílula__estrelas i { animation-play-state: paused; will-change: opacity; }
+:root[data-tema="escuro"] .tema-pílula__estrelas i,
+.tema-pílula[data-forçar="escuro"] .tema-pílula__estrelas i { animation-play-state: running; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) .tema-pílula__estrelas i { animation-play-state: running; }
+}
+:root[data-tema="claro"] .tema-pílula__estrelas i,
+.tema-pílula[data-forçar="claro"] .tema-pílula__estrelas i { animation-play-state: paused; }
