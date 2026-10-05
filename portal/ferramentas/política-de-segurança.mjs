@@ -36,7 +36,7 @@ export const ARQUIVOS_DA_RAIZ = Object.freeze([
 ]);
 
 /** Pastas inteiras que vão para o ar (com os filtros de extensão e de subpasta abaixo). */
-export const PASTAS_PUBLICADAS = Object.freeze(['estilos', 'scripts', 'dados', 'recursos', 'f', 'vitrine']);
+export const PASTAS_PUBLICADAS = Object.freeze(['estilos', 'scripts', 'dados', 'recursos', 'f', 'en', 'vitrine']);
 
 /** Extensões que o navegador precisa. Documentação (.md), mapas e testes ficam de fora. */
 export const EXTENSÕES_PUBLICÁVEIS = Object.freeze([

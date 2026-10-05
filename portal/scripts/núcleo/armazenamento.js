@@ -6,6 +6,8 @@
  * e chaves perigosas de protótipo são descartadas na desserialização.
  */
 
+import { t } from './idioma.js';
+
 const PREFIXO = 'portal.';
 const CHAVES_PROIBIDAS = new Set(['__proto__', 'constructor', 'prototype']);
 
@@ -98,10 +100,10 @@ export function exportarTudo() {
  * @throws {Error} quando o arquivo não tem o formato esperado
  */
 export function importarTudo(conteúdo) {
-  if (!conteúdo || typeof conteúdo !== 'object') throw new Error('Arquivo inválido.');
+  if (!conteúdo || typeof conteúdo !== 'object') throw new Error(t('salvos.arquivoInválido'));
   const { versão, dados } = /** @type {any} */ (conteúdo);
   if (versão !== 1 || !dados || typeof dados !== 'object') {
-    throw new Error('Este arquivo não é uma cópia do portal.');
+    throw new Error(t('salvos.nãoÉCópia'));
   }
   let importadas = 0;
   let ignoradas = 0;

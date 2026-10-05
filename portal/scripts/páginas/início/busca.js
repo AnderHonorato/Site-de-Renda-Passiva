@@ -3,22 +3,14 @@ import { ferramentas } from '../../../dados/catálogo.js';
 import { buscar } from '../../núcleo/busca.js';
 import { escapar } from '../../núcleo/texto.js';
 import { ícone } from '../../núcleo/ícones.js';
+import { t, lista, raizDoSite, raizDoIdioma } from '../../núcleo/idioma.js';
 
 export function montar() {
   const campoDeBusca = document.getElementById('busca');
   const caixaDeSugestões = document.getElementById('sugestões');
   if (!campoDeBusca || !caixaDeSugestões) throw new Error('A busca da página inicial não está no HTML.');
 
-  const INTENÇÕES = [
-    'quanto devo cobrar',
-    'rachar a conta',
-    'quantos dias faltam',
-    'qual embalagem compensa',
-    'somar horas trabalhadas',
-    'fazer um orçamento',
-    'limpar minha planilha',
-    'criar senha forte',
-  ];
+  const INTENÇÕES = lista('início.intenções');
   const caixaDeIntenções = document.getElementById('intenções');
   if (caixaDeIntenções) {
     caixaDeIntenções.innerHTML = INTENÇÕES
@@ -47,12 +39,12 @@ export function montar() {
 
     const achados = buscar(ferramentas, consulta, { limite: 7 });
     if (achados.length === 0) {
-      caixaDeSugestões.innerHTML = `<p class="sugestões__vazio">Nada encontrado para “${escapar(consulta)}”.<br>
-        <a href="ferramentas.html">Ver o catálogo completo</a></p>`;
+      caixaDeSugestões.innerHTML = `<p class="sugestões__vazio">${escapar(t('início.nadaEncontrado', { consulta }))}<br>
+        <a href="${raizDoIdioma}ferramentas.html">${escapar(t('início.verCatálogoCompleto'))}</a></p>`;
     } else {
       caixaDeSugestões.innerHTML = achados.map((f, i) => {
-        const destino = f.status === 'pronta' ? `f/${f.slug}/` : `ferramentas.html#${f.slug}`;
-        const selo = f.status === 'pronta' ? '' : '<span class="etiqueta">Planejada</span>';
+        const destino = f.status === 'pronta' ? `${raizDoSite}f/${f.slug}/` : `${raizDoIdioma}ferramentas.html#${f.slug}`;
+        const selo = f.status === 'pronta' ? '' : `<span class="etiqueta">${escapar(t('lista.planejada'))}</span>`;
         return `<a class="sugestões__item" role="option" id="sugestão-${i}" aria-selected="false" href="${destino}">
           ${ícone(f.ícone)}<span><b>${escapar(f.nome)}</b><small>${escapar(f.resumo)}</small></span>${selo}</a>`;
       }).join('');
@@ -81,7 +73,7 @@ export function montar() {
       if (caixaDeSugestões.hidden) {
         if (evento.key === 'Enter' && campoDeBusca.value.trim()) {
           evento.preventDefault();
-          location.href = `ferramentas.html?busca=${encodeURIComponent(campoDeBusca.value.trim())}`;
+          location.href = `${raizDoIdioma}ferramentas.html?busca=${encodeURIComponent(campoDeBusca.value.trim())}`;
         }
         return;
       }
@@ -93,7 +85,7 @@ export function montar() {
         if (ativa >= 0 && itens[ativa]) { evento.preventDefault(); itens[ativa].click(); }
         else if (campoDeBusca.value.trim()) {
           evento.preventDefault();
-          location.href = `ferramentas.html?busca=${encodeURIComponent(campoDeBusca.value.trim())}`;
+          location.href = `${raizDoIdioma}ferramentas.html?busca=${encodeURIComponent(campoDeBusca.value.trim())}`;
         }
       }
     });
