@@ -1,240 +1,210 @@
 /**
- * Escolha de arquivos para as ferramentas avançadas (ler QR Code, converter planilha, ZIP).
+ * Escolha de arquivos das ferramentas de PDF e imagem: botão do portal no lugar
+ * da entrada nativa, arrastar e soltar em qualquer ponto da ferramenta, lista
+ * acessível (um ou vários arquivos, com setas para reordenar) e recusa dos
+ * arquivos inválidos já na escolha, com a mensagem no campo.
  *
- * Mesmo desenho de `escolher-pdf.js`: troca o campo de arquivo nativo (que não segue o tema) por um botão do
- * portal, aceita arrastar e soltar em qualquer ponto da ferramenta, e CONFERE cada arquivo na hora da escolha
- * (vazio, grande demais, tipo errado, corrompido), mostrando o motivo no campo antes de a pessoa digitar qualquer
- * coisa. A conferência de cada ferramenta entra pela função `conferir`; aqui só mora a parte de tela.
- *
- * Os arquivos são lidos no navegador e nunca saem do aparelho.
+ * Só o começo do arquivo é lido na escolha; o resto, na hora de processar.
+ * Mesmo comportamento da lista de Juntar PDF, que tem a própria implementação.
  */
 import { mostrarErro, limparErros } from '../../núcleo/interface.js';
 import { escapar } from '../../núcleo/texto.js';
 import { ícone } from '../../núcleo/ícones.js';
+import { formatarTamanho, validarArquivoPdf } from '../../cálculos/pdf.js';
+import { mensagemDeErroDoPdfÚnico } from '../../cálculos/pdf-páginas.js';
 
-/** "12,3 KB", "4,5 MB" no padrão brasileiro. */
-export function formatarBytes(bytes) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} KB`;
-  if (bytes < 1024 ** 3) return `${(bytes / 1024 / 1024).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} MB`;
-  return `${(bytes / 1024 ** 3).toLocaleString('pt-BR', { maximumFractionDigits: 2 })} GB`;
+/** Bytes lidos do começo de cada arquivo para conferir o formato. */
+const BYTES_DO_COMEÇO = 1024;
+
+/** Seta para cima: a seta para baixo do conjunto do portal, girada. */
+const SETA_PARA_CIMA = ícone('seta-baixo')
+  .replace('focusable="false">', 'focusable="false"><g transform="rotate(180 12 12)">')
+  .replace('</svg>', '</g></svg>');
+
+/**
+ * Conferência de um PDF na hora da escolha: vazio, grande demais e assinatura
+ * %PDF (pelo conteúdo, não pela extensão). Senha e dano só aparecem ao abrir.
+ * @param {File} arquivo
+ * @param {Uint8Array} começo
+ * @returns {Promise<{erro?: string}>}
+ */
+export async function validarPdfDaEscolha(arquivo, começo) {
+  const nome = arquivo.name;
+  if (arquivo.size === 0) return { erro: mensagemDeErroDoPdfÚnico('arquivo_vazio', { nome }) };
+  const validação = validarArquivoPdf({ nome, tamanho: arquivo.size, bytes: começo });
+  return validação.ok ? {} : { erro: mensagemDeErroDoPdfÚnico(validação.erro, { nome }) };
 }
 
 /**
- * Nome de arquivo com pontos de quebra (<wbr>) depois de ".", "_" e "-" e a cada 12 letras de um trecho sem
- * espaço: no celular, um nome longo sem espaços estourava a largura.
+ * Nome de arquivo com pontos de quebra depois de ".", "_" e "-" e a cada 12
+ * letras de um trecho sem espaço, para não ser cortado no meio no celular.
  * @returns {string} HTML já escapado
  */
 export function nomeQuebrável(nome) {
-  return String(nome).split(' ').map((palavra) => {
-    const pedaços = (palavra.match(/[^._-]*[._-]?/g) ?? []).filter(Boolean)
-      .flatMap((pedaço) => pedaço.match(/.{1,12}/gu) ?? []);
+  return nome.split(' ').map((palavra) => {
+    const pedaços = palavra.match(/[^._-]*[._-]?/g).filter(Boolean)
+      .flatMap((pedaço) => pedaço.match(/.{1,12}/gu));
     return pedaços.map(escapar).join('<wbr>');
   }).join(' ');
 }
 
 /**
- * @typedef {{arquivo: File, nome: string, tamanho: number, detalhe: string, dados: any}} ArquivoEscolhido
- * @typedef {{ok: true, detalhe?: string, dados?: any} | {ok: false, mensagem: string}} Conferência
- */
-
-/**
- * @param {HTMLElement} elemento raiz da ferramenta (já montada por `montarFerramenta`)
+ * @typedef {{nome: string, tamanho: number, arquivo: File, extra?: string}} Item
+ *
+ * @param {HTMLElement} elemento raiz da ferramenta, já montada por `montarFerramenta`
  * @param {{
- *   campo?: string,
- *   aceitar?: string,
- *   múltiplos?: boolean,
- *   máximoDeArquivos?: number,
- *   rótuloDoBotão: string,
- *   rótuloParaTrocar?: string,
- *   rótuloDaFoto?: string,
- *   textoDoVazio: string,
- *   textoDeSolte: string,
- *   ícone?: string,
- *   conferir: (arquivo: File, jáEscolhidos: ArquivoEscolhido[]) => Promise<Conferência> | Conferência,
- *   aoMudar?: (lista: ArquivoEscolhido[]) => void,
+ *   campo: string, rótuloDoBotão: string, accept: string, múltiplo?: boolean, limite?: number,
+ *   mensagemDeLimite?: string, rótuloDaLista: string, textoDoVazio: string, textoDeSolte: string,
+ *   ícone?: string, soltar?: boolean,
+ *   validar: (arquivo: File, começo: Uint8Array) => Promise<{erro?: string, extra?: string}>,
+ *   aoMudar?: (itens: Item[]) => void,
  * }} opções
+ * @returns {{
+ *   itens: () => Item[], limpar: () => void, travar: (travada: boolean) => void,
+ *   botãoEscolher: HTMLButtonElement, adicionar: (arquivos: File[]) => Promise<void>,
+ * }}
  */
-export function prepararEscolhaDeArquivos(elemento, opções) {
+export function montarEscolhaDeArquivos(elemento, opções) {
   const {
-    campo: nomeDoCampo = 'arquivo', aceitar = '', múltiplos = false, máximoDeArquivos = 1,
-    rótuloDoBotão, rótuloParaTrocar = rótuloDoBotão, rótuloDaFoto, textoDoVazio, textoDeSolte,
-    ícone: nomeDoÍcone = 'documento', conferir, aoMudar = () => {},
+    campo: nomeDoCampo, rótuloDoBotão, accept, múltiplo = false, limite = 1, mensagemDeLimite = 'Limite de arquivos atingido.',
+    rótuloDaLista, textoDoVazio, textoDeSolte, ícone: nomeDoÍcone = 'documento', validar, aoMudar, soltar = true,
   } = opções;
+
   const formulário = elemento.querySelector('#formulário');
   const entrada = elemento.querySelector(`#campo-${nomeDoCampo}`);
   const campo = entrada.closest('.campo');
+  const resultado = elemento.querySelector('#resultado');
 
-  // O campo de arquivo ocupa a linha inteira, em vez de dividir a grade com os outros campos.
-  elemento.querySelector('.campos').before(campo);
-  campo.classList.add('b-3');
+  /** @type {Item[]} */
+  let itens = [];
+  let travada = false;
+  let visível = true;
 
-  entrada.accept = aceitar;
-  entrada.multiple = múltiplos;
+  // A entrada de arquivo nativa não segue o tema; quem abre a escolha é um botão do portal.
+  entrada.multiple = múltiplo;
+  entrada.accept = accept;
   entrada.hidden = true;
+  const botãoEscolher = document.createElement('button');
+  botãoEscolher.type = 'button';
+  botãoEscolher.className = 'botão botão--linha';
+  botãoEscolher.innerHTML = `${ícone('pasta')}${escapar(rótuloDoBotão)}`;
+  if (entrada.getAttribute('aria-describedby')) botãoEscolher.setAttribute('aria-describedby', entrada.getAttribute('aria-describedby'));
+  entrada.after(botãoEscolher);
+  botãoEscolher.addEventListener('click', () => entrada.click());
 
-  const botão = document.createElement('button');
-  botão.type = 'button';
-  botão.className = 'botão botão--linha';
-  botão.setAttribute('aria-describedby', `campo-${nomeDoCampo}-dica`);
-  const pintarBotão = () => { botão.innerHTML = `${ícone('pasta')}${escolhidos.length && !múltiplos ? rótuloParaTrocar : rótuloDoBotão}`; };
-  entrada.after(botão);
-  botão.addEventListener('click', () => entrada.click());
-
-  // No celular, `capture` abre a câmera do aparelho e devolve a foto: dispensa a permissão de câmera da página.
-  let entradaDaFoto = null;
-  let botãoDaFoto = null;
-  if (rótuloDaFoto) {
-    entradaDaFoto = document.createElement('input');
-    entradaDaFoto.type = 'file';
-    entradaDaFoto.accept = 'image/*';
-    entradaDaFoto.setAttribute('capture', 'environment');
-    entradaDaFoto.hidden = true;
-    entradaDaFoto.tabIndex = -1;
-    entradaDaFoto.setAttribute('aria-hidden', 'true');
-    botãoDaFoto = document.createElement('button');
-    botãoDaFoto.type = 'button';
-    botãoDaFoto.className = 'botão botão--linha';
-    botãoDaFoto.innerHTML = `${ícone('imagem')}${escapar(rótuloDaFoto)}`;
-    botãoDaFoto.addEventListener('click', () => entradaDaFoto.click());
-    botão.after(botãoDaFoto, entradaDaFoto);
-  }
-
+  // Lista sem <ul>: o recuo padrão da lista roubava 40px da linha no celular.
   const lista = document.createElement('div');
+  lista.className = 'lista-ferramentas t-2';
   lista.setAttribute('role', 'list');
-  lista.setAttribute('aria-label', 'Arquivos escolhidos');
-  lista.hidden = true;
-
+  lista.setAttribute('aria-label', rótuloDaLista);
   const vazio = document.createElement('p');
   vazio.className = 'vazio t-2';
   vazio.textContent = textoDoVazio;
-
-  // Avisa leitores de tela e quem está com a conexão lenta de que o arquivo está sendo lido.
-  const estado = document.createElement('p');
-  estado.className = 'pequeno suave t-1';
-  estado.setAttribute('role', 'status');
-  estado.hidden = true;
-
-  (botãoDaFoto ?? botão).after(lista);
-  lista.after(vazio, estado);
-
-  /** @type {ArquivoEscolhido[]} */
-  let escolhidos = [];
-  let travado = false;
-  /** Cada rodada de escolha ganha um número; resposta de uma rodada antiga é ignorada. */
-  let rodada = 0;
+  campo.after(lista, vazio);
 
   function desenhar() {
-    lista.hidden = escolhidos.length === 0;
-    vazio.hidden = escolhidos.length > 0;
-    pintarBotão();
-    lista.replaceChildren(...escolhidos.map((item, i) => {
-      const linha = document.createElement('div');
-      linha.setAttribute('role', 'listitem');
-      linha.className = 'ferramenta-linha t-2';
-      const nome = escapar(item.nome);
-      linha.innerHTML = `<span class="ferramenta-linha__ícone">${ícone(nomeDoÍcone)}</span>
+    lista.innerHTML = itens.map((a, i) => {
+      const nome = escapar(a.nome);
+      const botão = (ação, conteúdo, rótulo, desligado) => `<button type="button" class="ícone-botão${desligado ? ' campo--inativo' : ''}"`
+        + ` data-ação="${ação}" data-índice="${i}" aria-label="${rótulo}: ${nome}"${desligado ? ' disabled' : ''}>${conteúdo}</button>`;
+      const numeração = múltiplo ? `${i + 1}. ` : '';
+      const resumo = [formatarTamanho(a.tamanho), a.extra].filter(Boolean).join(' · ');
+      return `<div class="ferramenta-linha" role="listitem">
+        <span class="ferramenta-linha__ícone">${ícone(nomeDoÍcone)}</span>
         <span class="ferramenta-linha__texto">
-          <span class="ferramenta-linha__nome" title="${nome}">${nomeQuebrável(item.nome)}</span>
-          <span class="ferramenta-linha__resumo">${escapar([formatarBytes(item.tamanho), item.detalhe].filter(Boolean).join(' · '))}</span>
+          <span class="ferramenta-linha__nome" title="${nome}">${numeração}${nomeQuebrável(a.nome)}</span>
+          <span class="ferramenta-linha__resumo">${escapar(resumo)}</span>
         </span>
         <span class="ferramenta-linha__fim">
-          <button type="button" class="ícone-botão" data-tirar="${i}" aria-label="Tirar ${nome} da lista"${travado ? ' disabled' : ''}>${ícone('fechar')}</button>
-        </span>`;
-      return linha;
-    }));
+          ${múltiplo ? botão('subir', SETA_PARA_CIMA, 'Subir', i === 0) : ''}
+          ${múltiplo ? botão('descer', ícone('seta-baixo'), 'Descer', i === itens.length - 1) : ''}
+          ${botão('remover', ícone('lixeira'), 'Remover', false)}
+        </span>
+      </div>`;
+    }).join('');
+    lista.hidden = !visível || itens.length === 0;
+    vazio.hidden = !visível || itens.length > 0;
   }
 
-  function notificar() {
+  /** A lista mudou: o arquivo gerado antes não corresponde mais a ela. */
+  function mudou() {
+    resultado.hidden = true;
     desenhar();
-    aoMudar(escolhidos);
+    aoMudar?.(itens);
   }
 
-  function limpar() {
-    rodada += 1;
-    escolhidos = [];
-    estado.hidden = true;
-    notificar();
-  }
-
-  /** @param {File[]} arquivos */
   async function adicionar(arquivos) {
-    if (travado || arquivos.length === 0) return;
-    const minha = ++rodada;
+    if (travada) return;
     limparErros(formulário);
     const recusas = [];
-    let candidatos = arquivos;
-    if (!múltiplos && candidatos.length > 1) {
-      recusas.push(`Um arquivo por vez: usei "${candidatos[0].name}" e deixei os outros de fora.`);
-      candidatos = candidatos.slice(0, 1);
-    }
-    const novos = múltiplos ? [...escolhidos] : [];
-    for (const arquivo of candidatos) {
-      if (novos.length >= máximoDeArquivos) {
-        recusas.push(`Limite de ${máximoDeArquivos} arquivos: "${arquivo.name}" e os seguintes ficaram de fora.`);
-        break;
-      }
-      if (múltiplos && novos.some((e) => e.nome === arquivo.name && e.tamanho === arquivo.size)) {
-        recusas.push(`"${arquivo.name}" já estava na lista.`);
+    // Em modo de um arquivo só, a nova escolha troca a anterior (mas só se for válida).
+    const escolhidos = múltiplo ? arquivos : arquivos.slice(0, 1);
+    if (!múltiplo && arquivos.length > 1) recusas.push('Esta ferramenta trabalha com um arquivo por vez. Usei o primeiro.');
+    for (const arquivo of escolhidos) {
+      if (múltiplo && itens.length >= limite) {
+        recusas.push(`"${arquivo.name}" ficou de fora: ${mensagemDeLimite}`);
         continue;
       }
-      estado.textContent = `Conferindo "${arquivo.name}"…`;
-      estado.hidden = false;
-      let resultado;
+      let validação;
       try {
-        resultado = await conferir(arquivo, novos);
-      } catch (erro) {
-        console.error(erro);
-        resultado = { ok: false, mensagem: `Não foi possível ler "${arquivo.name}". Escolha o arquivo de novo.` };
+        const começo = new Uint8Array(await arquivo.slice(0, BYTES_DO_COMEÇO).arrayBuffer());
+        validação = await validar(arquivo, começo);
+      } catch {
+        validação = { erro: `Não foi possível ler "${arquivo.name}". Tente escolher o arquivo de novo.` };
       }
-      if (minha !== rodada) return;
-      if (resultado.ok) {
-        novos.push({ arquivo, nome: arquivo.name, tamanho: arquivo.size, detalhe: resultado.detalhe ?? '', dados: resultado.dados });
-      } else {
-        recusas.push(`"${arquivo.name}": ${resultado.mensagem}`);
+      if (validação.erro) {
+        recusas.push(validação.erro);
+        continue;
       }
+      const item = { nome: arquivo.name, tamanho: arquivo.size, arquivo, extra: validação.extra };
+      if (múltiplo) itens.push(item);
+      else itens = [item];
     }
-    estado.hidden = true;
-    if (novos.length !== escolhidos.length || novos.some((n, i) => n !== escolhidos[i])) {
-      escolhidos = novos;
-      notificar();
-    }
-    if (recusas.length) mostrarErro(campo, recusas.slice(0, 3).join(' ') + (recusas.length > 3 ? ` (e mais ${recusas.length - 3} recusado${recusas.length - 3 === 1 ? '' : 's'}.)` : ''));
+    mudou();
+    if (recusas.length) mostrarErro(campo, recusas.join(' '));
   }
 
-  const aoEscolher = (origem) => () => {
-    adicionar([...origem.files]);
-    origem.value = '';
-  };
-  entrada.addEventListener('change', aoEscolher(entrada));
-  entradaDaFoto?.addEventListener('change', aoEscolher(entradaDaFoto));
+  entrada.addEventListener('change', () => {
+    adicionar([...entrada.files]);
+    entrada.value = '';
+  });
 
   lista.addEventListener('click', (evento) => {
-    const tirar = evento.target.closest('[data-tirar]');
-    if (!tirar || travado) return;
-    limparErros(formulário);
-    rodada += 1;
-    escolhidos = escolhidos.filter((_, i) => i !== Number(tirar.dataset.tirar));
-    notificar();
-    botão.focus();
+    const botão = evento.target.closest('button[data-ação]');
+    if (!botão || botão.disabled || travada) return;
+    const índice = Number(botão.dataset.índice);
+    const ação = botão.dataset.ação;
+    if (ação === 'remover') {
+      itens.splice(índice, 1);
+      limparErros(formulário);
+      mudou();
+      (lista.querySelector(`[data-ação="remover"][data-índice="${Math.min(índice, itens.length - 1)}"]`) ?? botãoEscolher).focus();
+      return;
+    }
+    const destino = índice + (ação === 'subir' ? -1 : 1);
+    [itens[índice], itens[destino]] = [itens[destino], itens[índice]];
+    mudou();
+    // O foco acompanha o arquivo que mudou de lugar.
+    const mesmo = lista.querySelector(`[data-ação="${ação}"][data-índice="${destino}"]`);
+    (mesmo && !mesmo.disabled ? mesmo : lista.querySelector(`[data-ação="${ação === 'subir' ? 'descer' : 'subir'}"][data-índice="${destino}"]`))?.focus();
   });
 
   // Arrastar e soltar em qualquer ponto da ferramenta.
   let profundidade = 0;
-  const temArquivos = (evento) => [...(evento.dataTransfer?.types ?? [])].includes('Files');
-  const terminarArraste = () => {
-    profundidade = 0;
-    vazio.textContent = textoDoVazio;
-    vazio.hidden = escolhidos.length > 0;
-  };
+  const temArquivos = (evento) => soltar && [...(evento.dataTransfer?.types ?? [])].includes('Files');
   elemento.addEventListener('dragenter', (evento) => {
-    if (!temArquivos(evento) || travado) return;
+    if (!temArquivos(evento)) return;
     evento.preventDefault();
-    profundidade += 1;
+    profundidade++;
     vazio.textContent = textoDeSolte;
     vazio.hidden = false;
   });
   elemento.addEventListener('dragover', (evento) => { if (temArquivos(evento)) evento.preventDefault(); });
+  const terminarArraste = () => {
+    profundidade = 0;
+    vazio.textContent = textoDoVazio;
+    vazio.hidden = !visível || itens.length > 0;
+  };
   elemento.addEventListener('dragleave', (evento) => {
     if (!temArquivos(evento)) return;
     profundidade = Math.max(0, profundidade - 1);
@@ -247,19 +217,31 @@ export function prepararEscolhaDeArquivos(elemento, opções) {
     adicionar([...evento.dataTransfer.files]);
   });
 
-  formulário.addEventListener('reset', () => { limpar(); });
+  function limpar() {
+    itens = [];
+    desenhar();
+    aoMudar?.(itens);
+  }
+  formulário.addEventListener('reset', limpar);
 
   desenhar();
 
   return {
-    atuais: () => escolhidos,
+    itens: () => itens,
     limpar,
     adicionar,
+    botãoEscolher,
+    /** Mostra ou esconde o campo inteiro (botão, lista e aviso de vazio), para escolhas que dependem de outra. */
+    mostrar(valor) {
+      visível = valor;
+      campo.hidden = !valor;
+      desenhar();
+    },
+    /** Liga e desliga a edição da lista: durante o processamento, ela não pode mudar. */
     travar(valor) {
-      travado = valor;
-      botão.disabled = valor;
-      if (botãoDaFoto) botãoDaFoto.disabled = valor;
-      for (const tirar of lista.querySelectorAll('[data-tirar]')) tirar.toggleAttribute('disabled', valor);
+      travada = valor;
+      lista.inert = valor;
+      botãoEscolher.disabled = valor;
     },
   };
 }

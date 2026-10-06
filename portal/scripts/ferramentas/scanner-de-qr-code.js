@@ -7,7 +7,7 @@
  */
 import { montarFerramenta, ErroDeEntrada } from '../núcleo/montador.js';
 import { criarProgresso, avisar } from '../núcleo/interface.js';
-import { prepararEscolhaDeArquivos } from './auxiliares/escolher-arquivos.js';
+import { prepararEscolhaDeArquivos } from './auxiliares/escolher-arquivos-avançadas.js';
 import {
   conferirImagem, escalasParaTentar, procurarCódigos, textoDoAchado, PRAZO_DA_LEITURA_MS, TAMANHO_MÁXIMO_DA_IMAGEM, MEGAPIXELS_MÁXIMOS, MÁXIMO_DE_CÓDIGOS,
 } from '../cálculos/scanner-de-qr-code.js';

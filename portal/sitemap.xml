@@ -42,6 +42,7 @@
   <url><loc>https://exemplo.invalid/portal/f/juntar-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/dividir-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/girar-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/extrair-texto-de-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/estoque-minimo/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/calculadora-de-nps/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/custo-de-receita/</loc></url>
@@ -57,4 +58,12 @@
   <url><loc>https://exemplo.invalid/portal/f/remover-paginas-do-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/extrair-paginas-do-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/organizar-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/jpg-para-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/pdf-para-jpg/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/numerar-paginas-do-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/marca-dagua-no-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/recortar-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/comparar-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/scanner-de-qr-code/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/simulador-de-financiamento/</loc></url>
 </urlset>
