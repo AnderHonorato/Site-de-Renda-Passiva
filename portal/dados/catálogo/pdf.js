@@ -240,7 +240,7 @@ export const ferramentas = [
   },
   {
     id: 'F169', slug: 'numerar-paginas-do-pdf', nome: 'Números de página no PDF', cat: 'pdf',
-    ícone: 'lista', tarefas: ['criar'], status: 'planejada',
+    ícone: 'lista', tarefas: ['criar'], status: 'pronta',
     resumo: 'Numera as páginas do PDF no rodapé ou no topo, com o formato e a posição que você escolher.',
     problema: 'Numerar um documento longo, um processo ou uma apostila que veio sem numeração.',
     entra: 'Um PDF, a posição (canto ou centro), o formato (1, Página 1 de 10, i, ii) e a página inicial.',

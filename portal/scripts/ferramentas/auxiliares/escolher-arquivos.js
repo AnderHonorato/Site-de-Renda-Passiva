@@ -10,7 +10,8 @@
 import { mostrarErro, limparErros } from '../../núcleo/interface.js';
 import { escapar } from '../../núcleo/texto.js';
 import { ícone } from '../../núcleo/ícones.js';
-import { formatarTamanho } from '../../cálculos/pdf.js';
+import { formatarTamanho, validarArquivoPdf } from '../../cálculos/pdf.js';
+import { mensagemDeErroDoPdfÚnico } from '../../cálculos/pdf-páginas.js';
 
 /** Bytes lidos do começo de cada arquivo para conferir o formato. */
 const BYTES_DO_COMEÇO = 1024;
@@ -19,6 +20,20 @@ const BYTES_DO_COMEÇO = 1024;
 const SETA_PARA_CIMA = ícone('seta-baixo')
   .replace('focusable="false">', 'focusable="false"><g transform="rotate(180 12 12)">')
   .replace('</svg>', '</g></svg>');
+
+/**
+ * Conferência de um PDF na hora da escolha: vazio, grande demais e assinatura
+ * %PDF (pelo conteúdo, não pela extensão). Senha e dano só aparecem ao abrir.
+ * @param {File} arquivo
+ * @param {Uint8Array} começo
+ * @returns {Promise<{erro?: string}>}
+ */
+export async function validarPdfDaEscolha(arquivo, começo) {
+  const nome = arquivo.name;
+  if (arquivo.size === 0) return { erro: mensagemDeErroDoPdfÚnico('arquivo_vazio', { nome }) };
+  const validação = validarArquivoPdf({ nome, tamanho: arquivo.size, bytes: começo });
+  return validação.ok ? {} : { erro: mensagemDeErroDoPdfÚnico(validação.erro, { nome }) };
+}
 
 /**
  * Nome de arquivo com pontos de quebra depois de ".", "_" e "-" e a cada 12
