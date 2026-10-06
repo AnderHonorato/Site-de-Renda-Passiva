@@ -232,3 +232,107 @@ test('editor de fotos: abre, gira, corta, ajusta, redimensiona e baixa; recusa o
     await contexto.close();
   }
 });
+
+/* ------------------------------------------------------------------ criador de gráficos */
+
+test('criador de gráficos: cria barras, linhas e pizza, valida, exporta PNG, SVG e CSV e não deixa texto de fora virar marcação', { skip: pular }, async () => {
+  for (const [largura, altura, tema] of [[390, 844, 'light'], [320, 640, 'dark'], [1280, 900, 'light']]) {
+    const { contexto, página, erros, externas } = await abrir('criador-de-graficos', { viewport: { width: largura, height: altura }, colorScheme: tema });
+    await página.click('button[type="submit"]');
+    assert.match(await erroDe(página, 'dados'), /Cole os dados/);
+
+    await página.click('text=Preencher com um exemplo');
+    await página.fill('#campo-título', 'Vendas do <1º> quadrimestre');
+    await página.fill('#campo-prefixo', 'R$');
+    await página.click('button[type="submit"]');
+    await página.waitForSelector('#resultado:not([hidden])');
+    assert.match(await página.locator('#resultado').innerText(), /Gráfico de barras/);
+    assert.equal(await página.locator('#resultado tbody tr').count(), 4);
+    assert.match(await página.locator('#resultado').innerText(), /R\$ 1\.200/);
+    // O gráfico é um SVG válido, sem estilo embutido, com título e descrição, e cabe na tela.
+    const svg = await página.evaluate(() => {
+      const el = document.querySelector('figure svg');
+      const xml = new DOMParser().parseFromString(new XMLSerializer().serializeToString(el), 'image/svg+xml');
+      return {
+        válido: !xml.querySelector('parsererror'), estilos: el.querySelectorAll('[style]').length + el.querySelectorAll('style').length,
+        título: el.querySelector('title')?.textContent, papel: el.getAttribute('role'), largura: el.getBoundingClientRect().width,
+        retângulos: el.querySelectorAll('rect').length, imagens: document.querySelectorAll('figure img').length,
+      };
+    });
+    assert.equal(svg.válido, true);
+    assert.equal(svg.estilos, 0);
+    assert.equal(svg.título, 'Vendas do <1º> quadrimestre');
+    assert.equal(svg.papel, 'img');
+    assert.ok(svg.largura <= largura, `o gráfico tem ${svg.largura}px numa tela de ${largura}px`);
+    assert.equal(svg.retângulos, 1 + 8 + 2);
+    assert.equal(await semRolagemLateral(página), true, `sem rolagem lateral em ${largura}px`);
+    await capturar(página, `criador-de-graficos-${largura}-${tema}.png`);
+
+    if (largura === 390) {
+      // Exporta: SVG (texto XML), PNG (imagem de 1120 × 800) e a tabela em CSV.
+      const arquivoSvg = await baixar(página, '[data-arquivo="1"]');
+      assert.equal(arquivoSvg.nome, 'vendas-do-1-quadrimestre.svg');
+      const texto = arquivoSvg.bytes.toString('utf8');
+      assert.ok(texto.startsWith('<?xml version="1.0"'));
+      assert.match(texto, /width="560" height="400"/);
+      assert.match(texto, /Vendas do &lt;1º&gt; quadrimestre/);
+      const arquivoPng = await baixar(página, '[data-arquivo="0"]');
+      assert.equal(arquivoPng.nome, 'vendas-do-1-quadrimestre.png');
+      assert.equal(arquivoPng.bytes.subarray(1, 4).toString(), 'PNG');
+      const pixels = await lerPixels(página, arquivoPng.bytes, [[0.01, 0.01]]);
+      assert.deepEqual([pixels.largura, pixels.altura], [1120, 800]);
+      assert.deepEqual(pixels.cores[0], [255, 255, 255]);
+      const csv = await baixar(página, '[data-tabela="csv"]');
+      assert.match(csv.bytes.toString('utf8'), /Janeiro;R\$ 1\.200;R\$ 800/);
+
+      // Trocar o tipo refaz o gráfico sozinho: a pizza usa a primeira série e avisa.
+      await página.selectOption('#campo-tipo', 'pizza');
+      await página.waitForFunction(() => document.querySelector('figure svg path') && /Gráfico de pizza/.test(document.querySelector('#resultado').innerText));
+      assert.equal(await página.locator('figure svg path').count(), 4);
+      assert.match(await página.locator('#resultado').innerText(), /uma coluna só: usei "Vendas"/);
+      assert.match(await página.locator('#resultado').innerText(), /Participação/i);
+      assert.equal(await página.locator('[data-campo="rótuloX"]').isVisible(), false);
+
+      await página.selectOption('#campo-tipo', 'linhas');
+      await página.selectOption('#campo-fundo', 'escuro');
+      await página.waitForFunction(() => document.querySelector('figure svg polyline'));
+      assert.equal(await página.locator('figure svg polyline').count(), 2);
+      assert.equal(await página.locator('figure svg > rect').first().getAttribute('fill'), '#15171c');
+      const escuro = await baixar(página, '[data-arquivo="0"]');
+      assert.deepEqual((await lerPixels(página, escuro.bytes, [[0.01, 0.01]])).cores[0], [21, 23, 28]);
+
+      // Barras com 41 categorias: a mensagem manda usar linhas.
+      await página.selectOption('#campo-tipo', 'barras');
+      await página.fill('#campo-dados', `Nome;V\n${Array.from({ length: 41 }, (_, i) => `C${i};${i}`).join('\n')}`);
+      await página.click('button[type="submit"]');
+      assert.match(await erroDe(página, 'tipo'), /41 categorias.*gráfico de linhas/);
+      assert.equal(await página.locator('figure svg').count(), 0);
+
+      // Texto no lugar de número: linha e coluna.
+      await página.fill('#campo-dados', 'Mês;Vendas\nJan;100\nFev;abc');
+      await página.click('button[type="submit"]');
+      assert.match(await erroDe(página, 'dados'), /Linha 3 \(Fev\), coluna "Vendas": "abc" não é um número/);
+
+      // Texto hostil nos nomes e no título não vira elemento da página.
+      await página.fill('#campo-dados', 'Nome;V\n"<img src=x onerror=window.__hack=1>";5\n"</text><script>window.__hack=2</script>";7');
+      await página.fill('#campo-título', '<img src=x onerror=window.__hack=3>');
+      await página.click('button[type="submit"]');
+      await página.waitForSelector('figure svg');
+      assert.equal(await página.evaluate(() => [document.querySelectorAll('figure img').length, document.querySelectorAll('figure script').length, window.__hack ?? 'nenhum'].join('|')), '0|0|nenhum');
+      assert.match(await página.locator('figure svg').innerHTML(), /&lt;img src=x/);
+
+      // CSV em Windows-1252 (Excel em português): vira o conteúdo da caixa, com os acentos certos.
+      const cp1252 = Buffer.concat([Buffer.from('Produto;Vendas\r\n', 'latin1'), Buffer.from([0x43, 0x61, 0x66, 0xE9]), Buffer.from(';1.234,5\r\n', 'latin1'), Buffer.from([0x41, 0xE7, 0xFA, 0x63, 0x61, 0x72]), Buffer.from(';900\r\n', 'latin1')]);
+      await página.setInputFiles('#campo-arquivo', arquivo('vendas.csv', 'text/csv', cp1252));
+      await página.waitForFunction(() => /Café/.test(document.querySelector('#campo-dados').value));
+      assert.match(await página.inputValue('#campo-dados'), /Açúcar/);
+      await página.waitForFunction(() => /1\.234,5/.test(document.querySelector('#resultado')?.innerText ?? ''));
+      // Um XLSX (ZIP) é recusado com a explicação.
+      await página.setInputFiles('#campo-arquivo', arquivo('planilha.xlsx', 'application/zip', Buffer.from([0x50, 0x4B, 3, 4, 0, 0, 0, 0])));
+      assert.match(await erroDe(página, 'arquivo'), /não é um CSV de texto/);
+    }
+    assert.deepEqual(erros, []);
+    assert.deepEqual(externas, [], 'nenhuma requisição para fora');
+    await contexto.close();
+  }
+});
