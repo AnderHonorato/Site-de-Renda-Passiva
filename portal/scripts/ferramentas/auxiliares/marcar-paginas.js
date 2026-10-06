@@ -98,13 +98,20 @@ export function criarMarcadorDePáginas({ depoisDe, entrada, ordem = 'crescente'
   });
   entrada.form?.addEventListener('reset', () => { lista = []; pintar(); });
 
+  let permitido = true;
+  const cabe = () => total > 0 && total <= limiteDaGrade;
+
   return {
     definirTotal(novoTotal) {
       total = novoTotal;
-      const mostrar = total > 0 && total <= limiteDaGrade;
-      bloco.hidden = !mostrar;
-      if (!mostrar) { bloco.replaceChildren(); botões = []; lista = []; return; }
+      bloco.hidden = !(cabe() && permitido);
+      if (!cabe()) { bloco.replaceChildren(); botões = []; lista = []; return; }
       desenhar();
+    },
+    /** Liga e desliga o bloco sem perder o desenho (a ferramenta de girar só usa o bloco no modo "páginas escolhidas"). */
+    mostrar(visível) {
+      permitido = visível;
+      bloco.hidden = !(cabe() && permitido);
     },
   };
 }
