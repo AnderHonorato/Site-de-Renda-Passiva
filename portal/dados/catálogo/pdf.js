@@ -93,7 +93,7 @@ export const ferramentas = [
   // -------------------------------------------------------------- converter para PDF
   {
     id: 'F158', slug: 'jpg-para-pdf', nome: 'JPG para PDF', cat: 'pdf',
-    ícone: 'imagem', tarefas: ['converter'], status: 'planejada',
+    ícone: 'imagem', tarefas: ['converter'], status: 'pronta',
     resumo: 'Transforma fotos e imagens (JPG, PNG) em um PDF, uma por página, no tamanho de papel que você escolher.',
     problema: 'Mandar várias fotos de documentos como um arquivo só.',
     entra: 'Imagens JPG ou PNG, a ordem, o tamanho da página (A4, carta ou o da imagem) e a margem.',
@@ -160,7 +160,7 @@ export const ferramentas = [
   // ------------------------------------------------------------- converter de PDF
   {
     id: 'F163', slug: 'pdf-para-jpg', nome: 'PDF para JPG', cat: 'pdf',
-    ícone: 'imagem', tarefas: ['converter'], status: 'planejada',
+    ícone: 'imagem', tarefas: ['converter'], status: 'pronta',
     resumo: 'Transforma cada página do PDF em uma imagem JPG (ou PNG), na resolução que você escolher.',
     problema: 'Usar uma página de PDF como imagem em um post, slide ou formulário que não aceita PDF.',
     entra: 'Um PDF, as páginas desejadas, o formato (JPG ou PNG) e a resolução (72 a 300 dpi).',
@@ -240,7 +240,7 @@ export const ferramentas = [
   },
   {
     id: 'F169', slug: 'numerar-paginas-do-pdf', nome: 'Números de página no PDF', cat: 'pdf',
-    ícone: 'lista', tarefas: ['criar'], status: 'planejada',
+    ícone: 'lista', tarefas: ['criar'], status: 'pronta',
     resumo: 'Numera as páginas do PDF no rodapé ou no topo, com o formato e a posição que você escolher.',
     problema: 'Numerar um documento longo, um processo ou uma apostila que veio sem numeração.',
     entra: 'Um PDF, a posição (canto ou centro), o formato (1, Página 1 de 10, i, ii) e a página inicial.',
@@ -253,7 +253,7 @@ export const ferramentas = [
   },
   {
     id: 'F170', slug: 'marca-dagua-no-pdf', nome: "Marca d'água no PDF", cat: 'pdf',
-    ícone: 'estrela', tarefas: ['criar'], status: 'planejada',
+    ícone: 'estrela', tarefas: ['criar'], status: 'pronta',
     resumo: "Carimba um texto ou uma imagem em todas as páginas, como RASCUNHO ou CONFIDENCIAL, com a opacidade que você quiser.",
     problema: 'Identificar um PDF como rascunho, cópia ou confidencial antes de compartilhar.',
     entra: "Um PDF e um texto ou imagem para a marca d'água, o ângulo, o tamanho e a opacidade.",
@@ -266,10 +266,10 @@ export const ferramentas = [
   },
   {
     id: 'F171', slug: 'recortar-pdf', nome: 'Recortar PDF', cat: 'pdf',
-    ícone: 'régua', tarefas: ['organizar'], status: 'planejada',
+    ícone: 'régua', tarefas: ['organizar'], status: 'pronta',
     resumo: 'Corta as margens ou uma área das páginas. O conteúdo cortado continua dentro do arquivo, só fica escondido.',
     problema: 'Tirar margens brancas, cabeçalhos ou deixar só um gráfico ou uma tabela da página.',
-    entra: 'Um PDF; você desenha o retângulo de corte na primeira página e aplica a todas ou a algumas.',
+    entra: 'Um PDF e quanto cortar em cima, à direita, embaixo e à esquerda (em mm, cm ou pontos); um desenho da primeira página mostra o que fica. Vale para todas as páginas ou só algumas.',
     processa: 'Ajusta a área visível de cada página (CropBox) com pdf-lib, no navegador. Para apagar de verdade o que ficou de fora, use a ferramenta de ocultar informações.',
     sai: 'PDF com a nova área visível.',
     exporta: ['baixar'], plano: 'gratuito', local: true,
