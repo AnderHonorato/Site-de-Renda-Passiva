@@ -11,11 +11,11 @@ export const ferramentas = [
   // ---------------------------------------------------------------- organizar
   {
     id: 'F152', slug: 'remover-paginas-do-pdf', nome: 'Remover páginas do PDF', cat: 'pdf',
-    ícone: 'documento', tarefas: ['organizar'], status: 'planejada',
+    ícone: 'documento', tarefas: ['organizar'], status: 'pronta',
     resumo: 'Apaga as páginas que você marcar e devolve o PDF só com o resto, sem recomprimir nada.',
     problema: 'Tirar a folha de rosto, a página em branco ou o anexo errado de um PDF sem refazer o arquivo.',
-    entra: 'Um PDF e as páginas a remover, marcadas na miniatura ou digitadas (1, 3-5, 9).',
-    processa: 'Copia para um PDF novo todas as páginas que não foram marcadas, com a biblioteca pdf-lib no seu navegador.',
+    entra: 'Um PDF (até 100 MB) e as páginas a remover, digitadas (1, 3-5, 9) ou marcadas tocando nos números.',
+    processa: 'Copia para um PDF novo todas as páginas que não foram marcadas, com a biblioteca pdf-lib no seu navegador. O arquivo não sai do aparelho.',
     sai: 'PDF sem as páginas removidas e a contagem de páginas antes e depois.',
     exporta: ['baixar'], plano: 'gratuito', local: true,
     tags: ['remover páginas', 'apagar página', 'excluir página', 'excluir folha do pdf'],
