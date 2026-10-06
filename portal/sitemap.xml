@@ -67,9 +67,12 @@
   <url><loc>https://exemplo.invalid/portal/f/assinar-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/ocultar-informacoes-do-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/comparar-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/editor-de-fotos/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/criar-gif/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/scanner-de-qr-code/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/texto-para-fala/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/converter-planilha/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/criador-de-graficos/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/zip/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/simulador-de-financiamento/</loc></url>
 </urlset>
