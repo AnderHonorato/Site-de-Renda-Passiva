@@ -1,11 +1,14 @@
 /** Comportamento do cabeçalho: menu de categorias, tema e atalho de busca. */
-import { alternarTema, lerTema } from './preferências.js';
+import { alternarTema, lerTema, sincronizarFavoritos } from './preferências.js';
 import { isolarBloco, carregarBloco, instalarTratadorGlobal } from './isolar-bloco.js';
 import { ligarÍconesVivos } from './ícone-animado.js';
 import { trocarTemaComTransição } from './transição-de-tema.js';
 import { ligarBuscaDoTopo } from './busca-do-topo.js';
 import { ligarAntiCópia } from './anti-cópia.js';
 import { ligarNotificações } from './notificações.js';
+import { ícone } from './ícones.js';
+import { avisar } from './interface.js';
+import { obterSessao } from './sessão.js';
 
 function ligarMenuDeCategorias() {
   const gatilho = document.getElementById('abrir-categorias');
@@ -110,6 +113,44 @@ isolarBloco('busca-do-topo-ligar', ligarBuscaDoTopo);
 isolarBloco('arte-do-rodapé', ligarArteDoRodapé);
 isolarBloco('anti-cópia', ligarAntiCópia);
 isolarBloco('notificações', ligarNotificações);
+isolarBloco('sessão-e-chat', async () => {
+  const idioma = document.documentElement.lang === 'en' ? 'en' : 'pt';
+  const base = document.documentElement.dataset.raizIdioma || './';
+  const fim = document.querySelector('.topo__fim');
+  if (!fim) return;
+  const link = document.createElement('a');
+  link.className = 'conta__atalho';
+  link.href = `${base}entrar.html?volta=${encodeURIComponent(location.pathname)}`;
+  const rotulo = document.createElement('span');
+  rotulo.textContent = idioma === 'en' ? 'Sign in' : 'Entrar';
+  link.innerHTML = ícone('pessoas');
+  link.append(rotulo);
+  link.setAttribute('aria-label', rotulo.textContent);
+  fim.prepend(link);
+  try {
+    const sessao = await obterSessao();
+    if (!sessao.usuario) return;
+    sincronizarFavoritos().then(({ excedentesLocais }) => {
+      if (excedentesLocais > 0 && !sessionStorage.getItem('portal.favoritos.cota-avisada')) {
+        sessionStorage.setItem('portal.favoritos.cota-avisada', '1');
+        avisar(idioma === 'en' ? 'Some favorites remain only on this device because of your account limit.'
+          : 'Alguns favoritos ficam só neste aparelho por causa do limite da conta.');
+      }
+    }).catch(() => {});
+    link.href = `${base}conta/`;
+    rotulo.textContent = idioma === 'en' ? 'Account' : 'Conta';
+    link.setAttribute('aria-label', rotulo.textContent);
+    const título = document.querySelector('.abertura__título');
+    const primeiroNome = String(sessao.usuario.nome || '').trim().split(/\s+/)[0];
+    if (título && primeiroNome) título.textContent = idioma === 'en'
+      ? `Hello, ${primeiroNome}! What shall we work on today?`
+      : `Olá, ${primeiroNome}! O que vamos trabalhar hoje?`;
+    if (sessao.chat_habilitado) {
+      const modulo = await import('./chat/chat.js');
+      modulo.ligarChat(sessao);
+    }
+  } catch { /* A API não afeta o portal estático. */ }
+});
 // O aviso de bloqueador só é baixado nas páginas geradas com anúncios ativos.
 if (document.documentElement.dataset.anuncios === 'sim') {
   isolarBloco('anti-bloqueador', () => carregarBloco(new URL('./anti-bloqueador.js', import.meta.url).href).then((m) => m.ligarAntiBloqueador()));

@@ -19,6 +19,7 @@ import { site } from '../dados/site.js';
 import { íconeVivo, arteViva } from '../scripts/núcleo/ícone-animado.js';
 import { gerarÍconesAnimados } from './ícones-animados.mjs';
 import { lerRegistro, atualizarRegistro, montarFeed } from './lançamentos.mjs';
+import { paginasConta } from './páginas-conta.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -100,6 +101,7 @@ function páginaDeFerramenta(f) {
         <h2>Como usar</h2>
         <div id="instruções"></div>
       </section>
+      ${f.cat !== 'estudos' ? '<div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>' : ''}
     </div>`;
 
   return montarPágina({
@@ -113,6 +115,7 @@ function páginaDeFerramenta(f) {
     atual: 'ferramentas',
     conteúdo,
     scripts: ['núcleo/página-de-ferramenta.js'],
+    anunciosPermitidos: f.cat !== 'estudos',
   });
 }
 
@@ -167,12 +170,28 @@ function sitemap(base = 'https://exemplo.invalid/portal/') {
 /** Todas as páginas de um idioma: português na raiz, inglês em en/. */
 function páginasDoIdioma(ctx) {
   const pasta = ctx.idioma.pasta;
+  const en = ctx.código === 'en';
+  const cookies = montarPágina({ ctx, título: en ? 'Cookies and privacy preferences' : 'Cookies e preferências de privacidade',
+    descrição: en ? 'Choose your advertising preferences and learn about essential session cookies.' : 'Escolha suas preferências de publicidade e conheça os cookies essenciais da sua sessão.',
+    base: '', raiz: ctx.idioma.raizDoSite || (en ? '../' : ''), atual: '', anunciosPermitidos: false,
+    alternativas: { 'pt-BR': en ? '../cookies.html' : 'cookies.html', en: en ? 'cookies.html' : 'en/cookies.html' },
+    conteúdo: `<div class="largura seção prosa"><h1>${en ? 'Cookies and privacy preferences' : 'Cookies e preferências de privacidade'}</h1><p>${en ? 'Session cookies are HttpOnly and essential for your account. A separate CSRF cookie protects changes. Theme, saved tools and advertising preferences are stored on this device.' : 'O cookie de sessão é HttpOnly e essencial para a conta. Outro cookie protege alterações contra CSRF. Tema, ferramentas salvas e preferências de anúncios ficam neste aparelho.'}</p><p>${en ? 'Google does not load before your choice, when there are no configured ads, or on account, administration and legal pages. Your choice lasts 180 days. Essential only requests non-personalized ads; Reject ads prevents Google from loading. Non-personalized ads may still use storage for security and frequency. Regional requirements may also require Google’s certified consent platform before public advertising.' : 'Nada do Google carrega antes da escolha, sem anúncios configurados ou em páginas de conta, administração e textos legais. A escolha dura 180 dias. Só o essencial solicita anúncios não personalizados; Recusar anúncios impede o carregamento do Google. Anúncios não personalizados ainda podem usar armazenamento para segurança e frequência. Exigências regionais também podem exigir uma plataforma de consentimento certificada pelo Google antes da publicidade pública.'}</p><div id="preferencias-cookies"></div><p id="estado-consentimento" role="status"></p></div>`,
+  });
+  const planos = montarPágina({ ctx, título: en ? 'Plans and account access' : 'Planos e acesso da conta',
+    descrição: en ? 'Free public tools and manually granted Plus and Premium accounts without automatic billing.' : 'Ferramentas públicas gratuitas e contas Plus e Premium liberadas manualmente, sem cobrança automática.',
+    base: '', raiz: en ? '../' : '', atual: '', anunciosPermitidos: false,
+    alternativas: { 'pt-BR': en ? '../planos.html' : 'planos.html', en: en ? 'planos.html' : 'en/planos.html' },
+    conteúdo: `<section class="largura seção prosa"><h1>${en ? 'Plans' : 'Planos'}</h1><p>${en ? 'Public browser tools remain free and do not require an account. Plus and Premium are granted manually by an administrator. There is no automatic charge or checkout.' : 'As ferramentas públicas do navegador continuam gratuitas e não exigem conta. Plus e Premium são liberados manualmente pelo administrador. Não há cobrança automática nem checkout.'}</p><h2>${en ? 'Free' : 'Grátis'}</h2><p>${en ? 'Use public tools, create a profile, participate in moderated chat and save up to 10 favorites in your account.' : 'Use as ferramentas públicas, crie um perfil, participe do chat moderado e guarde até 10 favoritos na conta.'}</p><h2>Plus / Premium</h2><p>${en ? 'Manually granted accounts do not display ads and can save more account favorites. Server processing and additional Premium quotas are separate roadmap items; this page does not promise unavailable features.' : 'Contas liberadas manualmente não exibem anúncios e podem guardar mais favoritos na conta. Processamento no servidor e cotas adicionais do Premium são etapas separadas do plano; esta página não promete funções indisponíveis.'}</p><p><a class="botão" href="conta/mensagens.html">${en ? 'Ask the administrator through your account' : 'Peça ao administrador pela sua conta'}</a></p></section>`,
+  });
   return [
     [`${pasta}index.html`, páginaInicial(ctx)],
     [`${pasta}ferramentas.html`, páginaDeCatálogo(ctx)],
     [`${pasta}salvos.html`, páginaDeSalvos(ctx)],
     [`${pasta}404.html`, página404(ctx)],
     ...páginasInstitucionais(ctx).map((p) => [`${pasta}${p.arquivo}`, p.html]),
+    ...paginasConta(ctx),
+    [`${pasta}cookies.html`, cookies],
+    [`${pasta}planos.html`, planos],
   ];
 }
 

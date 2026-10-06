@@ -12,6 +12,7 @@ import { ícone } from './ícones.js';
 import { criarProgresso, mostrarErro, limparErros, lerFormulário, avisar } from './interface.js';
 import { copiar, baixar, baixarCsv, baixarPlanilha, nomeDeArquivo } from './exportar.js';
 import { marcarResultado, pulsar } from './movimento.js';
+import { registrarUso } from './uso-ferramentas.js';
 
 /** Erro de entrada: a mensagem vai para o campo indicado, não para o console. */
 export class ErroDeEntrada extends Error {
@@ -244,6 +245,8 @@ export function montarFerramenta(raiz, ferramenta, definição) {
     try {
       const saída = await calcular(dados);
       desenharResultado(saída);
+      // A conta recebe só o identificador da ferramenta, nunca os valores ou arquivos.
+      void registrarUso(ferramenta.slug);
       if (demorada) progresso.concluir('Pronto');
       else progresso.esconder();
       if (focar) caixaDeResultado.focus({ preventScroll: true });

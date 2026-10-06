@@ -1,0 +1,21 @@
+.conta { padding-block: 28px 64px; }
+.conta__painel { max-width: 640px; margin-inline: auto; padding: clamp(18px, 4vw, 32px); }
+.conta__painel h1 { margin: 4px 0 8px; font-family: var(--fonte-título); letter-spacing: -.035em; }
+.conta__painel h2 { font-size: 1.15rem; margin: 30px 0 12px; }
+.conta__form { display: grid; gap: 13px; margin-block: 22px; }
+.conta__form[hidden], .conta__links[hidden] { display: none; }
+.conta__campo { display: grid; gap: 5px; color: var(--tinta-média); font-size: var(--t-sm); font-weight: 600; }
+.conta__campo input, .conta__campo textarea, .conta__campo select { width: 100%; border: 1px solid var(--borda-forte); border-radius: var(--raio-p); background: var(--superfície); color: var(--tinta); padding: 11px 12px; font: inherit; }
+.conta__campo input:focus-visible, .conta__campo textarea:focus-visible { outline: 2px solid var(--marca); outline-offset: 1px; }
+.conta__aceite { display: flex; gap: 9px; align-items: start; font-size: var(--t-sm); }
+.conta__aceite input { margin-top: 3px; }
+.conta__links, .conta__ações { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.conta__estado { min-height: 1.3em; color: var(--marca); }
+.conta__estado[data-erro="sim"] { color: var(--erro); }
+.conta__denuncia { padding: 15px; margin-block: 12px; }
+.conta__avatar, .conta__selos { display: flex; align-items: center; gap: 8px; }
+.conta__avatar svg { width: 54px; height: 54px; }
+.conta__atalho { display: inline-flex; align-items: center; gap: 5px; color: var(--tinta-média); font-size: var(--t-sm); font-weight: 600; white-space: nowrap; text-decoration: none; }
+.conta__atalho svg { width: 16px; height: 16px; }
+.conta__atalho:hover { color: var(--marca); }
+@media (max-width: 600px) { .conta__atalho { width: 30px; height: 30px; justify-content: center; } .conta__atalho span { display: none; } .conta__atalho svg { width: 20px; height: 20px; } }

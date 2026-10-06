@@ -1,0 +1,36 @@
+.ícone-nível,
+.avatar-biblioteca,
+.ícone-tempo-comunidade {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  vertical-align: middle;
+  overflow: visible;
+}
+
+.ícone-nível__base { transform-origin: 50% 50%; }
+.ícone-nível--2 .ícone-nível__base,
+.ícone-nível--3 .ícone-nível__base,
+.ícone-nível--4 .ícone-nível__base,
+.ícone-nível--5 .ícone-nível__base,
+.ícone-nível--6 .ícone-nível__base,
+.ícone-nível--7 .ícone-nível__base,
+.ícone-nível--8 .ícone-nível__base {
+  animation: brilho-nível 3.5s ease-in-out infinite;
+}
+
+.avatar-biblioteca { color: var(--cor-destaque, #557c68); }
+.ícone-tempo-comunidade { color: var(--texto-suave, #65716d); }
+
+@keyframes brilho-nível {
+  0%, 100% { opacity: .9; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ícone-nível *, .avatar-biblioteca *, .ícone-tempo-comunidade * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

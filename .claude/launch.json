@@ -14,10 +14,8 @@
       "name": "portal",
       "runtimeExecutable": "node",
       "runtimeArgs": [
-        "portal/ferramentas/servir.mjs",
-        "portal",
-        "--porta",
-        "4400"
+        "--env-file-if-exists=portal/.env",
+        "portal/ferramentas/desenvolver.mjs"
       ],
       "port": 4400
     },

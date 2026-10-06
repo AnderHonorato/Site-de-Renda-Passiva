@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 import { arquivoDeCabeçalhos, deveSerPublicado } from './política-de-segurança.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
-const PASTAS_QUE_NUNCA_SÃO_VARRIDAS = new Set(['node_modules', 'testes', 'visuais', 'publicação', 'ferramentas']);
+const PASTAS_QUE_NUNCA_SÃO_VARRIDAS = new Set(['node_modules', 'testes', 'visuais', 'publicação', 'ferramentas', 'servidor', 'banco', 'scripts-admin']);
 
 /** Lista os arquivos que entram na publicação, como caminhos relativos com barra normal. */
 export async function listarPublicáveis(raiz = RAIZ) {

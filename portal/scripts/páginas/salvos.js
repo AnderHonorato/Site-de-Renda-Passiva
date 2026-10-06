@@ -1,7 +1,8 @@
 /** Meus salvos: favoritos, histórico e cópia de segurança. */
 import { ferramentas, ferramentaPorSlug } from '../../dados/catálogo.js';
 import { desenharLista, ligarLista } from '../núcleo/lista.js';
-import { lerFavoritos, lerRecentes, limparRecentes } from '../núcleo/preferências.js';
+import { lerFavoritos, lerRecentes, limparRecentes, sincronizarFavoritos } from '../núcleo/preferências.js';
+import { obterSessao } from '../núcleo/sessão.js';
 import { exportarTudo, importarTudo, armazenamentoAtivo } from '../núcleo/armazenamento.js';
 import { baixar } from '../núcleo/exportar.js';
 import { avisar } from '../núcleo/interface.js';
@@ -26,6 +27,15 @@ function desenharTudo() {
 }
 
 desenharTudo();
+obterSessao().then((sessao) => {
+  if (!sessao.usuario) return;
+  return sincronizarFavoritos().then(({ excedentesLocais }) => {
+    desenharTudo();
+    if (excedentesLocais > 0) avisar(document.documentElement.lang === 'en'
+      ? 'Some favorites exceed your account limit and remain on this device.'
+      : 'Alguns favoritos excedem o limite da conta e permanecem neste aparelho.');
+  });
+}).catch(() => {});
 ligarLista(listaFavoritos, ferramentas, desenharTudo);
 ligarLista(listaRecentes, ferramentas, desenharTudo);
 

@@ -21,7 +21,7 @@ export const CABEÇALHOS_DE_SEGURANÇA = Object.freeze({
 });
 
 /** Pastas da raiz do portal que existem só para desenvolver e nunca devem ser entregues. */
-export const PASTAS_PRIVADAS = Object.freeze(['testes', 'ferramentas', 'visuais', 'node_modules', 'publicação']);
+export const PASTAS_PRIVADAS = Object.freeze(['testes', 'ferramentas', 'visuais', 'node_modules', 'publicação', 'servidor', 'banco', 'scripts-admin']);
 
 /** Arquivos da raiz que nunca devem ser entregues. */
 export const ARQUIVOS_PRIVADOS = Object.freeze(['package.json', 'package-lock.json', 'README.md']);
@@ -33,10 +33,12 @@ export const SUBPASTAS_PRIVADAS = Object.freeze(['vitrine/ferramentas', 'vitrine
 export const ARQUIVOS_DA_RAIZ = Object.freeze([
   'index.html', 'ferramentas.html', 'salvos.html', 'ajuda.html', 'privacidade.html', 'termos.html',
   '404.html', 'manifesto.webmanifest', 'robots.txt', 'sitemap.xml',
+  'entrar.html', 'criar-conta.html', 'recuperar-senha.html', 'redefinir-senha.html', 'cookies.html',
+  'perfil.html', 'planos.html',
 ]);
 
 /** Pastas inteiras que vão para o ar (com os filtros de extensão e de subpasta abaixo). */
-export const PASTAS_PUBLICADAS = Object.freeze(['estilos', 'scripts', 'dados', 'recursos', 'f', 'en', 'vitrine']);
+export const PASTAS_PUBLICADAS = Object.freeze(['estilos', 'scripts', 'dados', 'recursos', 'f', 'en', 'vitrine', 'conta', 'admin']);
 
 /** Extensões que o navegador precisa. Documentação (.md), mapas e testes ficam de fora. */
 export const EXTENSÕES_PUBLICÁVEIS = Object.freeze([

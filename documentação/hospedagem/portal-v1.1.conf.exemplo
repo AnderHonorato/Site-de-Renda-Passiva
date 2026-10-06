@@ -1,0 +1,23 @@
+# Exemplo para adaptar ao domínio/certificado do proprietário. Não foi implantado.
+# API continua privada em 127.0.0.1:4870; o servidor do portal encaminha /api/.
+# Configure URL_PUBLICA=https://SEU-DOMINIO no ambiente dos dois processos Node.
+# Com este proxy local, configure PORTAL_PROXY_CONFIAVEL=1 no servidor do portal.
+# Mantenha o servidor Node/HTML para CSP com nonce quando ativar AdSense.
+server {
+    listen 443 ssl;
+    server_name SEU-DOMINIO;
+    ssl_certificate /CAMINHO/DO/CERTIFICADO.pem;
+    ssl_certificate_key /CAMINHO/DA/CHAVE.pem;
+    client_max_body_size 64k;
+
+    location / {
+        proxy_pass http://127.0.0.1:4400;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Connection "";
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_buffering off;
+        proxy_read_timeout 90s;
+        proxy_cache off;
+    }
+}

@@ -1,5 +1,7 @@
 /** Favoritos, histórico recente e tema — tudo guardado só neste aparelho. */
 import { ler, gravar, apagar } from './armazenamento.js';
+import { api } from './api.js';
+import { avisar } from './interface.js';
 
 const LIMITE_FAVORITOS = 60;
 const LIMITE_RECENTES = 12;
@@ -21,12 +23,55 @@ export function alternarFavorito(slug) {
   if (posição >= 0) {
     atuais.splice(posição, 1);
     gravar('favoritos', atuais);
+    enviarFavorito(slug, false);
     return { favoritado: false, limiteAtingido: false };
   }
   if (atuais.length >= LIMITE_FAVORITOS) return { favoritado: false, limiteAtingido: true };
   atuais.unshift(slug);
   gravar('favoritos', atuais);
+  enviarFavorito(slug, true);
   return { favoritado: true, limiteAtingido: false };
+}
+
+const slugValido = (slug) => /^[a-z0-9-]{2,80}$/.test(slug);
+
+async function enviarFavorito(slug, adicionar) {
+  if (!slugValido(slug)) return;
+  try {
+    const { obterSessao } = await import('./sessão.js');
+    const sessao = await obterSessao();
+    if (!sessao.usuario) return;
+    await api(`/api/favoritos/${encodeURIComponent(slug)}`, { metodo: adicionar ? 'PUT' : 'DELETE' });
+  } catch (erro) {
+    if (erro.message === 'limite_favoritos') avisar(document.documentElement.lang === 'en'
+      ? 'Account favorite limit reached. Saved on this device.'
+      : 'Limite de favoritos da conta atingido. Salvo neste aparelho.');
+  }
+}
+
+/** Junta os favoritos da conta aos deste aparelho sem apagar os excedentes locais. */
+let sincronizacaoPendente;
+export function sincronizarFavoritos() {
+  if (!sincronizacaoPendente) sincronizacaoPendente = juntarFavoritos().finally(() => { sincronizacaoPendente = undefined; });
+  return sincronizacaoPendente;
+}
+
+async function juntarFavoritos() {
+  const resposta = await api('/api/favoritos');
+  const remotos = (resposta.favoritos || []).filter(slugValido);
+  const locais = lerFavoritos().filter(slugValido);
+  const unidos = [...new Set([...locais, ...remotos])].slice(0, LIMITE_FAVORITOS);
+  gravar('favoritos', unidos);
+  let excedentesLocais = 0;
+  const pendentes = locais.filter((slug) => !remotos.includes(slug));
+  for (const [indice, slug] of pendentes.entries()) {
+    try { await api(`/api/favoritos/${encodeURIComponent(slug)}`, { metodo: 'PUT' }); }
+    catch (erro) {
+      if (erro.message === 'limite_favoritos') { excedentesLocais += pendentes.length - indice; break; }
+      excedentesLocais += 1;
+    }
+  }
+  return { total: unidos.length, excedentesLocais };
 }
 
 /** @param {string} slug */

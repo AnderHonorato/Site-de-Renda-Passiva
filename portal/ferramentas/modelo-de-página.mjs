@@ -155,10 +155,12 @@ function rodapé(ctx, base, alternativas) {
       <li><a href="${base}ferramentas.html">${escapar(t('moldura.rodapéTodas'))}</a></li>
       <li><a href="${base}salvos.html">${escapar(t('moldura.rodapéSalvos'))}</a></li>
       <li><a href="${base}ajuda.html">${escapar(t('moldura.rodapéComoUsar'))}</a></li>
+      <li><a href="${base}planos.html">${ctx.código === 'en' ? 'Plans' : 'Planos'}</a></li>
     </ul></div>
     <div><h4>${escapar(t('moldura.rodapéLegal'))}</h4><ul>
       <li><a href="${base}privacidade.html">${escapar(t('moldura.rodapéPrivacidade'))}</a></li>
       <li><a href="${base}termos.html">${escapar(t('moldura.rodapéTermos'))}</a></li>
+      <li><a href="${base}cookies.html">Cookies</a></li>
     </ul></div>
   </div>
   <div class="largura rodapé__legal">
@@ -183,10 +185,11 @@ function rodapé(ctx, base, alternativas) {
 export function montarPágina({
   ctx = contextoPt, título, descrição, base = '', raiz = base, atual = '', conteúdo,
   scripts = [], estilos = [], canônica, semÍndice = false, alternativas = {},
+  anunciosPermitidos = atual === 'início' || atual === 'ferramentas',
 }) {
   // Caminho começando com "./" é relativo à raiz do site (ex.: a vitrine), não a estilos/ ou scripts/.
   const caminho = (pasta, arquivo) => (arquivo.startsWith('./') ? `${raiz || './'}${arquivo.slice(2)}` : `${raiz}${pasta}/${arquivo}`);
-  const folhas = ['núcleo.css', 'fontes.css', 'layout.css', 'componentes.css', 'movimento.css', 'páginas.css', ...estilos]
+  const folhas = [...new Set(['núcleo.css', 'fontes.css', 'layout.css', 'componentes.css', 'movimento.css', 'páginas.css', 'conta.css', 'chat.css', 'nível.css', 'publicidade.css', 'consentimento.css', ...estilos])]
     .map((f) => `  <link rel="stylesheet" href="${caminho('estilos', f)}">`).join('\n');
   const módulos = scripts
     .map((s) => `  <script type="module" src="${caminho('scripts', s)}"></script>`).join('\n');
@@ -204,7 +207,7 @@ export function montarPágina({
   if (hreflangs.length < 2) hreflangs.length = 0;
 
   return `<!doctype html>
-<html lang="${ctx.código}" data-raiz="${escapar(raiz)}" data-raiz-idioma="${escapar(base)}"${atributosDeProteção()}>
+<html lang="${ctx.código}" data-raiz="${escapar(raiz)}" data-raiz-idioma="${escapar(base)}"${anunciosPermitidos ? '' : ' data-anuncios="nao"'}${atributosDeProteção()}>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -224,11 +227,13 @@ ${módulos}
 ${cabeçalho(ctx, base, atual, todas)}
   <main id="conteúdo">
 ${conteúdo}
+${anunciosPermitidos ? '    <div class="largura"><div data-anuncio-posicao="rodape" class="publicidade-vazia"></div></div>' : ''}
   </main>
 ${rodapé(ctx, base, todas)}
 ${barraInferior(ctx, base, atual)}
   <div class="notificação" id="aviso" role="status" aria-live="polite"></div>
   <script type="module" src="${raiz}scripts/núcleo/cabeçalho.js"></script>
+  <script type="module" src="${raiz}scripts/núcleo/consentimento.js"></script>
 </body>
 </html>
 `;
