@@ -166,6 +166,8 @@ test('ícone animado que falha deixa o estático e não é tentado de novo em la
   await rolarMedindo(página, 150);
   const estados = await página.evaluate(() => [...document.querySelectorAll('#lista-prontas .ícone-vivo')].map((c) => c.dataset.estado));
   assert.ok(estados.includes('falhou'));
-  assert.ok(tentativas <= 40, `tentativas: ${tentativas}`);
+  // No máximo uma tentativa por ícone da página: mais que isso seria um laço de repetição.
+  const total = await página.evaluate(() => document.querySelectorAll('.ícone-vivo').length);
+  assert.ok(tentativas <= total, `tentativas: ${tentativas} para ${total} ícones`);
   await contexto.close();
 });
