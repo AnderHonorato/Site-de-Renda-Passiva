@@ -160,7 +160,7 @@ export const ferramentas = [
   // ------------------------------------------------------------- converter de PDF
   {
     id: 'F163', slug: 'pdf-para-jpg', nome: 'PDF para JPG', cat: 'pdf',
-    ícone: 'imagem', tarefas: ['converter'], status: 'planejada',
+    ícone: 'imagem', tarefas: ['converter'], status: 'pronta',
     resumo: 'Transforma cada página do PDF em uma imagem JPG (ou PNG), na resolução que você escolher.',
     problema: 'Usar uma página de PDF como imagem em um post, slide ou formulário que não aceita PDF.',
     entra: 'Um PDF, as páginas desejadas, o formato (JPG ou PNG) e a resolução (72 a 300 dpi).',
