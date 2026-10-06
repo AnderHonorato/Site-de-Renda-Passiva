@@ -140,7 +140,7 @@ export function montarTextoFinal(páginas, { títulos = true } = {}) {
  *     fechar: () => void | Promise<void>,
  *   }>,
  *   páginas?: string, parágrafos?: boolean, títulos?: boolean,
- *   aoProgredir?: Function, cancelado?: () => boolean,
+ *   aoProgredir?: Function, cancelado?: () => boolean, limiteDePáginas?: number,
  * }} opções
  * @returns {Promise<
  *   {ok: true, texto: string, páginas: {página: number, texto: string, caracteres: number, vazia: boolean}[], totalDePáginas: number, semTexto: number[], caracteres: number}
@@ -148,7 +148,7 @@ export function montarTextoFinal(páginas, { títulos = true } = {}) {
  * >}
  */
 export async function extrairTextoDoPdf(arquivo, {
-  abrir, páginas = '', parágrafos = false, títulos = true, aoProgredir, cancelado,
+  abrir, páginas = '', parágrafos = false, títulos = true, aoProgredir, cancelado, limiteDePáginas = LIMITE_DE_PÁGINAS,
 } = {}) {
   const { nome, bytes } = arquivo;
   const falha = (erro, mais = {}) => ({ ok: false, erro, extras: { nome, ...mais } });
@@ -168,7 +168,7 @@ export async function extrairTextoDoPdf(arquivo, {
   try {
     const total = documento.páginas;
     if (!Number.isInteger(total) || total < 1) return falha('pdf_sem_paginas');
-    if (total > LIMITE_DE_PÁGINAS) return falha('pdf_páginas_demais', { total, limite: LIMITE_DE_PÁGINAS });
+    if (total > limiteDePáginas) return falha('pdf_páginas_demais', { total, limite: limiteDePáginas });
     const faixa = interpretarPáginas(páginas, total);
     if (!faixa.ok) return faixa;
 
