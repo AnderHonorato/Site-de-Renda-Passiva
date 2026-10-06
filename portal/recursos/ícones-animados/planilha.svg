@@ -2,8 +2,8 @@
   <style>
     #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
     #i > * { transform-box: fill-box; transform-origin: center; }
-    #i > :nth-child(2) { stroke-dasharray: 80; animation: traça 3s ease-in-out infinite; }
-    @keyframes traça { 0% { stroke-dashoffset: 80; } 50%, 100% { stroke-dashoffset: 0; } }
+    #i > :nth-child(2) { transform-origin: left center; animation: traça 3s ease-in-out infinite; }
+    @keyframes traça { 0% { transform: scaleX(0); } 50%, 100% { transform: scaleX(1); } }
     #i > :nth-child(1) { animation: respira 3s ease-in-out infinite; }
     @keyframes respira { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }

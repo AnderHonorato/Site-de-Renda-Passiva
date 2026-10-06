@@ -8,21 +8,15 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { acharChromium, abrirNavegador } from '../../ferramentas/achar-playwright.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const PORTA = 4432;
 const BASE = `http://127.0.0.1:${PORTA}`;
 
-let chromium = null;
-for (const carregar of [
-  () => createRequire(import.meta.url)('playwright'),
-  () => createRequire(join(RAIZ, '..', 'ander-flow', 'package.json'))('playwright'),
-]) {
-  try { chromium = carregar().chromium; break; } catch { /* próximo */ }
-}
+const chromium = acharChromium();
 const pular = chromium ? false : 'Playwright não encontrado (npm i -D playwright)';
 
 let servidor;
@@ -35,7 +29,7 @@ before(async () => {
     try { if ((await fetch(`${BASE}/`)).ok) break; } catch { /* subindo */ }
     await new Promise((r) => setTimeout(r, 100));
   }
-  try { navegador = await chromium.launch(); } catch { navegador = await chromium.launch({ channel: 'msedge' }); }
+  navegador = await abrirNavegador(chromium);
 });
 after(async () => {
   await navegador?.close();
@@ -201,21 +195,25 @@ test('ícone animado lento mostra o estático; ícone que falha deixa o estátic
   const lento = await abrir();
   await lento.página.route(/%C3%ADcones-animados/, async (rota) => { await new Promise((r) => setTimeout(r, 1500)); await rota.continue(); });
   await lento.página.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
-  await lento.página.waitForSelector('#lista-prontas .ícone-vivo');
+  await lento.página.locator('#lista-prontas .ícone-vivo').first().waitFor();
+  await lento.página.locator('#lista-prontas').scrollIntoViewIfNeeded(); // o controle só baixa o que está na tela
+  await lento.página.waitForSelector('#lista-prontas .ícone-vivo:has(img[src])');
   const durante = await lento.página.evaluate(() => {
-    const caixa = document.querySelector('#lista-prontas .ícone-vivo');
+    const caixa = document.querySelector('#lista-prontas .ícone-vivo:has(img[src])');
     return { estado: caixa.dataset.estado, estático: getComputedStyle(caixa.firstElementChild).opacity };
   });
   assert.equal(durante.estado, 'carregando');
   assert.equal(durante.estático, '1', 'o estático aparece enquanto a animada demora');
-  await lento.página.waitForFunction(() => document.querySelector('#lista-prontas .ícone-vivo')?.dataset.estado === 'pronto', null, { timeout: 8000 });
+  await lento.página.waitForFunction(() => document.querySelector('#lista-prontas .ícone-vivo:has(img[src])')?.dataset.estado === 'pronto', null, { timeout: 8000 });
   await lento.contexto.close();
 
   const quebrado = await abrir();
   await quebrado.página.route(/%C3%ADcones-animados/, (rota) => rota.abort());
   await quebrado.página.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+  await quebrado.página.locator('#lista-prontas').scrollIntoViewIfNeeded();
+  await quebrado.página.waitForSelector('#lista-prontas .ícone-vivo[data-estado="falhou"]');
   const depois = await quebrado.página.evaluate(() => {
-    const caixa = document.querySelector('#lista-prontas .ícone-vivo');
+    const caixa = document.querySelector('#lista-prontas .ícone-vivo[data-estado="falhou"]');
     return { estado: caixa.dataset.estado, estático: getComputedStyle(caixa.firstElementChild).opacity, animado: getComputedStyle(caixa.querySelector('img')).display };
   });
   assert.deepEqual(depois, { estado: 'falhou', estático: '1', animado: 'none' });

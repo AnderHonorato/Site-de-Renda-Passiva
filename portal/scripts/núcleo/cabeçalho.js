@@ -80,6 +80,14 @@ function ligarAtalhoDeBusca() {
   });
 }
 
+function ligarArteDoRodapé() {
+  const arte = document.querySelector('.rodapé__arte');
+  if (!arte || !('IntersectionObserver' in window)) { arte?.setAttribute('data-visível', ''); return; }
+  new IntersectionObserver(([entrada]) => {
+    if (entrada.isIntersecting) arte.setAttribute('data-visível', ''); else arte.removeAttribute('data-visível');
+  }).observe(arte);
+}
+
 // Cada comportamento do cabeçalho é isolado: se um falhar, os outros continuam.
 instalarTratadorGlobal();
 isolarBloco('ícones-animados', ligarÍconesVivos);
@@ -87,3 +95,4 @@ isolarBloco('menu-de-categorias', ligarMenuDeCategorias);
 isolarBloco('tema', ligarTema);
 isolarBloco('atalho-de-busca', ligarAtalhoDeBusca);
 isolarBloco('busca-do-topo-ligar', ligarBuscaDoTopo);
+isolarBloco('arte-do-rodapé', ligarArteDoRodapé);

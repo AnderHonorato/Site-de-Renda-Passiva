@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#171717" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="../../recursos/ícone.svg" type="image/svg+xml">
   <link rel="manifest" href="../../manifesto.webmanifest">
+  <link rel="preload" href="../../recursos/fontes/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../estilos/núcleo.css">
   <link rel="stylesheet" href="../../estilos/fontes.css">
   <link rel="stylesheet" href="../../estilos/layout.css">
@@ -88,7 +89,7 @@
       </nav>
 
       <header class="ferramenta-topo">
-        <span class="ferramenta-topo__ícone"><span class="ícone-vivo" data-estado="carregando"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.7 12h.01M12 12h.01M15.3 12h.01M8.7 16h.01M12 16h.01M15.3 16h.01"/></svg><img class="ícone-vivo__animado" src="../../recursos/ícones-animados/calculo.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span></span>
+        <span class="ferramenta-topo__ícone"><span class="ícone-vivo" data-estado="carregando"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 7.5h7"/><path d="M8.7 12h.01M12 12h.01M15.3 12h.01M8.7 16h.01M12 16h.01M15.3 16h.01"/></svg><img class="ícone-vivo__animado" data-viva="ícone" data-fonte="../../recursos/ícones-animados/calculo.svg" alt="" width="22" height="22" decoding="async"></span></span>
         <div>
           <h1>Calculadora de porcentagem</h1>
           <p>Porcentagem de um valor, aumento, desconto, diferença percentual e quanto A é de B.</p>
@@ -96,7 +97,7 @@
         <div class="ferramenta-topo__ações">
           <button class="ícone-botão favorito" type="button" data-favorito="porcentagem" aria-pressed="false" aria-label="Salvar nos favoritos"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 4.5h11a1 1 0 0 1 1 1V20l-6.5-3.8L5.5 20V5.5a1 1 0 0 1 1-1Z"/></svg></button>
         </div>
-        <img class="só-claro ferramenta-topo__arte" src="../../recursos/ilustrações/categorias/calculo.svg" alt="" width="480" height="200" loading="eager" decoding="async"><img class="só-escuro ferramenta-topo__arte" src="../../recursos/ilustrações/categorias/calculo.escuro.svg" alt="" width="480" height="200" loading="eager" decoding="async">
+        <img class="ferramenta-topo__arte" data-viva="topo" data-fonte-claro="../../recursos/ilustrações/categorias/calculo.svg" data-fonte-escuro="../../recursos/ilustrações/categorias/calculo.escuro.svg" alt="" width="480" height="200" decoding="async">
       </header>
 
       <div class="ferramenta-área">

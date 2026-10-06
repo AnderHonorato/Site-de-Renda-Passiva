@@ -276,3 +276,15 @@
 @keyframes rd-pisca { 0%, 100% { opacity: 0; transform: scale(.4); } 45%, 55% { opacity: 1; transform: scale(1); } }
 @media (max-width: 640px) { .rodapé__arte { padding-inline: 8px; } }
 @media (prefers-reduced-motion: reduce) { .rd-gira, .rd-brilho, .rd-faísca { animation: none; } .rd-faísca { opacity: .8; } .rd-item { transition: none; } }
+/* As estrelas só piscam quando aparecem (tema escuro). Piscando escondidas no tema claro, mantinham a animação
+   rodando na thread principal o tempo todo (medido: ~8 ms de estilo por quadro numa página grande). */
+.tema-pílula__estrelas i { animation-play-state: paused; will-change: opacity; }
+:root[data-tema="escuro"] .tema-pílula__estrelas i,
+.tema-pílula[data-forçar="escuro"] .tema-pílula__estrelas i { animation-play-state: running; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) .tema-pílula__estrelas i { animation-play-state: running; }
+}
+:root[data-tema="claro"] .tema-pílula__estrelas i,
+.tema-pílula[data-forçar="claro"] .tema-pílula__estrelas i { animation-play-state: paused; }
+/* A bancada do rodapé só se mexe enquanto está na tela (marcado por scripts/núcleo/cabeçalho.js). */
+.rodapé__arte:not([data-visível]) * { animation-play-state: paused; }

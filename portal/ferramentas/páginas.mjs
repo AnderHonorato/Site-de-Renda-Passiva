@@ -8,7 +8,7 @@
  * que por enquanto só existem em português).
  */
 import { ícone } from '../scripts/núcleo/ícones.js';
-import { imagemDoTema } from '../scripts/núcleo/ícone-animado.js';
+import { imagemDoTema, arteViva } from '../scripts/núcleo/ícone-animado.js';
 import { site } from '../dados/site.js';
 import { blocosEmHtml, emLinha } from '../scripts/núcleo/texto-rico.js';
 import { montarPágina, escapar } from './modelo-de-página.mjs';
@@ -51,7 +51,7 @@ export function páginaInicial(ctx) {
   const grade = ctx.categorias.map((c) => `<a class="categoria-cartão" href="${base}ferramentas.html?categoria=${encodeURIComponent(c.id)}">
       <span class="ícone-vivo categoria-cartão__arte" data-estado="carregando">
         <span class="categoria-cartão__ícone">${ícone(c.ícone)}</span>
-        ${imagemDoTema(`${raiz}${arteDaCategoria(c.id, true)}`, { classe: 'ícone-vivo__animado', largura: 300, altura: 200 })}
+        ${arteViva(`${raiz}${arteDaCategoria(c.id, true)}`, { classe: 'ícone-vivo__animado', largura: 300, altura: 200 })}
       </span>
       <span><b>${escapar(c.nome)}</b><small data-contagem="${escapar(c.id)}"></small></span>
     </a>`).join('');

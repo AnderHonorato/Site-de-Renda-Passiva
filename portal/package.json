@@ -10,12 +10,13 @@
     "gerar": "node ferramentas/gerar.mjs",
     "verificar": "node ferramentas/verificar.mjs",
     "testar": "node --test \"testes/*.test.mjs\"",
-    "testar:navegador": "node --test testes/navegador/*.teste.mjs",
+    "testar:navegador": "node --test --test-concurrency=1 testes/navegador/*.teste.mjs",
     "no-ar": "node ferramentas/manter-no-ar.mjs --porta 4400",
     "servir": "node ferramentas/servir.mjs . --porta 4400",
     "publicar": "node ferramentas/publicar.mjs",
     "construir": "npm run conferir && npm run publicar",
     "conferir": "npm run gerar && npm run testar && npm run verificar",
+    "medir": "node ferramentas/medir-desempenho.mjs",
     "vitrine:capas": "node vitrine/ferramentas/vitrine-gerar-capas.mjs",
     "vitrine:video": "node vitrine/ferramentas/vitrine-renderizar-video.mjs"
   }

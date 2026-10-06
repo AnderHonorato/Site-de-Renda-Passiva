@@ -201,6 +201,7 @@ body[data-modo="cliente"] .ferramenta-topo { padding-block: 14px 10px; }
 .ferramenta-topo__arte {
   flex: 0 0 clamp(250px, 27vw, 340px); width: clamp(250px, 27vw, 340px); height: auto; aspect-ratio: 12 / 5;
   object-fit: cover; border-radius: var(--raio); border: 1px solid var(--borda); box-shadow: var(--sombra-1);
+  background: var(--superfície-3); /* o espaço já aparece pintado enquanto a ilustração animada não chega */
 }
 @media (max-width: 720px) {
   .ferramenta-topo__arte { flex-basis: 96px; width: 96px; border-radius: 10px; }
@@ -208,3 +209,8 @@ body[data-modo="cliente"] .ferramenta-topo { padding-block: 14px 10px; }
 @media (max-width: 560px) { .ferramenta-topo__arte { display: none !important; } }
 @media print { .ferramenta-topo__arte { display: none !important; } }
 body[data-modo="cliente"] .ferramenta-topo__arte { display: none !important; }
+
+/* O que o JavaScript desenha chega depois do HTML. Enquanto está vazio, o espaço já fica reservado, para o que vem
+   abaixo (coluna lateral, rodapé) não saltar quando o conteúdo entrar (CLS). Medido: 0,39 a 0,58 antes. */
+.lista-ferramentas:empty { min-height: 70vh; }
+#ferramenta:not(:has(> :not(noscript))) { min-height: 62vh; }

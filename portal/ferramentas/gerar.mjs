@@ -16,7 +16,7 @@ import { ícone } from '../scripts/núcleo/ícones.js';
 import { ferramentas, ferramentasProntas, conferirCatálogo } from '../dados/catálogo.js';
 import { categorias, tarefas } from '../dados/categorias.js';
 import { site } from '../dados/site.js';
-import { íconeVivo, imagemDoTema } from '../scripts/núcleo/ícone-animado.js';
+import { íconeVivo, arteViva } from '../scripts/núcleo/ícone-animado.js';
 import { gerarÍconesAnimados } from './ícones-animados.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -67,7 +67,7 @@ function páginaDeFerramenta(f) {
         <div class="ferramenta-topo__ações">
           <button class="ícone-botão favorito" type="button" data-favorito="${escapar(f.slug)}" aria-pressed="false" aria-label="Salvar nos favoritos">${ícone('marcador')}</button>
         </div>
-        ${imagemDoTema(`../../${arteDaCategoria(f.cat)}`, { classe: 'ferramenta-topo__arte', largura: 480, altura: 200, carregar: 'eager' })}
+        ${arteViva(`../../${arteDaCategoria(f.cat)}`, { classe: 'ferramenta-topo__arte', largura: 480, altura: 200, tipo: 'topo' })}
       </header>
 
       <div class="ferramenta-área">
