@@ -75,7 +75,9 @@ export async function abrirComPdfjsParaTexto(bytes) {
         const itens = [];
         for (const item of conteúdo.items) {
           const convertido = itemEmCoordenadasDaVista(item, viewport, pdfjs.Util);
-          if (convertido) itens.push(convertido);
+          // Fonte de largura fixa: a ocultação divide o trecho em partes iguais em vez de medir as letras.
+          const família = conteúdo.styles?.[item.fontName]?.fontFamily;
+          if (convertido) itens.push({ ...convertido, mono: família === 'monospace', serif: família === 'serif' });
         }
         return { itens, largura: viewport.width, altura: viewport.height };
       } finally {
