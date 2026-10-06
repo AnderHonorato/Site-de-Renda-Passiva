@@ -51,7 +51,7 @@ const TERMINAÇÕES_QUE_IMITAM_ARQUIVO = new Set(['zip', 'mov']);
 const SEGUNDO_NÍVEL = new Set(['com', 'org', 'net', 'gov', 'edu', 'co', 'ac', 'mil', 'ind', 'eco']);
 
 /** Caracteres invisíveis ou de controle e os que invertem o sentido do texto (esconder o fim do endereço). */
-const CARACTERES_ESTRANHOS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F​-‏‪-‮⁠-⁤⁦-⁩﻿]/;
+const CARACTERES_ESTRANHOS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u2069\uFEFF]/;
 
 /* ------------------------------------------------------------------ punycode (RFC 3492) */
 

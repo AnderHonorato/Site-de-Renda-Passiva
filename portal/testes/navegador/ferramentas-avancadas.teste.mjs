@@ -118,7 +118,7 @@ test('simulador de financiamento: simula, compara Price e SAC, valida e exporta 
       await página.waitForSelector('#resultado:not([hidden])');
       const csv = await baixar(página, '[data-arquivo="0"]');
       assert.equal(csv.nome, 'financiamento-price.csv');
-      const linhas = new TextDecoder().decode(csv.bytes).replace(/^﻿/, '').trim().split(/\r?\n/);
+      const linhas = new TextDecoder().decode(csv.bytes).replace(/^\uFEFF/, '').trim().split(/\r?\n/);
       assert.equal(linhas.length, 13);
       // Número com vírgula decimal sai entre aspas (CSV válido; o Excel em português lê como número).
       assert.equal(linhas[1], '1;"10661,85";"1200,00";"9461,85";"0,00";"110538,15"');
