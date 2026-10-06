@@ -52,6 +52,7 @@ export function nomeQuebrável(nome) {
  *   textoDeSolte: string,
  *   ícone?: string,
  *   únicoAgora?: () => boolean,
+ *   reordenar?: boolean,
  *   conferir: (arquivo: File, jáEscolhidos: ArquivoEscolhido[]) => Promise<Conferência> | Conferência,
  *   aoMudar?: (lista: ArquivoEscolhido[]) => void,
  * }} opções
@@ -60,7 +61,7 @@ export function prepararEscolhaDeArquivos(elemento, opções) {
   const {
     campo: nomeDoCampo = 'arquivo', aceitar = '', múltiplos = false, máximoDeArquivos = 1,
     rótuloDoBotão, rótuloParaTrocar = rótuloDoBotão, rótuloDaFoto, textoDoVazio, textoDeSolte,
-    ícone: nomeDoÍcone = 'documento', conferir, aoMudar = () => {}, únicoAgora = () => false,
+    ícone: nomeDoÍcone = 'documento', conferir, aoMudar = () => {}, únicoAgora = () => false, reordenar = false,
   } = opções;
   const formulário = elemento.querySelector('#formulário');
   const entrada = elemento.querySelector(`#campo-${nomeDoCampo}`);
@@ -140,6 +141,8 @@ export function prepararEscolhaDeArquivos(elemento, opções) {
           <span class="ferramenta-linha__resumo">${escapar([formatarBytes(item.tamanho), item.detalhe].filter(Boolean).join(' · '))}</span>
         </span>
         <span class="ferramenta-linha__fim">
+          ${reordenar && escolhidos.length > 1 ? `<button type="button" class="ícone-botão" data-mover="${i}" data-sentido="-1" aria-label="Mover ${nome} para cima"${travado || i === 0 ? ' disabled' : ''}>↑</button>
+          <button type="button" class="ícone-botão" data-mover="${i}" data-sentido="1" aria-label="Mover ${nome} para baixo"${travado || i === escolhidos.length - 1 ? ' disabled' : ''}>↓</button>` : ''}
           <button type="button" class="ícone-botão" data-tirar="${i}" aria-label="Tirar ${nome} da lista"${travado ? ' disabled' : ''}>${ícone('fechar')}</button>
         </span>`;
       return linha;
@@ -215,6 +218,22 @@ export function prepararEscolhaDeArquivos(elemento, opções) {
   entradaDaFoto?.addEventListener('change', aoEscolher(entradaDaFoto));
 
   lista.addEventListener('click', (evento) => {
+    const mover = evento.target.closest('[data-mover]');
+    if (mover && !travado) {
+      const de = Number(mover.dataset.mover);
+      const para = de + Number(mover.dataset.sentido);
+      if (para < 0 || para >= escolhidos.length) return;
+      rodada += 1;
+      const novos = [...escolhidos];
+      [novos[de], novos[para]] = [novos[para], novos[de]];
+      escolhidos = novos;
+      notificar();
+      // O foco acompanha o item movido; no limite da lista, passa para o outro botão do par.
+      const alvo = lista.querySelector(`[data-mover="${para}"][data-sentido="${mover.dataset.sentido}"]`)
+        ?? lista.querySelector(`[data-mover="${para}"]:not([disabled])`);
+      alvo?.focus();
+      return;
+    }
     const tirar = evento.target.closest('[data-tirar]');
     if (!tirar || travado) return;
     limparErros(formulário);
@@ -265,6 +284,10 @@ export function prepararEscolhaDeArquivos(elemento, opções) {
       botão.disabled = valor;
       if (botãoDaFoto) botãoDaFoto.disabled = valor;
       for (const tirar of lista.querySelectorAll('[data-tirar]')) tirar.toggleAttribute('disabled', valor);
+      for (const mover of lista.querySelectorAll('[data-mover]')) {
+        const destino = Number(mover.dataset.mover) + Number(mover.dataset.sentido);
+        mover.toggleAttribute('disabled', valor || destino < 0 || destino >= escolhidos.length);
+      }
     },
   };
 }
