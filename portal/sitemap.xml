@@ -40,6 +40,8 @@
   <url><loc>https://exemplo.invalid/portal/f/removedor-de-acentos/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/remover-linhas-duplicadas-de-texto/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/juntar-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/dividir-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/girar-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/estoque-minimo/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/calculadora-de-nps/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/custo-de-receita/</loc></url>
@@ -52,4 +54,7 @@
   <url><loc>https://exemplo.invalid/portal/f/area-de-paredes/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/calculadora-de-churrasco/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/margem-de-contribuicao/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/remover-paginas-do-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/extrair-paginas-do-pdf/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/organizar-pdf/</loc></url>
 </urlset>
