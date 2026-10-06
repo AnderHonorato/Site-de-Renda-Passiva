@@ -266,10 +266,10 @@ export const ferramentas = [
   },
   {
     id: 'F171', slug: 'recortar-pdf', nome: 'Recortar PDF', cat: 'pdf',
-    ícone: 'régua', tarefas: ['organizar'], status: 'planejada',
+    ícone: 'régua', tarefas: ['organizar'], status: 'pronta',
     resumo: 'Corta as margens ou uma área das páginas. O conteúdo cortado continua dentro do arquivo, só fica escondido.',
     problema: 'Tirar margens brancas, cabeçalhos ou deixar só um gráfico ou uma tabela da página.',
-    entra: 'Um PDF; você desenha o retângulo de corte na primeira página e aplica a todas ou a algumas.',
+    entra: 'Um PDF e quanto cortar em cima, à direita, embaixo e à esquerda (em mm, cm ou pontos); um desenho da primeira página mostra o que fica. Vale para todas as páginas ou só algumas.',
     processa: 'Ajusta a área visível de cada página (CropBox) com pdf-lib, no navegador. Para apagar de verdade o que ficou de fora, use a ferramenta de ocultar informações.',
     sai: 'PDF com a nova área visível.',
     exporta: ['baixar'], plano: 'gratuito', local: true,
