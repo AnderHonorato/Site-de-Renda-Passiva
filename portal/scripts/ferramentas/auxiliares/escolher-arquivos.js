@@ -55,7 +55,7 @@ export function nomeQuebrável(nome) {
  * @param {{
  *   campo: string, rótuloDoBotão: string, accept: string, múltiplo?: boolean, limite?: number,
  *   mensagemDeLimite?: string, rótuloDaLista: string, textoDoVazio: string, textoDeSolte: string,
- *   ícone?: string,
+ *   ícone?: string, soltar?: boolean,
  *   validar: (arquivo: File, começo: Uint8Array) => Promise<{erro?: string, extra?: string}>,
  *   aoMudar?: (itens: Item[]) => void,
  * }} opções
@@ -67,7 +67,7 @@ export function nomeQuebrável(nome) {
 export function montarEscolhaDeArquivos(elemento, opções) {
   const {
     campo: nomeDoCampo, rótuloDoBotão, accept, múltiplo = false, limite = 1, mensagemDeLimite = 'Limite de arquivos atingido.',
-    rótuloDaLista, textoDoVazio, textoDeSolte, ícone: nomeDoÍcone = 'documento', validar, aoMudar,
+    rótuloDaLista, textoDoVazio, textoDeSolte, ícone: nomeDoÍcone = 'documento', validar, aoMudar, soltar = true,
   } = opções;
 
   const formulário = elemento.querySelector('#formulário');
@@ -78,6 +78,7 @@ export function montarEscolhaDeArquivos(elemento, opções) {
   /** @type {Item[]} */
   let itens = [];
   let travada = false;
+  let visível = true;
 
   // A entrada de arquivo nativa não segue o tema; quem abre a escolha é um botão do portal.
   entrada.multiple = múltiplo;
@@ -121,8 +122,8 @@ export function montarEscolhaDeArquivos(elemento, opções) {
         </span>
       </div>`;
     }).join('');
-    lista.hidden = itens.length === 0;
-    vazio.hidden = itens.length > 0;
+    lista.hidden = !visível || itens.length === 0;
+    vazio.hidden = !visível || itens.length > 0;
   }
 
   /** A lista mudou: o arquivo gerado antes não corresponde mais a ela. */
@@ -190,7 +191,7 @@ export function montarEscolhaDeArquivos(elemento, opções) {
 
   // Arrastar e soltar em qualquer ponto da ferramenta.
   let profundidade = 0;
-  const temArquivos = (evento) => [...(evento.dataTransfer?.types ?? [])].includes('Files');
+  const temArquivos = (evento) => soltar && [...(evento.dataTransfer?.types ?? [])].includes('Files');
   elemento.addEventListener('dragenter', (evento) => {
     if (!temArquivos(evento)) return;
     evento.preventDefault();
@@ -202,7 +203,7 @@ export function montarEscolhaDeArquivos(elemento, opções) {
   const terminarArraste = () => {
     profundidade = 0;
     vazio.textContent = textoDoVazio;
-    vazio.hidden = itens.length > 0;
+    vazio.hidden = !visível || itens.length > 0;
   };
   elemento.addEventListener('dragleave', (evento) => {
     if (!temArquivos(evento)) return;
@@ -230,6 +231,12 @@ export function montarEscolhaDeArquivos(elemento, opções) {
     limpar,
     adicionar,
     botãoEscolher,
+    /** Mostra ou esconde o campo inteiro (botão, lista e aviso de vazio), para escolhas que dependem de outra. */
+    mostrar(valor) {
+      visível = valor;
+      campo.hidden = !valor;
+      desenhar();
+    },
     /** Liga e desliga a edição da lista: durante o processamento, ela não pode mudar. */
     travar(valor) {
       travada = valor;

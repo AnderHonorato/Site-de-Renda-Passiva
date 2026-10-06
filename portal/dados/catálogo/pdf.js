@@ -253,7 +253,7 @@ export const ferramentas = [
   },
   {
     id: 'F170', slug: 'marca-dagua-no-pdf', nome: "Marca d'água no PDF", cat: 'pdf',
-    ícone: 'estrela', tarefas: ['criar'], status: 'planejada',
+    ícone: 'estrela', tarefas: ['criar'], status: 'pronta',
     resumo: "Carimba um texto ou uma imagem em todas as páginas, como RASCUNHO ou CONFIDENCIAL, com a opacidade que você quiser.",
     problema: 'Identificar um PDF como rascunho, cópia ou confidencial antes de compartilhar.',
     entra: "Um PDF e um texto ou imagem para a marca d'água, o ângulo, o tamanho e a opacidade.",

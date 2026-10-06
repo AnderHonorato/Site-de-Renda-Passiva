@@ -228,6 +228,21 @@ export function paraEspaçoDoPdf(g, vx, vy) {
   }
 }
 
+/**
+ * A mesma conversão de `paraEspaçoDoPdf`, como matriz [a, b, c, d, e, f] do `cm`,
+ * para compor com a matriz de uma imagem girada.
+ * @param {ReturnType<typeof geometriaDaPágina>} g
+ * @returns {number[]}
+ */
+export function matrizVisualParaPdf(g) {
+  switch (g.rot) {
+    case 90: return [0, 1, -1, 0, g.x + g.w, g.y];
+    case 180: return [-1, 0, 0, -1, g.x + g.w, g.y + g.h];
+    case 270: return [0, -1, 1, 0, g.x, g.y + g.h];
+    default: return [1, 0, 0, 1, g.x, g.y];
+  }
+}
+
 /* ------------------------------------------- escrever na página (camadas) */
 
 /**

@@ -65,6 +65,17 @@ export function matrizesDeTexto(documento, índice) {
     .map((m) => m.slice(1, 7).map(Number));
 }
 
+/** Opacidades (`ca`) dos estados gráficos da página, em ordem de nome. */
+export function opacidadesDaPágina(documento, índice) {
+  const recursos = documento.getPage(índice).node.Resources();
+  const estados = recursos?.lookup(PDFName.of('ExtGState'));
+  if (!estados) return [];
+  return estados.entries()
+    .sort(([a], [b]) => String(a).localeCompare(String(b)))
+    .map(([, valor]) => documento.context.lookup(valor).lookup(PDFName.of('ca'))?.asNumber())
+    .filter((n) => n !== undefined);
+}
+
 /** Caixa de um tipo ("CropBox", "MediaBox"…) como [x1, y1, x2, y2], ou null. */
 export function caixaDaPágina(documento, índice, nome) {
   const matriz = documento.getPage(índice).node.lookup(PDFName.of(nome));
