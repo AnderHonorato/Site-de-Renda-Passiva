@@ -65,5 +65,8 @@
   <url><loc>https://exemplo.invalid/portal/f/recortar-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/comparar-pdf/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/scanner-de-qr-code/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/texto-para-fala/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/converter-planilha/</loc></url>
+  <url><loc>https://exemplo.invalid/portal/f/zip/</loc></url>
   <url><loc>https://exemplo.invalid/portal/f/simulador-de-financiamento/</loc></url>
 </urlset>
