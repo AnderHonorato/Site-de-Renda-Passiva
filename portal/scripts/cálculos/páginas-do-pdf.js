@@ -53,7 +53,8 @@ export function mensagemDeErro(erro, dados = {}) {
     tudo_removido: 'Você marcou todas as páginas. Deixe pelo menos uma página no PDF.',
     nenhuma_marcada: 'Nenhuma página foi marcada para remover.',
     saída_grande_demais: 'As partes passariam de 400 MB juntas. Use menos partes (mais páginas por arquivo) ou divida em etapas.',
-    muitos_arquivos: `Isso daria mais de ${número(dados.limiteDeArquivos ?? 0)} arquivos. Use intervalos maiores.`,
+    tamanho_inválido: 'Informe quantas páginas cada arquivo terá, com um número inteiro a partir de 1.',
+    muitos_arquivos:`Isso daria mais de ${número(dados.limiteDeArquivos ?? 0)} arquivos. Use intervalos maiores.`,
     cancelado: 'Operação cancelada. Nenhum arquivo foi gerado.',
     falha_ao_montar: 'Não foi possível montar o novo PDF. O arquivo pode estar danificado.',
   };

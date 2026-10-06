@@ -142,7 +142,7 @@ test('abrirPdf: vazio, falso, corrompido, protegido, sem páginas e acima do lim
 test('todas as mensagens existem em português e a desconhecida cai num texto geral', () => {
   for (const código of ['arquivo_vazio', 'arquivo_nao_pdf', 'arquivo_grande_demais', 'pdf_protegido', 'pdf_corrompido', 'pdf_sem_páginas',
     'limite_de_páginas', 'sem_arquivo', 'páginas_vazio', 'texto_longo', 'páginas_inválido', 'página_zero', 'fora_do_total',
-    'intervalo_invertido', 'seleção_grande', 'tudo_removido', 'nenhuma_marcada', 'saída_grande_demais', 'muitos_arquivos',
+    'intervalo_invertido', 'seleção_grande', 'tudo_removido', 'nenhuma_marcada', 'tamanho_inválido', 'saída_grande_demais', 'muitos_arquivos',
     'cancelado', 'falha_ao_montar']) {
     assert.notEqual(mensagemDeErro(código, { nome: 'x.pdf', limite: 3, total: 3, trecho: '1', de: '3', até: '2' }), 'Não foi possível processar o PDF.', código);
   }
