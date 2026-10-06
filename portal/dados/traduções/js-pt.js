@@ -40,6 +40,10 @@ export default Object.freeze({
     verCatálogoCompleto: 'Ver o catálogo completo',
     contagemCategoria: '{prontas} de {total} prontas',
   },
+  notificações: {
+    rótulo: 'Novidades',
+    rótuloComNovas: '{n} novidade não lida|{n} novidades não lidas',
+  },
   proteção: {
     cópiaBloqueada: 'O conteúdo deste site é protegido contra cópia. Os resultados das ferramentas podem ser copiados normalmente.',
     textoNaÁreaDeTransferência: 'Conteúdo protegido. Para ler e usar as ferramentas, acesse {endereço}',

@@ -22,6 +22,10 @@ export default Object.freeze({
     menuVerCatálogo: 'Ver o catálogo completo',
     buscar: 'Buscar ferramenta',
     buscaTopoMarcador: 'Buscar ferramenta…',
+    notificações: 'Novidades',
+    notificaçõesTítulo: 'Novidades',
+    notificaçõesMarcarTodas: 'Marcar todas como lidas',
+    notificaçõesVazio: 'Nenhuma novidade por enquanto.',
     temaRótulo: 'Tema escuro',
     navPrincipal: 'Navegação principal',
     navCelular: 'Navegação no celular',
@@ -104,6 +108,10 @@ export default Object.freeze({
     favoritos: 'Favoritos',
     abertas: 'Abertas recentemente',
     limparHistórico: 'Limpar histórico',
+  },
+
+  notificações: {
+    novaFerramenta: 'Nova ferramenta: {item}',
   },
 
   erro404: {

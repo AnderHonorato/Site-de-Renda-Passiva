@@ -5,6 +5,7 @@ import { ligarÍconesVivos } from './ícone-animado.js';
 import { trocarTemaComTransição } from './transição-de-tema.js';
 import { ligarBuscaDoTopo } from './busca-do-topo.js';
 import { ligarAntiCópia } from './anti-cópia.js';
+import { ligarNotificações } from './notificações.js';
 
 function ligarMenuDeCategorias() {
   const gatilho = document.getElementById('abrir-categorias');
@@ -108,6 +109,7 @@ isolarBloco('atalho-de-busca', ligarAtalhoDeBusca);
 isolarBloco('busca-do-topo-ligar', ligarBuscaDoTopo);
 isolarBloco('arte-do-rodapé', ligarArteDoRodapé);
 isolarBloco('anti-cópia', ligarAntiCópia);
+isolarBloco('notificações', ligarNotificações);
 // O aviso de bloqueador só é baixado nas páginas geradas com anúncios ativos.
 if (document.documentElement.dataset.anuncios === 'sim') {
   isolarBloco('anti-bloqueador', () => carregarBloco(new URL('./anti-bloqueador.js', import.meta.url).href).then((m) => m.ligarAntiBloqueador()));

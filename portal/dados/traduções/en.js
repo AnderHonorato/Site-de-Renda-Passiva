@@ -16,6 +16,10 @@ export default Object.freeze({
     menuVerCatálogo: 'See the full catalog',
     buscar: 'Search tools',
     buscaTopoMarcador: 'Search tools…',
+    notificações: 'What\'s new',
+    notificaçõesTítulo: 'What\'s new',
+    notificaçõesMarcarTodas: 'Mark all as read',
+    notificaçõesVazio: 'Nothing new for now.',
     temaRótulo: 'Dark theme',
     navPrincipal: 'Main navigation',
     navCelular: 'Mobile navigation',
@@ -98,6 +102,10 @@ export default Object.freeze({
     favoritos: 'Favorites',
     abertas: 'Recently opened',
     limparHistórico: 'Clear history',
+  },
+
+  notificações: {
+    novaFerramenta: 'New tool: {item}',
   },
 
   erro404: {

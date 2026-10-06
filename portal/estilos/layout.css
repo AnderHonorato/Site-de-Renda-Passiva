@@ -298,3 +298,43 @@
 .tema-pílula[data-forçar="claro"] .tema-pílula__estrelas i { animation-play-state: paused; }
 /* A bancada do rodapé só se mexe enquanto está na tela (marcado por scripts/núcleo/cabeçalho.js). */
 .rodapé__arte:not([data-visível]) * { animation-play-state: paused; }
+
+/* ---------- Sino de notificações ---------- */
+.notificações { position: relative; display: inline-flex; }
+.notificações__botão { position: relative; }
+.notificações__contador {
+  position: absolute; top: -4px; right: -4px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px;
+  display: grid; place-items: center; background: var(--acento); color: var(--acento-sobre, #1a1a1a);
+  font-size: 10px; font-weight: 600; line-height: 1; border: 2px solid var(--superfície);
+}
+.notificações__contador[hidden] { display: none; }
+.notificações__botão[data-novas="sim"] svg { animation: sino-toca 1.4s ease-in-out 1; transform-origin: 50% 12%; }
+@keyframes sino-toca { 0%, 100% { transform: rotate(0); } 15% { transform: rotate(14deg); } 30% { transform: rotate(-12deg); } 45% { transform: rotate(8deg); } 60% { transform: rotate(-5deg); } 75% { transform: rotate(2deg); } }
+.notificações__painel {
+  position: absolute; right: 0; top: calc(100% + 10px); z-index: 75; width: min(380px, calc(100vw - 24px));
+  max-height: min(70svh, 520px); overflow-y: auto;
+  background: var(--superfície); border: 1px solid var(--borda); border-radius: var(--raio-g); box-shadow: var(--sombra-3);
+}
+.notificações__painel[hidden] { display: none; }
+.notificações__topo { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 14px; background: var(--superfície); border-bottom: 1px solid var(--borda); }
+.notificações__lista { list-style: none; margin: 0; padding: 6px; display: grid; gap: 2px; }
+.notificações__item { position: relative; display: grid; gap: 2px; padding: 10px 12px 10px 22px; border-radius: var(--raio); color: inherit; text-decoration: none; }
+a.notificações__item:hover { background: var(--superfície-3); }
+.notificações__item b { font-size: var(--t-sm); font-weight: 600; }
+.notificações__item span { font-size: var(--t-sm); color: var(--tinta-média); }
+.notificações__item small { font-size: var(--t-xs); color: var(--tinta-suave); }
+.notificações__item[data-nova="sim"]::before { content: ""; position: absolute; left: 9px; top: 15px; width: 7px; height: 7px; border-radius: 50%; background: var(--marca); }
+.notificações__vazio { margin: 0; padding: 22px 16px; text-align: center; color: var(--tinta-suave); font-size: var(--t-sm); }
+@media (max-width: 720px) {
+  .notificações { position: static; }
+  .notificações__painel { position: fixed; left: 12px; right: 12px; top: 62px; width: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .notificações__botão[data-novas="sim"] svg { animation: none; } }
+
+/* Em telas muito estreitas o cabeçalho não comporta idioma, busca, sino e tema juntos: o seletor de idioma
+   do topo some (o do rodapé continua) e os botões ficam mais juntos. */
+@media (max-width: 420px) {
+  .topo__fim .idioma--topo { display: none; }
+  .topo__fim { gap: 4px; }
+}
+.notificações__item span { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

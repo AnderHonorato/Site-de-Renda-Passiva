@@ -18,6 +18,7 @@ import { categorias, tarefas } from '../dados/categorias.js';
 import { site } from '../dados/site.js';
 import { íconeVivo, arteViva } from '../scripts/núcleo/ícone-animado.js';
 import { gerarÍconesAnimados } from './ícones-animados.mjs';
+import { lerRegistro, atualizarRegistro, montarFeed } from './lançamentos.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -194,6 +195,19 @@ async function principal() {
   await rm(join(RAIZ, 'en'), { recursive: true, force: true });
   await gerarÍconesAnimados();
 
+  // Lançamentos: registra as ferramentas que ficaram prontas desde a última geração e monta o feed do sino.
+  const hoje = new Date().toISOString().slice(0, 10);
+  const registroAtual = await lerRegistro(join(RAIZ, 'dados', 'lançamentos.json'));
+  const { registro, novos, mudou } = atualizarRegistro(registroAtual, ferramentasProntas.map((f) => f.slug), hoje);
+  if (mudou) {
+    await escrever('dados/lançamentos.json', `${JSON.stringify(registro, null, 2)}\n`);
+    if (novos.length) console.log(`Novas ferramentas desde a última geração (viram novidade no sino): ${novos.join(', ')}`);
+  }
+  const feed = montarFeed(registro, contextoPt.ferramentasProntas, contextoEn.ferramentasProntas, {
+    pt: (nome) => contextoPt.t('notificações.novaFerramenta', { item: nome }),
+    en: (nome) => contextoEn.t('notificações.novaFerramenta', { item: nome }),
+  }, hoje);
+
   const arquivos = [
     ...páginasDoIdioma(contextoPt),
     ...páginasDoIdioma(contextoEn),
@@ -201,6 +215,7 @@ async function principal() {
     ['recursos/ícone.svg', íconeDoSite()],
     ['vitrine/vitrine-números.js', númerosDaVitrine()],
     ['sitemap.xml', sitemap()],
+    ['dados/novidades.json', `${JSON.stringify(feed)}\n`],
     ['robots.txt', 'User-agent: *\nAllow: /\nDisallow: /salvos.html\n'],
     ...ferramentasProntas.map((f) => [`f/${f.slug}/index.html`, páginaDeFerramenta(f)]),
   ];

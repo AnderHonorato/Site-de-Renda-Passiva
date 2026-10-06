@@ -73,6 +73,17 @@
         <input class="busca-topo__campo" id="busca-topo-campo" name="busca" type="search" tabindex="-1" role="combobox" aria-expanded="false" aria-controls="busca-topo-sugestões" aria-autocomplete="list" aria-label="Buscar ferramenta" placeholder="Buscar ferramenta…">
         <div class="sugestões busca-topo__sugestões" id="busca-topo-sugestões" role="listbox" hidden></div>
       </form>
+      <span class="notificações" id="notificações">
+        <button class="ícone-botão notificações__botão" type="button" id="abrir-notificações" aria-expanded="false" aria-controls="painel-notificações" aria-label="Novidades"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14l1.5-2Z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="notificações__contador" hidden></span></button>
+        <div class="notificações__painel" id="painel-notificações" hidden>
+          <div class="notificações__topo">
+            <b>Novidades</b>
+            <button class="botão botão--texto" type="button" data-notificações="marcar-todas" hidden>Marcar todas como lidas</button>
+          </div>
+          <ul class="notificações__lista"></ul>
+          <p class="notificações__vazio" hidden>Nenhuma novidade por enquanto.</p>
+        </div>
+      </span>
       <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="Tema escuro">
         <span class="tema-pílula__estrelas" aria-hidden="true"><i></i><i></i><i></i></span>
         <svg class="tema-pílula__astro" viewBox="0 0 24 24" aria-hidden="true" focusable="false">

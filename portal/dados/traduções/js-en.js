@@ -36,6 +36,10 @@ export default Object.freeze({
     verCatálogoCompleto: 'See the full catalog',
     contagemCategoria: '{prontas} of {total} ready',
   },
+  notificações: {
+    rótulo: 'What\'s new',
+    rótuloComNovas: '{n} unread update|{n} unread updates',
+  },
   proteção: {
     cópiaBloqueada: 'This site\'s content is protected against copying. Tool results can be copied normally.',
     textoNaÁreaDeTransferência: 'Protected content. To read and use the tools, visit {endereço}',

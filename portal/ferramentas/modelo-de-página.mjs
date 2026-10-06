@@ -96,6 +96,17 @@ function cabeçalho(ctx, base, atual, alternativas) {
         <input class="busca-topo__campo" id="busca-topo-campo" name="busca" type="search" tabindex="-1" role="combobox" aria-expanded="false" aria-controls="busca-topo-sugestões" aria-autocomplete="list" aria-label="${escapar(t('moldura.buscar'))}" placeholder="${escapar(t('moldura.buscaTopoMarcador'))}">
         <div class="sugestões busca-topo__sugestões" id="busca-topo-sugestões" role="listbox" hidden></div>
       </form>
+      <span class="notificações" id="notificações">
+        <button class="ícone-botão notificações__botão" type="button" id="abrir-notificações" aria-expanded="false" aria-controls="painel-notificações" aria-label="${escapar(t('moldura.notificações'))}">${ícone('sino')}<span class="notificações__contador" hidden></span></button>
+        <div class="notificações__painel" id="painel-notificações" hidden>
+          <div class="notificações__topo">
+            <b>${escapar(t('moldura.notificaçõesTítulo'))}</b>
+            <button class="botão botão--texto" type="button" data-notificações="marcar-todas" hidden>${escapar(t('moldura.notificaçõesMarcarTodas'))}</button>
+          </div>
+          <ul class="notificações__lista"></ul>
+          <p class="notificações__vazio" hidden>${escapar(t('moldura.notificaçõesVazio'))}</p>
+        </div>
+      </span>
       <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="${escapar(t('moldura.temaRótulo'))}">
         <span class="tema-pílula__estrelas" aria-hidden="true"><i></i><i></i><i></i></span>
         <svg class="tema-pílula__astro" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
