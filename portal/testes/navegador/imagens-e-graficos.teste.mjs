@@ -336,3 +336,121 @@ test('criador de gráficos: cria barras, linhas e pizza, valida, exporta PNG, SV
     await contexto.close();
   }
 });
+
+/* ------------------------------------------------------------------ criar GIF */
+
+/** Decodifica um GIF com o decodificador do próprio Chromium (WebCodecs) e devolve quadros, repetição, tamanho e a cor de pontos do primeiro quadro. */
+async function lerGifNoNavegador(página, bytes, pontos = []) {
+  return página.evaluate(async ([base64, lista]) => {
+    const dados = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+    const decodificador = new ImageDecoder({ data: dados, type: 'image/gif' });
+    await decodificador.tracks.ready;
+    const faixa = decodificador.tracks.selectedTrack;
+    const { image } = await decodificador.decode({ frameIndex: 0 });
+    const tela = new OffscreenCanvas(image.displayWidth, image.displayHeight);
+    const c = tela.getContext('2d');
+    c.drawImage(image, 0, 0);
+    const cores = lista.map(([fx, fy]) => [...c.getImageData(Math.floor(fx * (image.displayWidth - 1)), Math.floor(fy * (image.displayHeight - 1)), 1, 1).data]);
+    const duração = image.duration;
+    image.close();
+    return { quadros: faixa.frameCount, repetições: faixa.repetitionCount, largura: tela.width, altura: tela.height, cores, duração };
+  }, [bytes.toString('base64'), pontos]);
+}
+
+test('criar GIF: monta o GIF de várias imagens, na ordem escolhida, confere no decodificador do navegador e recusa o que não é imagem', { skip: pular }, async () => {
+  for (const [largura, altura, tema] of [[390, 844, 'light'], [320, 640, 'dark'], [1280, 900, 'light']]) {
+    const { contexto, página, erros, externas } = await abrir('criar-gif', { viewport: { width: largura, height: altura }, colorScheme: tema });
+    await página.click('button[type="submit"]');
+    assert.match(await erroDe(página, 'arquivo'), /pelo menos 2 imagens/);
+
+    const horizontal = await imagemDeTeste(página, 800, 600);
+    const vertical = await imagemDeTeste(página, 300, 400, 'image/png');
+    const quadrada = await imagemDeTeste(página, 200, 200, 'image/png');
+    await página.setInputFiles('#campo-arquivo', [arquivo('a-horizontal.jpg', 'image/jpeg', horizontal), arquivo('b-vertical.png', 'image/png', vertical), arquivo('c-quadrada.png', 'image/png', quadrada)]);
+    await página.waitForFunction(() => document.querySelectorAll('[role="listitem"]').length === 3);
+    assert.equal(await semRolagemLateral(página), true, `sem rolagem lateral em ${largura}px`);
+
+    if (largura === 390) {
+      // Reordenar: mover a primeira para baixo troca a ordem, e o primeiro botão "para cima" da lista fica desligado.
+      assert.equal(await página.locator('[data-mover="0"][data-sentido="-1"]').isDisabled(), true);
+      await página.click('[data-mover="0"][data-sentido="1"]');
+      assert.match(await página.locator('[role="listitem"]').first().innerText(), /b-vertical\.png/);
+      await página.click('[data-mover="1"][data-sentido="-1"]');
+      assert.match(await página.locator('[role="listitem"]').first().innerText(), /a-horizontal\.jpg/);
+
+      // Opções inválidas vão para o campo certo, antes de abrir qualquer imagem.
+      await página.fill('#campo-largura', '5');
+      await página.click('button[type="submit"]');
+      assert.match(await erroDe(página, 'largura'), /entre 16 e 1\.000/);
+      await página.fill('#campo-largura', '480');
+      await página.fill('#campo-atraso', '5');
+      await página.click('button[type="submit"]');
+      assert.match(await erroDe(página, 'atraso'), /entre 20 e 10\.000/);
+      await página.fill('#campo-atraso', '200');
+
+      // GIF de verdade: 3 imagens com ida e volta = 4 quadros de 480 × 360 (a primeira é 4:3).
+      await página.check('#campo-idaEVolta');
+      await página.click('button[type="submit"]');
+      await página.waitForSelector('#resultado:not([hidden])', { timeout: 60_000 });
+      assert.match(await página.locator('#resultado').innerText(), /GIF pronto/);
+      assert.match(await página.locator('#resultado').innerText(), /4 quadros de 480 × 360 px/);
+      const prévia = página.locator('figure img');
+      await prévia.waitFor();
+      assert.equal(await prévia.evaluate((img) => img.complete && img.naturalWidth), 480);
+      const gif = await baixar(página, '[data-arquivo="0"]');
+      assert.equal(gif.nome, 'a-horizontal.gif');
+      assert.equal(gif.bytes.subarray(0, 6).toString('latin1'), 'GIF89a');
+      const lido = await lerGifNoNavegador(página, gif.bytes, [[0.1, 0.1], [0.9, 0.1], [0.1, 0.9], [0.9, 0.9]]);
+      assert.deepEqual([lido.quadros, lido.largura, lido.altura, lido.repetições], [4, 480, 360, Infinity]);
+      assert.deepEqual(lido.cores.map(predominante), ['vermelho', 'verde', 'azul', 'amarelo']);
+      assert.equal(lido.duração, 200_000, 'microssegundos: 200 ms');
+      await capturar(página, `criar-gif-${largura}-${tema}.png`);
+
+      // Repetir uma vez: o navegador lê contagem 0 (não há extensão de repetição).
+      await página.selectOption('#campo-repetições', '1');
+      await página.click('button[type="submit"]');
+      await página.waitForFunction(() => document.querySelector('#resultado dd, #resultado li')?.innerText?.length > 0 && /Uma vez/.test(document.querySelector('#resultado').innerText));
+      const uma = await lerGifNoNavegador(página, await baixar(página, '[data-arquivo="0"]').then((a) => a.bytes));
+      assert.equal(uma.repetições, 0);
+
+      // PNG com transparência e fundo transparente: o canto vazado sai com alfa 0.
+      const transparente = await página.evaluate(async () => {
+        const tela = document.createElement('canvas'); tela.width = 100; tela.height = 100;
+        const c = tela.getContext('2d'); c.fillStyle = '#e11d48'; c.fillRect(30, 30, 40, 40);
+        const blob = await new Promise((r) => tela.toBlob(r, 'image/png'));
+        let t = ''; for (const b of new Uint8Array(await blob.arrayBuffer())) t += String.fromCharCode(b); return btoa(t);
+      });
+      await página.click('[data-tirar="0"]');
+      await página.click('[data-tirar="0"]');
+      await página.click('[data-tirar="0"]');
+      await página.setInputFiles('#campo-arquivo', [arquivo('t1.png', 'image/png', Buffer.from(transparente, 'base64')), arquivo('t2.png', 'image/png', Buffer.from(transparente, 'base64'))]);
+      await página.waitForFunction(() => document.querySelectorAll('[role="listitem"]').length === 2);
+      await página.selectOption('#campo-fundo', 'transparente');
+      await página.selectOption('#campo-repetições', 'infinito');
+      await página.click('button[type="submit"]');
+      await página.waitForFunction(() => /2 quadros de 480 × 480/.test(document.querySelector('#resultado')?.innerText ?? ''), null, { timeout: 60_000 });
+      const vazado = await lerGifNoNavegador(página, (await baixar(página, '[data-arquivo="0"]')).bytes, [[0.02, 0.02], [0.5, 0.5]]);
+      assert.equal(vazado.cores[0][3], 0, 'o canto é transparente');
+      assert.deepEqual(vazado.cores[1].slice(0, 3), [225, 29, 72]);
+
+      // Entradas hostis: PDF com nome de imagem, arquivo vazio, cabeçalho de 900 megapixels e lista cheia.
+      await página.setInputFiles('#campo-arquivo', arquivo('relatório.png', 'image/png', Buffer.from('%PDF-1.7\n1 0 obj\n<<>>\nendobj\n')));
+      assert.match(await erroDe(página, 'arquivo'), /PDF.*não uma imagem/);
+      await página.setInputFiles('#campo-arquivo', arquivo('vazia.png', 'image/png', Buffer.alloc(0)));
+      assert.match(await erroDe(página, 'arquivo'), /vazio/);
+      await página.setInputFiles('#campo-arquivo', arquivo('gigante.png', 'image/png', Buffer.from(pngSólido(30_000, 30_000, { linhas: 1 }))));
+      assert.match(await erroDe(página, 'arquivo'), /900 megapixels/);
+      const muitas = Array.from({ length: 62 }, (_, i) => arquivo(`q${i}.png`, 'image/png', Buffer.from(pngSólido(8 + i, 8))));
+      await página.setInputFiles('#campo-arquivo', muitas);
+      await página.waitForFunction(() => document.querySelectorAll('[role="listitem"]').length === 60, null, { timeout: 60_000 });
+      assert.match(await erroDe(página, 'arquivo'), /Limite de 60 arquivos/);
+      // Com 60 quadros de proporção estranha e largura grande, o orçamento de pixels recusa antes de abrir as imagens.
+      await página.fill('#campo-largura', '1000');
+      await página.click('button[type="submit"]');
+      assert.match(await erroDe(página, 'largura'), /24 milhões/);
+    }
+    assert.deepEqual(erros, []);
+    assert.deepEqual(externas, [], 'nenhuma requisição para fora');
+    await contexto.close();
+  }
+});
