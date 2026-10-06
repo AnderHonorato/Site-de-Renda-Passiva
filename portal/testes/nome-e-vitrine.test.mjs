@@ -74,7 +74,8 @@ test('a vitrine não promete o que o site não tem', () => {
     assert.doesNotMatch(tudo, /\bpix\b/i, `Pix em ${idioma}`);
     assert.doesNotMatch(tudo, /an[úu]nci|\bads?\b/i, `anúncio em ${idioma}`);
     assert.doesNotMatch(tudo, /\b(seis|six)\b/i, `contagem fixa de áreas em ${idioma}`);
-    assert.doesNotMatch(tudo, /\b49\b/, `número antigo em ${idioma}`);
+    // 49 era o número fixo antigo da vitrine; quando o catálogo de fato tem 49 prontas, o número é o certo.
+    if (ferramentasProntas.length !== 49) assert.doesNotMatch(tudo, /\b49\b/, `número antigo em ${idioma}`);
   }
 });
 
