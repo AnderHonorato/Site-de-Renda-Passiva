@@ -177,7 +177,7 @@ export const ferramentas = [
   },
   {
     id: 'F065', slug: 'extrair-texto-de-pdf', nome: 'Extrair texto do PDF', cat: 'pdf',
-    ícone: 'documento', tarefas: ['analisar'], status: 'planejada',
+    ícone: 'documento', tarefas: ['analisar'], status: 'pronta',
     resumo: 'Puxa o texto de um PDF para copiar ou editar, página por página. PDF escaneado precisa de OCR antes.',
     problema: 'Copiar o conteúdo de um PDF sem digitar tudo de novo.',
     entra: 'Um PDF e, se quiser, as páginas desejadas.',
