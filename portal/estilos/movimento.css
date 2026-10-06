@@ -120,3 +120,31 @@
   transform-origin: top center; animation: tt-gota 640ms ease-in-out infinite alternate;
 }
 @keyframes tt-gota { from { transform: scaleY(.45); } to { transform: scaleY(1.25); } }
+
+/* ---------- Respostas ao passar o mouse ----------
+   Só em aparelhos com mouse e sem "reduzir movimento"; só transform e opacity, que não pedem
+   recálculo de layout. Cada área responde de um jeito, para o site parecer vivo sem ficar barulhento. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ferramenta-linha, .categoria-cartão, .intenções__lista button, .relacionadas a, .acesso-rápido a { transition-property: transform, border-color, background-color, box-shadow, color; transition-duration: .22s; transition-timing-function: var(--curva-mola, ease); }
+  .ferramenta-linha:hover { transform: translateY(-2px); }
+  .ferramenta-linha__ícone, .ferramenta-linha__seta, .favorito, .categoria-cartão__ícone { transition: transform .26s var(--curva-mola, ease), color .15s ease, background-color .15s ease; }
+  .ferramenta-linha:hover .ferramenta-linha__ícone { transform: rotate(-7deg) scale(1.1); }
+  .ferramenta-linha:hover .ferramenta-linha__seta { transform: translateX(4px); }
+  .favorito:hover { transform: scale(1.18) rotate(-6deg); }
+  .favorito:active { transform: scale(.92); }
+
+  .categoria-cartão:hover { transform: translateY(-3px); }
+  .categoria-cartão__arte img { transition: transform .5s var(--curva-mola, ease); }
+  .categoria-cartão:hover .categoria-cartão__arte img { transform: scale(1.08); }
+  .categoria-cartão:hover .categoria-cartão__ícone { transform: rotate(8deg) scale(1.12); }
+
+  .intenções__lista button:hover { transform: translateY(-2px) rotate(-1deg); }
+  .relacionadas a:hover, .acesso-rápido a:hover { transform: translateX(3px); }
+
+  .ícone-botão:hover { transform: translateY(-1px) scale(1.06); }
+  .ícone-botão:active, .botão:active { transform: scale(.95); }
+  .ícone-botão { transition-property: transform, background-color, color, border-color; }
+
+  .rodapé a { transition: transform .18s ease, color .15s ease; display: inline-block; }
+  .rodapé li a:hover { transform: translateX(3px); }
+}
