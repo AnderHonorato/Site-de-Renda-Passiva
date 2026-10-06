@@ -1,2 +1,2 @@
 // Gerado por ferramentas/gerar.mjs a partir do catálogo. Não edite à mão.
-export const números = Object.freeze({ prontas: 47, catálogo: 208, categorias: 17 });
+export const números = Object.freeze({ prontas: 52, catálogo: 208, categorias: 17 });
