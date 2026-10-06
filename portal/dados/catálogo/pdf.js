@@ -93,7 +93,7 @@ export const ferramentas = [
   // -------------------------------------------------------------- converter para PDF
   {
     id: 'F158', slug: 'jpg-para-pdf', nome: 'JPG para PDF', cat: 'pdf',
-    ícone: 'imagem', tarefas: ['converter'], status: 'planejada',
+    ícone: 'imagem', tarefas: ['converter'], status: 'pronta',
     resumo: 'Transforma fotos e imagens (JPG, PNG) em um PDF, uma por página, no tamanho de papel que você escolher.',
     problema: 'Mandar várias fotos de documentos como um arquivo só.',
     entra: 'Imagens JPG ou PNG, a ordem, o tamanho da página (A4, carta ou o da imagem) e a margem.',
