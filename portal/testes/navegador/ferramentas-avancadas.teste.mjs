@@ -359,3 +359,65 @@ test('converter planilha: cola CSV, converte para JSON, XLSX e CSV, lê arquivo 
     await contexto.close();
   }
 });
+
+/* ------------------------------------------------------------------ ZIP */
+
+test('ZIP: compacta vários arquivos, abre um ZIP, recusa caminho perigoso e baixa só o que foi marcado', { skip: pular }, async () => {
+  const { criarZip, lerZip, extrairEntrada } = await import('../../scripts/cálculos/zip.js');
+  const codificador = new TextEncoder();
+
+  for (const [largura, altura, tema] of [[390, 844, 'light'], [320, 640, 'dark'], [1280, 900, 'light']]) {
+    const { contexto, página, erros, externas } = await abrir('zip', { viewport: { width: largura, height: altura }, colorScheme: tema });
+    await página.click('button[type="submit"]');
+    assert.match(await erroDe(página, 'arquivo'), /Escolha pelo menos um arquivo/);
+
+    const texto = 'linha repetida para comprimir. '.repeat(300);
+    await página.setInputFiles('#campo-arquivo', [
+      { name: 'relatório.txt', mimeType: 'text/plain', buffer: Buffer.from(texto) },
+      { name: 'dados.csv', mimeType: 'text/csv', buffer: Buffer.from('a;b' + QUEBRA + '1;2') },
+      { name: 'relatório.txt', mimeType: 'text/plain', buffer: Buffer.from(texto + 'x') },
+    ]);
+    await página.waitForSelector('[role="listitem"]');
+    await página.click('button[type="submit"]');
+    await página.waitForSelector('#resultado:not([hidden])', { timeout: 20000 });
+    assert.match(await página.locator('#resultado').innerText(), /ZIP com 3 arquivos/);
+    assert.equal(await semRolagemLateral(página), true, `sem rolagem lateral em ${largura}px`);
+    await capturar(página, `zip-${largura}-${tema}.png`);
+
+    if (largura === 390) {
+      const baixado = await baixar(página, '[data-arquivo="0"]');
+      assert.equal(baixado.nome, 'arquivos.zip');
+      const bytes = new Uint8Array(baixado.bytes);
+      const { entradas } = lerZip(bytes);
+      assert.deepEqual(entradas.map((e) => e.nome), ['relatório.txt', 'dados.csv', 'relatório (2).txt']);
+      assert.equal(new TextDecoder().decode(await extrairEntrada(bytes, entradas[1])), 'a;b' + QUEBRA + '1;2');
+
+      // Abrir um ZIP com uma entrada de caminho perigoso (nome trocado por ../ no cabeçalho, mesmo tamanho).
+      const bom = await criarZip([
+        { nome: 'ab/leia-me.txt', bytes: codificador.encode('olá do zip') },
+        { nome: 'bom.txt', bytes: codificador.encode('segundo arquivo') },
+      ], { comprimir: false });
+      const adulterado = Buffer.from(bom.bytes).toString('latin1').split('ab/leia-me.txt').join('../leia-me.txt');
+      await página.selectOption('#campo-modo', 'abrir');
+      await página.setInputFiles('#campo-arquivo', { name: 'hostil.zip', mimeType: 'application/zip', buffer: Buffer.from(adulterado, 'latin1') });
+      await página.waitForFunction(() => /no ZIP/.test(document.querySelector('#resultado')?.innerText ?? ''));
+      const lista = await página.locator('#resultado').innerText();
+      assert.match(lista, /2 arquivos no ZIP/);
+      assert.match(lista, /recusado: caminho suspeito/);
+      assert.match(lista, /Nada foi extraído ainda/);
+      assert.equal(await página.locator('input[data-zip-entrada]').count(), 1, 'só a entrada segura pode ser marcada');
+      assert.equal(await página.locator('input[data-zip-entrada]').isChecked(), true);
+
+      const saída = await baixar(página, '[data-arquivo="0"]');
+      assert.equal(saída.nome, 'bom.txt');
+      assert.equal(saída.bytes.toString(), 'segundo arquivo');
+
+      // Arquivo que não é ZIP, mesmo com extensão .zip.
+      await página.setInputFiles('#campo-arquivo', { name: 'falso.zip', mimeType: 'application/zip', buffer: Buffer.from('isto não é um zip, é só texto. '.repeat(10)) });
+      assert.match(await erroDe(página, 'arquivo'), /não é um ZIP/);
+    }
+    assert.deepEqual(erros, []);
+    assert.deepEqual(externas, [], 'nenhuma requisição para fora');
+    await contexto.close();
+  }
+});

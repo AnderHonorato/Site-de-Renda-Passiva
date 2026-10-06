@@ -51,6 +51,7 @@ export function nomeQuebrável(nome) {
  *   textoDoVazio: string,
  *   textoDeSolte: string,
  *   ícone?: string,
+ *   únicoAgora?: () => boolean,
  *   conferir: (arquivo: File, jáEscolhidos: ArquivoEscolhido[]) => Promise<Conferência> | Conferência,
  *   aoMudar?: (lista: ArquivoEscolhido[]) => void,
  * }} opções
@@ -59,7 +60,7 @@ export function prepararEscolhaDeArquivos(elemento, opções) {
   const {
     campo: nomeDoCampo = 'arquivo', aceitar = '', múltiplos = false, máximoDeArquivos = 1,
     rótuloDoBotão, rótuloParaTrocar = rótuloDoBotão, rótuloDaFoto, textoDoVazio, textoDeSolte,
-    ícone: nomeDoÍcone = 'documento', conferir, aoMudar = () => {},
+    ícone: nomeDoÍcone = 'documento', conferir, aoMudar = () => {}, únicoAgora = () => false,
   } = opções;
   const formulário = elemento.querySelector('#formulário');
   const entrada = elemento.querySelector(`#campo-${nomeDoCampo}`);
@@ -164,17 +165,19 @@ export function prepararEscolhaDeArquivos(elemento, opções) {
     limparErros(formulário);
     const recusas = [];
     let candidatos = arquivos;
-    if (!múltiplos && candidatos.length > 1) {
+    // Modo de um arquivo só (fixo, ou só por enquanto): o arquivo novo SUBSTITUI o anterior.
+    const único = !múltiplos || únicoAgora();
+    if (único && candidatos.length > 1) {
       recusas.push(`Um arquivo por vez: usei "${candidatos[0].name}" e deixei os outros de fora.`);
       candidatos = candidatos.slice(0, 1);
     }
-    const novos = múltiplos ? [...escolhidos] : [];
+    const novos = único ? [] : [...escolhidos];
     for (const arquivo of candidatos) {
-      if (novos.length >= máximoDeArquivos) {
+      if (novos.length >= (único ? 1 : máximoDeArquivos)) {
         recusas.push(`Limite de ${máximoDeArquivos} arquivos: "${arquivo.name}" e os seguintes ficaram de fora.`);
         break;
       }
-      if (múltiplos && novos.some((e) => e.nome === arquivo.name && e.tamanho === arquivo.size)) {
+      if (!único && novos.some((e) => e.nome === arquivo.name && e.tamanho === arquivo.size)) {
         recusas.push(`"${arquivo.name}" já estava na lista.`);
         continue;
       }
@@ -195,7 +198,9 @@ export function prepararEscolhaDeArquivos(elemento, opções) {
       }
     }
     estado.hidden = true;
-    if (novos.length !== escolhidos.length || novos.some((n, i) => n !== escolhidos[i])) {
+    // Substituindo e o arquivo novo foi recusado: o anterior continua valendo.
+    const manterAnterior = único && novos.length === 0;
+    if (!manterAnterior && (novos.length !== escolhidos.length || novos.some((n, i) => n !== escolhidos[i]))) {
       escolhidos = novos;
       notificar();
     }
