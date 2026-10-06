@@ -40,6 +40,16 @@ export default Object.freeze({
     verCatálogoCompleto: 'Ver o catálogo completo',
     contagemCategoria: '{prontas} de {total} prontas',
   },
+  proteção: {
+    cópiaBloqueada: 'O conteúdo deste site é protegido contra cópia. Os resultados das ferramentas podem ser copiados normalmente.',
+    textoNaÁreaDeTransferência: 'Conteúdo protegido. Para ler e usar as ferramentas, acesse {endereço}',
+  },
+  bloqueador: {
+    título: 'Desative o bloqueador de anúncios',
+    texto: 'As ferramentas são grátis porque o site é mantido por anúncios discretos. Detectamos um bloqueador de anúncios, então a ferramenta ficou pausada.',
+    como: 'Desative o bloqueador para este site e atualize a página. Se preferir não ver anúncios, os planos Plus e Premium não têm.',
+    recarregar: 'Já desativei, atualizar a página',
+  },
   boasVindas: {
     slides: [
       'Bem-vindo|Ferramentas prontas para calcular, criar e organizar. Sem cadastro, e o que você digita fica no seu aparelho.',

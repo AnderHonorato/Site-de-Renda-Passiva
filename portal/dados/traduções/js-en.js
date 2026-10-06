@@ -36,6 +36,16 @@ export default Object.freeze({
     verCatálogoCompleto: 'See the full catalog',
     contagemCategoria: '{prontas} of {total} ready',
   },
+  proteção: {
+    cópiaBloqueada: 'This site\'s content is protected against copying. Tool results can be copied normally.',
+    textoNaÁreaDeTransferência: 'Protected content. To read and use the tools, visit {endereço}',
+  },
+  bloqueador: {
+    título: 'Turn off your ad blocker',
+    texto: 'The tools are free because the site is supported by discreet ads. We detected an ad blocker, so the tool is paused.',
+    como: 'Turn the blocker off for this site and reload the page. If you prefer no ads, the Plus and Premium plans have none.',
+    recarregar: 'I turned it off, reload the page',
+  },
   boasVindas: {
     slides: [
       'Welcome|Ready-made tools to calculate, create and organize. No sign-up, and what you type stays on your device.',

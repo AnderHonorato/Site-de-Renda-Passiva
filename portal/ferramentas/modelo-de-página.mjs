@@ -16,6 +16,7 @@ import { site } from '../dados/site.js';
 import { códigosDeIdioma, idiomas } from '../dados/idiomas.js';
 import { contextoPt } from './contexto-de-idioma.mjs';
 import { onda } from './ondas.mjs';
+import { anúncios, anúnciosAtivos, proteções } from '../dados/anúncios.js';
 import { arteDoRodapé } from './arte-do-rodapé.mjs';
 
 const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
@@ -116,6 +117,16 @@ function barraInferior(ctx, base, atual) {
   return `<nav class="barra-inferior" aria-label="${escapar(ctx.t('moldura.navCelular'))}">${itens}</nav>`;
 }
 
+/** Atributos de <html> que ligam as proteções e o aviso de bloqueador, conforme dados/anúncios.js. */
+function atributosDeProteção() {
+  const ativos = anúnciosAtivos();
+  return [
+    proteções.antiCópia ? ' data-anti-copia="sim"' : '',
+    ativos ? ' data-anuncios="sim"' : '',
+    ativos && anúncios.exigirSemBloqueador ? ' data-exigir-sem-bloqueador="sim"' : '',
+  ].join('');
+}
+
 function rodapé(ctx, base, alternativas) {
   const { t } = ctx;
   const porCategoria = ctx.categorias.slice(0, 6).map((c) =>
@@ -182,7 +193,7 @@ export function montarPágina({
   if (hreflangs.length < 2) hreflangs.length = 0;
 
   return `<!doctype html>
-<html lang="${ctx.código}" data-raiz="${escapar(raiz)}" data-raiz-idioma="${escapar(base)}">
+<html lang="${ctx.código}" data-raiz="${escapar(raiz)}" data-raiz-idioma="${escapar(base)}"${atributosDeProteção()}>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">

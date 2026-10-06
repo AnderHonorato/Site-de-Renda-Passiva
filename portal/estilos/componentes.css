@@ -416,3 +416,23 @@ dialog.diálogo::backdrop { background: rgba(26, 26, 26, .5); backdrop-filter: b
   .boas-vindas__barra i { transition: none; }
 }
 .apresentação { margin: 14px 0 0; }
+
+/* ---------- Proteção contra cópia e aviso de bloqueador de anúncios ---------- */
+html.anti-cópia body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+html.anti-cópia :is(input, textarea, select, [contenteditable="true"], .resultado, .resultado *, .copiável, .copiável *, pre, code, .tabela-copiável, .tabela-copiável *) {
+  -webkit-user-select: text; user-select: text; -webkit-touch-callout: default;
+}
+html.anti-cópia img, html.anti-cópia svg { -webkit-user-drag: none; user-drag: none; }
+@media print { html.anti-cópia body { -webkit-user-select: text; user-select: text; } }
+
+/* A isca que os bloqueadores escondem: existe na página, mas não aparece nem ocupa espaço visível. */
+.isca-de-anúncio { position: absolute; left: -9999px; top: -9999px; width: 10px; height: 10px; pointer-events: none; }
+
+.aviso-de-bloqueador {
+  width: min(480px, calc(100vw - 32px)); padding: 28px 26px; border: 1px solid var(--borda); border-radius: var(--raio-g);
+  background: var(--superfície); color: var(--tinta); box-shadow: var(--sombra-3);
+}
+.aviso-de-bloqueador::backdrop { background: rgba(26, 26, 26, .6); }
+.aviso-de-bloqueador h2 { margin: 0 0 10px; font-size: var(--t-xl, 1.4rem); line-height: 1.2; }
+.aviso-de-bloqueador p { margin: 0 0 10px; line-height: 1.55; }
+.aviso-de-bloqueador .ações { margin-top: 16px; }
