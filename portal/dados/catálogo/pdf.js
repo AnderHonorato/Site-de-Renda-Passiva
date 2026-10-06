@@ -279,7 +279,7 @@ export const ferramentas = [
   },
   {
     id: 'F172', slug: 'preencher-formulario-pdf', nome: 'Preencher formulário em PDF', cat: 'pdf',
-    ícone: 'lista', tarefas: ['criar'], status: 'planejada',
+    ícone: 'lista', tarefas: ['criar'], status: 'pronta',
     resumo: 'Preenche os campos de formulários PDF (texto, caixas de marcar, listas) e deixa o resultado fixo ou editável.',
     problema: 'Preencher um formulário em PDF sem imprimir, escrever à mão e escanear de volta.',
     entra: 'Um PDF com campos de formulário; a tela lista cada campo para você preencher.',
