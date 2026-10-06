@@ -81,12 +81,12 @@
 .busca-topo__botão { position: relative; z-index: 1; order: 2; }
 .busca-topo__campo { order: 1; }
 .busca-topo[data-aberta="sim"] .busca-topo__botão { border-color: transparent; background: none; color: var(--marca); }
-.busca-topo__sugestões { left: auto; right: 0; width: min(380px, calc(100vw - 24px)); }
+.busca-topo .busca-topo__sugestões { left: auto; right: 0; width: min(380px, calc(100vw - 24px)); }
 @media (max-width: 720px) {
   /* No celular o campo cobre a barra inteira do cabeçalho. */
   .busca-topo[data-aberta="sim"] { position: absolute; left: 12px; right: 12px; top: 50%; transform: translateY(-50%); z-index: 60; }
   .busca-topo[data-aberta="sim"] .busca-topo__campo { width: 100%; }
-  .busca-topo__sugestões { left: 0; right: 0; width: auto; }
+  .busca-topo .busca-topo__sugestões { left: 0; right: 0; width: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .busca-topo__campo { transition: none; } }
 
@@ -100,6 +100,16 @@
   padding: 12px;
 }
 .menu-categorias__painel[hidden] { display: none; }
+/* Em telas médias o painel de 720px sairia da janela: ele passa a se ancorar no cabeçalho inteiro,
+   com 16px de folga dos dois lados. O vão entre o botão e o painel é preenchido para o mouse não "cair". */
+.menu-categorias__painel::before { content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
+@media (max-width: 1000px) {
+  .menu-categorias { position: static; }
+  .menu-categorias__painel { left: 16px; right: 16px; width: auto; max-height: calc(100svh - 90px); overflow-y: auto; }
+  .menu-categorias__grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.menu-categorias__rodapé { flex-wrap: wrap; gap: 6px 12px; }
+.menu-categorias__rodapé a { white-space: normal; }
 .menu-categorias__grade {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px;
 }

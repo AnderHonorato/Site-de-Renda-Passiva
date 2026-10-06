@@ -20,6 +20,16 @@ function ligarMenuDeCategorias() {
   };
 
   gatilho.addEventListener('click', () => (painel.hidden ? abrir() : fechar()));
+
+  // Com mouse, passar por cima abre o menu e sair dele fecha, com uma folga para o ponteiro
+  // atravessar o vão entre o botão e o painel. Teclado e toque seguem pelo clique.
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const área = gatilho.closest('.menu-categorias');
+    let espera = 0;
+    const agendar = (acao, ms) => { clearTimeout(espera); espera = setTimeout(acao, ms); };
+    área?.addEventListener('pointerenter', () => agendar(abrir, 90));
+    área?.addEventListener('pointerleave', () => agendar(fechar, 240));
+  }
   document.addEventListener('click', (evento) => {
     if (painel.hidden) return;
     const alvo = evento.target;
