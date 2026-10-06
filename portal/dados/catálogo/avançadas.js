@@ -178,11 +178,11 @@ export const ferramentas = [
   },
   {
     id: 'F193', slug: 'texto-para-fala', nome: 'Texto para fala', cat: 'imagens',
-    ícone: 'balão', tarefas: ['converter'], status: 'planejada',
+    ícone: 'balão', tarefas: ['converter'], status: 'pronta',
     resumo: 'Lê um texto em voz alta com a voz do seu aparelho, na velocidade e no tom que você escolher. Não gera arquivo de áudio.',
     problema: 'Ouvir um texto longo, conferir a leitura de um roteiro ou apoiar quem tem dificuldade para ler.',
     entra: 'Um texto, a voz em português (as que o aparelho tiver), a velocidade e o tom.',
-    processa: 'Usa a síntese de voz do próprio navegador (Web Speech API), que não envia o texto para fora. A qualidade da voz depende do aparelho.',
+    processa: 'Usa a síntese de voz do próprio navegador (Web Speech API). Com as vozes do aparelho, o texto não sai daqui; vozes de rede aparecem marcadas e começam desligadas. A qualidade depende do aparelho. Não gera arquivo de áudio.',
     sai: 'Áudio tocado na hora, com pausa e retomada por parágrafo.',
     exporta: ['copiar'], plano: 'gratuito', local: true,
     tags: ['texto para fala', 'ler em voz alta', 'síntese de voz', 'narração', 'locução'],

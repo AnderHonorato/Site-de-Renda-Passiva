@@ -166,6 +166,7 @@ export default {
 
         const situaçãoNaTela = document.createElement('p');
         situaçãoNaTela.className = 'pequeno t-2';
+        situaçãoNaTela.id = 'situação-da-leitura';
         situaçãoNaTela.setAttribute('role', 'status');
         situaçãoNaTela.hidden = true;
         formulário.after(controles, situaçãoNaTela);

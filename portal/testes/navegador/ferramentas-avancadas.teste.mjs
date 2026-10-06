@@ -47,8 +47,9 @@ after(async () => {
   servidor?.kill();
 });
 
-async function abrir(slug, { viewport = { width: 390, height: 844 }, colorScheme = 'light' } = {}) {
+async function abrir(slug, { viewport = { width: 390, height: 844 }, colorScheme = 'light', antes = null } = {}) {
   const contexto = await navegador.newContext({ viewport, acceptDownloads: true, colorScheme });
+  if (antes) await contexto.addInitScript(antes);
   await contexto.addCookies([{ name: 'visto_novidades', value: '1', url: BASE }]);
   const página = await contexto.newPage();
   const erros = [];
@@ -203,4 +204,103 @@ test('ler QR Code: imagem cheia de ruído não trava a página (prazo) e a leitu
   assert.ok(Date.now() - inicio < 45000, 'a leitura de ruído precisa terminar no prazo');
   assert.deepEqual(erros.filter((e) => !/Failed to load resource/.test(e)), []);
   await contexto.close();
+});
+
+/* ------------------------------------------------------------------ texto para fala */
+
+/** Sintetizador de mentira, instalado antes da página: o teste não depende de voz nem de som do computador. */
+function sintetizadorFalso({ comVozes = true } = {}) {
+  const instalar = (comVozes) => {
+    window.__falas = [];
+    window.__eventos = [];
+    const vozes = [
+      { voiceURI: 'Maria', name: 'Maria', lang: 'pt-BR', localService: true },
+      { voiceURI: 'Rede', name: 'Voz de rede', lang: 'pt-BR', localService: false },
+      { voiceURI: 'Alex', name: 'Alex', lang: 'en-US', localService: true },
+    ];
+    window.SpeechSynthesisUtterance = class { constructor(texto) { this.text = texto; this.rate = 1; this.pitch = 1; } };
+    let última = null;
+    const sint = {
+      speaking: false, pending: false, paused: false,
+      getVoices: () => (comVozes ? vozes : []),
+      addEventListener() {},
+      speak(fala) { última = fala; window.__falas.push({ texto: fala.text, voz: fala.voice?.name, velocidade: fala.rate, tom: fala.pitch }); this.speaking = true; setTimeout(() => fala.onstart?.(), 0); },
+      cancel() { this.speaking = false; window.__eventos.push('cancel'); },
+      pause() { this.paused = true; window.__eventos.push('pause'); },
+      resume() { this.paused = false; window.__eventos.push('resume'); },
+    };
+    window.__terminar = () => { sint.speaking = false; última?.onend?.(); };
+    Object.defineProperty(window, 'speechSynthesis', { value: sint, configurable: true });
+  };
+  // O script roda dentro da página, sem acesso às variáveis daqui: o argumento vai escrito no código.
+  return { content: `(${instalar.toString()})(${JSON.stringify(comVozes)})` };
+}
+
+const QUEBRA = String.fromCharCode(10);
+
+test('texto para fala: lê em fila, pausa, pula de parágrafo, para; erros no campo certo e sem arquivo de áudio', { skip: pular }, async () => {
+  for (const [largura, altura, tema] of [[390, 844, 'light'], [320, 640, 'dark'], [1280, 900, 'light']]) {
+    const { contexto, página, erros, externas } = await abrir('texto-para-fala', { viewport: { width: largura, height: altura }, colorScheme: tema, antes: sintetizadorFalso() });
+    await página.waitForFunction(() => document.querySelector('#campo-voz').value === 'Maria');
+    // Só vozes do aparelho, em português, por padrão.
+    assert.deepEqual(await página.locator('#campo-voz option').allInnerTexts(), ['Maria (pt-BR) — no aparelho']);
+
+    await página.click('button[type="submit"]');
+    assert.match(await erroDe(página, 'texto'), /Escreva ou cole/);
+
+    await página.fill('#campo-texto', ['Primeiro parágrafo aqui.', 'Segundo parágrafo, mais longo.', 'Terceiro.'].join(QUEBRA));
+    await página.selectOption('#campo-velocidade', '1.5');
+    await página.click('button[type="submit"]');
+    await página.waitForSelector('#resultado:not([hidden])');
+    assert.deepEqual(await página.evaluate(() => window.__falas), [{ texto: 'Primeiro parágrafo aqui.', voz: 'Maria', velocidade: 1.5, tom: 1 }]);
+    assert.match(await página.locator('#situação-da-leitura').innerText(), /Lendo o parágrafo 1 de 3/);
+    assert.match(await página.locator('#resultado').innerText(), /Não é gerado arquivo de áudio/);
+    assert.equal(await semRolagemLateral(página), true, `sem rolagem lateral em ${largura}px`);
+    await capturar(página, `fala-${largura}-${tema}.png`);
+
+    // Fim do trecho: passa para o seguinte, sozinho.
+    await página.evaluate(() => window.__terminar());
+    assert.equal((await página.evaluate(() => window.__falas)).at(-1).texto, 'Segundo parágrafo, mais longo.');
+    // Pausar e continuar.
+    await página.click('button:has-text("Pausar")');
+    assert.match(await página.locator('#situação-da-leitura').innerText(), /Pausado no parágrafo 2 de 3/);
+    await página.click('button:has-text("Continuar")');
+    assert.match(await página.locator('#situação-da-leitura').innerText(), /Lendo o parágrafo 2 de 3/);
+    // Pular de parágrafo.
+    await página.click('button:has-text("Parágrafo seguinte")');
+    assert.equal((await página.evaluate(() => window.__falas)).at(-1).texto, 'Terceiro.');
+    assert.equal(await página.locator('button:has-text("Parágrafo seguinte")').isDisabled(), true);
+    await página.click('button:has-text("Parágrafo anterior")');
+    assert.equal((await página.evaluate(() => window.__falas)).at(-1).texto, 'Segundo parágrafo, mais longo.');
+    // Parar.
+    await página.click('button:has-text("Parar")');
+    assert.equal(await página.locator('button:has-text("Pausar")').isHidden(), true);
+    assert.equal((await página.evaluate(() => window.__eventos)).at(-1), 'cancel');
+
+    // Mostrar vozes de outros idiomas e de rede.
+    await página.uncheck('#campo-sóDoAparelho');
+    await página.check('#campo-todosOsIdiomas');
+    assert.equal(await página.locator('#campo-voz option').count(), 3);
+    await página.selectOption('#campo-voz', 'Rede');
+    await página.click('button[type="submit"]');
+    await página.waitForSelector('#resultado:not([hidden])');
+    assert.match(await página.locator('#resultado').innerText(), /voz é de rede.*enviar o texto/);
+    assert.deepEqual(erros, []);
+    assert.deepEqual(externas, [], 'nenhuma requisição para fora');
+    await contexto.close();
+  }
+});
+
+test('texto para fala: sem suporte e sem vozes, a tela diz o que acontece e o que fazer', { skip: pular }, async () => {
+  const semApi = await abrir('texto-para-fala', { antes: { content: 'delete window.SpeechSynthesisUtterance; Object.defineProperty(window, "speechSynthesis", { value: undefined, configurable: true });' } });
+  assert.equal(await semApi.página.locator('button[type="submit"]').isDisabled(), true);
+  assert.match(await semApi.página.locator('#campo-voz-dica').innerText(), /não tem leitura em voz alta/);
+  await semApi.contexto.close();
+
+  const semVozes = await abrir('texto-para-fala', { antes: sintetizadorFalso({ comVozes: false }) });
+  await semVozes.página.waitForFunction(() => /não informou nenhuma voz/.test(document.querySelector('#campo-voz-dica').textContent), null, { timeout: 6000 });
+  await semVozes.página.fill('#campo-texto', 'Olá');
+  await semVozes.página.click('button[type="submit"]');
+  assert.match(await erroDe(semVozes.página, 'voz'), /Configurações/);
+  await semVozes.contexto.close();
 });
