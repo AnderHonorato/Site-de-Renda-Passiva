@@ -304,3 +304,58 @@ test('texto para fala: sem suporte e sem vozes, a tela diz o que acontece e o qu
   assert.match(await erroDe(semVozes.página, 'voz'), /Configurações/);
   await semVozes.contexto.close();
 });
+
+/* ------------------------------------------------------------------ converter planilha */
+
+test('converter planilha: cola CSV, converte para JSON, XLSX e CSV, lê arquivo em Windows-1252 e recusa o que não é texto', { skip: pular }, async () => {
+  for (const [largura, altura, tema] of [[390, 844, 'light'], [320, 640, 'dark'], [1280, 900, 'light']]) {
+    const { contexto, página, erros, externas } = await abrir('converter-planilha', { viewport: { width: largura, height: altura }, colorScheme: tema });
+    await página.click('button[type="submit"]');
+    assert.match(await erroDe(página, 'arquivo'), /Escolha um arquivo ou cole/);
+
+    const csv = ['nome;cidade;cep', 'Ana;São Paulo;01310-000', 'Bruno;Recife;50030-230'].join(QUEBRA);
+    await página.fill('#campo-conteúdo', csv);
+    await página.click('button[type="submit"]');
+    await página.waitForSelector('#resultado:not([hidden])');
+    assert.match(await página.locator('#resultado').innerText(), /2 linhas × 3 colunas/);
+    assert.equal(await página.locator('#resultado tbody tr').count(), 2);
+    const json = await baixar(página, '[data-arquivo="0"]');
+    assert.equal(json.nome, 'planilha.json');
+    assert.equal(JSON.parse(json.bytes.toString())[0].cep, '01310-000');
+    assert.equal(await semRolagemLateral(página), true, `sem rolagem lateral em ${largura}px`);
+    await capturar(página, `planilha-${largura}-${tema}.png`);
+
+    if (largura === 390) {
+      await página.selectOption('#campo-formatoDeSaída', 'xlsx');
+      await página.click('button[type="submit"]');
+      await página.waitForFunction(() => /Baixar XLSX/.test(document.querySelector('#resultado')?.innerText ?? ''));
+      const xlsx = await baixar(página, '[data-arquivo="0"]');
+      assert.equal(xlsx.nome, 'planilha.xlsx');
+      assert.equal(xlsx.bytes.subarray(0, 2).toString(), 'PK');
+      assert.ok(xlsx.bytes.toString('latin1').includes('Recife'));
+
+      await página.selectOption('#campo-formatoDeSaída', 'csv');
+      await página.selectOption('#campo-separadorDeSaída', ',');
+      await página.click('button[type="submit"]');
+      await página.waitForFunction(() => /Baixar CSV/.test(document.querySelector('#resultado')?.innerText ?? ''));
+      const saída = await baixar(página, '[data-arquivo="0"]');
+      assert.equal(saída.nome, 'planilha.csv');
+      assert.ok(saída.bytes.toString('utf8').startsWith('\uFEFFnome,cidade,cep'.replace('\uFEFF', String.fromCharCode(0xFEFF))));
+
+      // Arquivo em Windows-1252, como o Excel em português grava: converte sozinho ao escolher.
+      const cp1252 = Buffer.concat([Buffer.from('cidade;nota' + QUEBRA, 'latin1'), Buffer.from([0x53, 0xE3, 0x6F, 0x20, 0x50, 0x61, 0x75, 0x6C, 0x6F]), Buffer.from(';10', 'latin1')]);
+      await página.setInputFiles('#campo-arquivo', { name: 'Relatório.csv', mimeType: 'text/csv', buffer: cp1252 });
+      await página.waitForFunction(() => /Windows-1252/.test(document.querySelector('#resultado')?.innerText ?? ''));
+      assert.match(await página.locator('#resultado').innerText(), /São Paulo/);
+
+      // ZIP/XLSX e binário são recusados com a explicação; JSON inválido vai para o campo certo.
+      await página.setInputFiles('#campo-arquivo', { name: 'dados.xlsx', mimeType: 'application/zip', buffer: Buffer.from([0x50, 0x4B, 3, 4, 0, 0, 0, 0]) });
+      assert.match(await erroDe(página, 'arquivo'), /pacote ZIP \(XLSX/);
+      await página.setInputFiles('#campo-arquivo', { name: 'dados.json', mimeType: 'application/json', buffer: Buffer.from('{"a":') });
+      assert.match(await erroDe(página, 'arquivo'), /JSON inválido/);
+    }
+    assert.deepEqual(erros, []);
+    assert.deepEqual(externas, [], 'nenhuma requisição para fora');
+    await contexto.close();
+  }
+});
