@@ -2,6 +2,8 @@ import { api, en, estado, mensagemErro, obterSessao } from './comum.js';
 import { criarAvatarDoPerfil, criarIconeNivel, criarTempoNaComunidade, resumoTempoNaComunidade } from '../../núcleo/nível.js';
 import { ícone } from '../../núcleo/ícones.js';
 import { ferramentaPorSlug } from '../../../dados/catálogo.js';
+import { aplicarPrestigio } from '../../núcleo/prestígio.js';
+import { criarIconeMedalha } from '../../núcleo/emblemas.js';
 
 const usuario = new URLSearchParams(location.search).get('usuario');
 const area = document.getElementById('perfil-pessoa');
@@ -51,11 +53,8 @@ function criarMedalha(medalha) {
   item.dataset.desbloqueada = medalha.desbloqueada ? 'sim' : 'nao';
   item.tabIndex = 0;
 
-  const simbolo = elemento(
-    'span',
-    'medalha__simbolo',
-    medalha.desbloqueada ? siglaMedalha(medalha.nome) : '·'
-  );
+  const simbolo = elemento('span', 'medalha__simbolo');
+  simbolo.append(criarIconeMedalha(medalha));
   item.append(simbolo);
 
   const dica = elemento('div', 'medalha__tooltip');
@@ -186,6 +185,7 @@ async function carregar() {
     area.replaceChildren();
     area.className = 'perfil-comunidade';
     area.dataset.moldura = perfil.moldura || 'basica';
+    aplicarPrestigio(area,perfil);
 
     const hero = elemento('section', 'perfil-comunidade__hero');
     hero.dataset.banner = perfil.banner || 'brisa';

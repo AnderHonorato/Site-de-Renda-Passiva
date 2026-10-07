@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="ZIP: compactar e descompactar — Ferramentas do Ander">
+  <meta property="og:description" content="Junta arquivos em um ZIP ou abre um ZIP e baixa os arquivos de dentro, escolhendo quais. ZIP protegido por senha não é aberto.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Escolha o que fazer: &quot;Compactar em ZIP&quot; ou &quot;Abrir um ZIP&quot;.</li><li>Para compactar, escolha os arquivos (vários de uma vez) e toque em &quot;Compactar&quot;. Baixe o ZIP pronto.</li><li>Para abrir, escolha o ZIP. A lista mostra tudo o que há dentro, com o tamanho, antes de extrair qualquer coisa. Entradas suspeitas aparecem recusadas, com o motivo.</li><li>Marque os arquivos que quer e toque em &quot;Baixar os marcados&quot;. Eles são baixados um a um.</li></ol><h3>Exemplo</h3><p>Três arquivos (relatorio.pdf, planilha.xlsx e foto.jpg) viram &quot;arquivos.zip&quot;. Como PDF, XLSX e JPG já são comprimidos, o ZIP fica do tamanho dos três juntos. Já uma pasta de textos de 1 MB costuma virar um ZIP de 300 a 400 KB.</p><h3>Limites e premissas</h3><p>Até 2.000 arquivos e 200 MB no total, ao compactar; ZIP de até 200 MB, ao abrir, com arquivos de até 200 MB cada e até 25 baixados por vez (300 MB no total). ZIP protegido por senha NÃO é aberto, e o ZIP que você cria não tem senha. Não abre ZIP de mais de 4 GB (ZIP64), dividido em vários volumes, nem entradas que são atalhos (symlink). Defesas: o tamanho declarado no ZIP não é confiado (a extração para se sair mais do que o declarado), entradas que se sobrepõem e taxas de compressão impossíveis são recusadas, e nomes com &quot;..&quot;, caminho absoluto, letra de unidade ou caracteres invisíveis são recusados. O arquivo baixado leva só o nome, nunca o caminho. Cada arquivo tem o CRC-32 conferido. Não extrai ZIP dentro de ZIP sozinho. As pastas não são recriadas: cada arquivo é baixado solto. Tudo roda no seu navegador, sem envio.</p><h3>Perguntas frequentes</h3><details><summary>Por que meu ZIP quase não ficou menor?</summary><p>Porque JPG, PNG, PDF, MP3, vídeos, XLSX e DOCX já são comprimidos. O ZIP agrupa, mas quase não consegue reduzir. Texto, CSV e código encolhem bastante.</p></details><details><summary>Posso abrir um ZIP com senha?</summary><p>Não. Abra com o programa que o criou, que pede a senha, e salve uma cópia sem proteção.</p></details><details><summary>O que significa &quot;caminho suspeito&quot;?</summary><p>O nome da entrada tenta sair da pasta de destino (com &quot;..&quot;) ou aponta para um lugar do sistema (como C:\ ou /etc). Ela é recusada para o arquivo não ser gravado fora do lugar. O resto do ZIP continua disponível.</p></details><details><summary>Por que a ferramenta recusou meu ZIP inteiro como &quot;bomba&quot;?</summary><p>Porque o ZIP é montado de um jeito que reaproveita os mesmos dados várias vezes, ou declara tamanhos que não batem com o conteúdo. ZIPs normais não fazem isso; se o seu é de uma fonte confiável, gere-o de novo.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

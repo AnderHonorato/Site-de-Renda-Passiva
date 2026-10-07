@@ -150,6 +150,7 @@ export default Object.freeze({
       '## What is stored',
       'On this device: favorites, tool history, theme, local drafts and advertising choice. When you create an account, the portal stores email, name, username, declared age, derived password, sessions, profile, friendships, blocks, messages and reports. Chat messages are retained for up to 90 days. Other people may see your profile and messages under community rules; do not share sensitive information.',
       '## Cookies and advertising',
+      'The first-party functional visto_novidades cookie stores only the last news revision seen for one year, with SameSite=Lax. If cookies are blocked, the portal tries local storage. This avoids repeating the presentation and allows new publications to appear; it contains no personal identification.',
       'Session and CSRF cookies are essential for accounts. Your advertising choice lasts 180 days and can be changed in [Cookies](cookies.html). Reject ads prevents Google from loading. Essential only requests non-personalized ads, which may still use storage for security and frequency. Regional consent requirements and the AdSense account must be configured before public advertising. Empty ads do not reserve space.',
       '## How to erase it',
       'In [My saved](salvos.html) you clear the history and remove favorites. Clearing the site data in the browser itself erases everything at once. Before that, use the copy export if you want to keep it.',

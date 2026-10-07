@@ -20,6 +20,8 @@ import { íconeVivo, arteViva } from '../scripts/núcleo/ícone-animado.js';
 import { gerarÍconesAnimados } from './ícones-animados.mjs';
 import { lerRegistro, atualizarRegistro, montarFeed } from './lançamentos.mjs';
 import { paginasConta } from './páginas-conta.mjs';
+import { instrucoesEmHtml } from '../scripts/núcleo/instruções.js';
+import { basePublica, completarSeo } from './seo.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -30,7 +32,7 @@ const RÓTULO_DE_EXPORTAÇÃO = {
 
 /* --------------------------------------------------- página de ferramenta */
 
-function páginaDeFerramenta(f) {
+function páginaDeFerramenta(f, instruções) {
   const categoria = categorias.find((c) => c.id === f.cat);
   const exporta = f.exporta.length
     ? f.exporta.map((e) => RÓTULO_DE_EXPORTAÇÃO[e] ?? e).join(', ')
@@ -99,7 +101,7 @@ function páginaDeFerramenta(f) {
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções">${instrucoesEmHtml(instruções)}</div>
       </section>
       ${f.cat !== 'estudos' ? '<div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>' : ''}
     </div>`;
@@ -157,7 +159,8 @@ function íconeDoSite() {
 `;
 }
 
-function sitemap(base = 'https://exemplo.invalid/portal/') {
+function sitemap(base = basePublica()) {
+  if (!base) return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>\n';
   const páginasDoIdioma = ['', 'ferramentas.html', 'ajuda.html', 'privacidade.html', 'termos.html'];
   const urls = [...páginasDoIdioma, ...páginasDoIdioma.map((u) => `en/${u}`),
     ...ferramentasProntas.map((f) => `f/${f.slug}/`)];
@@ -210,6 +213,12 @@ async function principal() {
     return;
   }
 
+  // Confere todas as definições antes de substituir as páginas da prévia ao vivo.
+  const definicoes = new Map();
+  for (const ferramenta of ferramentasProntas) {
+    const modulo = await import(new URL(`../scripts/ferramentas/${ferramenta.slug}.js`, import.meta.url));
+    definicoes.set(ferramenta.slug, (modulo.default || modulo.definição)?.instruções);
+  }
   await rm(join(RAIZ, 'f'), { recursive: true, force: true });
   await rm(join(RAIZ, 'en'), { recursive: true, force: true });
   await gerarÍconesAnimados();
@@ -227,6 +236,10 @@ async function principal() {
     en: (nome) => contextoEn.t('notificações.novaFerramenta', { item: nome }),
   }, hoje);
 
+  const ferramentasGeradas=[];
+  for(const f of ferramentasProntas) {
+    ferramentasGeradas.push([`f/${f.slug}/index.html`,páginaDeFerramenta(f,definicoes.get(f.slug))]);
+  }
   const arquivos = [
     ...páginasDoIdioma(contextoPt),
     ...páginasDoIdioma(contextoEn),
@@ -235,11 +248,11 @@ async function principal() {
     ['vitrine/vitrine-números.js', númerosDaVitrine()],
     ['sitemap.xml', sitemap()],
     ['dados/novidades.json', `${JSON.stringify(feed)}\n`],
-    ['robots.txt', 'User-agent: *\nAllow: /\nDisallow: /salvos.html\n'],
-    ...ferramentasProntas.map((f) => [`f/${f.slug}/index.html`, páginaDeFerramenta(f)]),
+    ['robots.txt', basePublica() ? `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /en/admin/\nDisallow: /api/\nDisallow: /conta/\nDisallow: /en/conta/\nDisallow: /perfil.html\nDisallow: /en/perfil.html\nDisallow: /salvos.html\nDisallow: /en/salvos.html\nSitemap: ${basePublica()}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n'],
+    ...ferramentasGeradas,
   ];
 
-  for (const [caminho, conteúdo] of arquivos) await escrever(caminho, conteúdo);
+  for (const [caminho, conteúdo] of arquivos) await escrever(caminho,caminho.endsWith('.html') ? completarSeo(conteúdo,caminho,{ferramenta:ferramentasProntas.find(f=>caminho===`f/${f.slug}/index.html`)}) : conteúdo);
 
   console.log(`Geradas ${arquivos.length} saídas: ${ferramentasProntas.length} páginas de ferramenta `
     + `+ ${arquivos.length - ferramentasProntas.length} arquivos do portal.`);

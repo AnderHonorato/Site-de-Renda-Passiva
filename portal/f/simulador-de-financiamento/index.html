@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Simulador de financiamento — Ferramentas do Ander">
+  <meta property="og:description" content="Compara financiamento pelo SAC e pela Tabela Price, com entrada, seguro, tarifas e o custo efetivo total (CET).">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Informe o valor do bem e a entrada que você vai dar (pode ser zero).</li><li>Informe o prazo em meses e a taxa de juros, escolhendo se ela é ao mês ou ao ano. Contratos de imóvel costumam anunciar a taxa ao ano.</li><li>Se houver seguro, tarifa mensal ou tarifa inicial, preencha. Sem isso o CET fica igual à taxa de juros.</li><li>Toque em &quot;Simular&quot;. O resultado compara a Tabela Price e a SAC, e a tabela mês a mês mostra o sistema que você escolher. Baixe o CSV ou a planilha para conferir ou guardar.</li></ol><h3>Exemplo</h3><p>Um bem de R$ 150.000,00 com entrada de R$ 30.000,00 financia R$ 120.000,00. Em 12 meses a 1% ao mês, a Price tem parcela fixa de R$ 10.661,85 e paga R$ 7.942,26 de juros. A SAC começa em R$ 11.200,00, termina em R$ 10.100,00 e paga R$ 7.800,00 de juros, R$ 142,26 a menos.</p><h3>Limites e premissas</h3><p>Prazo de 1 a 480 meses, taxa de até 30% ao mês ou 1000% ao ano e valor de até R$ 1 bilhão. A conta assume taxa fixa e não inclui correção monetária (TR, IPCA), IOF nem amortizações extras. Taxa &quot;ao ano, efetiva&quot; usa juros compostos ((1 + taxa)^(1/12) − 1); &quot;nominal&quot; divide por 12, como muitos contratos de imóvel. O CET é a taxa interna de retorno do fluxo (valor recebido menos tarifa inicial contra todas as parcelas, com seguro e tarifa mensal), no espírito da Resolução CMN nº 3.517/2007; sem IOF, o do banco costuma ser um pouco maior. Todos os valores são calculados em centavos e a última parcela quita o saldo restante, para a soma fechar certinha. É uma simulação para comparar e planejar, não uma proposta de crédito. Nada é enviado para fora do seu aparelho.</p><h3>Perguntas frequentes</h3><details><summary>Qual é melhor, Price ou SAC?</summary><p>Depende do que pesa mais. A SAC paga menos juros no total, mas a primeira parcela é maior. A Price tem parcela igual do começo ao fim, mais fácil de encaixar no orçamento, e custa mais juros.</p></details><details><summary>Por que o CET é maior que a taxa de juros?</summary><p>Porque o CET inclui seguro e tarifas. Se você deixar seguro e tarifas zerados, o CET fica igual à taxa de juros.</p></details><details><summary>Minha parcela no banco saiu diferente. Por quê?</summary><p>Bancos somam correção monetária da taxa referencial, IOF, seguros com regras próprias e podem arredondar de outro jeito. Use a simulação para comparar sistemas e prazos, e o contrato para o valor final.</p></details><details><summary>A taxa do meu contrato é &quot;12% ao ano&quot;. Qual opção escolho?</summary><p>Se o contrato diz &quot;taxa nominal&quot;, escolha &quot;ao ano, nominal&quot; (12% ao ano vira 1% ao mês). Se diz &quot;taxa efetiva&quot;, escolha &quot;ao ano, efetiva&quot; (12% ao ano vira cerca de 0,9489% ao mês).</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

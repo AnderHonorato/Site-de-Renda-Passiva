@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="PDF para JPG — Ferramentas do Ander">
+  <meta property="og:description" content="Transforma cada página do PDF em uma imagem JPG (ou PNG), na resolução que você escolher.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Toque em &quot;Escolher PDF&quot; ou arraste o arquivo para o quadro. Ele é lido no seu navegador, sem envio para servidor.</li><li>Escolha o formato (JPG ou PNG), a resolução em dpi (150 serve para tela; 300 para imprimir) e, se for o caso, só algumas páginas, como 1-3 ou 5.</li><li>Toque em &quot;Converter em imagens&quot; e acompanhe o progresso, página a página. Se estiver demorando, dá para cancelar.</li><li>Baixe o resultado: uma página vira uma imagem solta; várias viram um ZIP com as imagens em ordem.</li></ol><h3>Exemplo</h3><p>Um PDF A4 de 3 páginas em JPG a 150 dpi vira um ZIP com 3 imagens de 1240 × 1754 pixels, chamadas nome-pagina-001.jpg, nome-pagina-002.jpg e nome-pagina-003.jpg. A 72 dpi, a mesma página sai com 595 × 842 pixels.</p><h3>Limites e premissas</h3><p>PDF de até 100 MB e 3.000 páginas; até 200 páginas convertidas por vez. Resolução de 72 a 300 dpi. Página muito grande tem a resolução reduzida para a imagem não passar de 8.000 pixels de lado (o resultado avisa). O arquivo é reconhecido pelo conteúdo, não pela extensão. PDF protegido por senha não pode ser convertido: salve uma cópia sem proteção. O fundo das imagens é sempre branco. Fontes que não vêm dentro do PDF são trocadas pelas do seu aparelho, então o desenho pode variar um pouco. PDFs que usam fontes asiáticas não embutidas podem sair com letras faltando. Só as páginas viram imagem: esta ferramenta não extrai as fotos que estão dentro do PDF. A conversão usa o leitor de PDF pdf.js (licença Apache 2.0), que roda dentro da página.</p><h3>Perguntas frequentes</h3><details><summary>Meu PDF é enviado para algum servidor?</summary><p>Não. O leitor que desenha as páginas é baixado com a página e roda no seu navegador; o arquivo não sai do aparelho.</p></details><details><summary>Qual a diferença entre JPG e PNG?</summary><p>JPG gera arquivos menores e serve para fotos e páginas com imagem. PNG não perde qualidade e fica melhor em texto e desenhos, mas os arquivos são maiores.</p></details><details><summary>Que resolução devo escolher?</summary><p>72 dpi é para miniaturas; 150 dpi serve para ver na tela e mandar por mensagem; 300 dpi é para imprimir. Quanto maior, maior e mais lento o arquivo.</p></details><details><summary>E se o PDF tiver senha?</summary><p>Ele não pode ser convertido sem a senha. Abra o arquivo no leitor de PDF, salve uma cópia sem proteção e use essa cópia aqui.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

@@ -8,7 +8,8 @@ server {
     server_name SEU-DOMINIO;
     ssl_certificate /CAMINHO/DO/CERTIFICADO.pem;
     ssl_certificate_key /CAMINHO/DA/CHAVE.pem;
-    client_max_body_size 64k;
+    # Perfil completo + foto recortada em base64: limite da API 1.750.000 bytes.
+    client_max_body_size 2m;
 
     location / {
         proxy_pass http://127.0.0.1:4400;

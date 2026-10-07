@@ -394,6 +394,15 @@ dialog.diálogo::backdrop { background: rgba(26, 26, 26, .5); backdrop-filter: b
 .boas-vindas__texto { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 40px 32px 24px; }
 .boas-vindas__fechar { position: absolute; top: 12px; right: 12px; }
 .boas-vindas__slides { flex: 1 1 auto; }
+.boas-vindas__segmentos { display:flex; gap:4px; }
+.boas-vindas__segmentos i { flex:1; height:3px; border-radius:3px; background:var(--borda); }
+.boas-vindas__segmentos i.atual { background:var(--marca); }
+.boas-vindas__segmentos[hidden] { display:none; }
+.boas-vindas__próximo svg[hidden] { display:none; }
+.boas-vindas__imagem { display:block; max-width:100%; max-height:200px; object-fit:contain; margin-block:12px; border-radius:8px; }
+.boas-vindas__slide p { white-space:pre-wrap; overflow-wrap:anywhere; }
+.boas-vindas__slide .botão { margin-top:12px; }
+.boas-vindas__ações { flex-wrap:wrap; }
 .boas-vindas__slide { animation: bv-slide .3s ease both; }
 .boas-vindas__slide h2 { margin: 0 0 10px; font-size: var(--t-xl, 1.5rem); line-height: 1.2; }
 .boas-vindas__slide p { margin: 0; color: var(--tinta-média); line-height: 1.6; }

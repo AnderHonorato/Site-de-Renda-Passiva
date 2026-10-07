@@ -12,6 +12,7 @@
  */
 import { t, idioma, raizDoSite } from './idioma.js';
 import { isolarBloco } from './isolar-bloco.js';
+import { tocarSom } from './sons.js';
 
 const CHAVE_DAS_LIDAS = 'notificacoes-lidas-v1';
 const MÁXIMO_DE_LIDAS = 300;
@@ -20,6 +21,7 @@ const fontes = new Map();
 /** @type {{id: string, título: string, texto: string, link?: string, data: string, origem: string, lida?: boolean, fonte: string}[]} */
 let itens = [];
 let ligado = false;
+let carregouAntes=false;
 let aoMudar = () => {};
 
 /* ------------------------------------------------------------------ lidas (no aparelho) */
@@ -81,9 +83,12 @@ async function recarregar() {
     }
   }));
   const vistos = new Set();
+  const anteriores = new Set(itens.map(item=>item.id));
   itens = lotes.flat()
     .filter((i) => (vistos.has(i.id) ? false : vistos.add(i.id)))
     .sort((a, b) => String(b.data).localeCompare(String(a.data)));
+  if(carregouAntes&&itens.some(item=>!anteriores.has(item.id)&&!éLida(item,lerLidas())))tocarSom('notificacao');
+  carregouAntes=true;
   aoMudar();
 }
 
@@ -170,4 +175,3 @@ export function ligarNotificações() {
   const começar = () => isolarBloco('notificações-carregar', recarregar);
   if ('requestIdleCallback' in window) requestIdleCallback(começar, { timeout: 2500 }); else setTimeout(começar, 800);
 }
-

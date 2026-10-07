@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Texto para fala — Ferramentas do Ander">
+  <meta property="og:description" content="Lê um texto em voz alta com a voz do seu aparelho, na velocidade e no tom que você escolher. Não gera arquivo de áudio.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Escreva ou cole o texto (até 30.000 caracteres).</li><li>Escolha a voz, a velocidade e o tom. A lista mostra as vozes em português do seu aparelho; as marcadas &quot;de rede&quot; podem enviar o texto ao fornecedor da voz, por isso começam desligadas.</li><li>Toque em &quot;Ler em voz alta&quot;. Use &quot;Pausar&quot;, &quot;Parar&quot; e os botões de parágrafo para controlar a leitura.</li><li>Para guardar o texto, use &quot;Copiar&quot;. A ferramenta não cria arquivo de áudio.</li></ol><h3>Exemplo</h3><p>Colando o recado &quot;Bom dia, pessoal. A reunião de hoje começa às dez horas, na sala dois.&quot; e, depois de uma linha em branco, &quot;Tragam o relatório do mês.&quot;, a ferramenta separa 2 parágrafos e 19 palavras e lê o primeiro, depois o segundo. Em velocidade normal a estimativa é de 8 segundos; a 2× cai para 4. &quot;Parágrafo seguinte&quot; pula direto para &quot;Tragam o relatório do mês.&quot;</p><h3>Limites e premissas</h3><p>Até 30.000 caracteres. O texto é lido em trechos de até 200 caracteres, sem cortar palavra, porque alguns navegadores interrompem falas longas. As vozes e a qualidade dependem do aparelho e do navegador; nenhuma voz é baixada por esta página. Não gera arquivo de áudio nem baixa MP3: isso exigiria um servidor com voz sintética própria. Em alguns celulares o botão de pausa só interrompe, e continuar recomeça o trecho. Algumas vozes (por exemplo as &quot;de rede&quot; do Chrome) enviam o texto ao fornecedor da voz; por isso a lista mostra de onde cada voz vem e só usa vozes do aparelho por padrão. O texto fica só na memória desta página.</p><h3>Perguntas frequentes</h3><details><summary>Não aparece nenhuma voz em português. O que faço?</summary><p>A lista vem do seu aparelho. No Windows, instale uma voz em Configurações &gt; Hora e idioma &gt; Fala; no Android, em Configurações &gt; Idioma &gt; Saída de texto para fala; no iPhone, em Ajustes &gt; Acessibilidade &gt; Conteúdo Falado &gt; Vozes. Depois recarregue a página.</p></details><details><summary>Posso baixar o áudio?</summary><p>Não. O navegador só toca a voz, sem entregar o arquivo. Para gravar, use a gravação de tela com som do próprio aparelho.</p></details><details><summary>O texto sai do meu aparelho?</summary><p>Não sai desta página, e as vozes do aparelho também não enviam nada. Só as vozes marcadas &quot;de rede&quot; podem enviar o texto ao fornecedor da voz, e por isso ficam desligadas até você pedir.</p></details><details><summary>A leitura parou no meio. Por quê?</summary><p>Alguns navegadores interrompem a fala quando a aba fica em segundo plano ou a tela apaga. Volte à página e toque em &quot;Ler em voz alta&quot; de novo.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

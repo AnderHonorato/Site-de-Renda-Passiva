@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Calculadora de NPS — Ferramentas do Ander">
+  <meta property="og:description" content="Calcula o Net Promoter Score a partir das notas de 0 a 10 dadas pelos clientes.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Cole as notas da pesquisa: uma por resposta, separadas por vírgula, espaço ou quebra de linha. Dá para copiar a coluna direto da planilha.</li><li>Se você só tem o resumo, em vez de cada nota, escolha a contagem por nota e escreva uma linha por nota, como &quot;10: 25&quot;.</li><li>Clique em Calcular NPS. A ferramenta separa detratores, neutros e promotores e mostra a conta feita.</li><li>Veja o aviso sobre o tamanho da amostra antes de comparar com outra pesquisa. Copie o resultado ou baixe a planilha.</li></ol><h3>Exemplo</h3><p>As notas 9, 10, 8, 6, 10, 7, 9, 3, 10, 8 são 10 respostas: 5 promotores (9, 10, 10, 9, 10), 3 neutros (8, 7, 8) e 2 detratores (6, 3). NPS = (5 − 2) ÷ 10 × 100 = 30, na zona de aperfeiçoamento. Como são só 10 respostas, a ferramenta avisa que a amostra é pequena: uma resposta que mude de grupo move o índice em 20 pontos.</p><h3>Limites e premissas</h3><p>Notas inteiras de 0 a 10; a vírgula separa notas, então &quot;8,5&quot; é lido como 8 e 5. Coladas uma a uma, cabem até 1.000 notas (e 100.000 caracteres); na contagem por nota não há limite prático, até 100.000.000 respostas em cada nota. Quem não respondeu não entra: só conta quem deu nota. O NPS sai como inteiro, e meio ponto arredonda para longe do zero. A margem de erro (95% de confiança) só é calculada a partir de 30 respostas e supõe que quem respondeu representa os seus clientes. A leitura por zonas é uma convenção de mercado, não uma regra. Tudo roda no seu navegador: as notas não são enviadas a lugar nenhum.</p><h3>Perguntas frequentes</h3><details><summary>O que são detratores, neutros e promotores?</summary><p>Detratores deram de 0 a 6 e tendem a falar mal; neutros (também chamados de passivos) deram 7 ou 8 e estão satisfeitos, mas não indicam; promotores deram 9 ou 10 e recomendam. O NPS é o percentual de promotores menos o de detratores.</p></details><details><summary>Por que os neutros não entram na conta, mas mudam o resultado?</summary><p>Eles não somam nem subtraem, porém fazem parte do total de respostas. Quanto maior o grupo de neutros, menores ficam os percentuais de promotores e de detratores e mais perto de zero o NPS.</p></details><details><summary>Quantas respostas preciso para confiar no NPS?</summary><p>Com menos de 30 respostas o índice oscila demais: uma única resposta pode mover vários pontos. A partir de 100 a margem de erro já fica razoável. A ferramenta mostra a margem de erro e avisa quando a amostra é pequena.</p></details><details><summary>Posso colar um resumo em vez de todas as notas?</summary><p>Pode. Escolha &quot;Contagem por nota&quot; e escreva uma linha por nota, como &quot;10: 25&quot; (25 pessoas deram 10). Notas que não aparecem valem zero. Se você tem só as onze quantidades, da nota 0 à 10, use a terceira opção.</p></details><details><summary>O que é um NPS bom?</summary><p>Depende do setor e do público. Como referência comum: acima de 50 é considerado bom e acima de 75, excelente. Compare principalmente com o seu próprio histórico, sempre com amostras de tamanho parecido.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

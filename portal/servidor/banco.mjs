@@ -7,6 +7,19 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
   const db = new DatabaseSync(caminho);
   db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
   db.exec(`
+    CREATE TABLE IF NOT EXISTS novidades (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      titulo_pt TEXT NOT NULL, texto_pt TEXT NOT NULL,
+      titulo_en TEXT NOT NULL, texto_en TEXT NOT NULL,
+      botao_pt TEXT NOT NULL DEFAULT '', botao_en TEXT NOT NULL DEFAULT '',
+      url TEXT NOT NULL DEFAULT '', alt_pt TEXT NOT NULL DEFAULT '', alt_en TEXT NOT NULL DEFAULT '',
+      publicar_em TEXT, retirar_em TEXT, ordem INTEGER NOT NULL DEFAULT 0,
+      ativo INTEGER NOT NULL DEFAULT 0, versao INTEGER NOT NULL DEFAULT 1,
+      revisao INTEGER NOT NULL DEFAULT 0, imagem BLOB, imagem_mime TEXT
+    );
+    CREATE TABLE IF NOT EXISTS novidades_publicacoes (id INTEGER PRIMARY KEY AUTOINCREMENT);
+    INSERT OR IGNORE INTO novidades_publicacoes(id) VALUES(1);
+    CREATE TABLE IF NOT EXISTS publicidade_config (id INTEGER PRIMARY KEY CHECK(id=1),dados TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS usuarios (
       id INTEGER PRIMARY KEY, email TEXT NOT NULL UNIQUE COLLATE NOCASE,
       usuario TEXT NOT NULL UNIQUE COLLATE NOCASE, nome TEXT NOT NULL,
@@ -132,6 +145,11 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
     );
     INSERT OR IGNORE INTO salas(id,tipo,nome) VALUES('global','global','Conversa geral');
   `);
+  db.exec(`CREATE TABLE IF NOT EXISTS conquistas_vistas (
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    tipo TEXT NOT NULL, patamar INTEGER NOT NULL, visto_em TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY(usuario_id,tipo)
+  )`);
   const colunas=db.prepare('PRAGMA table_info(usuarios)').all().map(c=>c.name);
   if(!colunas.includes('idioma'))db.exec("ALTER TABLE usuarios ADD COLUMN idioma TEXT NOT NULL DEFAULT 'pt-BR'");
   if(!colunas.includes('tema'))db.exec("ALTER TABLE usuarios ADD COLUMN tema TEXT NOT NULL DEFAULT 'sistema'");

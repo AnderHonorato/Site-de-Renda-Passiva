@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Remover linhas duplicadas — Ferramentas do Ander">
+  <meta property="og:description" content="Remove linhas repetidas de uma lista de texto, mantendo a primeira ocorrência.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Cole a lista no campo, uma linha por item. O resultado acompanha a digitação.</li><li>Escolha como comparar: &quot;Maçã&quot; e &quot;maçã&quot; contam como a mesma linha? Espaços no começo e no fim contam? As linhas vazias devem ficar todas?</li><li>Confira a lista e quantas linhas saíram. A tela mostra as primeiras linhas, com quantas vezes cada uma apareceu.</li><li>Copie a lista sem repetições ou baixe como arquivo de texto.</li></ol><h3>Exemplo</h3><p>A lista &quot;banana, Maçã, banana, Uva, maçã&quot; (uma por linha) fica &quot;banana, Maçã, Uva&quot;, com 2 linhas removidas: a segunda &quot;banana&quot; e a &quot;maçã&quot; escrita em minúscula. A linha que fica é sempre a primeira, do jeito que você a escreveu. Desmarcando &quot;Ignorar maiúsculas&quot;, só a segunda &quot;banana&quot; sai e a &quot;maçã&quot; minúscula continua na lista.</p><h3>Limites e premissas</h3><p>Até 100.000 caracteres e 20.000 linhas. Cada linha que fica é a original, sem trocar maiúsculas nem espaços; só a comparação ignora essas diferenças. Linhas com letras acentuadas iguais na tela são tratadas como iguais, mesmo que o acento tenha sido digitado separado da letra. Acento, porém, conta: &quot;cafe&quot; e &quot;café&quot; são linhas diferentes. Uma linha só com espaços só é considerada vazia quando &quot;Ignorar espaços&quot; está marcado. A quebra de linha no fim do texto não vira uma linha vazia. As quebras do resultado são sempre simples. O texto não sai do seu navegador.</p><h3>Perguntas frequentes</h3><details><summary>Qual das linhas repetidas fica?</summary><p>A primeira. Se &quot;Maçã&quot; aparece antes de &quot;maçã&quot;, a lista fica com &quot;Maçã&quot;. As seguintes saem, mesmo que estejam escritas de outro jeito.</p></details><details><summary>Por que sumiram linhas vazias da minha lista?</summary><p>Com a opção &quot;Manter todas as linhas vazias&quot; desmarcada, a segunda linha vazia em diante conta como repetição da primeira. Marque a opção para não mexer em nenhuma linha vazia, por exemplo para preservar a separação entre blocos.</p></details><details><summary>A ordem da lista muda?</summary><p>Não. As linhas que ficam seguem a ordem em que apareceram. Esta ferramenta só tira repetições, não ordena.</p></details><details><summary>A lista que eu colo é guardada?</summary><p>Não. A comparação acontece no seu navegador e o texto não é enviado nem guardado.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

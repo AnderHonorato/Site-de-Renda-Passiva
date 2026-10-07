@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Divisão de contas — Ferramentas do Ander">
+  <meta property="og:description" content="Quem pagou o quê, quanto cada um deve e o menor número de transferências para acertar.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,11 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Escreva uma pessoa por linha, no formato &quot;nome = quanto pagou&quot;.</li><li>Quem não pagou nada entra só com o nome.</li><li>Para dividir em partes desiguais, acrescente o peso: &quot;Ana = 120 = 2&quot; conta a Ana como duas cotas.</li><li>Toque em Dividir. Você recebe o saldo de cada um e a lista de quem paga para quem.</li></ol><h3>Exemplo</h3><p>Ana = 300
+Bruno = 90
+Carla
+
+Total de R$ 390,00 para três pessoas: R$ 130,00 cada. Carla paga R$ 130,00 para a Ana e o Bruno paga R$ 40,00 para a Ana. Dois acertos resolvem.</p><h3>Limites e premissas</h3><p>Os acertos são reduzidos ao mínimo prático: o maior credor recebe do maior devedor até zerar. Centavos de arredondamento vão para a última pessoa da lista, de modo que a soma sempre fecha exatamente com o total.</p><h3>Perguntas frequentes</h3><details><summary>Posso dividir em partes desiguais?</summary><p>Sim. Use o terceiro campo como peso. Um casal que conta como duas cotas recebe peso 2.</p></details><details><summary>Os nomes ficam salvos em algum lugar?</summary><p>Não. Nada sai do seu navegador, e a ferramenta não guarda a lista depois que você fecha a página.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

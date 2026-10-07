@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Simulador de parcelamento — Ferramentas do Ander">
+  <meta property="og:description" content="Parcela pela Tabela Price, custo total do crédito e comparação com o pagamento à vista.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Informe o valor total da compra e a entrada, se houver.</li><li>Informe o número de parcelas e a taxa de juros mensal cobrada pela loja.</li><li>Se existe desconto para pagamento à vista, preencha o campo: a comparação fica honesta.</li><li>O resultado mostra a parcela, o total pago e qual opção sai mais barata.</li></ol><h3>Exemplo</h3><p>R$ 3.000,00 em 10 vezes a 2% ao mês dá parcela de R$ 333,98 e total de R$ 3.339,80. Com 8% de desconto à vista, o pagamento imediato sairia por R$ 2.760,00 — R$ 579,80 mais barato.</p><h3>Limites e premissas</h3><p>Usa a Tabela Price, que é o sistema do crediário e do cartão. Não inclui IOF, seguro nem tarifa de cadastro, então o custo real de um financiamento bancário costuma ser um pouco maior que o mostrado aqui. Se a taxa informada for zero, o parcelamento é considerado sem juros.</p><h3>Perguntas frequentes</h3><details><summary>A loja diz &quot;sem juros&quot;. Preciso preencher a taxa?</summary><p>Coloque zero. Mas confira se existe desconto à vista: se existe, o parcelamento &quot;sem juros&quot; tem juros embutidos, e a comparação vai mostrar isso.</p></details><details><summary>Por que meu banco cobra mais do que o resultado?</summary><p>Porque o banco soma IOF, tarifas e às vezes seguro. Esta ferramenta calcula só os juros da taxa informada.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

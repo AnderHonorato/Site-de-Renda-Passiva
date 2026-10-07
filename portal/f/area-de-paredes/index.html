@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Área de paredes e tetos — Ferramentas do Ander">
+  <meta property="og:description" content="Soma a área de paredes e tetos, descontando portas e janelas marcadas.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,12 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Escreva uma superfície por linha: nome; largura; altura. Acrescente a quantidade quando forem iguais.</li><li>Para incluir o teto, some-o como mais uma linha com as medidas do piso.</li><li>Liste portas e janelas no segundo campo, no mesmo formato.</li><li>A área líquida é a que você leva para a calculadora de tinta ou de revestimento.</li></ol><h3>Exemplo</h3><p>Parede norte; 4; 2,70
+Parede sul; 4; 2,70
+Parede leste; 3; 2,70
+Parede oeste; 3; 2,70
+
+Com uma porta de 0,80 × 2,10 e uma janela de 1,20 × 1,00: 37,80 m² brutos, 2,88 m² de aberturas, 34,92 m² líquidos.</p><h3>Limites e premissas</h3><p>As medidas são em metros e a área sai em metros quadrados. A ferramenta soma o que você informar: ela não conhece a planta da sua casa e não adivinha o teto. Se as aberturas somarem mais que as paredes, ela recusa em vez de devolver área negativa.</p><h3>Perguntas frequentes</h3><details><summary>Desconto portas e janelas ao pintar?</summary><p>Para orçar tinta, sim: você não pinta o vão. Para orçar revestimento de parede, também. Em superfícies pequenas o desconto muda pouco, mas em ambiente com muita janela faz diferença de litros.</p></details><details><summary>Como incluo o teto?</summary><p>Some uma linha com a largura e o comprimento do cômodo. O teto tem a mesma área do piso.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

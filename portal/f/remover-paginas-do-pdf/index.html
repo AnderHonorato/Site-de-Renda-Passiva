@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Remover páginas do PDF — Ferramentas do Ander">
+  <meta property="og:description" content="Apaga as páginas que você marcar e devolve o PDF só com o resto, sem recomprimir nada.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Toque em &quot;Escolher PDF&quot; ou arraste o arquivo para o quadro. Ele é lido no seu navegador, sem envio para servidor.</li><li>Digite as páginas que devem sair (por exemplo 1, 3-5, 9) ou toque nos números do bloco &quot;Marcar as páginas tocando nos números&quot;.</li><li>Toque em &quot;Remover páginas&quot; e confira a contagem: quantas páginas tinha, quantas saíram e quantas ficaram.</li><li>Baixe o PDF novo. O arquivo original continua intacto no seu aparelho.</li></ol><h3>Exemplo</h3><p>Um contrato de 10 páginas veio com a folha de rosto (página 1), uma página em branco (4) e dois anexos que não valem (9 e 10). Digitando 1, 4, 9-10, o PDF novo fica com 6 páginas: as originais 2, 3, 5, 6, 7 e 8, na mesma ordem.</p><h3>Limites e premissas</h3><p>Um PDF por vez, com até 100 MB e até 2.000 páginas. O arquivo é reconhecido pelo conteúdo, não pela extensão. PDF protegido por senha não pode ser editado. Não dá para remover todas as páginas: pelo menos uma precisa ficar. As páginas que ficam entram como estão, sem recompressão. O PDF novo é montado do zero com as páginas que ficaram, então o conteúdo das removidas não fica escondido dentro do arquivo; em troca, marcadores (sumário) e campos de formulário do original podem não ser mantidos, e links que apontavam para uma página removida deixam de funcionar. Não há miniaturas: as páginas são escolhidas pelo número. A cópia usa a biblioteca pdf-lib (licença MIT), que roda dentro da página.</p><h3>Perguntas frequentes</h3><details><summary>Meu arquivo é enviado para algum servidor?</summary><p>Não. A biblioteca que monta o PDF é baixada com a página e roda no seu navegador; o arquivo não sai do aparelho.</p></details><details><summary>O conteúdo das páginas removidas continua dentro do arquivo?</summary><p>Não. O PDF novo é uma cópia só das páginas que ficaram; o que estava nas outras não vai junto. Mesmo assim, confira o resultado antes de enviar um documento sensível.</p></details><details><summary>E se o PDF tiver senha?</summary><p>Ele não pode ser aberto aqui sem a senha. Abra no leitor de PDF, salve uma cópia sem proteção e use essa cópia.</p></details><details><summary>Como removo só as páginas pares ou só as ímpares?</summary><p>Abra o bloco &quot;Marcar as páginas tocando nos números&quot; e use os botões &quot;Pares&quot; ou &quot;Ímpares&quot;. O campo de páginas é preenchido sozinho.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

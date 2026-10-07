@@ -16,7 +16,7 @@ function criarEscolha(alvo, faixa = false) {
   painel.className = faixa ? 'consentimento painel' : 'painel consentimento-opcoes';
   painel.setAttribute('aria-label', t('Preferências de privacidade', 'Privacy preferences'));
   const texto = document.createElement('p');
-  texto.textContent = t('Usamos cookies essenciais para sua conta e guardamos as preferências neste aparelho. Se houver anúncios, você pode escolher anúncios personalizados, não personalizados ou nenhum anúncio.', 'We use essential cookies for your account and store preferences on this device. When ads are available, you may choose personalized ads, non-personalized ads or no ads.');
+  texto.textContent = t('Usamos cookies essenciais para sua conta e guardamos as preferências neste aparelho. O cookie funcional visto_novidades lembra, por um ano, a última novidade vista. Se houver anúncios, você pode escolher anúncios personalizados, não personalizados ou nenhum anúncio.', 'We use essential cookies for your account and store preferences on this device. The functional visto_novidades cookie remembers the last news seen for one year. When ads are available, you may choose personalized ads, non-personalized ads or no ads.');
   painel.append(texto);
   const acoes = document.createElement('div');
   acoes.className = 'consentimento__acoes';
@@ -47,4 +47,7 @@ async function iniciar() {
   } catch { /* A indisponibilidade da API mantém as ferramentas utilizáveis. */ }
 }
 
-iniciar().catch(() => {});
+iniciar().catch(() => {}).finally(() => {
+  document.documentElement.dataset.consentimentoPronto = 'sim';
+  window.dispatchEvent(new Event('consentimento-pronto'));
+});

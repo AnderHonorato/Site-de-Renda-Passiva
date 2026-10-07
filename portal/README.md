@@ -1,4 +1,4 @@
-# Portal — versão 1.1.0
+# Portal — versão 1.2.0
 
 O portal escolhido é o da porta **4400**. A identidade visual e as 65 ferramentas prontas foram preservadas. Conta e chat usam uma API separada, na mesma origem através do proxy do portal. O catálogo tem 208 itens; os planejados continuam identificados como planejados.
 
@@ -15,7 +15,7 @@ npm run dev
 
 Abra `http://127.0.0.1:4400/`. O comando inicia site e API, preservando arquivos e banco. A API escuta só em `127.0.0.1:4870`; as páginas usam `/api/` na 4400. Ctrl+C encerra os dois processos. `npm run servir` inicia apenas o site; `npm run api`, apenas a API. O arquivo `.env`, quando existir, é lido pelo comando `dev`.
 
-O comando `dev` habilita o chat local. Em produção o chat fica desligado até `PORTAL_CHAT_PUBLICO=1`; exige as condições do checklist e responsável por moderação. Para LAN ou domínio definitivo, configure `URL_PUBLICA` com a origem exata usada no navegador. Alterações de outra origem são recusadas.
+O comando `dev` habilita o chat local. Em desenvolvimento, com a origem padrão da 4400 e o chat local habilitado, a API aceita também os endereços das interfaces deste computador na porta 4400. Em produção o chat fica desligado até `PORTAL_CHAT_PUBLICO=1`; exige as condições do checklist e responsável por moderação. Para domínio definitivo, configure `URL_PUBLICA` com a origem exata usada no navegador. Alterações de outra origem são recusadas.
 
 ## Conta e administração
 
@@ -55,7 +55,9 @@ PORTAL_ADS_RESULTADO=
 PORTAL_ADS_TESTE=1
 ```
 
-Editor: `ca-pub-` mais 16 dígitos. Blocos: IDs reais de 6–20 dígitos. Sem configuração, consentimento, autorização da API ou preenchimento, os blocos não ocupam altura nem margem. Posições após o conteúdo de uso e acima do rodapé, longe dos controles. Conta, admin, autenticação, perfis, textos legais, erros, salvos, planos e estudos não recebem anúncios; Plus/Premium também não.
+O administrador pode configurar `/admin/publicidade/`, com validação do editor e dos blocos de resultado, lista e rodapé. A configuração salva no banco prevalece sobre as variáveis legadas. `Demonstração local` mostra cartões identificados para conferir posições e não carrega o Google nem gera receita; essa opção é recusada em produção. Em 07/10/2026 a prévia local foi habilitada a pedido do proprietário, que ainda não tem IDs.
+
+Editor: `ca-pub-` mais 16 dígitos. Blocos: IDs reais de 6–20 dígitos. Sem configuração, consentimento, autorização da API ou preenchimento, os blocos reais não ocupam altura nem margem. Posições após o conteúdo de uso, na lista e acima do rodapé, longe dos controles. Conta, admin, autenticação, perfis, textos legais, erros, salvos, planos e estudos não recebem anúncios; Plus/Premium também não.
 
 Use apenas blocos manuais no AdSense. Anúncios automáticos/âncoras/vinhetas não fazem parte do formato implementado. A escolha muda em `/cookies.html`. O servidor gera `ads.txt`; HTML autorizado recebe nonce novo e CSP própria. Sem publicidade, mantém a CSP original.
 
@@ -74,3 +76,19 @@ npm run publicar
 O exemplo `../documentação/hospedagem/portal-v1.1.conf.exemplo` encaminha também SSE. Use `PORTAL_PROXY_CONFIAVEL=1` somente com proxy local que sobrescreve `X-Forwarded-For` com o IP real; isso permite limites por visitante. Requisições diretas não podem escolher seu IP por cabeçalho.
 
 Estado: `../CHECKLIST.md` e `../documentação/plano-portal-principal.md`.
+
+## Perfil e conquistas — 07/10/2026
+
+Nome, biografia, redes sociais, preferências, visual e foto são gravados juntos por `PATCH /api/perfil`. Uma entrada inválida impede a atualização inteira. A tela conserva os campos quando há erro e mantém o tema usado no aparelho. Links sociais aceitam o @usuário ou a URL direta do perfil na plataforma correspondente.
+
+A foto é recortada localmente em 512 × 512, com zoom, posição e prévias de perfil/chat. A consulta privada da imagem não usa cache para que uma alteração apareça após salvar. Trabalhos, favoritos e suporte ficam em abas com transição dentro da conta. Senhas e tokens não participam desse salvamento.
+
+Conquistas pendentes são calculadas a partir da atividade real. O servidor registra o maior patamar já recebido em cada família; uma nova aba ou outro aparelho não repete a celebração. O modal tem feixes de luz e emblema central, com movimento reduzido quando solicitado pelo sistema. Sons discretos são sintetizados no aparelho após interação; podem ser desativados em Preferências. Mensagens próprias não fazem som de recebimento.
+
+Para o teste solicitado, `@honor` recebeu o nível 15, último marco dos banners e molduras atuais. A progressão numérica continua acima disso. Não foram alterados plano, senha, dados do perfil nem atividades para inventar medalhas. O banco anterior está preservado em `.execucao/`, fora da publicação e do Git.
+
+## Busca e divulgação
+
+O gerador inclui instruções, exemplos, limites e perguntas reais no HTML das 65 ferramentas. Títulos, descrições, Open Graph e dados estruturados descrevem cada ferramenta. Canonical, hreflang absoluto e sitemap exigem um domínio HTTPS real em `URL_PUBLICA` ou `PORTAL_URL_SITE`; na prévia local o sitemap fica vazio e o robots impede indexação. `npm run gerar` lê `.env` quando existir.
+
+O roteiro para Search Console, conteúdo e campanhas está em [busca e publicidade](../documentação/busca-e-publicidade-2026-10-07.md). A preparação técnica não representa indexação confirmada, aprovação de anúncios ou campanha paga ativa.

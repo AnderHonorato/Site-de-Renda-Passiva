@@ -122,6 +122,7 @@ isolarBloco('sessão-e-chat', async () => {
     const sessao = await obterSessao();
     renderizarContaTopo(fim, sessao, { base, idioma });
     if (!sessao.usuario) return;
+    import('./evolução.js').then(m=>m.conferirConquistas(sessao)).catch(()=>{});
     sincronizarFavoritos().then(({ excedentesLocais }) => {
       if (excedentesLocais > 0 && !sessionStorage.getItem('portal.favoritos.cota-avisada')) {
         sessionStorage.setItem('portal.favoritos.cota-avisada', '1');

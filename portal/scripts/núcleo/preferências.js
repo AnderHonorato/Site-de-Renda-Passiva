@@ -42,6 +42,8 @@ async function enviarFavorito(slug, adicionar) {
     const sessao = await obterSessao();
     if (!sessao.usuario) return;
     await api(`/api/favoritos/${encodeURIComponent(slug)}`, { metodo: adicionar ? 'PUT' : 'DELETE' });
+    const evolucao = await import('./evolução.js');
+    void evolucao.conferirConquistas(sessao);
   } catch (erro) {
     if (erro.message === 'limite_favoritos') avisar(document.documentElement.lang === 'en'
       ? 'Account favorite limit reached. Saved on this device.'
@@ -111,6 +113,7 @@ export function aplicarTema(tema) {
   if (tema === 'sistema') raiz.removeAttribute('data-tema');
   else raiz.setAttribute('data-tema', tema);
   gravar('tema', tema);
+  document.dispatchEvent(new CustomEvent('portal:tema-alterado', { detail: { tema } }));
 }
 
 /** Alterna entre claro e escuro, partindo do que está valendo agora. */

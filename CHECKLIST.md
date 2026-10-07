@@ -1,4 +1,4 @@
-# Continuidade do portal — 06/10/2026 — v1.1.0
+# Continuidade do portal — 07/10/2026 — v1.2.0
 
 Fonte: `documentação/plano-portal-principal.md` e decisões 24–36 de `ander-flow/docs/decisoes.md`. O `ander-flow/` permanece referência congelada. Os itens descrevem o portal da 4400. Código/testes e validação visual são registrados separadamente.
 
@@ -30,10 +30,28 @@ Fonte: `documentação/plano-portal-principal.md` e decisões 24–36 de `ander-
 - [x] Trabalhos salvos com reabertura, renomear/apagar e cotas reais de Grátis/Plus aplicadas no servidor.
 - [ ] Cotas adicionais finais do Premium; até a definição, Premium herda explicitamente as cotas do Plus.
 - [ ] Admin de ferramentas, textos com histórico, categorias, limites e regras de pontos.
-- [ ] Boas-vindas/novidades editáveis; apresentação existente permanece.
+- [x] Boas-vindas/novidades editáveis no admin, com português/inglês, imagem, ordem, publicação/retirada programadas e revisão para reaparecer só quando inédita; apresentação existente preservada.
 - [ ] Edição administrativa das regras de pontos e revisão visual do modal de evolução.
 - [ ] Tradução de todas as ferramentas; moldura/telas de conta já bilíngues.
 - [ ] Processamento isolado no servidor, conversões avançadas e ferramentas planejadas (ondas 16/17).
 - [ ] Domínio/HTTPS, contato responsável, SMTP/procedimento de recuperação, restauração de backup e produção.
 
 Essas pendências já eram ondas separadas do plano do Claude e não estão concluídas nesta versão.
+
+## Refinamento — 07/10/2026
+
+- [x] Perfil completo, preferências e foto gravados juntos; erro conserva os campos e o tema atual do aparelho não é substituído pelo tema antigo do servidor.
+- [x] Foto com recorte local, zoom/posição e prévias de perfil/chat; saída quadrada 512 × 512 e consulta sem cache de foto antiga.
+- [x] Trabalhos, favoritos, suporte e planos como abas da conta, com saída/entrada lateral e rascunho preservado. Transição entre páginas de conta/perfil nos navegadores compatíveis.
+- [x] Emblemas SVG próprios com família, metal, facetas, fitas, ornamentos e diferenciação por patamar; níveis mais altos recebem coroa e detalhes adicionais.
+- [x] Celebração central de nível/medalha com feixes de luz, fila e registro no servidor por usuário/família/patamar. Repetição manual da animação disponível em Visual.
+- [x] Sons locais e discretos para recebimento de notificação/mensagem, nível/conquista e abrir/fechar chat; mensagem própria não faz som de recebimento; controle para silenciar em Preferências.
+- [x] `@honor`, conta mais recente criada em 07/10, colocada no nível 15 a pedido do dono; plano, credenciais, campos do perfil e atividades preservados. Backup privado antes da alteração.
+- [x] Admin de publicidade pronto para IDs futuros; demonstração local rotulada, com posições em listas/resultado/rodapé, sem conexão com Google ou receita.
+- [x] Conteúdo de uso das 65 ferramentas no HTML; metadados de compartilhamento, dados estruturados, sitemap e canonical condicionados a domínio HTTPS real. Roteiro de divulgação em `documentação/busca-e-publicidade-2026-10-07.md`.
+- [x] 1.078/1.078 testes de código, 4/4 fluxos da API e 65/65 de navegador. Após o ajuste de Planos/prévia manual, 16/16 testes de conta/chat repetidos. Verificador: 116 páginas, 200 scripts, 208 entradas; sem problemas.
+- [x] Porta 4400 responde no computador e no endereço LAN do mesmo computador; API e chat local ativos. Prévia de publicidade conferida no navegador real. Conta/perfil/recorte/animações conferidos em Chromium com dados de teste, incluindo larguras 320/390 e telas baixas.
+- [ ] Conferência em outro dispositivo físico da rede e avaliação dos sons em alto-falantes reais.
+- [ ] Referência Grok: Drive identificou `grok-workspace.zip`, mas bloqueou download por classificação de malware/spam; o conteúdo da animação não foi visualizado.
+
+Não houve implantação em domínio público nem ativação de anúncios reais/campanhas pagas. Os arquivos privados de execução, bancos, backups e imagens de testes não entram na publicação.

@@ -1,7 +1,8 @@
 import { api } from '../api.js';
 import { ícone } from '../ícones.js';
-import { criarAvatarDoPerfil } from '../nível.js';
+import { criarAvatarDoPerfil, criarIconeNivel, criarTempoNaComunidade } from '../nível.js';
 import { atualizarNivel } from '../evolução.js';
+import { tocarSom } from '../sons.js';
 
 const en = document.documentElement.lang === 'en';
 const txt = (pt, ingles) => en ? ingles : pt;
@@ -23,6 +24,7 @@ let reconectarTimer = 0;
 let replyAtual = null;
 let miniPerfil = null;
 let formatacao = null;
+let conversasRecolhidas = false;
 const perfisCache = new Map();
 
 function elemento(tag, classe, texto) {
@@ -159,6 +161,7 @@ function renderListaSalas(lista) {
 function criarInterfaceChat(corpo, sessao) {
   corpo.replaceChildren();
   const layout = elemento('div', 'chat__layout');
+  layout.dataset.recolhido = conversasRecolhidas ? 'sim' : 'nao';
   const lista = elemento('nav', 'chat__salas');
   lista.setAttribute('aria-label', txt('Conversas', 'Conversations'));
   const conversa = elemento('div', 'chat__conversa');
@@ -374,6 +377,7 @@ function montarMensagem(msg, sessao, composer) {
 
   const cabecalho = elemento('div', 'chat__mensagem-cabecalho');
   const perfilLink = elemento('a', 'chat__autor');
+  if (msg.autor?.papel === 'admin') perfilLink.dataset.admin = 'sim';
   perfilLink.href = base + 'perfil.html?usuario=' + encodeURIComponent(msg.autor?.usuario || '');
   perfilLink.append(
     avatarDe(msg.autor || { avatar: 'sol' }, 'chat__autor-avatar'),
@@ -429,6 +433,12 @@ function montarMensagem(msg, sessao, composer) {
   }
 
   const rodape = elemento('footer', 'chat__mensagem-rodape');
+  const selos = elemento('span','chat__autor-selos');
+  const nivel = criarIconeNivel(msg.autor?.nivel || 1);
+  selos.append(nivel);
+  if (msg.autor?.criado_em) selos.append(criarTempoNaComunidade(msg.autor.criado_em));
+  if (msg.autor?.papel === 'admin') { const cargo = elemento('span','chat__cargo','Admin'); selos.append(cargo); }
+  rodape.append(selos);
   rodape.append(elemento('time', '', horaCurta(msg.criado_em)));
   item.append(rodape);
   return item;
@@ -707,6 +717,15 @@ async function abrirSala(sala, conversa, sessao, { marcar = true } = {}) {
   conversa.replaceChildren();
 
   const cabecalho = elemento('header', 'chat__conversa-topo');
+  const alternar = elemento('button','chat__alternar-salas');
+  alternar.type = 'button'; alternar.innerHTML = ícone('pessoas');
+  alternar.setAttribute('aria-label',txt('Mostrar ou recolher conversas','Show or hide conversations'));
+  alternar.setAttribute('aria-expanded',String(!conversasRecolhidas));
+  alternar.addEventListener('click',()=>{
+    conversasRecolhidas = !conversasRecolhidas;
+    conversa.closest('.chat__layout').dataset.recolhido = conversasRecolhidas ? 'sim' : 'nao';
+    alternar.setAttribute('aria-expanded',String(!conversasRecolhidas));
+  });
   const titulo = elemento('div', 'chat__conversa-identidade');
   if (sala.tipo === 'direta') titulo.append(avatarDe(sala.outro || {}, 'chat__conversa-avatar'));
   else {
@@ -727,7 +746,7 @@ async function abrirSala(sala, conversa, sessao, { marcar = true } = {}) {
     )
   );
   titulo.append(tituloTexto);
-  cabecalho.append(titulo);
+  cabecalho.append(alternar,titulo);
 
   const mensagens = elemento('div', 'chat__mensagens');
   mensagens.setAttribute('role', 'log');
@@ -828,6 +847,7 @@ function iniciarEventos(sessao) {
       const dado = JSON.parse(evento.data);
       const id = String(dado.salaId || dado.sala || '');
       const msg = dado.mensagem || dado;
+      if (msg.autor?.id && Number(msg.autor.id) !== Number(sessao.usuario?.id)) tocarSom('notificacao');
       const painelVisivel = painelAtual && !painelAtual.hidden && painelAtual.dataset.fechando !== 'sim';
 
       if (painelVisivel && String(salaAtual) === id && conversaAtual) {
@@ -916,6 +936,7 @@ export function ligarChat(sessao) {
   let temporizadorFechar = 0;
   const ocultar = () => {
     if (painel.hidden || painel.dataset.fechando === 'sim') return;
+    tocarSom('fechar');
     painel.dataset.fechando = 'sim';
     bolha.setAttribute('aria-expanded', 'false');
     esconderMiniPerfil();
@@ -937,6 +958,7 @@ export function ligarChat(sessao) {
     clearTimeout(temporizadorFechar);
     delete painel.dataset.fechando;
     painel.hidden = false;
+    tocarSom('abrir');
     bolha.setAttribute('aria-expanded', 'true');
 
     if (!sessao.chat_aceito && !sessao.usuario?.chat_aceito) {

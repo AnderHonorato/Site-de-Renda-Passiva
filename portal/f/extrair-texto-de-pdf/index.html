@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Extrair texto do PDF — Ferramentas do Ander">
+  <meta property="og:description" content="Puxa o texto de um PDF para copiar ou editar, página por página. PDF escaneado precisa de OCR antes.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Toque em &quot;Escolher PDF&quot; ou arraste o arquivo para o quadro. Ele é lido no seu navegador, sem envio para servidor.</li><li>Se quiser só parte do documento, escreva as páginas em &quot;Páginas&quot;, como 1-3 ou 5. Em branco, vale o PDF todo. Escolha também se as linhas ficam como no PDF ou se são unidas em parágrafos.</li><li>Toque em &quot;Extrair texto&quot;. O texto aparece na tela, página por página.</li><li>Copie o texto ou baixe um arquivo .txt para abrir em qualquer editor.</li></ol><h3>Exemplo</h3><p>Um contrato de 3 páginas vira um texto com os títulos &quot;--- Página 1 ---&quot;, &quot;--- Página 2 ---&quot; e &quot;--- Página 3 ---&quot;, cada um seguido do que está escrito na página. Escrevendo &quot;2&quot; em &quot;Páginas&quot;, só o texto da página 2 sai. Um PDF que é só foto de documento escaneado não tem texto: a ferramenta avisa em vez de entregar um arquivo vazio.</p><h3>Limites e premissas</h3><p>PDF de até 100 MB e 3.000 páginas; texto de até 10.000.000 caracteres. O arquivo é reconhecido pelo conteúdo, não pela extensão. PDF protegido por senha não pode ser lido: salve uma cópia sem proteção. A ferramenta só pega o texto que está dentro do arquivo. PDF ESCANEADO (cada página é uma foto) não tem texto, e esta ferramenta não faz OCR: o reconhecimento de caracteres é outra ferramenta. A ordem é a que o arquivo guarda, que costuma ser a de leitura; em páginas com colunas, tabelas ou formulários o texto pode sair fora de ordem ou com os espaços trocados. Letras decorativas, fórmulas e fontes sem mapeamento correto podem sair trocadas por outros símbolos. Imagens e gráficos não viram texto. Na tela aparecem só os primeiros 200.000 caracteres; copiar e baixar levam o texto inteiro. A leitura usa o leitor de PDF pdf.js (licença Apache 2.0), que roda dentro da página.</p><h3>Perguntas frequentes</h3><details><summary>Meu PDF é enviado para algum servidor?</summary><p>Não. O leitor que extrai o texto é baixado com a página e roda no seu navegador; o arquivo não sai do aparelho.</p></details><details><summary>O aviso diz que meu PDF não tem texto. E agora?</summary><p>Ele provavelmente é um documento escaneado ou fotografado: cada página é uma imagem. Para transformar a imagem em texto é preciso OCR, que é outra ferramenta e não está nesta.</p></details><details><summary>O texto saiu com as linhas quebradas no meio das frases. Dá para arrumar?</summary><p>Sim: escolha &quot;Unir as linhas de cada parágrafo&quot;. As linhas seguidas viram uma só, e as palavras partidas com hífen no fim da linha são recompostas.</p></details><details><summary>E se o PDF tiver senha?</summary><p>Ele não pode ser lido sem a senha. Abra o arquivo no leitor de PDF, salve uma cópia sem proteção e use essa cópia aqui.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

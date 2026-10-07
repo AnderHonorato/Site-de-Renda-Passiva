@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="CSV e JSON — Ferramentas do Ander">
+  <meta property="og:description" content="Converte CSV em JSON e JSON em CSV, com separador e cabeçalho configuráveis.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Cole o CSV (ou as células copiadas da planilha) ou o JSON.</li><li>Escolha o sentido da conversão.</li><li>No sentido CSV para JSON, a primeira linha vira o nome dos campos.</li><li>Copie o resultado ou baixe o arquivo.</li></ol><h3>Exemplo</h3><p>O CSV &quot;nome;idade&quot; com a linha &quot;Ana;34&quot; vira [{&quot;nome&quot;:&quot;Ana&quot;,&quot;idade&quot;:&quot;34&quot;}]. No caminho inverso, uma lista de objetos vira uma tabela com uma coluna por campo encontrado.</p><h3>Limites e premissas</h3><p>Os valores vindos de CSV são texto: &quot;34&quot; sai como &quot;34&quot; e não como número, porque adivinhar tipo estraga CEP, telefone e código com zero à esquerda. O separador é detectado sozinho e aspas e quebras de linha dentro das células são respeitadas. Tudo roda no seu navegador.</p><h3>Perguntas frequentes</h3><details><summary>Por que os números viram texto no JSON?</summary><p>Para não corromper dados. Um CEP como 01310-000 ou um código 007 viraria outra coisa se a ferramenta tentasse converter sozinha. Se você precisa de números, converta no destino.</p></details><details><summary>E se os objetos do JSON tiverem campos diferentes?</summary><p>A tabela recebe a união de todos os campos encontrados, e as células sem valor ficam vazias.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

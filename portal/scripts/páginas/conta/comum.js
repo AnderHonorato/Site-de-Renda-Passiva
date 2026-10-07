@@ -5,8 +5,13 @@ export const en = document.documentElement.lang === 'en';
 export { api, caminhoDoIdioma, obterSessao, voltaSegura };
 
 function fecharPainelConta() {
-  if (history.length > 1 && document.referrer.startsWith(location.origin)) history.back();
-  else location.assign(document.documentElement.dataset.raizIdioma || './');
+  const painel=document.querySelector('.conta.conta--modal');
+  if(painel?.dataset.fechando==='sim')return;
+  if(painel) { painel.dataset.fechando='sim'; painel.classList.add('conta--saindo'); }
+  setTimeout(()=>{
+    if (history.length > 1 && document.referrer.startsWith(location.origin)) history.back();
+    else location.assign(document.documentElement.dataset.raizIdioma || './');
+  },painel&&!matchMedia('(prefers-reduced-motion: reduce)').matches?180:0);
 }
 
 document.querySelector('.conta__fechar-painel')?.addEventListener('click', fecharPainelConta);
@@ -14,8 +19,23 @@ document.querySelector('.conta.conta--modal')?.addEventListener('click', evento 
   if (evento.target === evento.currentTarget) fecharPainelConta();
 });
 document.addEventListener('keydown', evento => {
+  if (document.querySelector('dialog[open]')) return;
   if (evento.key === 'Escape' && document.querySelector('.conta.conta--modal')) fecharPainelConta();
+  if(evento.key==='Tab') {
+    const modal=document.querySelector('.conta.conta--modal');if(!modal)return;
+    const controles=[...modal.querySelectorAll('a[href],button,input,select,textarea,[tabindex="0"]')].filter(el=>!el.disabled&&el.getClientRects().length>0);
+    const primeiro=controles[0],ultimo=controles.at(-1);
+    if(evento.shiftKey&&document.activeElement===primeiro) { evento.preventDefault();ultimo?.focus(); }
+    else if(!evento.shiftKey&&document.activeElement===ultimo) { evento.preventDefault();primeiro?.focus(); }
+  }
 });
+
+const modalConta=document.querySelector('.conta.conta--modal');
+if(modalConta) {
+  modalConta.setAttribute('role','dialog');modalConta.setAttribute('aria-modal','true');
+  const titulo=modalConta.querySelector('h1');if(titulo) { titulo.id='titulo-painel-conta';modalConta.setAttribute('aria-labelledby',titulo.id); }
+  modalConta.querySelector('.conta__fechar-painel')?.focus({preventScroll:true});
+}
 
 export function estado(mensagem, erro = false) {
   const alvo = document.querySelector('.conta__estado');
@@ -48,6 +68,8 @@ export function mensagemErro(erro) {
     usuario_em_uso: en ? 'This username is already in use.' : 'Este @usuário já está em uso.',
     senha_invalida: en ? 'Check your password.' : 'Confira sua senha.',
     dados_invalidos: en ? 'Check the fields and try again.' : 'Confira os campos e tente novamente.',
+    sociais_invalidas: en ? 'Check your social links. Use a username or the direct profile URL; WhatsApp needs 8 to 15 digits.' : 'Confira os links sociais. Use o @usuário ou o endereço direto do perfil; WhatsApp precisa de 8 a 15 dígitos.',
+    ferramentas_nao_usadas: en ? 'Choose up to five tools you have already used.' : 'Escolha até cinco ferramentas que você já usou.',
     imagem_invalida: en ? 'Use a PNG, JPEG or WebP image.' : 'Use uma imagem PNG, JPEG ou WebP.',
     corpo_grande: en ? 'This file is too large.' : 'Este arquivo é grande demais.',
     csrf_invalido: en ? 'Session expired. Reload the page.' : 'Sessão expirada. Recarregue a página.',

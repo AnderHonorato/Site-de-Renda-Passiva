@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Limpeza de texto — Ferramentas do Ander">
+  <meta property="og:description" content="Remove espaços duplicados, linhas vazias e quebras de linha soltas.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Cole ou digite o texto no campo. O texto limpo acompanha a digitação.</li><li>Confira as opções: espaços do começo e do fim, espaços repetidos e linhas vazias seguidas já vêm marcados. Marque &quot;Juntar linhas partidas no meio da frase&quot; para texto copiado de PDF.</li><li>Copie o texto limpo ou baixe como arquivo de texto.</li></ol><h3>Exemplo</h3><p>O texto &quot;Olá   mundo&quot;, seguido de várias linhas vazias e de &quot;Tudo bem?&quot;, vira &quot;Olá mundo&quot;, uma linha vazia e &quot;Tudo bem?&quot;. Já &quot;Isto é uma frase&quot; numa linha e &quot;que continua na linha de baixo.&quot; na seguinte, com a opção de juntar linhas marcada, viram uma frase só: &quot;Isto é uma frase que continua na linha de baixo.&quot;</p><h3>Limites e premissas</h3><p>Até 200.000 caracteres. Os parágrafos de verdade, separados por linha vazia, são mantidos: várias linhas vazias seguidas viram uma só, nunca nenhuma. Ao juntar linhas, uma linha só continua na seguinte se não terminar em ponto, exclamação, interrogação, dois-pontos, ponto e vírgula ou hífen, e a seguinte não começar como item de lista (&quot;-&quot;, &quot;•&quot;, &quot;1.&quot;). Palavra partida com hífen no fim da linha não é juntada. Letras, acentos, pontuação e espaços únicos ficam como estão. O texto não sai do seu navegador.</p><h3>Perguntas frequentes</h3><details><summary>Para que serve juntar linhas partidas?</summary><p>Texto copiado de PDF costuma vir com uma quebra de linha no fim de cada linha da página, mesmo no meio da frase. Com a opção marcada, essas linhas viram uma só; os parágrafos, separados por linha vazia, continuam separados.</p></details><details><summary>Por que uma linha não foi juntada com a seguinte?</summary><p>Porque ela termina em ponto, exclamação, interrogação, dois-pontos, ponto e vírgula ou hífen, ou a linha seguinte começa como item de lista. Nesses casos a quebra provavelmente é de propósito.</p></details><details><summary>O texto que eu colo é guardado?</summary><p>Não. A limpeza acontece no seu navegador e o texto não é enviado nem guardado.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

@@ -16,6 +16,8 @@ const textos = {
     niveis: ['Níveis e medalhas', 'Veja como sua participação no portal evolui o nível, as medalhas e as personalizações do perfil.'],
     usuarios: ['Usuários', 'Gerencie contas e planos pelo painel administrativo.'],
     adminSuporte: ['Suporte', 'Responda às mensagens enviadas pelos usuários.'],
+    novidades: ['Novidades', 'Edite a apresentação de novidades, sua ordem e as datas de publicação.'],
+    publicidade: ['Publicidade', 'Configure os blocos de anúncios e confira as posições na prévia local.'],
   },
   en: {
     entrar: ['Sign in', 'Access your account to chat and save your preferences.', 'Email', 'Password', 'Sign in', 'Create account', 'Forgot password'],
@@ -30,6 +32,8 @@ const textos = {
     niveis: ['Levels and medals', 'See how your activity evolves your level, medals, and profile customizations.'],
     usuarios: ['Users', 'Manage accounts and plans in the admin panel.'],
     adminSuporte: ['Support', 'Reply to messages sent by users.'],
+    novidades: ['News', 'Edit news, their order and publication dates.'],
+    publicidade: ['Advertising', 'Configure ad units and inspect their positions in the local preview.'],
   },
 };
 
@@ -74,10 +78,11 @@ export function paginasConta(ctx) {
     ['redefinir-senha.html', 'redefinir', quadro(t.redefinir[0], t.redefinir[1], `<form id="form-redefinir" class="conta__form">${campo('senha', t.redefinir[2], 'password', 'autocomplete="new-password" minlength="12" maxlength="128" required')}<button class="botão botão--primário" type="submit">${escapar(t.redefinir[3])}</button></form>`, 'redefinir')],
     ['conta/index.html', 'conta', quadro(t.conta[0], t.conta[1], `<div id="conta-conteudo" hidden>
       <nav class="conta__acoes-rapidas" aria-label="${en ? 'Quick actions' : 'Ações rápidas'}">
-        <a id="atalho-perfil-publico" class="conta__acao" href="../perfil.html">${ícone('pessoas')}<span>${en ? 'Profile' : 'Perfil'}</span></a>
-        <a class="conta__acao" href="trabalhos.html">${ícone('pasta')}<span>${en ? 'Works' : 'Trabalhos'}</span></a>
-        <a class="conta__acao" href="mensagens.html">${ícone('balão')}<span>${en ? 'Messages' : 'Mensagens'}</span></a>
-        <a class="conta__acao" href="../planos.html">${ícone('estrela')}<span>${en ? 'Plans' : 'Planos'}</span></a>
+        <button class="conta__acao" type="button" data-conta-aba="perfil">${ícone('pessoas')}<span>${en ? 'Profile' : 'Perfil'}</span></button>
+        <button class="conta__acao" type="button" data-conta-aba="trabalhos">${ícone('pasta')}<span>${en ? 'Works' : 'Trabalhos'}</span></button>
+        <button class="conta__acao" type="button" data-conta-aba="favoritos">${ícone('estrela')}<span>${en ? 'Favorites' : 'Favoritos'}</span></button>
+        <button class="conta__acao" type="button" data-conta-aba="mensagens">${ícone('balão')}<span>${en ? 'Messages' : 'Mensagens'}</span></button>
+        <button class="conta__acao" type="button" data-conta-aba="planos">${ícone('estrela')}<span>${en ? 'Plans' : 'Planos'}</span></button>
         <button class="conta__acao conta__acao--sair" id="sair-conta" type="button">${ícone('seta')}<span>${escapar(t.conta[14])}</span></button>
       </nav>
 
@@ -101,6 +106,7 @@ export function paginasConta(ctx) {
               <div class="ações">
                 <label class="botão botão--linha conta__upload" for="foto-perfil">${ícone('imagem')}${en ? 'Use photo' : 'Usar foto'}</label>
                 <input class="sr-só" id="foto-perfil" type="file" accept="image/png,image/jpeg,image/webp">
+                <button class="botão botão--linha" id="recortar-foto" type="button" hidden>${ícone('imagem')}${en ? 'Crop photo' : 'Recortar foto'}</button>
                 <button class="botão botão--texto" id="remover-foto" type="button" hidden>${ícone('lixeira')}${en ? 'Remove photo' : 'Remover foto'}</button>
               </div>
             </div>
@@ -134,8 +140,9 @@ export function paginasConta(ctx) {
 
       <section class="conta__aba" data-conta-painel="aparencia" hidden>
         <div class="conta__subtitulo"><div><h2>${en ? 'Plan and progress' : 'Plano e evolução'}</h2><p class="suave pequeno">${en ? 'Your activity unlocks new profile styles.' : 'Sua atividade desbloqueia novos visuais para o perfil.'}</p></div></div>
-        <a id="plano-visual" class="conta__plano" href="../planos.html"></a>
+        <button type="button" id="plano-visual" class="conta__plano" data-conta-aba="planos"></button>
         <div id="progresso-nivel" class="conta__progresso"></div>
+        <button type="button" id="previa-conquista" class="botão botão--linha">${ícone('estrela')}${en ? 'Replay level celebration' : 'Ver animação do nível'}</button>
         <div id="conta-medalhas" class="conta__medalhas"></div>
         <a class="conta__como-evoluir" href="../niveis.html">${ícone('ajuda')}${en ? 'How levels and medals work' : 'Como funcionam níveis e medalhas'}</a>
 
@@ -149,6 +156,8 @@ export function paginasConta(ctx) {
         <form id="form-preferencias" class="conta__form conta__form--compacta">
           <label class="conta__campo"><span>${escapar(t.conta[19])}</span><select name="idioma"><option value="pt-BR">Português</option><option value="en">English</option></select></label>
           <label class="conta__campo"><span>${escapar(t.conta[20])}</span><select name="tema"><option value="sistema">${en ? 'System' : 'Sistema'}</option><option value="claro">${en ? 'Light' : 'Claro'}</option><option value="escuro">${en ? 'Dark' : 'Escuro'}</option></select></label>
+          <label class="conta__aceite"><input id="sons-ativos" type="checkbox"><span>${en ? 'Sounds for messages, achievements and chat' : 'Sons para mensagens, conquistas e chat'}</span></label>
+          <p class="suave pequeno">${en ? 'Short, quiet sounds. This choice is saved on this device.' : 'Sons curtos e discretos. Esta escolha fica salva neste aparelho.'}</p>
         </form>
       </section>
 
@@ -168,7 +177,23 @@ export function paginasConta(ctx) {
         <form id="form-amizade" class="conta__form conta__form--linha">${campo('amigo', '@usuário', 'text', 'autocomplete="off"')}<button class="botão" type="submit">${ícone('mais')}${escapar(t.conta[17])}</button></form>
       </section>
 
-      <nav id="conta-admin" class="conta__admin" hidden><a class="conta__acao" href="../admin/chat/">${ícone('escudo')}${en ? 'Chat moderation' : 'Moderação'}</a><a class="conta__acao" href="../admin/usuarios/">${ícone('pessoas')}${en ? 'Users' : 'Usuários'}</a><a class="conta__acao" href="../admin/suporte/">${ícone('balão')}${en ? 'Support' : 'Suporte'}</a></nav>
+      <section class="conta__aba" data-conta-painel="trabalhos" hidden>
+        <h2>${en ? 'Your saved works' : 'Seus trabalhos salvos'}</h2><p id="trabalhos-resumo" class="suave pequeno"></p><div id="lista-trabalhos"></div>
+      </section>
+      <section class="conta__aba" data-conta-painel="planos" hidden>
+        <h2>${en ? 'Plans and account limits' : 'Planos e limites da conta'}</h2><div id="conta-planos" class="conta__planos"></div>
+        <p class="suave pequeno">${en ? 'Paid plans are granted by the administrator. There is no automatic checkout.' : 'Planos pagos são liberados pelo administrador. Não há cobrança automática.'}</p>
+        <button type="button" class="botão botão--linha" data-conta-aba="mensagens">${en ? 'Contact support' : 'Falar com o suporte'}</button>
+      </section>
+      <section class="conta__aba" data-conta-painel="favoritos" hidden>
+        <h2>${en ? 'Your favorite tools' : 'Suas ferramentas favoritas'}</h2><div id="conta-favoritos" class="conta__colecao"></div>
+      </section>
+      <section class="conta__aba" data-conta-painel="mensagens" hidden>
+        <h2>${en ? 'Messages to support' : 'Mensagens ao suporte'}</h2>
+        <form id="form-suporte" class="conta__form">${campo('assunto', en ? 'Subject' : 'Assunto', 'text', 'minlength="3" maxlength="100" required')}<label class="conta__campo"><span>${en ? 'Message' : 'Mensagem'}</span><textarea name="texto" minlength="10" maxlength="2000" rows="3" required></textarea></label><button class="botão" type="submit">${en ? 'Send message' : 'Enviar mensagem'}</button></form><div id="lista-suporte"></div>
+      </section>
+
+      <nav id="conta-admin" class="conta__admin" hidden><a class="conta__acao" href="../admin/chat/">${ícone('escudo')}${en ? 'Chat moderation' : 'Moderação'}</a><a class="conta__acao" href="../admin/usuarios/">${ícone('pessoas')}${en ? 'Users' : 'Usuários'}</a><a class="conta__acao" href="../admin/suporte/">${ícone('balão')}${en ? 'Support' : 'Suporte'}</a><a class="conta__acao" href="../admin/publicidade/">${ícone('balão')}${en ? 'Advertising' : 'Publicidade'}</a><a class="conta__acao" href="../admin/novidades/">${ícone('balão')}${en ? 'News' : 'Novidades'}</a></nav>
 
       <div id="conta-salvar" class="conta-salvar" hidden>
         <span>${en ? 'You have unsaved changes' : 'Você alterou algumas coisas'}</span>
@@ -193,6 +218,34 @@ export function paginasConta(ctx) {
     ['conta/trabalhos.html', 'trabalhos', quadro(t.trabalhos[0], t.trabalhos[1], `<div class="conta__trabalhos-cabeçalho"><p id="trabalhos-resumo" class="suave pequeno"></p><a class="botão botão--linha" href="../ferramentas.html">${en ? 'Open tools' : 'Abrir ferramentas'}</a></div><div id="lista-trabalhos"></div><p class="suave pequeno">${en ? 'Free accounts can save 3 works. Plus can save 500. Premium currently inherits the Plus account quota until its final limits are defined.' : 'Contas Grátis podem salvar 3 trabalhos. Plus pode salvar 500. Premium herda por enquanto a cota de conta do Plus até os limites finais serem definidos.'}</p>`, 'trabalhos')],
     ['admin/usuarios/index.html', 'usuarios', quadro(t.usuarios[0], t.usuarios[1], '<div id="lista-usuarios"></div>', 'usuarios')],
     ['admin/suporte/index.html', 'adminSuporte', quadro(t.adminSuporte[0], t.adminSuporte[1], '<div id="lista-admin-suporte"></div>', 'admin-suporte')],
+    ['admin/novidades/index.html', 'novidades', quadro(t.novidades[0], t.novidades[1], `<nav class="conta__links"><a href="../chat/">${en ? 'Moderation' : 'Moderação'}</a><a href="../usuarios/">${en ? 'Users' : 'Usuários'}</a><a href="../suporte/">${en ? 'Support' : 'Suporte'}</a></nav>
+      <button class="botão botão--linha" type="button" id="nova-novidade">${en ? 'New item' : 'Nova novidade'}</button>
+      <form id="form-novidade" class="conta__form" hidden>
+        ${['pt','en'].map(l=>`<fieldset><legend>${l === 'pt' ? 'Português' : 'English'}</legend>
+          ${campo(`titulo_${l}`,en ? 'Title' : 'Título','text','maxlength="120" required')}
+          <label class="conta__campo"><span>${en ? 'Text' : 'Texto'}</span><textarea name="texto_${l}" rows="4" maxlength="2000" required></textarea></label>
+          ${campo(`botao_${l}`,en ? 'Button label (optional)' : 'Texto do botão (opcional)','text','maxlength="60"')}
+          ${campo(`alt_${l}`,en ? 'Image description' : 'Descrição da imagem','text','maxlength="200"')}
+        </fieldset>`).join('')}
+        ${campo('url',en ? 'Button destination (e.g. /ferramentas.html)' : 'Destino do botão (ex.: /ferramentas.html)','text','maxlength="500"')}
+        ${campo('ordem',en ? 'Order (lower numbers first)' : 'Ordem (números menores primeiro)','number','min="0" max="9999" value="0" required')}
+        ${campo('publicar_em',en ? 'Publish at (your local time; empty = immediately)' : 'Publicar em (seu horário local; vazio = agora)','datetime-local')}
+        ${campo('retirar_em',en ? 'Withdraw at (optional)' : 'Retirar em (opcional)','datetime-local')}
+        <label class="conta__campo"><span>${en ? 'Image (PNG, JPEG, WebP, up to 1 MB)' : 'Imagem (PNG, JPEG, WebP, até 1 MB)'}</span><input type="file" name="imagem" accept="image/png,image/jpeg,image/webp"></label>
+        <label><input type="checkbox" name="remover_imagem"> ${en ? 'Remove current image' : 'Remover imagem atual'}</label>
+        <label><input type="checkbox" name="ativo"> ${en ? 'Publish (leave off to save a draft)' : 'Publicar (desmarque para guardar rascunho)'}</label>
+        <p class="suave pequeno">${en ? 'Up to 20 enabled items, including scheduled news. Both languages are required. Every content update appears again to visitors.' : 'Até 20 itens ligados, incluindo agendados. As duas traduções são obrigatórias. Ao atualizar o conteúdo publicado, ele volta a aparecer aos visitantes.'}</p>
+        <div class="ações"><button class="botão" type="submit">${en ? 'Save' : 'Salvar'}</button><button class="botão botão--linha" id="prever-novidade" type="button">${en ? 'Preview' : 'Pré-visualizar'}</button><button class="botão botão--texto" id="cancelar-novidade" type="button">${en ? 'Cancel' : 'Cancelar'}</button></div>
+      </form><div id="lista-novidades"></div>`, 'novidades')],
+    ['admin/publicidade/index.html', 'publicidade', quadro(t.publicidade[0],t.publicidade[1],`<form id="form-publicidade" class="conta__form" hidden>
+      <label><input type="checkbox" name="ativo"> ${en ? 'Enable advertising' : 'Ligar publicidade'}</label>
+      <label id="opcao-demonstracao"><input type="checkbox" name="demonstracao"> ${en ? 'Local preview (no Google requests)' : 'Demonstração local (sem chamadas ao Google)'}</label>
+      <label><input type="checkbox" name="teste"> ${en ? 'AdSense test mode' : 'Modo de teste do AdSense'}</label>
+      ${campo('editor',en ? 'Publisher ID' : 'ID do editor','text','placeholder="ca-pub-0000000000000000" maxlength="23"')}
+      ${['resultado','lista','rodape'].map(p=>campo(p,en ? {resultado:'After result and instructions',lista:'Catalog list',rodape:'Before footer'}[p] : {resultado:'Depois do resultado e das instruções',lista:'Lista do catálogo',rodape:'Antes do rodapé'}[p],'text','inputmode="numeric" maxlength="20"')).join('')}
+      <p class="suave pequeno">${en ? 'Paid accounts, account/profile pages, chat and study tools do not show ads. Ads only load after a privacy choice. Local preview is blocked in production.' : 'Contas pagas, páginas de conta/perfil, chat e ferramentas de estudo não exibem anúncios. Os blocos só carregam depois da escolha de privacidade. A demonstração local é bloqueada em produção.'}</p>
+      <button type="submit" class="botão">${en ? 'Save settings' : 'Salvar configuração'}</button>
+      </form><p id="publicidade-status" class="suave"></p><nav class="conta__links"><a href="../../ferramentas.html">${en ? 'Inspect catalog' : 'Conferir catálogo'}</a><a href="../../">${en ? 'Inspect home page' : 'Conferir início'}</a></nav>`,'publicidade')],
   ];
   return paginas.map(([arquivo, chave, conteúdo]) => {
     const profundidade = arquivo.split('/').length - 1;

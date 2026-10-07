@@ -5,6 +5,7 @@ import { íconeVivo, imagemDoTema, conferirÍconesVivos } from './ícone-animado
 import { lerFavoritos, alternarFavorito } from './preferências.js';
 import { avisar } from './interface.js';
 import { t, éInglês, raizDoSite } from './idioma.js';
+import { iniciarPublicidade } from '../publicidade/anúncios-condicionais.js';
 
 /**
  * Markup de uma linha de ferramenta.
@@ -75,16 +76,17 @@ function fichaDaPlanejada(f) {
  * @param {readonly object[]} lista
  * @param {{base?: string, vazio?: string}} [opções]
  */
-export function desenharLista(contêiner, lista, { base = raizDoSite, vazio = t('lista.nenhuma') } = {}) {
+export function desenharLista(contêiner, lista, { base = raizDoSite, vazio = t('lista.nenhuma'), anuncios = false } = {}) {
   const favoritos = new Set(lerFavoritos());
   if (lista.length === 0) {
     contêiner.innerHTML = `<p class="vazio">${imagemDoTema(`${base}recursos/ilustrações/estado-vazio`, { classe: 'vazio__desenho', largura: 160, altura: 120 })}${escapar(vazio)}</p>`;
     return;
   }
   contêiner.innerHTML = lista
-    .map((f) => linhaDeFerramenta(f, { base, favoritada: favoritos.has(f.slug) }))
+    .map((f,i) => linhaDeFerramenta(f, { base, favoritada: favoritos.has(f.slug) })+(anuncios && [11,23].includes(i) && i+1<lista.length ? '<div data-anuncio-posicao="lista" class="publicidade-vazia"></div>' : ''))
     .join('');
   conferirÍconesVivos(contêiner);
+  if(anuncios) void iniciarPublicidade().catch(()=>{});
 }
 
 /**

@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Sorteio — Ferramentas do Ander">
+  <meta property="og:description" content="Sorteia números, nomes e divide participantes em times, sem repetição quando pedido.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Escolha o tipo: números, nomes ou times.</li><li>Para números, informe a faixa. Para nomes e times, escreva um por linha.</li><li>Diga quantos resultados quer (ou quantos times).</li><li>Toque em Sortear. Um código de conferência é gerado junto, para você provar depois que não refez o sorteio.</li></ol><h3>Exemplo</h3><p>Doze participantes em três times: cada time sai com quatro pessoas, distribuídas ao acaso.</p><h3>Limites e premissas</h3><p>O sorteio usa a fonte criptográfica do navegador, então o resultado é imprevisível e não tem viés. Nada é registrado em servidor: se a página for recarregada, o sorteio é outro. Por isso existe o código de conferência, que é gerado junto do resultado.</p><h3>Perguntas frequentes</h3><details><summary>O sorteio é realmente aleatório?</summary><p>Sim. Usa crypto.getRandomValues, a mesma fonte usada para gerar chaves. A amostragem descarta valores que causariam viés, então todos os itens têm exatamente a mesma chance.</p></details><details><summary>Serve para sorteio com valor legal?</summary><p>Não. Promoção comercial com distribuição de prêmio precisa de autorização e regras próprias. Esta ferramenta serve para sorteio informal.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

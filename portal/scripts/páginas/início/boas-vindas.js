@@ -7,21 +7,8 @@ import { carregarBloco } from '../../núcleo/isolar-bloco.js';
 import { ícone } from '../../núcleo/ícones.js';
 import { escapar } from '../../núcleo/texto.js';
 import { t, lista, idioma } from '../../núcleo/idioma.js';
+import { carregarNovidades, lembrarNovidades, linkNovidadeSeguro, ultimaNovidadeVista } from '../../núcleo/novidades.js';
 
-const COOKIE = 'visto_novidades';
-const UM_ANO = 60 * 60 * 24 * 365;
-
-function jáViu() {
-  try {
-    if (document.cookie.split('; ').some((c) => c.startsWith(`${COOKIE}=`))) return true;
-  } catch { /* cookies bloqueados: cai para o armazenamento local */ }
-  try { return localStorage.getItem(COOKIE) === '1'; } catch { return false; }
-}
-
-function lembrar() {
-  try { document.cookie = `${COOKIE}=1; max-age=${UM_ANO}; path=/; SameSite=Lax`; } catch { /* sem cookie */ }
-  try { localStorage.setItem(COOKIE, '1'); } catch { /* sem armazenamento */ }
-}
 
 /** Cada item da lista traduzida é "título|texto". */
 function slidesDaLista() {
@@ -34,9 +21,9 @@ function slidesDaLista() {
 let aberto = null;
 
 /** Abre o popup. Devolve o elemento (ou o que já estava aberto). */
-export function abrirBoasVindas() {
+export function abrirBoasVindas({ itens = slidesDaLista(), lembrar = true } = {}) {
   if (aberto) return aberto;
-  const slides = slidesDaLista();
+  const slides = itens;
   if (slides.length === 0) return null;
 
   const diálogo = document.createElement('dialog');
@@ -49,14 +36,12 @@ export function abrirBoasVindas() {
     <div class="boas-vindas__texto">
       <button class="ícone-botão boas-vindas__fechar" type="button" data-bv="fechar" aria-label="${escapar(t('boasVindas.fechar'))}">${ícone('fechar')}</button>
       <div class="boas-vindas__slides" aria-live="polite">
-        ${slides.map((s, i) => `<section class="boas-vindas__slide" data-slide="${i}"${i === 0 ? '' : ' hidden'}>
-          <h2${i === 0 ? ' id="bv-título"' : ''}>${escapar(s.título)}</h2>
-          <p>${escapar(s.texto)}</p>
-        </section>`).join('')}
       </div>
-      <div class="boas-vindas__barra" role="presentation"><i></i></div>
+      <p class="suave pequeno" data-bv-posicao role="status"></p>
+      <div class="boas-vindas__segmentos" aria-hidden="true"></div>
       <div class="boas-vindas__ações">
         <button class="botão botão--texto" type="button" data-bv="fechar">${escapar(t('boasVindas.pular'))}</button>
+        <button class="botão botão--linha" type="button" data-bv="anterior">${idioma === 'en' ? 'Previous' : 'Anterior'}</button>
         <button class="botão boas-vindas__próximo" type="button" autofocus data-bv="próximo">
           <span>${escapar(t('boasVindas.próximo'))}</span> ${ícone('seta', { tamanho: 16 })}
         </button>
@@ -64,13 +49,35 @@ export function abrirBoasVindas() {
     </div>`;
   document.body.append(diálogo);
 
+  const area = diálogo.querySelector('.boas-vindas__slides');
+  const segmentos = diálogo.querySelector('.boas-vindas__segmentos');
+  const posicao = diálogo.querySelector('[data-bv-posicao]');
+  for (const [i,s] of slides.entries()) {
+    const slide = document.createElement('section'); slide.className = 'boas-vindas__slide'; slide.dataset.slide = String(i);
+    const titulo = document.createElement('h2'); titulo.textContent = s.título ?? s.titulo; titulo.id = `bv-titulo-${i}`;
+    const texto = document.createElement('p'); texto.textContent = s.texto; slide.append(titulo,texto);
+    if (typeof s.imagem_url === 'string' && /^\/api\/(admin\/)?novidades\/\d+\/imagem\?v=\d+$/u.test(s.imagem_url)) {
+      const imagem = document.createElement('img'); imagem.src = s.imagem_url; imagem.alt = s.alt || ''; imagem.className = 'boas-vindas__imagem'; imagem.loading = 'lazy';
+      imagem.addEventListener('error',()=>imagem.remove(),{once:true}); slide.append(imagem);
+    }
+    const url = linkNovidadeSeguro(s.url);
+    if (url && s.botao) { const link = document.createElement('a'); link.href = url; link.className = 'botão botão--linha'; link.textContent = s.botao; slide.append(link); }
+    area.append(slide); segmentos.append(document.createElement('i'));
+  }
+
   let atual = 0;
-  const barra = diálogo.querySelector('.boas-vindas__barra i');
   const rótuloDoBotão = diálogo.querySelector('.boas-vindas__próximo span');
+  const anterior = diálogo.querySelector('[data-bv="anterior"]');
   const ir = (índice) => {
     atual = Math.max(0, Math.min(slides.length - 1, índice));
     diálogo.querySelectorAll('.boas-vindas__slide').forEach((el, i) => { el.hidden = i !== atual; });
-    barra.style.transform = `scaleX(${(atual + 1) / slides.length})`;
+    segmentos.hidden = slides.length === 1;
+    segmentos.querySelectorAll('i').forEach((el,i)=>el.classList.toggle('atual',i === atual));
+    anterior.hidden = atual === 0;
+    posicao.hidden = slides.length === 1;
+    posicao.textContent = idioma === 'en' ? `Item ${atual + 1} of ${slides.length}` : `Item ${atual + 1} de ${slides.length}`;
+    diálogo.setAttribute('aria-labelledby',`bv-titulo-${atual}`);
+    diálogo.querySelector('.boas-vindas__próximo svg').hidden = slides.length === 1;
     rótuloDoBotão.textContent = atual === slides.length - 1 ? t('boasVindas.começar') : t('boasVindas.próximo');
   };
   ir(0);
@@ -80,7 +87,7 @@ export function abrirBoasVindas() {
     if (!aberto) return;
     vitrine?.destruir?.();
     aberto = null;
-    lembrar();
+    if (lembrar) lembrarNovidades(Math.max(1,...slides.map(s=>Number(s.revisao)||1)));
     diálogo.classList.add('boas-vindas--saindo');
     const remover = () => diálogo.remove();
     diálogo.addEventListener('animationend', remover, { once: true });
@@ -93,12 +100,13 @@ export function abrirBoasVindas() {
     if (alvo === diálogo) { fechar(); return; } // clique no fundo escuro
     const ação = alvo?.closest('[data-bv]')?.dataset.bv;
     if (ação === 'fechar') fechar();
+    else if (ação === 'anterior') ir(atual - 1);
     else if (ação === 'próximo') (atual === slides.length - 1 ? fechar() : ir(atual + 1));
   });
   diálogo.addEventListener('cancel', (evento) => { evento.preventDefault(); fechar(); }); // Esc
   diálogo.addEventListener('keydown', (evento) => {
-    if (evento.key === 'ArrowRight') ir(atual + 1);
-    else if (evento.key === 'ArrowLeft') ir(atual - 1);
+    if (evento.key === 'ArrowRight') { evento.preventDefault(); ir(atual + 1); }
+    else if (evento.key === 'ArrowLeft') { evento.preventDefault(); ir(atual - 1); }
   });
 
   if (typeof diálogo.showModal === 'function') diálogo.showModal(); else diálogo.setAttribute('open', '');
@@ -118,11 +126,22 @@ export function abrirBoasVindas() {
   return diálogo;
 }
 
-export function montar() {
-  document.getElementById('ver-apresentação')?.addEventListener('click', () => abrirBoasVindas());
-  if (jáViu()) return;
+export async function montar() {
+  let publicado = await carregarNovidades(idioma);
+  document.getElementById('ver-apresentação')?.addEventListener('click', () => {
+    abrirBoasVindas({itens:[...slidesDaLista(),...publicado]});
+  });
+  const visto = ultimaNovidadeVista();
+  const itens = [...(visto ? [] : slidesDaLista()),...publicado.filter(s=>s.revisao > visto)];
+  if (!itens.length) return;
   // Espera a página assentar: o popup não disputa o primeiro carregamento.
-  const abrir = () => abrirBoasVindas();
+  let mostrou = false;
+  const abrir = () => {
+    if (mostrou || document.documentElement.dataset.consentimentoPronto !== 'sim' || document.querySelector('.consentimento') || document.querySelector('dialog[open]')) return;
+    mostrou = true; abrirBoasVindas({itens});
+  };
+  window.addEventListener('consentimento-alterado',()=>setTimeout(abrir,0));
+  window.addEventListener('consentimento-pronto',()=>setTimeout(abrir,700),{once:true});
   if ('requestIdleCallback' in window) requestIdleCallback(() => setTimeout(abrir, 700), { timeout: 3000 });
   else setTimeout(abrir, 1500);
 }

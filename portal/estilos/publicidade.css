@@ -36,6 +36,8 @@
 }
 
 [data-anuncio-posicao].publicidade-vazia { display: none; }
+.publicidade-demonstracao { min-height:120px; display:grid; align-content:center; justify-items:center; padding:20px; border:1px dashed var(--borda-forte); border-radius:var(--raio-p); background:var(--superfície-2); color:var(--tinta-média); text-align:center; }
+.publicidade-demonstracao p { margin:6px 0 0; font-size:.8rem; }
 
 @media print {
   [data-anuncio-posicao] { display: none !important; }

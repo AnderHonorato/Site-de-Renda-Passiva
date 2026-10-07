@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Converter planilha — Ferramentas do Ander">
+  <meta property="og:description" content="Converte CSV, TSV e JSON entre si e para XLSX. Não lê XLSX, XLS nem ODS; fórmulas e macros não são levadas.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Escolha um arquivo CSV, TSV ou JSON, ou cole o conteúdo da planilha na caixa (dá para copiar as células direto do Excel).</li><li>Escolha o formato de saída: CSV, TSV, JSON ou XLSX. O formato de entrada e o separador são detectados sozinhos; se errar, escolha à mão.</li><li>Confira a prévia e toque em &quot;Baixar&quot;. Nos formatos de texto, &quot;Copiar&quot; leva o resultado para a área de transferência.</li></ol><h3>Exemplo</h3><p>O CSV &quot;nome;cidade;cep&quot; com as linhas &quot;Ana;São Paulo;01310-000&quot; e &quot;Bruno;Recife;50030-230&quot; vira, em JSON, uma lista de dois objetos com os campos nome, cidade e cep. O CEP continua &quot;01310-000&quot; (texto). Em XLSX, o resultado é uma planilha de 2 linhas de dados e 3 colunas, com o cabeçalho destacado.</p><h3>Limites e premissas</h3><p>Arquivos de até 20 MB, 200.000 linhas e 500 colunas; o XLSX gerado vai até 1.000.000 células. Lê CSV, TSV e JSON (lista de objetos ou lista de listas), em UTF-8, UTF-16 ou Windows-1252 (o &quot;CSV&quot; do Excel em português). Não lê XLSX, XLS nem ODS: abra a planilha no Excel ou no LibreOffice e salve como CSV. Saem só os valores: fórmulas, formatação, gráficos, macros e várias abas não são levados, e o XLSX gerado tem uma aba. Valores de CSV/TSV são texto; marque &quot;Converter números&quot; para gravar números e verdadeiro/falso no JSON e no XLSX (números com zero à esquerda, como &quot;007&quot;, continuam texto). No CSV e no TSV, célula de texto que começa com =, +, - ou @ ganha um apóstrofo, para o Excel não rodá-la como fórmula. Cabeçalhos repetidos ganham sufixo (nome, nome_2). Tudo roda no seu navegador, sem envio.</p><h3>Perguntas frequentes</h3><details><summary>Posso converter um XLSX em CSV?</summary><p>Ainda não: esta ferramenta não lê XLSX. No Excel, use Arquivo &gt; Salvar como &gt; CSV UTF-8 e depois converta aqui para JSON, TSV ou outro CSV.</p></details><details><summary>Por que meu CSV abre com os acentos errados no Excel?</summary><p>O Excel precisa da marca de codificação (BOM) no começo do arquivo UTF-8. A opção vem marcada por padrão; desmarque só se o programa de destino reclamar dela.</p></details><details><summary>Por que &quot;007&quot; não virou número?</summary><p>Porque número com zero à esquerda costuma ser código (CEP, telefone, SKU), e virar número apagaria o zero. Ele só vira número se não tiver zero à esquerda.</p></details><details><summary>O que acontece com linhas de tamanhos diferentes?</summary><p>Elas são completadas com células vazias até a largura da maior linha, e a tela avisa quantas foram ajustadas.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

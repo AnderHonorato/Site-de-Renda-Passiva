@@ -16,7 +16,7 @@ export function montar() {
     if (lista.length > 0) desenharLista(listaRecentes, lista);
   }
 
-  desenharLista(listaProntas, ferramentasProntas);
+  desenharLista(listaProntas, ferramentasProntas,{anuncios:true});
   desenharRecentes();
   ligarLista(listaProntas, ferramentas, desenharRecentes);
   ligarLista(listaRecentes, ferramentas, desenharRecentes);

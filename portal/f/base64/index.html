@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Base64: codificar e decodificar — Ferramentas do Ander">
+  <meta property="og:description" content="Texto e arquivo para Base64 e de volta, com suporte a UTF-8 e URL-safe.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Cole o texto no campo.</li><li>Escolha codificar ou decodificar.</li><li>Marque URL-safe se o resultado vai dentro de um endereço da web.</li><li>Copie o resultado.</li></ol><h3>Exemplo</h3><p>&quot;Ação&quot; codificado vira &quot;QcOnw6Nv&quot;. Decodificando de volta, os acentos voltam intactos.</p><h3>Limites e premissas</h3><p>Trabalha com texto. Acentos são tratados como UTF-8, que é o padrão da web. O texto nunca sai do seu navegador.</p><h3>Perguntas frequentes</h3><details><summary>Base64 é criptografia?</summary><p>Não. É apenas uma forma de representar dados em caracteres seguros para transporte. Qualquer pessoa consegue decodificar. Nunca use Base64 para esconder senha.</p></details><details><summary>O que é URL-safe?</summary><p>Uma variação que troca &quot;+&quot; por &quot;-&quot; e &quot;/&quot; por &quot;_&quot; e remove o &quot;=&quot; do fim, para o texto caber num endereço sem quebrar.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

@@ -1,4 +1,5 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
+let numeroSelo=0;
 const PALETA = Object.freeze(['#557C68', '#4E718E', '#8A669A', '#B4773F', '#468A87', '#B75D74', '#6B70B7', '#9B7A32', '#397A58']);
 const BIBLIOTECA_AVATARES = Object.freeze(['sol', 'folha', 'estrela', 'lua', 'orbita', 'chama', 'raio', 'flor', 'planeta', 'nuvem', 'diamante', 'cometa', 'onda', 'coroa', 'borboleta']);
 
@@ -54,9 +55,28 @@ export function criarIconeNivel(nivel, { doc = document } = {}) {
   const geometria = geometriaNivel(nivel);
   const svg = criarSvg(doc, `ícone-nível ícone-nível--${geometria.patamar}`, `Nível ${geometria.nivel}`);
   svg.setAttribute('data-patamar', String(geometria.patamar));
-  svg.append(elemento(doc, 'path', { d: caminhoPolígono(32, 32, geometria.raioExterior, geometria.pontas), fill: geometria.cor, class: 'ícone-nível__base' }));
-  svg.append(elemento(doc, 'circle', { cx: 32, cy: 32, r: 20, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.5, opacity: .72 }));
-  svg.append(elemento(doc, 'path', { d: caminhoPolígono(32, 32, 12 + Math.min(4, geometria.patamar), 4 + Math.min(8, geometria.patamar * 2)), fill: 'currentColor', class: 'ícone-nível__símbolo' }));
+  svg.setAttribute('data-evolucao',String(geometria.nivel>=13 ? 4 : geometria.nivel>=8 ? 3 : geometria.nivel>=5 ? 2 : geometria.nivel>=3 ? 1 : 0));
+  const id=`metal-nivel-${++numeroSelo}`;
+  const defs=elemento(doc,'defs'),gradiente=elemento(doc,'linearGradient',{id,x1:0,y1:0,x2:1,y2:1});
+  const metais=geometria.nivel>=13?['#f7e9b4','#c9a354','#8f672d','#ead28a']:geometria.nivel>=8?['#d5d6fa','#9296ca','#55578b','#b3b5e2']:geometria.nivel>=5?['#fae9a3','#d1b15c','#957128','#eed18d']:['#e0e9e1','#7aa18b','#416451','#a9cbb2'];
+  for(const [indice,offset]of [0,.32,.65,1].entries())gradiente.append(elemento(doc,'stop',{offset,'stop-color':metais[indice]}));
+  defs.append(gradiente);svg.append(defs);
+  if(geometria.nivel>=8){
+    for(const lado of [-1,1]){
+      const grupo=elemento(doc,'g',{transform:lado<0?'translate(64 0) scale(-1 1)':'',fill:`url(#${id})`,stroke:metais[2],'stroke-width':.35});
+      grupo.append(elemento(doc,'path',{d:'M48 47C62 43 65 24 56 12C60 24 61 36 48 47',fill:'none',stroke:metais[1],'stroke-width':1}));
+      for(let i=0;i<5;i++){const y=18+i*5;grupo.append(elemento(doc,'path',{d:`M59 ${y+5}q-7-1-7-7q8 0 7 7 M60 ${y+5}q7-3 5-9q-7 3-5 9`}));}
+      svg.append(grupo);
+    }
+  }
+  svg.append(elemento(doc,'path',{d:'M18 42 10 59l13-4 9 7 5-21 M35 42l5 19 8-8 10 5-9-20',fill:'currentColor',opacity:.3}));
+  svg.append(elemento(doc, 'path', { d: caminhoPolígono(32, 30, 28, 6 + Math.min(6,Math.floor(geometria.nivel/3))), fill:`url(#${id})`, stroke:'currentColor','stroke-width':1,class: 'ícone-nível__base' }));
+  svg.append(elemento(doc,'path',{d:'M32 2 54 15 50 18 32 7 14 18 10 15Z',fill:'#fff',opacity:.45}));
+  svg.append(elemento(doc, 'circle', { cx: 32, cy: 30, r: 21, fill: 'var(--superfície, var(--fundo))', stroke: 'currentColor', 'stroke-width': 1.5 }));
+  svg.append(elemento(doc,'circle',{cx:32,cy:30,r:18,fill:'none',stroke:'currentColor','stroke-width':.7,'stroke-dasharray':'1 3',opacity:.65}));
+  svg.append(elemento(doc,'path',{d:geometria.nivel>=13?'M24 19 28 22 32 15 36 22 40 19 38 26H26Z':'M32 15 36 20 32 25 28 20Z',fill:'currentColor',class:'ícone-nível__símbolo'}));
+  if(geometria.nivel>=13)for(const x of [24,32,40])svg.append(elemento(doc,'circle',{cx:x,cy:x===32?14:18,r:1.2,fill:metais[1]}));
+  const numero=elemento(doc,'text',{x:32,y:42,'text-anchor':'middle','font-size':geometria.nivel>9999?10:16,'font-weight':800,fill:'currentColor'});numero.textContent=String(geometria.nivel);svg.append(numero);
   for (const ornamento of geometria.ornamentos) svg.append(elemento(doc, 'circle', { cx: ornamento.x, cy: ornamento.y, r: 2.1, fill: 'currentColor', class: 'ícone-nível__ornamento' }));
   return svg;
 }

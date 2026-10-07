@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Girar PDF — Ferramentas do Ander">
+  <meta property="og:description" content="Gira todas as páginas, ou só as que você marcar, em 90, 180 ou 270 graus, e salva o PDF na posição certa.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Toque em &quot;Escolher PDF&quot; ou arraste o arquivo para o quadro. Ele é lido no seu navegador, sem envio para servidor.</li><li>Escolha o giro (90° para a direita, 180° ou 90° para a esquerda) e quais páginas girar: todas, só as ímpares, só as pares ou páginas escolhidas por você.</li><li>Se escolheu &quot;Páginas escolhidas&quot;, digite os números (por exemplo 2, 4-6) ou toque neles no bloco &quot;Marcar as páginas tocando nos números&quot;.</li><li>Toque em &quot;Girar PDF&quot;, confira o resumo e baixe o arquivo. O original continua intacto no seu aparelho.</li></ol><h3>Exemplo</h3><p>Um escaneamento de 6 páginas saiu com as páginas 2 e 5 deitadas, viradas para a esquerda. Em &quot;Páginas escolhidas&quot;, digitando 2, 5 com giro de 90° para a direita, só essas duas voltam para a posição certa; as outras quatro ficam como estavam.</p><h3>Limites e premissas</h3><p>Um PDF por vez, com até 100 MB e até 2.000 páginas. O arquivo é reconhecido pelo conteúdo, não pela extensão. PDF protegido por senha não pode ser editado. O giro é somado ao que a página já tinha: uma página que já estava a 90° e recebe mais 90° fica a 180°. Nada é recomprimido nem redesenhado: só a marca de rotação da página muda, então não há perda de qualidade. O PDF é gravado de novo, mas marcadores, links e campos de formulário continuam no lugar. Não há miniaturas para conferir: o resumo diz quais páginas foram giradas. A gravação usa a biblioteca pdf-lib (licença MIT), que roda dentro da página.</p><h3>Perguntas frequentes</h3><details><summary>Meu arquivo é enviado para algum servidor?</summary><p>Não. A biblioteca que grava o PDF é baixada com a página e roda no seu navegador; o arquivo não sai do aparelho.</p></details><details><summary>O giro piora a qualidade das páginas?</summary><p>Não. O conteúdo da página não é tocado: o PDF só ganha a indicação de que aquela página deve ser mostrada girada.</p></details><details><summary>Girei e o leitor ainda mostra a página de lado. O que houve?</summary><p>Confira se escolheu o sentido certo: &quot;para a direita&quot; é o sentido do relógio. Se a página ficou pior, gire de novo com 180° ou use o sentido contrário; os giros se somam.</p></details><details><summary>E se o PDF tiver senha?</summary><p>Ele não pode ser aberto aqui sem a senha. Abra no leitor de PDF, salve uma cópia sem proteção e use essa cópia.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Marca d&#39;água no PDF — Ferramentas do Ander">
+  <meta property="og:description" content="Carimba um texto ou uma imagem em todas as páginas, como RASCUNHO ou CONFIDENCIAL, com a opacidade que você quiser.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Toque em &quot;Escolher PDF&quot; ou arraste o arquivo para o quadro. Ele é lido no seu navegador, sem envio para servidor.</li><li>Escolha se a marca é um texto (RASCUNHO, CONFIDENCIAL, o nome de quem recebe) ou uma imagem, como um logotipo.</li><li>Ajuste opacidade, rotação e posição. &quot;Repetir pela página inteira&quot; espalha a marca em mosaico. Para marcar só algumas páginas, escreva quais em &quot;Páginas&quot;, como 2-3 ou ímpares.</li><li>Toque em &quot;Aplicar marca d&#39;água&quot; e baixe o PDF. O original continua intacto no seu aparelho.</li></ol><h3>Exemplo</h3><p>Um contrato de 5 páginas com o texto CONFIDENCIAL, opacidade 50%, rotação de 45 graus, no centro: cada página sai com a palavra atravessada na diagonal, meio transparente, sem esconder o texto do contrato. Com &quot;Páginas&quot; 2-3, só essas duas recebem a marca.</p><h3>Limites e premissas</h3><p>PDF de até 100 MB e 3.000 páginas; texto de até 100 caracteres; imagem JPG, PNG, WebP ou GIF de até 25 MB. O arquivo é reconhecido pelo conteúdo, não pela extensão. PDF protegido por senha não pode ser marcado. O texto usa uma fonte padrão do PDF: letras com acento e a pontuação comum funcionam; setas, emojis e letras de outros alfabetos não. Texto grande demais para a página é reduzido para caber (o resultado avisa). A marca fica dentro do conteúdo da página e vale na impressão, mas NÃO é à prova de remoção: quem tiver um editor de PDF consegue tirá-la. Para esconder de verdade informações sensíveis, use a ferramenta de ocultar informações. Com a marca &quot;abaixo do conteúdo&quot;, páginas com fundo colorido ou imagem em tela cheia (como escaneamentos) escondem a marca. Assinaturas digitais do PDF deixam de valer depois de marcar, porque o arquivo muda. A marca d&#39;água usa a biblioteca pdf-lib (licença MIT), que roda dentro da página.</p><h3>Perguntas frequentes</h3><details><summary>Meu PDF e minha imagem são enviados para algum servidor?</summary><p>Não. A biblioteca é baixada com a página e roda no seu navegador; os arquivos não saem do aparelho.</p></details><details><summary>Dá para tirar a marca d&#39;água depois?</summary><p>Quem receber o PDF e tiver um editor de PDF pode removê-la. Ela serve para identificar (rascunho, cópia, confidencial), não para impedir que o arquivo seja reaproveitado.</p></details><details><summary>A marca sumiu em algumas páginas. Por quê?</summary><p>Se você escolheu &quot;abaixo do conteúdo&quot;, páginas com um fundo ou uma imagem em tela cheia cobrem a marca. Use &quot;acima do conteúdo&quot; com opacidade menor.</p></details><details><summary>Como faço a marca cruzar a página na diagonal?</summary><p>Deixe a posição no centro e a rotação em 45 graus (ou -45 para a diagonal contrária).</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Validador de CPF e CNPJ — Ferramentas do Ander">
+  <meta property="og:description" content="Confere os dígitos verificadores de CPF e CNPJ e formata o número.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Cole o CPF ou o CNPJ. Pode vir com ponto, barra e traço ou só com números.</li><li>Toque em Conferir. A ferramenta identifica o tipo pelo tamanho.</li><li>Se for válido, você recebe o número já formatado para copiar.</li></ol><h3>Exemplo</h3><p>111.444.777-35 é um CPF matematicamente válido. 111.444.777-36 não é: o último dígito não confere.</p><h3>Limites e premissas</h3><p>A conferência é matemática: confirma que os dígitos verificadores batem. Isso não significa que o documento exista, esteja ativo ou pertença à pessoa que informou. Nenhuma consulta é feita à Receita Federal e nada sai do seu navegador.</p><h3>Perguntas frequentes</h3><details><summary>Isso consulta a situação na Receita?</summary><p>Não. A ferramenta só recalcula os dígitos verificadores. Para situação cadastral é preciso consultar a Receita Federal.</p></details><details><summary>Para que serve então?</summary><p>Para pegar erro de digitação antes de salvar um cadastro ou emitir um documento. É o uso real: a maioria dos problemas é dígito trocado.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

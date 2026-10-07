@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Juntar PDF — Ferramentas do Ander">
+  <meta property="og:description" content="Junta vários arquivos PDF em um único documento, na ordem escolhida.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Toque em &quot;Escolher PDFs&quot; ou arraste os arquivos para o quadro. Eles são lidos no seu navegador, sem envio para servidor.</li><li>Use as setas de cada linha para deixar os arquivos na ordem que o documento final deve ter. A lixeira tira o arquivo da lista.</li><li>Toque em &quot;Juntar PDFs&quot; e acompanhe o progresso página a página. Se estiver demorando, dá para cancelar.</li><li>Baixe o PDF juntado. Os arquivos originais continuam intactos no seu aparelho.</li></ol><h3>Exemplo</h3><p>Para mandar a documentação de um cadastro num arquivo só: o RG escaneado (1 página), o comprovante de residência (1 página) e o contrato (4 páginas) viram um único PDF de 6 páginas, na ordem da lista.</p><h3>Limites e premissas</h3><p>Até 3 arquivos por vez, cada um com até 100 MB. O arquivo é reconhecido pelo conteúdo, não pela extensão. PDF protegido por senha não pode ser juntado. As páginas entram como estão, sem recompressão: o tamanho final fica perto da soma dos originais. A junção usa a biblioteca pdf-lib (licença MIT), que roda dentro da página.</p><h3>Perguntas frequentes</h3><details><summary>Meus arquivos são enviados para algum servidor?</summary><p>Não. A biblioteca que junta os PDFs é baixada com a página e roda no seu navegador; os arquivos não saem do aparelho.</p></details><details><summary>E se o PDF tiver senha?</summary><p>PDF protegido não pode ser juntado sem a senha. Abra o arquivo no leitor de PDF, salve uma cópia sem proteção e use essa cópia aqui.</p></details><details><summary>Preciso juntar mais de 3 arquivos. E agora?</summary><p>Junte em etapas: junte os 3 primeiros, baixe o resultado e junte esse arquivo com os próximos. A ordem das páginas se mantém.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

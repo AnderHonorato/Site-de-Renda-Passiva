@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Comparar PDF — Ferramentas do Ander">
+  <meta property="og:description" content="Mostra o que mudou no texto entre duas versões de um PDF, página a página: o que foi acrescentado, removido ou trocado.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Escolha o PDF &quot;Original&quot; (a versão mais antiga) e o PDF &quot;Novo&quot; (a versão alterada). Dá para arrastar os dois de uma vez para o quadro: o primeiro vira o original e o segundo, o novo. Eles são lidos no seu navegador, sem envio para servidor.</li><li>Se não quiser que &quot;Contrato&quot; e &quot;contrato&quot; contem como diferença, marque para ignorar maiúsculas e minúsculas.</li><li>Toque em &quot;Comparar PDFs&quot; e acompanhe o progresso.</li><li>Leia a lista de mudanças, página por página: o que saiu aparece riscado, o que entrou aparece destacado. Copie ou baixe o relatório.</li></ol><h3>Exemplo</h3><p>O contrato A tem 2 páginas e o contrato B, 3. Na página 1, o título trocou &quot;versão A&quot; por &quot;versão B&quot; e uma linha nova foi acrescentada; a página 3 só existe no B. O relatório lista uma edição e um acréscimo na página 1 e a página 3 inteira como &quot;página acrescentada&quot;. Comparando um PDF com ele mesmo, o resultado é &quot;Nenhuma diferença no texto&quot;.</p><h3>Limites e premissas</h3><p>PDF de até 100 MB cada e até 300 páginas por versão (a leitura de um PDF só vai até 3.000). O arquivo é reconhecido pelo conteúdo, não pela extensão. PDF protegido por senha não pode ser comparado. SÓ O TEXTO É COMPARADO, palavra por palavra: esta ferramenta NÃO faz comparação visual. Mudança de imagem, de cor, de fonte, de tabela desenhada ou de posição das coisas não aparece, e quebras de linha e espaços não contam. PDF escaneado (cada página é uma foto) não tem texto e não pode ser comparado: o OCR (reconhecimento de caracteres) é outra ferramenta. As páginas das duas versões são pareadas pelo conteúdo (semelhança mínima de 40%), então uma página nova ou removida no meio não faz o resto &quot;mudar&quot;. Em páginas com colunas ou tabelas, o texto vem na ordem em que o arquivo o guarda, que pode não ser a ordem visual. Páginas totalmente diferentes e muito grandes aparecem como uma troca só. A leitura usa o leitor de PDF pdf.js (licença Apache 2.0), que roda dentro da página.</p><h3>Perguntas frequentes</h3><details><summary>Meus PDFs são enviados para algum servidor?</summary><p>Não. O leitor é baixado com a página e roda no seu navegador; os arquivos não saem do aparelho.</p></details><details><summary>Ela mostra as diferenças de imagem ou de formatação?</summary><p>Não. A comparação é só do texto. Se a única mudança foi uma imagem, uma cor ou o tamanho de uma letra, o resultado diz que não há diferença no texto.</p></details><details><summary>Inseri uma página no meio e o resto não ficou todo diferente. Por quê?</summary><p>Porque as páginas são pareadas pelo conteúdo, não pela posição. A página nova aparece como &quot;acrescentada&quot; e as outras continuam emparelhadas com as suas.</p></details><details><summary>O PDF é escaneado. Dá para comparar?</summary><p>Não com esta ferramenta, porque não há texto dentro do arquivo. É preciso passar o OCR antes, e o OCR é outra ferramenta.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

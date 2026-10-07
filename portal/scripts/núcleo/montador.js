@@ -253,6 +253,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
         });
         botãoSalvar.textContent = emInglês ? 'Work saved' : 'Trabalho salvo';
         botãoSalvar.dataset.trabalhoId = String(resposta.trabalho.id);
+        import('./evolução.js').then(m=>m.conferirConquistas(sessao)).catch(()=>{});
         const temArquivo = formulário.querySelector('input[type="file"]');
         avisar(temArquivo
           ? (emInglês ? 'Settings saved. Choose the local file again when reopening.' : 'Configurações salvas. Ao reabrir, escolha novamente o arquivo local.')

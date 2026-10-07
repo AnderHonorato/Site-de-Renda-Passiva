@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Ler QR Code — Ferramentas do Ander">
+  <meta property="og:description" content="Lê um QR Code de uma imagem, print ou foto e mostra o conteúdo, com sinais de golpe, antes de você abrir o link.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Toque em &quot;Escolher imagem&quot; (ou arraste o arquivo, ou cole uma imagem com Ctrl+V). No celular, &quot;Tirar foto&quot; abre a câmera do aparelho.</li><li>A leitura começa sozinha. O conteúdo aparece em uma caixa, com o tipo do código (link, Wi-Fi, Pix, contato, texto) e os sinais de alerta.</li><li>Leia os avisos. Nada é aberto automaticamente: se o conteúdo for um link e você quiser abri-lo, toque em &quot;Abrir o link&quot;.</li><li>Para guardar o conteúdo, use &quot;Copiar&quot;.</li></ol><h3>Exemplo</h3><p>Um print de QR Code de cardápio mostra o link &quot;https://exemplo.com.br/cardapio&quot;, tipo Link, conexão https. Um QR de encurtador como &quot;https://bit.ly/abc&quot; aparece com o alerta de que o destino verdadeiro fica escondido até abrir.</p><h3>Limites e premissas</h3><p>Imagens PNG, JPG, WebP, GIF, BMP ou AVIF de até 20 MB e 100 megapixels; até 5 QR Codes por imagem. O tipo é conferido pelo conteúdo do arquivo, não pela extensão. Os alertas são sinais conhecidos de golpe (encurtador, endereço numérico, nome de banco em site de outro dono, letras que imitam outras, http sem criptografia): ajudam, mas não provam nada. A falta de alerta NÃO significa que o link é seguro. A leitura contínua pela câmera ao vivo não está disponível: a política de segurança do portal desliga a câmera das páginas. Pelo celular, &quot;Tirar foto&quot; abre a câmera do aparelho e lê a foto. Usa o leitor nativo do navegador quando existe e, senão, a biblioteca jsQR (licença Apache-2.0), que roda no aparelho. Nenhuma imagem sai do seu aparelho. QR Code muito pequeno, borrado, cortado ou com pouco contraste pode não ser lido; recorte só o código e tente de novo.</p><h3>Perguntas frequentes</h3><details><summary>Por que a ferramenta não abre o link sozinha?</summary><p>Porque o golpe do QR Code funciona assim: o código leva a um site falso de banco, estacionamento ou cardápio. Ler é seguro; abrir é uma decisão sua, depois de conferir o endereço.</p></details><details><summary>A ferramenta disse que não encontrou nenhum QR Code. E agora?</summary><p>Recorte a imagem deixando só o código, com um pouco de margem branca em volta, e tente de novo. Fotos tremidas, em ângulo ou com reflexo costumam falhar; tire outra de frente e com boa luz.</p></details><details><summary>E se o código for um Pix?</summary><p>A ferramenta mostra o recebedor, a cidade, a chave e o valor que estão dentro do código e confere o código de verificação. Confirme os mesmos dados no aplicativo do seu banco antes de pagar.</p></details><details><summary>Minha imagem foi enviada para algum lugar?</summary><p>Não. A leitura acontece dentro do seu navegador, sem envio para servidor.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

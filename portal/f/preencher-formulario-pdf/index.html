@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Preencher formulário em PDF — Ferramentas do Ander">
+  <meta property="og:description" content="Preenche os campos de formulários PDF (texto, caixas de marcar, listas) e deixa o resultado fixo ou editável.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Toque em &quot;Escolher PDF&quot; ou arraste o arquivo para o quadro. Ele é lido no seu navegador, sem envio para servidor. Se o PDF tiver campos de formulário, eles aparecem numa lista logo abaixo.</li><li>Preencha os campos: escreva nos de texto, marque as caixas, escolha uma opção nos botões de opção e nas listas. Campos protegidos pelo próprio PDF aparecem desligados.</li><li>Se quiser que ninguém mais edite os campos, marque &quot;Achatar o formulário&quot;. Sem isso, o PDF continua preenchível.</li><li>Toque em &quot;Gerar PDF preenchido&quot; e baixe o arquivo. O original continua intacto no seu aparelho.</li></ol><h3>Exemplo</h3><p>Um formulário com os campos &quot;nome&quot;, &quot;cidade&quot; (lista) e &quot;aceite&quot; (caixa): você escreve Ana Teste, escolhe Recife e marca o aceite. Sem achatar, o PDF gerado ainda tem os três campos, já preenchidos. Achatando, os campos desaparecem e &quot;Ana Teste&quot; passa a ser parte fixa da página.</p><h3>Limites e premissas</h3><p>PDF de até 100 MB, com até 1.000 campos e até 10.000 caracteres por campo de texto. O arquivo é reconhecido pelo conteúdo, não pela extensão. PDF protegido por senha não pode ser preenchido: salve uma cópia sem proteção. Só funcionam PDFs que JÁ TÊM campos de formulário (AcroForm). Se o PDF não tiver, a ferramenta avisa: ela não cria campos nem escreve em qualquer lugar da página. Formulários no formato XFA (alguns documentos antigos de governo) não são suportados. Num formulário que traz os dois formatos, o XFA é removido para valerem os campos preenchidos. Os valores usam uma fonte padrão do PDF: letras com acento e a pontuação comum funcionam; setas, emojis e letras de outros alfabetos não. Campos calculados por programação (JavaScript) do PDF não são recalculados aqui. Preencher um PDF que já tem assinatura digital invalida essa assinatura. Campos de assinatura e botões não são preenchidos. A biblioteca usada é a pdf-lib (licença MIT), que roda dentro da página.</p><h3>Perguntas frequentes</h3><details><summary>Meu PDF é enviado para algum servidor?</summary><p>Não. A biblioteca é baixada com a página e roda no seu navegador; o arquivo não sai do aparelho.</p></details><details><summary>A ferramenta disse que o PDF não tem campos. O que faço?</summary><p>Ele é um PDF comum, em que o formulário é só um desenho. Esta ferramenta preenche apenas campos de formulário de verdade. Peça uma versão preenchível ao emissor do documento.</p></details><details><summary>O que significa achatar?</summary><p>É transformar os campos preenchidos em conteúdo fixo da página, como se tivessem sido impressos. O arquivo fica sem campos, não dá mais para editar os valores, e o texto continua selecionável.</p></details><details><summary>Os nomes dos campos são estranhos, como &quot;txt_a1&quot;. Por quê?</summary><p>São os nomes que quem fez o PDF deu aos campos. A lista mostra também a página de cada campo e o valor que já estava preenchido, para ajudar a achá-los.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

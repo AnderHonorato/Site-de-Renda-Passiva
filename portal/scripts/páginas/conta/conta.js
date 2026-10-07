@@ -1,6 +1,11 @@
 import { api, dados, en, estado, ligar, mensagemErro, obterSessao } from './comum.js';
 import { aplicarTema, lerTema } from '../../núcleo/preferências.js';
 import { criarAvatar, criarAvatarDoPerfil, criarIconeNivel, nomesAvataresDisponíveis } from '../../núcleo/nível.js';
+import { aplicarPrestigio } from '../../núcleo/prestígio.js';
+import { recortarAvatar, fotoParaDados } from '../../núcleo/recortar-avatar.js';
+import { criarIconeMedalha } from '../../núcleo/emblemas.js';
+import { sonsAtivos, definirSons } from '../../núcleo/sons.js';
+import { mostrarNovoNivel } from '../../núcleo/evolução.js';
 import { ícone } from '../../núcleo/ícones.js';
 import { ferramentaPorSlug } from '../../../dados/catálogo.js';
 
@@ -80,13 +85,53 @@ function marcarAlterado() {
   atualizarBarra();
 }
 
+let transicaoAba=0;
 function trocarAba(nome) {
+  const paineis=[...document.querySelectorAll('[data-conta-painel]')];
+  const seguinte=paineis.find(p=>p.dataset.contaPainel===nome);
+  if(!seguinte)return;
+  const anterior=paineis.find(p=>!p.hidden);
+  clearTimeout(transicaoAba);
   for (const botao of document.querySelectorAll('[data-conta-aba]')) {
     botao.setAttribute('aria-pressed', botao.dataset.contaAba === nome ? 'true' : 'false');
   }
-  for (const painel of document.querySelectorAll('[data-conta-painel]')) {
-    painel.hidden = painel.dataset.contaPainel !== nome;
-  }
+  for(const painel of paineis)painel.classList.remove('conta__aba--saindo','conta__aba--entrando');
+  if(anterior===seguinte)return;
+  anterior?.classList.add('conta__aba--saindo');
+  history.replaceState(history.state,'',`#${nome}`);
+  transicaoAba=setTimeout(()=>{
+    for(const painel of paineis){painel.hidden=painel!==seguinte;painel.classList.remove('conta__aba--saindo');}
+    seguinte.classList.add('conta__aba--entrando');
+    if(nome==='trabalhos')import('./trabalhos.js').catch(erro=>estado(mensagemErro(erro),true));
+    if(nome==='mensagens')import('./suporte.js').catch(erro=>estado(mensagemErro(erro),true));
+    if(nome==='favoritos')void carregarFavoritos();
+    if(nome==='planos')void carregarPlanos();
+  },matchMedia('(prefers-reduced-motion: reduce)').matches?0:140);
+}
+
+async function carregarPlanos(){
+  const area=document.getElementById('conta-planos');area.textContent=en?'Loading…':'Carregando…';
+  try{const resposta=await api('/api/planos');area.replaceChildren();
+    for(const plano of resposta.planos||[]){const cartao=elemento('article','painel');cartao.dataset.plano=plano.id;
+      cartao.append(elemento('h3','',plano.id==='gratuito'?(en?'Free':'Grátis'):plano.id==='plus'?'Plus':'Premium'));
+      for(const [chave,nome]of [['favoritos',en?'favorites':'favoritos'],['trabalhos',en?'saved works':'trabalhos salvos']])cartao.append(elemento('p','',`${plano.limites[chave]} ${nome}`));
+      if(plano.id!=='gratuito')cartao.append(elemento('p','',en?'No advertising':'Sem publicidade'));
+      if(plano.provisorio)cartao.append(elemento('small','suave',en?'Currently inherits Plus limits.':'Por enquanto, herda os limites do Plus.'));
+      if(plano.id===contaAtual.plano)cartao.append(elemento('strong','',en?'Your current plan':'Seu plano atual'));
+      area.append(cartao);
+    }
+  }catch(erro){area.textContent=mensagemErro(erro);}
+}
+
+async function carregarFavoritos(){
+  const area=document.getElementById('conta-favoritos');
+  area.textContent=en?'Loading…':'Carregando…';
+  try{const resposta=await api('/api/favoritos');area.replaceChildren();
+    for(const slug of resposta.favoritos||[]){const ferramenta=ferramentaPorSlug(slug);if(!ferramenta)continue;
+      const linha=elemento('a','conta__favorito',en?(ferramenta.en?.nome||ferramenta.nome):ferramenta.nome);linha.href=`../f/${slug}/`;area.append(linha);
+    }
+    if(!area.childElementCount)area.append(elemento('p','suave',en?'Favorite a tool to find it here.':'Marque uma ferramenta como favorita para encontrá-la aqui.'));
+  }catch(erro){area.textContent=mensagemErro(erro);}
 }
 
 function ligarAbas() {
@@ -186,11 +231,8 @@ function criarMedalha(medalha, pequena = false) {
   item.dataset.desbloqueada = medalha.desbloqueada ? 'sim' : 'nao';
   item.tabIndex = 0;
 
-  const simbolo = elemento(
-    'span',
-    'medalha__simbolo',
-    medalha.desbloqueada ? siglaMedalha(medalha.nome) : '·'
-  );
+  const simbolo = elemento('span', 'medalha__simbolo');
+  simbolo.append(criarIconeMedalha(medalha));
   item.append(simbolo);
 
   if (!pequena) {
@@ -342,6 +384,7 @@ function renderResumo(perfil, conta) {
   if (!slot) return;
 
   const resumo = elemento('section', 'conta-resumo');
+  aplicarPrestigio(resumo,perfil);
   const avatarResumo = elemento('div', 'conta-resumo__avatar');
   const avatar = criarAvatarDoPerfil(perfil);
   if (avatar) avatarResumo.append(avatar);
@@ -385,10 +428,12 @@ function preencher(perfil, conta) {
   }
 
   formPreferencias.elements.idioma.value = conta.idioma || document.documentElement.lang;
-  formPreferencias.elements.tema.value = conta.tema || lerTema();
+  formPreferencias.elements.tema.value = lerTema();
 
   const remover = document.getElementById('remover-foto');
   if (remover) remover.hidden = !perfil.foto_url;
+  const recortar = document.getElementById('recortar-foto');
+  if (recortar) recortar.hidden = !perfil.foto_url && !fotoPendente;
 
   renderAvatarPreview();
   renderAvatares();
@@ -448,22 +493,17 @@ async function enviarFoto(blob) {
 
 async function salvarAlteracoes() {
   if (salvando) return;
+  if (!formPerfil.reportValidity() || !formPreferencias.reportValidity()) return;
+  const atual = estadoEditavel();
+  const temaAntesDeSalvar = lerTema();
   salvando = true;
   const botao = document.getElementById('salvar-alteracoes');
-  if (botao) botao.disabled = true;
+  const controles = [...document.querySelectorAll('#conta-conteudo input,#conta-conteudo select,#conta-conteudo textarea,#conta-conteudo button')].filter(el => !el.disabled);
+  for (const controle of controles) controle.disabled = true;
+  document.getElementById('conta-conteudo').setAttribute('aria-busy','true');
+  estado(en ? 'Saving changes…' : 'Salvando alterações…');
 
   try {
-    const atual = estadoEditavel();
-
-    if (fotoPendente) {
-      const blob = await compactarFoto(fotoPendente);
-      const resposta = await enviarFoto(blob);
-      perfilAtual.foto_url = resposta.foto_url;
-    } else if (removerFotoPendente) {
-      await api('/api/perfil/foto', { metodo: 'DELETE' });
-      perfilAtual.foto_url = null;
-    }
-
     const respostaPerfil = await api('/api/perfil', {
       metodo: 'PATCH',
       dados: {
@@ -476,32 +516,29 @@ async function salvarAlteracoes() {
         sociais: atual.sociais,
         visibilidade: { bio: atual.bioVisivel, local: atual.localVisivel },
         ferramentas_recomendadas: atual.recomendadas,
-      },
-    });
-
-    const respostaConta = await api('/api/conta', {
-      metodo: 'PATCH',
-      dados: {
         idioma: atual.idioma,
         tema: atual.tema,
-        nome: atual.nome,
+        ...(fotoPendente ? { foto: await fotoParaDados(fotoPendente) } : removerFotoPendente ? { foto: null } : {}),
       },
     });
 
     perfilAtual = respostaPerfil.perfil || perfilAtual;
-    contaAtual = respostaConta.usuario || contaAtual;
+    contaAtual = { ...contaAtual, ...(respostaPerfil.usuario || {}), idioma: atual.idioma, tema: atual.tema };
     fotoPendente = null;
     removerFotoPendente = false;
-    aplicarTema(atual.tema);
+    // Uma escolha feita no cabeçalho durante a requisição continua valendo.
+    if (lerTema() === temaAntesDeSalvar) aplicarTema(atual.tema);
     preencher(perfilAtual, contaAtual);
     estadoInicial = serializarEstado();
     atualizarBarra();
     estado(en ? 'Changes saved.' : 'Alterações salvas.');
   } catch (erro) {
-    estado(mensagemErro(erro), true);
+    estado(mensagemErro(erro) + (en ? ' Your changes are still here; correct the field or retry.' : ' Suas alterações continuam aqui; corrija o campo ou tente salvar novamente.'), true);
   } finally {
     salvando = false;
+    for (const controle of controles) if (controle.isConnected) controle.disabled = false;
     if (botao) botao.disabled = false;
+    document.getElementById('conta-conteudo').removeAttribute('aria-busy');
   }
 }
 
@@ -581,6 +618,7 @@ try {
 
     preencher(perfilAtual, contaAtual);
     ligarAbas();
+    if(location.hash)trocarAba(location.hash.slice(1));
     await carregarAmizades();
 
     estadoInicial = serializarEstado();
@@ -597,14 +635,36 @@ try {
   estado(mensagemErro(erro), true);
 }
 
-document.getElementById('foto-perfil')?.addEventListener('change', evento => {
+document.getElementById('foto-perfil')?.addEventListener('change', async evento => {
   const arquivo = evento.target.files && evento.target.files[0];
   if (!arquivo) return;
-  fotoPendente = arquivo;
+  try {
+  const recorte = await recortarAvatar(arquivo);
+  if (!recorte) return;
+  fotoPendente = recorte;
   removerFotoPendente = false;
   renderAvatarPreview();
   marcarAlterado();
+  document.getElementById('recortar-foto').hidden = false;
+  } catch (erro) { estado(mensagemErro(erro),true); }
+  finally { evento.target.value = ''; }
 });
+
+document.getElementById('recortar-foto')?.addEventListener('click',async()=>{
+  try {
+    let arquivo=fotoPendente;
+    if(!arquivo&&perfilAtual.foto_url){const r=await fetch(perfilAtual.foto_url,{credentials:'same-origin',signal:AbortSignal.timeout(8000)});if(!r.ok)throw new Error('imagem_invalida');arquivo=await r.blob();}
+    if(!arquivo)return;const recorte=await recortarAvatar(arquivo);if(!recorte)return;
+    fotoPendente=recorte;removerFotoPendente=false;renderAvatarPreview();marcarAlterado();
+  }catch(erro){estado(mensagemErro(erro),true);}
+});
+
+document.addEventListener('portal:tema-alterado',evento=>{
+  if(formPreferencias&&!salvando){formPreferencias.elements.tema.value=evento.detail.tema;marcarAlterado();}
+});
+
+const controleSons=document.getElementById('sons-ativos');
+if(controleSons){controleSons.checked=sonsAtivos();controleSons.addEventListener('change',()=>definirSons(controleSons.checked));}
 
 document.getElementById('remover-foto')?.addEventListener('click', () => {
   fotoPendente = null;
@@ -617,6 +677,7 @@ document.getElementById('remover-foto')?.addEventListener('click', () => {
 
 document.getElementById('salvar-alteracoes')?.addEventListener('click', salvarAlteracoes);
 document.getElementById('cancelar-alteracoes')?.addEventListener('click', cancelarAlteracoes);
+document.getElementById('previa-conquista')?.addEventListener('click',()=>{const nivel=Number(perfilAtual?.nivel)||1;mostrarNovoNivel(nivel-1,nivel);});
 
 ligar('form-senha', async form => {
   await api('/api/conta/senha', { metodo: 'PATCH', dados: dados(form) });

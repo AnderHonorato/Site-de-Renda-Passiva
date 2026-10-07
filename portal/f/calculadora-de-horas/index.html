@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Calculadora de horas — Ferramentas do Ander">
+  <meta property="og:description" content="Soma jornadas com intervalo, calcula carga horária, extras e saldo de banco de horas.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Escreva um dia por linha: identificação, entrada, saída e intervalo em minutos.</li><li>Separe os campos com ponto e vírgula. O intervalo é opcional.</li><li>Informe a jornada contratual do dia para ver extras e saldo.</li><li>O total do período e o saldo aparecem no fim, e você pode baixar a planilha.</li></ol><h3>Exemplo</h3><p>01/10; 08:00; 18:00; 60 — dez horas entre entrada e saída, menos uma hora de intervalo, dão 9h00 trabalhadas. Com jornada de 8h00, o saldo do dia é +1h00.</p><h3>Limites e premissas</h3><p>Saída anterior à entrada é lida como turno que vira o dia, não como erro. O cálculo é de horas brutas: não aplica adicional noturno, percentual de hora extra, DSR nem regra de convenção coletiva. Para fechamento de folha, confira com o setor pessoal.</p><h3>Perguntas frequentes</h3><details><summary>A ferramenta calcula o valor da hora extra?</summary><p>Não. Ela entrega a quantidade de horas. O percentual de extra e o adicional noturno dependem da convenção coletiva da categoria.</p></details><details><summary>Como lanço um turno da noite?</summary><p>Normalmente: 22:00 como entrada e 06:00 como saída. A virada de dia é reconhecida sozinha.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

@@ -1,13 +1,13 @@
 {
   "name": "portal-de-ferramentas",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Portal de ferramentas com conta opcional, chat moderado e publicidade condicional.",
   "type": "module",
   "license": "UNLICENSED",
   "engines": { "node": ">=22.14" },
   "scripts": {
-    "gerar": "node ferramentas/gerar.mjs",
+    "gerar": "node --env-file-if-exists=.env ferramentas/gerar.mjs",
     "verificar": "node ferramentas/verificar.mjs",
     "testar": "node --test \"testes/*.test.mjs\"",
     "testar:navegador": "node --test --test-concurrency=1 testes/navegador/*.teste.mjs",

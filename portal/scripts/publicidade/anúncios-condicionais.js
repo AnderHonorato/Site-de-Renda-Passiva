@@ -32,6 +32,10 @@ function invalidarExecuções() {
 export function invalidarPublicidade() { invalidarExecuções(); }
 
 export function validarRespostaAnuncios(resposta) {
+  if (resposta?.ativo === true && resposta.permitido === true && resposta.demonstracao === true && resposta.editor === null) {
+    const blocos = Object.fromEntries(POSICOES.filter(p=>resposta.blocos?.[p] === 'demonstracao').map(p=>[p,'demonstracao']));
+    return Object.keys(blocos).length ? {editor:null,blocos,demonstracao:true,teste:true} : null;
+  }
   if (!resposta || typeof resposta !== 'object' || resposta.ativo !== true || resposta.permitido !== true || !EDITOR_VALIDO.test(String(resposta.editor ?? ''))) return null;
   const blocos = {};
   for (const posicao of POSICOES) {
@@ -207,6 +211,16 @@ export async function iniciarPublicidade({ fetcher = globalThis.fetch, doc = glo
     if (token !== geração) return;
     if (!consentimentoVigente(consentimentoSalvo(), Date.now()) || !atual || atual.editor !== config.editor || atual.blocos[container.dataset.anuncioPosicao] !== bloco) { esconder(container); return; }
     const npa = consentimentoNaoPersonalizado(consentimentoSalvo());
+    if (atual.demonstracao) {
+      const ingles = doc.documentElement.lang === 'en';
+      const rotulo = doc.createElement('span'); rotulo.dataset.rotuloPublicidade = ''; rotulo.textContent = ingles ? 'Advertisement preview' : 'Prévia de publicidade';
+      const anuncio = doc.createElement('div'); anuncio.className = 'publicidade-demonstracao';
+      const titulo = doc.createElement('strong'); titulo.textContent = ingles ? 'Your ad here' : 'Seu anúncio aqui';
+      const texto = doc.createElement('p'); texto.textContent = ingles ? 'Local preview · no Google connection or revenue.' : 'Demonstração local · sem conexão com o Google ou receita.';
+      anuncio.append(titulo,texto); container.replaceChildren(rotulo,anuncio);
+      container.classList.remove('publicidade-pendente','publicidade-vazia'); container.classList.add('publicidade-preenchida');
+      contêineresAguardando.delete(container); contêineresAtivos.add(container); return;
+    }
     window.adsbygoogle = window.adsbygoogle || [];
     window.adsbygoogle.requestNonPersonalizedAds = npa ? 1 : 0;
     criarScript(atual.editor, [ { container } ]);

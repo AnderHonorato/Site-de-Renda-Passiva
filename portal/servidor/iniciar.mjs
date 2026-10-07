@@ -1,18 +1,26 @@
 import { createServer } from 'node:http';
 import { appendFileSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { networkInterfaces } from 'node:os';
 import { abrirBanco } from './banco.mjs';
 import { hash, token, erro, cookies, senhaHash, hashDummy, comparar, corpo } from './seguranca.mjs';
 import { ferramentasProntas, ferramentaPorSlug } from '../dados/catálogo.js';
 import { categorias } from '../dados/categorias.js';
 import { limitesDoPlano, planosPublicos, trabalhoPublico, validarEdicaoTrabalho, validarNovoTrabalho } from './trabalhos.mjs';
 import { AVATARES, medalhasDoUsuario, nivelDePontos, personalizacoesDoNivel, progressoDeNivel, validarPersonalizacao, validarSociais } from './perfil.mjs';
+import { MAX_IMAGEM, itemAdmin, novidadesPublicas, removerNovidade, salvarImagem, salvarNovidade } from './novidades.mjs';
+import { configuracaoPublicidade, salvarPublicidade } from './publicidade.mjs';
 
 const agora = () => Date.now();
 const nomeSessao = process.env.URL_PUBLICA?.startsWith('https://') ? '__Host-sessao' : 'sessao';
 const nomeCsrf = process.env.URL_PUBLICA?.startsWith('https://') ? '__Host-csrf' : 'csrf';
 const secure = nomeSessao.startsWith('__Host-');
 const origem = new URL(process.env.URL_PUBLICA || 'http://127.0.0.1:4400').origin;
+const origensPermitidas = new Set([origem]);
+if(process.env.NODE_ENV==='development'&&process.env.PORTAL_CHAT_LOCAL==='1'&&origem==='http://127.0.0.1:4400'){
+  origensPermitidas.add('http://localhost:4400');
+  for(const lista of Object.values(networkInterfaces()))for(const rede of lista||[])if(rede.family==='IPv4')origensPermitidas.add(`http://${rede.address}:4400`);
+}
 const banco = abrirBanco();
 for(const c of categorias)banco.prepare("INSERT OR IGNORE INTO salas(id,tipo,nome) VALUES(?,'categoria',?)").run(`categoria-${c.id}`,c.nome);
 for(const f of ferramentasProntas)banco.prepare("INSERT OR IGNORE INTO salas(id,tipo,nome) VALUES(?,'ferramenta',?)").run(`ferramenta-${f.slug}`,f.nome);
@@ -55,7 +63,7 @@ function senhaValida(x){return typeof x==='string' && x.length>=12 && x.length<=
 function conferirLimite(chave,max,janela){const tempo=agora();let l=limites.get(chave)||[];l=l.filter(t=>t>tempo-janela);if(l.length>=max){const e=erro(429,'muitas_tentativas');e.retryAfter=Math.max(1,Math.ceil((l[0]+janela-tempo)/1000));throw e;}l.push(tempo);limites.set(chave,l);if(limites.size>10000)for(const [k,v] of limites)if(v.at(-1)<tempo-janela)limites.delete(k);}
 function proteger(req){
   if(['GET','HEAD','OPTIONS'].includes(req.method))return;
-  if(req.headers.origin!==origem || req.headers['sec-fetch-site']==='cross-site')throw erro(403,'origem_invalida');
+  if(!origensPermitidas.has(req.headers.origin) || req.headers['sec-fetch-site']==='cross-site')throw erro(403,'origem_invalida');
   const cs=cookies(req)[nomeCsrf]; const h=req.headers['x-csrf-token'];
   if(!cs||!h||cs!==h||!(/^[A-Za-z0-9_-]{32,}$/.test(cs)))throw erro(403,'csrf_invalido');
 }
@@ -179,6 +187,39 @@ async function rota(req,res){
     const u=sessao(req);return json(res,200,{usuario:usuarioPublico(u),chat_habilitado:chatAtivo(),chat_aceito:!!u?.chat_aceito_em});
   }
   proteger(req);
+  if(p==='/api/admin/publicidade'&&m==='GET') { admin(req);return json(res,200,{config:configuracaoPublicidade(banco),local:process.env.NODE_ENV!=='production'}); }
+  if(p==='/api/admin/publicidade'&&m==='PUT') {
+    const u=admin(req),config=salvarPublicidade(banco,await corpo(req));registrarAdmin(u,'editar_publicidade',null,{ativo:config.ativo,demonstracao:config.demonstracao});return json(res,200,{config});
+  }
+  if(p==='/api/novidades'&&m==='GET') return json(res,200,novidadesPublicas(banco,url.searchParams.get('idioma')));
+  if(p==='/api/admin/novidades'&&m==='GET'){
+    admin(req); return json(res,200,{itens:banco.prepare('SELECT id FROM novidades ORDER BY ordem,id').all().map(x=>itemAdmin(banco,x.id))});
+  }
+  if(p==='/api/admin/novidades'&&m==='POST'){
+    const u=admin(req),item=salvarNovidade(banco,await corpo(req));registrarAdmin(u,'criar_novidade',item.id);return json(res,201,{item});
+  }
+  const novidade=p.match(/^\/api\/admin\/novidades\/(\d+)$/);
+  if(novidade&&m==='PUT'){
+    const u=admin(req),item=salvarNovidade(banco,await corpo(req),Number(novidade[1]));registrarAdmin(u,'editar_novidade',item.id);return json(res,200,{item});
+  }
+  if(novidade&&m==='DELETE'){
+    const u=admin(req),b=await corpo(req);removerNovidade(banco,Number(novidade[1]),b.versao);registrarAdmin(u,'remover_novidade',Number(novidade[1]));return json(res,200,{ok:true});
+  }
+  const imagemNovidade=p.match(/^\/api\/(admin\/)?novidades\/(\d+)\/imagem$/);
+  if(imagemNovidade&&m==='GET'){
+    const id=Number(imagemNovidade[2]);
+    if(imagemNovidade[1])admin(req);
+    else if(!novidadesPublicas(banco).itens.some(x=>x.id===id))throw erro(404,'novidade_nao_localizada');
+    const item=banco.prepare('SELECT imagem,imagem_mime FROM novidades WHERE id=?').get(id);
+    if(!item?.imagem)throw erro(404,'novidade_nao_localizada');
+    res.writeHead(200,{'Content-Type':item.imagem_mime,'Content-Length':item.imagem.length,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'"});return res.end(item.imagem);
+  }
+  if(imagemNovidade?.[1]&&['POST','DELETE'].includes(m)){
+    const u=admin(req),id=Number(imagemNovidade[2]);
+    const bytes=m==='POST'?await corpoBinario(req,MAX_IMAGEM):null;
+    const item=salvarImagem(banco,id,Number(req.headers['x-novidade-versao']),bytes,String(req.headers['content-type']||''));
+    registrarAdmin(u,m==='POST'?'imagem_novidade':'remover_imagem_novidade',id);return json(res,200,{item});
+  }
   if(m==='POST'&&p==='/api/autenticacao/criar-conta'){
     conferirLimite(`cadastro:${ip(req)}`,5,3600000);const b=await corpo(req);
     const nome=String(b.nome||'').trim(),email=String(b.email||'').trim().toLowerCase(),handle=String(b.usuario||'').trim().toLowerCase();
@@ -354,11 +395,28 @@ async function rota(req,res){
   if(m==='GET'&&p.startsWith('/api/perfil/foto/')){
     const u=exigir(req),handle=decodeURIComponent(p.slice('/api/perfil/foto/'.length)),alvo=banco.prepare('SELECT * FROM usuarios WHERE usuario=?').get(handle);
     indisponivelPerfil(u,alvo);if(!alvo.avatar_foto||!alvo.avatar_foto_mime)throw erro(404,'imagem_nao_localizada');
-    res.writeHead(200,{'Content-Type':alvo.avatar_foto_mime,'Content-Length':alvo.avatar_foto.length,'Cache-Control':'private, max-age=300','X-Content-Type-Options':'nosniff','Content-Disposition':'inline'});
+    res.writeHead(200,{'Content-Type':alvo.avatar_foto_mime,'Content-Length':alvo.avatar_foto.length,'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','Content-Disposition':'inline'});
     res.end(alvo.avatar_foto);return;
   }
+  if(p==='/api/conquistas'&&m==='GET'){
+    const u=exigir(req),nivel=nivelDoUsuario(u),vistas=new Map(banco.prepare('SELECT tipo,patamar FROM conquistas_vistas WHERE usuario_id=?').all(u.id).map(v=>[v.tipo,v.patamar]));
+    const conquistas=[];
+    if(nivel>1&&nivel>(vistas.get('nivel')||1))conquistas.push({tipo:'nivel',chave:`nivel:${nivel}`,nivel});
+    for(const medalha of medalhasDoUsuario(banco,u))if(medalha.desbloqueada&&medalha.tier>(vistas.get(medalha.id)??-1))conquistas.push({tipo:'medalha',chave:`${medalha.id}:${medalha.tier}`,medalha});
+    return json(res,200,{conquistas});
+  }
+  if(p==='/api/conquistas/receber'&&m==='POST'){
+    const u=exigir(req),b=await corpo(req),chave=String(b.chave||''),partes=/^([a-z]+):(\d{1,9})$/.exec(chave);
+    if(!partes)throw erro(400,'dados_invalidos');
+    const tipo=partes[1],patamar=Number(partes[2]);
+    const medalha=medalhasDoUsuario(banco,u).find(m=>m.id===tipo);
+    if(tipo==='nivel'?(patamar<2||patamar>nivelDoUsuario(u)):(!medalha?.desbloqueada||patamar>medalha.tier))throw erro(400,'dados_invalidos');
+    const r=banco.prepare(`INSERT INTO conquistas_vistas(usuario_id,tipo,patamar) VALUES(?,?,?)
+      ON CONFLICT(usuario_id,tipo) DO UPDATE SET patamar=excluded.patamar,visto_em=datetime('now') WHERE conquistas_vistas.patamar<excluded.patamar`).run(u.id,tipo,patamar);
+    return json(res,200,{recebida:Boolean(r.changes)});
+  }
   if(m==='PATCH'&&p==='/api/perfil'){
-    const u=exigir(req),b=await corpo(req,65536);
+    const u=exigir(req),b=await corpo(req,1_750_000);
     const nome=b.nome===undefined?u.nome:String(b.nome).trim(),bio=b.bio===undefined?u.bio:String(b.bio).trim(),local=b.local===undefined?u.local:String(b.local).trim(),avatar=b.avatar===undefined?u.avatar:String(b.avatar);
     const banner=b.banner===undefined?(u.banner||'brisa'):String(b.banner),moldura=b.moldura===undefined?(u.moldura||'basica'):String(b.moldura);
     const nivel=nivelDoUsuario(u);
@@ -368,11 +426,20 @@ async function rota(req,res){
     const recomendadas=b.ferramentas_recomendadas===undefined?JSON.parse(u.recomendadas):b.ferramentas_recomendadas;
     if(!Array.isArray(recomendadas)||recomendadas.length>5||recomendadas.some(s=>typeof s!=='string'||!banco.prepare('SELECT 1 FROM uso_ferramentas WHERE usuario_id=? AND slug=?').get(u.id,s)))throw erro(400,'ferramentas_nao_usadas');
     const sociais=b.sociais===undefined?jsonSeguro(u.sociais,{}):validarSociais(b.sociais);
-    if(sociais===null)throw erro(400,'dados_invalidos');
-    banco.prepare('UPDATE usuarios SET nome=?,bio=?,local=?,avatar=?,banner=?,moldura=?,sociais=?,visibilidade=?,recomendadas=? WHERE id=?')
-      .run(nome,bio,local,avatar,banner,moldura,JSON.stringify(sociais),vis,JSON.stringify(recomendadas),u.id);
+    if(sociais===null)throw erro(400,'sociais_invalidas');
+    const tema=b.tema??u.tema,idioma=b.idioma??u.idioma;
+    if(!['claro','escuro','sistema'].includes(tema)||!['pt-BR','en'].includes(idioma))throw erro(400,'dados_invalidos');
+    let foto=u.avatar_foto,mime=u.avatar_foto_mime;
+    if(b.foto===null){foto=null;mime=null;}
+    else if(b.foto!==undefined){
+      if(!b.foto||typeof b.foto!=='object'||typeof b.foto.dados!=='string'||b.foto.dados.length>1_600_000||!['image/png','image/jpeg','image/webp'].includes(b.foto.mime)||!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(b.foto.dados))throw erro(400,'imagem_invalida');
+      foto=Buffer.from(b.foto.dados,'base64');mime=b.foto.mime;
+      if(foto.length>1_200_000||!imagemValida(foto,mime))throw erro(400,'imagem_invalida');
+    }
+    banco.prepare('UPDATE usuarios SET nome=?,bio=?,local=?,avatar=?,banner=?,moldura=?,sociais=?,visibilidade=?,recomendadas=?,tema=?,idioma=?,avatar_foto=?,avatar_foto_mime=? WHERE id=?')
+      .run(nome,bio,local,avatar,banner,moldura,JSON.stringify(sociais),vis,JSON.stringify(recomendadas),tema,idioma,foto,mime,u.id);
     const atualizado=banco.prepare('SELECT * FROM usuarios WHERE id=?').get(u.id);
-    return json(res,200,{perfil:enriquecerPerfil({...usuarioPublico(atualizado),visibilidade:JSON.parse(atualizado.visibilidade)},atualizado)});
+    return json(res,200,{usuario:usuarioPublico(atualizado),perfil:enriquecerPerfil({...usuarioPublico(atualizado),visibilidade:JSON.parse(atualizado.visibilidade)},atualizado)});
   }
   if(m==='GET'&&p.startsWith('/api/perfil/')){
     const u=exigir(req),alvo=banco.prepare('SELECT * FROM usuarios WHERE usuario=?').get(decodeURIComponent(p.slice('/api/perfil/'.length)));indisponivelPerfil(u,alvo);
@@ -545,14 +612,16 @@ async function rota(req,res){
     }else throw erro(400,'dados_invalidos');registrarAdmin(u,'denuncia_'+b.acao,d.alvo_usuario_id,{denuncia:id});return json(res,200,{ok:true});
   }
   if(p==='/api/anuncios'&&m==='GET'){
-    const editor=String(process.env.PORTAL_ADS_EDITOR||'');const ativo=process.env.PORTAL_ADS_ATIVO==='1'&&/^ca-pub-\d{16}$/.test(editor);
-    const referer=req.headers.referer||'';let caminho='';try{const ref=new URL(referer);if(ref.origin===origem)caminho=ref.pathname;}catch{}
+    const config=configuracaoPublicidade(banco),editor=config.editor;
+    const demonstracao=config.demonstracao&&process.env.NODE_ENV!=='production';
+    const ativo=config.ativo&&(config.demonstracao?demonstracao:/^ca-pub-\d{16}$/.test(editor));
+    const referer=req.headers.referer||'';let caminho='';try{const ref=new URL(referer);if(origensPermitidas.has(ref.origin))caminho=ref.pathname;}catch{}
     const normal=caminho.replace(/^\/en(?=\/)/,'');const ferramenta=normal.match(/^\/f\/([a-z0-9-]+)\/?(?:index\.html)?$/)?.[1];
     const ficha=ferramenta?ferramentaPorSlug[ferramenta]:null;
     const paginaPermitida=['/','/index.html','/ferramentas.html'].includes(normal)||!!(ficha&&ficha.status==='pronta'&&!['estudos'].includes(ficha.cat));
     const pagou=['plus','premium'].includes(sessao(req)?.plano);const permitido=ativo&&paginaPermitida&&!pagou;
-    const blocos={};for(const chave of ['RODAPE','RESULTADO','LISTA']){const valor=String(process.env[`PORTAL_ADS_${chave}`]||'');if(/^\d{6,20}$/.test(valor))blocos[chave.toLowerCase()]=valor;}
-    return json(res,200,{ativo,editor:permitido?editor:null,blocos:permitido?blocos:{},teste:process.env.PORTAL_ADS_TESTE==='1',permitido});
+    const blocos={};for(const chave of ['rodape','resultado','lista']){const valor=config.blocos[chave];if(demonstracao)blocos[chave]='demonstracao';else if(/^\d{6,20}$/.test(valor))blocos[chave]=valor;}
+    return json(res,200,{ativo,editor:permitido&&!demonstracao?editor:null,blocos:permitido?blocos:{},teste:config.teste,demonstracao:permitido&&demonstracao,permitido});
   }
   throw erro(404,'nao_encontrado');
 }

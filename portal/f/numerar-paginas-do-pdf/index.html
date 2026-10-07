@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Números de página no PDF — Ferramentas do Ander">
+  <meta property="og:description" content="Numera as páginas do PDF no rodapé ou no topo, com o formato e a posição que você escolher.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Toque em &quot;Escolher PDF&quot; ou arraste o arquivo para o quadro. Ele é lido no seu navegador, sem envio para servidor.</li><li>Escolha onde o número fica, o texto (&quot;Página 3 de 10&quot;, só &quot;3&quot;…) e a numeração (1, 2, 3 ou i, ii, iii ou a, b, c).</li><li>Se quiser numerar só algumas páginas, escreva quais em &quot;Páginas a numerar&quot;, como 2-10 ou pares. Em branco, vale o PDF todo.</li><li>Toque em &quot;Numerar páginas&quot; e baixe o PDF. O original continua intacto no seu aparelho.</li></ol><h3>Exemplo</h3><p>Uma apostila de 5 páginas, com o texto &quot;Página {n} de {p}&quot;, embaixo e no centro, em letra tamanho 12: a página 3 sai com &quot;Página 3 de 5&quot; centralizado, a 12 mm da borda de baixo. Com &quot;Páginas a numerar&quot; 2-4 e primeiro número 10, as páginas 2, 3 e 4 saem com &quot;Página 10 de 5&quot;, &quot;Página 11 de 5&quot; e &quot;Página 12 de 5&quot;: o {p} é sempre o total de páginas do PDF.</p><h3>Limites e premissas</h3><p>PDF de até 100 MB e 3.000 páginas. O arquivo é reconhecido pelo conteúdo, não pela extensão. PDF protegido por senha não pode ser numerado. O número é desenhado com uma fonte padrão do PDF (Helvetica, Times ou Courier): letras com acento e a pontuação comum funcionam; setas, emojis e letras de outros alfabetos não. Margem da borda até o número: 8 mm (pequena), 12 mm (recomendada) ou 20 mm (grande). O número entra por cima do conteúdo e não muda o resto da página; se a página já tiver algo no mesmo lugar, escolha outra posição ou uma margem maior. Em página girada (como um escaneamento de lado) o número acompanha a leitura. Assinaturas digitais do PDF deixam de valer depois de numerar, porque o arquivo muda. A numeração usa a biblioteca pdf-lib (licença MIT), que roda dentro da página.</p><h3>Perguntas frequentes</h3><details><summary>Meu PDF é enviado para algum servidor?</summary><p>Não. A biblioteca que numera o PDF é baixada com a página e roda no seu navegador; o arquivo não sai do aparelho.</p></details><details><summary>Quero que o número comece na página 3 do PDF, valendo 1. Como faço?</summary><p>Em &quot;Páginas a numerar&quot; escreva 3- (da 3 até o fim) e deixe o primeiro número em 1. A capa e a folha de rosto ficam sem número.</p></details><details><summary>Por que &quot;Página 10 de 5&quot;?</summary><p>O {p} é o total de páginas do PDF, e não o último número escrito. Se o primeiro número não for 1, prefira o texto só com {n}.</p></details><details><summary>O número saiu em cima de um texto da página. E agora?</summary><p>Escolha outro canto ou aumente a margem. Para imprimir frente e verso, use &quot;Espelhar nas páginas pares&quot;: o número fica sempre do lado de fora.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

@@ -131,7 +131,15 @@ export function validarSociais(entrada) {
       saida.whatsapp = digitos;
       continue;
     }
-    const handle = valor.replace(/^@/, '');
+    let handle = valor.replace(/^@/, '');
+    if (/^https?:\/\//i.test(valor)) {
+      try {
+        const url = new URL(valor);
+        const hosts = { instagram: ['instagram.com','www.instagram.com'], facebook: ['facebook.com','www.facebook.com'], tiktok: ['tiktok.com','www.tiktok.com'], x: ['x.com','www.x.com','twitter.com','www.twitter.com'] };
+        if (!hosts[chave]?.includes(url.hostname) || url.username || url.password || url.port || url.search || url.hash || !/^\/@?[A-Za-z0-9._-]+\/?$/.test(url.pathname)) return null;
+        handle = url.pathname.replace(/^\/@?/, '').replace(/\/$/, '');
+      } catch { return null; }
+    }
     if (!/^[A-Za-z0-9._-]{1,50}$/.test(handle)) return null;
     saida[chave] = handle;
   }

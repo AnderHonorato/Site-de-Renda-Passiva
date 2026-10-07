@@ -46,6 +46,7 @@ function gravarEndereço(empilhar) {
 }
 
 function aplicar({ empilhar = false } = {}) {
+  document.documentElement.dataset.publicoInfantil = estado.categoria === 'estudos' ? 'sim' : 'nao';
   let resultado = buscar(ferramentas, estado.busca, {
     categoria: estado.categoria,
     tarefa: estado.tarefa,
@@ -58,6 +59,7 @@ function aplicar({ empilhar = false } = {}) {
   }
 
   desenharLista(lista, resultado, {
+    anuncios: estado.categoria !== 'estudos' && estado.status !== 'favoritas',
     vazio: estado.status === 'favoritas'
       ? t('catálogo.nenhumFavorito')
       : t('catálogo.nenhumFiltro'),

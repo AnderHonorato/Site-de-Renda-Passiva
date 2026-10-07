@@ -50,7 +50,7 @@ const CABEÇALHOS = { ...CABEÇALHOS_DE_SEGURANÇA, 'Cache-Control': 'no-store' 
 async function responder(resposta, status, arquivo, método, requisição) {
   const tipo = TIPOS[path.extname(arquivo).toLowerCase()] ?? 'application/octet-stream';
   // A CSP continua idêntica enquanto a API não autorizar publicidade nesta página.
-  if (status === 200 && tipo.startsWith('text/html') && process.env.PORTAL_ADS_ATIVO === '1' && requisição) {
+  if (status === 200 && tipo.startsWith('text/html') && requisição) {
     try {
       const origem = new URL(process.env.URL_PUBLICA || `http://127.0.0.1:${porta}`).origin;
       const anuncios = await fetch(`http://127.0.0.1:${portaApi}/api/anuncios`, {

@@ -74,13 +74,13 @@ const perfil = {
   ],
 };
 
-async function contextoComApi({ viewport = { width: 1200, height: 800 }, chat = false } = {}) {
-  const contexto = await navegador.newContext({ viewport });
+async function contextoComApi({ viewport = { width: 1200, height: 800 }, chat = false,perfilAlterado={},reducedMotion } = {}) {
+  const contexto = await navegador.newContext({ viewport,reducedMotion });
   await contexto.addCookies([{ name: 'visto_novidades', value: '1', url: BASE }]);
 
   await contexto.addInitScript(() => {
     class EventSourceFalso {
-      constructor() { this.readyState = 1; this.listeners = new Map(); }
+      constructor() { this.readyState = 1; this.listeners = new Map(); window.__eventSourceFalso=this; }
       addEventListener(nome, fn) { this.listeners.set(nome, fn); }
       close() { this.readyState = 2; }
       set onerror(_) {}
@@ -125,7 +125,7 @@ async function contextoComApi({ viewport = { width: 1200, height: 800 }, chat = 
       return rota.fulfill({ contentType: 'application/json', body: JSON.stringify({ usuario: { id: 1, nome: 'Ander Alterado', usuario: 'ander_teste', plano: 'plus', idioma: 'pt-BR', tema: 'sistema', nivel: 6 } }) });
     }
     if (p === '/api/perfil/ander_teste' && metodo === 'GET') {
-      return rota.fulfill({ contentType: 'application/json', body: JSON.stringify({ perfil }) });
+      return rota.fulfill({ contentType: 'application/json', body: JSON.stringify({ perfil:{...perfil,...perfilAlterado} }) });
     }
     if (p === '/api/perfil/ander_teste' && metodo === 'PATCH') {
       return rota.fulfill({ contentType: 'application/json', body: JSON.stringify({ perfil: { ...perfil, ...req.postDataJSON() } }) });
@@ -139,6 +139,9 @@ async function contextoComApi({ viewport = { width: 1200, height: 800 }, chat = 
     if (p === '/api/favoritos') {
       return rota.fulfill({ contentType: 'application/json', body: JSON.stringify({ favoritos: [] }) });
     }
+    if (p === '/api/trabalhos') return rota.fulfill({contentType:'application/json',body:JSON.stringify({trabalhos:[],limite:3})});
+    if (p === '/api/planos') return rota.fulfill({contentType:'application/json',body:JSON.stringify({planos:[{id:'gratuito',limites:{favoritos:10,trabalhos:3}},{id:'plus',limites:{favoritos:500,trabalhos:500}},{id:'premium',limites:{favoritos:500,trabalhos:500},provisorio:true}]})});
+    if (p === '/api/suporte') return rota.fulfill({contentType:'application/json',body:JSON.stringify({mensagens:[]})});
     if (p === '/api/chat/salas') {
       return rota.fulfill({ contentType: 'application/json', body: JSON.stringify({ salas, total_nao_lidas: salas.reduce((s, x) => s + x.nao_lidas, 0) }) });
     }
@@ -216,7 +219,7 @@ test('conta vira modal central amplo e alterações usam barra flutuante', { ski
   assert.ok(caixa.x >= 0 && caixa.x + caixa.width <= 1200);
   assert.ok(caixa.height < 800);
 
-  assert.equal(await página.locator('.conta__acoes-rapidas .conta__acao').count(), 5);
+  assert.equal(await página.locator('.conta__acoes-rapidas .conta__acao').count(), 6);
   assert.equal(await página.locator('#conta-salvar').isVisible(), false);
 
   const nome = página.locator('#form-perfil [name="nome"]');
@@ -232,6 +235,83 @@ test('conta vira modal central amplo e alterações usam barra flutuante', { ski
   assert.equal(await página.locator('#opcoes-banner .conta__personalizacao[disabled]').count(), 1);
   assert.equal(await página.locator('#conta-medalhas .medalha').count(), 2);
 
+  await contexto.close();
+});
+
+test('perfil mantém tema claro, preserva dados no erro e salva em uma requisição', {skip:pular}, async()=>{
+  const {contexto,página}=await contextoComApi();let falhar=true,gravacoes=[];
+  await contexto.addInitScript(()=>localStorage.setItem('portal.tema','"claro"'));
+  await contexto.route('**/api/perfil',rota=>{const entrada=rota.request().postDataJSON();gravacoes.push(entrada);return rota.fulfill({status:falhar?503:200,contentType:'application/json',body:JSON.stringify(falhar?{erro:'indisponivel'}:{perfil:{...perfil,...entrada},usuario:{...perfil,tema:entrada.tema,idioma:entrada.idioma}})});});
+  await página.goto(BASE+'/conta/');await página.waitForSelector('#form-perfil [name="nome"]');
+  await página.locator('#form-perfil [name="nome"]').fill('Nome preservado');
+  await página.locator('#form-perfil [name="bio"]').fill('Todas as alterações continuam aqui');
+  await página.click('#salvar-alteracoes');await página.waitForFunction(()=>document.querySelector('.conta__estado')?.textContent.includes('continuam aqui'));
+  assert.equal(await página.locator('#form-perfil [name="nome"]').inputValue(),'Nome preservado');assert.equal(await página.locator('html').getAttribute('data-tema'),'claro');
+  falhar=false;await página.click('#salvar-alteracoes');await página.waitForFunction(()=>document.querySelector('.conta__estado')?.textContent==='Alterações salvas.');
+  assert.equal(gravacoes.length,2);assert.equal(gravacoes[1].tema,'claro');assert.equal(await página.locator('html').getAttribute('data-tema'),'claro');assert.equal(await página.locator('#conta-salvar').isVisible(),false);
+  await contexto.close();
+});
+
+test('trabalhos, favoritos e suporte deslizam dentro da conta sem trocar página', {skip:pular},async()=>{
+  const {contexto,página}=await contextoComApi();await página.goto(BASE+'/conta/');await página.waitForSelector('#conta-conteudo:not([hidden])');
+  await página.locator('#form-perfil [name="bio"]').fill('Rascunho continua nas abas');
+  for(const nome of ['trabalhos','favoritos','mensagens','planos']){
+    await página.click(`.conta__acoes-rapidas [data-conta-aba="${nome}"]`);await página.waitForSelector(`[data-conta-painel="${nome}"]:not([hidden])`);
+    assert.equal(new URL(página.url()).pathname,'/conta/');assert.equal(await página.locator('.conta--modal').count(),1);assert.equal(await página.locator('[data-conta-painel]:not([hidden])').count(),1);
+  }
+  await página.waitForSelector('#conta-planos article');assert.equal(await página.locator('#conta-planos article').count(),3);
+  await página.click('[data-conta-aba="aparencia"]');await página.waitForSelector('[data-conta-painel="aparencia"]:not([hidden])');await página.click('#previa-conquista');await página.waitForSelector('.conquista[open]');assert.match(await página.locator('#conquista-titulo').textContent(),/6/);await página.locator('.conquista button').click();
+  await página.click('.conta__acoes-rapidas [data-conta-aba="perfil"]');await página.waitForSelector('[data-conta-painel="perfil"]:not([hidden])');assert.equal(await página.locator('#form-perfil [name="bio"]').inputValue(),'Rascunho continua nas abas');
+  await página.click('[data-conta-aba="preferencias"]');await página.waitForSelector('[data-conta-painel="preferencias"]:not([hidden])');await página.locator('#sons-ativos').uncheck();assert.equal(await página.evaluate(()=>JSON.parse(localStorage.getItem('portal.sons'))),false);
+  await contexto.close();
+});
+
+test('recorte de uma foto retangular gera avatar quadrado e salvo atomicamente', {skip:pular},async()=>{
+  const {contexto,página}=await contextoComApi();let salvo;
+  await contexto.route('**/api/perfil',rota=>{salvo=rota.request().postDataJSON();return rota.fulfill({contentType:'application/json',body:JSON.stringify({perfil:{...perfil,foto_url:'/api/perfil/foto/ander_teste'},usuario:perfil})});});
+  await página.goto(BASE+'/conta/');await página.waitForSelector('#conta-conteudo:not([hidden])');
+  const imagem=await página.evaluate(()=>{const c=document.createElement('canvas');c.width=640;c.height=320;const ctx=c.getContext('2d');ctx.fillStyle='#557c68';ctx.fillRect(0,0,320,320);ctx.fillStyle='#b38924';ctx.fillRect(320,0,320,320);return c.toDataURL('image/png').split(',')[1];});
+  await página.locator('#foto-perfil').setInputFiles({name:'retangular.png',mimeType:'image/png',buffer:Buffer.from(imagem,'base64')});await página.waitForSelector('.avatar-recorte[open]');
+  await página.locator('input[aria-label="Posição horizontal"]').fill('100');await página.getByRole('button',{name:'Usar este recorte',exact:true}).click();await página.waitForSelector('#avatar-preview img');
+  const dimensoes=await página.locator('#avatar-preview img').evaluate(img=>[img.naturalWidth,img.naturalHeight]);assert.deepEqual(dimensoes,[512,512]);
+  await página.click('#salvar-alteracoes');await página.waitForFunction(()=>document.querySelector('.conta__estado')?.textContent==='Alterações salvas.');assert.equal(salvo.foto.mime,'image/webp');assert.ok(salvo.foto.dados.length<1_600_000);
+  await contexto.close();
+});
+
+test('conquistas ficam em fila, têm feixes de luz, cabem no celular e não repetem', {skip:pular},async()=>{
+  const {contexto,página}=await contextoComApi({viewport:{width:390,height:844}});let recebeu=new Set();
+  const conquistas=[{tipo:'nivel',chave:'nivel:15',nivel:15},{tipo:'medalha',chave:'explorador:7',medalha:{...perfil.medalhas[0],tier:7,patamar:'Mítica'}}];
+  await contexto.route('**/api/conquistas',rota=>rota.fulfill({contentType:'application/json',body:JSON.stringify({conquistas:conquistas.filter(c=>!recebeu.has(c.chave))})}));
+  await contexto.route('**/api/conquistas/receber',rota=>{const {chave}=rota.request().postDataJSON();const nova=!recebeu.has(chave);recebeu.add(chave);return rota.fulfill({contentType:'application/json',body:JSON.stringify({recebida:nova})});});
+  await página.goto(BASE+'/conta/');await página.waitForSelector('.conquista[open]');
+  assert.equal(await página.locator('.conquista[open]').count(),1);assert.match(await página.locator('#conquista-titulo').textContent(),/15/);
+  const caixa=await página.locator('.conquista').boundingBox();assert.ok(caixa.x>=0&&caixa.y>=0&&caixa.x+caixa.width<=390&&caixa.y+caixa.height<=844);
+  assert.equal(await página.locator('.conquista__luz').count(),1);
+  await página.screenshot({path:join(RAIZ,'.execucao/conquista-2026-10-07.png')});
+  await página.locator('.conquista button').click();await página.waitForFunction(()=>document.querySelector('#conquista-titulo')?.textContent==='Explorador');assert.equal(await página.locator('.conquista .emblema').count(),1);
+  await página.locator('.conquista button').click();await página.reload();await página.waitForSelector('#conta-conteudo:not([hidden])');assert.equal(await página.locator('.conquista').count(),0);
+  await contexto.close();
+});
+
+test('sons só seguem eventos, não tocam para mensagem própria e podem ser silenciados', {skip:pular},async()=>{
+  const {contexto,página}=await contextoComApi({chat:true});
+  await contexto.addInitScript(()=>{
+    window.__notas=[];
+    window.AudioContext=class{
+      constructor(){this.state='running';this.currentTime=0;this.destination={};}
+      resume(){this.state='running';return Promise.resolve();}
+      createOscillator(){const osc={frequency:{value:0},connect(){},disconnect(){},stop(){},start(){window.__notas.push(osc.frequency.value);}};return osc;}
+      createGain(){return {gain:{setValueAtTime(){},linearRampToValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){},disconnect(){}};}
+    };
+  });
+  await página.goto(BASE+'/');await página.waitForSelector('#chat-bolha');assert.equal(await página.evaluate(()=>window.__notas.length),0);
+  await página.click('#chat-bolha');await página.waitForSelector('.chat__mensagem');assert.equal(await página.evaluate(()=>window.__notas.length),2);
+  await página.evaluate(()=>window.__eventSourceFalso.listeners.get('mensagem')({data:JSON.stringify({salaId:'global',mensagem:{id:51,texto:'Minha mensagem',autor:{id:1,usuario:'ander_teste',avatar:'sol'}}})}));
+  assert.equal(await página.evaluate(()=>window.__notas.length),2);
+  await página.evaluate(()=>window.__eventSourceFalso.listeners.get('mensagem')({data:JSON.stringify({salaId:'global',mensagem:{id:52,texto:'Nova mensagem recebida',autor:{id:2,usuario:'luna',avatar:'lua'}}})}));
+  assert.equal(await página.evaluate(()=>window.__notas.length),4);
+  await página.click('.chat__fechar');assert.equal(await página.evaluate(()=>window.__notas.length),6);await página.waitForSelector('#chat-painel[hidden]',{state:'attached'});
+  await página.evaluate(()=>localStorage.setItem('portal.sons','false'));await página.click('#chat-bolha');assert.equal(await página.evaluate(()=>window.__notas.length),6);
   await contexto.close();
 });
 
@@ -341,12 +421,59 @@ test('modal de conta e chat cabem em 390 px sem rolagem lateral', { skip: pular 
 
   const caixa = await página.locator('.conta.conta--modal .conta__painel').boundingBox();
   assert.ok(caixa.x >= 0 && caixa.x + caixa.width <= 390);
+  assert.ok(caixa.y>=0&&caixa.y+caixa.height<=844,'conta inteira dentro da altura da tela');
 
   await página.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   await página.click('#chat-bolha');
   const chat = await página.locator('.chat__painel').boundingBox();
   assert.ok(chat.x >= 0 && chat.x + chat.width <= 390);
+  assert.ok(chat.y>=0&&chat.y+chat.height<=844,'chat inteiro dentro da altura da tela');
   assert.equal(await página.evaluate(() => document.documentElement.scrollWidth), 390);
 
   await contexto.close();
+});
+
+for(const viewport of [{width:1366,height:768},{width:1024,height:600},{width:844,height:390},{width:320,height:568}]) {
+  test(`conta e perfil dentro da tela ${viewport.width} × ${viewport.height}`,{skip:pular},async()=>{
+    const {contexto,página}=await contextoComApi({viewport});
+    try {
+      for(const url of ['/conta/','/perfil.html?usuario=ander_teste']) {
+        await página.goto(BASE+url,{waitUntil:'domcontentloaded'});
+        await página.waitForSelector(url.startsWith('/conta')?'#conta-conteudo:not([hidden])':'.perfil-comunidade__hero');
+        await página.waitForTimeout(350);
+        const box=await página.locator('.conta--modal .conta__painel').boundingBox();
+        assert.ok(box.x>=0&&box.x+box.width<=viewport.width+1,`${url}: largura`);
+        assert.ok(box.y>=0&&box.y+box.height<=viewport.height+1,`${url}: altura`);
+        assert.equal(await página.evaluate(()=>document.documentElement.scrollWidth),viewport.width);
+      }
+    } finally { await contexto.close(); }
+  });
+}
+
+test('conversas recolhem, texto permanece legível e chat cabe em tela baixa',{skip:pular},async()=>{
+  const {contexto,página}=await contextoComApi({viewport:{width:1024,height:500},chat:true});
+  try {
+    await página.goto(BASE+'/',{waitUntil:'domcontentloaded'});await página.click('#chat-bolha');
+    await página.waitForSelector('.chat__mensagem');await página.waitForTimeout(350);
+    const box=await página.locator('.chat__painel').boundingBox();assert.ok(box.y>=0&&box.y+box.height<=500);
+    const toggle=página.getByRole('button',{name:'Mostrar ou recolher conversas'});
+    await toggle.click();assert.equal(await página.locator('.chat__salas').isVisible(),false);
+    assert.equal(await toggle.getAttribute('aria-expanded'),'false');
+    await toggle.click();assert.equal(await página.locator('.chat__salas').isVisible(),true);
+    const size=await página.locator('.chat__texto').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize));assert.ok(size>=14);
+  } finally {await contexto.close();}
+});
+
+test('perfil evoluído tem aura e emblemas, sem animação quando movimento é reduzido',{skip:pular},async()=>{
+  for(const reducedMotion of ['no-preference','reduce']) {
+    const {contexto,página}=await contextoComApi({reducedMotion,perfilAlterado:{nivel:13,banner:'lenda',moldura:'mitica',medalhas:[{id:'explorador',nome:'Explorador',tier:7,desbloqueada:true,patamar:'Mítica',descricao:'Use ferramentas.',valor:100,meta:100,completa:true}]}});
+    try {
+      await página.goto(BASE+'/perfil.html?usuario=ander_teste',{waitUntil:'domcontentloaded'});await página.waitForSelector('.perfil-comunidade__hero');
+      assert.equal(await página.locator('.perfil-comunidade').getAttribute('data-prestigio'),'4');
+      assert.equal(await página.locator('.perfil-comunidade__nivel svg').getAttribute('data-evolucao'),'4');
+      const animation=await página.locator('.perfil-comunidade__fundo').evaluate(el=>getComputedStyle(el,'::before').animationName);
+      assert.equal(animation,reducedMotion==='reduce'?'none':'prestigio-aura');
+      if(reducedMotion==='no-preference') await página.screenshot({path:join(RAIZ,'.execucao','perfil-prestigio-2026-10-07.png')});
+    } finally {await contexto.close();}
+  }
 });

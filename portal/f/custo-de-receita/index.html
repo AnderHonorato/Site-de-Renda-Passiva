@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="../../estilos/consentimento.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
+  <meta property="og:title" content="Custo de receita — Ferramentas do Ander">
+  <meta property="og:description" content="Calcula o custo total e por unidade de uma receita a partir dos ingredientes.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
 </head>
 <body>
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
@@ -143,7 +147,11 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"></div>
+        <div id="instruções"><ol><li>Escreva um ingrediente por linha: nome; quantidade do pacote; preço do pacote; quantidade usada.</li><li>Use a MESMA unidade nas duas quantidades. Se o pacote tem 1 kg e você usa 500 g, escreva 1000 e 500.</li><li>Informe quantas unidades a receita rende: fatias, potes, porções.</li><li>O custo por unidade é o que você leva para a ferramenta de preço de venda.</li></ol><h3>Exemplo</h3><p>Farinha; 1000; 5,90; 500
+Açúcar; 1000; 4,50; 300
+Ovos; 12; 12,00; 4
+
+Rendendo 12 fatias: custo total de R$ 8,30 e R$ 0,70 por fatia.</p><h3>Limites e premissas</h3><p>A conta é proporcional ao consumo: meio pacote custa metade do pacote. Ela cobre o custo de ingrediente, não a embalagem, a energia do forno nem o seu tempo — esses entram como despesa fixa e valor da hora na formação do preço. A ferramenta não converte unidades sozinha, de propósito: converter errado silenciosamente é pior que avisar.</p><h3>Perguntas frequentes</h3><details><summary>Por que preciso usar a mesma unidade?</summary><p>Porque a ferramenta não tem como saber se &quot;1&quot; é um quilo, uma grama ou uma unidade. Padronizar em gramas e mililitros resolve quase todos os casos.</p></details><details><summary>O custo por unidade já é o preço de venda?</summary><p>Não. É só o custo de ingrediente. Leve esse valor para a ferramenta de preço de venda e acrescente a margem, as taxas e o seu tempo.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

@@ -1,5 +1,6 @@
 import { api, en, mensagemErro, obterSessao } from './comum.js';
 import { criarIconeNivel } from '../../núcleo/nível.js';
+import { criarIconeMedalha } from '../../núcleo/emblemas.js';
 
 const area = document.getElementById('niveis-progresso');
 
@@ -51,6 +52,7 @@ try {
       const item = elemento('a', 'niveis__medalha');
       item.href = '#' + encodeURIComponent(medalha.id);
       item.dataset.tier = String(medalha.tier || 0);
+      item.append(criarIconeMedalha(medalha));
       item.append(
         elemento('b', '', medalha.nome),
         elemento(
