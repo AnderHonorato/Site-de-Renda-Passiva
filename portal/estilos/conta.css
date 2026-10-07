@@ -15,7 +15,18 @@
 .conta__denuncia { padding: 15px; margin-block: 12px; }
 .conta__avatar, .conta__selos { display: flex; align-items: center; gap: 8px; }
 .conta__avatar svg { width: 54px; height: 54px; }
-.conta__atalho { display: inline-flex; align-items: center; gap: 5px; color: var(--tinta-média); font-size: var(--t-sm); font-weight: 600; white-space: nowrap; text-decoration: none; }
-.conta__atalho svg { width: 16px; height: 16px; }
-.conta__atalho:hover { color: var(--marca); }
-@media (max-width: 600px) { .conta__atalho { width: 30px; height: 30px; justify-content: center; } .conta__atalho span { display: none; } .conta__atalho svg { width: 20px; height: 20px; } }
+.conta__atalho {
+  min-height: 36px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  border: 1px solid var(--borda-forte); border-radius: var(--raio-pílula);
+  background: var(--superfície); color: var(--tinta-média); font-size: var(--t-sm); font-weight: 650;
+  white-space: nowrap; text-decoration: none;
+  transition: color .18s ease, border-color .18s ease, background .18s ease, transform .18s var(--curva-mola, ease);
+}
+.conta__atalho svg { width: 16px; height: 16px; color: var(--marca); }
+.conta__atalho:hover { color: var(--tinta); border-color: var(--marca); background: var(--marca-fraca); transform: translateY(-1px); }
+.conta__atalho:active { transform: translateY(0); }
+@media (max-width: 600px) {
+  .conta__atalho { width: 36px; min-height: 36px; padding: 0; }
+  .conta__atalho span { display: none; }
+  .conta__atalho svg { width: 18px; height: 18px; }
+}

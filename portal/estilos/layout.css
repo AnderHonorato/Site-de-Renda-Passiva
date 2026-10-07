@@ -331,6 +331,33 @@ a.notificações__item:hover { background: var(--superfície-3); }
 }
 @media (prefers-reduced-motion: reduce) { .notificações__botão[data-novas="sim"] svg { animation: none; } }
 
+/* ---------- Idioma: controle segmentado, coerente com os demais controles do topo ---------- */
+.idioma {
+  display: inline-flex; align-items: center; gap: 2px; padding: 3px;
+  border: 1px solid var(--borda-forte); border-radius: var(--raio-pílula);
+  background: var(--superfície);
+}
+.idioma__item {
+  min-width: 31px; height: 28px; padding: 0 7px; display: grid; place-items: center;
+  border-radius: calc(var(--raio-pílula) - 4px); color: var(--tinta-suave);
+  font-size: .7rem; line-height: 1; font-weight: 750; letter-spacing: .045em;
+  text-decoration: none; user-select: none;
+  transition: color .16s ease, background .16s ease, box-shadow .16s ease, transform .16s var(--curva-mola, ease);
+}
+a.idioma__item:hover { color: var(--tinta); background: var(--superfície-3); transform: translateY(-1px); }
+.idioma__item[aria-current="true"] {
+  color: var(--marca); background: var(--marca-fraca);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--marca) 24%, transparent);
+}
+.idioma__item--desligado { opacity: .38; cursor: not-allowed; }
+.idioma--rodapé { border-color: rgba(245, 242, 237, .18); background: rgba(245, 242, 237, .06); }
+.idioma--rodapé .idioma__item { color: var(--rodapé-suave); }
+.idioma--rodapé .idioma__item[aria-current="true"] {
+  color: var(--rodapé-texto); background: rgba(245, 242, 237, .11);
+  box-shadow: inset 0 0 0 1px rgba(245, 242, 237, .12);
+}
+.idioma--rodapé a.idioma__item:hover { color: var(--rodapé-texto); background: rgba(245, 242, 237, .1); }
+
 /* Em telas muito estreitas o cabeçalho não comporta idioma, busca, sino e tema juntos: o seletor de idioma
    do topo some (o do rodapé continua) e os botões ficam mais juntos. */
 @media (max-width: 420px) {

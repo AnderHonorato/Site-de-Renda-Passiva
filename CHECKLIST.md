@@ -18,8 +18,8 @@ Fonte: `documentação/plano-portal-principal.md` e decisões 24–36 de `ander-
 - [x] Publicidade condicional preparada, blocos vazios recolhidos, consentimento e CSP com nonce.
 - [x] Privacidade/cookies em português e inglês.
 - [x] 65 ferramentas mantidas; 208 itens no catálogo, sem telas falsas para planejadas.
-- [x] Testes de código/API executados; evidência em `documentação/entrega-portal-v1.1.0.md`.
-- [ ] Conferência visual/fluxo no navegador: ferramenta bloqueada por preferência salva do Codex, mesmo após autorização no chat. Não foi considerada validada.
+- [x] Testes de código/API executados; suíte completa em 06/10 com 1.053 testes aprovados e 0 falhas, além do verificador estrutural sem problemas.
+- [x] Conferência visual do login e do cabeçalho na porta 4400 concluída em 06/10; Entrar/Conta e PT/EN seguem o padrão visual do portal, e as rotas bilíngues de conta foram validadas.
 - [ ] Anúncio real, aprovação AdSense, IDs do dono e CMP aplicável: nada foi ativado sem esses dados.
 
 ## Ondas seguintes do plano original

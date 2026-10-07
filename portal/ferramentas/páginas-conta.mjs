@@ -88,7 +88,11 @@ export function paginasConta(ctx) {
     const profundidade = arquivo.split('/').length - 1;
     const base = '../'.repeat(profundidade);
     const raizSite = profundidade ? `${base}${raiz}` : raiz;
+    const atualNoIdioma = `${'../'.repeat(profundidade)}${arquivo}`;
+    const alternativas = en
+      ? { en: atualNoIdioma, 'pt-BR': `${'../'.repeat(profundidade + 1)}${arquivo}` }
+      : { 'pt-BR': atualNoIdioma, en: `${'../'.repeat(profundidade)}en/${arquivo}` };
     return [`${prefixo}${arquivo}`, montarPágina({ctx, título: `${t[chave][0]} — ${site.nome}`, descrição: t[chave][1], base, raiz: raizSite, conteúdo,
-      scripts: [`páginas/conta/${chave === 'adminSuporte' ? 'admin-suporte' : chave}.js`], estilos: ['conta.css'], semÍndice: true})];
+      scripts: [`páginas/conta/${chave === 'adminSuporte' ? 'admin-suporte' : chave}.js`], estilos: ['conta.css'], semÍndice: true, alternativas})];
   });
 }
