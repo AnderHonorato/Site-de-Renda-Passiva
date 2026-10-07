@@ -206,14 +206,14 @@ async function contextoComApi({ viewport = { width: 1200, height: 800 }, chat = 
   return { contexto, página, getResposta: () => respostaEnviada };
 }
 
-test('conta vira drawer compacto e alterações usam barra flutuante', { skip: pular }, async () => {
+test('conta vira modal central amplo e alterações usam barra flutuante', { skip: pular }, async () => {
   const { contexto, página } = await contextoComApi();
   await página.goto(BASE + '/conta/', { waitUntil: 'domcontentloaded' });
   await página.waitForSelector('#conta-conteudo:not([hidden])');
 
-  const caixa = await página.locator('.conta.conta--drawer .conta__painel').boundingBox();
-  assert.ok(caixa.width <= 448);
-  assert.ok(caixa.x + caixa.width <= 1200);
+  const caixa = await página.locator('.conta.conta--modal .conta__painel').boundingBox();
+  assert.ok(caixa.width >= 760 && caixa.width <= 1120);
+  assert.ok(caixa.x >= 0 && caixa.x + caixa.width <= 1200);
   assert.ok(caixa.height < 800);
 
   assert.equal(await página.locator('.conta__acoes-rapidas .conta__acao').count(), 5);
@@ -298,13 +298,13 @@ test('chat mantém não lidas por conversa, responde como citação e Shift+Ente
   await contexto.close();
 });
 
-test('perfil público usa drawer, data de entrada, plano, medalhas, sociais e personalização', { skip: pular }, async () => {
+test('perfil público usa modal central, data de entrada, plano, medalhas, sociais e personalização', { skip: pular }, async () => {
   const { contexto, página } = await contextoComApi();
   await página.goto(BASE + '/perfil.html?usuario=ander_teste', { waitUntil: 'domcontentloaded' });
   await página.waitForSelector('.perfil-comunidade__hero');
 
-  const drawer = await página.locator('.conta.conta--drawer .conta__painel').boundingBox();
-  assert.ok(drawer.width <= 448);
+  const modal = await página.locator('.conta.conta--modal .conta__painel').boundingBox();
+  assert.ok(modal.width >= 760 && modal.width <= 1120);
   assert.equal(await página.locator('.perfil-comunidade__hero').getAttribute('data-banner'), 'aurora');
   assert.equal(await página.locator('.perfil-comunidade__avatar').getAttribute('data-moldura'), 'ouro');
   assert.match(await página.locator('.perfil-comunidade__tempo').textContent(), /Desde 24\/08\/2026/);
@@ -317,13 +317,29 @@ test('perfil público usa drawer, data de entrada, plano, medalhas, sociais e pe
   await contexto.close();
 });
 
-test('drawer e chat cabem em 390 px sem rolagem lateral', { skip: pular }, async () => {
+test('perfil próprio mostra edição e perfil de outra pessoa mostra ações sociais', { skip: pular }, async () => {
+  const { contexto, página } = await contextoComApi();
+
+  await página.goto(BASE + '/perfil.html?usuario=ander_teste', { waitUntil: 'domcontentloaded' });
+  await página.waitForSelector('.perfil-comunidade__hero');
+  assert.equal(await página.getByRole('link', { name: /Editar meu perfil/i }).count(), 1);
+  assert.equal(await página.getByRole('button', { name: /Adicionar aos amigos/i }).count(), 0);
+
+  await página.goto(BASE + '/perfil.html?usuario=luna', { waitUntil: 'domcontentloaded' });
+  await página.waitForSelector('.perfil-comunidade__hero');
+  assert.equal(await página.getByRole('button', { name: /Adicionar aos amigos/i }).count(), 1);
+  assert.equal(await página.getByRole('link', { name: /Editar meu perfil/i }).count(), 0);
+
+  await contexto.close();
+});
+
+test('modal de conta e chat cabem em 390 px sem rolagem lateral', { skip: pular }, async () => {
   const { contexto, página } = await contextoComApi({ viewport: { width: 390, height: 844 }, chat: true });
   await página.goto(BASE + '/conta/', { waitUntil: 'domcontentloaded' });
   await página.waitForSelector('#conta-conteudo:not([hidden])');
   assert.equal(await página.evaluate(() => document.documentElement.scrollWidth), 390);
 
-  const caixa = await página.locator('.conta.conta--drawer .conta__painel').boundingBox();
+  const caixa = await página.locator('.conta.conta--modal .conta__painel').boundingBox();
   assert.ok(caixa.x >= 0 && caixa.x + caixa.width <= 390);
 
   await página.goto(BASE + '/', { waitUntil: 'domcontentloaded' });

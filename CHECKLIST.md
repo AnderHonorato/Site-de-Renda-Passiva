@@ -18,8 +18,8 @@ Fonte: `documentação/plano-portal-principal.md` e decisões 24–36 de `ander-
 - [x] Publicidade condicional preparada, blocos vazios recolhidos, consentimento e CSP com nonce.
 - [x] Privacidade/cookies em português e inglês.
 - [x] 65 ferramentas mantidas; 208 itens no catálogo, sem telas falsas para planejadas.
-- [x] Testes completos em 07/10: 1.056/1.056 de código, 2/2 fluxos grandes da API e 50/50 de navegador aprovados; verificador estrutural sem problemas.
-- [x] Conferência visual na porta 4400 atualizada em 07/10: cabeçalho logado com avatar/nome e menu flutuante, Entrar/Criar conta para visitante, conta/login/perfil em drawer direito compacto e chat alto/estreito; 390 px sem rolagem lateral.
+- [x] Testes completos em 07/10: 1.056/1.056 de código, 2/2 fluxos grandes da API e 51/51 de navegador aprovados; verificador estrutural sem problemas.
+- [x] Conferência visual na porta 4400 atualizada em 07/10: cabeçalho logado com avatar/nome e menu flutuante, Entrar/Criar conta para visitante, Minha conta e Perfil em modal central amplo/compacto por dentro e chat flutuante restaurado; 390 px sem rolagem lateral.
 - [x] Perfil v2: upload de foto, 15 avatares autorais, links sociais, ferramentas recomendadas visuais, plano clicável, data/tempo de comunidade e barra flutuante Salvar/Cancelar.
 - [x] Evolução v2: níveis por interações + bônus de medalhas, 7 famílias de medalhas com 8 patamares, página explicativa e banners/molduras desbloqueados por nível; níveis 13–15 têm animações de maior impacto.
 - [x] Chat v2: não lidas por sala e na bolha, lista com última mensagem/horário, resposta vinculada, Shift+Enter, formatação contextual, mini perfil no hover, mídia privada com prévia/player/progresso/download/denúncia e expiração em 48 h; chat público continua apenas texto.

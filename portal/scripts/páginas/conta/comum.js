@@ -4,9 +4,17 @@ import { caminhoDoIdioma, obterSessao, voltaSegura } from '../../núcleo/sessão
 export const en = document.documentElement.lang === 'en';
 export { api, caminhoDoIdioma, obterSessao, voltaSegura };
 
-document.querySelector('.conta__fechar-painel')?.addEventListener('click', () => {
+function fecharPainelConta() {
   if (history.length > 1 && document.referrer.startsWith(location.origin)) history.back();
   else location.assign(document.documentElement.dataset.raizIdioma || './');
+}
+
+document.querySelector('.conta__fechar-painel')?.addEventListener('click', fecharPainelConta);
+document.querySelector('.conta.conta--modal')?.addEventListener('click', evento => {
+  if (evento.target === evento.currentTarget) fecharPainelConta();
+});
+document.addEventListener('keydown', evento => {
+  if (evento.key === 'Escape' && document.querySelector('.conta.conta--modal')) fecharPainelConta();
 });
 
 export function estado(mensagem, erro = false) {

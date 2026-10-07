@@ -38,7 +38,8 @@ function campo(id, rotulo, tipo = 'text', attrs = '') {
 }
 
 function quadro(titulo, descricao, interior, id) {
-  return `<section class="conta conta--drawer"><div class="painel conta__painel" id="${id}">
+  const modo = ['conta', 'perfil'].includes(id) ? 'conta--modal' : 'conta--drawer';
+  return `<section class="conta ${modo}"><div class="painel conta__painel" id="${id}">
     <div class="conta__barra-topo">
       <div><p class="rótulo">${escapar(titulo)}</p><h1>${escapar(titulo)}</h1></div>
       <button class="conta__fechar-painel" type="button" aria-label="Fechar">${ícone('fechar')}</button>
