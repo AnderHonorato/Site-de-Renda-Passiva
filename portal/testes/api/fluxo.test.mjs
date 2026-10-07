@@ -35,6 +35,7 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     cookie=cookie.replace(/csrf=[^;]+/,'csrf=bad');r=await pedir('/api/autenticacao/sessao');assert.equal(r.status,200);assert.match(csrf,/^[A-Za-z0-9_-]{43}$/);
     r=await pedir('/api/autenticacao/criar-conta','POST',{nome:'Alice',email:'alice@example.com',usuario:'alice',senha:'senha-muito-forte-123',idade:20,aceitaTermos:true});assert.equal(r.status,201);assert.equal(r.data.usuario.papel,'usuario');
     r=await pedir('/api/autenticacao/sessao');assert.equal(r.data.usuario.usuario,'alice');
+    r=await pedir('/api/conta');assert.deepEqual(r.data.limites,{favoritos:10,trabalhos:3,lote_arquivos:3});assert.deepEqual(r.data.uso,{favoritos:0,trabalhos:0});
     r=await pedir('/api/perfil','PATCH',{ferramentas_recomendadas:[ferramentasProntas[0].slug]});assert.equal(r.status,400);
     r=await pedir(`/api/ferramentas/${ferramentasProntas[0].slug}/uso`,'POST',{});assert.equal(r.status,200);
     r=await pedir('/api/perfil','PATCH',{ferramentas_recomendadas:[ferramentasProntas[0].slug]});assert.equal(r.status,200);assert.deepEqual(r.data.perfil.ferramentas_recomendadas,[ferramentasProntas[0].slug]);
@@ -43,6 +44,15 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     r=await pedir(`/api/favoritos/${ferramentasProntas[0].slug}`,'PUT',{});assert.equal(r.status,200);
     r=await pedir(`/api/favoritos/${ferramentasProntas[10].slug}`,'PUT',{});assert.equal(r.status,403);assert.equal(r.data.erro,'limite_favoritos');
     r=await pedir('/api/favoritos');assert.equal(r.data.favoritos.length,10);
+    const slugTrabalho=ferramentasProntas[0].slug;
+    const trabalhos=[];
+    for(let n=1;n<=3;n++){r=await pedir('/api/trabalhos','POST',{ferramenta_slug:slugTrabalho,titulo:`Trabalho ${n}`,dados:{valor:String(n),opcao:'teste'},situacao:'salvo'});assert.equal(r.status,201);trabalhos.push(r.data.trabalho);}
+    r=await pedir('/api/trabalhos','POST',{ferramenta_slug:slugTrabalho,titulo:'Excedente',dados:{valor:'4'},situacao:'salvo'});assert.equal(r.status,403);assert.equal(r.data.erro,'limite_do_plano');
+    r=await pedir('/api/trabalhos');assert.equal(r.status,200);assert.equal(r.data.limite,3);assert.equal(r.data.trabalhos.length,3);
+    r=await pedir(`/api/trabalhos/${trabalhos[0].id}`);assert.equal(r.status,200);assert.deepEqual(r.data.trabalho.dados,{valor:'1',opcao:'teste'});
+    r=await pedir(`/api/trabalhos/${trabalhos[0].id}`,'PATCH',{titulo:'Trabalho renomeado'});assert.equal(r.status,200);assert.equal(r.data.trabalho.titulo,'Trabalho renomeado');
+    r=await pedir(`/api/trabalhos/${trabalhos[2].id}`,'DELETE',{});assert.equal(r.status,200);assert.equal(r.data.ok,true);
+    r=await pedir('/api/conta');assert.equal(r.data.uso.trabalhos,2);
     r=await pedir('/api/suporte','POST',{assunto:'Ajuda no site',texto:'Preciso de ajuda com uma ferramenta.'});assert.equal(r.status,201);const suporteId=r.data.id;
     r=await pedir('/api/chat/salas');assert.equal(r.status,403);
     r=await pedir('/api/chat/aceite','POST',{});assert.equal(r.status,400);assert.equal(r.data.erro,'aceite_obrigatorio');

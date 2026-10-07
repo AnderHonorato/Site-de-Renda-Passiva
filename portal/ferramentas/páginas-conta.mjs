@@ -11,6 +11,7 @@ const textos = {
     moderar: ['Moderação do chat', 'Analise denúncias e tome medidas sobre o chat.', 'Atualizar denúncias'],
     perfil: ['Perfil', 'Conheça as pessoas da comunidade e gerencie suas conexões.'],
     suporte: ['Mensagens', 'Converse com a equipe sobre sua conta e acompanhe as respostas.'],
+    trabalhos: ['Meus trabalhos', 'Reabra, renomeie ou apague os valores que você escolheu salvar nas ferramentas.'],
     usuarios: ['Usuários', 'Gerencie contas e planos pelo painel administrativo.'],
     adminSuporte: ['Suporte', 'Responda às mensagens enviadas pelos usuários.'],
   },
@@ -23,6 +24,7 @@ const textos = {
     moderar: ['Chat moderation', 'Review reports and take action on chat content.', 'Refresh reports'],
     perfil: ['Profile', 'Meet community members and manage your connections.'],
     suporte: ['Messages', 'Contact the team about your account and follow replies.'],
+    trabalhos: ['My works', 'Reopen, rename, or delete the values you chose to save in tools.'],
     usuarios: ['Users', 'Manage accounts and plans in the admin panel.'],
     adminSuporte: ['Support', 'Reply to messages sent by users.'],
   },
@@ -76,11 +78,12 @@ export function paginasConta(ctx) {
       ${campo('senhaExclusao', t.conta[8], 'password', 'autocomplete="current-password" required')}
       <button class="botão" type="submit">${escapar(t.conta[13])}</button><button class="botão botão--linha" id="cancelar-exclusao" type="button">${en ? 'Cancel' : 'Cancelar'}</button></form>
       <h2>${escapar(t.conta[15])}</h2><div id="amizades"></div><form id="form-amizade" class="conta__form">${campo('amigo', '@usuário', 'text', 'autocomplete="off"')}<button class="botão" type="submit">${escapar(t.conta[17])}</button></form>
-      <a href="mensagens.html">${en ? 'My messages' : 'Minhas mensagens'}</a><nav id="conta-admin" class="conta__links" hidden><a href="../admin/chat/">${en ? 'Chat moderation' : 'Moderação do chat'}</a><a href="../admin/usuarios/">${en ? 'Users' : 'Usuários'}</a><a href="../admin/suporte/">${en ? 'Support' : 'Suporte'}</a></nav>
+      <div class="conta__links"><a href="trabalhos.html">${en ? 'My works' : 'Meus trabalhos'}</a><a href="mensagens.html">${en ? 'My messages' : 'Minhas mensagens'}</a><a href="../planos.html">${en ? 'Plans' : 'Planos'}</a></div><nav id="conta-admin" class="conta__links" hidden><a href="../admin/chat/">${en ? 'Chat moderation' : 'Moderação do chat'}</a><a href="../admin/usuarios/">${en ? 'Users' : 'Usuários'}</a><a href="../admin/suporte/">${en ? 'Support' : 'Suporte'}</a></nav>
       <button class="botão botão--texto" id="sair-conta" type="button">${escapar(t.conta[14])}</button></div>`, 'conta')],
     ['admin/chat/index.html', 'moderar', quadro(t.moderar[0], t.moderar[1], `<nav class="conta__links"><a href="../usuarios/">${en ? 'Users' : 'Usuários'}</a><a href="../suporte/">${en ? 'Support' : 'Suporte'}</a></nav><button class="botão" id="atualizar-denuncias" type="button">${escapar(t.moderar[2])}</button><div id="denuncias"></div>`, 'moderar')],
     ['perfil.html', 'perfil', quadro(t.perfil[0], t.perfil[1], '<div id="perfil-pessoa"></div>', 'perfil')],
     ['conta/mensagens.html', 'suporte', quadro(t.suporte[0], t.suporte[1], `<form id="form-suporte" class="conta__form">${campo('assunto', en ? 'Subject' : 'Assunto', 'text', 'minlength="3" maxlength="100" required')}<label class="conta__campo"><span>${en ? 'Message' : 'Mensagem'}</span><textarea name="texto" minlength="10" maxlength="2000" rows="5" required></textarea></label><button class="botão" type="submit">${en ? 'Send message' : 'Enviar mensagem'}</button></form><div id="lista-suporte"></div>`, 'suporte')],
+    ['conta/trabalhos.html', 'trabalhos', quadro(t.trabalhos[0], t.trabalhos[1], `<div class="conta__trabalhos-cabeçalho"><p id="trabalhos-resumo" class="suave pequeno"></p><a class="botão botão--linha" href="../ferramentas.html">${en ? 'Open tools' : 'Abrir ferramentas'}</a></div><div id="lista-trabalhos"></div><p class="suave pequeno">${en ? 'Free accounts can save 3 works. Plus can save 500. Premium currently inherits the Plus account quota until its final limits are defined.' : 'Contas Grátis podem salvar 3 trabalhos. Plus pode salvar 500. Premium herda por enquanto a cota de conta do Plus até os limites finais serem definidos.'}</p>`, 'trabalhos')],
     ['admin/usuarios/index.html', 'usuarios', quadro(t.usuarios[0], t.usuarios[1], '<div id="lista-usuarios"></div>', 'usuarios')],
     ['admin/suporte/index.html', 'adminSuporte', quadro(t.adminSuporte[0], t.adminSuporte[1], '<div id="lista-admin-suporte"></div>', 'admin-suporte')],
   ];

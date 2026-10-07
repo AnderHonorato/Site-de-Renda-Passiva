@@ -117,6 +117,9 @@ export function conferirCatálogo() {
     if (!['pronta', 'planejada'].includes(f.status)) {
       problemas.push(`${f.id}: status inválido: ${f.status}`);
     }
+    if (!['gratuito', 'plus', 'premium'].includes(f.plano)) {
+      problemas.push(`${f.id}: plano inválido: ${f.plano}`);
+    }
     if (f.resumo.length > 130) {
       problemas.push(`${f.id}: resumo longo demais para uma linha (${f.resumo.length} caracteres)`);
     }

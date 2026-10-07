@@ -13,6 +13,8 @@ import { criarProgresso, mostrarErro, limparErros, lerFormulário, avisar } from
 import { copiar, baixar, baixarCsv, baixarPlanilha, nomeDeArquivo } from './exportar.js';
 import { marcarResultado, pulsar } from './movimento.js';
 import { registrarUso } from './uso-ferramentas.js';
+import { api } from './api.js';
+import { caminhoDoIdioma, obterSessao } from './sessão.js';
 
 /** Erro de entrada: a mensagem vai para o campo indicado, não para o console. */
 export class ErroDeEntrada extends Error {
@@ -86,6 +88,25 @@ export function texto(dados, nome, { rótulo, obrigatório = true, máximo = 200
   if (!valor && obrigatório) throw new ErroDeEntrada(`Preencha o campo "${rótulo}".`, nome);
   if (valor.length > máximo) throw new ErroDeEntrada(`${rótulo} passou de ${máximo} caracteres.`, nome);
   return valor;
+}
+
+export function preencherFormulário(formulário, dados) {
+  if (!dados || typeof dados !== 'object' || Array.isArray(dados)) return;
+  for (const [nome, valor] of Object.entries(dados)) {
+    const controles = formulário.querySelectorAll(`[name="${CSS.escape(nome)}"]`);
+    for (const controle of controles) {
+      if (controle instanceof HTMLInputElement && controle.type === 'file') continue;
+      if (controle instanceof HTMLInputElement && controle.type === 'checkbox') {
+        controle.checked = valor === true || valor === 'sim' || valor === 'true' || valor === '1';
+      } else if (controle instanceof HTMLInputElement && controle.type === 'radio') {
+        controle.checked = String(controle.value) === String(valor);
+      } else if ('value' in controle) {
+        controle.value = valor == null ? '' : String(valor);
+      }
+      controle.dispatchEvent(new Event('input', { bubbles: true }));
+      controle.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
 }
 
 function markupDeCampo(campo) {
@@ -166,6 +187,8 @@ export function montarFerramenta(raiz, ferramenta, definição) {
   const formulário = raiz.querySelector('#formulário');
   const caixaDeResultado = raiz.querySelector('#resultado');
   const progresso = criarProgresso(raiz.querySelector('#progresso'));
+  const emInglês = document.documentElement.lang === 'en';
+  let dadosAtuais = null;
 
   function desenharResultado(saída) {
     const linhas = (saída.linhas ?? [])
@@ -192,6 +215,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       botões.push(`<button class="botão botão--linha" type="button" data-tabela="csv">${ícone('baixar')}CSV</button>`);
       botões.push(`<button class="botão botão--linha" type="button" data-tabela="xlsx">${ícone('planilha')}Planilha</button>`);
     }
+    botões.push(`<button class="botão botão--linha" type="button" data-salvar-trabalho>${ícone('confere')}${emInglês ? 'Save work' : 'Salvar trabalho'}</button>`);
 
     caixaDeResultado.innerHTML = `<p class="rótulo">Resultado</p>
       <p class="resultado__valor">${escapar(saída.valor)}</p>
@@ -209,6 +233,40 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       const situação = await copiar(conteúdo);
       if (situação === 'copiado') pulsar(evento.currentTarget);
       avisar(situação === 'copiado' ? 'Copiado.' : 'Seu navegador bloqueou a cópia automática. Selecione o texto e copie.');
+    });
+
+    caixaDeResultado.querySelector('[data-salvar-trabalho]')?.addEventListener('click', async (evento) => {
+      const botãoSalvar = evento.currentTarget;
+      botãoSalvar.disabled = true;
+      try {
+        const sessao = await obterSessao({ renovar: true });
+        if (!sessao.usuario) {
+          const volta = `${location.pathname}${location.search}`;
+          location.assign(`${caminhoDoIdioma('entrar.html')}?volta=${encodeURIComponent(volta)}`);
+          return;
+        }
+        const data = new Intl.DateTimeFormat(emInglês ? 'en' : 'pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date());
+        const titulo = `${ferramenta.nome} · ${data}`.slice(0, 120);
+        const resposta = await api('/api/trabalhos', {
+          metodo: 'POST',
+          dados: { ferramenta_slug: ferramenta.slug, titulo, dados: dadosAtuais ?? lerFormulário(formulário), situacao: 'salvo' },
+        });
+        botãoSalvar.textContent = emInglês ? 'Work saved' : 'Trabalho salvo';
+        botãoSalvar.dataset.trabalhoId = String(resposta.trabalho.id);
+        const temArquivo = formulário.querySelector('input[type="file"]');
+        avisar(temArquivo
+          ? (emInglês ? 'Settings saved. Choose the local file again when reopening.' : 'Configurações salvas. Ao reabrir, escolha novamente o arquivo local.')
+          : (emInglês ? 'Saved to My works.' : 'Salvo em Meus trabalhos.'));
+      } catch (erro) {
+        if (erro?.message === 'limite_do_plano') {
+          avisar(emInglês ? 'Your plan reached its saved-work limit. Manage your saved works or request a plan change.' : 'Seu plano atingiu o limite de trabalhos salvos. Gerencie os salvos ou peça uma mudança de plano.');
+        } else if (erro?.indisponivel) {
+          avisar(emInglês ? 'Could not save now. Your result remains on this screen.' : 'Não foi possível salvar agora. Seu resultado continua nesta tela.');
+        } else {
+          avisar(emInglês ? 'Could not save this work.' : 'Não foi possível salvar este trabalho.');
+        }
+        botãoSalvar.disabled = false;
+      }
     });
 
     for (const botão of caixaDeResultado.querySelectorAll('[data-arquivo]')) {
@@ -244,8 +302,9 @@ export function montarFerramenta(raiz, ferramenta, definição) {
     if (demorada) progresso.iniciar('Calculando…');
     try {
       const saída = await calcular(dados);
+      dadosAtuais = { ...dados };
       desenharResultado(saída);
-      // A conta recebe só o identificador da ferramenta, nunca os valores ou arquivos.
+      // O uso recebe só o identificador; os valores só saem do aparelho quando a pessoa toca em "Salvar trabalho".
       void registrarUso(ferramenta.slug);
       if (demorada) progresso.concluir('Pronto');
       else progresso.esconder();
@@ -279,14 +338,41 @@ export function montarFerramenta(raiz, ferramenta, definição) {
     }
   }
 
+  async function reabrirSeSolicitado() {
+    const id = new URLSearchParams(location.search).get('trabalho');
+    if (!id || !/^\d+$/.test(id)) return;
+    try {
+      const sessao = await obterSessao();
+      if (!sessao.usuario) {
+        const volta = `${location.pathname}${location.search}`;
+        location.replace(`${caminhoDoIdioma('entrar.html')}?volta=${encodeURIComponent(volta)}`);
+        return;
+      }
+      const resposta = await api(`/api/trabalhos/${id}`);
+      if (resposta.trabalho.ferramenta_slug !== ferramenta.slug) {
+        avisar(emInglês ? 'This saved work belongs to another tool.' : 'Este trabalho salvo pertence a outra ferramenta.');
+        return;
+      }
+      preencherFormulário(formulário, resposta.trabalho.dados);
+      await executar({ focar: false });
+      avisar(emInglês ? 'Saved values restored.' : 'Valores salvos restaurados.');
+    } catch (erro) {
+      avisar(erro?.indisponivel
+        ? (emInglês ? 'Saved work is unavailable right now. The tool still works locally.' : 'O trabalho salvo está indisponível agora. A ferramenta continua funcionando localmente.')
+        : (emInglês ? 'Could not reopen this saved work.' : 'Não foi possível reabrir este trabalho salvo.'));
+    }
+  }
+
   formulário.addEventListener('submit', (evento) => { evento.preventDefault(); executar(); });
   formulário.addEventListener('reset', () => {
     limparErros(formulário);
+    dadosAtuais = null;
     caixaDeResultado.hidden = true;
     progresso.esconder();
   });
 
   aoMontar?.(raiz, executar);
+  void reabrirSeSolicitado();
 }
 
 export { baixar, baixarCsv, baixarPlanilha, nomeDeArquivo, copiar, avisar };

@@ -1,6 +1,6 @@
 import { api, dados, en, estado, ligar, mensagemErro, obterSessao } from './comum.js';
 import { aplicarTema, lerTema } from '../../núcleo/preferências.js';
-import { criarAvatar } from '../../núcleo/nível.js';
+import { criarAvatar, criarIconeNivel } from '../../núcleo/nível.js';
 
 let usuario;
 try {
@@ -14,6 +14,30 @@ try {
     const conta = contaResposta.usuario || contaResposta.conta || contaResposta;
     const perfilResposta = await api('/api/perfil/' + encodeURIComponent(usuario.usuario)).catch(() => ({}));
     const perfil = perfilResposta.perfil || perfilResposta;
+    const conteudo = document.getElementById('conta-conteudo');
+    const resumo = document.createElement('section');
+    resumo.className = 'conta-resumo';
+    const avatarResumo = document.createElement('div');
+    avatarResumo.className = 'conta-resumo__avatar';
+    const avatarDoResumo = criarAvatar(perfil.avatar || 'sol');
+    if (avatarDoResumo) avatarResumo.append(avatarDoResumo);
+    const textoResumo = document.createElement('div');
+    textoResumo.className = 'conta-resumo__texto';
+    const nomeResumo = document.createElement('strong');
+    nomeResumo.textContent = perfil.nome || conta.nome || usuario.nome || usuario.usuario;
+    const usuarioResumo = document.createElement('span');
+    usuarioResumo.textContent = `@${perfil.usuario || usuario.usuario}${(conta.plano || usuario.plano) ? ` · ${conta.plano || usuario.plano}` : ''}`;
+    const selosResumo = document.createElement('div');
+    selosResumo.className = 'conta-resumo__selos';
+    selosResumo.append(criarIconeNivel(perfil.nivel || usuario.nivel || 1));
+    textoResumo.append(nomeResumo, usuarioResumo, selosResumo);
+    const verPerfil = document.createElement('a');
+    verPerfil.className = 'botão botão--linha';
+    verPerfil.href = `../perfil.html?usuario=${encodeURIComponent(perfil.usuario || usuario.usuario)}`;
+    verPerfil.textContent = en ? 'View public profile' : 'Ver perfil público';
+    resumo.append(avatarResumo, textoResumo, verPerfil);
+    conteudo.prepend(resumo);
+
     const form = document.getElementById('form-perfil');
     for (const chave of ['nome', 'usuario', 'bio', 'local']) {
       if (form.elements[chave]) form.elements[chave].value = perfil[chave] ?? conta[chave] ?? usuario[chave] ?? '';

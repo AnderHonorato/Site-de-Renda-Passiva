@@ -5,6 +5,7 @@ import { abrirBanco } from './banco.mjs';
 import { hash, token, erro, cookies, senhaHash, hashDummy, comparar, corpo } from './seguranca.mjs';
 import { ferramentasProntas, ferramentaPorSlug } from '../dados/catálogo.js';
 import { categorias } from '../dados/categorias.js';
+import { limitesDoPlano, planosPublicos, trabalhoPublico, validarEdicaoTrabalho, validarNovoTrabalho } from './trabalhos.mjs';
 
 const agora = () => Date.now();
 const nomeSessao = process.env.URL_PUBLICA?.startsWith('https://') ? '__Host-sessao' : 'sessao';
@@ -76,7 +77,7 @@ async function rota(req,res){
   const url=new URL(req.url,'http://localhost');const p=url.pathname;const m=req.method;
   if(!p.startsWith('/api/'))throw erro(404,'nao_encontrado');
   conferirLimite(`global:${ip(req)}`,180,60000);
-  if(m==='OPTIONS'){res.writeHead(204,{'Allow':'GET,POST,PATCH,DELETE,OPTIONS'});res.end();return;}
+  if(m==='OPTIONS'){res.writeHead(204,{'Allow':'GET,POST,PUT,PATCH,DELETE,OPTIONS'});res.end();return;}
   if(m==='GET'&&p==='/api/autenticacao/sessao'){
     if(!(/^[A-Za-z0-9_-]{43}$/.test(cookies(req)[nomeCsrf]||'')))setCookie(res,nomeCsrf,token());
     const u=sessao(req);return json(res,200,{usuario:usuarioPublico(u),chat_habilitado:chatAtivo(),chat_aceito:!!u?.chat_aceito_em});
@@ -116,7 +117,14 @@ async function rota(req,res){
       banco.prepare('DELETE FROM redefinicoes WHERE usuario_id=?').run(r.usuario_id);banco.prepare('DELETE FROM sessoes WHERE usuario_id=?').run(r.usuario_id);banco.exec('COMMIT');
     }catch(e){banco.exec('ROLLBACK');throw e;}return json(res,200,{ok:true});
   }
-  if(m==='GET'&&p==='/api/conta'){return json(res,200,{usuario:usuarioPublico(exigir(req))});}
+  if(m==='GET'&&p==='/api/conta'){
+    const u=exigir(req), limitesPlano=limitesDoPlano(u.plano);
+    const usoConta={
+      favoritos:banco.prepare('SELECT count(*) total FROM favoritos WHERE usuario_id=?').get(u.id).total,
+      trabalhos:banco.prepare('SELECT count(*) total FROM trabalhos WHERE usuario_id=?').get(u.id).total,
+    };
+    return json(res,200,{usuario:usuarioPublico(u),limites:limitesPlano,uso:usoConta});
+  }
   if(m==='PATCH'&&p==='/api/conta'){
     const u=exigir(req),b=await corpo(req);const nome=b.nome===undefined?u.nome:String(b.nome).trim();const idioma=b.idioma??u.idioma,tema=b.tema??u.tema;
     if(nome.length<2||nome.length>80||!['pt-BR','en'].includes(idioma)||!['claro','escuro','sistema'].includes(tema))throw erro(400,'dados_invalidos');banco.prepare('UPDATE usuarios SET nome=?,idioma=?,tema=? WHERE id=?').run(nome,idioma,tema,u.id);
@@ -131,8 +139,9 @@ async function rota(req,res){
     const u=exigir(req);const mensagens=banco.prepare('SELECT id,sala_id,texto,criado_em FROM mensagens WHERE autor_id=?').all(u.id);
     const amizades=banco.prepare('SELECT * FROM amizades WHERE origem=? OR destino=?').all(u.id,u.id), bloqueios=banco.prepare('SELECT * FROM bloqueios WHERE origem=?').all(u.id);
     const favoritos=banco.prepare('SELECT slug,criado_em FROM favoritos WHERE usuario_id=?').all(u.id), suporte=banco.prepare('SELECT * FROM suporte WHERE usuario_id=?').all(u.id), uso=banco.prepare('SELECT slug,total,ultimo_uso_em FROM uso_ferramentas WHERE usuario_id=?').all(u.id);
+    const trabalhos=banco.prepare('SELECT ferramenta_slug,titulo,dados,situacao,criado_em,atualizado_em FROM trabalhos WHERE usuario_id=? ORDER BY atualizado_em DESC').all(u.id).map(item=>({...item,dados:JSON.parse(item.dados)}));
     const denuncias=banco.prepare('SELECT id,alvo_usuario_id,mensagem_id,motivo,situacao,criado_em FROM denuncias WHERE denunciante_id=?').all(u.id);
-    return json(res,200,{usuario:usuarioPublico(u),mensagens,amizades,bloqueios,favoritos,suporte,denuncias,uso});
+    return json(res,200,{usuario:usuarioPublico(u),mensagens,amizades,bloqueios,favoritos,trabalhos,suporte,denuncias,uso});
   }
   if(m==='DELETE'&&p==='/api/conta'){
     const u=exigir(req),b=await corpo(req);if(!await comparar(b.senha,u.senha_hash))throw erro(403,'senha_invalida');
@@ -154,11 +163,51 @@ async function rota(req,res){
   if(favorito&&m==='PUT'){
     const u=exigir(req);if(!ferramentaPorSlug[favorito[1]])throw erro(404,'ferramenta_nao_localizada');
     if(banco.prepare('SELECT 1 FROM favoritos WHERE usuario_id=? AND slug=?').get(u.id,favorito[1]))return json(res,200,{ok:true});
-    if(banco.prepare('SELECT count(*) total FROM favoritos WHERE usuario_id=?').get(u.id).total>=(u.plano==='gratuito'?10:500))throw erro(403,'limite_favoritos');
+    if(banco.prepare('SELECT count(*) total FROM favoritos WHERE usuario_id=?').get(u.id).total>=limitesDoPlano(u.plano).favoritos)throw erro(403,'limite_favoritos');
     banco.prepare('INSERT OR IGNORE INTO favoritos(usuario_id,slug) VALUES(?,?)').run(u.id,favorito[1]);return json(res,200,{ok:true});
   }
   if(favorito&&m==='DELETE'){
     const u=exigir(req);banco.prepare('DELETE FROM favoritos WHERE usuario_id=? AND slug=?').run(u.id,favorito[1]);return json(res,200,{ok:true});
+  }
+  if(p==='/api/planos'&&m==='GET'){return json(res,200,{planos:planosPublicos()});}
+  if(p==='/api/trabalhos'&&m==='GET'){
+    const u=exigir(req),situacao=url.searchParams.get('situacao');
+    if(situacao!==null&&!['em_aberto','salvo'].includes(situacao))throw erro(400,'dados_invalidos');
+    const linhas=situacao
+      ? banco.prepare('SELECT * FROM trabalhos WHERE usuario_id=? AND situacao=? ORDER BY atualizado_em DESC,id DESC').all(u.id,situacao)
+      : banco.prepare('SELECT * FROM trabalhos WHERE usuario_id=? ORDER BY atualizado_em DESC,id DESC').all(u.id);
+    return json(res,200,{trabalhos:linhas.map(x=>trabalhoPublico(x,ferramentaPorSlug[x.ferramenta_slug])),limite:limitesDoPlano(u.plano).trabalhos});
+  }
+  if(p==='/api/trabalhos'&&m==='POST'){
+    const u=exigir(req),b=await corpo(req);
+    if(!validarNovoTrabalho(b))throw erro(400,'dados_invalidos');
+    const ferramenta=ferramentaPorSlug[b.ferramenta_slug];if(!ferramenta||ferramenta.status!=='pronta')throw erro(404,'ferramenta_nao_localizada');
+    const limite=limitesDoPlano(u.plano).trabalhos,total=banco.prepare('SELECT count(*) total FROM trabalhos WHERE usuario_id=?').get(u.id).total;
+    if(total>=limite)throw erro(403,'limite_do_plano');
+    const r=banco.prepare('INSERT INTO trabalhos(usuario_id,ferramenta_slug,titulo,dados,situacao) VALUES(?,?,?,?,?)')
+      .run(u.id,b.ferramenta_slug,b.titulo.trim(),JSON.stringify(b.dados),b.situacao||'salvo');
+    const linha=banco.prepare('SELECT * FROM trabalhos WHERE id=?').get(Number(r.lastInsertRowid));
+    return json(res,201,{trabalho:trabalhoPublico(linha,ferramenta),limite});
+  }
+  const trabalhoRota=p.match(/^\/api\/trabalhos\/(\d+)$/);
+  if(trabalhoRota&&m==='GET'){
+    const u=exigir(req),linha=banco.prepare('SELECT * FROM trabalhos WHERE id=? AND usuario_id=?').get(+trabalhoRota[1],u.id);
+    if(!linha)throw erro(404,'trabalho_inexistente');
+    return json(res,200,{trabalho:trabalhoPublico(linha,ferramentaPorSlug[linha.ferramenta_slug])});
+  }
+  if(trabalhoRota&&m==='PATCH'){
+    const u=exigir(req),id=+trabalhoRota[1],linha=banco.prepare('SELECT * FROM trabalhos WHERE id=? AND usuario_id=?').get(id,u.id);
+    if(!linha)throw erro(404,'trabalho_inexistente');
+    const b=await corpo(req);if(!validarEdicaoTrabalho(b))throw erro(400,'dados_invalidos');
+    const titulo=b.titulo===undefined?linha.titulo:b.titulo.trim(),dados=b.dados===undefined?linha.dados:JSON.stringify(b.dados),situacao=b.situacao??linha.situacao;
+    banco.prepare('UPDATE trabalhos SET titulo=?,dados=?,situacao=?,atualizado_em=CURRENT_TIMESTAMP WHERE id=? AND usuario_id=?').run(titulo,dados,situacao,id,u.id);
+    const atualizado=banco.prepare('SELECT * FROM trabalhos WHERE id=?').get(id);
+    return json(res,200,{trabalho:trabalhoPublico(atualizado,ferramentaPorSlug[atualizado.ferramenta_slug])});
+  }
+  if(trabalhoRota&&m==='DELETE'){
+    const u=exigir(req),r=banco.prepare('DELETE FROM trabalhos WHERE id=? AND usuario_id=?').run(+trabalhoRota[1],u.id);
+    if(!r.changes)throw erro(404,'trabalho_inexistente');
+    return json(res,200,{ok:true});
   }
   if(p==='/api/suporte'&&m==='GET'){
     const u=exigir(req);return json(res,200,{mensagens:banco.prepare('SELECT * FROM suporte WHERE usuario_id=? ORDER BY id DESC LIMIT 100').all(u.id)});

@@ -28,13 +28,20 @@ export function ligarChat(sessao) {
   painel.id = 'chat-painel'; painel.hidden = true;
   painel.setAttribute('aria-label', txt('Chat da comunidade', 'Community chat'));
   const topo = elemento('div', 'chat__topo');
+  const identidade = elemento('div', 'chat__identidade');
+  const avatarTopo = criarAvatar(sessao.usuario?.avatar || 'sol');
+  if (avatarTopo) identidade.append(avatarTopo);
+  const identidadeTexto = elemento('span', 'chat__identidade-texto');
   const titulo = elemento('b', '', txt('Comunidade', 'Community'));
+  const subtitulo = elemento('small', '', sessao.usuario?.usuario ? `@${sessao.usuario.usuario}` : txt('Você está online', 'You are online'));
+  identidadeTexto.append(titulo, subtitulo);
+  identidade.append(identidadeTexto);
   const meuNivel = elemento('span', 'chat__meu-nivel');
   meuNivel.append(criarIconeNivel(sessao.usuario?.nivel || 1));
   meuNivel.title = txt('Seu nível', 'Your level');
   const fechar = elemento('button', 'chat__fechar', '×'); fechar.type = 'button';
   fechar.setAttribute('aria-label', txt('Fechar chat', 'Close chat'));
-  topo.append(titulo, meuNivel, fechar);
+  topo.append(identidade, meuNivel, fechar);
   const corpo = elemento('div', 'chat__corpo');
   const aviso = elemento('p', 'chat__aviso', txt('Não compartilhe dados pessoais no chat.', 'Do not share personal information in chat.'));
   aviso.id = 'chat-aviso';
@@ -48,11 +55,25 @@ export function ligarChat(sessao) {
       item.querySelector('.ícone-nível')?.replaceWith(criarIconeNivel(evento.detail.atual));
     }
   });
-  const ocultar = () => { painel.hidden = true; bolha.setAttribute('aria-expanded', 'false'); eventos?.close(); };
+  let temporizadorFechar = 0;
+  const ocultar = () => {
+    if (painel.hidden || painel.dataset.fechando === 'sim') return;
+    painel.dataset.fechando = 'sim';
+    bolha.setAttribute('aria-expanded', 'false');
+    eventos?.close();
+    clearTimeout(temporizadorFechar);
+    temporizadorFechar = window.setTimeout(() => {
+      painel.hidden = true;
+      delete painel.dataset.fechando;
+    }, 175);
+  };
   fechar.addEventListener('click', ocultar);
   bolha.addEventListener('click', async () => {
     if (!painel.hidden) { ocultar(); return; }
-    painel.hidden = false; bolha.setAttribute('aria-expanded', 'true');
+    clearTimeout(temporizadorFechar);
+    delete painel.dataset.fechando;
+    painel.hidden = false;
+    bolha.setAttribute('aria-expanded', 'true');
     if (!sessao.chat_aceito && !sessao.usuario?.chat_aceito) mostrarAceite(corpo, sessao);
     else await carregarSalas(corpo, sessao);
   });
@@ -92,10 +113,15 @@ async function carregarSalas(corpo, sessao) {
       alternarSalas.setAttribute('aria-expanded', String(!recolhida));
     });
     conversa.append(alternarSalas);
-    for (const sala of salas) {
+    for (const [indice, sala] of salas.entries()) {
       const botao = elemento('button', '', sala.nome || sala.titulo || String(sala.id));
       botao.type = 'button';
-      botao.addEventListener('click', () => abrirSala(sala, conversa, sessao));
+      if (indice === 0) botao.dataset.ativa = 'sim';
+      botao.addEventListener('click', () => {
+        for (const outro of lista.querySelectorAll('button')) delete outro.dataset.ativa;
+        botao.dataset.ativa = 'sim';
+        abrirSala(sala, conversa, sessao);
+      });
       lista.append(botao);
     }
     if (!salas.length) lista.append(elemento('p', 'chat__estado', txt('Nenhuma sala disponível.', 'No rooms available.')));

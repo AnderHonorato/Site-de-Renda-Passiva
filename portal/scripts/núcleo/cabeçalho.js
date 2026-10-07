@@ -6,9 +6,9 @@ import { trocarTemaComTransição } from './transição-de-tema.js';
 import { ligarBuscaDoTopo } from './busca-do-topo.js';
 import { ligarAntiCópia } from './anti-cópia.js';
 import { ligarNotificações } from './notificações.js';
-import { ícone } from './ícones.js';
 import { avisar } from './interface.js';
 import { obterSessao } from './sessão.js';
+import { renderizarContaTopo } from './conta-topo.js';
 
 function ligarMenuDeCategorias() {
   const gatilho = document.getElementById('abrir-categorias');
@@ -118,17 +118,9 @@ isolarBloco('sessão-e-chat', async () => {
   const base = document.documentElement.dataset.raizIdioma || './';
   const fim = document.querySelector('.topo__fim');
   if (!fim) return;
-  const link = document.createElement('a');
-  link.className = 'conta__atalho';
-  link.href = `${base}entrar.html?volta=${encodeURIComponent(location.pathname)}`;
-  const rotulo = document.createElement('span');
-  rotulo.textContent = idioma === 'en' ? 'Sign in' : 'Entrar';
-  link.innerHTML = ícone('pessoas');
-  link.append(rotulo);
-  link.setAttribute('aria-label', rotulo.textContent);
-  fim.prepend(link);
   try {
     const sessao = await obterSessao();
+    renderizarContaTopo(fim, sessao, { base, idioma });
     if (!sessao.usuario) return;
     sincronizarFavoritos().then(({ excedentesLocais }) => {
       if (excedentesLocais > 0 && !sessionStorage.getItem('portal.favoritos.cota-avisada')) {
@@ -137,9 +129,6 @@ isolarBloco('sessão-e-chat', async () => {
           : 'Alguns favoritos ficam só neste aparelho por causa do limite da conta.');
       }
     }).catch(() => {});
-    link.href = `${base}conta/`;
-    rotulo.textContent = idioma === 'en' ? 'Account' : 'Conta';
-    link.setAttribute('aria-label', rotulo.textContent);
     const título = document.querySelector('.abertura__título');
     const primeiroNome = String(sessao.usuario.nome || '').trim().split(/\s+/)[0];
     if (título && primeiroNome) título.textContent = idioma === 'en'
@@ -149,7 +138,9 @@ isolarBloco('sessão-e-chat', async () => {
       const modulo = await import('./chat/chat.js');
       modulo.ligarChat(sessao);
     }
-  } catch { /* A API não afeta o portal estático. */ }
+  } catch {
+    renderizarContaTopo(fim, null, { base, idioma });
+  }
 });
 // O aviso de bloqueador só é baixado nas páginas geradas com anúncios ativos.
 if (document.documentElement.dataset.anuncios === 'sim') {

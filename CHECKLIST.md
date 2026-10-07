@@ -18,13 +18,14 @@ Fonte: `documentação/plano-portal-principal.md` e decisões 24–36 de `ander-
 - [x] Publicidade condicional preparada, blocos vazios recolhidos, consentimento e CSP com nonce.
 - [x] Privacidade/cookies em português e inglês.
 - [x] 65 ferramentas mantidas; 208 itens no catálogo, sem telas falsas para planejadas.
-- [x] Testes de código/API executados; suíte completa em 06/10 com 1.053 testes aprovados e 0 falhas, além do verificador estrutural sem problemas.
-- [x] Conferência visual do login e do cabeçalho na porta 4400 concluída em 06/10; Entrar/Conta e PT/EN seguem o padrão visual do portal, e as rotas bilíngues de conta foram validadas.
+- [x] Testes de código/API executados; suíte de código com 1.056 testes aprovados, fluxo real da API aprovado e suíte de navegador com 46 testes aprovados e 0 falhas; verificador estrutural sem problemas.
+- [x] Conferência visual na porta 4400 atualizada em 07/10: cabeçalho logado com avatar/nome e menu flutuante, Entrar/Criar conta para visitante, perfil/conta com nova hierarquia e chat mais alto e estreito; 320/390 px sem rolagem lateral.
 - [ ] Anúncio real, aprovação AdSense, IDs do dono e CMP aplicável: nada foi ativado sem esses dados.
 
 ## Ondas seguintes do plano original
 
-- [ ] Trabalhos salvos com reabertura por ferramenta e cotas de Plus/Premium definidas.
+- [x] Trabalhos salvos com reabertura, renomear/apagar e cotas reais de Grátis/Plus aplicadas no servidor.
+- [ ] Cotas adicionais finais do Premium; até a definição, Premium herda explicitamente as cotas do Plus.
 - [ ] Admin de ferramentas, textos com histórico, categorias, limites e regras de pontos.
 - [ ] Boas-vindas/novidades editáveis; apresentação existente permanece.
 - [ ] Edição administrativa das regras de pontos e revisão visual do modal de evolução.

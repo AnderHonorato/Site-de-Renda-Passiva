@@ -68,6 +68,17 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
       acao TEXT NOT NULL, alvo_id INTEGER, detalhe TEXT NOT NULL DEFAULT '{}',
       criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
+    CREATE TABLE IF NOT EXISTS trabalhos (
+      id INTEGER PRIMARY KEY,
+      usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+      ferramenta_slug TEXT NOT NULL,
+      titulo TEXT NOT NULL,
+      dados TEXT NOT NULL DEFAULT '{}',
+      situacao TEXT NOT NULL DEFAULT 'salvo' CHECK(situacao IN ('em_aberto','salvo')),
+      criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      atualizado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE INDEX IF NOT EXISTS trabalhos_usuario ON trabalhos(usuario_id,situacao,atualizado_em DESC);
     CREATE TABLE IF NOT EXISTS favoritos (
       usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
       slug TEXT NOT NULL, criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
