@@ -1,5 +1,5 @@
 import { api } from './api.js';
-import { criarAvatar } from './nível.js';
+import { criarAvatarDoPerfil } from './nível.js';
 import { ícone } from './ícones.js';
 
 const txt = (idioma, pt, en) => idioma === 'en' ? en : pt;
@@ -58,7 +58,7 @@ export function renderizarContaTopo(fim, sessao, { base = './', idioma = 'pt' } 
   botao.setAttribute('aria-haspopup', 'menu');
   botao.setAttribute('aria-expanded', 'false');
 
-  const avatar = criarAvatar(sessao.usuario.avatar || 'sol');
+  const avatar = criarAvatarDoPerfil(sessao.usuario);
   if (avatar) {
     avatar.classList.add('conta-topo__avatar');
     botao.append(avatar);
@@ -85,7 +85,7 @@ export function renderizarContaTopo(fim, sessao, { base = './', idioma = 'pt' } 
 
   const topo = document.createElement('div');
   topo.className = 'conta-topo__resumo';
-  const avatarResumo = criarAvatar(sessao.usuario.avatar || 'sol');
+  const avatarResumo = criarAvatarDoPerfil(sessao.usuario);
   if (avatarResumo) topo.append(avatarResumo);
   const dados = document.createElement('span');
   const nomeCompleto = document.createElement('b');

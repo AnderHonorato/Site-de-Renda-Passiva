@@ -91,7 +91,8 @@ function encaminharApi(requisição, resposta) {
     resposta.writeHead(origem.statusCode || 502, { ...origem.headers, 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
     origem.pipe(resposta);
   });
-  destino.setTimeout(requisição.url?.startsWith('/api/chat/eventos') ? 0 : 10000, () => destino.destroy());
+  const prazo = requisição.url?.startsWith('/api/chat/eventos') ? 0 : (requisição.url?.includes('/midias') ? 60000 : 10000);
+  destino.setTimeout(prazo, () => destino.destroy());
   destino.on('error', () => {
     if (resposta.headersSent) return resposta.end();
     resposta.writeHead(503, { ...CABEÇALHOS, 'Content-Type': 'application/json; charset=utf-8' });
@@ -140,7 +141,7 @@ const servidor = http.createServer((requisição, resposta) => {
   return responder(resposta, 200, alvo, método, requisição);
 });
 servidor.headersTimeout = 15000;
-servidor.requestTimeout = 30000;
+servidor.requestTimeout = 90000;
 
 servidor.on('error', (erro) => {
   if (erro.code === 'EADDRINUSE') console.error(`A porta ${porta} está ocupada. Escolha outra com --porta.`);

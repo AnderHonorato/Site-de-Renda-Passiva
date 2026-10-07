@@ -22,8 +22,12 @@ test('geometria mantém todos os valores finitos e quantidade de elementos limit
   assert.equal(geometriaNivel('<svg onload=alert(1)>').nivel, 1);
 });
 
-test('biblioteca de avatares expõe somente desenhos fixos', () => {
-  assert.deepEqual(nomesAvataresDisponíveis, ['sol', 'folha', 'estrela']);
+test('biblioteca de avatares expõe somente desenhos fixos e autorais', () => {
+  assert.deepEqual(nomesAvataresDisponíveis, [
+    'sol', 'folha', 'estrela', 'lua', 'orbita', 'chama', 'raio', 'flor', 'planeta',
+    'nuvem', 'diamante', 'cometa', 'onda', 'coroa', 'borboleta',
+  ]);
+  assert.equal(new Set(nomesAvataresDisponíveis).size, 15);
 });
 
 test('tempo na comunidade apresenta uma duração segura, sem reutilizar o texto da data', () => {

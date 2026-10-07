@@ -101,26 +101,117 @@
   </div>
 </header>
   <main id="conteúdo">
-<section class="largura conta"><div class="painel conta__painel" id="conta"><p class="rótulo">My account</p><h1>My account</h1><p class="suave">Manage your data, profile, and security.</p><div id="conta-conteudo" hidden>
-      <form id="form-perfil" class="conta__form"><label class="conta__campo"><span>What should we call you?</span><input id="nome" name="nome" type="text" autocomplete="name" maxlength="80" required></label><label class="conta__campo"><span>@username</span><input id="usuario" name="usuario" type="text" readonly></label>
-      <label class="conta__campo"><span>Bio</span><textarea name="bio" maxlength="280" rows="3"></textarea></label><label class="conta__campo"><span>Where are you from?</span><input id="local" name="local" type="text" maxlength="80"></label>
-      <label class="conta__campo"><span>Avatar</span><select name="avatar"><option value="sol">Sun</option><option value="folha">Leaf</option><option value="estrela">Star</option></select></label><div id="avatar-preview" class="conta__avatar"></div>
-      <label class="conta__aceite"><input name="bioVisivel" type="checkbox" checked><span>Show my bio to other members</span></label>
-      <label class="conta__aceite"><input name="localVisivel" type="checkbox" checked><span>Show my location to other members</span></label>
-      <button class="botão botão--primário" type="submit">Save profile</button></form>
-      <h2>Recommended tools</h2><p class="suave pequeno">Choose up to five tools you have used.</p><form id="form-recomendadas" class="conta__form"><div id="opcoes-recomendadas"></div><button class="botão" type="submit">Save recommendations</button></form>
-      <h2>Preferences</h2><form id="form-preferencias" class="conta__form">
-      <label class="conta__campo"><span>Language</span><select name="idioma"><option value="pt-BR">Português</option><option value="en">English</option></select></label>
-      <label class="conta__campo"><span>Theme</span><select name="tema"><option value="sistema">System</option><option value="claro">Light</option><option value="escuro">Dark</option></select></label>
-      <button class="botão" type="submit">Save preferences</button></form>
-      <h2>Change password</h2><form id="form-senha" class="conta__form"><label class="conta__campo"><span>Current password</span><input id="senhaAtual" name="senhaAtual" type="password" autocomplete="current-password" required></label><label class="conta__campo"><span>New password</span><input id="novaSenha" name="novaSenha" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label><button class="botão" type="submit">Update password</button></form>
-      <h2>My data</h2><button class="botão" id="exportar-conta" type="button">Export my data</button> <button class="botão botão--linha" id="excluir-conta" type="button">Delete my account</button>
-      <form id="form-excluir" class="conta__form" hidden><p>This permanently deletes your account and data. Enter your password to confirm.</p>
-      <label class="conta__campo"><span>Current password</span><input id="senhaExclusao" name="senhaExclusao" type="password" autocomplete="current-password" required></label>
-      <button class="botão" type="submit">Delete my account</button><button class="botão botão--linha" id="cancelar-exclusao" type="button">Cancel</button></form>
-      <h2>My friends</h2><div id="amizades"></div><form id="form-amizade" class="conta__form"><label class="conta__campo"><span>@usuário</span><input id="amigo" name="amigo" type="text" autocomplete="off"></label><button class="botão" type="submit">Send request</button></form>
-      <div class="conta__links"><a href="trabalhos.html">My works</a><a href="mensagens.html">My messages</a><a href="../planos.html">Plans</a></div><nav id="conta-admin" class="conta__links" hidden><a href="../admin/chat/">Chat moderation</a><a href="../admin/usuarios/">Users</a><a href="../admin/suporte/">Support</a></nav>
-      <button class="botão botão--texto" id="sair-conta" type="button">Sign out</button></div><p class="conta__estado" role="status" aria-live="polite"></p></div></section>
+<section class="conta conta--drawer"><div class="painel conta__painel" id="conta">
+    <div class="conta__barra-topo">
+      <div><p class="rótulo">My account</p><h1>My account</h1></div>
+      <button class="conta__fechar-painel" type="button" aria-label="Fechar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 6 12 12"/><path d="m18 6-12 12"/></svg></button>
+    </div>
+    <p class="suave conta__descricao">Manage your data, profile, and security.</p>
+    <div class="conta__rolagem"><div id="conta-conteudo" hidden>
+      <nav class="conta__acoes-rapidas" aria-label="Quick actions">
+        <a id="atalho-perfil-publico" class="conta__acao" href="../perfil.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg><span>Profile</span></a>
+        <a class="conta__acao" href="trabalhos.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 7a2 2 0 0 1 2-2h3.3l2 2.5h7.7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2V7Z"/></svg><span>Works</span></a>
+        <a class="conta__acao" href="mensagens.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5c0 3.9-3.6 7-8 7a9 9 0 0 1-2.4-.3L4.5 20l1.3-3.8A6.6 6.6 0 0 1 4 11.5c0-3.9 3.6-7 8-7s8 3.1 8 7Z"/></svg><span>Messages</span></a>
+        <a class="conta__acao" href="../planos.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 4 2.5 5.1 5.5.8-4 3.9.9 5.6-4.9-2.6-4.9 2.6.9-5.6-4-3.9 5.5-.8L12 4Z"/></svg><span>Plans</span></a>
+        <button class="conta__acao conta__acao--sair" id="sair-conta" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h13"/><path d="m12.5 6.5 6 5.5-6 5.5"/></svg><span>Sign out</span></button>
+      </nav>
+
+      <div id="conta-resumo-slot"></div>
+
+      <nav class="conta__abas" aria-label="Account sections">
+        <button type="button" data-conta-aba="perfil" aria-pressed="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg>Profile</button>
+        <button type="button" data-conta-aba="aparencia" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 4 2.5 5.1 5.5.8-4 3.9.9 5.6-4.9-2.6-4.9 2.6.9-5.6-4-3.9 5.5-.8L12 4Z"/></svg>Style</button>
+        <button type="button" data-conta-aba="preferencias" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M12 3.5v2.2M12 18.3v2.2M20.5 12h-2.2M5.7 12H3.5M18 6l-1.6 1.6M7.6 16.4 6 18M18 18l-1.6-1.6M7.6 7.6 6 6"/></svg>Settings</button>
+        <button type="button" data-conta-aba="seguranca" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 5 6.5v5.7c0 4.1 2.9 7.2 7 8.3 4.1-1.1 7-4.2 7-8.3V6.5l-7-3Z"/></svg>Security</button>
+        <button type="button" data-conta-aba="amizades" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg>Friends</button>
+      </nav>
+
+      <section class="conta__aba" data-conta-painel="perfil">
+        <form id="form-perfil" class="conta__form conta__form--compacta">
+          <div class="conta__editor-avatar">
+            <div id="avatar-preview" class="conta__avatar"></div>
+            <div>
+              <strong>Profile image</strong>
+              <p class="suave pequeno">Choose an illustrated avatar or use your own photo.</p>
+              <div class="ações">
+                <label class="botão botão--linha conta__upload" for="foto-perfil"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.8" cy="9.5" r="1.6"/><path d="m4.5 17 4.3-4.3 3.4 3.4 3-3 4.3 4.3"/></svg>Use photo</label>
+                <input class="sr-só" id="foto-perfil" type="file" accept="image/png,image/jpeg,image/webp">
+                <button class="botão botão--texto" id="remover-foto" type="button" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 7h15"/><path d="M9.5 7V5.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V7"/><path d="M6.5 7v12a1.5 1.5 0 0 0 1.5 1.5h8a1.5 1.5 0 0 0 1.5-1.5V7"/></svg>Remove photo</button>
+              </div>
+            </div>
+          </div>
+          <input name="avatar" type="hidden" value="sol">
+          <div id="avatar-opcoes" class="conta__avatar-opcoes" aria-label="Illustrated avatars"></div>
+          <div class="conta__campos-duplos">
+            <label class="conta__campo"><span>What should we call you?</span><input id="nome" name="nome" type="text" autocomplete="name" maxlength="80" required></label>
+            <label class="conta__campo"><span>@username</span><input id="usuario" name="usuario" type="text" readonly></label>
+          </div>
+          <label class="conta__campo conta__campo--inteiro"><span>Bio</span><textarea name="bio" maxlength="280" rows="3"></textarea></label>
+          <label class="conta__campo"><span>Where are you from?</span><input id="local" name="local" type="text" maxlength="80"></label>
+          <div class="conta__visibilidade">
+            <label class="conta__aceite"><input name="bioVisivel" type="checkbox" checked><span>Public bio</span></label>
+            <label class="conta__aceite"><input name="localVisivel" type="checkbox" checked><span>Public location</span></label>
+          </div>
+          <fieldset class="conta__sociais">
+            <legend>Links on your public profile</legend>
+            <label class="conta__campo"><span>Site</span><input id="site" name="site" type="url" placeholder="https://..." maxlength="300"></label>
+            <label class="conta__campo"><span>Instagram</span><input id="instagram" name="instagram" type="text" placeholder="@usuario" maxlength="51"></label>
+            <label class="conta__campo"><span>TikTok</span><input id="tiktok" name="tiktok" type="text" placeholder="@usuario" maxlength="51"></label>
+            <label class="conta__campo"><span>X</span><input id="x" name="x" type="text" placeholder="@usuario" maxlength="51"></label>
+            <label class="conta__campo"><span>Facebook</span><input id="facebook" name="facebook" type="text" placeholder="@usuario" maxlength="51"></label>
+            <label class="conta__campo"><span>WhatsApp</span><input id="whatsapp" name="whatsapp" type="tel" placeholder="5511999999999" maxlength="20"></label>
+          </fieldset>
+        </form>
+
+        <div class="conta__subtitulo"><div><h2>Recommended tools</h2><p class="suave pequeno">Choose up to five tools you have used.</p></div></div>
+        <form id="form-recomendadas" class="conta__form conta__form--sem-caixa"><div id="opcoes-recomendadas" class="conta__recomendadas"></div></form>
+      </section>
+
+      <section class="conta__aba" data-conta-painel="aparencia" hidden>
+        <div class="conta__subtitulo"><div><h2>Plan and progress</h2><p class="suave pequeno">Your activity unlocks new profile styles.</p></div></div>
+        <a id="plano-visual" class="conta__plano" href="../planos.html"></a>
+        <div id="progresso-nivel" class="conta__progresso"></div>
+        <div id="conta-medalhas" class="conta__medalhas"></div>
+        <a class="conta__como-evoluir" href="../niveis.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M9.7 9.6a2.4 2.4 0 1 1 3.1 2.6c-.6.2-.8.7-.8 1.3v.4"/><path d="M12 17h.01"/></svg>How levels and medals work</a>
+
+        <div class="conta__subtitulo"><div><h2>Profile banner</h2><p class="suave pequeno">One style unlocks at each milestone.</p></div></div>
+        <div id="opcoes-banner" class="conta__personalizacoes"></div>
+        <div class="conta__subtitulo"><div><h2>Profile frame</h2></div></div>
+        <div id="opcoes-moldura" class="conta__personalizacoes"></div>
+      </section>
+
+      <section class="conta__aba" data-conta-painel="preferencias" hidden>
+        <form id="form-preferencias" class="conta__form conta__form--compacta">
+          <label class="conta__campo"><span>Language</span><select name="idioma"><option value="pt-BR">Português</option><option value="en">English</option></select></label>
+          <label class="conta__campo"><span>Theme</span><select name="tema"><option value="sistema">System</option><option value="claro">Light</option><option value="escuro">Dark</option></select></label>
+        </form>
+      </section>
+
+      <section class="conta__aba" data-conta-painel="seguranca" hidden>
+        <h2>Change password</h2>
+        <form id="form-senha" class="conta__form conta__form--compacta"><label class="conta__campo"><span>Current password</span><input id="senhaAtual" name="senhaAtual" type="password" autocomplete="current-password" required></label><label class="conta__campo"><span>New password</span><input id="novaSenha" name="novaSenha" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label><button class="botão botão--primário" type="submit">Update password</button></form>
+        <h2>My data</h2>
+        <div class="conta__dados-acoes"><button class="botão" id="exportar-conta" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4v10"/><path d="m7.5 10 4.5 4 4.5-4"/><path d="M4.5 17v1.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V17"/></svg>Export my data</button><button class="botão botão--linha" id="excluir-conta" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 7h15"/><path d="M9.5 7V5.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V7"/><path d="M6.5 7v12a1.5 1.5 0 0 0 1.5 1.5h8a1.5 1.5 0 0 0 1.5-1.5V7"/></svg>Delete my account</button></div>
+        <form id="form-excluir" class="conta__form" hidden><p>This permanently deletes your account and data. Enter your password to confirm.</p>
+          <label class="conta__campo"><span>Current password</span><input id="senhaExclusao" name="senhaExclusao" type="password" autocomplete="current-password" required></label>
+          <div class="ações"><button class="botão" type="submit">Delete my account</button><button class="botão botão--linha" id="cancelar-exclusao" type="button">Cancel</button></div>
+        </form>
+      </section>
+
+      <section class="conta__aba" data-conta-painel="amizades" hidden>
+        <h2>My friends</h2><div id="amizades" class="conta__amizades"></div>
+        <form id="form-amizade" class="conta__form conta__form--linha"><label class="conta__campo"><span>@usuário</span><input id="amigo" name="amigo" type="text" autocomplete="off"></label><button class="botão" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5v14"/><path d="M5 12h14"/></svg>Send request</button></form>
+      </section>
+
+      <nav id="conta-admin" class="conta__admin" hidden><a class="conta__acao" href="../admin/chat/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 5 6.5v5.7c0 4.1 2.9 7.2 7 8.3 4.1-1.1 7-4.2 7-8.3V6.5l-7-3Z"/></svg>Chat moderation</a><a class="conta__acao" href="../admin/usuarios/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg>Users</a><a class="conta__acao" href="../admin/suporte/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5c0 3.9-3.6 7-8 7a9 9 0 0 1-2.4-.3L4.5 20l1.3-3.8A6.6 6.6 0 0 1 4 11.5c0-3.9 3.6-7 8-7s8 3.1 8 7Z"/></svg>Support</a></nav>
+
+      <div id="conta-salvar" class="conta-salvar" hidden>
+        <span>You have unsaved changes</span>
+        <div><button id="cancelar-alteracoes" class="botão botão--linha" type="button">Cancel changes</button><button id="salvar-alteracoes" class="botão botão--primário" type="button">Save changes</button></div>
+      </div>
+    </div></div>
+    <p class="conta__estado" role="status" aria-live="polite"></p>
+  </div></section>
 
   </main>
 <div class="onda onda--rodapé" aria-hidden="true"><svg viewBox="0 0 1440 28" preserveAspectRatio="none"><path d="M0,0 C240,28 480,0 720,14 C960,28 1200,4 1440,18 L1440,28 L0,28 Z" fill="currentColor"/></svg></div>

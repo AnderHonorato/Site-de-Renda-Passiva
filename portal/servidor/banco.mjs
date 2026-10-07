@@ -15,6 +15,9 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
       papel TEXT NOT NULL DEFAULT 'usuario' CHECK(papel IN ('usuario','admin')),
       plano TEXT NOT NULL DEFAULT 'gratuito', situacao TEXT NOT NULL DEFAULT 'ativo',
       bio TEXT NOT NULL DEFAULT '', local TEXT NOT NULL DEFAULT '', avatar TEXT NOT NULL DEFAULT 'sol',
+      avatar_foto BLOB, avatar_foto_mime TEXT,
+      banner TEXT NOT NULL DEFAULT 'brisa', moldura TEXT NOT NULL DEFAULT 'basica',
+      sociais TEXT NOT NULL DEFAULT '{}',
       visibilidade TEXT NOT NULL DEFAULT '{}', chat_aceito_em TEXT,
       silenciado_ate TEXT, banido_em TEXT, pontos INTEGER NOT NULL DEFAULT 0,
       pontos_dia TEXT, pontos_hoje INTEGER NOT NULL DEFAULT 0,
@@ -52,10 +55,40 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
       id INTEGER PRIMARY KEY, sala_id TEXT NOT NULL REFERENCES salas(id) ON DELETE CASCADE,
       autor_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
       texto TEXT NOT NULL CHECK(length(texto)<=500),
+      resposta_a INTEGER REFERENCES mensagens(id) ON DELETE SET NULL,
       criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
       removida_em TEXT
     );
     CREATE INDEX IF NOT EXISTS mensagens_sala ON mensagens(sala_id,id DESC);
+    CREATE TABLE IF NOT EXISTS chat_leituras (
+      usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+      sala_id TEXT NOT NULL REFERENCES salas(id) ON DELETE CASCADE,
+      ultimo_id INTEGER NOT NULL DEFAULT 0,
+      atualizado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY(usuario_id,sala_id)
+    );
+    CREATE TABLE IF NOT EXISTS chat_midias (
+      id INTEGER PRIMARY KEY,
+      mensagem_id INTEGER NOT NULL REFERENCES mensagens(id) ON DELETE CASCADE,
+      autor_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+      nome TEXT NOT NULL,
+      mime TEXT NOT NULL,
+      tamanho INTEGER NOT NULL,
+      dados BLOB NOT NULL,
+      duracao REAL,
+      criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE INDEX IF NOT EXISTS chat_midias_mensagem ON chat_midias(mensagem_id);
+    CREATE TABLE IF NOT EXISTS chat_reproducao (
+      usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+      midia_id INTEGER NOT NULL REFERENCES chat_midias(id) ON DELETE CASCADE,
+      posicao REAL NOT NULL DEFAULT 0,
+      duracao REAL,
+      concluida INTEGER NOT NULL DEFAULT 0,
+      aberto_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      atualizado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY(usuario_id,midia_id)
+    );
     CREATE TABLE IF NOT EXISTS denuncias (
       id INTEGER PRIMARY KEY, denunciante_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
       alvo_usuario_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
@@ -103,7 +136,15 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
   if(!colunas.includes('idioma'))db.exec("ALTER TABLE usuarios ADD COLUMN idioma TEXT NOT NULL DEFAULT 'pt-BR'");
   if(!colunas.includes('tema'))db.exec("ALTER TABLE usuarios ADD COLUMN tema TEXT NOT NULL DEFAULT 'sistema'");
   if(!colunas.includes('recomendadas'))db.exec("ALTER TABLE usuarios ADD COLUMN recomendadas TEXT NOT NULL DEFAULT '[]'");
-  db.prepare("DELETE FROM mensagens WHERE criado_em < datetime('now','-90 days')").run();
+  if(!colunas.includes('avatar_foto'))db.exec("ALTER TABLE usuarios ADD COLUMN avatar_foto BLOB");
+  if(!colunas.includes('avatar_foto_mime'))db.exec("ALTER TABLE usuarios ADD COLUMN avatar_foto_mime TEXT");
+  if(!colunas.includes('banner'))db.exec("ALTER TABLE usuarios ADD COLUMN banner TEXT NOT NULL DEFAULT 'brisa'");
+  if(!colunas.includes('moldura'))db.exec("ALTER TABLE usuarios ADD COLUMN moldura TEXT NOT NULL DEFAULT 'basica'");
+  if(!colunas.includes('sociais'))db.exec("ALTER TABLE usuarios ADD COLUMN sociais TEXT NOT NULL DEFAULT '{}'");
+  const colunasMensagens=db.prepare('PRAGMA table_info(mensagens)').all().map(c=>c.name);
+  if(!colunasMensagens.includes('resposta_a'))db.exec("ALTER TABLE mensagens ADD COLUMN resposta_a INTEGER REFERENCES mensagens(id) ON DELETE SET NULL");
+  db.prepare("DELETE FROM mensagens WHERE criado_em < datetime('now','-90 days') AND sala_id NOT IN (SELECT id FROM salas WHERE tipo='direta')").run();
+  db.prepare("DELETE FROM mensagens WHERE criado_em < datetime('now','-48 hours') AND sala_id IN (SELECT id FROM salas WHERE tipo='direta')").run();
   db.prepare('DELETE FROM sessoes WHERE expira_em < ?').run(Date.now());
   return db;
 }

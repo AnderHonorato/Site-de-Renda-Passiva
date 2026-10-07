@@ -6,6 +6,7 @@ import { hash, token, erro, cookies, senhaHash, hashDummy, comparar, corpo } fro
 import { ferramentasProntas, ferramentaPorSlug } from '../dados/catálogo.js';
 import { categorias } from '../dados/categorias.js';
 import { limitesDoPlano, planosPublicos, trabalhoPublico, validarEdicaoTrabalho, validarNovoTrabalho } from './trabalhos.mjs';
+import { AVATARES, medalhasDoUsuario, nivelDePontos, personalizacoesDoNivel, progressoDeNivel, validarPersonalizacao, validarSociais } from './perfil.mjs';
 
 const agora = () => Date.now();
 const nomeSessao = process.env.URL_PUBLICA?.startsWith('https://') ? '__Host-sessao' : 'sessao';
@@ -28,7 +29,19 @@ function setCookie(res,name,value,{httpOnly=false,maxAge=2592000}={}) {
   const c=`${name}=${encodeURIComponent(value)}; Path=/; SameSite=Lax; Max-Age=${maxAge}${httpOnly?'; HttpOnly':''}${secure?'; Secure':''}`;
   const prior=res.getHeader('Set-Cookie'); res.setHeader('Set-Cookie',prior?[...(Array.isArray(prior)?prior:[prior]),c]:c);
 }
-function usuarioPublico(u) { if(!u)return null; return {id:u.id,nome:u.nome,email:u.email,usuario:u.usuario,plano:u.plano,papel:u.papel,idade:u.idade,idioma:u.idioma,tema:u.tema,criado_em:u.criado_em,bio:u.bio,local:u.local,avatar:u.avatar,pontos:u.pontos,nivel:1+Math.floor(Math.sqrt(u.pontos/10)),chat_aceito:!!u.chat_aceito_em}; }
+function jsonSeguro(valor,padrao={}){try{const x=JSON.parse(valor||'');return x&&typeof x==='object'&&!Array.isArray(x)?x:padrao;}catch{return padrao;}}
+function pontosDeEvolucao(u){const bonus=medalhasDoUsuario(banco,u).filter(m=>m.desbloqueada).reduce((s,m)=>s+((m.tier+1)*5),0);return Math.max(0,Number(u.pontos)||0)+bonus;}
+function nivelDoUsuario(u){return nivelDePontos(pontosDeEvolucao(u));}
+function usuarioPublico(u) {
+  if(!u)return null;
+  return {
+    id:u.id,nome:u.nome,email:u.email,usuario:u.usuario,plano:u.plano,papel:u.papel,idade:u.idade,
+    idioma:u.idioma,tema:u.tema,criado_em:u.criado_em,bio:u.bio,local:u.local,avatar:u.avatar,
+    foto_url:u.avatar_foto?`/api/perfil/foto/${encodeURIComponent(u.usuario)}`:null,
+    banner:u.banner||'brisa',moldura:u.moldura||'basica',sociais:jsonSeguro(u.sociais,{}),
+    pontos:u.pontos,pontos_evolucao:pontosDeEvolucao(u),nivel:nivelDoUsuario(u),chat_aceito:!!u.chat_aceito_em
+  };
+}
 function sessao(req) {
   const t=cookies(req)[nomeSessao]; if(!t)return null;
   return banco.prepare(`SELECT u.*,s.id sessao_id FROM sessoes s JOIN usuarios u ON u.id=s.usuario_id WHERE s.token_hash=? AND s.expira_em>? AND u.situacao='ativo'`).get(hash(t),agora())||null;
@@ -56,7 +69,14 @@ function salaPermitida(u,id){const sala=banco.prepare('SELECT * FROM salas WHERE
   indisponivelPerfil(u,banco.prepare('SELECT id FROM usuarios WHERE id=?').get(outro));
   if(!banco.prepare("SELECT 1 FROM amizades WHERE estado='aceita' AND ((origem=? AND destino=?) OR (origem=? AND destino=?))").get(u.id,outro,outro,u.id))throw erro(404,'sala_nao_localizada');
 }return sala;}
-function mensagemPublica(m){return {id:m.id,sala_id:m.sala_id,texto:m.texto,criado_em:m.criado_em,autor:{id:m.autor_id,nome:m.nome,usuario:m.usuario,avatar:m.avatar,papel:m.papel,criado_em:m.autor_criado_em,nivel:1+Math.floor(Math.sqrt(m.pontos/10))}};}
+function mensagemPublica(m,leitorId=null){
+  const resposta=m.resposta_id?{id:m.resposta_id,texto:m.resposta_texto,usuario:m.resposta_usuario}:null;
+  return {id:m.id,sala_id:m.sala_id,texto:m.texto,resposta_a:m.resposta_a||null,resposta,criado_em:m.criado_em,midias:midiasPublicas(m.id,leitorId),autor:{
+    id:m.autor_id,nome:m.nome,usuario:m.usuario,avatar:m.avatar,
+    foto_url:m.autor_tem_foto?`/api/perfil/foto/${encodeURIComponent(m.usuario)}`:null,
+    papel:m.papel,criado_em:m.autor_criado_em,nivel:nivelDePontos(m.pontos)
+  }};
+}
 function avisar(evento){
   const texto=`event: ${evento.removidaId?'remocao':'mensagem'}\ndata: ${JSON.stringify(evento)}\n\n`;
   const sala=banco.prepare('SELECT * FROM salas WHERE id=?').get(evento.sala);
@@ -70,8 +90,84 @@ function avisar(evento){
   }
 }
 function salaDiretaId(a,b){return `direta-${Math.min(a,b)}-${Math.max(a,b)}`;}
+
+function tipoMidia(mime){
+  if(mime.startsWith('image/'))return 'imagem';
+  if(mime.startsWith('audio/'))return 'audio';
+  if(mime.startsWith('video/'))return 'video';
+  return 'arquivo';
+}
+function limiteMidia(mime){
+  if(['image/png','image/jpeg','image/webp','image/gif'].includes(mime))return 8*1024*1024;
+  if(['audio/mpeg','audio/wav','audio/ogg','audio/mp4'].includes(mime))return 20*1024*1024;
+  if(['video/mp4','video/webm'].includes(mime))return 40*1024*1024;
+  if(['application/pdf','text/plain','text/csv','application/zip','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(mime))return 15*1024*1024;
+  return 0;
+}
+function conteudoMidiaValido(buffer,mime){
+  if(!buffer.length)return false;
+  if(mime==='image/png')return buffer.length>8&&buffer.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]));
+  if(mime==='image/jpeg')return buffer.length>3&&buffer[0]===0xff&&buffer[1]===0xd8&&buffer[2]===0xff;
+  if(mime==='image/webp')return buffer.length>12&&buffer.subarray(0,4).toString()==='RIFF'&&buffer.subarray(8,12).toString()==='WEBP';
+  if(mime==='image/gif')return buffer.length>6&&['GIF87a','GIF89a'].includes(buffer.subarray(0,6).toString());
+  if(mime==='application/pdf')return buffer.subarray(0,5).toString()==='%PDF-';
+  if(['application/zip','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(mime))return buffer.length>4&&buffer[0]===0x50&&buffer[1]===0x4b;
+  if(mime==='video/mp4'||mime==='audio/mp4')return buffer.length>12&&buffer.subarray(4,8).toString()==='ftyp';
+  if(mime==='video/webm')return buffer.length>4&&buffer[0]===0x1a&&buffer[1]===0x45&&buffer[2]===0xdf&&buffer[3]===0xa3;
+  if(mime==='audio/ogg')return buffer.length>4&&buffer.subarray(0,4).toString()==='OggS';
+  if(mime==='audio/wav')return buffer.length>12&&buffer.subarray(0,4).toString()==='RIFF'&&buffer.subarray(8,12).toString()==='WAVE';
+  if(mime==='audio/mpeg')return (buffer.length>3&&buffer.subarray(0,3).toString()==='ID3')||(buffer.length>2&&buffer[0]===0xff&&(buffer[1]&0xe0)===0xe0);
+  if(['text/plain','text/csv'].includes(mime))return !buffer.includes(0);
+  return true;
+}
+function nomeMidiaSeguro(valor){
+  let nome='';
+  try{nome=decodeURIComponent(String(valor||''));}catch{nome=String(valor||'');}
+  nome=nome.replace(/[\\/:*?"<>|\u0000-\u001f]/g,'_').trim().slice(0,120);
+  return nome||'arquivo';
+}
+function midiasPublicas(mensagemId,leitorId=null){
+  const linhas=banco.prepare('SELECT id,nome,mime,tamanho,duracao,criado_em FROM chat_midias WHERE mensagem_id=? ORDER BY id').all(mensagemId);
+  return linhas.map(item=>{
+    const leitura=leitorId?banco.prepare('SELECT posicao,duracao,concluida,aberto_em,atualizado_em FROM chat_reproducao WHERE usuario_id=? AND midia_id=?').get(leitorId,item.id):null;
+    return {
+      id:item.id,nome:item.nome,mime:item.mime,tamanho:item.tamanho,duracao:item.duracao,
+      tipo:tipoMidia(item.mime),url:'/api/chat/midias/'+item.id,criado_em:item.criado_em,
+      reproducao:leitura?{posicao:leitura.posicao,duracao:leitura.duracao,concluida:!!leitura.concluida,aberto_em:leitura.aberto_em}:null
+    };
+  });
+}
+function midiaComAcesso(u,id){
+  const item=banco.prepare('SELECT x.*,m.sala_id,m.autor_id mensagem_autor FROM chat_midias x JOIN mensagens m ON m.id=x.mensagem_id WHERE x.id=? AND m.removida_em IS NULL').get(id);
+  if(!item)throw erro(404,'midia_nao_localizada');
+  const sala=salaPermitida(u,item.sala_id);
+  if(sala.tipo==='direta'&&Date.parse(String(item.criado_em).replace(' ','T')+'Z')<agora()-48*3600000)throw erro(404,'midia_nao_localizada');
+  return item;
+}
+
 function registrarAdmin(u,acao,alvo,detalhe={}){banco.prepare('INSERT INTO auditoria_admin(admin_id,acao,alvo_id,detalhe) VALUES(?,?,?,?)').run(u.id,acao,alvo,JSON.stringify(detalhe));}
-function enriquecerPerfil(perfil,u){perfil.ferramentas_mais_usadas=banco.prepare('SELECT slug,total FROM uso_ferramentas WHERE usuario_id=? ORDER BY total DESC LIMIT 5').all(u.id);perfil.ferramentas_recomendadas=JSON.parse(u.recomendadas||'[]');return perfil;}
+function enriquecerPerfil(perfil,u){
+  perfil.ferramentas_mais_usadas=banco.prepare('SELECT slug,total FROM uso_ferramentas WHERE usuario_id=? ORDER BY total DESC LIMIT 5').all(u.id);
+  perfil.ferramentas_recomendadas=JSON.parse(u.recomendadas||'[]');
+  perfil.medalhas=medalhasDoUsuario(banco,u);
+  perfil.progresso_nivel=progressoDeNivel(pontosDeEvolucao(u));
+  perfil.personalizacoes=personalizacoesDoNivel(perfil.nivel);
+  return perfil;
+}
+async function corpoBinario(req,maximo){
+  const tamanho=Number(req.headers['content-length']||0);
+  if(tamanho>maximo)throw erro(413,'corpo_grande');
+  const partes=[];let total=0;
+  for await(const parte of req){total+=parte.length;if(total>maximo)throw erro(413,'corpo_grande');partes.push(parte);}
+  return Buffer.concat(partes);
+}
+function imagemValida(buffer,mime){
+  if(!buffer.length)return false;
+  if(mime==='image/png')return buffer.length>8&&buffer.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]));
+  if(mime==='image/jpeg')return buffer.length>3&&buffer[0]===0xff&&buffer[1]===0xd8&&buffer[2]===0xff;
+  if(mime==='image/webp')return buffer.length>12&&buffer.subarray(0,4).toString()==='RIFF'&&buffer.subarray(8,12).toString()==='WEBP';
+  return false;
+}
 
 async function rota(req,res){
   const url=new URL(req.url,'http://localhost');const p=url.pathname;const m=req.method;
@@ -157,7 +253,8 @@ async function rota(req,res){
     banco.prepare('INSERT INTO uso_ferramentas(usuario_id,slug,total) VALUES(?,?,1) ON CONFLICT(usuario_id,slug) DO UPDATE SET total=total+1,ultimo_uso_em=CURRENT_TIMESTAMP').run(u.id,slug);
     const dia=new Date().toISOString().slice(0,10),hoje=u.pontos_dia===dia?u.pontos_hoje:0;
     if(hoje<100)banco.prepare('UPDATE usuarios SET pontos=pontos+2,pontos_dia=?,pontos_hoje=? WHERE id=?').run(dia,hoje+2,u.id);
-    return json(res,200,{ok:true,nivel:1+Math.floor(Math.sqrt((u.pontos+(hoje<100?2:0))/10))});
+    const atualizado=banco.prepare('SELECT * FROM usuarios WHERE id=?').get(u.id);
+    return json(res,200,{ok:true,nivel:nivelDoUsuario(atualizado),pontos_evolucao:pontosDeEvolucao(atualizado)});
   }
   const favorito=p.match(/^\/api\/favoritos\/([a-z0-9-]{2,80})$/);
   if(favorito&&m==='PUT'){
@@ -242,15 +339,40 @@ async function rota(req,res){
     if(!disponivel){for(let n=1;n<=20&&sugestoes.length<3;n++){const s=`${h.replace(/[^a-z0-9_]/g,'').slice(0,17)}${n}`;if(validoUsuario(s)&&!banco.prepare('SELECT 1 FROM usuarios WHERE usuario=?').get(s))sugestoes.push(s);}}
     return json(res,200,{disponivel,sugestoes});
   }
+  if(m==='PUT'&&p==='/api/perfil/foto'){
+    const u=exigir(req),mime=String(req.headers['content-type']||'').split(';')[0].trim().toLowerCase();
+    if(!['image/png','image/jpeg','image/webp'].includes(mime))throw erro(415,'imagem_invalida');
+    const arquivo=await corpoBinario(req,1_200_000);
+    if(!imagemValida(arquivo,mime))throw erro(400,'imagem_invalida');
+    banco.prepare('UPDATE usuarios SET avatar_foto=?,avatar_foto_mime=? WHERE id=?').run(arquivo,mime,u.id);
+    return json(res,200,{foto_url:`/api/perfil/foto/${encodeURIComponent(u.usuario)}?v=${agora()}`});
+  }
+  if(m==='DELETE'&&p==='/api/perfil/foto'){
+    const u=exigir(req);banco.prepare('UPDATE usuarios SET avatar_foto=NULL,avatar_foto_mime=NULL WHERE id=?').run(u.id);
+    return json(res,200,{ok:true});
+  }
+  if(m==='GET'&&p.startsWith('/api/perfil/foto/')){
+    const u=exigir(req),handle=decodeURIComponent(p.slice('/api/perfil/foto/'.length)),alvo=banco.prepare('SELECT * FROM usuarios WHERE usuario=?').get(handle);
+    indisponivelPerfil(u,alvo);if(!alvo.avatar_foto||!alvo.avatar_foto_mime)throw erro(404,'imagem_nao_localizada');
+    res.writeHead(200,{'Content-Type':alvo.avatar_foto_mime,'Content-Length':alvo.avatar_foto.length,'Cache-Control':'private, max-age=300','X-Content-Type-Options':'nosniff','Content-Disposition':'inline'});
+    res.end(alvo.avatar_foto);return;
+  }
   if(m==='PATCH'&&p==='/api/perfil'){
-    const u=exigir(req),b=await corpo(req);const nome=b.nome===undefined?u.nome:String(b.nome).trim(),bio=b.bio===undefined?u.bio:String(b.bio).trim(),local=b.local===undefined?u.local:String(b.local).trim(),avatar=b.avatar===undefined?u.avatar:String(b.avatar);
-    if(nome.length<2||nome.length>80||bio.length>280||local.length>80||!['sol','folha','estrela'].includes(avatar))throw erro(400,'dados_invalidos');
+    const u=exigir(req),b=await corpo(req,65536);
+    const nome=b.nome===undefined?u.nome:String(b.nome).trim(),bio=b.bio===undefined?u.bio:String(b.bio).trim(),local=b.local===undefined?u.local:String(b.local).trim(),avatar=b.avatar===undefined?u.avatar:String(b.avatar);
+    const banner=b.banner===undefined?(u.banner||'brisa'):String(b.banner),moldura=b.moldura===undefined?(u.moldura||'basica'):String(b.moldura);
+    const nivel=nivelDoUsuario(u);
+    if(nome.length<2||nome.length>80||bio.length>280||local.length>80||!AVATARES.includes(avatar)||!validarPersonalizacao({avatar,banner,moldura},nivel))throw erro(400,'dados_invalidos');
     if(b.visibilidade!==undefined&&(b.visibilidade===null||typeof b.visibilidade!=='object'||Array.isArray(b.visibilidade)||Object.entries(b.visibilidade).some(([k,v])=>!['bio','local'].includes(k)||typeof v!=='boolean')))throw erro(400,'dados_invalidos');
     const vis=b.visibilidade===undefined?u.visibilidade:JSON.stringify(b.visibilidade);if(vis.length>1000)throw erro(400,'dados_invalidos');
     const recomendadas=b.ferramentas_recomendadas===undefined?JSON.parse(u.recomendadas):b.ferramentas_recomendadas;
     if(!Array.isArray(recomendadas)||recomendadas.length>5||recomendadas.some(s=>typeof s!=='string'||!banco.prepare('SELECT 1 FROM uso_ferramentas WHERE usuario_id=? AND slug=?').get(u.id,s)))throw erro(400,'ferramentas_nao_usadas');
-    banco.prepare('UPDATE usuarios SET nome=?,bio=?,local=?,avatar=?,visibilidade=?,recomendadas=? WHERE id=?').run(nome,bio,local,avatar,vis,JSON.stringify(recomendadas),u.id);
-    const atualizado=banco.prepare('SELECT * FROM usuarios WHERE id=?').get(u.id);return json(res,200,{perfil:enriquecerPerfil({...usuarioPublico(atualizado),visibilidade:JSON.parse(atualizado.visibilidade)},atualizado)});
+    const sociais=b.sociais===undefined?jsonSeguro(u.sociais,{}):validarSociais(b.sociais);
+    if(sociais===null)throw erro(400,'dados_invalidos');
+    banco.prepare('UPDATE usuarios SET nome=?,bio=?,local=?,avatar=?,banner=?,moldura=?,sociais=?,visibilidade=?,recomendadas=? WHERE id=?')
+      .run(nome,bio,local,avatar,banner,moldura,JSON.stringify(sociais),vis,JSON.stringify(recomendadas),u.id);
+    const atualizado=banco.prepare('SELECT * FROM usuarios WHERE id=?').get(u.id);
+    return json(res,200,{perfil:enriquecerPerfil({...usuarioPublico(atualizado),visibilidade:JSON.parse(atualizado.visibilidade)},atualizado)});
   }
   if(m==='GET'&&p.startsWith('/api/perfil/')){
     const u=exigir(req),alvo=banco.prepare('SELECT * FROM usuarios WHERE usuario=?').get(decodeURIComponent(p.slice('/api/perfil/'.length)));indisponivelPerfil(u,alvo);
@@ -284,8 +406,23 @@ async function rota(req,res){
     if(!chatAtivo())throw erro(503,'chat_indisponivel');const u=exigir(req),b=await corpo(req);if(b.aceito!==true)throw erro(400,'aceite_obrigatorio');banco.prepare('UPDATE usuarios SET chat_aceito_em=CURRENT_TIMESTAMP WHERE id=?').run(u.id);return json(res,200,{aceito:true});
   }
   if(p==='/api/chat/salas'&&m==='GET'){
-    const u=exigirChat(req);const salas=banco.prepare("SELECT * FROM salas WHERE tipo<>'direta' OR criador_id=? OR participante_id=? ORDER BY CASE tipo WHEN 'global' THEN 0 WHEN 'categoria' THEN 1 WHEN 'ferramenta' THEN 2 ELSE 3 END,nome").all(u.id,u.id).filter(s=>{try{salaPermitida(u,s.id);return true;}catch{return false;}});
-    return json(res,200,{salas});
+    const u=exigirChat(req);
+    const linhas=banco.prepare("SELECT * FROM salas WHERE tipo<>'direta' OR criador_id=? OR participante_id=? ORDER BY CASE tipo WHEN 'global' THEN 0 WHEN 'categoria' THEN 1 WHEN 'ferramenta' THEN 2 ELSE 3 END,nome").all(u.id,u.id)
+      .filter(s=>{try{salaPermitida(u,s.id);return true;}catch{return false;}});
+    const salas=linhas.map(s=>{
+      const leitura=banco.prepare('SELECT ultimo_id FROM chat_leituras WHERE usuario_id=? AND sala_id=?').get(u.id,s.id)?.ultimo_id||0;
+      const janela=s.tipo==='direta'?" AND criado_em>=datetime('now','-48 hours') ":'';
+      const ultima=banco.prepare(`SELECT id,texto,criado_em,autor_id FROM mensagens WHERE sala_id=? AND removida_em IS NULL ${janela} ORDER BY id DESC LIMIT 1`).get(s.id);
+      const nao_lidas=Number(banco.prepare(`SELECT count(*) total FROM mensagens WHERE sala_id=? AND id>? AND autor_id<>? AND removida_em IS NULL ${janela}`).get(s.id,leitura,u.id).total);
+      let outro=null;
+      if(s.tipo==='direta'){
+        const outroId=s.criador_id===u.id?s.participante_id:s.criador_id;
+        const pessoa=banco.prepare('SELECT id,nome,usuario,avatar,avatar_foto IS NOT NULL tem_foto FROM usuarios WHERE id=?').get(outroId);
+        if(pessoa)outro={...pessoa,foto_url:pessoa.tem_foto?`/api/perfil/foto/${encodeURIComponent(pessoa.usuario)}`:null};
+      }
+      return {...s,nao_lidas,ultima_mensagem:ultima?.texto||'',ultima_em:ultima?.criado_em||null,outro};
+    });
+    return json(res,200,{salas,total_nao_lidas:salas.reduce((sala,item)=>sala+item.nao_lidas,0)});
   }
   if(p==='/api/chat/eventos'&&m==='GET'){
     const u=exigirChat(req);if([...ouvintes].filter(x=>x.id===u.id).length>=3)throw erro(429,'muitas_conexoes');res.writeHead(200,{'Content-Type':'text/event-stream','Cache-Control':'no-cache, no-transform','Connection':'keep-alive','X-Accel-Buffering':'no'});res.write(': conectado\n\n');
@@ -294,20 +431,78 @@ async function rota(req,res){
       if(!vivo){res.end();clearInterval(keep);ouvintes.delete(item);return;}try{res.write(': ping\n\n');}catch{res.end();clearInterval(keep);ouvintes.delete(item);}
     },Math.max(100,Number(process.env.PORTAL_SSE_PING_MS)||25000));req.on('close',()=>{clearInterval(keep);ouvintes.delete(item);});return;
   }
+  const leituraRota=p.match(/^\/api\/chat\/salas\/([^/]+)\/leitura$/);
+  if(leituraRota&&m==='PATCH'){
+    const u=exigirChat(req),id=decodeURIComponent(leituraRota[1]);salaPermitida(u,id);const b=await corpo(req),ultimo=Number(b.ultimoId);
+    if(!Number.isInteger(ultimo)||ultimo<0)throw erro(400,'dados_invalidos');
+    if(ultimo&& !banco.prepare('SELECT 1 FROM mensagens WHERE id=? AND sala_id=?').get(ultimo,id))throw erro(400,'dados_invalidos');
+    banco.prepare(`INSERT INTO chat_leituras(usuario_id,sala_id,ultimo_id) VALUES(?,?,?) ON CONFLICT(usuario_id,sala_id) DO UPDATE SET ultimo_id=max(ultimo_id,excluded.ultimo_id),atualizado_em=CURRENT_TIMESTAMP`).run(u.id,id,ultimo);
+    return json(res,200,{ok:true});
+  }
+  const uploadMidia=p.match(/^\/api\/chat\/salas\/([^/]+)\/midias$/);
+  if(uploadMidia&&m==='POST'){
+    const u=exigirChat(req),id=decodeURIComponent(uploadMidia[1]),sala=salaPermitida(u,id);
+    if(sala.tipo!=='direta')throw erro(403,'midia_apenas_privado');
+    if(u.silenciado_ate&&Date.parse(u.silenciado_ate)>agora())throw erro(403,'chat_silenciado');
+    conferirLimite('midia:'+u.id,10,60000);
+    const mime=String(req.headers['content-type']||'').split(';')[0].trim().toLowerCase(),maximo=limiteMidia(mime);
+    if(!maximo)throw erro(415,'midia_invalida');
+    const nome=nomeMidiaSeguro(req.headers['x-arquivo-nome']),arquivo=await corpoBinario(req,maximo);
+    const duracaoBruta=Number(req.headers['x-midia-duracao']),duracao=Number.isFinite(duracaoBruta)&&duracaoBruta>0&&duracaoBruta<=86400?duracaoBruta:null;
+    if(!conteudoMidiaValido(arquivo,mime))throw erro(400,'midia_invalida');
+    let respostaA=null;const cabecaResposta=req.headers['x-resposta-a'];
+    if(cabecaResposta!==undefined&&cabecaResposta!==''){respostaA=Number(cabecaResposta);if(!Number.isInteger(respostaA)||!banco.prepare('SELECT 1 FROM mensagens WHERE id=? AND sala_id=? AND removida_em IS NULL').get(respostaA,id))throw erro(400,'resposta_invalida');}
+    banco.exec('BEGIN IMMEDIATE');
+    let mensagemId,midiaId;
+    try{
+      const rm=banco.prepare('INSERT INTO mensagens(sala_id,autor_id,texto,resposta_a) VALUES(?,?,?,?)').run(id,u.id,'',respostaA);mensagemId=Number(rm.lastInsertRowid);
+      const rx=banco.prepare('INSERT INTO chat_midias(mensagem_id,autor_id,nome,mime,tamanho,dados,duracao) VALUES(?,?,?,?,?,?,?)').run(mensagemId,u.id,nome,mime,arquivo.length,arquivo,duracao);midiaId=Number(rx.lastInsertRowid);
+      banco.exec('COMMIT');
+    }catch(e){try{banco.exec('ROLLBACK');}catch{}throw e;}
+    const msg=banco.prepare('SELECT m.*,a.nome,a.usuario,a.avatar,a.avatar_foto IS NOT NULL autor_tem_foto,a.papel,a.pontos,a.criado_em autor_criado_em,r.id resposta_id,r.texto resposta_texto,ra.usuario resposta_usuario FROM mensagens m JOIN usuarios a ON a.id=m.autor_id LEFT JOIN mensagens r ON r.id=m.resposta_a LEFT JOIN usuarios ra ON ra.id=r.autor_id WHERE m.id=?').get(mensagemId);
+    const dia=new Date().toISOString().slice(0,10),hoje=u.pontos_dia===dia?u.pontos_hoje:0;if(hoje<20)banco.prepare('UPDATE usuarios SET pontos=pontos+1,pontos_dia=?,pontos_hoje=? WHERE id=?').run(dia,hoje+1,u.id);
+    const publica=mensagemPublica(msg,u.id);avisar({sala:id,salaId:id,mensagem:publica});return json(res,201,{mensagem:publica,midiaId});
+  }
+  const progressoMidia=p.match(/^\/api\/chat\/midias\/(\d+)\/progresso$/);
+  if(progressoMidia&&m==='PATCH'){
+    const u=exigirChat(req),id=Number(progressoMidia[1]);midiaComAcesso(u,id);const b=await corpo(req);
+    const posicao=Math.max(0,Math.min(86400,Number(b.posicao)||0)),duracao=b.duracao==null?null:Math.max(0,Math.min(86400,Number(b.duracao)||0)),concluida=b.concluida===true?1:0;
+    banco.prepare('INSERT INTO chat_reproducao(usuario_id,midia_id,posicao,duracao,concluida) VALUES(?,?,?,?,?) ON CONFLICT(usuario_id,midia_id) DO UPDATE SET posicao=excluded.posicao,duracao=excluded.duracao,concluida=excluded.concluida,atualizado_em=CURRENT_TIMESTAMP').run(u.id,id,posicao,duracao,concluida);
+    return json(res,200,{ok:true,posicao,duracao,concluida:!!concluida});
+  }
+  const midiaRota=p.match(/^\/api\/chat\/midias\/(\d+)$/);
+  if(midiaRota&&(m==='GET'||m==='HEAD')){
+    const u=exigirChat(req),item=midiaComAcesso(u,Number(midiaRota[1])),dados=Buffer.from(item.dados);
+    banco.prepare('INSERT INTO chat_reproducao(usuario_id,midia_id,posicao) VALUES(?,?,0) ON CONFLICT(usuario_id,midia_id) DO UPDATE SET atualizado_em=CURRENT_TIMESTAMP').run(u.id,item.id);
+    const baixar=url.searchParams.get('download')==='1'||tipoMidia(item.mime)==='arquivo';
+    const disposicao=(baixar?'attachment':'inline')+"; filename*=UTF-8''"+encodeURIComponent(item.nome);
+    const baseHeaders={'Content-Type':item.mime,'Accept-Ranges':'bytes','Content-Disposition':disposicao,'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'};
+    const faixa=String(req.headers.range||'').match(/^bytes=(\d+)-(\d*)$/);
+    if(faixa){
+      const inicio=Math.min(dados.length-1,Number(faixa[1])),fim=faixa[2]?Math.min(dados.length-1,Number(faixa[2])):dados.length-1;
+      if(!Number.isFinite(inicio)||!Number.isFinite(fim)||inicio>fim){res.writeHead(416,{...baseHeaders,'Content-Range':'bytes */'+dados.length});res.end();return;}
+      const parte=dados.subarray(inicio,fim+1);res.writeHead(206,{...baseHeaders,'Content-Length':parte.length,'Content-Range':'bytes '+inicio+'-'+fim+'/'+dados.length});if(m==='HEAD')return res.end();res.end(parte);return;
+    }
+    res.writeHead(200,{...baseHeaders,'Content-Length':dados.length});if(m==='HEAD')return res.end();res.end(dados);return;
+  }
   const match=p.match(/^\/api\/chat\/salas\/([^/]+)\/mensagens$/);
   if(match&&m==='GET'){
-    const u=exigirChat(req),id=decodeURIComponent(match[1]);salaPermitida(u,id);const antes=Math.max(0,Number(url.searchParams.get('antes'))||Number.MAX_SAFE_INTEGER);
-    const mensagens=banco.prepare(`SELECT m.*,a.nome,a.usuario,a.avatar,a.papel,a.pontos,a.criado_em autor_criado_em FROM mensagens m JOIN usuarios a ON a.id=m.autor_id WHERE m.sala_id=? AND m.id<? AND m.removida_em IS NULL AND NOT EXISTS(SELECT 1 FROM bloqueios b WHERE (b.origem=? AND b.destino=m.autor_id) OR (b.destino=? AND b.origem=m.autor_id)) ORDER BY m.id DESC LIMIT 50`).all(id,antes,u.id,u.id).reverse().map(mensagemPublica);
-    return json(res,200,{mensagens});
+    const u=exigirChat(req),id=decodeURIComponent(match[1]),sala=salaPermitida(u,id),antes=Math.max(0,Number(url.searchParams.get('antes'))||Number.MAX_SAFE_INTEGER);
+    const janela=sala.tipo==='direta'?" AND m.criado_em>=datetime('now','-48 hours') ":'';
+    const mensagens=banco.prepare(`SELECT m.*,a.nome,a.usuario,a.avatar,a.avatar_foto IS NOT NULL autor_tem_foto,a.papel,a.pontos,a.criado_em autor_criado_em,r.id resposta_id,r.texto resposta_texto,ra.usuario resposta_usuario FROM mensagens m JOIN usuarios a ON a.id=m.autor_id LEFT JOIN mensagens r ON r.id=m.resposta_a LEFT JOIN usuarios ra ON ra.id=r.autor_id WHERE m.sala_id=? AND m.id<? AND m.removida_em IS NULL ${janela} AND NOT EXISTS(SELECT 1 FROM bloqueios b WHERE (b.origem=? AND b.destino=m.autor_id) OR (b.destino=? AND b.origem=m.autor_id)) ORDER BY m.id DESC LIMIT 50`).all(id,antes,u.id,u.id).reverse().map(msg=>mensagemPublica(msg,u.id));
+    return json(res,200,{mensagens,expira_em:sala.tipo==='direta'?48:null});
   }
   if(match&&m==='POST'){
-    const u=exigirChat(req),id=decodeURIComponent(match[1]);salaPermitida(u,id);if(u.silenciado_ate&&Date.parse(u.silenciado_ate)>agora())throw erro(403,'chat_silenciado');
+    const u=exigirChat(req),id=decodeURIComponent(match[1]),sala=salaPermitida(u,id);if(u.silenciado_ate&&Date.parse(u.silenciado_ate)>agora())throw erro(403,'chat_silenciado');
     conferirLimite(`chat2:${u.id}`,1,2000);conferirLimite(`chat60:${u.id}`,20,60000);const b=await corpo(req),texto=String(b.texto||'').trim();
     if(!texto||texto.length>500||/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(texto))throw erro(400,'mensagem_invalida');
-    if(Date.parse(u.criado_em)>agora()-7*86400000&&/(https?:\/\/|www\.|\b[a-z0-9-]+\.(?:com|net|org|br|io|dev|app)\b)/i.test(texto))throw erro(403,'links_conta_nova');
-    const r=banco.prepare('INSERT INTO mensagens(sala_id,autor_id,texto) VALUES(?,?,?)').run(id,u.id,texto);const msg=banco.prepare('SELECT m.*,a.nome,a.usuario,a.avatar,a.papel,a.pontos,a.criado_em autor_criado_em FROM mensagens m JOIN usuarios a ON a.id=m.autor_id WHERE m.id=?').get(Number(r.lastInsertRowid));
+    if(Date.parse(String(u.criado_em).replace(' ','T')+'Z')>agora()-7*86400000&&/(https?:\/\/|www\.|\b[a-z0-9-]+\.(?:com|net|org|br|io|dev|app)\b)/i.test(texto))throw erro(403,'links_conta_nova');
+    let respostaA=null;
+    if(b.respostaA!==undefined&&b.respostaA!==null){respostaA=Number(b.respostaA);if(!Number.isInteger(respostaA)||!banco.prepare('SELECT 1 FROM mensagens WHERE id=? AND sala_id=? AND removida_em IS NULL').get(respostaA,id))throw erro(400,'resposta_invalida');}
+    const r=banco.prepare('INSERT INTO mensagens(sala_id,autor_id,texto,resposta_a) VALUES(?,?,?,?)').run(id,u.id,texto,respostaA);
+    const msg=banco.prepare(`SELECT m.*,a.nome,a.usuario,a.avatar,a.avatar_foto IS NOT NULL autor_tem_foto,a.papel,a.pontos,a.criado_em autor_criado_em,r.id resposta_id,r.texto resposta_texto,ra.usuario resposta_usuario FROM mensagens m JOIN usuarios a ON a.id=m.autor_id LEFT JOIN mensagens r ON r.id=m.resposta_a LEFT JOIN usuarios ra ON ra.id=r.autor_id WHERE m.id=?`).get(Number(r.lastInsertRowid));
     const dia=new Date().toISOString().slice(0,10),hoje=u.pontos_dia===dia?u.pontos_hoje:0;if(hoje<20)banco.prepare('UPDATE usuarios SET pontos=pontos+1,pontos_dia=?,pontos_hoje=? WHERE id=?').run(dia,hoje+1,u.id);
-    avisar({sala:id,salaId:id,mensagem:mensagemPublica(msg)});return json(res,201,{mensagem:mensagemPublica(msg)});
+    const publica=mensagemPublica(msg,u.id);avisar({sala:id,salaId:id,mensagem:publica});return json(res,201,{mensagem:publica,expira_em:sala.tipo==='direta'?48:null});
   }
   if(p==='/api/chat/denuncias'&&m==='POST'){
     const u=exigirChat(req),b=await corpo(req),motivo=String(b.motivo||'').trim();conferirLimite(`denuncia:${u.id}`,5,3600000);if(motivo.length<3||motivo.length>500||(!b.mensagemId&&!b.usuarioId))throw erro(400,'dados_invalidos');
@@ -318,7 +513,13 @@ async function rota(req,res){
     if(!banco.prepare('SELECT 1 FROM usuarios WHERE id=?').get(alvo))throw erro(404,'perfil_nao_localizado');
     banco.prepare('INSERT INTO denuncias(denunciante_id,alvo_usuario_id,mensagem_id,motivo) VALUES(?,?,?,?)').run(u.id,alvo,msg?+b.mensagemId:null,motivo);return json(res,201,{ok:true});
   }
-  if(p==='/api/admin/chat/denuncias'&&m==='GET'){admin(req);return json(res,200,{denuncias:banco.prepare("SELECT d.*,m.texto,u.usuario,u.nome FROM denuncias d LEFT JOIN mensagens m ON m.id=d.mensagem_id LEFT JOIN usuarios u ON u.id=d.alvo_usuario_id WHERE d.situacao='aberta' ORDER BY d.id DESC LIMIT 100").all()});}
+  if(p==='/api/admin/chat/denuncias'&&m==='GET'){admin(req);return json(res,200,{denuncias:banco.prepare("SELECT d.*,m.texto,u.usuario,u.nome,x.id midia_id,x.nome midia_nome,x.mime midia_mime,x.tamanho midia_tamanho FROM denuncias d LEFT JOIN mensagens m ON m.id=d.mensagem_id LEFT JOIN usuarios u ON u.id=d.alvo_usuario_id LEFT JOIN chat_midias x ON x.id=(SELECT id FROM chat_midias WHERE mensagem_id=d.mensagem_id ORDER BY id LIMIT 1) WHERE d.situacao='aberta' ORDER BY d.id DESC LIMIT 100").all()});}
+  const midiaAdmin=p.match(/^\/api\/admin\/chat\/midias\/(\d+)$/);
+  if(midiaAdmin&&m==='GET'){
+    admin(req);const item=banco.prepare("SELECT x.* FROM chat_midias x JOIN denuncias d ON d.mensagem_id=x.mensagem_id WHERE x.id=? AND d.situacao='aberta' ORDER BY d.id DESC LIMIT 1").get(Number(midiaAdmin[1]));
+    if(!item)throw erro(404,'midia_nao_localizada');const dados=Buffer.from(item.dados),inline=tipoMidia(item.mime)!=='arquivo';
+    res.writeHead(200,{'Content-Type':item.mime,'Content-Length':dados.length,'Content-Disposition':(inline?'inline':'attachment')+"; filename*=UTF-8''"+encodeURIComponent(item.nome),'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'});res.end(dados);return;
+  }
   if(p==='/api/admin/chat/moderar'&&m==='POST'){
     const u=admin(req),b=await corpo(req),id=+b.usuarioId;if(!Number.isInteger(id)||id===u.id||!banco.prepare('SELECT 1 FROM usuarios WHERE id=?').get(id))throw erro(400,'dados_invalidos');
     if(b.acao==='silenciar'){const horas=Math.min(720,Math.max(1,+b.horas||24));banco.prepare('UPDATE usuarios SET silenciado_ate=? WHERE id=?').run(new Date(agora()+horas*3600000).toISOString(),id);}
@@ -360,7 +561,8 @@ export function iniciar({porta=Number(process.env.PORTAL_API_PORTA||4870),host='
   const servidor=createServer((req,res)=>{Promise.resolve(rota(req,res)).catch(e=>{if(res.headersSent){res.end();return;}json(res,e.status||500,{erro:e.codigo||'erro_interno'},e.status===429?{'Retry-After':String(e.retryAfter||2)}:{});});});
   const limpar=setInterval(()=>{
     try{
-      banco.prepare("DELETE FROM mensagens WHERE criado_em < datetime('now','-90 days')").run();
+      banco.prepare("DELETE FROM mensagens WHERE criado_em < datetime('now','-90 days') AND sala_id NOT IN (SELECT id FROM salas WHERE tipo='direta')").run();
+      banco.prepare("DELETE FROM mensagens WHERE criado_em < datetime('now','-48 hours') AND sala_id IN (SELECT id FROM salas WHERE tipo='direta')").run();
       banco.prepare('DELETE FROM sessoes WHERE expira_em<?').run(agora());
       banco.prepare('DELETE FROM redefinicoes WHERE expira_em<?').run(agora());
     }catch(e){process.stderr.write(`Falha na limpeza da API: ${e.message}\n`);}

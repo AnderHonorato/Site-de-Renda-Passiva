@@ -35,11 +35,11 @@ export async function comparar(senha, armazenado) {
   } catch { return false; }
 }
 
-export async function corpo(req) {
+export async function corpo(req, maxBytes = 16384) {
   const partes = []; let bytes = 0;
   for await (const parte of req) {
     bytes += parte.length;
-    if (bytes > 16384) throw erro(413, 'corpo_grande');
+    if (bytes > maxBytes) throw erro(413, 'corpo_grande');
     partes.push(parte);
   }
   try {

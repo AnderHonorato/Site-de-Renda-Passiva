@@ -101,7 +101,13 @@
   </div>
 </header>
   <main id="conteúdo">
-<section class="largura conta"><div class="painel conta__painel" id="criar"><p class="rótulo">Criar conta</p><h1>Criar conta</h1><p class="suave">Crie sua conta para usar a comunidade e guardar seus dados.</p><form id="form-criar" class="conta__form">
+<section class="conta conta--drawer"><div class="painel conta__painel" id="criar">
+    <div class="conta__barra-topo">
+      <div><p class="rótulo">Criar conta</p><h1>Criar conta</h1></div>
+      <button class="conta__fechar-painel" type="button" aria-label="Fechar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 6 12 12"/><path d="m18 6-12 12"/></svg></button>
+    </div>
+    <p class="suave conta__descricao">Crie sua conta para usar a comunidade e guardar seus dados.</p>
+    <div class="conta__rolagem"><form id="form-criar" class="conta__form">
       <label class="conta__campo"><span>Como quer ser chamado</span><input id="nome" name="nome" type="text" autocomplete="name" maxlength="80" required></label>
       <label class="conta__campo"><span>@usuário</span><input id="usuario" name="usuario" type="text" autocomplete="username" minlength="3" maxlength="20" pattern="[a-z0-9_]{3,20}" required></label>
       <small id="usuario-disponibilidade" aria-live="polite"></small>
@@ -109,7 +115,9 @@
       <label class="conta__campo"><span>Senha</span><input id="senha" name="senha" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label>
       <label class="conta__campo"><span>Idade</span><input id="idade" name="idade" type="number" min="13" max="120" inputmode="numeric" required></label>
       <label class="conta__aceite"><input name="aceitaTermos" type="checkbox" required><span>Confirmo que li os termos e tenho pelo menos 13 anos para usar o chat. <a href="termos.html">Termos</a></span></label>
-      <button class="botão botão--primário" type="submit">Criar conta</button></form><p class="conta__estado" role="status" aria-live="polite"></p></div></section>
+      <button class="botão botão--primário" type="submit">Criar conta</button></form></div>
+    <p class="conta__estado" role="status" aria-live="polite"></p>
+  </div></section>
 
   </main>
 <div class="onda onda--rodapé" aria-hidden="true"><svg viewBox="0 0 1440 28" preserveAspectRatio="none"><path d="M0,0 C240,28 480,0 720,14 C960,28 1200,4 1440,18 L1440,28 L0,28 Z" fill="currentColor"/></svg></div>

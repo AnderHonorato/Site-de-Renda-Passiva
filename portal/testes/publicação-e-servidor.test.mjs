@@ -28,7 +28,7 @@ test('caminhos de desenvolvimento são privados e os do navegador não', () => {
 });
 
 test('a lista de publicação é branca: só entra o que foi permitido', () => {
-  for (const sim of ['index.html', 'ferramentas.html', '404.html', 'manifesto.webmanifest', 'estilos/núcleo.css',
+  for (const sim of ['index.html', 'ferramentas.html', 'niveis.html', '404.html', 'manifesto.webmanifest', 'estilos/núcleo.css',
     'scripts/ferramentas/juros.js', 'dados/site.js', 'recursos/ícone.svg', 'recursos/fontes/inter-latin-wght-normal.woff2',
     'f/juros/index.html', 'vitrine/imagens/vitrine-capa-paisagem.webp']) {
     assert.equal(deveSerPublicado(sim), true, sim);

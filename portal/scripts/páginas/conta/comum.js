@@ -4,6 +4,11 @@ import { caminhoDoIdioma, obterSessao, voltaSegura } from '../../núcleo/sessão
 export const en = document.documentElement.lang === 'en';
 export { api, caminhoDoIdioma, obterSessao, voltaSegura };
 
+document.querySelector('.conta__fechar-painel')?.addEventListener('click', () => {
+  if (history.length > 1 && document.referrer.startsWith(location.origin)) history.back();
+  else location.assign(document.documentElement.dataset.raizIdioma || './');
+});
+
 export function estado(mensagem, erro = false) {
   const alvo = document.querySelector('.conta__estado');
   if (!alvo) return;
@@ -35,6 +40,8 @@ export function mensagemErro(erro) {
     usuario_em_uso: en ? 'This username is already in use.' : 'Este @usuário já está em uso.',
     senha_invalida: en ? 'Check your password.' : 'Confira sua senha.',
     dados_invalidos: en ? 'Check the fields and try again.' : 'Confira os campos e tente novamente.',
+    imagem_invalida: en ? 'Use a PNG, JPEG or WebP image.' : 'Use uma imagem PNG, JPEG ou WebP.',
+    corpo_grande: en ? 'This file is too large.' : 'Este arquivo é grande demais.',
     csrf_invalido: en ? 'Session expired. Reload the page.' : 'Sessão expirada. Recarregue a página.',
   };
   return codigos[erro.message] || (en ? 'Could not complete this action.' : 'Não foi possível concluir esta ação.');

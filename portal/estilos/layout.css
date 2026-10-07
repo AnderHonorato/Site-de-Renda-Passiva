@@ -476,3 +476,20 @@ a.idioma__item:hover { color: var(--tinta); background: var(--superfície-3); tr
   .conta-topo--visitante, .conta-topo__gatilho, .conta-topo__painel { animation: none; }
   .conta-topo__item, .conta-topo__gatilho, .conta-topo__avatar, .conta-topo__seta { transition: none; }
 }
+
+
+/* Foto enviada também ocupa o avatar do cabeçalho e do menu. */
+.conta-topo__gatilho > .avatar-foto.conta-topo__avatar {
+  width: 32px; height: 32px; flex: 0 0 32px; padding: 0; object-fit: cover; border-radius: 50%;
+  background: var(--superfície); box-shadow: inset 0 0 0 1px var(--borda);
+}
+.conta-topo__resumo > .avatar-foto {
+  width: 42px; height: 42px; flex: 0 0 42px; object-fit: cover; border-radius: 14px;
+  background: var(--superfície); box-shadow: inset 0 0 0 1px var(--borda);
+}
+@media (max-width:760px) {
+  .conta-topo__gatilho > .avatar-foto.conta-topo__avatar { width:29px;height:29px;flex-basis:29px; }
+}
+@media (max-width:560px) {
+  .conta-topo__gatilho > .avatar-foto.conta-topo__avatar { width:30px;height:30px; }
+}

@@ -101,7 +101,15 @@
   </div>
 </header>
   <main id="conteúdo">
-<section class="largura conta"><div class="painel conta__painel" id="usuarios"><p class="rótulo">Usuários</p><h1>Usuários</h1><p class="suave">Gerencie contas e planos pelo painel administrativo.</p><div id="lista-usuarios"></div><p class="conta__estado" role="status" aria-live="polite"></p></div></section>
+<section class="conta conta--drawer"><div class="painel conta__painel" id="usuarios">
+    <div class="conta__barra-topo">
+      <div><p class="rótulo">Usuários</p><h1>Usuários</h1></div>
+      <button class="conta__fechar-painel" type="button" aria-label="Fechar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 6 12 12"/><path d="m18 6-12 12"/></svg></button>
+    </div>
+    <p class="suave conta__descricao">Gerencie contas e planos pelo painel administrativo.</p>
+    <div class="conta__rolagem"><div id="lista-usuarios"></div></div>
+    <p class="conta__estado" role="status" aria-live="polite"></p>
+  </div></section>
 
   </main>
 <div class="onda onda--rodapé" aria-hidden="true"><svg viewBox="0 0 1440 28" preserveAspectRatio="none"><path d="M0,0 C240,28 480,0 720,14 C960,28 1200,4 1440,18 L1440,28 L0,28 Z" fill="currentColor"/></svg></div>
