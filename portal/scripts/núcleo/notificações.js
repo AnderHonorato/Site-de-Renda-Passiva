@@ -144,7 +144,10 @@ function desenhar(botão, contador, painel, lista, vazio, marcarTodas) {
     texto.textContent = item.texto ?? '';
     const data = document.createElement('small');
     data.textContent = quandoFoi(item.data);
-    corpo.append(título, texto, data);
+    const conteúdo = document.createElement('div');
+    conteúdo.className = 'notificações__conteúdo';
+    conteúdo.append(título, texto, data);
+    corpo.append(conteúdo);
     corpo.addEventListener('click', () => marcarComoLidas([item.id]));
     linha.append(corpo);
     return linha;

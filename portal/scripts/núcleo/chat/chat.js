@@ -1,7 +1,6 @@
 import { api } from '../api.js';
 import { ícone } from '../ícones.js';
-import { criarAvatarDoPerfil, criarIconeNivel, criarTempoNaComunidade } from '../nível.js';
-import { criarIconeMedalha } from '../emblemas.js';
+import { criarAvatarDoPerfil } from '../nível.js';
 import { atualizarNivel } from '../evolução.js';
 import { tocarSom } from '../sons.js';
 
@@ -23,10 +22,8 @@ let badgeBolha = null;
 let painelAtual = null;
 let reconectarTimer = 0;
 let replyAtual = null;
-let miniPerfil = null;
 let formatacao = null;
 let conversasRecolhidas = false;
-const perfisCache = new Map();
 
 function elemento(tag, classe, texto) {
   const el = document.createElement(tag);
@@ -200,84 +197,6 @@ function aplicarFormato(container, texto) {
   }
 }
 
-function esconderMiniPerfil() {
-  if (miniPerfil) miniPerfil.hidden = true;
-}
-
-async function mostrarMiniPerfil(handle, alvo) {
-  if (!handle || !alvo || !painelAtual) return;
-
-  if (!miniPerfil) {
-    miniPerfil = elemento('aside', 'chat__mini-perfil');
-    miniPerfil.hidden = true;
-    painelAtual.append(miniPerfil);
-  }
-
-  let perfil = perfisCache.get(handle);
-  if (!perfil) {
-    try {
-      const resposta = await api('/api/perfil/' + encodeURIComponent(handle));
-      perfil = resposta.perfil || resposta;
-      perfisCache.set(handle, perfil);
-    } catch {
-      return;
-    }
-  }
-
-  miniPerfil.replaceChildren();
-  miniPerfil.dataset.banner = perfil.banner || 'brisa';
-
-  const avatar = avatarDe(perfil, 'chat__mini-avatar');
-  const info = elemento('span', 'chat__mini-info');
-  info.append(
-    elemento('strong', '', perfil.nome || '@' + handle),
-    elemento('small', '', '@' + handle),
-    elemento('small', '', (en ? 'Level ' : 'Nível ') + (perfil.nivel || 1) + ' · ' + (perfil.plano || 'gratuito'))
-  );
-  const denunciar = elemento('button', 'chat__mini-denunciar');
-  const medalhas=elemento('span','chat__mini-insignias');
-  for(const medalha of (perfil.medalhas||[]).filter(m=>m.desbloqueada).slice(0,4)){
-    const selo=elemento('a','chat__mini-insignia');selo.href=base+'perfil.html?usuario='+encodeURIComponent(handle)+'&conquista='+encodeURIComponent(medalha.id+':'+medalha.tier);selo.title=medalha.nome+' · '+medalha.patamar;selo.append(criarIconeMedalha(medalha));selo.addEventListener('click',evento=>evento.stopPropagation());medalhas.append(selo);
-  }
-  if(medalhas.childElementCount)info.append(medalhas);
-  denunciar.type = 'button';
-  denunciar.title = txt('Denunciar usuário', 'Report user');
-  denunciar.setAttribute('aria-label', denunciar.title);
-  denunciar.innerHTML = ícone('alerta');
-  denunciar.addEventListener('click', async evento => {
-    evento.stopPropagation();
-    const motivo = prompt(txt('Motivo da denúncia:', 'Reason for report:'));
-    if (!motivo) return;
-    denunciar.disabled = true;
-    try {
-      await api('/api/chat/denuncias', { metodo: 'POST', dados: { usuarioId: perfil.id, motivo } });
-      denunciar.dataset.enviado = 'sim';
-    } catch {
-      denunciar.disabled = false;
-    }
-  });
-
-  const seta = elemento('span', 'chat__mini-seta');
-  seta.innerHTML = ícone('seta-diagonal');
-  miniPerfil.append(avatar, info, denunciar, seta);
-
-  miniPerfil.onclick = () => {
-    location.assign(base + 'perfil.html?usuario=' + encodeURIComponent(handle));
-  };
-
-  const alvoRect = alvo.getBoundingClientRect();
-  const painelRect = painelAtual.getBoundingClientRect();
-  miniPerfil.hidden = false;
-  const larguraMini = Math.max(236, miniPerfil.offsetWidth || 244);
-  const alturaMini = Math.max(82, miniPerfil.offsetHeight || 82);
-  const esquerda = Math.max(8, Math.min(painelRect.width - larguraMini - 8, alvoRect.left - painelRect.left));
-  const acima = alvoRect.top - painelRect.top - alturaMini - 8;
-  const abaixo = alvoRect.bottom - painelRect.top + 8;
-  const topo = acima >= 66 ? acima : Math.min(painelRect.height - alturaMini - 8, abaixo);
-  miniPerfil.style.left = esquerda + 'px';
-  miniPerfil.style.top = Math.max(66, topo) + 'px';
-}
-
 function denunciarMensagem(msg, botao) {
   return async () => {
     const motivo = prompt(txt('Motivo da denúncia:', 'Reason for report:'));
@@ -389,13 +308,6 @@ function montarMensagem(msg, sessao, composer) {
     avatarDe(msg.autor || { avatar: 'sol' }, 'chat__autor-avatar'),
     elemento('span', '', '@' + (msg.autor?.usuario || 'usuario'))
   );
-  perfilLink.addEventListener('mouseenter', () => mostrarMiniPerfil(msg.autor?.usuario, perfilLink));
-  perfilLink.addEventListener('mouseleave', () => {
-    setTimeout(() => {
-      if (!miniPerfil?.matches(':hover')) esconderMiniPerfil();
-    }, 180);
-  });
-
   const acoes = elemento('div', 'chat__mensagem-acoes');
   const responder = elemento('button', 'chat__responder');
   responder.type = 'button';
@@ -439,12 +351,6 @@ function montarMensagem(msg, sessao, composer) {
   }
 
   const rodape = elemento('footer', 'chat__mensagem-rodape');
-  const selos = elemento('span','chat__autor-selos');
-  const nivel = criarIconeNivel(msg.autor?.nivel || 1);
-  selos.append(nivel);
-  if (msg.autor?.criado_em) selos.append(criarTempoNaComunidade(msg.autor.criado_em));
-  if (msg.autor?.papel === 'admin') { const cargo = elemento('span','chat__cargo','Admin'); selos.append(cargo); }
-  rodape.append(selos);
   rodape.append(elemento('time', '', horaCurta(msg.criado_em)));
   item.append(rodape);
   return item;
@@ -713,7 +619,6 @@ async function abrirSala(sala, conversa, sessao, { marcar = true } = {}) {
   salaAtualDados = sala;
   mensagemIds = new Set();
   replyAtual = null;
-  esconderMiniPerfil();
 
   for (const botao of listaSalasAtual?.querySelectorAll('.chat__sala') || []) {
     if (botao.dataset.salaId === String(sala.id)) botao.dataset.ativa = 'sim';
@@ -945,7 +850,6 @@ export function ligarChat(sessao) {
     tocarSom('fechar');
     painel.dataset.fechando = 'sim';
     bolha.setAttribute('aria-expanded', 'false');
-    esconderMiniPerfil();
     if (formatacao) formatacao.hidden = true;
     clearTimeout(temporizadorFechar);
     temporizadorFechar = window.setTimeout(() => {

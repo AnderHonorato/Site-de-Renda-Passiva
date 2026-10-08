@@ -1056,3 +1056,35 @@ body:has(.conta.conta--modal) #conteúdo {
     grid-column: 1 !important;
   }
 }
+
+/* Conquistas do perfil: poucas, nomeadas e em uma bandeja própria. A coleção completa continua em Níveis. */
+.perfil-comunidade__conquistas {
+  max-width:520px;margin-top:12px; padding:10px; border:1px solid color-mix(in srgb,var(--marca) 20%,var(--borda));
+  border-radius:14px; background:color-mix(in srgb,var(--superfície) 84%,transparent);
+}
+.perfil-comunidade__conquistas-topo { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px; }
+.perfil-comunidade__conquistas-topo h3 { margin:0;font:800 .7rem var(--fonte-título);letter-spacing:.01em; }
+.perfil-comunidade__conquistas-topo a { color:var(--marca);font-size:.64rem;font-weight:800;text-decoration:none; }
+.perfil-comunidade__conquistas-topo a:hover { text-decoration:underline; }
+.perfil-comunidade__medalhas { display:grid;grid-template-columns:repeat(3,minmax(0,120px));gap:7px;margin:0; }
+.perfil-comunidade__medalhas .medalha {
+  width:auto;height:auto;min-height:82px;display:grid;grid-template-rows:52px auto;justify-items:center;align-content:center;gap:3px;
+  padding:5px 4px;border:1px solid color-mix(in srgb,currentColor 24%,var(--borda));border-radius:11px;
+  background:color-mix(in srgb,var(--superfície) 88%,transparent);box-shadow:none;
+}
+.perfil-comunidade__medalhas .medalha__simbolo { width:42px;height:50px;display:grid;place-items:center; }
+.perfil-comunidade__medalhas .medalha__rotulo { max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tinta-média);font-size:.58rem;font-weight:750;line-height:1.1; }
+.perfil-comunidade__conquistas-resumo { margin:8px 0 0;color:var(--tinta-suave);font-size:.59rem;line-height:1.3; }
+.perfil-comunidade__jornada { display:grid;gap:4px;margin-top:12px; }
+.perfil-comunidade__jornada b { font-size:.7rem; }
+.perfil-comunidade__jornada span { color:var(--tinta-média);font-size:.64rem; }
+.perfil-comunidade__jornada progress { appearance:none;width:100%;height:6px;border:0;border-radius:6px;background:var(--superfície-3);accent-color:var(--marca); }
+.perfil-comunidade__jornada progress::-webkit-progress-bar { background:var(--superfície-3);border-radius:6px; }
+.perfil-comunidade__jornada progress::-webkit-progress-value { background:var(--marca);border-radius:6px; }
+.perfil-comunidade__jornada progress::-moz-progress-bar { background:var(--marca);border-radius:6px; }
+.perfil-comunidade__colecao { margin-top:8px;padding-top:8px;border-top:1px solid var(--borda); }
+.perfil-comunidade__colecao summary { padding:4px 0;color:var(--marca);font-size:.67rem;font-weight:750;cursor:pointer; }
+.perfil-comunidade__medalhas--colecao { margin-top:8px; }
+.perfil-comunidade__visual { align-self:start; }
+.perfil-comunidade__medalhas .medalha:hover,.perfil-comunidade__medalhas .medalha:focus-visible { background:var(--superfície);border-color:currentColor; }
+@media (max-width:390px) { .perfil-comunidade__conquistas { padding:8px; } .perfil-comunidade__medalhas { gap:5px; } .perfil-comunidade__medalhas .medalha { min-height:76px;padding-inline:2px; } }

@@ -67,11 +67,6 @@ function cabeçalho(ctx, base, atual, alternativas) {
 
   return `<header class="topo">
   <div class="largura topo__interior">
-      <form class="busca-topo" id="busca-topo" role="search" data-aberta="não" autocomplete="off" action="${base}ferramentas.html">
-        <button class="ícone-botão busca-topo__botão" type="button" id="ir-para-busca" aria-expanded="false" aria-controls="busca-topo-campo" aria-label="${escapar(t('moldura.buscar'))}">${ícone('busca')}</button>
-        <input class="busca-topo__campo" id="busca-topo-campo" name="busca" type="search" tabindex="-1" role="combobox" aria-expanded="false" aria-controls="busca-topo-sugestões" aria-autocomplete="list" aria-label="${escapar(t('moldura.buscar'))}" placeholder="${escapar(t('moldura.buscaTopoMarcador'))}">
-        <div class="sugestões busca-topo__sugestões" id="busca-topo-sugestões" role="listbox" hidden></div>
-      </form>
     <a class="marca" href="${base || './'}" aria-label="${escapar(t('moldura.marcaInício'))}">
       <span class="marca__selo">${ícone('marca')}</span>
       <span class="marca__nome"><b>${escapar(site.destaque)}</b><span>${escapar(site.complemento)}</span></span>
@@ -95,6 +90,11 @@ function cabeçalho(ctx, base, atual, alternativas) {
     </nav>
     <span class="topo__espaço"></span>
     <div class="topo__fim">
+      <form class="busca-topo" id="busca-topo" role="search" data-aberta="não" autocomplete="off" action="${base}ferramentas.html">
+        <button class="ícone-botão busca-topo__botão" type="button" id="ir-para-busca" aria-expanded="false" aria-controls="busca-topo-campo" aria-label="${escapar(t('moldura.buscar'))}">${ícone('busca')}</button>
+        <input class="busca-topo__campo" id="busca-topo-campo" name="busca" type="search" tabindex="-1" role="combobox" aria-expanded="false" aria-controls="busca-topo-sugestões" aria-autocomplete="list" aria-label="${escapar(t('moldura.buscar'))}" placeholder="${escapar(t('moldura.buscaTopoMarcador'))}">
+        <div class="sugestões busca-topo__sugestões" id="busca-topo-sugestões" role="listbox" hidden></div>
+      </form>
       <span class="notificações" id="notificações">
         <button class="ícone-botão notificações__botão" type="button" id="abrir-notificações" aria-expanded="false" aria-controls="painel-notificações" aria-label="${escapar(t('moldura.notificações'))}">${ícone('sino')}<span class="notificações__contador" hidden></span></button>
         <div class="notificações__painel" id="painel-notificações" hidden>

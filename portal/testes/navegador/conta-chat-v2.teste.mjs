@@ -274,10 +274,18 @@ test('notificação da conquista aponta para a insígnia e detalhes param o bril
   await contexto.route('**/api/conquistas',rota=>rota.fulfill({contentType:'application/json',body:JSON.stringify({conquistas:[],notificacoes:[{tipo:'medalha',chave:'explorador:2',medalha:perfil.medalhas[0],data:'2026-10-07'}]})}));
   try {
     await página.goto(BASE+'/');await página.waitForSelector('.notificações__item--conquista',{state:'attached'});
-    assert.equal(await página.locator('.topo__interior > :first-child').getAttribute('id'),'busca-topo');
+    assert.equal(await página.locator('.topo__fim > :first-child').getAttribute('id'),'busca-topo', 'a busca fica ao lado do sino');
     await página.locator('.conta-topo--usuario .conta-topo__gatilho').hover();await página.waitForSelector('.conta-topo__painel:not([hidden])');
     assert.equal(await página.locator('.conta-topo__painel #alternar-tema').count(),1);assert.equal(await página.locator('.conta-topo__painel .idioma--topo').isVisible(),true);
-    await página.click('#abrir-notificações');await página.locator('.notificações__item--conquista').click();await página.waitForSelector('.insignia-detalhe:popover-open');
+    await página.click('#abrir-notificações');
+    const geometria = await página.locator('.notificações__item--conquista').evaluate(item => {
+      const selo = item.querySelector('.notificações__insignia')?.getBoundingClientRect();
+      const titulo = item.querySelector('b')?.getBoundingClientRect();
+      return selo && titulo ? { seloFim: selo.right, tituloInicio: titulo.left } : null;
+    });
+    assert.ok(geometria && geometria.seloFim <= geometria.tituloInicio, 'a insígnia ocupa coluna própria, sem cobrir o texto');
+    await página.screenshot({path:join(RAIZ,'.execucao/notificacoes-colunas-2026-10-08.png')});
+    await página.locator('.notificações__item--conquista').click();await página.waitForSelector('.insignia-detalhe:popover-open');
     assert.equal(new URL(página.url()).searchParams.get('conquista'),'explorador:2');
     const alvo=página.locator('[data-conquista="explorador"]');assert.equal(await alvo.evaluate(el=>el.classList.contains('conquista-destacada')),true);
     const caixa=await página.locator('.insignia-detalhe').boundingBox();assert.ok(caixa.x>=0&&caixa.x+caixa.width<=390&&caixa.y>=0&&caixa.y+caixa.height<=844);
@@ -395,9 +403,10 @@ test('chat mantém não lidas por conversa, responde como citação e Shift+Ente
   await mensagem.hover();
   assert.equal(await mensagem.locator('.chat__denunciar').count(), 0, 'denúncia não fica poluindo o balão');
   await mensagem.locator('.chat__autor').hover();
-  await página.waitForSelector('.chat__mini-perfil:not([hidden])');
-  assert.equal(await página.locator('.chat__mini-denunciar').count(), 1, 'denúncia fica no mini perfil do usuário');
-  assert.equal(await página.locator('.chat__mini-insignia .emblema').count(),2);
+  await página.waitForTimeout(220);
+  assert.equal(await página.locator('.chat__mini-perfil').count(), 0, 'o chat não abre balão de perfil ao passar o mouse');
+  assert.equal(await mensagem.locator('.chat__autor-avatar').count(), 1, 'o avatar continua sendo o único elemento visual do perfil no chat');
+  assert.equal(await mensagem.locator('.chat__autor-selos,.chat__mini-insignia').count(), 0, 'o chat não repete níveis ou emblemas junto às mensagens');
   await mensagem.hover();
   await mensagem.locator('.chat__responder').click();
   assert.equal(await página.locator('.chat__reply').isVisible(), true);
@@ -452,6 +461,9 @@ test('perfil público usa modal central, data de entrada, plano, medalhas, socia
   assert.equal(await página.locator('.perfil-comunidade__plano').getAttribute('data-plano'), 'plus');
   assert.match(await página.locator('.perfil-comunidade__plano').getAttribute('href'), /planos\.html$/);
   assert.equal(await página.locator('.perfil-comunidade__medalhas .medalha').count(), 2);
+  assert.equal(await página.locator('.perfil-comunidade__medalhas .medalha__rotulo').count(), 2);
+  assert.equal(await página.locator('.perfil-comunidade__jornada progress').getAttribute('value'), '38');
+  await página.screenshot({path:join(RAIZ,'.execucao/perfil-organizado-2026-10-08.png')});
   assert.equal(await página.locator('.perfil-comunidade__sociais a').count(), 2);
   assert.ok(await página.locator('.perfil-comunidade__ferramenta svg').count() >= 1);
 
@@ -472,6 +484,19 @@ test('perfil próprio mostra edição e perfil de outra pessoa mostra ações so
   assert.equal(await página.getByRole('link', { name: /Editar meu perfil/i }).count(), 0);
 
   await contexto.close();
+});
+
+test('perfil limita destaques e abre pela notificação uma conquista que ficou na coleção', {skip:pular},async()=>{
+  const medalhas=['explorador','pratica','conversa','colecao','veterano'].map((id,i)=>({id,nome:id,patamar:'Prata',tier:2,desbloqueada:true,valor:20-i,meta:30,descricao:'Um marco de teste.'}));
+  const {contexto,página}=await contextoComApi({perfilAlterado:{medalhas}});
+  try {
+    await página.goto(BASE+'/perfil.html?usuario=ander_teste&conquista=veterano:2');
+    await página.waitForSelector('.insignia-detalhe:popover-open');
+    assert.equal(await página.locator('.perfil-comunidade__conquistas > .perfil-comunidade__medalhas > .medalha').count(),3);
+    assert.equal(await página.locator('.perfil-comunidade__colecao .medalha').count(),2);
+    assert.equal(await página.locator('.perfil-comunidade__colecao').getAttribute('open'),'');
+    assert.equal(await página.locator('[data-conquista="veterano"]').evaluate(el=>el.classList.contains('conquista-destacada')),true);
+  } finally { await contexto.close(); }
 });
 
 test('modal de conta e chat cabem em 390 px sem rolagem lateral', { skip: pular }, async () => {

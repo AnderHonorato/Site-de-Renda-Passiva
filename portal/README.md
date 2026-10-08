@@ -1,4 +1,4 @@
-# Portal — versão 1.3.0
+# Portal — versão 1.3.1
 
 O portal escolhido é o da porta **4400**. A identidade visual e as 65 ferramentas prontas foram preservadas. Conta e chat usam uma API separada, na mesma origem através do proxy do portal. O catálogo tem 208 itens; os planejados continuam identificados como planejados.
 
@@ -76,6 +76,14 @@ npm run publicar
 O exemplo `../documentação/hospedagem/portal-v1.1.conf.exemplo` encaminha também SSE. Use `PORTAL_PROXY_CONFIAVEL=1` somente com proxy local que sobrescreve `X-Forwarded-For` com o IP real; isso permite limites por visitante. Requisições diretas não podem escolher seu IP por cabeçalho.
 
 Estado: `../CHECKLIST.md` e `../documentação/plano-portal-principal.md`.
+
+Auditoria atual do pedido original: [`documentacao/pendencias-prompt-original-2026-10-08.md`](documentacao/pendencias-prompt-original-2026-10-08.md). Ela distingue as funções entregues das lacunas da primeira fase, expansões posteriores e dependências de produção.
+
+## Refinamento visual — 08/10/2026
+
+A pesquisa fica imediatamente antes do sino no grupo direito do cabeçalho. Ao abrir, o campo cobre o topo e retorna à posição ao fechar. Notificações de conquistas usam colunas independentes para miniatura e texto. O perfil apresenta o progresso do nível, até três conquistas automáticas em destaque e a coleção recolhível com nomes; links de notificação abrem a coleção quando a conquista estiver nela. Os desenhos internos dos emblemas variam por família. O chat mostra avatar/nome e horário, sem selos de nível e sem cartão de perfil no hover. A denúncia de perfil continua em Mais no próprio perfil; a denúncia de mídia continua no visualizador.
+
+Verificação em 08/10: 1.103 testes unitários aprovados; 24 cenários de conta/chat/notificações e 2 de posição/expansão da busca e falha isolada aprovados. O verificador confirmou 120 páginas, 202 scripts e 208 itens. São testes em Chromium com dados de teste, com captura do perfil e das notificações revisada. A inspeção do navegador do usuário e outro aparelho físico não estão confirmadas nesta rodada.
 
 ## Perfil e conquistas — 07/10/2026
 

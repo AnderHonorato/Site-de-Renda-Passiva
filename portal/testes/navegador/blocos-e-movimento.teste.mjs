@@ -48,6 +48,29 @@ async function abrir({ primeiraVisita = false, ...opções } = {}) {
 
 const bloquear = (página, trecho) => página.route(`**/${trecho}**`, (rota) => rota.abort());
 
+test('busca fica junto do sino, expande dentro do topo e volta sem esconder os controles', {skip:pular},async()=>{
+  for(const viewport of [{width:1280,height:800},{width:390,height:844}]){
+    const {contexto,página}=await abrir({viewport});
+    try {
+      await página.goto(BASE+'/',{waitUntil:'networkidle'});
+      assert.equal(await página.locator('.topo__fim > :first-child').getAttribute('id'),'busca-topo');
+      const fechada=await página.locator('#ir-para-busca').boundingBox();
+      const sino=await página.locator('#abrir-notificações').boundingBox();
+      assert.ok(fechada.x+fechada.width<=sino.x+1,'lupa imediatamente antes do sino');
+      await página.click('#ir-para-busca');
+      await página.waitForTimeout(380);
+      const aberta=await página.locator('#busca-topo-campo').boundingBox();
+      assert.ok(aberta.x>=0&&aberta.x+aberta.width<=viewport.width+1&&aberta.width>viewport.width*.65);
+      await página.locator('#busca-topo-campo').fill('porcentagem');
+      await página.waitForSelector('#busca-topo-sugestões:not([hidden])');
+      await página.keyboard.press('Escape');
+      assert.equal(await página.locator('#busca-topo').getAttribute('data-aberta'),'não');
+      await página.click('#abrir-notificações');
+      assert.equal(await página.locator('#painel-notificações').isVisible(),true);
+    } finally {await contexto.close();}
+  }
+});
+
 test('falha na busca: só a busca mostra a mensagem; listas, cabeçalho e vitrine seguem', { skip: pular }, async () => {
   const { contexto, página } = await abrir();
   // O endereço chega com o acento codificado (n%C3%BAcleo).

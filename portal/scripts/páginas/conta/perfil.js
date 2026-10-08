@@ -43,10 +43,6 @@ function adicionarIcone(no, nome) {
   no.prepend(caixa);
 }
 
-function siglaMedalha(nome) {
-  return String(nome || '').split(/\s+/).slice(0, 2).map(p => p[0] || '').join('').toUpperCase();
-}
-
 function criarMedalha(medalha) {
   const item = elemento('div', 'medalha');
   item.dataset.tier = String(medalha.tier || 0);
@@ -58,8 +54,8 @@ function criarMedalha(medalha) {
 
   const simbolo = elemento('span', 'medalha__simbolo');
   simbolo.append(criarIconeMedalha(medalha));
-  item.append(simbolo);
-
+  const rotulo = elemento('span', 'medalha__rotulo', medalha.nome);
+  item.append(simbolo, rotulo);
 
   item.addEventListener('click',evento=>{if(!evento.target.closest('a'))mostrarDetalhe(item,medalha);});
   item.addEventListener('keydown',evento=>{if(evento.key==='Enter'||evento.key===' '){evento.preventDefault();mostrarDetalhe(item,medalha);}});
@@ -92,6 +88,7 @@ function destacarConquista(perfil){
   const medalha=(perfil.medalhas||[]).find(m=>m.id===tipo&&m.desbloqueada&&m.tier>=Number(patamar));
   if(tipo==='nivel'?Number(patamar)>perfil.nivel:!medalha)return;
   const alvo=area.querySelector(`[data-conquista="${tipo}"]`);if(!alvo)return;
+  const colecao=alvo.closest('details');if(colecao)colecao.open=true;
   alvo.scrollIntoView({block:'center',behavior:'instant'});alvo.classList.add('conquista-destacada');
   temporizadorDestaque=setTimeout(()=>alvo.classList.remove('conquista-destacada'),7000);
   requestAnimationFrame(()=>mostrarDetalhe(alvo,medalha,{breve:true,nivel:perfil.nivel}));
@@ -261,11 +258,37 @@ async function carregar() {
 
     identidade.append(superior, nome, handle, bio);
 
-    const medalhas = elemento('div', 'perfil-comunidade__medalhas');
-    for (const medalha of (perfil.medalhas || []).filter(m => m.desbloqueada)) {
-      medalhas.append(criarMedalha(medalha));
+    const progresso=perfil.progresso_nivel;
+    if(progresso){
+      const jornada=elemento('div','perfil-comunidade__jornada');
+      jornada.append(elemento('b','',en?'Your journey':'Sua jornada'));
+      jornada.append(elemento('span','',en?`${progresso.pontos || 0} points · ${progresso.faltam || 0} to the next level`:`${progresso.pontos || 0} pontos · faltam ${progresso.faltam || 0} para o próximo nível`));
+      const barra=elemento('progress');barra.max=100;barra.value=Math.max(0,Math.min(100,Number(progresso.percentual)||0));barra.setAttribute('aria-label',en?'Progress to the next level':'Progresso para o próximo nível');
+      jornada.append(barra);identidade.append(jornada);
     }
-    if (medalhas.childElementCount) identidade.append(medalhas);
+
+    const desbloqueadas = (perfil.medalhas || []).filter(m => m.desbloqueada)
+      .sort((a, b) => (Number(b.tier) - Number(a.tier)) || (Number(b.valor) - Number(a.valor)));
+    if (desbloqueadas.length) {
+      const conquistas = elemento('section', 'perfil-comunidade__conquistas');
+      const topoConquistas = elemento('div', 'perfil-comunidade__conquistas-topo');
+      topoConquistas.append(elemento('h3', '', en ? 'Featured achievements' : 'Conquistas em destaque'));
+      const medalhas = elemento('div', 'perfil-comunidade__medalhas');
+      for (const medalha of desbloqueadas.slice(0, 3)) medalhas.append(criarMedalha(medalha));
+      const resumo = elemento('p', 'perfil-comunidade__conquistas-resumo', desbloqueadas.length > 3
+        ? (en ? `+${desbloqueadas.length - 3} in your collection` : `+${desbloqueadas.length - 3} na sua coleção`)
+        : (en ? 'Open one to see the details.' : 'Abra uma para ver os detalhes.'));
+      conquistas.append(topoConquistas, medalhas, resumo);
+      const outras=(perfil.medalhas||[]).filter(m=>!desbloqueadas.slice(0,3).includes(m));
+      if(outras.length){
+        const colecao=elemento('details','perfil-comunidade__colecao');
+        colecao.append(elemento('summary','',en?'View full collection':'Ver coleção completa'));
+        const grade=elemento('div','perfil-comunidade__medalhas perfil-comunidade__medalhas--colecao');
+        for(const medalha of outras)grade.append(criarMedalha(medalha));
+        colecao.append(grade);conquistas.append(colecao);
+      }
+      identidade.append(conquistas);
+    }
 
     const meta = elemento('div', 'perfil-comunidade__meta');
     const chipNivel = elemento('a', 'perfil-comunidade__chip', (en ? 'Level ' : 'Nível ') + (perfil.nivel || 1));
