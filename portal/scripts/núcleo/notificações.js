@@ -13,6 +13,8 @@
 import { t, idioma, raizDoSite } from './idioma.js';
 import { isolarBloco } from './isolar-bloco.js';
 import { tocarSom } from './sons.js';
+import { criarIconeMedalha } from './emblemas.js';
+import { criarIconeNivel } from './nível.js';
 
 const CHAVE_DAS_LIDAS = 'notificacoes-lidas-v1';
 const MÁXIMO_DE_LIDAS = 300;
@@ -129,6 +131,11 @@ function desenhar(botão, contador, painel, lista, vazio, marcarTodas) {
     const href = linkSeguro(item.link);
     const corpo = document.createElement(href ? 'a' : 'div');
     corpo.className = 'notificações__item';
+    if(item.conquista){
+      corpo.classList.add('notificações__item--conquista');
+      const selo=document.createElement('span');selo.className='notificações__insignia';selo.setAttribute('aria-hidden','true');
+      selo.append(item.conquista.tipo==='nivel'?criarIconeNivel(item.conquista.nivel):criarIconeMedalha(item.conquista.medalha));corpo.append(selo);
+    }
     if (href) corpo.href = href;
     if (!éLida(item, lidas)) corpo.dataset.nova = 'sim';
     const título = document.createElement('b');

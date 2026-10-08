@@ -11,7 +11,19 @@
  * `isolarBloco`, e só o que é obrigatório para a página existir é importado de forma estática.
  */
 import { avisar } from './interface.js';
-import { t } from './idioma.js';
+
+// O limite de falhas não depende do carregamento dos dicionários: se um deles falhar,
+// a página ainda precisa conseguir apresentar a tentativa novamente.
+const textos = {
+  'bloco.aindaNãoDeu': ['Ainda não foi possível carregar.', 'Still unable to load.'],
+  'bloco.falhou': ['Não foi possível carregar esta parte.', 'Unable to load this section.'],
+  'bloco.recarregarAjuda': ['Tente novamente em instantes.', 'Please try again shortly.'],
+  'bloco.restoFunciona': ['O restante da página continua disponível.', 'The rest of the page remains available.'],
+  'bloco.tentarDeNovo': ['Tentar novamente', 'Try again'],
+  'bloco.recarregar': ['Recarregar página', 'Reload page'],
+  'bloco.algoDeuErrado': ['Uma função não respondeu. Você pode tentar novamente.', 'A feature did not respond. You can try again.'],
+};
+const t = chave => textos[chave]?.[document.documentElement.lang === 'en' ? 1 : 0] || chave;
 
 const DESENHO_CLARO = new URL('../../recursos/ilustrações/erro-do-servidor.svg', import.meta.url).href;
 const DESENHO_ESCURO = new URL('../../recursos/ilustrações/erro-do-servidor.escuro.svg', import.meta.url).href;
@@ -23,7 +35,9 @@ const DESENHO_ESCURO = new URL('../../recursos/ilustrações/erro-do-servidor.es
  * @param {number} [tentativa] número da tentativa, começando em 1
  */
 export function carregarBloco(endereço, tentativa = 1) {
-  return import(tentativa > 1 ? `${endereço}?tentativa=${tentativa}` : endereço);
+  const url = new URL(endereço, import.meta.url);
+  if (tentativa > 1) url.searchParams.set('tentativa', String(tentativa));
+  return import(url.href);
 }
 
 function criar(tag, atributos = {}, texto = '') {
@@ -40,7 +54,7 @@ function criar(tag, atributos = {}, texto = '') {
  * @param {() => void} tentarDeNovo
  * @param {number} falhas quantas vezes já falhou
  */
-function mostrarFalha(alvo, nome, tentarDeNovo, falhas) {
+function mostrarFalha(alvo, nome, tentarDeNovo, falhas, { preservar, discreto }) {
   const imagem = criar('img', { src: DESENHO_CLARO, alt: '', width: '160', height: '120', class: 'só-claro bloco-falhou__desenho' });
   const imagemEscura = criar('img', { src: DESENHO_ESCURO, alt: '', width: '160', height: '120', class: 'só-escuro bloco-falhou__desenho' });
   const título = criar('p', { class: 'bloco-falhou__título' }, falhas > 1 ? t('bloco.aindaNãoDeu') : t('bloco.falhou'));
@@ -57,14 +71,16 @@ function mostrarFalha(alvo, nome, tentarDeNovo, falhas) {
   const conteúdo = criar('div');
   conteúdo.append(título, texto, ações);
   const caixa = criar('div', { class: 'bloco-falhou', role: 'alert', 'data-bloco': nome });
-  caixa.append(imagem, imagemEscura, conteúdo);
+  if (!discreto) caixa.append(imagem, imagemEscura);
+  caixa.append(conteúdo);
+  if (discreto) caixa.classList.add('bloco-falhou--discreto');
   // Esconde o que estava no alvo (em vez de apagar) para poder restaurar se a nova tentativa der certo.
-  for (const filho of alvo.children) {
+  for (const filho of preservar ? [] : alvo.children) {
     if (filho.hidden) continue;
     filho.hidden = true;
     filho.setAttribute('data-escondido-por-falha', 'sim');
   }
-  alvo.append(caixa);
+  alvo.prepend(caixa);
 }
 
 function restaurar(alvo) {
@@ -84,21 +100,31 @@ function restaurar(alvo) {
  *   a falha só vai para o console (útil para comportamentos sem lugar próprio na tela).
  * @returns {Promise<boolean>} verdadeiro se montou
  */
-export async function isolarBloco(nome, montar, { alvo = null } = {}) {
+export async function isolarBloco(nome, montar, { alvo = null, preservar = false, discreto = false } = {}) {
   let tentativa = 0;
   let falhas = 0;
+  let executando = false;
 
   async function rodar() {
+    if (executando) return false;
+    executando = true;
     tentativa += 1;
     if (alvo) restaurar(alvo);
+    alvo?.setAttribute('aria-busy', 'true');
+    if (alvo) alvo.dataset.estadoBloco = 'carregando';
     try {
       await montar(tentativa);
+      if (alvo) alvo.dataset.estadoBloco = 'pronto';
       return true;
     } catch (erro) {
       falhas += 1;
       console.error(`[bloco ${nome}]`, erro);
-      if (alvo) mostrarFalha(alvo, nome, rodar, falhas);
+      if (alvo) alvo.dataset.estadoBloco = 'erro';
+      if (alvo) mostrarFalha(alvo, nome, rodar, falhas, { preservar, discreto });
       return false;
+    } finally {
+      executando = false;
+      alvo?.removeAttribute('aria-busy');
     }
   }
   return rodar();

@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 import { categorias } from '../dados/categorias.js';
 import { ferramentasProntas } from '../dados/catálogo.js';
 import { íconeVivo, arteViva } from '../scripts/núcleo/ícone-animado.js';
-import { escolherAtivas, fonteDaImagem } from '../scripts/núcleo/animação-viva.js';
+import { escolherAtivas, fonteDaImagem, precisaRodizio } from '../scripts/núcleo/animação-viva.js';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ler = (...partes) => readFile(join(RAIZ, ...partes), 'utf8');
@@ -101,6 +101,17 @@ test('escolherAtivas ativa todas quando cabem', () => {
   const lista = Array.from({ length: 4 }, () => imagem('ícone'));
   assert.equal(escolherAtivas(lista, 6, 3).size, 4);
   assert.equal(escolherAtivas([], 6, 0).size, 0);
+});
+
+test('rodízio considera a vaga usada pela arte prioritária', () => {
+  const lista = [imagem('topo'), ...Array.from({ length: 6 }, () => imagem('ícone'))];
+  assert.equal(precisaRodizio(lista, 6), true);
+  assert.equal(precisaRodizio(lista.slice(0, 6), 6), false);
+  const vistas = new Set();
+  for (let rodada = 0; rodada < 3; rodada++) {
+    for (const i of escolherAtivas(lista, 6, rodada)) vistas.add(i);
+  }
+  assert.equal(vistas.size, 7);
 });
 
 test('fonteDaImagem entrega só a variante do tema, ou o arquivo único', () => {

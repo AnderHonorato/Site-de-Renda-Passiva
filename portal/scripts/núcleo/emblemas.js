@@ -1,6 +1,15 @@
 const NS='http://www.w3.org/2000/svg';
 const desenhos={explorador:'M24 16 32 36 40 16 32 21Z M24 48 32 28 40 48 32 43Z',pratica:'M36 14 22 35h10l-4 15 16-24H33Z',conversa:'M18 20h28v19H32l-10 8v-8h-4Z',colecao:'M32 15 37 26 49 27 40 35 43 47 32 41 21 47 24 35 15 27 27 26Z',projetos:'M19 22h26v24H19Z M24 22v-6h16v6 M19 30h26',conexoes:'M21 26a6 6 0 1 0 0-12 6 6 0 0 0 0 12 M43 26a6 6 0 1 0 0-12 6 6 0 0 0 0 12 M12 44v-7c0-10 18-10 18 0v7 M34 44v-7c0-10 18-10 18 0v7',veterano:'M32 13 45 21v15c0 9-13 16-13 16S19 45 19 36V21Z M25 31l5 5 10-11'};
 let contador=0;
+const contornos={
+  explorador:'M32 3 52 12 61 32 52 52 32 61 12 52 3 32 12 12Z',
+  pratica:'M19 5h26l15 17-5 27-23 13L9 49 4 22Z',
+  conversa:'M14 6h36l10 12v27L44 60H20L4 45V18Z',
+  colecao:'M32 2 40 10 52 8 55 20 63 28 56 39 56 51 43 54 32 64 21 54 8 51 8 39 1 28 9 20 12 8 24 10Z',
+  projetos:'M13 5h38l9 11v33L32 63 4 49V16Z',
+  conexoes:'M32 2C48 2 61 16 61 32S48 62 32 62 3 48 3 32 16 2 32 2Z',
+  veterano:'M32 3 58 13v24c0 15-26 26-26 26S6 52 6 37V13Z',
+};
 export function criarIconeMedalha(medalha,{doc=document}={}){
   const svg=doc.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 64 72');svg.setAttribute('class','emblema');svg.setAttribute('role','img');svg.setAttribute('aria-label',`${medalha.nome||'Medalha'} · ${medalha.patamar||''}`);
   const id=`metal-emblema-${++contador}`;
@@ -10,7 +19,8 @@ export function criarIconeMedalha(medalha,{doc=document}={}){
   const cores=paletas[Math.max(0,Math.min(7,Number(medalha.tier)||0))];
   for(const [indice,offset]of [0,.32,.65,1].entries())gradiente.append(el('stop',{offset,'stop-color':cores[indice]}));defs.append(gradiente);svg.append(defs);
   svg.append(el('path',{d:'M19 47 14 68l12-5 6 7 5-24 M35 47l3 23 8-8 12 5-8-24',fill:'currentColor',opacity:.32}));
-  svg.append(el('path',{d:'M32 3 53 15l7 22-14 21H18L4 37l7-22Z',fill:`url(#${id})`,stroke:'currentColor','stroke-width':1.2}));
+  svg.append(el('path',{d:contornos[medalha.id]||contornos.colecao,fill:`url(#${id})`,stroke:'currentColor','stroke-width':1.2}));
+  svg.dataset.familia=medalha.id||'colecao';
   svg.append(el('path',{d:'M32 3 53 15 50 19 32 8 14 19 11 15Z',fill:'#fff',opacity:.5}));
   svg.append(el('circle',{cx:32,cy:31,r:22,fill:'var(--superfície, var(--fundo))',stroke:'currentColor','stroke-width':1.5}));
   svg.append(el('circle',{cx:32,cy:31,r:19,fill:'none',stroke:'currentColor','stroke-width':.8,'stroke-dasharray':'1 3',opacity:.6}));

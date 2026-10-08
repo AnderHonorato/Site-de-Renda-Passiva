@@ -219,7 +219,8 @@ test('conta vira modal central amplo e alterações usam barra flutuante', { ski
   assert.ok(caixa.x >= 0 && caixa.x + caixa.width <= 1200);
   assert.ok(caixa.height < 800);
 
-  assert.equal(await página.locator('.conta__acoes-rapidas .conta__acao').count(), 6);
+  assert.equal(await página.locator('.conta__acoes-rapidas .conta__acao').count(), 0);
+  assert.equal(await página.locator('#conta .medalha,#conta .ícone-nível').count(),0);
   assert.equal(await página.locator('#conta-salvar').isVisible(), false);
 
   const nome = página.locator('#form-perfil [name="nome"]');
@@ -231,9 +232,11 @@ test('conta vira modal central amplo e alterações usam barra flutuante', { ski
   assert.equal(await nome.inputValue(), 'Ander Teste');
   assert.equal(await página.locator('#conta-salvar').isVisible(), false);
 
+  assert.equal(await página.locator('[data-conta-aba="aparencia"]').count(),0);
+  await página.goto(BASE+'/conta/perfil.html');await página.waitForSelector('#conta-conteudo:not([hidden])');
   await página.click('[data-conta-aba="aparencia"]');
   assert.equal(await página.locator('#opcoes-banner .conta__personalizacao[disabled]').count(), 1);
-  assert.equal(await página.locator('#conta-medalhas .medalha').count(), 2);
+  assert.equal(await página.locator('#conta-medalhas .medalha').count(), 0);
 
   await contexto.close();
 });
@@ -242,7 +245,7 @@ test('perfil mantém tema claro, preserva dados no erro e salva em uma requisiç
   const {contexto,página}=await contextoComApi();let falhar=true,gravacoes=[];
   await contexto.addInitScript(()=>localStorage.setItem('portal.tema','"claro"'));
   await contexto.route('**/api/perfil',rota=>{const entrada=rota.request().postDataJSON();gravacoes.push(entrada);return rota.fulfill({status:falhar?503:200,contentType:'application/json',body:JSON.stringify(falhar?{erro:'indisponivel'}:{perfil:{...perfil,...entrada},usuario:{...perfil,tema:entrada.tema,idioma:entrada.idioma}})});});
-  await página.goto(BASE+'/conta/');await página.waitForSelector('#form-perfil [name="nome"]');
+  await página.goto(BASE+'/conta/perfil.html');await página.waitForSelector('#form-perfil [name="nome"]');
   await página.locator('#form-perfil [name="nome"]').fill('Nome preservado');
   await página.locator('#form-perfil [name="bio"]').fill('Todas as alterações continuam aqui');
   await página.click('#salvar-alteracoes');await página.waitForFunction(()=>document.querySelector('.conta__estado')?.textContent.includes('continuam aqui'));
@@ -253,17 +256,48 @@ test('perfil mantém tema claro, preserva dados no erro e salva em uma requisiç
 });
 
 test('trabalhos, favoritos e suporte deslizam dentro da conta sem trocar página', {skip:pular},async()=>{
-  const {contexto,página}=await contextoComApi();await página.goto(BASE+'/conta/');await página.waitForSelector('#conta-conteudo:not([hidden])');
+  const {contexto,página}=await contextoComApi();await página.goto(BASE+'/conta/perfil.html');await página.waitForSelector('#conta-conteudo:not([hidden])');
   await página.locator('#form-perfil [name="bio"]').fill('Rascunho continua nas abas');
   for(const nome of ['trabalhos','favoritos','mensagens','planos']){
     await página.click(`.conta__acoes-rapidas [data-conta-aba="${nome}"]`);await página.waitForSelector(`[data-conta-painel="${nome}"]:not([hidden])`);
-    assert.equal(new URL(página.url()).pathname,'/conta/');assert.equal(await página.locator('.conta--modal').count(),1);assert.equal(await página.locator('[data-conta-painel]:not([hidden])').count(),1);
+    assert.equal(new URL(página.url()).pathname,'/conta/perfil.html');assert.equal(await página.locator('.conta--modal').count(),1);assert.equal(await página.locator('[data-conta-painel]:not([hidden])').count(),1);
   }
   await página.waitForSelector('#conta-planos article');assert.equal(await página.locator('#conta-planos article').count(),3);
   await página.click('[data-conta-aba="aparencia"]');await página.waitForSelector('[data-conta-painel="aparencia"]:not([hidden])');await página.click('#previa-conquista');await página.waitForSelector('.conquista[open]');assert.match(await página.locator('#conquista-titulo').textContent(),/6/);await página.locator('.conquista button').click();
   await página.click('.conta__acoes-rapidas [data-conta-aba="perfil"]');await página.waitForSelector('[data-conta-painel="perfil"]:not([hidden])');assert.equal(await página.locator('#form-perfil [name="bio"]').inputValue(),'Rascunho continua nas abas');
   await página.click('[data-conta-aba="preferencias"]');await página.waitForSelector('[data-conta-painel="preferencias"]:not([hidden])');await página.locator('#sons-ativos').uncheck();assert.equal(await página.evaluate(()=>JSON.parse(localStorage.getItem('portal.sons'))),false);
   await contexto.close();
+});
+
+test('notificação da conquista aponta para a insígnia e detalhes param o brilho', {skip:pular},async()=>{
+  const {contexto,página}=await contextoComApi({viewport:{width:390,height:844}});
+  await contexto.route('**/api/conquistas',rota=>rota.fulfill({contentType:'application/json',body:JSON.stringify({conquistas:[],notificacoes:[{tipo:'medalha',chave:'explorador:2',medalha:perfil.medalhas[0],data:'2026-10-07'}]})}));
+  try {
+    await página.goto(BASE+'/');await página.waitForSelector('.notificações__item--conquista',{state:'attached'});
+    assert.equal(await página.locator('.topo__interior > :first-child').getAttribute('id'),'busca-topo');
+    await página.locator('.conta-topo--usuario .conta-topo__gatilho').hover();await página.waitForSelector('.conta-topo__painel:not([hidden])');
+    assert.equal(await página.locator('.conta-topo__painel #alternar-tema').count(),1);assert.equal(await página.locator('.conta-topo__painel .idioma--topo').isVisible(),true);
+    await página.click('#abrir-notificações');await página.locator('.notificações__item--conquista').click();await página.waitForSelector('.insignia-detalhe:popover-open');
+    assert.equal(new URL(página.url()).searchParams.get('conquista'),'explorador:2');
+    const alvo=página.locator('[data-conquista="explorador"]');assert.equal(await alvo.evaluate(el=>el.classList.contains('conquista-destacada')),true);
+    const caixa=await página.locator('.insignia-detalhe').boundingBox();assert.ok(caixa.x>=0&&caixa.x+caixa.width<=390&&caixa.y>=0&&caixa.y+caixa.height<=844);
+    await página.screenshot({path:join(RAIZ,'.execucao/insignia-notificacao-2026-10-07.png')});
+    await página.locator('.insignia-detalhe__fechar').click();await alvo.click();await página.waitForSelector('.insignia-detalhe:popover-open');
+    assert.equal(await alvo.evaluate(el=>el.classList.contains('conquista-destacada')),false);
+    assert.match(await página.locator('.insignia-detalhe').textContent(),/Use ferramentas/);
+    const caminhos=await página.locator('.perfil-comunidade__medalhas .emblema > path:nth-of-type(2)').evaluateAll(nos=>nos.map(no=>no.getAttribute('d')));assert.equal(new Set(caminhos).size,2);
+  } finally {await contexto.close();}
+});
+
+test('cadastro preserva biografia, sociais e recomendações ao salvar nome', {skip:pular},async()=>{
+  const {contexto,página}=await contextoComApi({perfilAlterado:{ferramentas_recomendadas:['porcentagem']}});let salvo;
+  await contexto.route('**/api/perfil',rota=>{salvo=rota.request().postDataJSON();return rota.fulfill({contentType:'application/json',body:JSON.stringify({perfil,usuario:perfil})});});
+  try {
+    await página.goto(BASE+'/conta/');await página.waitForSelector('#conta-resumo-slot strong');
+    assert.equal(await página.locator('[name="bio"],.conta__sociais,.conta__acoes-rapidas,#opcoes-banner').count(),0);
+    await página.locator('#form-perfil [name="nome"]').fill('Nome cadastral');await página.click('#salvar-alteracoes');await página.waitForFunction(()=>document.querySelector('.conta__estado')?.textContent==='Alterações salvas.');
+    assert.equal(salvo.bio,perfil.bio);assert.deepEqual(salvo.sociais,perfil.sociais);assert.deepEqual(salvo.ferramentas_recomendadas,['porcentagem']);
+  } finally {await contexto.close();}
 });
 
 test('recorte de uma foto retangular gera avatar quadrado e salvo atomicamente', {skip:pular},async()=>{
@@ -278,6 +312,25 @@ test('recorte de uma foto retangular gera avatar quadrado e salvo atomicamente',
   await contexto.close();
 });
 
+test('conquista aguarda recorte de foto e Escape mantém o chat aberto', {skip:pular},async()=>{
+  const {contexto,página}=await contextoComApi({chat:true});
+  try {
+    await página.goto(BASE+'/conta/');await página.waitForSelector('#conta-conteudo:not([hidden])');
+    await página.click('#chat-bolha');await página.waitForSelector('.chat__mensagem');
+    const imagem=await página.evaluate(()=>{const c=document.createElement('canvas');c.width=640;c.height=320;c.getContext('2d').fillRect(0,0,640,320);return c.toDataURL('image/png').split(',')[1];});
+    await página.locator('#foto-perfil').setInputFiles({name:'teste.png',mimeType:'image/png',buffer:Buffer.from(imagem,'base64')});
+    await página.waitForSelector('.avatar-recorte[open]');
+    await página.evaluate(async()=>{const evolução=await import('/scripts/núcleo/evolução.js');evolução.mostrarNovoNivel(5,6);});
+    assert.equal(await página.locator('dialog[open]').count(),1);
+    assert.equal(await página.locator('.conquista[open]').count(),0);
+    await página.keyboard.press('Escape');await página.waitForSelector('.conquista[open]');
+    assert.equal(await página.locator('dialog[open]').count(),1);
+    assert.equal(await página.locator('#chat-painel').isVisible(),true);
+    await página.keyboard.press('Escape');await página.waitForSelector('.conquista',{state:'detached'});
+    assert.equal(await página.locator('#chat-painel').isVisible(),true);
+  } finally {await contexto.close();}
+});
+
 test('conquistas ficam em fila, têm feixes de luz, cabem no celular e não repetem', {skip:pular},async()=>{
   const {contexto,página}=await contextoComApi({viewport:{width:390,height:844}});let recebeu=new Set();
   const conquistas=[{tipo:'nivel',chave:'nivel:15',nivel:15},{tipo:'medalha',chave:'explorador:7',medalha:{...perfil.medalhas[0],tier:7,patamar:'Mítica'}}];
@@ -287,6 +340,7 @@ test('conquistas ficam em fila, têm feixes de luz, cabem no celular e não repe
   assert.equal(await página.locator('.conquista[open]').count(),1);assert.match(await página.locator('#conquista-titulo').textContent(),/15/);
   const caixa=await página.locator('.conquista').boundingBox();assert.ok(caixa.x>=0&&caixa.y>=0&&caixa.x+caixa.width<=390&&caixa.y+caixa.height<=844);
   assert.equal(await página.locator('.conquista__luz').count(),1);
+  assert.equal(await página.locator('.conquista').evaluate(el=>getComputedStyle(el).overflow),'clip');
   await página.screenshot({path:join(RAIZ,'.execucao/conquista-2026-10-07.png')});
   await página.locator('.conquista button').click();await página.waitForFunction(()=>document.querySelector('#conquista-titulo')?.textContent==='Explorador');assert.equal(await página.locator('.conquista .emblema').count(),1);
   await página.locator('.conquista button').click();await página.reload();await página.waitForSelector('#conta-conteudo:not([hidden])');assert.equal(await página.locator('.conquista').count(),0);
@@ -343,6 +397,7 @@ test('chat mantém não lidas por conversa, responde como citação e Shift+Ente
   await mensagem.locator('.chat__autor').hover();
   await página.waitForSelector('.chat__mini-perfil:not([hidden])');
   assert.equal(await página.locator('.chat__mini-denunciar').count(), 1, 'denúncia fica no mini perfil do usuário');
+  assert.equal(await página.locator('.chat__mini-insignia .emblema').count(),2);
   await mensagem.hover();
   await mensagem.locator('.chat__responder').click();
   assert.equal(await página.locator('.chat__reply').isVisible(), true);
@@ -382,6 +437,12 @@ test('perfil público usa modal central, data de entrada, plano, medalhas, socia
   const { contexto, página } = await contextoComApi();
   await página.goto(BASE + '/perfil.html?usuario=ander_teste', { waitUntil: 'domcontentloaded' });
   await página.waitForSelector('.perfil-comunidade__hero');
+  // A entrada do modal é animada; mede a largura depois de ele atingir o quadro final.
+  await página.waitForFunction(() => {
+    const painel = document.querySelector('.conta.conta--modal .conta__painel');
+    const largura = painel?.getBoundingClientRect().width || 0;
+    return largura >= 760 && largura <= 1120;
+  });
 
   const modal = await página.locator('.conta.conta--modal .conta__painel').boundingBox();
   assert.ok(modal.width >= 760 && modal.width <= 1120);

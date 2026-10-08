@@ -2,10 +2,14 @@ import { api } from './api.js';
 
 let pedido;
 export function obterSessao({ renovar = false } = {}) {
-  if (!pedido || renovar) pedido = api('/api/autenticacao/sessao').catch((erro) => {
-    pedido = undefined;
-    throw erro;
-  });
+  if (!pedido || renovar) {
+    const atual = api('/api/autenticacao/sessao').catch((erro) => {
+      // Uma resposta antiga que falhou não deve apagar uma renovação que já está em curso.
+      if (pedido === atual) pedido = undefined;
+      throw erro;
+    });
+    pedido = atual;
+  }
   return pedido;
 }
 

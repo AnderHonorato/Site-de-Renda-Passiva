@@ -1,0 +1,32 @@
+.aviso-prioritario{--aviso-cor:#fff7ed;--aviso-fundo:#452c24;--aviso-peso:600;position:relative;isolation:isolate;color:var(--aviso-cor);background:var(--aviso-fundo);border-block-end:1px solid color-mix(in srgb,var(--aviso-cor) 18%,transparent);overflow:clip;width:100%;}
+.aviso-prioritario[hidden]{display:none;}
+.aviso-prioritario__slide{position:relative;isolation:isolate;min-height:90px;}
+.aviso-prioritario__slide::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,var(--aviso-fundo),color-mix(in srgb,var(--aviso-fundo) 94%,transparent) 58%,color-mix(in srgb,var(--aviso-fundo) 82%,transparent));}
+.aviso-prioritario__slide::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.08;background:repeating-linear-gradient(125deg,transparent 0 46px,currentColor 47px 48px,transparent 49px 94px);}
+.aviso-prioritario__imagem{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:center;}
+.aviso-prioritario__corpo{position:relative;width:min(1200px,100%);margin-inline:auto;padding:18px 145px 18px 28px;display:flex;align-items:center;gap:24px;}
+.aviso-prioritario__texto{flex:1;min-width:0;overflow-wrap:anywhere;}
+.aviso-prioritario__rotulo{font-family:var(--fonte);font-size:10px;letter-spacing:.16em;font-weight:700;opacity:.8;display:block;margin-bottom:4px;}
+.aviso-prioritario h2{margin:0;font-family:var(--fonte);font-size:clamp(17px,2vw,24px);font-weight:var(--aviso-peso);line-height:1.25;color:inherit;}
+.aviso-prioritario[data-fonte="titulo"] h2{font-family:var(--fonte-título,var(--fonte));}
+.aviso-prioritario p{margin:5px 0 0;font-size:13px;line-height:1.5;color:inherit;white-space:pre-line;}
+.aviso-prioritario__link{flex-shrink:0;color:inherit!important;text-decoration:none!important;border:1px solid currentColor;border-radius:var(--raio-pílula,999px);padding:9px 16px;font:600 12px var(--fonte);transition:background .2s,transform .2s;}
+.aviso-prioritario__link:hover{background:color-mix(in srgb,var(--aviso-cor) 12%,transparent);transform:translateY(-1px);}
+.aviso-prioritario__controles{position:absolute;inset-inline-end:max(14px,calc((100% - 1200px)/2 + 14px));top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:3px;}
+.aviso-prioritario__controle{appearance:none;border:0;border-radius:50%;background:transparent;color:inherit;font-size:23px;min-width:28px;min-height:34px;padding:3px;cursor:pointer;}
+.aviso-prioritario__controle:hover{background:color-mix(in srgb,var(--aviso-cor) 13%,transparent);}
+.aviso-prioritario__contador{font:500 10px var(--fonte);white-space:nowrap;}
+.aviso-prioritario :is(button,a):focus-visible{outline:2px solid currentColor;outline-offset:3px;}
+.aviso-prioritario[data-alinhamento="centro"] .aviso-prioritario__texto{text-align:center;}
+.aviso-prioritario[data-animacao="deslizar"] .aviso-prioritario__slide{animation:aviso-deslizar .42s cubic-bezier(.2,.7,.3,1);}
+.aviso-prioritario[data-animacao="suave"] .aviso-prioritario__slide{animation:aviso-suave .42s ease;}
+.aviso-prioritario__esqueleto{height:88px;width:min(1200px,100%);margin:auto;position:relative;overflow:hidden;}
+.aviso-prioritario__esqueleto::before{content:"";position:absolute;left:28px;top:24px;width:min(48%,420px);height:14px;border-radius:7px;background:color-mix(in srgb,var(--aviso-cor) 14%,transparent);box-shadow:0 24px 0 color-mix(in srgb,var(--aviso-cor) 9%,transparent);}
+.aviso-prioritario__esqueleto::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--aviso-cor) 7%,transparent),transparent);animation:aviso-esqueleto 1.5s linear infinite;}
+.aviso-prioritario__falha{display:flex;gap:14px;align-items:center;justify-content:center;padding:10px 20px;flex-wrap:wrap;}
+.aviso-prioritario__falha p{margin:0;}.aviso-prioritario__falha button{font:600 12px var(--fonte);border:1px solid currentColor;border-radius:999px;padding:6px 14px;}
+@keyframes aviso-deslizar{from{opacity:0;transform:translateX(22px);}to{opacity:1;transform:translateX(0);}}
+@keyframes aviso-suave{from{opacity:0;}to{opacity:1;}}
+@keyframes aviso-esqueleto{to{transform:translateX(100%);}}
+@media(max-width:700px){.aviso-prioritario__corpo{padding:15px 20px 45px;gap:12px;flex-wrap:wrap;}.aviso-prioritario__texto{flex-basis:100%;}.aviso-prioritario__controles{top:auto;bottom:8px;transform:none;inset-inline-end:16px;}.aviso-prioritario__link{padding:7px 12px;}.aviso-prioritario p{font-size:12px;}.aviso-prioritario__rotulo{font-size:9px;}}
+@media(prefers-reduced-motion:reduce){.aviso-prioritario *,.aviso-prioritario *::after{animation:none!important;transition:none!important;}}

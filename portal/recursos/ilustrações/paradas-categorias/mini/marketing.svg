@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="115 0 300 200" role="img" aria-labelledby="t">
+  <title id="t">Um megafone com ondas sonoras e um gráfico subindo</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #f6e3da; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .onda { animation: ondula 2.2s ease-out infinite; }
+    .w2 { animation-delay: .4s; } .w3 { animation-delay: .8s; }
+    @keyframes ondula { 0% { transform: translateX(-8px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateX(14px); opacity: 0; } }
+    .mega { animation: sacode 2.2s ease-in-out infinite; transform-origin: 160px 110px; }
+    @keyframes sacode { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+    .linha { stroke-dasharray: 130; animation: sobe 4s ease-in-out infinite; }
+    @keyframes sobe { 0%, 10% { stroke-dashoffset: 130; } 55%, 90% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 130; } }
+    .seta { animation: some 4s ease-in-out infinite; }
+    @keyframes some { 0%, 50% { opacity: 0; } 60%, 90% { opacity: 1; } 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="182" rx="150" ry="9"/>
+  <g class="mega">
+    <path d="M118 88l66-34v100l-66-34z" fill="#d97757" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="96" y="82" width="28" height="42" rx="8" fill="#3d4451" stroke="#1a1a1a" stroke-width="3"/>
+    <path d="M138 134l10 30a8 8 0 0 0 8 6h6a6 6 0 0 0 6-8l-10-28" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="184" y="62" width="14" height="84" rx="7" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3"/>
+  </g>
+  <g fill="none" stroke="#d97757" stroke-width="5" stroke-linecap="round"><path class="onda" d="M214 82a30 30 0 0 1 0 44"/><path class="onda w2" d="M232 70a48 48 0 0 1 0 68"/><path class="onda w3" d="M250 58a66 66 0 0 1 0 92"/></g>
+  <rect x="290" y="44" width="144" height="116" rx="14" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+  <path class="linha" d="M306 138l34-30 26 16 48-52" fill="none" stroke="#3d4451" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="seta" d="M400 78h20v20" fill="none" stroke="#d97757" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<style>*{animation:none!important;transition:none!important}</style></svg>

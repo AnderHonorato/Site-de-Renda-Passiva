@@ -1,6 +1,7 @@
 import { montarPágina, escapar } from './modelo-de-página.mjs';
 import { site } from '../dados/site.js';
 import { ícone } from '../scripts/núcleo/ícones.js';
+import { gerarPainelBanners } from './painel-banners.mjs';
 
 const textos = {
   'pt-BR': {
@@ -18,6 +19,7 @@ const textos = {
     adminSuporte: ['Suporte', 'Responda às mensagens enviadas pelos usuários.'],
     novidades: ['Novidades', 'Edite a apresentação de novidades, sua ordem e as datas de publicação.'],
     publicidade: ['Publicidade', 'Configure os blocos de anúncios e confira as posições na prévia local.'],
+    banners: ['Avisos prioritários', 'Crie avisos abaixo do cabeçalho, com imagem, textos, links e carrossel.'],
   },
   en: {
     entrar: ['Sign in', 'Access your account to chat and save your preferences.', 'Email', 'Password', 'Sign in', 'Create account', 'Forgot password'],
@@ -34,6 +36,7 @@ const textos = {
     adminSuporte: ['Support', 'Reply to messages sent by users.'],
     novidades: ['News', 'Edit news, their order and publication dates.'],
     publicidade: ['Advertising', 'Configure ad units and inspect their positions in the local preview.'],
+    banners: ['Priority announcements', 'Create announcements below the header with images, text, links, and a carousel.'],
   },
 };
 
@@ -54,29 +57,32 @@ function quadro(titulo, descricao, interior, id) {
   </div></section>`;
 }
 
+
+/** Cadastro mantém seus dados e segurança; atividade e visual ficam na edição do perfil. */
+function separarCadastro(html,en){
+  return html
+    .replace(/<nav class="conta__acoes-rapidas"[\s\S]*?<\/nav>/,'')
+    .replace(/<button[^>]*data-conta-aba="(?:aparencia|amizades)"[^>]*>[\s\S]*?<\/button>/g,'')
+    .replace(/<section class="conta__aba" data-conta-painel="(?:aparencia|amizades|trabalhos|favoritos|mensagens|planos)"[^>]*>[\s\S]*?<\/section>/g,'')
+    .replace(/<div class="conta__subtitulo"><div><h2>(?:Ferramentas recomendadas|Recommended tools)<\/h2>[\s\S]*?<form id="form-recomendadas"[\s\S]*?<\/form>/,'')
+    .replace(/<label class="conta__campo conta__campo--inteiro">[\s\S]*?<\/label>/,'')
+    .replace(/<label class="conta__campo"><span>[^<]*<\/span><input id="local"[^>]*><\/label>/,'')
+    .replace(/<div class="conta__visibilidade">[\s\S]*?<\/div>/,'')
+    .replace(/<fieldset class="conta__sociais">[\s\S]*?<\/fieldset>/,'')
+    .replace(/<nav id="conta-admin"[\s\S]*?<\/nav>/,'')
+    .replace(/Gerencie seus dados, perfil e segurança\./,'Gerencie seus dados de cadastro e a segurança da conta.')
+    .replace(/Manage your data, profile, and security\./,'Manage your registration details and account security.')
+    .replace(/(<button[^>]*data-conta-aba="perfil"[^>]*>)[\s\S]*?(<\/button>)/,'$1'+(en?'Registration details':'Dados cadastrais')+'$2')
+    .replace(/[ \t]+(?=\r?\n)/g,'')
+    .replace(/\n[ \t]*\n[ \t]*\n/g,'\n\n');
+}
+
 export function paginasConta(ctx) {
   const t = textos[ctx.código] || textos['pt-BR'];
   const prefixo = ctx.idioma.pasta;
   const raiz = prefixo ? '../' : '';
   const en = ctx.código === 'en';
-  const paginas = [
-    ['entrar.html', 'entrar', quadro(t.entrar[0], t.entrar[1], `<form id="form-entrar" class="conta__form">
-      ${campo('email', t.entrar[2], 'email', 'autocomplete="username" required')}
-      ${campo('senha', t.entrar[3], 'password', 'autocomplete="current-password" required')}
-      <button class="botão botão--primário" type="submit">${escapar(t.entrar[4])}</button></form>
-      <div class="conta__links"><a href="criar-conta.html">${escapar(t.entrar[5])}</a><a href="recuperar-senha.html">${escapar(t.entrar[6])}</a></div>`, 'entrar')],
-    ['criar-conta.html', 'criar', quadro(t.criar[0], t.criar[1], `<form id="form-criar" class="conta__form">
-      ${campo('nome', t.criar[2], 'text', 'autocomplete="name" maxlength="80" required')}
-      ${campo('usuario', t.criar[3], 'text', 'autocomplete="username" minlength="3" maxlength="20" pattern="[a-z0-9_]{3,20}" required')}
-      <small id="usuario-disponibilidade" aria-live="polite"></small>
-      ${campo('email', t.criar[4], 'email', 'autocomplete="email" required')}
-      ${campo('senha', t.criar[5], 'password', 'autocomplete="new-password" minlength="12" maxlength="128" required')}
-      ${campo('idade', t.criar[6], 'number', 'min="13" max="120" inputmode="numeric" required')}
-      <label class="conta__aceite"><input name="aceitaTermos" type="checkbox" required><span>${escapar(t.criar[7])} <a href="termos.html">${en ? 'Terms' : 'Termos'}</a></span></label>
-      <button class="botão botão--primário" type="submit">${escapar(t.criar[8])}</button></form>`, 'criar')],
-    ['recuperar-senha.html', 'recuperar', quadro(t.recuperar[0], t.recuperar[1], `<form id="form-recuperar" class="conta__form">${campo('email', t.recuperar[2], 'email', 'autocomplete="email" required')}<button class="botão botão--primário" type="submit">${escapar(t.recuperar[3])}</button></form>`, 'recuperar')],
-    ['redefinir-senha.html', 'redefinir', quadro(t.redefinir[0], t.redefinir[1], `<form id="form-redefinir" class="conta__form">${campo('senha', t.redefinir[2], 'password', 'autocomplete="new-password" minlength="12" maxlength="128" required')}<button class="botão botão--primário" type="submit">${escapar(t.redefinir[3])}</button></form>`, 'redefinir')],
-    ['conta/index.html', 'conta', quadro(t.conta[0], t.conta[1], `<div id="conta-conteudo" hidden>
+  const montarConta = () => quadro(t.conta[0], t.conta[1], `<div id="conta-conteudo" hidden>
       <nav class="conta__acoes-rapidas" aria-label="${en ? 'Quick actions' : 'Ações rápidas'}">
         <button class="conta__acao" type="button" data-conta-aba="perfil">${ícone('pessoas')}<span>${en ? 'Profile' : 'Perfil'}</span></button>
         <button class="conta__acao" type="button" data-conta-aba="trabalhos">${ícone('pasta')}<span>${en ? 'Works' : 'Trabalhos'}</span></button>
@@ -143,7 +149,7 @@ export function paginasConta(ctx) {
         <button type="button" id="plano-visual" class="conta__plano" data-conta-aba="planos"></button>
         <div id="progresso-nivel" class="conta__progresso"></div>
         <button type="button" id="previa-conquista" class="botão botão--linha">${ícone('estrela')}${en ? 'Replay level celebration' : 'Ver animação do nível'}</button>
-        <div id="conta-medalhas" class="conta__medalhas"></div>
+
         <a class="conta__como-evoluir" href="../niveis.html">${ícone('ajuda')}${en ? 'How levels and medals work' : 'Como funcionam níveis e medalhas'}</a>
 
         <div class="conta__subtitulo"><div><h2>${en ? 'Profile banner' : 'Banner do perfil'}</h2><p class="suave pequeno">${en ? 'One style unlocks at each milestone.' : 'Novos estilos são desbloqueados conforme o nível.'}</p></div></div>
@@ -193,13 +199,32 @@ export function paginasConta(ctx) {
         <form id="form-suporte" class="conta__form">${campo('assunto', en ? 'Subject' : 'Assunto', 'text', 'minlength="3" maxlength="100" required')}<label class="conta__campo"><span>${en ? 'Message' : 'Mensagem'}</span><textarea name="texto" minlength="10" maxlength="2000" rows="3" required></textarea></label><button class="botão" type="submit">${en ? 'Send message' : 'Enviar mensagem'}</button></form><div id="lista-suporte"></div>
       </section>
 
-      <nav id="conta-admin" class="conta__admin" hidden><a class="conta__acao" href="../admin/chat/">${ícone('escudo')}${en ? 'Chat moderation' : 'Moderação'}</a><a class="conta__acao" href="../admin/usuarios/">${ícone('pessoas')}${en ? 'Users' : 'Usuários'}</a><a class="conta__acao" href="../admin/suporte/">${ícone('balão')}${en ? 'Support' : 'Suporte'}</a><a class="conta__acao" href="../admin/publicidade/">${ícone('balão')}${en ? 'Advertising' : 'Publicidade'}</a><a class="conta__acao" href="../admin/novidades/">${ícone('balão')}${en ? 'News' : 'Novidades'}</a></nav>
+      <nav id="conta-admin" class="conta__admin" hidden><a class="conta__acao" href="../admin/chat/">${ícone('escudo')}${en ? 'Chat moderation' : 'Moderação'}</a><a class="conta__acao" href="../admin/usuarios/">${ícone('pessoas')}${en ? 'Users' : 'Usuários'}</a><a class="conta__acao" href="../admin/suporte/">${ícone('balão')}${en ? 'Support' : 'Suporte'}</a><a class="conta__acao" href="../admin/publicidade/">${ícone('balão')}${en ? 'Advertising' : 'Publicidade'}</a><a class="conta__acao" href="../admin/banners/">${ícone('megafone')}${en ? 'Announcements' : 'Avisos'}</a><a class="conta__acao" href="../admin/novidades/">${ícone('balão')}${en ? 'News' : 'Novidades'}</a></nav>
 
       <div id="conta-salvar" class="conta-salvar" hidden>
         <span>${en ? 'You have unsaved changes' : 'Você alterou algumas coisas'}</span>
         <div><button id="cancelar-alteracoes" class="botão botão--linha" type="button">${en ? 'Cancel changes' : 'Cancelar alterações'}</button><button id="salvar-alteracoes" class="botão botão--primário" type="button">${en ? 'Save changes' : 'Salvar alterações'}</button></div>
       </div>
-    </div>`, 'conta')],
+    </div>`, 'conta');
+  const paginas = [
+    ['entrar.html', 'entrar', quadro(t.entrar[0], t.entrar[1], `<form id="form-entrar" class="conta__form">
+      ${campo('email', t.entrar[2], 'email', 'autocomplete="username" required')}
+      ${campo('senha', t.entrar[3], 'password', 'autocomplete="current-password" required')}
+      <button class="botão botão--primário" type="submit">${escapar(t.entrar[4])}</button></form>
+      <div class="conta__links"><a href="criar-conta.html">${escapar(t.entrar[5])}</a><a href="recuperar-senha.html">${escapar(t.entrar[6])}</a></div>`, 'entrar')],
+    ['criar-conta.html', 'criar', quadro(t.criar[0], t.criar[1], `<form id="form-criar" class="conta__form">
+      ${campo('nome', t.criar[2], 'text', 'autocomplete="name" maxlength="80" required')}
+      ${campo('usuario', t.criar[3], 'text', 'autocomplete="username" minlength="3" maxlength="20" pattern="[a-z0-9_]{3,20}" required')}
+      <small id="usuario-disponibilidade" aria-live="polite"></small>
+      ${campo('email', t.criar[4], 'email', 'autocomplete="email" required')}
+      ${campo('senha', t.criar[5], 'password', 'autocomplete="new-password" minlength="12" maxlength="128" required')}
+      ${campo('idade', t.criar[6], 'number', 'min="13" max="120" inputmode="numeric" required')}
+      <label class="conta__aceite"><input name="aceitaTermos" type="checkbox" required><span>${escapar(t.criar[7])} <a href="termos.html">${en ? 'Terms' : 'Termos'}</a></span></label>
+      <button class="botão botão--primário" type="submit">${escapar(t.criar[8])}</button></form>`, 'criar')],
+    ['recuperar-senha.html', 'recuperar', quadro(t.recuperar[0], t.recuperar[1], `<form id="form-recuperar" class="conta__form">${campo('email', t.recuperar[2], 'email', 'autocomplete="email" required')}<button class="botão botão--primário" type="submit">${escapar(t.recuperar[3])}</button></form>`, 'recuperar')],
+    ['redefinir-senha.html', 'redefinir', quadro(t.redefinir[0], t.redefinir[1], `<form id="form-redefinir" class="conta__form">${campo('senha', t.redefinir[2], 'password', 'autocomplete="new-password" minlength="12" maxlength="128" required')}<button class="botão botão--primário" type="submit">${escapar(t.redefinir[3])}</button></form>`, 'redefinir')],
+    ['conta/index.html','conta',montarConta()],
+    ['conta/perfil.html','conta',montarConta().replace(/Minha conta/g, 'Editar perfil').replace(/My account/g, 'Edit profile')],
     ['niveis.html', 'niveis', quadro(t.niveis[0], t.niveis[1], `<div id="niveis-progresso"></div>
       <section class="niveis__bloco"><h2>${en ? 'How the level grows' : 'Como o nível sobe'}</h2><p>${en ? 'Completed tool uses and useful community interactions add points. Repetitive activity is limited per day so spam does not become a shortcut.' : 'Usos concluídos de ferramentas e interações úteis na comunidade somam pontos. Atividade repetitiva tem limite diário para que spam não vire atalho.'}</p></section>
       <section class="niveis__bloco"><h2>${en ? 'Medals' : 'Medalhas'}</h2><div class="niveis__lista">
@@ -246,8 +271,10 @@ export function paginasConta(ctx) {
       <p class="suave pequeno">${en ? 'Paid accounts, account/profile pages, chat and study tools do not show ads. Ads only load after a privacy choice. Local preview is blocked in production.' : 'Contas pagas, páginas de conta/perfil, chat e ferramentas de estudo não exibem anúncios. Os blocos só carregam depois da escolha de privacidade. A demonstração local é bloqueada em produção.'}</p>
       <button type="submit" class="botão">${en ? 'Save settings' : 'Salvar configuração'}</button>
       </form><p id="publicidade-status" class="suave"></p><nav class="conta__links"><a href="../../ferramentas.html">${en ? 'Inspect catalog' : 'Conferir catálogo'}</a><a href="../../">${en ? 'Inspect home page' : 'Conferir início'}</a></nav>`,'publicidade')],
+    ['admin/banners/index.html','banners',quadro(t.banners[0],t.banners[1],gerarPainelBanners(en),'banners')],
   ];
-  return paginas.map(([arquivo, chave, conteúdo]) => {
+  return paginas.map(([arquivo, chave, conteúdoOriginal]) => {
+    const conteúdo = arquivo === 'conta/index.html' ? separarCadastro(conteúdoOriginal, en) : conteúdoOriginal;
     const profundidade = arquivo.split('/').length - 1;
     const base = '../'.repeat(profundidade);
     const raizSite = profundidade ? `${base}${raiz}` : raiz;
@@ -255,7 +282,8 @@ export function paginasConta(ctx) {
     const alternativas = en
       ? { en: atualNoIdioma, 'pt-BR': `${'../'.repeat(profundidade + 1)}${arquivo}` }
       : { 'pt-BR': atualNoIdioma, en: `${'../'.repeat(profundidade)}en/${arquivo}` };
-    return [`${prefixo}${arquivo}`, montarPágina({ctx, título: `${t[chave][0]} — ${site.nome}`, descrição: t[chave][1], base, raiz: raizSite, conteúdo,
+    const titulo=arquivo==='conta/perfil.html'?(en?'Edit profile':'Editar perfil'):t[chave][0];
+    return [`${prefixo}${arquivo}`, montarPágina({ctx, título: `${titulo} — ${site.nome}`, descrição: t[chave][1], base, raiz: raizSite, conteúdo,
       scripts: [`páginas/conta/${chave === 'adminSuporte' ? 'admin-suporte' : chave}.js`], estilos: ['conta.css'], semÍndice: true, alternativas})];
   });
 }

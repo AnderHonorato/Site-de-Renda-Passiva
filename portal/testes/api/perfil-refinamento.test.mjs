@@ -27,7 +27,10 @@ test('perfil: gravação atômica com preferências e foto; conquistas recebidas
     await pedir('/api/favoritos/porcentagem','PUT',{});
     let pendentes=(await pedir('/api/conquistas')).data.conquistas;assert.ok(pendentes.some(c=>c.chave==='nivel:15'));assert.ok(pendentes.some(c=>c.chave==='colecao:0'));
     for(const conquista of pendentes){assert.equal((await pedir('/api/conquistas/receber','POST',{chave:conquista.chave})).data.recebida,true);assert.equal((await pedir('/api/conquistas/receber','POST',{chave:conquista.chave})).data.recebida,false);}
-    assert.equal((await pedir('/api/conquistas')).data.conquistas.length,0);
+    const aposCelebrar=(await pedir('/api/conquistas')).data;
+    assert.equal(aposCelebrar.conquistas.length,0);
+    assert.ok(aposCelebrar.notificacoes.some(c=>c.chave==='nivel:15'),'notificação persiste após receber a animação');
+    assert.ok(aposCelebrar.notificacoes.some(c=>c.chave==='colecao:0'));
     assert.equal((await pedir('/api/conquistas/receber','POST',{chave:'nivel:99999'})).status,400);assert.equal((await pedir('/api/conquistas/receber','POST',{chave:'colecao:7'})).status,400);
     db.prepare('UPDATE usuarios SET pontos=2250 WHERE id=?').run(criado.data.usuario.id);pendentes=(await pedir('/api/conquistas')).data.conquistas;assert.deepEqual(pendentes.map(c=>c.chave),['nivel:16']);
     r=await pedir('/api/perfil','PATCH',{foto:null});assert.equal(r.status,200);assert.equal(r.data.perfil.foto_url,null);assert.equal(r.data.usuario.tema,'claro');

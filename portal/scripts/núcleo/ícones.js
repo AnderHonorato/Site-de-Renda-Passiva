@@ -29,6 +29,7 @@ const FORMAS = {
   confere: '<path d="m5.5 12.5 4.2 4.2L18.5 8"/>',
   'confere-círculo': '<circle cx="12" cy="12" r="8"/><path d="m8.4 12.2 2.6 2.6 4.6-5"/>',
   alerta: '<path d="M12 4.5 3.8 19a1 1 0 0 0 .9 1.5h14.6a1 1 0 0 0 .9-1.5L12 4.5Z"/><path d="M12 10v4"/><path d="M12 17h.01"/>',
+  megafone: '<path d="M4.5 13.5V10l10-4v11l-10-3.5Z"/><path d="M14.5 8.5c1.8.8 3 2.2 3 3.5s-1.2 2.7-3 3.5"/><path d="m6.5 14.2 1.4 4.1h2.4l-1.1-3.3"/>',
   info: '<circle cx="12" cy="12" r="8"/><path d="M12 11v5"/><path d="M12 8h.01"/>',
   sino: '<path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14l1.5-2Z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
   escudo: '<path d="M12 3.5 5 6.5v5.7c0 4.1 2.9 7.2 7 8.3 4.1-1.1 7-4.2 7-8.3V6.5l-7-3Z"/>',

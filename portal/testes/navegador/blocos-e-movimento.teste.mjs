@@ -108,7 +108,7 @@ test('falha numa ferramenta: só a área dela falha, e "Tentar de novo" recupera
   assert.equal(await página.locator('#painel-categorias').isVisible(), true, 'o cabeçalho responde');
   await página.keyboard.press('Escape'); // fecha o menu, que cobre parte da página
   await página.unroute('**/scripts/ferramentas/juros.js**');
-  await página.click('.bloco-falhou button:has-text("Tentar de novo")');
+  await página.locator('#ferramenta').getByRole('button', { name: 'Tentar novamente' }).click();
   await página.waitForSelector('#formulário', { timeout: 5000 });
   assert.equal(await página.locator('#ferramenta > .bloco-falhou').count(), 0);
   await contexto.close();
@@ -163,6 +163,7 @@ test('o botão de tema vira a pílula, troca o tema com a tela coberta e não de
   const { contexto, página } = await abrir({ colorScheme: 'light' });
   await página.goto(`${BASE}/`, { waitUntil: 'networkidle' });
   assert.equal(await página.getAttribute('#alternar-tema', 'aria-checked'), 'false');
+  await página.click('#abrir-preferencias');
   await página.click('#alternar-tema');
   await página.waitForSelector('.transição-tema', { timeout: 2000 });
   assert.equal(await página.getAttribute('#alternar-tema', 'aria-checked'), 'true', 'a pílula responde ao clique na hora');
@@ -174,6 +175,9 @@ test('o botão de tema vira a pílula, troca o tema com a tela coberta e não de
     escuro: [...document.querySelectorAll('.só-escuro')].every((i) => getComputedStyle(i).display !== 'none'),
   }));
   assert.deepEqual(visíveis, { claro: true, escuro: true });
+  // A paleta é uma escolha pontual dentro do menu do visitante: a transição devolve o
+  // foco ao cabeçalho, então o painel é aberto de novo para a próxima escolha.
+  await página.click('#abrir-preferencias');
   await página.click('#alternar-tema');
   await página.waitForSelector('.transição-tema', { timeout: 2000 }); // a cobertura começa depois da pílula
   await página.waitForSelector('.transição-tema', { state: 'detached', timeout: 5000 });
@@ -185,6 +189,7 @@ test('o botão de tema vira a pílula, troca o tema com a tela coberta e não de
 test('com movimento reduzido a troca de tema é imediata e sem camada', { skip: pular }, async () => {
   const { contexto, página } = await abrir({ reducedMotion: 'reduce' });
   await página.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+  await página.click('#abrir-preferencias');
   await página.click('#alternar-tema');
   await página.waitForFunction(() => document.documentElement.getAttribute('data-tema') === 'escuro', null, { timeout: 1000 });
   assert.equal(await página.locator('.transição-tema').count(), 0);

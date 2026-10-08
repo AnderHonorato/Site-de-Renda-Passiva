@@ -1,6 +1,7 @@
 import { api } from '../api.js';
 import { ícone } from '../ícones.js';
 import { criarAvatarDoPerfil, criarIconeNivel, criarTempoNaComunidade } from '../nível.js';
+import { criarIconeMedalha } from '../emblemas.js';
 import { atualizarNivel } from '../evolução.js';
 import { tocarSom } from '../sons.js';
 
@@ -234,6 +235,11 @@ async function mostrarMiniPerfil(handle, alvo) {
     elemento('small', '', (en ? 'Level ' : 'Nível ') + (perfil.nivel || 1) + ' · ' + (perfil.plano || 'gratuito'))
   );
   const denunciar = elemento('button', 'chat__mini-denunciar');
+  const medalhas=elemento('span','chat__mini-insignias');
+  for(const medalha of (perfil.medalhas||[]).filter(m=>m.desbloqueada).slice(0,4)){
+    const selo=elemento('a','chat__mini-insignia');selo.href=base+'perfil.html?usuario='+encodeURIComponent(handle)+'&conquista='+encodeURIComponent(medalha.id+':'+medalha.tier);selo.title=medalha.nome+' · '+medalha.patamar;selo.append(criarIconeMedalha(medalha));selo.addEventListener('click',evento=>evento.stopPropagation());medalhas.append(selo);
+  }
+  if(medalhas.childElementCount)info.append(medalhas);
   denunciar.type = 'button';
   denunciar.title = txt('Denunciar usuário', 'Report user');
   denunciar.setAttribute('aria-label', denunciar.title);
@@ -969,7 +975,7 @@ export function ligarChat(sessao) {
   });
 
   document.addEventListener('keydown', evento => {
-    if (evento.key === 'Escape' && painel && !painel.hidden && !document.querySelector('.chat__midia-modal[open]')) {
+    if (evento.key === 'Escape' && painel && !painel.hidden && !evento.defaultPrevented && !document.querySelector('dialog[open],:popover-open')) {
       ocultar();
     }
   });

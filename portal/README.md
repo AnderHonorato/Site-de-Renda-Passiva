@@ -1,4 +1,4 @@
-# Portal — versão 1.2.0
+# Portal — versão 1.3.0
 
 O portal escolhido é o da porta **4400**. A identidade visual e as 65 ferramentas prontas foram preservadas. Conta e chat usam uma API separada, na mesma origem através do proxy do portal. O catálogo tem 208 itens; os planejados continuam identificados como planejados.
 
@@ -10,10 +10,10 @@ Na pasta `portal`:
 
 ```powershell
 npm run gerar
-npm run dev
+npm run no-ar
 ```
 
-Abra `http://127.0.0.1:4400/`. O comando inicia site e API, preservando arquivos e banco. A API escuta só em `127.0.0.1:4870`; as páginas usam `/api/` na 4400. Ctrl+C encerra os dois processos. `npm run servir` inicia apenas o site; `npm run api`, apenas a API. O arquivo `.env`, quando existir, é lido pelo comando `dev`.
+Abra `http://127.0.0.1:4400/`. O comando inicia site e API, preservando arquivos e banco, e religa o conjunto se um deles cair. A API escuta só em `127.0.0.1:4870`; as páginas usam `/api/` na 4400. Ctrl+C encerra os dois processos. `npm run dev` inicia uma sessão simples de desenvolvimento; `npm run servir`, apenas o site; `npm run api`, apenas a API. O arquivo `.env`, quando existir, é lido por `dev` e `no-ar`.
 
 O comando `dev` habilita o chat local. Em desenvolvimento, com a origem padrão da 4400 e o chat local habilitado, a API aceita também os endereços das interfaces deste computador na porta 4400. Em produção o chat fica desligado até `PORTAL_CHAT_PUBLICO=1`; exige as condições do checklist e responsável por moderação. Para domínio definitivo, configure `URL_PUBLICA` com a origem exata usada no navegador. Alterações de outra origem são recusadas.
 
@@ -86,6 +86,12 @@ A foto é recortada localmente em 512 × 512, com zoom, posição e prévias de 
 Conquistas pendentes são calculadas a partir da atividade real. O servidor registra o maior patamar já recebido em cada família; uma nova aba ou outro aparelho não repete a celebração. O modal tem feixes de luz e emblema central, com movimento reduzido quando solicitado pelo sistema. Sons discretos são sintetizados no aparelho após interação; podem ser desativados em Preferências. Mensagens próprias não fazem som de recebimento.
 
 Para o teste solicitado, `@honor` recebeu o nível 15, último marco dos banners e molduras atuais. A progressão numérica continua acima disso. Não foram alterados plano, senha, dados do perfil nem atividades para inventar medalhas. O banco anterior está preservado em `.execucao/`, fora da publicação e do Git.
+
+## Avisos prioritários e estabilidade — 07/10/2026
+
+O administrador encontra **Avisos** no menu de administração da conta. A área cria até doze avisos ativos abaixo do cabeçalho, com textos em português e inglês, cores com contraste validado, imagem opcional PNG/JPEG/WebP de até 1 MiB, texto alternativo, link seguro, programação e ordem. Dois ou mais avisos formam um carrossel que pausa ao receber foco, ao passar o mouse, fora da tela, com a página oculta ou quando a pessoa prefere reduzir movimento. Sem avisos ativos, a região não ocupa espaço.
+
+O cabeçalho, sessão, chat, busca e avisos são inicializados em blocos independentes. Se uma função falhar, ela mostra uma mensagem localizada e uma nova tentativa, sem trocar uma conta carregada por visitante ou interromper as ferramentas. Durante o carregamento são usados esqueletos no formato dos componentes. As ilustrações de categoria agora respeitam o orçamento de movimento no celular, revezam corretamente as vagas disponíveis e mostram a variante estática coerente quando não há vaga.
 
 ## Busca e divulgação
 

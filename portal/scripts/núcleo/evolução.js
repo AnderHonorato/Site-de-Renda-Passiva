@@ -2,6 +2,7 @@ import { criarIconeNivel } from './nível.js';
 import { criarIconeMedalha } from './emblemas.js';
 import { tocarSom } from './sons.js';
 import { api } from './api.js';
+import { registrarFonte } from './notificações.js';
 
 const en = () => document.documentElement.lang === 'en';
 
@@ -36,14 +37,32 @@ function celebrar(conquista) {
 async function consumirFila(){
   if(exibindo)return;exibindo=true;
   try{while(fila.length){const item=fila.shift();
+    await esperarOutrosDialogos();
     if(item.chave){try{const resposta=await api('/api/conquistas/receber',{metodo:'POST',dados:{chave:item.chave}});if(!resposta.recebida){enfileiradas.delete(item.chave);continue;}}catch{enfileiradas.delete(item.chave);continue;}}
+    await esperarOutrosDialogos();
     await celebrar(item);if(item.chave)enfileiradas.delete(item.chave);
   }}finally{exibindo=false;}
+}
+function esperarOutrosDialogos(){
+  if(!document.querySelector('dialog[open]'))return Promise.resolve();
+  return new Promise(resolve=>{
+    const observador=new MutationObserver(()=>{if(!document.querySelector('dialog[open]')){observador.disconnect();resolve();}});
+    observador.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['open']});
+  });
 }
 export function conferirConquistas(sessao){
   if(!sessao?.usuario)return Promise.resolve();
   if(pedido)return pedido;
   pedido=api('/api/conquistas').then(resposta=>{
+    const base=document.documentElement.dataset.raizIdioma||'./';
+    const itens=(resposta.notificacoes||resposta.conquistas||[]).map(item=>({
+      id:`conquista:${sessao.usuario.id}:${item.chave}`,
+      título:item.tipo==='nivel'?(en()?`Level ${item.nivel} unlocked`:`Nível ${item.nivel} desbloqueado`):item.medalha.nome,
+      texto:item.tipo==='nivel'?(en()?'See your progress on your profile.':'Veja sua evolução no perfil.'):`${item.medalha.patamar} · ${item.medalha.descricao}`,
+      link:`${base}perfil.html?usuario=${encodeURIComponent(sessao.usuario.usuario)}&conquista=${encodeURIComponent(item.chave)}`,
+      data:item.data||new Date().toISOString(),origem:'conquista',conquista:item,
+    }));
+    registrarFonte('conquistas',{carregar:async()=>itens});
     for(const item of resposta.conquistas||[]){if(!item?.chave||enfileiradas.has(item.chave))continue;enfileiradas.add(item.chave);fila.push(item);}
     void consumirFila();
   }).catch(()=>{}).finally(()=>{pedido=undefined;});

@@ -38,6 +38,7 @@ function csrf() {
 }
 
 function sociaisDoForm() {
+  if(!formPerfil?.elements.site)return perfilAtual?.sociais||{};
   const resultado = {};
   for (const chave of ['site', 'instagram', 'facebook', 'tiktok', 'x', 'whatsapp']) {
     const campo = formPerfil && formPerfil.elements[chave];
@@ -48,6 +49,7 @@ function sociaisDoForm() {
 }
 
 function recomendadasDoForm() {
+  if(!formRecomendadas)return perfilAtual?.ferramentas_recomendadas||[];
   return [...document.querySelectorAll('#opcoes-recomendadas input[name="ferramenta"]:checked')].map(i => i.value);
 }
 
@@ -57,11 +59,11 @@ function estadoEditavel() {
   const molduraAtual = document.querySelector('#opcoes-moldura [aria-pressed="true"]');
   return {
     nome: formPerfil.elements.nome.value,
-    bio: formPerfil.elements.bio.value,
-    local: formPerfil.elements.local.value,
+    bio: formPerfil.elements.bio?.value??perfilAtual?.bio??'',
+    local: formPerfil.elements.local?.value??perfilAtual?.local??'',
     avatar: formPerfil.elements.avatar.value,
-    bioVisivel: formPerfil.elements.bioVisivel.checked,
-    localVisivel: formPerfil.elements.localVisivel.checked,
+    bioVisivel: formPerfil.elements.bioVisivel?.checked??perfilAtual?.visibilidade?.bio??true,
+    localVisivel: formPerfil.elements.localVisivel?.checked??perfilAtual?.visibilidade?.local??true,
     sociais: sociaisDoForm(),
     recomendadas: recomendadasDoForm(),
     banner: bannerAtual ? bannerAtual.dataset.id : (perfilAtual ? perfilAtual.banner : 'brisa'),
@@ -384,7 +386,7 @@ function renderResumo(perfil, conta) {
   if (!slot) return;
 
   const resumo = elemento('section', 'conta-resumo');
-  aplicarPrestigio(resumo,perfil);
+
   const avatarResumo = elemento('div', 'conta-resumo__avatar');
   const avatar = criarAvatarDoPerfil(perfil);
   if (avatar) avatarResumo.append(avatar);
@@ -393,12 +395,7 @@ function renderResumo(perfil, conta) {
   texto.append(elemento('strong', '', perfil.nome || conta.nome || usuario.nome || usuario.usuario));
   texto.append(elemento('span', '', '@' + (perfil.usuario || usuario.usuario)));
 
-  const selos = elemento('div', 'conta-resumo__selos');
-  selos.append(criarIconeNivel(perfil.nivel || 1));
-  for (const medalha of (perfil.medalhas || []).filter(m => m.desbloqueada).slice(-3)) {
-    selos.append(criarMedalha(medalha, true));
-  }
-  texto.append(selos);
+
 
   const ver = elemento('a', 'botão botão--linha');
   ver.href = '../perfil.html?usuario=' + encodeURIComponent(perfil.usuario || usuario.usuario);
@@ -419,8 +416,8 @@ function preencher(perfil, conta) {
     }
   }
 
-  formPerfil.elements.bioVisivel.checked = perfil.visibilidade ? perfil.visibilidade.bio !== false : true;
-  formPerfil.elements.localVisivel.checked = perfil.visibilidade ? perfil.visibilidade.local !== false : true;
+  if(formPerfil.elements.bioVisivel)formPerfil.elements.bioVisivel.checked = perfil.visibilidade ? perfil.visibilidade.bio !== false : true;
+  if(formPerfil.elements.localVisivel)formPerfil.elements.localVisivel.checked = perfil.visibilidade ? perfil.visibilidade.local !== false : true;
   formPerfil.elements.avatar.value = nomesAvataresDisponíveis.includes(perfil.avatar) ? perfil.avatar : 'sol';
 
   for (const chave of ['site', 'instagram', 'facebook', 'tiktok', 'x', 'whatsapp']) {

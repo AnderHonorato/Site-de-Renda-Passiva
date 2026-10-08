@@ -10,6 +10,7 @@ import { limitesDoPlano, planosPublicos, trabalhoPublico, validarEdicaoTrabalho,
 import { AVATARES, medalhasDoUsuario, nivelDePontos, personalizacoesDoNivel, progressoDeNivel, validarPersonalizacao, validarSociais } from './perfil.mjs';
 import { MAX_IMAGEM, itemAdmin, novidadesPublicas, removerNovidade, salvarImagem, salvarNovidade } from './novidades.mjs';
 import { configuracaoPublicidade, salvarPublicidade } from './publicidade.mjs';
+import { iniciarBanners, tratarBanners } from './banners.mjs';
 
 const agora = () => Date.now();
 const nomeSessao = process.env.URL_PUBLICA?.startsWith('https://') ? '__Host-sessao' : 'sessao';
@@ -22,6 +23,7 @@ if(process.env.NODE_ENV==='development'&&process.env.PORTAL_CHAT_LOCAL==='1'&&or
   for(const lista of Object.values(networkInterfaces()))for(const rede of lista||[])if(rede.family==='IPv4')origensPermitidas.add(`http://${rede.address}:4400`);
 }
 const banco = abrirBanco();
+iniciarBanners(banco);
 for(const c of categorias)banco.prepare("INSERT OR IGNORE INTO salas(id,tipo,nome) VALUES(?,'categoria',?)").run(`categoria-${c.id}`,c.nome);
 for(const f of ferramentasProntas)banco.prepare("INSERT OR IGNORE INTO salas(id,tipo,nome) VALUES(?,'ferramenta',?)").run(`ferramenta-${f.slug}`,f.nome);
 const limites = new Map();
@@ -182,6 +184,7 @@ async function rota(req,res){
   if(!p.startsWith('/api/'))throw erro(404,'nao_encontrado');
   conferirLimite(`global:${ip(req)}`,180,60000);
   if(m==='OPTIONS'){res.writeHead(204,{'Allow':'GET,POST,PUT,PATCH,DELETE,OPTIONS'});res.end();return;}
+  if(await tratarBanners(req,res,{banco,json,admin,proteger,corpo,corpoBinario,registrarAdmin}))return;
   if(m==='GET'&&p==='/api/autenticacao/sessao'){
     if(!(/^[A-Za-z0-9_-]{43}$/.test(cookies(req)[nomeCsrf]||'')))setCookie(res,nomeCsrf,token());
     const u=sessao(req);return json(res,200,{usuario:usuarioPublico(u),chat_habilitado:chatAtivo(),chat_aceito:!!u?.chat_aceito_em});
@@ -399,11 +402,17 @@ async function rota(req,res){
     res.end(alvo.avatar_foto);return;
   }
   if(p==='/api/conquistas'&&m==='GET'){
-    const u=exigir(req),nivel=nivelDoUsuario(u),vistas=new Map(banco.prepare('SELECT tipo,patamar FROM conquistas_vistas WHERE usuario_id=?').all(u.id).map(v=>[v.tipo,v.patamar]));
+    const u=exigir(req),nivel=nivelDoUsuario(u),registros=banco.prepare('SELECT tipo,patamar,visto_em FROM conquistas_vistas WHERE usuario_id=?').all(u.id),vistas=new Map(registros.map(v=>[v.tipo,v.patamar]));
     const conquistas=[];
+    const notificacoes=[];
+    if(nivel>1)notificacoes.push({tipo:'nivel',chave:`nivel:${nivel}`,nivel});
     if(nivel>1&&nivel>(vistas.get('nivel')||1))conquistas.push({tipo:'nivel',chave:`nivel:${nivel}`,nivel});
-    for(const medalha of medalhasDoUsuario(banco,u))if(medalha.desbloqueada&&medalha.tier>(vistas.get(medalha.id)??-1))conquistas.push({tipo:'medalha',chave:`${medalha.id}:${medalha.tier}`,medalha});
-    return json(res,200,{conquistas});
+    for(const medalha of medalhasDoUsuario(banco,u))if(medalha.desbloqueada){
+      const item={tipo:'medalha',chave:`${medalha.id}:${medalha.tier}`,medalha};notificacoes.push(item);
+      if(medalha.tier>(vistas.get(medalha.id)??-1))conquistas.push(item);
+    }
+    for(const item of notificacoes)item.data=registros.find(v=>v.tipo===item.chave.split(':')[0])?.visto_em||u.criado_em;
+    return json(res,200,{conquistas,notificacoes});
   }
   if(p==='/api/conquistas/receber'&&m==='POST'){
     const u=exigir(req),b=await corpo(req),chave=String(b.chave||''),partes=/^([a-z]+):(\d{1,9})$/.exec(chave);

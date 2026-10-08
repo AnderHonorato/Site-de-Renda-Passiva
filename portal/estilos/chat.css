@@ -423,3 +423,5 @@
   .chat__mensagem-acoes { opacity:1; transform:none; }
   .chat__anexo,.chat__enviar { width:40px; height:44px; }
 }
+.chat__mini-insignias { display:flex;gap:5px;align-items:center;margin-top:5px; }
+.chat__mini-insignia { display:inline-flex;width:26px;height:30px;color:var(--marca);text-decoration:none; }

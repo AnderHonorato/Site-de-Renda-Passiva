@@ -52,29 +52,49 @@ function criarMedalha(medalha) {
   item.dataset.tier = String(medalha.tier || 0);
   item.dataset.desbloqueada = medalha.desbloqueada ? 'sim' : 'nao';
   item.tabIndex = 0;
+  item.setAttribute('role','button');
+  item.setAttribute('aria-label',`${medalha.nome} · ${medalha.patamar}`);
+  item.dataset.conquista=medalha.id;
 
   const simbolo = elemento('span', 'medalha__simbolo');
   simbolo.append(criarIconeMedalha(medalha));
   item.append(simbolo);
 
-  const dica = elemento('div', 'medalha__tooltip');
-  dica.append(
-    elemento('b', '', medalha.nome),
-    elemento(
-      'p',
-      '',
-      medalha.desbloqueada
-        ? medalha.patamar + ' · ' + medalha.valor + (medalha.completa ? '' : ' / ' + medalha.meta)
-        : medalha.valor + ' / ' + medalha.meta
-    ),
-    elemento('p', '', medalha.descricao)
-  );
 
-  const link = elemento('a', '', en ? 'How to earn it' : 'Como ganhar');
-  link.href = raiz + 'niveis.html#' + encodeURIComponent(medalha.id);
-  dica.append(link);
-  item.append(dica);
+  item.addEventListener('click',evento=>{if(!evento.target.closest('a'))mostrarDetalhe(item,medalha);});
+  item.addEventListener('keydown',evento=>{if(evento.key==='Enter'||evento.key===' '){evento.preventDefault();mostrarDetalhe(item,medalha);}});
   return item;
+}
+
+let detalheAtual,temporizadorDestaque;
+function mostrarDetalhe(alvo,medalha,{breve=false,nivel}={}) {
+  detalheAtual?.remove();
+  if(!breve){clearTimeout(temporizadorDestaque);alvo.classList.remove('conquista-destacada');}
+  const balao=elemento('div','insignia-detalhe');balao.setAttribute('popover','auto');balao.setAttribute('role','status');
+  const selo=elemento('span','insignia-detalhe__selo');selo.append(medalha?criarIconeMedalha(medalha):criarIconeNivel(nivel));
+  const texto=elemento('div','insignia-detalhe__texto');
+  texto.append(elemento('b','',medalha?medalha.nome:(en?'Level ':'Nível ')+nivel));
+  texto.append(elemento('p','',medalha?`${medalha.patamar} · ${medalha.descricao}`:(en?'Your activity earns points and unlocks new profile styles.':'Sua atividade gera pontos e desbloqueia novos visuais do perfil.')));
+  if(medalha)texto.append(elemento('small','',`${medalha.valor} / ${medalha.meta} · ${medalha.completa?(en?'Completed':'Concluída'):(en?'Keep exploring':'Continue explorando')}`));
+  const fechar=elemento('button','insignia-detalhe__fechar','×');fechar.type='button';fechar.setAttribute('aria-label',en?'Close details':'Fechar detalhes');fechar.addEventListener('click',()=>balao.remove());
+  balao.append(selo,texto,fechar);document.body.append(balao);balao.showPopover?.();
+  const rect=alvo.getBoundingClientRect(),altura=balao.offsetHeight,largura=balao.offsetWidth;
+  balao.style.left=Math.max(10,Math.min(innerWidth-largura-10,rect.left+rect.width/2-largura/2))+'px';
+  balao.style.top=Math.max(10,Math.min(innerHeight-altura-10,rect.top-altura-12))+'px';
+  detalheAtual=balao;
+  if(breve)setTimeout(()=>{if(detalheAtual===balao)balao.remove();},6000);
+}
+
+function destacarConquista(perfil){
+  const chave=new URLSearchParams(location.search).get('conquista');
+  if(!chave||!/^([a-z]+):(\d{1,9})$/.test(chave))return;
+  const [tipo,patamar]=chave.split(':');
+  const medalha=(perfil.medalhas||[]).find(m=>m.id===tipo&&m.desbloqueada&&m.tier>=Number(patamar));
+  if(tipo==='nivel'?Number(patamar)>perfil.nivel:!medalha)return;
+  const alvo=area.querySelector(`[data-conquista="${tipo}"]`);if(!alvo)return;
+  alvo.scrollIntoView({block:'center',behavior:'instant'});alvo.classList.add('conquista-destacada');
+  temporizadorDestaque=setTimeout(()=>alvo.classList.remove('conquista-destacada'),7000);
+  requestAnimationFrame(()=>mostrarDetalhe(alvo,medalha,{breve:true,nivel:perfil.nivel}));
 }
 
 function urlSocial(chave, valor) {
@@ -199,8 +219,8 @@ async function carregar() {
     const avatar = criarAvatarDoPerfil(perfil);
     if (avatar) moldura.append(avatar);
 
-    const nivel = elemento('a', 'perfil-comunidade__nivel');
-    nivel.href = raiz + 'niveis.html';
+    const nivel = elemento('button', 'perfil-comunidade__nivel');nivel.type='button';nivel.dataset.conquista='nivel';
+    nivel.addEventListener('click',()=>mostrarDetalhe(nivel,null,{nivel:perfil.nivel||1}));
     nivel.append(criarIconeNivel(perfil.nivel || 1));
     nivel.title = (en ? 'Level ' : 'Nível ') + (perfil.nivel || 1) + (en ? ' · Learn how it works' : ' · Ver como funciona');
     moldura.append(nivel);
@@ -242,7 +262,7 @@ async function carregar() {
     identidade.append(superior, nome, handle, bio);
 
     const medalhas = elemento('div', 'perfil-comunidade__medalhas');
-    for (const medalha of (perfil.medalhas || []).filter(m => m.desbloqueada).slice(-5)) {
+    for (const medalha of (perfil.medalhas || []).filter(m => m.desbloqueada)) {
       medalhas.append(criarMedalha(medalha));
     }
     if (medalhas.childElementCount) identidade.append(medalhas);
@@ -266,7 +286,7 @@ async function carregar() {
     const acoes = elemento('div', 'perfil-comunidade__acoes');
     if (perfil.usuario === sessao.usuario.usuario) {
       const editar = elemento('a', 'botão botão--primário', en ? 'Edit my profile' : 'Editar meu perfil');
-      editar.href = raiz + 'conta/';
+      editar.href = raiz + 'conta/perfil.html';
       editar.innerHTML = ícone('engrenagem') + editar.textContent;
       acoes.append(editar);
     } else {
@@ -365,6 +385,7 @@ async function carregar() {
       );
       area.append(vazio);
     }
+    destacarConquista(perfil);
   } catch (erro) {
     estado(erro.status === 404 ? naoEncontrado : mensagemErro(erro), true);
   }

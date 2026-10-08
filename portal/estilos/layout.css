@@ -53,6 +53,27 @@
 .menu-categorias > button:hover, .menu-categorias > button[aria-expanded="true"] { background: var(--superfície-3); color: var(--tinta); }
 .topo__espaço { flex: 1 1 auto; }
 .topo__fim { display: flex; align-items: center; gap: 6px; }
+.preferencias-topo { position:relative;flex:none; }
+.preferencias-topo[hidden] { display:none; }
+.preferencias-topo__painel { position:absolute;right:0;top:calc(100% + 8px);width:250px;padding:8px;border:1px solid var(--borda);border-radius:20px;background:var(--superfície);box-shadow:0 16px 45px #0002; }
+.preferencias-topo__conteudo { padding:8px 14px;border-top:1px solid var(--borda); }
+.preferencias-topo__linha { display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:48px;font-size:.8rem;color:var(--tinta-média); }
+.preferencias-topo__linha .idioma--topo { display:inline-flex; }
+.topo__interior { position:relative; }
+.topo__interior > .busca-topo { flex:none; }
+.topo__interior > .busca-topo[data-aberta="sim"] { position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);z-index:65;background:var(--fundo);border-radius:24px; }
+.topo__interior > .busca-topo[data-aberta="sim"] .busca-topo__campo { width:100%;margin:0;padding:0 18px 0 46px; }
+.topo__interior > .busca-topo .busca-topo__botão { position:absolute;left:0;order:0; }
+.topo__interior > .busca-topo[data-aberta="não"] { width:36px; }
+.topo__interior > .busca-topo .busca-topo__sugestões { left:0;right:auto; }
+.notificações__item--conquista { padding-left:68px;position:relative; }
+.notificações__insignia { position:absolute;left:16px;top:14px;width:36px;height:42px;color:var(--marca); }
+.notificações__insignia .ícone-nível { width:36px;height:42px; }
+.conta-topo__painel .preferencias-topo__linha .idioma--topo,.preferencias-topo__painel .preferencias-topo__linha .idioma--topo { display:inline-flex; }
+@media(max-width:460px) {
+  #abrir-preferencias { width:36px;height:36px;min-height:36px;padding:8px; }
+  #abrir-preferencias > span,#abrir-preferencias > svg:last-child { display:none; }
+}
 
 .ícone-botão {
   width: 36px; height: 36px; flex: 0 0 36px;

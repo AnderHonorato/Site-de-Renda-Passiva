@@ -19,7 +19,7 @@ document.querySelector('.conta.conta--modal')?.addEventListener('click', evento 
   if (evento.target === evento.currentTarget) fecharPainelConta();
 });
 document.addEventListener('keydown', evento => {
-  if (document.querySelector('dialog[open]')) return;
+  if (evento.defaultPrevented || document.querySelector('dialog[open],:popover-open')) return;
   if (evento.key === 'Escape' && document.querySelector('.conta.conta--modal')) fecharPainelConta();
   if(evento.key==='Tab') {
     const modal=document.querySelector('.conta.conta--modal');if(!modal)return;

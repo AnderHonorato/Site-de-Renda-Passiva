@@ -3,6 +3,7 @@ import { criarAvatarDoPerfil } from './nível.js';
 import { ícone } from './ícones.js';
 
 const txt = (idioma, pt, en) => idioma === 'en' ? en : pt;
+const escutas = new WeakMap();
 
 function link(texto, href, iconeNome) {
   const a = document.createElement('a');
@@ -15,7 +16,7 @@ function link(texto, href, iconeNome) {
   return a;
 }
 
-function fecharAoClicarFora(raiz, painel, botao) {
+function fecharAoClicarFora(raiz, painel, botao, signal) {
   const fechar = () => {
     painel.hidden = true;
     raiz.removeAttribute('data-aberta');
@@ -25,20 +26,27 @@ function fecharAoClicarFora(raiz, painel, botao) {
     const alvo = evento.target;
     if (painel.hidden || !(alvo instanceof Node) || raiz.contains(alvo)) return;
     fechar();
-  });
+  }, { signal });
   document.addEventListener('keydown', (evento) => {
     if (evento.key !== 'Escape' || painel.hidden) return;
     fechar();
     botao.focus();
-  });
+  }, { signal });
   return fechar;
 }
 
 export function renderizarContaTopo(fim, sessao, { base = './', idioma = 'pt' } = {}) {
-  fim.querySelector('.conta-topo')?.remove();
+  const preferencias=document.querySelector('.preferencias-topo__conteudo');
+  const visitante=document.getElementById('preferencias-visitante');
+  if(preferencias&&visitante)visitante.querySelector('.preferencias-topo__painel').append(preferencias);
+  if(visitante)visitante.hidden=Boolean(sessao?.usuario);
+  const anterior = fim.querySelector('.conta-topo');
+  if (anterior) { escutas.get(anterior)?.abort(); anterior.remove(); }
 
   const raiz = document.createElement('div');
   raiz.className = 'conta-topo';
+  const controlador = new AbortController();
+  escutas.set(raiz, controlador);
 
   if (!sessao?.usuario) {
     raiz.classList.add('conta-topo--visitante');
@@ -47,7 +55,7 @@ export function renderizarContaTopo(fim, sessao, { base = './', idioma = 'pt' } 
     const criar = link(txt(idioma, 'Criar conta', 'Create account'), `${base}criar-conta.html`, 'mais');
     criar.classList.add('conta-topo__criar');
     raiz.append(entrar, criar);
-    fim.prepend(raiz);
+    fim.append(raiz);
     return;
   }
 
@@ -122,18 +130,25 @@ export function renderizarContaTopo(fim, sessao, { base = './', idioma = 'pt' } 
     }
   });
 
-  painel.append(topo, navegacao, sair);
+  painel.append(topo, navegacao);
+  if(preferencias)painel.append(preferencias);
+  painel.append(sair);
   raiz.append(botao, painel);
-  fim.prepend(raiz);
+  fim.append(raiz);
 
-  const fechar = fecharAoClicarFora(raiz, painel, botao);
+  const fechar = fecharAoClicarFora(raiz, painel, botao, controlador.signal);
+  const abrir=()=>{painel.hidden=false;raiz.setAttribute('data-aberta','sim');botao.setAttribute('aria-expanded','true');};
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+    let espera;
+    controlador.signal.addEventListener('abort', () => clearTimeout(espera), { once: true });
+    raiz.addEventListener('pointerenter',()=>{clearTimeout(espera);espera=setTimeout(abrir,90);});
+    raiz.addEventListener('pointerleave',()=>{clearTimeout(espera);espera=setTimeout(fechar,240);});
+  }
   botao.addEventListener('click', () => {
     if (!painel.hidden) {
       fechar();
       return;
     }
-    painel.hidden = false;
-    raiz.setAttribute('data-aberta', 'sim');
-    botao.setAttribute('aria-expanded', 'true');
+    abrir();
   });
 }

@@ -81,6 +81,27 @@ function responderNãoEncontrado(resposta, método, caminho = '/') {
 }
 
 function encaminharApi(requisição, resposta) {
+  // A prévia isolada (`--local`), usada também pela suíte visual das ferramentas, precisa
+  // continuar parecendo uma visita sem conta quando a API não foi iniciada. Assim os módulos
+  // que dependem de sessão não geram erros de rede nem escondem uma ferramenta que é local.
+  // O servidor de desenvolvimento normal não usa `--local`: nele toda falha da API segue para
+  // o bloco de recuperação mostrado na tela.
+  const rotaLocal = new URL(requisição.url || '/', 'http://127.0.0.1').pathname;
+  // O `fetch` do Node também envia `sec-fetch-mode`; Client Hints é o sinal que distingue
+  // a página Chrome/Edge de uma chamada de verificação do próprio processo de testes.
+  const préviaNoNavegador = sóLocal && typeof requisição.headers['sec-ch-ua'] === 'string';
+  if (préviaNoNavegador && requisição.method === 'GET' && rotaLocal === '/api/autenticacao/sessao') {
+    resposta.writeHead(200, { ...CABEÇALHOS, 'Content-Type': 'application/json; charset=utf-8' });
+    return resposta.end(JSON.stringify({ usuario: null, chat_habilitado: false, chat_aceito: false }));
+  }
+  if (préviaNoNavegador && requisição.method === 'GET' && rotaLocal === '/api/banners') {
+    resposta.writeHead(200, { ...CABEÇALHOS, 'Content-Type': 'application/json; charset=utf-8' });
+    return resposta.end(JSON.stringify({ itens: [] }));
+  }
+  if (préviaNoNavegador && requisição.method === 'GET' && rotaLocal === '/api/anuncios') {
+    resposta.writeHead(200, { ...CABEÇALHOS, 'Content-Type': 'application/json; charset=utf-8' });
+    return resposta.end(JSON.stringify({ permitido: false }));
+  }
   const remoto = requisição.socket.remoteAddress || '127.0.0.1';
   const proxyLocal = process.env.PORTAL_PROXY_CONFIAVEL === '1' && ['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(remoto);
   const ipEncaminhado = String(requisição.headers['x-forwarded-for'] || '').trim();

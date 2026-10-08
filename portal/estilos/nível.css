@@ -26,7 +26,7 @@
 .emblema__brilho { transform-origin:32px 32px; animation:emblema-cintila 3.6s ease-in-out infinite; }
 @keyframes emblema-cintila { 0%,100% { opacity:.4; transform:scale(.96); } 50% { opacity:1; transform:scale(1.05); } }
 
-.conquista { width:min(440px,calc(100vw - 28px)); max-height:calc(100dvh - 28px); overflow:auto; padding:0; border:1px solid color-mix(in srgb,var(--marca) 25%,var(--borda)); border-radius:26px; background:var(--superfície); color:var(--tinta); box-shadow:0 30px 100px #0004; animation:conquista-chega .55s cubic-bezier(.2,.8,.25,1) both; }
+.conquista { position:fixed; isolation:isolate; width:min(440px,calc(100vw - 28px)); max-height:calc(100dvh - 28px); overflow:clip; padding:0; border:1px solid color-mix(in srgb,var(--marca) 25%,var(--borda)); border-radius:32px 32px 56px 56px; background:radial-gradient(ellipse at 50% 35%,var(--marca-fraca),transparent 70%),var(--superfície); color:var(--tinta); box-shadow:0 30px 100px #0004; animation:conquista-chega .55s cubic-bezier(.2,.8,.25,1) both; }
 .conquista::backdrop,.avatar-recorte::backdrop { background:#111a; backdrop-filter:blur(7px); }
 .conquista__conteudo { position:relative; z-index:1; text-align:center; padding:30px 28px; }
 .conquista__etiqueta { margin:0; font-size:.72rem; font-weight:750; letter-spacing:.16em; text-transform:uppercase; color:var(--marca); }
@@ -37,11 +37,31 @@
 .conquista h2 { font:750 clamp(1.4rem,4vw,1.9rem)/1.2 var(--fonte-título); margin:0 0 12px; letter-spacing:-.025em; }
 .conquista #conquista-texto { font-size:.9rem; line-height:1.65; color:var(--tinta-média); margin:0 0 24px; }
 .conquista .botão { min-width:160px; }
-.conquista__luz { position:absolute; inset:-120px; pointer-events:none; background:repeating-conic-gradient(from 12deg at 50% 46%,transparent 0 13deg,color-mix(in srgb,#ba944b 11%,transparent) 14deg 20deg,transparent 21deg 35deg); mask-image:radial-gradient(ellipse,black 12%,transparent 66%); animation:conquista-luz 18s linear infinite; }
+.conquista__luz { position:absolute; inset:0; overflow:clip; pointer-events:none; }
+.conquista__luz::before { content:''; position:absolute; inset:-40%; background:repeating-conic-gradient(from 12deg at 50% 46%,transparent 0 13deg,color-mix(in srgb,var(--marca) 15%,transparent) 14deg 20deg,transparent 21deg 35deg); mask-image:radial-gradient(ellipse,black 12%,transparent 66%); animation:conquista-luz 18s linear infinite; }
+@media (max-height:540px) {
+  .conquista__conteudo { padding:14px 22px; }
+  .conquista__palco { width:100px;height:100px;margin:10px auto; }
+  .conquista__palco .ícone-nível,.conquista__palco .emblema { width:78px;height:88px; }
+  .conquista h2 { font-size:1.25rem;margin-bottom:6px; }
+  .conquista #conquista-texto { font-size:.8rem;line-height:1.4;margin-bottom:12px; }
+}
 @keyframes conquista-chega { from{opacity:0; transform:translateY(22px) scale(.94)} to{opacity:1;transform:none} }
 @keyframes conquista-selo { from{opacity:0;transform:scale(.65) rotate(-12deg)} to{opacity:1;transform:none} }
 @keyframes conquista-anel { from{opacity:0;transform:scale(.5)} to{opacity:.25;transform:none} }
 @keyframes conquista-luz { to{transform:rotate(360deg)} }
+.perfil-comunidade__nivel { cursor:pointer; }
+.insignia-detalhe { position:fixed;inset:auto;margin:0;display:flex;align-items:center;gap:12px;width:min(310px,calc(100vw - 20px));padding:16px 32px 16px 16px;border:1px solid var(--borda);border-radius:22px;background:var(--superfície);color:var(--tinta);box-shadow:0 12px 36px #0003;font:inherit; }
+.insignia-detalhe:not(:popover-open) { display:none; }
+.insignia-detalhe__selo { width:52px;height:60px;flex:none;color:var(--marca); }
+.insignia-detalhe__selo .ícone-nível { width:52px;height:60px; }
+.insignia-detalhe__texto { min-width:0;font-size:.8rem; }
+.insignia-detalhe__texto p { margin:5px 0;line-height:1.45;color:var(--tinta-média); }
+.insignia-detalhe__texto small { color:var(--tinta-suave); }
+.insignia-detalhe__fechar { position:absolute;top:6px;right:7px;width:28px;height:28px;border:0;border-radius:50%;background:none;color:var(--tinta-média);font-size:1.2rem;cursor:pointer; }
+.conquista-destacada .emblema,.conquista-destacada .ícone-nível { animation:insignia-recebida 1.2s ease-in-out 6 !important; }
+@keyframes insignia-recebida { 50% { filter:drop-shadow(0 0 12px var(--marca));transform:scale(1.12); } }
+@media (prefers-reduced-motion:reduce) { .conquista-destacada .emblema,.conquista-destacada .ícone-nível { animation:none !important;outline:2px solid var(--marca);outline-offset:4px; } }
 @media (prefers-reduced-motion:reduce) { .conquista,.conquista *,.emblema * { animation:none !important; transition:none !important; } }
 .ícone-tempo-comunidade { color: var(--texto-suave, #65716d); }
 .ícone-nível[data-evolucao="1"] { color:#4e718e; }

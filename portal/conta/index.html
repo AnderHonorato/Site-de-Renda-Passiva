@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="../estilos/nível.css">
   <link rel="stylesheet" href="../estilos/publicidade.css">
   <link rel="stylesheet" href="../estilos/consentimento.css">
+  <link rel="stylesheet" href="../estilos/estabilidade.css">
+  <link rel="stylesheet" href="../estilos/banner-prioritario.css">
   <script src="../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../scripts/páginas/conta/conta.js"></script>
   <meta property="og:title" content="Minha conta — Ferramentas do Ander">
@@ -36,6 +38,11 @@
   <a class="pular" href="#conteúdo">Pular para o conteúdo</a>
 <header class="topo">
   <div class="largura topo__interior">
+      <form class="busca-topo" id="busca-topo" role="search" data-aberta="não" autocomplete="off" action="../ferramentas.html">
+        <button class="ícone-botão busca-topo__botão" type="button" id="ir-para-busca" aria-expanded="false" aria-controls="busca-topo-campo" aria-label="Buscar ferramenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg></button>
+        <input class="busca-topo__campo" id="busca-topo-campo" name="busca" type="search" tabindex="-1" role="combobox" aria-expanded="false" aria-controls="busca-topo-sugestões" aria-autocomplete="list" aria-label="Buscar ferramenta" placeholder="Buscar ferramenta…">
+        <div class="sugestões busca-topo__sugestões" id="busca-topo-sugestões" role="listbox" hidden></div>
+      </form>
     <a class="marca" href="../" aria-label="Ferramentas do Ander, início">
       <span class="marca__selo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.27 4.5L10.66 2.49L13.34 2.49L13.73 4.5L16.08 5.47L17.78 4.33L19.67 6.22L18.53 7.92L19.5 10.27L21.51 10.66L21.51 13.34L19.5 13.73L18.53 16.08L19.67 17.78L17.78 19.67L16.08 18.53L13.73 19.5L13.34 21.51L10.66 21.51L10.27 19.5L7.92 18.53L6.22 19.67L4.33 17.78L5.47 16.08L4.5 13.73L2.49 13.34L2.49 10.66L4.5 10.27L5.47 7.92L4.33 6.22L6.22 4.33L7.92 5.47Z"/><path d="M8.9 12.3l2.2 2.2 4.2-4.7"/></svg></span>
       <span class="marca__nome"><b>Ferramentas</b><span>do Ander</span></span>
@@ -76,12 +83,6 @@
     </nav>
     <span class="topo__espaço"></span>
     <div class="topo__fim">
-      <div class="idioma idioma--topo" role="group" aria-label="Idioma"><span class="idioma__item" lang="pt-BR" aria-current="true" title="Português">PT</span><a class="idioma__item" href="../en/conta/index.html" hreflang="en" lang="en" title="English">EN</a></div>
-      <form class="busca-topo" id="busca-topo" role="search" data-aberta="não" autocomplete="off" action="../ferramentas.html">
-        <button class="ícone-botão busca-topo__botão" type="button" id="ir-para-busca" aria-expanded="false" aria-controls="busca-topo-campo" aria-label="Buscar ferramenta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></svg></button>
-        <input class="busca-topo__campo" id="busca-topo-campo" name="busca" type="search" tabindex="-1" role="combobox" aria-expanded="false" aria-controls="busca-topo-sugestões" aria-autocomplete="list" aria-label="Buscar ferramenta" placeholder="Buscar ferramenta…">
-        <div class="sugestões busca-topo__sugestões" id="busca-topo-sugestões" role="listbox" hidden></div>
-      </form>
       <span class="notificações" id="notificações">
         <button class="ícone-botão notificações__botão" type="button" id="abrir-notificações" aria-expanded="false" aria-controls="painel-notificações" aria-label="Novidades"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14l1.5-2Z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="notificações__contador" hidden></span></button>
         <div class="notificações__painel" id="painel-notificações" hidden>
@@ -93,14 +94,22 @@
           <p class="notificações__vazio" hidden>Nenhuma novidade por enquanto.</p>
         </div>
       </span>
-      <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="Tema escuro">
+      <div class="preferencias-topo" id="preferencias-visitante">
+        <button type="button" class="conta-topo__gatilho" id="abrir-preferencias" aria-expanded="false" aria-controls="preferencias-painel"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg><span>Visitante</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9.5 6 6 6-6"/></svg></button>
+        <div class="preferencias-topo__painel" id="preferencias-painel" hidden>
+          <div class="preferencias-topo__conteudo">
+            <div class="preferencias-topo__linha"><span>Tema</span>      <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="Tema escuro">
         <span class="tema-pílula__estrelas" aria-hidden="true"><i></i><i></i><i></i></span>
         <svg class="tema-pílula__astro" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <g class="astro__raios"><path d="M12 2.2v2.6M12 19.2v2.6M2.2 12h2.6M19.2 12h2.6M5.1 5.1 7 7M17 17l1.9 1.9M5.1 18.9 7 17M17 7l1.9-1.9"/></g>
           <circle class="astro__núcleo" cx="12" cy="12" r="5.2"/>
           <circle class="astro__corte" cx="17" cy="8" r="4.6"/>
         </svg>
-      </button>
+      </button></div>
+            <div class="preferencias-topo__linha"><span>Idioma</span><div class="idioma idioma--topo" role="group" aria-label="Idioma"><span class="idioma__item" lang="pt-BR" aria-current="true" title="Português">PT</span><a class="idioma__item" href="../en/conta/index.html" hreflang="en" lang="en" title="English">EN</a></div></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -110,25 +119,17 @@
       <div><p class="rótulo">Minha conta</p><h1>Minha conta</h1></div>
       <button class="conta__fechar-painel" type="button" aria-label="Fechar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 6 12 12"/><path d="m18 6-12 12"/></svg></button>
     </div>
-    <p class="suave conta__descricao">Gerencie seus dados, perfil e segurança.</p>
+    <p class="suave conta__descricao">Gerencie seus dados de cadastro e a segurança da conta.</p>
     <div class="conta__rolagem"><div id="conta-conteudo" hidden>
-      <nav class="conta__acoes-rapidas" aria-label="Ações rápidas">
-        <button class="conta__acao" type="button" data-conta-aba="perfil"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg><span>Perfil</span></button>
-        <button class="conta__acao" type="button" data-conta-aba="trabalhos"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 7a2 2 0 0 1 2-2h3.3l2 2.5h7.7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2V7Z"/></svg><span>Trabalhos</span></button>
-        <button class="conta__acao" type="button" data-conta-aba="favoritos"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 4 2.5 5.1 5.5.8-4 3.9.9 5.6-4.9-2.6-4.9 2.6.9-5.6-4-3.9 5.5-.8L12 4Z"/></svg><span>Favoritos</span></button>
-        <button class="conta__acao" type="button" data-conta-aba="mensagens"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5c0 3.9-3.6 7-8 7a9 9 0 0 1-2.4-.3L4.5 20l1.3-3.8A6.6 6.6 0 0 1 4 11.5c0-3.9 3.6-7 8-7s8 3.1 8 7Z"/></svg><span>Mensagens</span></button>
-        <button class="conta__acao" type="button" data-conta-aba="planos"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 4 2.5 5.1 5.5.8-4 3.9.9 5.6-4.9-2.6-4.9 2.6.9-5.6-4-3.9 5.5-.8L12 4Z"/></svg><span>Planos</span></button>
-        <button class="conta__acao conta__acao--sair" id="sair-conta" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h13"/><path d="m12.5 6.5 6 5.5-6 5.5"/></svg><span>Sair</span></button>
-      </nav>
 
       <div id="conta-resumo-slot"></div>
 
       <nav class="conta__abas" aria-label="Seções da conta">
-        <button type="button" data-conta-aba="perfil" aria-pressed="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg>Perfil</button>
-        <button type="button" data-conta-aba="aparencia" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 4 2.5 5.1 5.5.8-4 3.9.9 5.6-4.9-2.6-4.9 2.6.9-5.6-4-3.9 5.5-.8L12 4Z"/></svg>Visual</button>
+        <button type="button" data-conta-aba="perfil" aria-pressed="true">Dados cadastrais</button>
+
         <button type="button" data-conta-aba="preferencias" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M12 3.5v2.2M12 18.3v2.2M20.5 12h-2.2M5.7 12H3.5M18 6l-1.6 1.6M7.6 16.4 6 18M18 18l-1.6-1.6M7.6 7.6 6 6"/></svg>Preferências</button>
         <button type="button" data-conta-aba="seguranca" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 5 6.5v5.7c0 4.1 2.9 7.2 7 8.3 4.1-1.1 7-4.2 7-8.3V6.5l-7-3Z"/></svg>Segurança</button>
-        <button type="button" data-conta-aba="amizades" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg>Amigos</button>
+
       </nav>
 
       <section class="conta__aba" data-conta-painel="perfil">
@@ -152,40 +153,13 @@
             <label class="conta__campo"><span>Como quer ser chamado</span><input id="nome" name="nome" type="text" autocomplete="name" maxlength="80" required></label>
             <label class="conta__campo"><span>@usuário</span><input id="usuario" name="usuario" type="text" readonly></label>
           </div>
-          <label class="conta__campo conta__campo--inteiro"><span>Biografia</span><textarea name="bio" maxlength="280" rows="3"></textarea></label>
-          <label class="conta__campo"><span>De onde é</span><input id="local" name="local" type="text" maxlength="80"></label>
-          <div class="conta__visibilidade">
-            <label class="conta__aceite"><input name="bioVisivel" type="checkbox" checked><span>Biografia pública</span></label>
-            <label class="conta__aceite"><input name="localVisivel" type="checkbox" checked><span>Localização pública</span></label>
-          </div>
-          <fieldset class="conta__sociais">
-            <legend>Links no perfil público</legend>
-            <label class="conta__campo"><span>Site</span><input id="site" name="site" type="url" placeholder="https://..." maxlength="300"></label>
-            <label class="conta__campo"><span>Instagram</span><input id="instagram" name="instagram" type="text" placeholder="@usuario" maxlength="51"></label>
-            <label class="conta__campo"><span>TikTok</span><input id="tiktok" name="tiktok" type="text" placeholder="@usuario" maxlength="51"></label>
-            <label class="conta__campo"><span>X</span><input id="x" name="x" type="text" placeholder="@usuario" maxlength="51"></label>
-            <label class="conta__campo"><span>Facebook</span><input id="facebook" name="facebook" type="text" placeholder="@usuario" maxlength="51"></label>
-            <label class="conta__campo"><span>WhatsApp</span><input id="whatsapp" name="whatsapp" type="tel" placeholder="5511999999999" maxlength="20"></label>
-          </fieldset>
+
+
+
         </form>
 
-        <div class="conta__subtitulo"><div><h2>Ferramentas recomendadas</h2><p class="suave pequeno">Escolha até cinco ferramentas que você já usou.</p></div></div>
-        <form id="form-recomendadas" class="conta__form conta__form--sem-caixa"><div id="opcoes-recomendadas" class="conta__recomendadas"></div></form>
       </section>
 
-      <section class="conta__aba" data-conta-painel="aparencia" hidden>
-        <div class="conta__subtitulo"><div><h2>Plano e evolução</h2><p class="suave pequeno">Sua atividade desbloqueia novos visuais para o perfil.</p></div></div>
-        <button type="button" id="plano-visual" class="conta__plano" data-conta-aba="planos"></button>
-        <div id="progresso-nivel" class="conta__progresso"></div>
-        <button type="button" id="previa-conquista" class="botão botão--linha"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 4 2.5 5.1 5.5.8-4 3.9.9 5.6-4.9-2.6-4.9 2.6.9-5.6-4-3.9 5.5-.8L12 4Z"/></svg>Ver animação do nível</button>
-        <div id="conta-medalhas" class="conta__medalhas"></div>
-        <a class="conta__como-evoluir" href="../niveis.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M9.7 9.6a2.4 2.4 0 1 1 3.1 2.6c-.6.2-.8.7-.8 1.3v.4"/><path d="M12 17h.01"/></svg>Como funcionam níveis e medalhas</a>
-
-        <div class="conta__subtitulo"><div><h2>Banner do perfil</h2><p class="suave pequeno">Novos estilos são desbloqueados conforme o nível.</p></div></div>
-        <div id="opcoes-banner" class="conta__personalizacoes"></div>
-        <div class="conta__subtitulo"><div><h2>Moldura do perfil</h2></div></div>
-        <div id="opcoes-moldura" class="conta__personalizacoes"></div>
-      </section>
 
       <section class="conta__aba" data-conta-painel="preferencias" hidden>
         <form id="form-preferencias" class="conta__form conta__form--compacta">
@@ -207,28 +181,11 @@
         </form>
       </section>
 
-      <section class="conta__aba" data-conta-painel="amizades" hidden>
-        <h2>Minhas amizades</h2><div id="amizades" class="conta__amizades"></div>
-        <form id="form-amizade" class="conta__form conta__form--linha"><label class="conta__campo"><span>@usuário</span><input id="amigo" name="amigo" type="text" autocomplete="off"></label><button class="botão" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5v14"/><path d="M5 12h14"/></svg>Enviar pedido</button></form>
-      </section>
 
-      <section class="conta__aba" data-conta-painel="trabalhos" hidden>
-        <h2>Seus trabalhos salvos</h2><p id="trabalhos-resumo" class="suave pequeno"></p><div id="lista-trabalhos"></div>
-      </section>
-      <section class="conta__aba" data-conta-painel="planos" hidden>
-        <h2>Planos e limites da conta</h2><div id="conta-planos" class="conta__planos"></div>
-        <p class="suave pequeno">Planos pagos são liberados pelo administrador. Não há cobrança automática.</p>
-        <button type="button" class="botão botão--linha" data-conta-aba="mensagens">Falar com o suporte</button>
-      </section>
-      <section class="conta__aba" data-conta-painel="favoritos" hidden>
-        <h2>Suas ferramentas favoritas</h2><div id="conta-favoritos" class="conta__colecao"></div>
-      </section>
-      <section class="conta__aba" data-conta-painel="mensagens" hidden>
-        <h2>Mensagens ao suporte</h2>
-        <form id="form-suporte" class="conta__form"><label class="conta__campo"><span>Assunto</span><input id="assunto" name="assunto" type="text" minlength="3" maxlength="100" required></label><label class="conta__campo"><span>Mensagem</span><textarea name="texto" minlength="10" maxlength="2000" rows="3" required></textarea></label><button class="botão" type="submit">Enviar mensagem</button></form><div id="lista-suporte"></div>
-      </section>
 
-      <nav id="conta-admin" class="conta__admin" hidden><a class="conta__acao" href="../admin/chat/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 5 6.5v5.7c0 4.1 2.9 7.2 7 8.3 4.1-1.1 7-4.2 7-8.3V6.5l-7-3Z"/></svg>Moderação</a><a class="conta__acao" href="../admin/usuarios/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg>Usuários</a><a class="conta__acao" href="../admin/suporte/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5c0 3.9-3.6 7-8 7a9 9 0 0 1-2.4-.3L4.5 20l1.3-3.8A6.6 6.6 0 0 1 4 11.5c0-3.9 3.6-7 8-7s8 3.1 8 7Z"/></svg>Suporte</a><a class="conta__acao" href="../admin/publicidade/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5c0 3.9-3.6 7-8 7a9 9 0 0 1-2.4-.3L4.5 20l1.3-3.8A6.6 6.6 0 0 1 4 11.5c0-3.9 3.6-7 8-7s8 3.1 8 7Z"/></svg>Publicidade</a><a class="conta__acao" href="../admin/novidades/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5c0 3.9-3.6 7-8 7a9 9 0 0 1-2.4-.3L4.5 20l1.3-3.8A6.6 6.6 0 0 1 4 11.5c0-3.9 3.6-7 8-7s8 3.1 8 7Z"/></svg>Novidades</a></nav>
+
+
+
 
       <div id="conta-salvar" class="conta-salvar" hidden>
         <span>Você alterou algumas coisas</span>

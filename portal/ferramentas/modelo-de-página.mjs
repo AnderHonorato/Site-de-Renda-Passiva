@@ -67,6 +67,11 @@ function cabeçalho(ctx, base, atual, alternativas) {
 
   return `<header class="topo">
   <div class="largura topo__interior">
+      <form class="busca-topo" id="busca-topo" role="search" data-aberta="não" autocomplete="off" action="${base}ferramentas.html">
+        <button class="ícone-botão busca-topo__botão" type="button" id="ir-para-busca" aria-expanded="false" aria-controls="busca-topo-campo" aria-label="${escapar(t('moldura.buscar'))}">${ícone('busca')}</button>
+        <input class="busca-topo__campo" id="busca-topo-campo" name="busca" type="search" tabindex="-1" role="combobox" aria-expanded="false" aria-controls="busca-topo-sugestões" aria-autocomplete="list" aria-label="${escapar(t('moldura.buscar'))}" placeholder="${escapar(t('moldura.buscaTopoMarcador'))}">
+        <div class="sugestões busca-topo__sugestões" id="busca-topo-sugestões" role="listbox" hidden></div>
+      </form>
     <a class="marca" href="${base || './'}" aria-label="${escapar(t('moldura.marcaInício'))}">
       <span class="marca__selo">${ícone('marca')}</span>
       <span class="marca__nome"><b>${escapar(site.destaque)}</b><span>${escapar(site.complemento)}</span></span>
@@ -90,12 +95,6 @@ function cabeçalho(ctx, base, atual, alternativas) {
     </nav>
     <span class="topo__espaço"></span>
     <div class="topo__fim">
-      ${seletorDeIdioma(ctx, alternativas, 'idioma idioma--topo')}
-      <form class="busca-topo" id="busca-topo" role="search" data-aberta="não" autocomplete="off" action="${base}ferramentas.html">
-        <button class="ícone-botão busca-topo__botão" type="button" id="ir-para-busca" aria-expanded="false" aria-controls="busca-topo-campo" aria-label="${escapar(t('moldura.buscar'))}">${ícone('busca')}</button>
-        <input class="busca-topo__campo" id="busca-topo-campo" name="busca" type="search" tabindex="-1" role="combobox" aria-expanded="false" aria-controls="busca-topo-sugestões" aria-autocomplete="list" aria-label="${escapar(t('moldura.buscar'))}" placeholder="${escapar(t('moldura.buscaTopoMarcador'))}">
-        <div class="sugestões busca-topo__sugestões" id="busca-topo-sugestões" role="listbox" hidden></div>
-      </form>
       <span class="notificações" id="notificações">
         <button class="ícone-botão notificações__botão" type="button" id="abrir-notificações" aria-expanded="false" aria-controls="painel-notificações" aria-label="${escapar(t('moldura.notificações'))}">${ícone('sino')}<span class="notificações__contador" hidden></span></button>
         <div class="notificações__painel" id="painel-notificações" hidden>
@@ -107,14 +106,22 @@ function cabeçalho(ctx, base, atual, alternativas) {
           <p class="notificações__vazio" hidden>${escapar(t('moldura.notificaçõesVazio'))}</p>
         </div>
       </span>
-      <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="${escapar(t('moldura.temaRótulo'))}">
+      <div class="preferencias-topo" id="preferencias-visitante">
+        <button type="button" class="conta-topo__gatilho" id="abrir-preferencias" aria-expanded="false" aria-controls="preferencias-painel">${ícone('pessoas')}<span>${ctx.código === 'en' ? 'Visitor' : 'Visitante'}</span>${ícone('chevron-baixo',{tamanho:14})}</button>
+        <div class="preferencias-topo__painel" id="preferencias-painel" hidden>
+          <div class="preferencias-topo__conteudo">
+            <div class="preferencias-topo__linha"><span>${ctx.código === 'en' ? 'Theme' : 'Tema'}</span>      <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="${escapar(t('moldura.temaRótulo'))}">
         <span class="tema-pílula__estrelas" aria-hidden="true"><i></i><i></i><i></i></span>
         <svg class="tema-pílula__astro" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <g class="astro__raios"><path d="M12 2.2v2.6M12 19.2v2.6M2.2 12h2.6M19.2 12h2.6M5.1 5.1 7 7M17 17l1.9 1.9M5.1 18.9 7 17M17 7l1.9-1.9"/></g>
           <circle class="astro__núcleo" cx="12" cy="12" r="5.2"/>
           <circle class="astro__corte" cx="17" cy="8" r="4.6"/>
         </svg>
-      </button>
+      </button></div>
+            <div class="preferencias-topo__linha"><span>${ctx.código === 'en' ? 'Language' : 'Idioma'}</span>${seletorDeIdioma(ctx, alternativas, 'idioma idioma--topo')}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>`;
@@ -189,7 +196,7 @@ export function montarPágina({
 }) {
   // Caminho começando com "./" é relativo à raiz do site (ex.: a vitrine), não a estilos/ ou scripts/.
   const caminho = (pasta, arquivo) => (arquivo.startsWith('./') ? `${raiz || './'}${arquivo.slice(2)}` : `${raiz}${pasta}/${arquivo}`);
-  const folhas = [...new Set(['núcleo.css', 'fontes.css', 'layout.css', 'componentes.css', 'movimento.css', 'páginas.css', 'conta.css', 'chat.css', 'nível.css', 'publicidade.css', 'consentimento.css', ...estilos])]
+  const folhas = [...new Set(['núcleo.css', 'fontes.css', 'layout.css', 'componentes.css', 'movimento.css', 'páginas.css', 'conta.css', 'chat.css', 'nível.css', 'publicidade.css', 'consentimento.css', 'estabilidade.css', 'banner-prioritario.css', ...estilos])]
     .map((f) => `  <link rel="stylesheet" href="${caminho('estilos', f)}">`).join('\n');
   const módulos = scripts
     .map((s) => `  <script type="module" src="${caminho('scripts', s)}"></script>`).join('\n');

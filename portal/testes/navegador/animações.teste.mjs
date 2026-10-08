@@ -98,6 +98,7 @@ test('só a variante do tema atual é baixada; ao trocar o tema, só a nova', { 
   assert.deepEqual(pedidos.filter((p) => p.endsWith('.escuro.svg')), [], 'no tema claro nenhuma variante escura é pedida');
   await página.evaluate(() => window.scrollTo(0, 0));
   const antes = pedidos.length;
+  await página.click('#abrir-preferencias');
   await página.click('#alternar-tema');
   await página.waitForSelector('.transição-tema', { state: 'detached', timeout: 5000 });
   await página.waitForTimeout(800);

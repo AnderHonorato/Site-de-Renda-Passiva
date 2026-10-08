@@ -483,9 +483,9 @@
 .perfil-comunidade__sociais{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;}
 .perfil-comunidade__social{width:31px;height:31px;display:grid;place-items:center;border:1px solid var(--borda);border-radius:9px;background:var(--superfície);color:var(--marca);text-decoration:none;font-size:.58rem;font-weight:900;}
 .perfil-comunidade__social:hover{transform:translateY(-2px);}
-.perfil-comunidade__medalhas{display:flex;gap:5px;align-items:center;margin-top:8px;}
-.perfil-comunidade__medalhas .medalha{width:42px;height:46px;aspect-ratio:auto;border-radius:12px;}
-.perfil-comunidade__medalhas .medalha__simbolo{width:30px;height:36px;}
+.perfil-comunidade__medalhas{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;}
+.perfil-comunidade__medalhas .medalha{width:48px;height:56px;aspect-ratio:auto;border:0;background:none;box-shadow:none;border-radius:50%;animation:none;cursor:pointer;}
+.perfil-comunidade__medalhas .medalha__simbolo{width:42px;height:50px;}
 .perfil-comunidade__grade{grid-template-columns:1fr !important;gap:8px !important;}
 .perfil-comunidade__secao{padding:11px !important;border-radius:14px !important;}
 .perfil-comunidade__ferramentas{grid-template-columns:1fr 1fr;gap:5px !important;}
