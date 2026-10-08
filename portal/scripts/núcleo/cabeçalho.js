@@ -9,6 +9,19 @@ function ligarMenuDeCategorias() {
   if (!gatilho || !painel) return;
   let espera = 0;
 
+  const ajustarAltura = () => {
+    if (painel.hidden) return;
+    if (!gatilho.getClientRects().length) {
+      clearTimeout(espera);painel.hidden=true;gatilho.setAttribute('aria-expanded','false');return;
+    }
+    const viewport = window.visualViewport;
+    const limite = viewport ? viewport.offsetTop + viewport.height : innerHeight;
+    // offsetTop ignora a translação temporária da animação de entrada do painel.
+    const topo = painel.offsetTop + (painel.offsetParent?.getBoundingClientRect().top || 0);
+    const espaço = Math.max(0, limite - topo - 16);
+    painel.style.maxHeight = `${espaço}px`;
+  };
+
   const fechar = () => {
     clearTimeout(espera);
     painel.hidden = true;
@@ -17,10 +30,14 @@ function ligarMenuDeCategorias() {
   const abrir = () => {
     clearTimeout(espera);
     painel.hidden = false;
+    ajustarAltura();
     gatilho.setAttribute('aria-expanded', 'true');
   };
 
   gatilho.addEventListener('click', () => (painel.hidden ? abrir() : fechar()));
+  window.addEventListener('resize', ajustarAltura);
+  window.visualViewport?.addEventListener('resize', ajustarAltura);
+  window.visualViewport?.addEventListener('scroll', ajustarAltura);
 
   // Com mouse, passar por cima abre o menu e sair dele fecha, com uma folga para o ponteiro
   // atravessar o vão entre o botão e o painel. Teclado e toque seguem pelo clique.

@@ -3,6 +3,7 @@ import { ícone } from '../ícones.js';
 import { criarAvatarDoPerfil } from '../nível.js';
 import { atualizarNivel } from '../evolução.js';
 import { tocarSom } from '../sons.js';
+import { rankDoNivel } from '../../../dados/recompensas.js';
 
 const en = document.documentElement.lang === 'en';
 const txt = (pt, ingles) => en ? ingles : pt;
@@ -24,6 +25,59 @@ let reconectarTimer = 0;
 let replyAtual = null;
 let formatacao = null;
 let conversasRecolhidas = false;
+let pesquisaSalas = '';
+let participantesAtual = null;
+let mensagensDados = new Map();
+
+function atualizarParticipantes() {
+  if (!participantesAtual) return;
+  const pessoas = new Map();
+  if (salaAtualDados?.tipo === 'direta' && salaAtualDados.outro) pessoas.set(salaAtualDados.outro.id, salaAtualDados.outro);
+  for (const item of conversaAtual?.querySelectorAll('.chat__mensagem') || []) {
+    const autor = mensagensDados.get(item.dataset.id)?.autor;
+    if (autor?.usuario) pessoas.set(autor.id || autor.usuario, autor);
+  }
+  participantesAtual.replaceChildren();
+  participantesAtual.append(elemento('h3', '', txt('Nesta conversa', 'In this conversation')),
+    elemento('p', 'chat__participantes-aviso', txt('Pessoas das mensagens carregadas', 'People in the loaded messages')));
+  for (const pessoa of pessoas.values()) {
+    const link = elemento('a', 'chat__participante');
+    link.href = base + 'perfil.html?usuario=' + encodeURIComponent(pessoa.usuario || '');
+    const nome = elemento('span', 'chat__participante-nome');
+    nome.append(elemento('strong', '', pessoa.nome || '@' + pessoa.usuario), elemento('small', '', '@' + pessoa.usuario));
+    link.append(avatarDe(pessoa, 'chat__participante-avatar'), nome);
+    if (Number(pessoa.nivel) > 0) {
+      const rank = rankDoNivel(pessoa.nivel);
+      const evolucao = elemento('span', 'chat__participante-evolucao');
+      evolucao.append(
+        elemento('span', 'chat__participante-rank', en ? rank.nome_en + (rank.subnivel ? ' ' + rank.subnivel : '') : rank.rotulo),
+        elemento('small', 'chat__participante-nivel', txt('Nível ', 'Level ') + rank.nivel)
+      );
+      nome.append(evolucao);
+    }
+    participantesAtual.append(link);
+  }
+  if (!pessoas.size) participantesAtual.append(elemento('p', 'chat__estado', txt('Os participantes aparecem quando a conversa começa.', 'Participants appear when the conversation starts.')));
+}
+
+function organizarMensagens(lista) {
+  lista.querySelectorAll('.chat__dia').forEach(item => item.remove());
+  let anterior = null;
+  let diaAnterior = '';
+  for (const item of lista.querySelectorAll('.chat__mensagem')) {
+    const data = dataSegura(item.dataset.criadoEm);
+    const dia = data ? data.toLocaleDateString(en ? 'en-US' : 'pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+    if (dia && dia !== diaAnterior) {
+      const separador = elemento('div', 'chat__dia', dia);
+      lista.insertBefore(separador, item);
+    }
+    const intervalo = data && anterior?.data ? data - anterior.data : Infinity;
+    const agrupada = anterior && item.dataset.autorId && anterior.autor === item.dataset.autorId && dia === diaAnterior && intervalo >= 0 && intervalo < 300000;
+    item.classList.toggle('chat__mensagem--continuacao', Boolean(agrupada));
+    anterior = { autor: item.dataset.autorId, data };
+    diaAnterior = dia;
+  }
+}
 
 function elemento(tag, classe, texto) {
   const el = document.createElement(tag);
@@ -121,7 +175,15 @@ function renderListaSalas(lista) {
   const scroll = lista.scrollTop;
   lista.replaceChildren();
 
-  for (const sala of salasCache) {
+  let grupoAtual = '';
+  const salas = salasCache.filter(sala => nomeSala(sala).toLocaleLowerCase().includes(pesquisaSalas.toLocaleLowerCase()));
+  const ordem = ['global', 'categoria', 'ferramenta', 'direta'];
+  const grupos = { global: txt('Comunidade', 'Community'), categoria: txt('Categorias', 'Categories'), ferramenta: txt('Ferramentas', 'Tools'), direta: txt('Mensagens privadas', 'Private messages') };
+  for (const sala of [...salas].sort((a, b) => ordem.indexOf(a.tipo) - ordem.indexOf(b.tipo))) {
+    if (sala.tipo !== grupoAtual) {
+      lista.append(elemento('h3', 'chat__salas-grupo', grupos[sala.tipo] || txt('Conversas', 'Conversations')));
+      grupoAtual = sala.tipo;
+    }
     const botao = elemento('button', 'chat__sala');
     botao.type = 'button';
     botao.dataset.salaId = String(sala.id);
@@ -145,11 +207,14 @@ function renderListaSalas(lista) {
     badge.hidden = !sala.nao_lidas;
 
     botao.append(avatar, texto, badge);
-    botao.addEventListener('click', () => abrirSala(sala, conversaAtual, sessaoAtual, { marcar: true }));
+    botao.addEventListener('click', () => {
+      if (window.matchMedia('(max-width: 700px)').matches) conversasRecolhidas = true;
+      abrirSala(sala, conversaAtual, sessaoAtual, { marcar: true });
+    });
     lista.append(botao);
   }
 
-  if (!salasCache.length) {
+  if (!salas.length) {
     lista.append(elemento('p', 'chat__estado', txt('Nenhuma conversa disponível.', 'No conversations available.')));
   }
 
@@ -163,9 +228,19 @@ function criarInterfaceChat(corpo, sessao) {
   const lista = elemento('nav', 'chat__salas');
   lista.setAttribute('aria-label', txt('Conversas', 'Conversations'));
   const conversa = elemento('div', 'chat__conversa');
+  const lateral = elemento('aside', 'chat__lateral');
+  const pesquisa = elemento('input', 'chat__pesquisa-salas');
+  pesquisa.type = 'search';
+  pesquisa.placeholder = txt('Pesquisar conversas', 'Search conversations');
+  pesquisa.setAttribute('aria-label', pesquisa.placeholder);
+  pesquisa.value = pesquisaSalas;
+  pesquisa.addEventListener('input', () => { pesquisaSalas = pesquisa.value.trim(); renderListaSalas(lista); });
+  lateral.append(pesquisa, lista);
+  participantesAtual = elemento('aside', 'chat__participantes');
+  participantesAtual.setAttribute('aria-label', txt('Participantes da conversa', 'Conversation participants'));
   listaSalasAtual = lista;
   conversaAtual = conversa;
-  layout.append(lista, conversa);
+  layout.append(lateral, conversa, participantesAtual);
   corpo.append(layout);
   renderListaSalas(lista);
 }
@@ -297,17 +372,23 @@ function montarMensagem(msg, sessao, composer) {
   const item = elemento('article', 'chat__mensagem');
   item.dataset.id = String(msg.id);
   item.dataset.autorId = String(msg.autor?.id ?? '');
+  item.dataset.criadoEm = String(msg.criado_em || '');
+  mensagensDados.set(String(msg.id), msg);
   const minha = msg.autor?.id === sessao.usuario?.id;
   if (minha) item.classList.add('chat__mensagem--minha');
 
   const cabecalho = elemento('div', 'chat__mensagem-cabecalho');
+  const avatarLink = elemento('a', 'chat__mensagem-avatar');
+  avatarLink.href = base + 'perfil.html?usuario=' + encodeURIComponent(msg.autor?.usuario || '');
+  avatarLink.setAttribute('aria-label', txt('Ver perfil de ', 'View profile of ') + (msg.autor?.nome || msg.autor?.usuario || ''));
+  avatarLink.append(avatarDe(msg.autor || { avatar: 'sol' }, 'chat__autor-avatar'));
+  item.append(avatarLink);
   const perfilLink = elemento('a', 'chat__autor');
   if (msg.autor?.papel === 'admin') perfilLink.dataset.admin = 'sim';
   perfilLink.href = base + 'perfil.html?usuario=' + encodeURIComponent(msg.autor?.usuario || '');
-  perfilLink.append(
-    avatarDe(msg.autor || { avatar: 'sol' }, 'chat__autor-avatar'),
-    elemento('span', '', '@' + (msg.autor?.usuario || 'usuario'))
-  );
+  perfilLink.append(elemento('span', '', msg.autor?.nome || '@' + (msg.autor?.usuario || 'usuario')));
+  const horario = elemento('time', 'chat__horario', dataSegura(msg.criado_em)?.toLocaleTimeString(en ? 'en-US' : 'pt-BR', { hour: '2-digit', minute: '2-digit' }) || '');
+  horario.dateTime = dataSegura(msg.criado_em)?.toISOString() || '';
   const acoes = elemento('div', 'chat__mensagem-acoes');
   const responder = elemento('button', 'chat__responder');
   responder.type = 'button';
@@ -317,7 +398,7 @@ function montarMensagem(msg, sessao, composer) {
   responder.addEventListener('click', () => configurarReply(msg, composer));
 
   acoes.append(responder);
-  cabecalho.append(perfilLink, acoes);
+  cabecalho.append(perfilLink, horario, acoes);
   item.append(cabecalho);
 
   if (msg.resposta) {
@@ -350,9 +431,6 @@ function montarMensagem(msg, sessao, composer) {
     item.append(midias);
   }
 
-  const rodape = elemento('footer', 'chat__mensagem-rodape');
-  rodape.append(elemento('time', '', horaCurta(msg.criado_em)));
-  item.append(rodape);
   return item;
 }
 
@@ -362,6 +440,8 @@ function mostrarMensagem(msg, lista, sessao, composer, { rolar = true, inicio = 
   const item = montarMensagem(msg, sessao, composer);
   if (inicio) lista.prepend(item);
   else lista.append(item);
+  organizarMensagens(lista);
+  atualizarParticipantes();
   if (rolar) lista.scrollTop = lista.scrollHeight;
   return item;
 }
@@ -505,6 +585,7 @@ function criarComposer(sala, lista, sessao) {
   reply.append(replyTexto, replyFechar);
 
   const linha = elemento('div', 'chat__composer-linha');
+  linha.dataset.anexo = sala.tipo === 'direta' ? 'sim' : 'nao';
   const status = elemento('small', 'chat__composer-status');
 
   if (sala.tipo === 'direta') {
@@ -618,6 +699,7 @@ async function abrirSala(sala, conversa, sessao, { marcar = true } = {}) {
   salaAtual = sala.id;
   salaAtualDados = sala;
   mensagemIds = new Set();
+  mensagensDados = new Map();
   replyAtual = null;
 
   for (const botao of listaSalasAtual?.querySelectorAll('.chat__sala') || []) {
@@ -626,6 +708,8 @@ async function abrirSala(sala, conversa, sessao, { marcar = true } = {}) {
   }
 
   conversa.replaceChildren();
+  conversa.closest('.chat__layout').dataset.recolhido = conversasRecolhidas ? 'sim' : 'nao';
+  atualizarParticipantes();
 
   const cabecalho = elemento('header', 'chat__conversa-topo');
   const alternar = elemento('button','chat__alternar-salas');
@@ -778,7 +862,9 @@ function iniciarEventos(sessao) {
     try {
       const dado = JSON.parse(evento.data);
       const item = painelAtual?.querySelector('.chat__mensagem[data-id="' + String(dado.removidaId) + '"]');
+      const lista = item?.closest('.chat__mensagens');
       item?.remove();
+      if (lista) { organizarMensagens(lista); atualizarParticipantes(); }
       buscarSalas();
     } catch {}
   });
@@ -794,6 +880,7 @@ function iniciarEventos(sessao) {
 export function ligarChat(sessao) {
   if (document.getElementById('chat-bolha')) return;
   sessaoAtual = sessao;
+  conversasRecolhidas = window.matchMedia('(max-width: 700px)').matches;
 
   const bolha = elemento('button', 'chat__bolha');
   bolha.id = 'chat-bolha';

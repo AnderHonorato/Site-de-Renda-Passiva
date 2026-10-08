@@ -7,6 +7,15 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
   const db = new DatabaseSync(caminho);
   db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
   db.exec(`
+    CREATE TABLE IF NOT EXISTS perfil_conquistas_destaque (
+      usuario_id INTEGER PRIMARY KEY REFERENCES usuarios(id) ON DELETE CASCADE,
+      selecionadas TEXT NOT NULL DEFAULT '[]'
+    );
+    CREATE TABLE IF NOT EXISTS conquistas_ganhas (
+      usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+      tipo TEXT NOT NULL, patamar INTEGER NOT NULL, criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY(usuario_id,tipo)
+    );
     CREATE TABLE IF NOT EXISTS novidades (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       titulo_pt TEXT NOT NULL, texto_pt TEXT NOT NULL,

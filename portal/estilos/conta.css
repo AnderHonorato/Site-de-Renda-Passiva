@@ -457,7 +457,7 @@
 
 .perfil-comunidade { margin-top: 8px !important; gap: 10px !important; }
 .perfil-comunidade__hero {
-  grid-template-columns: auto minmax(0,1fr) !important; gap: 12px !important; padding: 16px !important;
+  grid-template-columns: auto minmax(0,1fr); gap: 12px !important; padding: 16px !important;
   border-radius: 17px !important; min-height: 172px;
 }
 .perfil-comunidade__hero[data-banner="brisa"]{background:linear-gradient(135deg,var(--marca-fraca),var(--superfície) 62%);}
@@ -1082,7 +1082,69 @@ body:has(.conta.conta--modal) #conteúdo {
 .perfil-comunidade__jornada progress::-webkit-progress-bar { background:var(--superfície-3);border-radius:6px; }
 .perfil-comunidade__jornada progress::-webkit-progress-value { background:var(--marca);border-radius:6px; }
 .perfil-comunidade__jornada progress::-moz-progress-bar { background:var(--marca);border-radius:6px; }
+
+/* Ranks e coleção: usar o papel, tinta e acento do portal nos estados de recompensa. */
+.selo-rank { width:54px;height:54px;flex:none;overflow:visible;color:var(--rank-cor,var(--marca));filter:drop-shadow(0 3px 5px color-mix(in srgb,currentColor 22%,transparent)); }
+.selo-rank__base { fill:color-mix(in srgb,currentColor 18%,var(--superfície));stroke:currentColor;stroke-width:1.5; }
+.selo-rank__borda { fill:none;stroke:currentColor;stroke-width:.7;opacity:.6; }
+.selo-rank__simbolo { fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-linecap:round; }
+.selo-rank[data-patamar="8"] { animation:rank-resplandece 4s ease-in-out infinite; }
+.perfil-comunidade__rank { display:inline-flex;align-items:center;gap:8px;margin-bottom:9px;color:var(--tinta);font-size:.86rem; }
+.perfil-comunidade__rank .selo-rank { width:42px;height:42px; }
+.perfil-comunidade__jornada { max-width:600px; }
+.perfil-comunidade__jornada>b { font-size:1.7rem;letter-spacing:-.04em;color:var(--marca);line-height:1.2; }
+.perfil-comunidade__jornada>span { font-size:.76rem; }
+.perfil-comunidade__jornada progress { height:8px; }
+.perfil-comunidade__proximo { color:var(--tinta-suave);font-size:.72rem; }
+.perfil-comunidade__medalhas[data-quantidade="4"],.perfil-comunidade__medalhas[data-quantidade="5"] { grid-template-columns:repeat(5,minmax(0,1fr)); }
+.perfil-comunidade__estatisticas { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--borda);border-radius:var(--raio);background:var(--superfície);overflow:hidden; }
+.perfil-comunidade__estatisticas>div { display:grid;gap:3px;padding:16px;min-width:0; }
+.perfil-comunidade__estatisticas>div+div { border-left:1px solid var(--borda); }
+.perfil-comunidade__estatisticas b { font-size:1.5rem;line-height:1.2; }
+.perfil-comunidade__estatisticas span { color:var(--tinta-suave);font-size:.76rem; }
+.colecao-conquistas { padding:20px;border:1px solid var(--borda);border-radius:var(--raio-g);background:var(--superfície); }
+.colecao-conquistas__topo h2 { margin:0;font-size:1.1rem; }
+.colecao-conquistas__topo p { margin:5px 0 16px;color:var(--tinta-suave);font-size:.82rem; }
+.colecao-conquistas__resumo { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;font-size:.8rem; }
+.colecao-conquistas__filtros { display:flex;gap:5px;flex-wrap:wrap; }
+.colecao-conquistas__filtros .botão { min-height:34px;padding:5px 11px;font-size:.75rem; }
+.colecao-conquistas__filtros [aria-pressed="true"] { border-color:var(--marca);background:var(--marca-fraca);color:var(--marca); }
+.colecao-conquistas__grade { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px; }
+.colecao-conquistas__card { display:grid;grid-template-columns:72px minmax(0,1fr);align-content:start;gap:10px;padding:14px;border:1px solid var(--borda);border-radius:var(--raio);background:var(--superfície-2);min-width:0; }
+.colecao-conquistas__simbolo { width:72px;height:82px;display:grid;place-items:center;background:radial-gradient(ellipse,var(--marca-fraca),transparent 75%);border:0;border-radius:var(--raio);color:var(--marca);cursor:pointer; }
+.colecao-conquistas__simbolo svg { width:60px;height:68px; }
+.colecao-conquistas__card[data-desbloqueada="nao"] .colecao-conquistas__simbolo { filter:grayscale(1);opacity:.55; }
+.colecao-conquistas__texto h3 { margin:0;font-size:.9rem; }
+.colecao-conquistas__patamar { display:block;color:var(--marca);font-size:.7rem;font-weight:700;margin-top:3px; }
+.colecao-conquistas__texto p { margin:7px 0;font-size:.76rem;color:var(--tinta-média);line-height:1.5; }
+.colecao-conquistas__texto small { display:block;font-size:.7rem;color:var(--tinta-suave); }
+.colecao-conquistas progress { width:100%;height:6px;accent-color:var(--marca); }
+.colecao-conquistas__etapas { grid-column:1/-1;display:flex;justify-content:space-between;gap:3px; }
+.colecao-conquistas__etapas span { display:grid;place-items:center;width:24px;height:24px;border:1px solid var(--borda);border-radius:50%;font-size:.75rem;color:var(--tinta-suave); }
+.colecao-conquistas__etapas [data-ganha="sim"] { background:var(--marca-fraca);color:var(--marca);border-color:color-mix(in srgb,var(--marca) 40%,var(--borda)); }
+.colecao-conquistas__card>.botão { grid-column:1/-1;justify-self:start;min-height:34px;padding:5px 12px;font-size:.72rem; }
+.colecao-conquistas__card>[aria-pressed="true"] { border-color:var(--marca); }
+.colecao-conquistas__escolhas { display:grid;gap:8px;margin-top:18px;padding-top:16px;border-top:1px solid var(--borda);font-size:.8rem; }
+.colecao-conquistas__escolhas>.botão { justify-self:start; }
+.colecao-conquistas__ordem { display:flex;align-items:center;gap:5px; }
+.colecao-conquistas__ordem>span { flex:1;min-width:0; }
+.colecao-conquistas__ordem .botão { min-height:32px;padding:4px 10px; }
+.colecao-conquistas__status { margin:0;color:var(--tinta-suave);font-size:.78rem; }
+@keyframes rank-resplandece { 50% { filter:drop-shadow(0 0 9px color-mix(in srgb,currentColor 45%,transparent)); } }
+@media(max-width:700px) {
+  .perfil-comunidade__medalhas[data-quantidade="4"],.perfil-comunidade__medalhas[data-quantidade="5"] { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .colecao-conquistas { padding:14px; }.colecao-conquistas__grade { grid-template-columns:1fr; }
+  .perfil-comunidade__estatisticas { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .perfil-comunidade__estatisticas>div:nth-child(3) { border-left:0; }.perfil-comunidade__estatisticas>div:nth-child(n+3) { border-top:1px solid var(--borda); }
+}
+@media(prefers-reduced-motion:reduce) { .selo-rank { animation:none!important; } }
 .perfil-comunidade__colecao { margin-top:8px;padding-top:8px;border-top:1px solid var(--borda); }
+.perfil-comunidade__conquistas>a.perfil-comunidade__colecao { display:block;color:var(--marca);font-size:.72rem;font-weight:700; }
+.colecao-conquistas { scroll-margin-top:90px; }
+.niveis__ranks { display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:10px;margin-top:14px; }
+.niveis__ranks article { display:grid;justify-items:center;text-align:center;gap:7px;padding:14px 8px;border:1px solid var(--borda);border-radius:var(--raio);background:var(--superfície); }
+.niveis__ranks .selo-rank { width:58px;height:65px; }
+.niveis__ranks b { font-size:.82rem; }.niveis__ranks small { color:var(--tinta-suave);font-size:.7rem; }
 .perfil-comunidade__colecao summary { padding:4px 0;color:var(--marca);font-size:.67rem;font-weight:750;cursor:pointer; }
 .perfil-comunidade__medalhas--colecao { margin-top:8px; }
 .perfil-comunidade__visual { align-self:start; }

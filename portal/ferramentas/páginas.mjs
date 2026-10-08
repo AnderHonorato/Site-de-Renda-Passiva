@@ -84,7 +84,6 @@ export function páginaInicial(ctx) {
             <p class="rótulo">${escapar(t('início.pedem'))}</p>
             <div class="intenções__lista" id="intenções"></div>
           </div>
-          <p class="apresentação"><button class="botão botão--texto" type="button" id="ver-apresentação">${ícone('estrela', { tamanho: 15 })} ${escapar(t('início.verApresentação'))}</button></p>
           </div>
         </div>
         <aside class="acesso-rápido entra atraso-3" aria-label="${escapar(t('início.acessoRápido'))}">

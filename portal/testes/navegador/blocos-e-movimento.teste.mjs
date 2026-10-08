@@ -48,8 +48,48 @@ async function abrir({ primeiraVisita = false, ...opções } = {}) {
 
 const bloquear = (página, trecho) => página.route(`**/${trecho}**`, (rota) => rota.abort());
 
-test('busca fica junto do sino, expande dentro do topo e volta sem esconder os controles', {skip:pular},async()=>{
-  for(const viewport of [{width:1280,height:800},{width:390,height:844}]){
+test('publicidade bloqueada não derruba listas, catálogo, consentimento nem apresentação automática', {skip:pular}, async()=>{
+  const {contexto,página}=await abrir({primeiraVisita:true});
+  try {
+    await página.route('**/publicidade/**', rota=>rota.abort('blockedbyclient'));
+    await página.goto(BASE+'/',{waitUntil:'networkidle'});
+    await página.waitForFunction(()=>document.documentElement.dataset.consentimentoPronto==='sim');
+    assert.equal(await página.locator('#lista-prontas .ferramenta-linha').count(),65);
+    assert.equal(await página.locator('#lista-prontas .bloco-falhou').count(),0);
+    await página.waitForSelector('dialog[open] [data-vitrine]');
+    await página.keyboard.press('Escape');
+    await página.goto(BASE+'/ferramentas.html',{waitUntil:'networkidle'});
+    assert.ok(await página.locator('.ferramenta-linha').count()>=65);
+    assert.equal(await página.locator('.bloco-falhou').count(),0);
+  } finally {await contexto.close();}
+});
+
+test('menu de categorias cabe em telas baixas e continua acessível após redimensionar', {skip:pular}, async()=>{
+  const {contexto,página}=await abrir();
+  try {
+    await página.goto(BASE+'/',{waitUntil:'networkidle'});
+    for(const viewport of [{width:1366,height:600},{width:1024,height:600},{width:934,height:510},{width:900,height:390}]){
+      await página.setViewportSize(viewport);
+      await página.locator('#abrir-categorias').hover();
+      await página.locator('#painel-categorias').waitFor({state:'visible'});
+      await página.waitForFunction(()=>document.getElementById('painel-categorias').getAnimations().every(a=>a.playState==='finished'));
+      const geometria=await página.locator('#painel-categorias').evaluate(el=>({top:el.getBoundingClientRect().top,bottom:el.getBoundingClientRect().bottom,height:el.clientHeight,scroll:el.scrollHeight,overflow:getComputedStyle(el).overflowY}));
+      assert.ok(geometria.top>=0&&geometria.bottom<=viewport.height-14,JSON.stringify({viewport,geometria}));
+      assert.equal(geometria.overflow,'auto');
+      await página.locator('#painel-categorias').evaluate(el=>{el.scrollTop=el.scrollHeight;});
+      if(geometria.scroll>geometria.height+1)assert.ok(await página.locator('#painel-categorias').evaluate(el=>el.scrollTop>0),JSON.stringify({viewport,geometria}));
+    }
+    await página.keyboard.press('Escape');
+    assert.equal(await página.locator('#painel-categorias').isHidden(),true);
+    await página.locator('#abrir-categorias').click();
+    await página.locator('#painel-categorias').waitFor({state:'visible'});
+    await página.setViewportSize({width:390,height:640});
+    await página.locator('#painel-categorias').waitFor({state:'hidden'});
+  } finally {await contexto.close();}
+});
+
+test('busca fica junto do sino e abre somente um campo curto para a esquerda', {skip:pular},async()=>{
+  for(const viewport of [{width:1280,height:800},{width:390,height:844},{width:320,height:740}]){
     const {contexto,página}=await abrir({viewport});
     try {
       await página.goto(BASE+'/',{waitUntil:'networkidle'});
@@ -60,7 +100,9 @@ test('busca fica junto do sino, expande dentro do topo e volta sem esconder os c
       await página.click('#ir-para-busca');
       await página.waitForTimeout(380);
       const aberta=await página.locator('#busca-topo-campo').boundingBox();
-      assert.ok(aberta.x>=0&&aberta.x+aberta.width<=viewport.width+1&&aberta.width>viewport.width*.65);
+      assert.ok(aberta.x>=10&&aberta.width>80&&aberta.width<=240&&aberta.x<fechada.x);
+      assert.ok(Math.abs(aberta.x+aberta.width-(fechada.x+fechada.width))<2,'campo cresce para a esquerda da lupa');
+      const sinoAberto=await página.locator('#abrir-notificações').boundingBox();assert.ok(Math.abs(sino.x-sinoAberto.x)<1,'sino mantém sua posição');
       await página.locator('#busca-topo-campo').fill('porcentagem');
       await página.waitForSelector('#busca-topo-sugestões:not([hidden])');
       await página.keyboard.press('Escape');
@@ -84,11 +126,13 @@ test('falha na busca: só a busca mostra a mensagem; listas, cabeçalho e vitrin
   await contexto.close();
 });
 
-test('popup de boas-vindas: aparece na primeira visita, lembra pelo cookie e o botão reabre', { skip: pular }, async () => {
+test('apresentação é automática na primeira visita e o cookie impede a repetição', { skip: pular }, async () => {
   const { contexto, página, erros } = await abrir({ primeiraVisita: true });
   await página.goto(`${BASE}/`, { waitUntil: 'networkidle' });
   await página.waitForSelector('dialog.boas-vindas[open]', { timeout: 8000 });
   assert.equal(await página.locator('[data-vitrine]').count(), 1, 'a animação está dentro do popup');
+  assert.ok((await contexto.cookies()).some(c=>c.name==='visto_novidades'),'registra a visualização ao abrir');
+  assert.equal(await página.locator('#ver-apresentação').count(),0,'não exige abertura manual');
   assert.equal(await página.locator('#bloco-vitrine').count(), 0, 'a vitrine saiu da página');
   await página.click('[data-bv="próximo"]');
   await página.click('[data-bv="próximo"]');
@@ -99,13 +143,23 @@ test('popup de boas-vindas: aparece na primeira visita, lembra pelo cookie e o b
   await página.reload({ waitUntil: 'networkidle' });
   await página.waitForTimeout(3500);
   assert.equal(await página.locator('dialog.boas-vindas').count(), 0, 'na segunda visita não abre sozinho');
-  await página.click('#ver-apresentação');
-  assert.equal(await página.locator('dialog.boas-vindas[open]').count(), 1, 'o botão reabre');
-  await página.keyboard.press('Escape');
-  await página.waitForTimeout(500);
-  assert.equal(await página.locator('dialog.boas-vindas').count(), 0, 'Esc fecha');
   assert.deepEqual(erros, []);
   await contexto.close();
+});
+
+test('apresentação aguarda outro diálogo e não repete após recarregar sem concluir', {skip:pular},async()=>{
+  const {contexto,página}=await abrir({primeiraVisita:true});
+  try{
+    await página.addInitScript(()=>document.addEventListener('DOMContentLoaded',()=>{const d=document.createElement('dialog');d.id='dialogo-pendente';d.textContent='Teste';document.body.append(d);d.showModal();}));
+    await página.goto(BASE+'/',{waitUntil:'networkidle'});
+    assert.equal(await página.locator('.boas-vindas[open]').count(),0);
+    await página.locator('#dialogo-pendente').evaluate(d=>{d.close();d.remove();});
+    await página.waitForSelector('.boas-vindas[open]');
+    await página.reload({waitUntil:'networkidle'});
+    await página.locator('#dialogo-pendente').evaluate(d=>{d.close();d.remove();});
+    await página.waitForTimeout(2200);
+    assert.equal(await página.locator('.boas-vindas').count(),0);
+  }finally{await contexto.close();}
 });
 
 test('falha na animação do popup: o popup continua útil sem ela e a busca responde', { skip: pular }, async () => {

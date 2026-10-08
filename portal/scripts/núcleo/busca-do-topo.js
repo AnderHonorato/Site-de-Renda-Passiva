@@ -24,6 +24,12 @@ export function ligarBuscaDoTopo() {
   let ativa = -1;
 
   const aberta = () => formulário.dataset.aberta === 'sim';
+  const ajustarLargura = () => {
+    const limite=innerWidth<=720?176:240;
+    formulário.style.setProperty('--busca-largura',`${Math.max(36,Math.min(limite,botão.getBoundingClientRect().right-12))}px`);
+  };
+  window.addEventListener('resize',()=>{if(aberta())ajustarLargura();});
+  window.visualViewport?.addEventListener('resize',()=>{if(aberta())ajustarLargura();});
 
   function fecharSugestões() {
     caixa.hidden = true;
@@ -33,6 +39,7 @@ export function ligarBuscaDoTopo() {
   }
 
   function abrir() {
+    ajustarLargura();
     formulário.dataset.aberta = 'sim';
     botão.setAttribute('aria-expanded', 'true');
     campo.tabIndex = 0;

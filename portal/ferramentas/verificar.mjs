@@ -32,6 +32,7 @@ async function listar(pasta, filtro = () => true) {
   for (const entrada of await readdir(pasta, { withFileTypes: true })) {
     const caminho = join(pasta, entrada.name);
     if (entrada.isDirectory()) {
+      if (entrada.name.startsWith('.')) continue;
       if (['node_modules', 'publicação', 'recursos', 'servidor', 'banco', 'scripts-admin'].includes(entrada.name)) continue;
       encontrados.push(...await listar(caminho, filtro));
     } else if (filtro(caminho)) {

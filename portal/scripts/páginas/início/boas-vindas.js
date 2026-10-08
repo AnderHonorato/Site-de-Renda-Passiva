@@ -1,7 +1,7 @@
 /**
  * Popup de boas-vindas da página inicial: a animação do portal à esquerda e um carrossel curto à
- * direita. Aparece sozinho na primeira visita (a lembrança fica num cookie) e pode ser reaberto
- * pelo botão "Ver a apresentação". A animação e as fontes dela só são baixadas quando o popup abre.
+ * direita. Aparece sozinho na primeira visita e grava essa visualização num cookie.
+ * A animação e as fontes dela só são baixadas quando o popup abre.
  */
 import { carregarBloco } from '../../núcleo/isolar-bloco.js';
 import { ícone } from '../../núcleo/ícones.js';
@@ -87,7 +87,6 @@ export function abrirBoasVindas({ itens = slidesDaLista(), lembrar = true } = {}
     if (!aberto) return;
     vitrine?.destruir?.();
     aberto = null;
-    if (lembrar) lembrarNovidades(Math.max(1,...slides.map(s=>Number(s.revisao)||1)));
     diálogo.classList.add('boas-vindas--saindo');
     const remover = () => diálogo.remove();
     diálogo.addEventListener('animationend', remover, { once: true });
@@ -111,6 +110,7 @@ export function abrirBoasVindas({ itens = slidesDaLista(), lembrar = true } = {}
 
   if (typeof diálogo.showModal === 'function') diálogo.showModal(); else diálogo.setAttribute('open', '');
   aberto = diálogo;
+  if (lembrar) lembrarNovidades(Math.max(1,...slides.map(s=>Number(s.revisao)||1)));
 
   // A animação entra depois do popup aparecer; se falhar, o painel continua útil sem ela.
   carregarBloco(new URL('../../../vitrine/vitrine.js', import.meta.url).href)
@@ -127,19 +127,20 @@ export function abrirBoasVindas({ itens = slidesDaLista(), lembrar = true } = {}
 }
 
 export async function montar() {
-  let publicado = await carregarNovidades(idioma);
-  document.getElementById('ver-apresentação')?.addEventListener('click', () => {
-    abrirBoasVindas({itens:[...slidesDaLista(),...publicado]});
-  });
+  const publicado = await carregarNovidades(idioma);
   const visto = ultimaNovidadeVista();
   const itens = [...(visto ? [] : slidesDaLista()),...publicado.filter(s=>s.revisao > visto)];
   if (!itens.length) return;
   // Espera a página assentar: o popup não disputa o primeiro carregamento.
   let mostrou = false;
+  let pendente;
+  const observador=new MutationObserver(()=>{clearTimeout(pendente);pendente=setTimeout(abrir,80);});
   const abrir = () => {
     if (mostrou || document.documentElement.dataset.consentimentoPronto !== 'sim' || document.querySelector('.consentimento') || document.querySelector('dialog[open]')) return;
-    mostrou = true; abrirBoasVindas({itens});
+    mostrou=true;observador.disconnect();clearTimeout(pendente);abrirBoasVindas({itens});
   };
+  // Se outro diálogo estiver aberto, a apresentação espera seu fechamento.
+  observador.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['open','hidden']});
   window.addEventListener('consentimento-alterado',()=>setTimeout(abrir,0));
   window.addEventListener('consentimento-pronto',()=>setTimeout(abrir,700),{once:true});
   if ('requestIdleCallback' in window) requestIdleCallback(() => setTimeout(abrir, 700), { timeout: 3000 });

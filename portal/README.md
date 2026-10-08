@@ -1,4 +1,4 @@
-# Portal — versão 1.3.1
+# Portal — versão 1.3.2
 
 O portal escolhido é o da porta **4400**. A identidade visual e as 65 ferramentas prontas foram preservadas. Conta e chat usam uma API separada, na mesma origem através do proxy do portal. O catálogo tem 208 itens; os planejados continuam identificados como planejados.
 
@@ -81,9 +81,13 @@ Auditoria atual do pedido original: [`documentacao/pendencias-prompt-original-20
 
 ## Refinamento visual — 08/10/2026
 
-A pesquisa fica imediatamente antes do sino no grupo direito do cabeçalho. Ao abrir, o campo cobre o topo e retorna à posição ao fechar. Notificações de conquistas usam colunas independentes para miniatura e texto. O perfil apresenta o progresso do nível, até três conquistas automáticas em destaque e a coleção recolhível com nomes; links de notificação abrem a coleção quando a conquista estiver nela. Os desenhos internos dos emblemas variam por família. O chat mostra avatar/nome e horário, sem selos de nível e sem cartão de perfil no hover. A denúncia de perfil continua em Mais no próprio perfil; a denúncia de mídia continua no visualizador.
+A pesquisa fica imediatamente antes do sino no grupo direito do cabeçalho. Ao abrir, cresce apenas para a esquerda, até 240 px no computador e 176 px no celular, sem deslocar o sino. Notificações de conquistas usam colunas independentes para miniatura e texto; o cabeçalho do painel fica fora da lista rolável e não pode ser coberto pelos itens. Barras de rolagem usam cores do tema, com alternativa nativa em contraste forçado. O perfil apresenta rank, XP, estatísticas e coleção filtrável com oito marcos por conquista. Até cinco destaques podem ser escolhidos e ordenados; contas sem seleção conservam os três destaques automáticos anteriores. Conquistas recebidas persistem após remover favoritos/trabalhos. Links de notificação destacam a insígnia correspondente, inclusive na coleção. Os desenhos dos emblemas variam por família e os nove ranks têm símbolos próprios.
 
-Verificação em 08/10: 1.103 testes unitários aprovados; 24 cenários de conta/chat/notificações e 2 de posição/expansão da busca e falha isolada aprovados. O verificador confirmou 120 páginas, 202 scripts e 208 itens. São testes em Chromium com dados de teste, com captura do perfil e das notificações revisada. A inspeção do navegador do usuário e outro aparelho físico não estão confirmadas nesta rodada.
+O chat segue a organização pública observada no SuperAnimes, dentro do tema do portal: salas à esquerda, conversa central, participantes à direita. Mensagens contínuas agrupam o autor e separadores marcam as datas; não há medalhas ou cartões no fluxo de mensagens. O painel de participantes mostra rank textual. Sem API de presença, a lista identifica pessoas das mensagens carregadas e não afirma que estão online. No celular, salas ficam em um painel recolhível. A denúncia de perfil continua em Mais no próprio perfil; a denúncia de mídia continua no visualizador.
+
+O menu de categorias mede o espaço disponível e rola internamente em telas baixas. Ao passar para a navegação móvel, fecha o painel do cabeçalho. A publicidade é carregada como módulo opcional: sua falha não impede listas, consentimento nem a apresentação flutuante. Na página inicial, a apresentação aparece automaticamente na primeira visita após o consentimento e aguarda outros diálogos. A visualização é registrada ao abrir, por cookie por um ano e fallback local. Não exige botão manual e não se repete ao recarregar. Avisos publicados posteriormente conservam seu controle por revisão.
+
+Evidências atualizadas desta versão: [relatório v1.3.2](documentacao/entrega-v1.3.2.md). São testes em Chromium com dados de teste; a inspeção da sessão real do proprietário e outro aparelho físico não estão confirmadas nesta rodada.
 
 ## Perfil e conquistas — 07/10/2026
 

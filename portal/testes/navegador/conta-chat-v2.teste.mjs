@@ -127,6 +127,10 @@ async function contextoComApi({ viewport = { width: 1200, height: 800 }, chat = 
     if (p === '/api/perfil/ander_teste' && metodo === 'GET') {
       return rota.fulfill({ contentType: 'application/json', body: JSON.stringify({ perfil:{...perfil,...perfilAlterado} }) });
     }
+    if(p==='/api/perfil/conquistas'&&metodo==='PATCH'){
+      perfilAlterado.conquistas_destaque=req.postDataJSON().selecionadas;
+      return rota.fulfill({contentType:'application/json',body:JSON.stringify({selecionadas:perfilAlterado.conquistas_destaque})});
+    }
     if (p === '/api/perfil/ander_teste' && metodo === 'PATCH') {
       return rota.fulfill({ contentType: 'application/json', body: JSON.stringify({ perfil: { ...perfil, ...req.postDataJSON() } }) });
     }
@@ -287,7 +291,7 @@ test('notificação da conquista aponta para a insígnia e detalhes param o bril
     await página.screenshot({path:join(RAIZ,'.execucao/notificacoes-colunas-2026-10-08.png')});
     await página.locator('.notificações__item--conquista').click();await página.waitForSelector('.insignia-detalhe:popover-open');
     assert.equal(new URL(página.url()).searchParams.get('conquista'),'explorador:2');
-    const alvo=página.locator('[data-conquista="explorador"]');assert.equal(await alvo.evaluate(el=>el.classList.contains('conquista-destacada')),true);
+    const alvo=página.locator('.perfil-comunidade__medalhas [data-conquista="explorador"]');assert.equal(await alvo.evaluate(el=>el.classList.contains('conquista-destacada')),true);
     const caixa=await página.locator('.insignia-detalhe').boundingBox();assert.ok(caixa.x>=0&&caixa.x+caixa.width<=390&&caixa.y>=0&&caixa.y+caixa.height<=844);
     await página.screenshot({path:join(RAIZ,'.execucao/insignia-notificacao-2026-10-07.png')});
     await página.locator('.insignia-detalhe__fechar').click();await alvo.click();await página.waitForSelector('.insignia-detalhe:popover-open');
@@ -486,6 +490,33 @@ test('perfil próprio mostra edição e perfil de outra pessoa mostra ações so
   await contexto.close();
 });
 
+test('perfil salva cinco destaques ordenados, filtra a coleção e cabe no celular', {skip:pular},async()=>{
+  const medalhas=['explorador','pratica','conversa','colecao','projetos','veterano','conexoes'].map((id,i)=>({id,nome:id,patamar:'Ouro',tier:3,desbloqueada:i<6,valor:100-i,meta:160,percentual:55,descricao:'Resolva tarefas para avançar nesta conquista.',etapas:Array.from({length:8},(_,j)=>({tier:j,nome:'Marco '+j,meta:(j+1)*10,desbloqueada:i<6&&j<=3}))}));
+  const dados={medalhas,progresso_nivel:{nivel:6,pontos:250,faltam:110,percentual:0}};
+  const {contexto,página}=await contextoComApi({viewport:{width:1366,height:900},perfilAlterado:dados});
+  try{
+    await página.goto(BASE+'/perfil.html?usuario=ander_teste');await página.waitForSelector('.colecao-conquistas');
+    await página.locator('[data-destacar="colecao"]').click();await página.locator('[data-destacar="projetos"]').click();
+    await página.locator('[data-destacar="veterano"]').click();
+    assert.match(await página.locator('.colecao-conquistas__status').textContent(),/até 5/);
+    await página.getByRole('button',{name:'Mover antes: projetos',exact:true}).click();
+    await página.getByRole('button',{name:'Salvar destaques',exact:true}).click();
+    await página.waitForFunction(()=>document.querySelectorAll('.perfil-comunidade__medalhas>.medalha').length===5);
+    assert.deepEqual(dados.conquistas_destaque,['explorador','pratica','conversa','projetos','colecao']);
+    await página.reload();await página.waitForSelector('.colecao-conquistas');
+    assert.deepEqual(await página.locator('.perfil-comunidade__medalhas>.medalha').evaluateAll(nos=>nos.map(n=>n.dataset.conquista)),dados.conquistas_destaque);
+    await página.locator('[data-filtro="ganhas"]').click();assert.equal(await página.locator('.colecao-conquistas__card').count(),6);
+    await página.locator('[data-filtro="todas"]').click();assert.equal(await página.locator('.colecao-conquistas__card').count(),7);
+    await página.locator('.conta__rolagem').evaluate(el=>el.scrollTop=0);await página.screenshot({path:join(RAIZ,'.execucao/perfil-ranks-2026-10-08.png')});
+    await página.locator('.colecao-conquistas').scrollIntoViewIfNeeded();await página.screenshot({path:join(RAIZ,'.execucao/colecao-conquistas-2026-10-08.png')});
+    await página.setViewportSize({width:320,height:740});await página.locator('.conta__rolagem').evaluate(el=>el.scrollTop=0);
+    assert.equal(await página.evaluate(()=>document.documentElement.scrollWidth),320);
+    const identidade=await página.locator('.perfil-comunidade__identidade').boundingBox();
+    assert.ok(identidade.width>=192,'texto do perfil usa a largura disponível, sem coluna comprimida junto à foto');
+    await página.screenshot({path:join(RAIZ,'.execucao/perfil-ranks-mobile-2026-10-08.png')});
+  }finally{await contexto.close();}
+});
+
 test('perfil limita destaques e abre pela notificação uma conquista que ficou na coleção', {skip:pular},async()=>{
   const medalhas=['explorador','pratica','conversa','colecao','veterano'].map((id,i)=>({id,nome:id,patamar:'Prata',tier:2,desbloqueada:true,valor:20-i,meta:30,descricao:'Um marco de teste.'}));
   const {contexto,página}=await contextoComApi({perfilAlterado:{medalhas}});
@@ -493,8 +524,8 @@ test('perfil limita destaques e abre pela notificação uma conquista que ficou 
     await página.goto(BASE+'/perfil.html?usuario=ander_teste&conquista=veterano:2');
     await página.waitForSelector('.insignia-detalhe:popover-open');
     assert.equal(await página.locator('.perfil-comunidade__conquistas > .perfil-comunidade__medalhas > .medalha').count(),3);
-    assert.equal(await página.locator('.perfil-comunidade__colecao .medalha').count(),2);
-    assert.equal(await página.locator('.perfil-comunidade__colecao').getAttribute('open'),'');
+    assert.equal(await página.locator('.colecao-conquistas__card').count(),5);
+    assert.equal(await página.locator('.colecao-conquistas [data-conquista="veterano"]').isVisible(),true);
     assert.equal(await página.locator('[data-conquista="veterano"]').evaluate(el=>el.classList.contains('conquista-destacada')),true);
   } finally { await contexto.close(); }
 });

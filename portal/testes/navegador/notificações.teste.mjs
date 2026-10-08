@@ -79,6 +79,29 @@ test('o sino mostra as novidades para quem não tem conta, leva à ferramenta e 
   await contexto.close();
 });
 
+test('topo das notificações permanece separado durante a rolagem, com barras no tema', {skip:pular},async()=>{
+  for(const [viewport,tema] of [[{width:1366,height:600},'claro'],[{width:320,height:568},'escuro']]){
+    const {contexto,página}=await abrir({viewport});
+    try{
+      await contexto.addInitScript(tema=>localStorage.setItem('portal.tema',JSON.stringify(tema)),tema);
+      await feedFalso(página,Array.from({length:20},(_,i)=>item('juros','Ferramenta '+i)).map((x,i)=>({...x,id:'teste-'+i})));
+      await página.goto(BASE+'/',{waitUntil:'networkidle'});await página.click('#abrir-notificações');
+      const topo=await página.locator('.notificações__topo').boundingBox();
+      const geometria=await página.locator('.notificações__topo').evaluate(el=>{const t=el.querySelector('b').getBoundingClientRect(),b=el.querySelector('button').getBoundingClientRect();return {tituloFim:t.right,botaoInicio:b.left};});
+      assert.ok(geometria.tituloFim<=geometria.botaoInicio);
+      await página.locator('.notificações__lista').evaluate(el=>el.scrollTop=el.scrollHeight);
+      assert.ok(await página.locator('.notificações__lista').evaluate(el=>el.scrollTop>0));
+      const depois=await página.locator('.notificações__topo').boundingBox();assert.ok(Math.abs(topo.y-depois.y)<1);
+      assert.equal(await página.locator('.notificações__topo').evaluate(el=>el.contains(document.elementFromPoint(el.getBoundingClientRect().left+20,el.getBoundingClientRect().top+20))),true,'a lista não cobre o topo');
+      assert.equal(await página.locator('.notificações__lista').evaluate(el=>getComputedStyle(el).scrollbarWidth),'thin');
+      assert.notEqual(await página.locator('.notificações__lista').evaluate(el=>getComputedStyle(el).scrollbarColor),'auto');
+      await página.screenshot({path:join(RAIZ,`.execucao/notificacoes-rolagem-${tema}-2026-10-08.png`)});
+      await página.getByRole('button',{name:/Marcar todas|Marcar todos/}).click();
+      assert.equal(await página.locator('.notificações__contador:not([hidden])').count(),0);
+    }finally{await contexto.close();}
+  }
+});
+
 test('em inglês o sino mostra os textos em inglês', { skip: pular }, async () => {
   const { contexto, página } = await abrir();
   await feedFalso(página, [item('juros', 'Juros')]);

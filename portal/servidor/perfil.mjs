@@ -161,10 +161,17 @@ function valorDaMedalha(db, usuario, tipo) {
 }
 
 export function medalhasDoUsuario(db, usuario) {
+  const ganhas = new Map(db.prepare('SELECT tipo,patamar FROM conquistas_ganhas WHERE usuario_id=?').all(usuario.id).map(m=>[m.tipo,m.patamar]));
+  // Contas existentes conservam os marcos já recebidos antes desta versão.
+  for (const m of db.prepare('SELECT tipo,patamar FROM conquistas_vistas WHERE usuario_id=?').all(usuario.id)) {
+    if (m.tipo !== 'nivel') ganhas.set(m.tipo,Math.max(ganhas.get(m.tipo)??-1,m.patamar));
+  }
   return MEDALHAS.map(def => {
     const valor = valorDaMedalha(db, usuario, def.consulta);
     let tier = -1;
     for (let i = 0; i < def.limites.length; i++) if (valor >= def.limites[i]) tier = i;
+    tier = Math.min(def.limites.length-1,Math.max(tier,ganhas.get(def.id)??-1));
+    if (tier >= 0 && tier > (ganhas.get(def.id)??-1)) db.prepare('INSERT INTO conquistas_ganhas(usuario_id,tipo,patamar) VALUES(?,?,?) ON CONFLICT(usuario_id,tipo) DO UPDATE SET patamar=max(patamar,excluded.patamar)').run(usuario.id,def.id,tier);
     const atual = Math.max(0, tier);
     const proximoIndice = Math.min(def.limites.length - 1, Math.max(0, tier + 1));
     const meta = def.limites[proximoIndice];
@@ -178,6 +185,7 @@ export function medalhasDoUsuario(db, usuario) {
       patamar: PATAMARES[atual].nome,
       classe: PATAMARES[atual].classe,
       meta,
+      etapas: def.limites.map((limite,i)=>({tier:i,nome:PATAMARES[i].nome,meta:limite,desbloqueada:i<=tier})),
       completa: tier === def.limites.length - 1,
       percentual: tier < 0 ? Math.min(99, Math.round((valor / def.limites[0]) * 100))
         : tier === def.limites.length - 1 ? 100

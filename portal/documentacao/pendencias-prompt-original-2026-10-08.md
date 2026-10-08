@@ -1,4 +1,4 @@
-# Auditoria de continuidade — 08/10/2026 — v1.3.1
+# Auditoria de continuidade — 08/10/2026 — v1.3.2
 
 Comparação do super prompt anexado em `02fda86f-ec72-476d-b593-0f02eb85b7d3/Texto colado.txt`, do histórico do Claude anexado em `a090e02b-82f7-4771-a813-e2ec5df35490/Texto colado.txt` e do código do portal principal. As decisões posteriores em `../documentação/plano-portal-principal.md` prevalecem: manter o visual do portal atual, `ander-flow/` como referência congelada, planos manuais, API independente e continuidade na porta 4400.
 
@@ -25,7 +25,7 @@ Comparação do super prompt anexado em `02fda86f-ec72-476d-b593-0f02eb85b7d3/Te
 ## Pedidos posteriores ainda parciais
 
 - **Premium:** `servidor/servidor-planos.json` ainda declara Premium provisório, com as mesmas cotas do Plus (500 favoritos, 500 trabalhos, lote de 100). Falta implementar diferenciação útil; a escolha de uma proposta foi delegada ao agente pelo proprietário, não exige pedir os números novamente.
-- **Recompensas da referência:** o perfil já tem progresso, três destaques automáticos e coleção. Falta escolha persistente e ordenação dos três emblemas destacados, filtros da coleção, explicação da próxima recompensa, missões/eventos e ranking com privacidade. A análise de referência cobriu páginas públicas de perfil e ranking; isso não é uma auditoria de funções privadas de todo o site.
+- **Recompensas da referência:** entregues escolha persistente e ordenação de até cinco destaques, filtros da coleção, oito marcos por família, conquistas permanentes, nove ranks distintos e XP faltante para o próximo rank. O chat tem salas/conversa/participantes, agrupamento de mensagens e datas, preservando o tema do portal. Faltam missões/eventos e ranking com privacidade; presença online exige API própria. A referência foi capturada com a instalação existente do Crawl4AI: cinco páginas e 90 recursos públicos. Isso não revela regras privadas nem constitui cópia integral funcional do backend.
 - **Ferramentas posteriores:** conversões/serviço de arquivos e outras planejadas são ondas separadas; o contrato de processamento local das ferramentas atuais continua. Não tratar o serviço remoto como entregue.
 - **Backup de C:\Projetos:** somente uma parte foi enviada ao Drive. Os manifestos e pontos de retomada foram preservados. Backup integral, ensaio de restauração e liberação de espaço não estão concluídos. O pedido de não apagar nada continua vigente.
 
@@ -38,7 +38,7 @@ Comparação do super prompt anexado em `02fda86f-ec72-476d-b593-0f02eb85b7d3/Te
 
 Pagamento integrado não é lacuna desta fase: foi excluído em favor de liberação manual pelo administrador. A identidade visual literal do design antigo também foi superada pela decisão posterior de preservar a linguagem do portal atual.
 
-## Evidência da rodada atual
+## Evidência da v1.3.1
 
 - 1.103/1.103 testes unitários aprovados em 08/10.
 - 24/24 cenários de conta, chat e notificações aprovados, incluindo tela baixa, 320/390 px, conquistas escondidas e ausência de sobreposição.
@@ -46,10 +46,14 @@ Pagamento integrado não é lacuna desta fase: foi excluído em favor de libera�
 - Verificador: 120 páginas, 202 scripts, 208 entradas; sem problemas.
 - Capturas privadas de teste: `.execucao/perfil-organizado-2026-10-08.png` e `.execucao/notificacoes-colunas-2026-10-08.png`. Dados simulados; não representam uma conta real do proprietário.
 
+## Continuação v1.3.2
+
+Correções urgentes entregues: falha opcional dos anúncios deixa de interromper lista e apresentação; menu de categorias cabe na altura disponível; notificações têm topo separado da rolagem; busca curta cresce para a esquerda junto ao sino; rolagem segue o tema. A apresentação é automática na primeira visita da página inicial e grava o cookie ao aparecer. Dados existentes foram comparados antes/depois do reinício da API, com cópia SQLite consistente preservada. Evidência atual em [entrega-v1.3.2.md](entrega-v1.3.2.md).
+
 ## Ordem de continuidade
 
 1. Completar a importação XLSX e a ferramenta em etapas.
-2. Diferenciar Premium e organizar a escolha de conquistas do perfil.
+2. Diferenciar Premium e implementar missões/eventos/ranking de recompensas.
 3. Administração do catálogo/conteúdo/pontos e proteção progressiva persistente.
 4. Inglês das ferramentas e nova validação de desempenho/acessibilidade.
 5. Preparar produção e validar domínio, e-mail, anúncios e backup/restauração.

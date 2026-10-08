@@ -1,8 +1,8 @@
 /** Publicidade condicional do portal. Nenhuma decisão de elegibilidade vem do HTML sozinho:
  * a API precisa permitir, haver consentimento vigente e ao menos um bloco com ID válido.
  */
-export const CHAVE_CONSENTIMENTO = 'consentimento-portal-v1';
-export const VERSAO_CONSENTIMENTO = '1';
+import { CHAVE_CONSENTIMENTO, VERSAO_CONSENTIMENTO, consentimentoVigente } from '../núcleo/consentimento-dados.js';
+export { CHAVE_CONSENTIMENTO, VERSAO_CONSENTIMENTO, consentimentoVigente };
 export const POSICOES = Object.freeze(['resultado', 'lateral', 'lista', 'rodape']);
 const EDITOR_VALIDO = /^ca-pub-\d{16}$/;
 const BLOCO_VALIDO = /^\d{6,20}$/;
@@ -43,12 +43,6 @@ export function validarRespostaAnuncios(resposta) {
     if (BLOCO_VALIDO.test(id)) blocos[posicao] = id;
   }
   return Object.keys(blocos).length ? { editor: resposta.editor, blocos, teste: resposta.teste === true } : null;
-}
-
-export function consentimentoVigente(consentimento, agora = Date.now()) {
-  return !!consentimento && consentimento.versao === VERSAO_CONSENTIMENTO &&
-    Number.isFinite(consentimento.expiraEm) && consentimento.expiraEm > agora &&
-    ['aceitar', 'essencial'].includes(consentimento.escolha);
 }
 
 export function estadoDoBloco(status) {

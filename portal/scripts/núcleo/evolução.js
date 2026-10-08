@@ -1,5 +1,6 @@
-import { criarIconeNivel } from './nível.js';
 import { criarIconeMedalha } from './emblemas.js';
+import { criarSeloRank } from './ranks.js';
+import { rankDoNivel } from '../../dados/recompensas.js';
 import { tocarSom } from './sons.js';
 import { api } from './api.js';
 import { registrarFonte } from './notificações.js';
@@ -25,10 +26,11 @@ function celebrar(conquista) {
   const etiqueta=elemento('p','conquista__etiqueta',en()?'A new milestone':'Uma nova conquista');
   const palco=elemento('div','conquista__palco');
   const nivel=conquista.tipo==='nivel';
-  palco.append(nivel?criarIconeNivel(conquista.nivel):criarIconeMedalha(conquista.medalha));
+  palco.append(nivel?criarSeloRank(conquista.nivel,{ingles:en()}):criarIconeMedalha(conquista.medalha));
   palco.dataset.tier=String(conquista.medalha?.tier??Math.min(7,Math.floor(conquista.nivel/2)));
   const titulo=elemento('h2','',nivel?(en()?`Level ${conquista.nivel} unlocked!`:`Nível ${conquista.nivel} desbloqueado!`):(conquista.medalha.nome));titulo.id='conquista-titulo';
-  const texto=elemento('p','',nivel?(en()?'Your journey is taking shape. Explore the profile styles you have unlocked.':'Sua jornada está ganhando forma. Confira os visuais que você desbloqueou no perfil.'):`${conquista.medalha.patamar} · ${conquista.medalha.descricao}`);texto.id='conquista-texto';
+  const rank=nivel?rankDoNivel(conquista.nivel):null;
+  const texto=elemento('p','',nivel?`${en()?rank.nome_en:rank.nome} ${rank.subnivel} · ${en()?'Explore the profile styles you have unlocked.':'Confira os visuais que você desbloqueou no perfil.'}`:`${conquista.medalha.patamar} · ${conquista.medalha.descricao}`);texto.id='conquista-texto';
   const continuar=elemento('button','botão botão--primário',en()?'Continue':'Continuar');continuar.type='button';continuar.addEventListener('click',()=>dialogo.close());
   conteudo.append(etiqueta,palco,titulo,texto,continuar);dialogo.append(luz,conteudo);document.body.append(dialogo);
   dialogo.showModal();tocarSom(nivel?'nivel':'conquista');

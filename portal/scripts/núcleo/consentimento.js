@@ -1,4 +1,7 @@
-import { iniciarPublicidade, CHAVE_CONSENTIMENTO, VERSAO_CONSENTIMENTO, consentimentoVigente } from '../publicidade/anúncios-condicionais.js';
+import { CHAVE_CONSENTIMENTO, VERSAO_CONSENTIMENTO, consentimentoVigente } from './consentimento-dados.js';
+
+const iniciarPublicidade = () => import('../publicidade/anúncios-condicionais.js')
+  .then(m => m.iniciarPublicidade()).catch(() => {});
 
 const en = document.documentElement.lang === 'en';
 const t = (pt, english) => en ? english : pt;

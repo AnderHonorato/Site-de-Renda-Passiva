@@ -5,7 +5,6 @@ import { íconeVivo, imagemDoTema, conferirÍconesVivos } from './ícone-animado
 import { lerFavoritos, alternarFavorito } from './preferências.js';
 import { avisar } from './interface.js';
 import { t, éInglês, raizDoSite } from './idioma.js';
-import { iniciarPublicidade } from '../publicidade/anúncios-condicionais.js';
 
 /**
  * Markup de uma linha de ferramenta.
@@ -86,7 +85,10 @@ export function desenharLista(contêiner, lista, { base = raizDoSite, vazio = t(
     .map((f,i) => linhaDeFerramenta(f, { base, favoritada: favoritos.has(f.slug) })+(anuncios && [11,23].includes(i) && i+1<lista.length ? '<div data-anuncio-posicao="lista" class="publicidade-vazia"></div>' : ''))
     .join('');
   conferirÍconesVivos(contêiner);
-  if(anuncios) void iniciarPublicidade().catch(()=>{});
+  // Um bloqueador de anúncios pode impedir até o download deste módulo opcional.
+  // A lista precisa estar desenhada e utilizável independentemente da publicidade.
+  if (anuncios) void import('../publicidade/anúncios-condicionais.js')
+    .then(({ iniciarPublicidade }) => iniciarPublicidade()).catch(() => {});
 }
 
 /**

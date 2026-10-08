@@ -9,6 +9,15 @@
    versão mais escura (5,2:1 sobre o marfim). Branco sobre --acento dá 3,1:1 e não
    passa; por isso nenhum botão usa texto branco. */
 
+/* Rolagem comum aos painéis, listas e página; as cores acompanham o tema. */
+* { scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--marca) 48%,var(--borda-forte)) var(--superfície-2); }
+::-webkit-scrollbar { width:8px;height:8px; }
+::-webkit-scrollbar-track { background:var(--superfície-2);border-radius:99px; }
+::-webkit-scrollbar-thumb { background:color-mix(in srgb,var(--marca) 48%,var(--borda-forte));border:2px solid var(--superfície-2);border-radius:99px; }
+::-webkit-scrollbar-thumb:hover { background:var(--marca); }
+::-webkit-scrollbar-corner { background:var(--superfície-2); }
+@media(forced-colors:active) { * { scrollbar-color:auto;scrollbar-width:auto; } }
+
 :root {
   color-scheme: light;
 

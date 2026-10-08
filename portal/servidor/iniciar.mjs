@@ -8,6 +8,7 @@ import { ferramentasProntas, ferramentaPorSlug } from '../dados/catálogo.js';
 import { categorias } from '../dados/categorias.js';
 import { limitesDoPlano, planosPublicos, trabalhoPublico, validarEdicaoTrabalho, validarNovoTrabalho } from './trabalhos.mjs';
 import { AVATARES, medalhasDoUsuario, nivelDePontos, personalizacoesDoNivel, progressoDeNivel, validarPersonalizacao, validarSociais } from './perfil.mjs';
+import { progressoDeRank } from '../dados/recompensas.js';
 import { MAX_IMAGEM, itemAdmin, novidadesPublicas, removerNovidade, salvarImagem, salvarNovidade } from './novidades.mjs';
 import { configuracaoPublicidade, salvarPublicidade } from './publicidade.mjs';
 import { iniciarBanners, tratarBanners } from './banners.mjs';
@@ -40,6 +41,7 @@ function setCookie(res,name,value,{httpOnly=false,maxAge=2592000}={}) {
   const prior=res.getHeader('Set-Cookie'); res.setHeader('Set-Cookie',prior?[...(Array.isArray(prior)?prior:[prior]),c]:c);
 }
 function jsonSeguro(valor,padrao={}){try{const x=JSON.parse(valor||'');return x&&typeof x==='object'&&!Array.isArray(x)?x:padrao;}catch{return padrao;}}
+function listaSegura(valor){try{const x=JSON.parse(valor||'');return Array.isArray(x)?x:[];}catch{return [];}}
 function pontosDeEvolucao(u){const bonus=medalhasDoUsuario(banco,u).filter(m=>m.desbloqueada).reduce((s,m)=>s+((m.tier+1)*5),0);return Math.max(0,Number(u.pontos)||0)+bonus;}
 function nivelDoUsuario(u){return nivelDePontos(pontosDeEvolucao(u));}
 function usuarioPublico(u) {
@@ -161,6 +163,9 @@ function enriquecerPerfil(perfil,u){
   perfil.ferramentas_recomendadas=JSON.parse(u.recomendadas||'[]');
   perfil.medalhas=medalhasDoUsuario(banco,u);
   perfil.progresso_nivel=progressoDeNivel(pontosDeEvolucao(u));
+  perfil.rank=progressoDeRank(perfil.progresso_nivel.pontos);
+  const destaques=banco.prepare('SELECT selecionadas FROM perfil_conquistas_destaque WHERE usuario_id=?').get(u.id);
+  perfil.conquistas_destaque=destaques?listaSegura(destaques.selecionadas):null;
   perfil.personalizacoes=personalizacoesDoNivel(perfil.nivel);
   return perfil;
 }
@@ -281,7 +286,8 @@ async function rota(req,res){
     const favoritos=banco.prepare('SELECT slug,criado_em FROM favoritos WHERE usuario_id=?').all(u.id), suporte=banco.prepare('SELECT * FROM suporte WHERE usuario_id=?').all(u.id), uso=banco.prepare('SELECT slug,total,ultimo_uso_em FROM uso_ferramentas WHERE usuario_id=?').all(u.id);
     const trabalhos=banco.prepare('SELECT ferramenta_slug,titulo,dados,situacao,criado_em,atualizado_em FROM trabalhos WHERE usuario_id=? ORDER BY atualizado_em DESC').all(u.id).map(item=>({...item,dados:JSON.parse(item.dados)}));
     const denuncias=banco.prepare('SELECT id,alvo_usuario_id,mensagem_id,motivo,situacao,criado_em FROM denuncias WHERE denunciante_id=?').all(u.id);
-    return json(res,200,{usuario:usuarioPublico(u),mensagens,amizades,bloqueios,favoritos,trabalhos,suporte,denuncias,uso});
+    const conquistas=medalhasDoUsuario(banco,u),destaques=banco.prepare('SELECT selecionadas FROM perfil_conquistas_destaque WHERE usuario_id=?').get(u.id);
+    return json(res,200,{usuario:usuarioPublico(u),mensagens,amizades,bloqueios,favoritos,trabalhos,suporte,denuncias,uso,conquistas,conquistas_destaque:destaques?listaSegura(destaques.selecionadas):null});
   }
   if(m==='DELETE'&&p==='/api/conta'){
     const u=exigir(req),b=await corpo(req);if(!await comparar(b.senha,u.senha_hash))throw erro(403,'senha_invalida');
@@ -423,6 +429,14 @@ async function rota(req,res){
     const r=banco.prepare(`INSERT INTO conquistas_vistas(usuario_id,tipo,patamar) VALUES(?,?,?)
       ON CONFLICT(usuario_id,tipo) DO UPDATE SET patamar=excluded.patamar,visto_em=datetime('now') WHERE conquistas_vistas.patamar<excluded.patamar`).run(u.id,tipo,patamar);
     return json(res,200,{recebida:Boolean(r.changes)});
+  }
+  if(m==='PATCH'&&p==='/api/perfil/conquistas'){
+    const u=exigir(req),b=await corpo(req),selecionadas=b.selecionadas;
+    const ganhas=new Set(medalhasDoUsuario(banco,u).filter(m=>m.desbloqueada).map(m=>m.id));
+    if(!Array.isArray(selecionadas)||selecionadas.length>5||new Set(selecionadas).size!==selecionadas.length
+      ||selecionadas.some(id=>typeof id!=='string'||!ganhas.has(id)))throw erro(400,'conquistas_invalidas');
+    banco.prepare('INSERT INTO perfil_conquistas_destaque(usuario_id,selecionadas) VALUES(?,?) ON CONFLICT(usuario_id) DO UPDATE SET selecionadas=excluded.selecionadas').run(u.id,JSON.stringify(selecionadas));
+    return json(res,200,{selecionadas});
   }
   if(m==='PATCH'&&p==='/api/perfil'){
     const u=exigir(req),b=await corpo(req,1_750_000);

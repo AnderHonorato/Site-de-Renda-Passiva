@@ -102,7 +102,7 @@ function cabeçalho(ctx, base, atual, alternativas) {
             <b>${escapar(t('moldura.notificaçõesTítulo'))}</b>
             <button class="botão botão--texto" type="button" data-notificações="marcar-todas" hidden>${escapar(t('moldura.notificaçõesMarcarTodas'))}</button>
           </div>
-          <ul class="notificações__lista"></ul>
+          <ul class="notificações__lista" tabindex="0" aria-label="${escapar(t('moldura.notificações'))}"></ul>
           <p class="notificações__vazio" hidden>${escapar(t('moldura.notificaçõesVazio'))}</p>
         </div>
       </span>
