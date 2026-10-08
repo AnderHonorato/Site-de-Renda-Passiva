@@ -7,6 +7,7 @@ import { criarIconeMedalha } from '../../núcleo/emblemas.js';
 import { criarSeloRank } from '../../núcleo/ranks.js';
 import { progressoDeRank, rankDoNivel } from '../../../dados/recompensas.js';
 import { escolherDestaques, montarColecao } from './colecao-conquistas.js';
+import { criarProgressoEmblema } from '../../núcleo/progresso-emblema.js';
 
 const usuario = new URLSearchParams(location.search).get('usuario');
 const area = document.getElementById('perfil-pessoa');
@@ -56,7 +57,7 @@ function criarMedalha(medalha) {
   item.dataset.conquista=medalha.id;
 
   const simbolo = elemento('span', 'medalha__simbolo');
-  simbolo.append(criarIconeMedalha(medalha));
+  simbolo.append(criarProgressoEmblema(medalha, { ingles: en }));
   const rotulo = elemento('span', 'medalha__rotulo', medalha.nome);
   item.append(simbolo, rotulo);
 
@@ -207,7 +208,7 @@ async function carregar() {
     area.dataset.moldura = perfil.moldura || 'basica';
     aplicarPrestigio(area,perfil);
 
-    const hero = elemento('section', 'perfil-comunidade__hero');
+    const hero = elemento('section', 'perfil-comunidade__hero perfil-comunidade__hero--compacto');
     hero.dataset.banner = perfil.banner || 'brisa';
     hero.dataset.moldura = perfil.moldura || 'basica';
 
@@ -232,7 +233,7 @@ async function carregar() {
     hero.dataset.rank=rank.id;
     const distintivo=elemento('span','perfil-comunidade__rank');
     distintivo.append(criarSeloRank(perfil.nivel||1,{ingles:en}),elemento('b','',(en?rank.nome_en:rank.nome)+' '+rank.subnivel));
-    identidade.append(distintivo);
+    visual.append(distintivo);
 
     const papel = elemento(
       'span',
@@ -266,13 +267,14 @@ async function carregar() {
 
     identidade.append(superior, nome, handle, bio);
 
+    let jornada, conquistas;
     const progresso=perfil.progresso_nivel;
     if(progresso){
-      const jornada=elemento('div','perfil-comunidade__jornada');
+      jornada=elemento('div','perfil-comunidade__jornada');
       jornada.append(elemento('b','',`${progresso.pontos || 0} XP`));
       jornada.append(elemento('span','',en?`${progresso.faltam || 0} XP to the next level`:`Faltam ${progresso.faltam || 0} XP para o próximo nível`));
       const barra=elemento('progress');barra.max=100;barra.value=Math.max(0,Math.min(100,Number(progresso.percentual)||0));barra.setAttribute('aria-label',en?'Progress to the next level':'Progresso para o próximo nível');
-      jornada.append(barra);identidade.append(jornada);
+      jornada.append(barra);
       const proximo=elemento('small','perfil-comunidade__proximo',rank.proximo
         ? (en?`${rank.faltam} XP to ${rankDoNivel(rank.nivel_proximo_rank).nome_en} I`:`${rank.faltam} XP para ${rank.proximo} I`)
         : (en?'Highest rank reached':'Rank máximo alcançado'));
@@ -283,7 +285,7 @@ async function carregar() {
       .sort((a, b) => (Number(b.tier) - Number(a.tier)) || (Number(b.valor) - Number(a.valor)));
     const destaques=escolherDestaques(perfil);
     if (destaques.length) {
-      const conquistas = elemento('section', 'perfil-comunidade__conquistas');
+      conquistas = elemento('section', 'perfil-comunidade__conquistas');
       const topoConquistas = elemento('div', 'perfil-comunidade__conquistas-topo');
       topoConquistas.append(elemento('h3', '', en ? 'Featured achievements' : 'Conquistas em destaque'));
       const medalhas = elemento('div', 'perfil-comunidade__medalhas');
@@ -292,10 +294,9 @@ async function carregar() {
       const resumo = elemento('p', 'perfil-comunidade__conquistas-resumo', desbloqueadas.length > destaques.length
         ? (en ? `+${desbloqueadas.length - destaques.length} in your collection` : `+${desbloqueadas.length - destaques.length} na sua coleção`)
         : (en ? 'Open one to see the details.' : 'Abra uma para ver os detalhes.'));
-      conquistas.append(topoConquistas, medalhas, resumo);
+      conquistas.append(topoConquistas, medalhas);
       const verColecao=elemento('a','perfil-comunidade__colecao',en?'View full collection':'Ver coleção completa');
-      verColecao.href='#colecao-conquistas';conquistas.append(verColecao);
-      identidade.append(conquistas);
+      verColecao.href='#colecao-conquistas';verColecao.title=resumo.textContent;topoConquistas.append(verColecao);
     }
 
     const meta = elemento('div', 'perfil-comunidade__meta');
@@ -334,9 +335,20 @@ async function carregar() {
         }
       });
 
-      const mais = elemento('details', 'perfil-comunidade__mais');
-      const resumo = elemento('summary', '', en ? 'More' : 'Mais');
+      const mais = elemento('div', 'perfil-comunidade__mais');
+      const resumo = elemento('button', 'botão botão--linha', en ? 'More' : 'Mais');
+      resumo.type='button';resumo.setAttribute('aria-expanded','false');resumo.setAttribute('aria-controls','perfil-mais-menu');
       const menu = elemento('div', 'perfil-comunidade__mais-menu');
+      menu.id='perfil-mais-menu';menu.setAttribute('popover','auto');
+      function posicionarMenu(){
+        const rect=resumo.getBoundingClientRect();
+        menu.style.left=Math.max(8,Math.min(innerWidth-menu.offsetWidth-8,rect.right-menu.offsetWidth))+'px';
+        menu.style.top=Math.max(8,Math.min(innerHeight-menu.offsetHeight-8,rect.bottom+6))+'px';
+      }
+      resumo.addEventListener('click',()=>{menu.togglePopover();if(menu.matches(':popover-open'))posicionarMenu();});
+      menu.addEventListener('toggle',evento=>resumo.setAttribute('aria-expanded',String(evento.newState==='open')));
+      window.addEventListener('resize',()=>{if(menu.matches(':popover-open'))posicionarMenu();});
+      document.querySelector('.conta__rolagem')?.addEventListener('scroll',()=>{if(menu.matches(':popover-open'))menu.hidePopover();},{passive:true});
 
       const bloquear = elemento('button', '', en ? 'Block' : 'Bloquear');
       bloquear.type = 'button';
@@ -367,7 +379,7 @@ async function carregar() {
               dados: { usuarioId: perfil.id, motivo },
             });
             estado(en ? 'Profile reported.' : 'Perfil denunciado.');
-            mais.removeAttribute('open');
+            menu.hidePopover();
           } catch (erro) {
             estado(mensagemErro(erro), true);
             denunciar.disabled = false;
@@ -380,7 +392,10 @@ async function carregar() {
       acoes.append(amizade, mais);
     }
 
-    hero.append(fundo, visual, identidade, acoes);
+    identidade.append(acoes);
+    hero.append(fundo, visual, identidade);
+    if(jornada)hero.append(jornada);
+    if(conquistas)hero.append(conquistas);
     area.append(hero);
     const estatisticas=elemento('div','perfil-comunidade__estatisticas');
     for(const [id,pt,english]of [['explorador','Ferramentas exploradas','Tools explored'],['pratica','Resultados concluídos','Completed results'],['projetos','Trabalhos salvos','Saved works'],['colecao','Favoritos','Favorites']]){

@@ -25,7 +25,7 @@ export function ligarBuscaDoTopo() {
 
   const aberta = () => formulário.dataset.aberta === 'sim';
   const ajustarLargura = () => {
-    const limite=innerWidth<=720?176:240;
+    const limite=innerWidth<=720?176:216;
     formulário.style.setProperty('--busca-largura',`${Math.max(36,Math.min(limite,botão.getBoundingClientRect().right-12))}px`);
   };
   window.addEventListener('resize',()=>{if(aberta())ajustarLargura();});
@@ -81,7 +81,7 @@ export function ligarBuscaDoTopo() {
     } else {
       caixa.innerHTML = achados.map((f, i) => {
         const selo = f.status === 'pronta' ? '' : `<span class="etiqueta">${escapar(t('lista.planejada'))}</span>`;
-        return `<a class="sugestões__item" role="option" id="sugestão-topo-${i}" aria-selected="false" href="${escapar(destinoDe(f))}">`
+        return `<a class="sugestões__item" role="option" id="sugestão-topo-${i}" aria-label="${escapar(f.nome)}" title="${escapar(f.nome)}" aria-selected="false" href="${escapar(destinoDe(f))}">`
           + `${ícone(f.ícone)}<span><b>${escapar(f.nome)}</b><small>${escapar(f.resumo)}</small></span>${selo}</a>`;
       }).join('');
     }

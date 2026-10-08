@@ -486,8 +486,40 @@ test('perfil próprio mostra edição e perfil de outra pessoa mostra ações so
   await página.waitForSelector('.perfil-comunidade__hero');
   assert.equal(await página.getByRole('button', { name: /Adicionar aos amigos/i }).count(), 1);
   assert.equal(await página.getByRole('link', { name: /Editar meu perfil/i }).count(), 0);
+  await página.getByRole('button',{name:'Mais',exact:true}).click();
+  await página.waitForSelector('.perfil-comunidade__mais-menu:popover-open');
+  const menu=await página.locator('.perfil-comunidade__mais-menu').boundingBox();
+  const bloquear=página.getByRole('button',{name:'Bloquear',exact:true});
+  assert.equal(await bloquear.isVisible(),true);
+  assert.ok(menu.y>=0&&menu.y+menu.height<=900,'menu cabe na tela');
+  assert.equal(await bloquear.evaluate(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));}),true,'ação visível acima do cartão e de outras camadas');
+  await página.keyboard.press('Escape');
+  await página.waitForSelector('.perfil-comunidade__mais-menu:popover-open',{state:'hidden'});
+  await página.waitForFunction(()=>document.querySelector('.perfil-comunidade__mais button').getAttribute('aria-expanded')==='false');
 
   await contexto.close();
+});
+
+test('editor agrupa todos os campos sem espaços implícitos ou cortes', {skip:pular},async()=>{
+  for(const viewport of [{width:1366,height:900},{width:390,height:844},{width:320,height:740}]){
+    const {contexto,página}=await contextoComApi({viewport,perfilAlterado:{sociais:{site:'https://example.com/',instagram:'ander.teste',facebook:'ander',tiktok:'ander',x:'ander',whatsapp:'5511999999999'}}});
+    try{
+      await página.goto(BASE+'/conta/perfil.html');await página.waitForSelector('#avatar-opcoes button');
+      await página.waitForTimeout(350);
+      assert.equal(await página.locator('#avatar-opcoes button').count(),15);
+      for(const nome of ['nome','usuario','bio','local','site','instagram','facebook','tiktok','x','whatsapp','bioVisivel','localVisivel']){
+        const campo=página.locator(`#form-perfil [name="${nome}"]`);
+        assert.equal(await campo.count(),1,`preservado: ${nome}`);
+        const largura=await campo.evaluate(el=>{const r=el.getBoundingClientRect(),f=el.closest('form').getBoundingClientRect();return r.left>=f.left-1&&r.right<=f.right+1;});
+        assert.equal(largura,true,`campo dentro do formulário: ${nome}`);
+      }
+      assert.equal(await página.locator('#form-perfil [name="instagram"]').inputValue(),'ander.teste');
+      const form=await página.locator('#form-perfil').boundingBox();
+      assert.ok(form.height<(viewport.width>800?480:850),'formulário compacto sem remover entradas');
+      assert.equal(await página.locator('.conta__rolagem').evaluate(el=>el.scrollWidth<=el.clientWidth),true);
+      await página.screenshot({path:join(RAIZ,`.execucao/editor-integrado-${viewport.width}-v1.3.3.png`)});
+    }finally{await contexto.close();}
+  }
 });
 
 test('perfil salva cinco destaques ordenados, filtra a coleção e cabe no celular', {skip:pular},async()=>{
@@ -507,12 +539,25 @@ test('perfil salva cinco destaques ordenados, filtra a coleção e cabe no celul
     assert.deepEqual(await página.locator('.perfil-comunidade__medalhas>.medalha').evaluateAll(nos=>nos.map(n=>n.dataset.conquista)),dados.conquistas_destaque);
     await página.locator('[data-filtro="ganhas"]').click();assert.equal(await página.locator('.colecao-conquistas__card').count(),6);
     await página.locator('[data-filtro="todas"]').click();assert.equal(await página.locator('.colecao-conquistas__card').count(),7);
+    assert.equal(await página.locator('.colecao-conquistas progress').count(),0,'progresso acompanha o emblema, sem barra duplicada');
+    const anel=página.locator('.colecao-conquistas .emblema-progresso__anel').first();
+    assert.equal(await anel.getAttribute('aria-valuenow'),'55');
+    await anel.scrollIntoViewIfNeeded();
+    await página.waitForFunction(()=>Math.abs(parseFloat(getComputedStyle(document.querySelector('.colecao-conquistas .emblema-progresso__valor')).strokeDashoffset)-45)<.1);
+    assert.equal(await anel.locator('.emblema-progresso__valor').evaluate(el=>parseFloat(getComputedStyle(el).strokeDashoffset)),45);
+    assert.notEqual(await página.locator('.emblema-progresso').first().evaluate(el=>getComputedStyle(el,'::before').animationName),'none');
     await página.locator('.conta__rolagem').evaluate(el=>el.scrollTop=0);await página.screenshot({path:join(RAIZ,'.execucao/perfil-ranks-2026-10-08.png')});
+    const hero=await página.locator('.perfil-comunidade__hero').boundingBox();
+    assert.ok(hero.height<410,'identificação, XP e cinco destaques formam uma carteira compacta');
+    const stats=await página.locator('.perfil-comunidade__estatisticas').boundingBox();
+    assert.ok(stats.y+stats.height<900,'estatísticas visíveis na primeira tela do computador');
     await página.locator('.colecao-conquistas').scrollIntoViewIfNeeded();await página.screenshot({path:join(RAIZ,'.execucao/colecao-conquistas-2026-10-08.png')});
     await página.setViewportSize({width:320,height:740});await página.locator('.conta__rolagem').evaluate(el=>el.scrollTop=0);
     assert.equal(await página.evaluate(()=>document.documentElement.scrollWidth),320);
     const identidade=await página.locator('.perfil-comunidade__identidade').boundingBox();
-    assert.ok(identidade.width>=192,'texto do perfil usa a largura disponível, sem coluna comprimida junto à foto');
+    await página.screenshot({path:join(RAIZ,'.execucao/perfil-ranks-mobile-2026-10-08.png')});
+    assert.ok(identidade.width>=170,`identificação continua legível com avatar ao lado em tela de 320px (${identidade.width}px)`);
+    assert.equal(await página.locator('.conta__rolagem').evaluate(el=>el.scrollWidth<=el.clientWidth),true,'perfil sem rolagem lateral interna');
     await página.screenshot({path:join(RAIZ,'.execucao/perfil-ranks-mobile-2026-10-08.png')});
   }finally{await contexto.close();}
 });
@@ -590,6 +635,8 @@ test('perfil evoluído tem aura e emblemas, sem animação quando movimento é r
       assert.equal(await página.locator('.perfil-comunidade__nivel svg').getAttribute('data-evolucao'),'4');
       const animation=await página.locator('.perfil-comunidade__fundo').evaluate(el=>getComputedStyle(el,'::before').animationName);
       assert.equal(animation,reducedMotion==='reduce'?'none':'prestigio-aura');
+      const aura=await página.locator('.emblema-progresso').first().evaluate(el=>getComputedStyle(el,'::before').animationName);
+      assert.equal(aura,reducedMotion==='reduce'?'none':'emblema-aura');
       if(reducedMotion==='no-preference') await página.screenshot({path:join(RAIZ,'.execucao','perfil-prestigio-2026-10-07.png')});
     } finally {await contexto.close();}
   }

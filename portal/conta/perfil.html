@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="../estilos/consentimento.css">
   <link rel="stylesheet" href="../estilos/estabilidade.css">
   <link rel="stylesheet" href="../estilos/banner-prioritario.css">
+  <link rel="stylesheet" href="../estilos/perfil-compacto.css">
+  <link rel="stylesheet" href="../estilos/editor-perfil.css">
   <script src="../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../scripts/páginas/conta/conta.js"></script>
   <meta property="og:title" content="Editar perfil — Ferramentas do Ander">
@@ -114,7 +116,7 @@
   </div>
 </header>
   <main id="conteúdo">
-<section class="conta conta--modal"><div class="painel conta__painel" id="conta">
+<section class="conta conta--modal conta--editor"><div class="painel conta__painel" id="conta">
     <div class="conta__barra-topo">
       <div><p class="rótulo">Editar perfil</p><h1>Editar perfil</h1></div>
       <button class="conta__fechar-painel" type="button" aria-label="Fechar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 6 12 12"/><path d="m18 6-12 12"/></svg></button>
@@ -141,45 +143,49 @@
       </nav>
 
       <section class="conta__aba" data-conta-painel="perfil">
-        <form id="form-perfil" class="conta__form conta__form--compacta">
-          <div class="conta__editor-avatar">
-            <div id="avatar-preview" class="conta__avatar"></div>
-            <div>
-              <strong>Imagem do perfil</strong>
-              <p class="suave pequeno">Escolha um avatar ilustrado ou use sua própria foto.</p>
-              <div class="ações">
-                <label class="botão botão--linha conta__upload" for="foto-perfil"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.8" cy="9.5" r="1.6"/><path d="m4.5 17 4.3-4.3 3.4 3.4 3-3 4.3 4.3"/></svg>Usar foto</label>
-                <input class="sr-só" id="foto-perfil" type="file" accept="image/png,image/jpeg,image/webp">
-                <button class="botão botão--linha" id="recortar-foto" type="button" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.8" cy="9.5" r="1.6"/><path d="m4.5 17 4.3-4.3 3.4 3.4 3-3 4.3 4.3"/></svg>Recortar foto</button>
-                <button class="botão botão--texto" id="remover-foto" type="button" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 7h15"/><path d="M9.5 7V5.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V7"/><path d="M6.5 7v12a1.5 1.5 0 0 0 1.5 1.5h8a1.5 1.5 0 0 0 1.5-1.5V7"/></svg>Remover foto</button>
-              </div>
-            </div>
-          </div>
-          <input name="avatar" type="hidden" value="sol">
-          <div id="avatar-opcoes" class="conta__avatar-opcoes" aria-label="Avatares ilustrados"></div>
-          <div class="conta__campos-duplos">
-            <label class="conta__campo"><span>Como quer ser chamado</span><input id="nome" name="nome" type="text" autocomplete="name" maxlength="80" required></label>
-            <label class="conta__campo"><span>@usuário</span><input id="usuario" name="usuario" type="text" readonly></label>
-          </div>
-          <label class="conta__campo conta__campo--inteiro"><span>Biografia</span><textarea name="bio" maxlength="280" rows="3"></textarea></label>
-          <label class="conta__campo"><span>De onde é</span><input id="local" name="local" type="text" maxlength="80"></label>
-          <div class="conta__visibilidade">
-            <label class="conta__aceite"><input name="bioVisivel" type="checkbox" checked><span>Biografia pública</span></label>
-            <label class="conta__aceite"><input name="localVisivel" type="checkbox" checked><span>Localização pública</span></label>
-          </div>
-          <fieldset class="conta__sociais">
-            <legend>Links no perfil público</legend>
-            <label class="conta__campo"><span>Site</span><input id="site" name="site" type="url" placeholder="https://..." maxlength="300"></label>
-            <label class="conta__campo"><span>Instagram</span><input id="instagram" name="instagram" type="text" placeholder="@usuario" maxlength="51"></label>
-            <label class="conta__campo"><span>TikTok</span><input id="tiktok" name="tiktok" type="text" placeholder="@usuario" maxlength="51"></label>
-            <label class="conta__campo"><span>X</span><input id="x" name="x" type="text" placeholder="@usuario" maxlength="51"></label>
-            <label class="conta__campo"><span>Facebook</span><input id="facebook" name="facebook" type="text" placeholder="@usuario" maxlength="51"></label>
-            <label class="conta__campo"><span>WhatsApp</span><input id="whatsapp" name="whatsapp" type="tel" placeholder="5511999999999" maxlength="20"></label>
-          </fieldset>
-        </form>
-
-        <div class="conta__subtitulo"><div><h2>Ferramentas recomendadas</h2><p class="suave pequeno">Escolha até cinco ferramentas que você já usou.</p></div></div>
-        <form id="form-recomendadas" class="conta__form conta__form--sem-caixa"><div id="opcoes-recomendadas" class="conta__recomendadas"></div></form>
+        <form id="form-perfil" class="conta__form conta__form--compacta editor-perfil">
+    <section class="editor-perfil__imagem" aria-labelledby="editor-imagem-titulo">
+      <div class="conta__editor-avatar">
+        <div id="avatar-preview" class="conta__avatar"></div>
+        <div><strong id="editor-imagem-titulo">Imagem do perfil</strong><p class="suave pequeno">Foto ou avatar ilustrado.</p></div>
+      </div>
+      <div class="ações editor-perfil__foto-acoes">
+        <label class="botão botão--linha conta__upload" for="foto-perfil"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.8" cy="9.5" r="1.6"/><path d="m4.5 17 4.3-4.3 3.4 3.4 3-3 4.3 4.3"/></svg>Usar foto</label>
+        <input class="sr-só" id="foto-perfil" type="file" accept="image/png,image/jpeg,image/webp">
+        <button class="botão botão--linha" id="recortar-foto" type="button" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.8" cy="9.5" r="1.6"/><path d="m4.5 17 4.3-4.3 3.4 3.4 3-3 4.3 4.3"/></svg>Recortar</button>
+        <button class="botão botão--texto" id="remover-foto" type="button" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 7h15"/><path d="M9.5 7V5.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V7"/><path d="M6.5 7v12a1.5 1.5 0 0 0 1.5 1.5h8a1.5 1.5 0 0 0 1.5-1.5V7"/></svg>Remover foto</button>
+      </div>
+      <input name="avatar" type="hidden" value="sol">
+      <p class="editor-perfil__rotulo">Avatares ilustrados</p>
+      <div id="avatar-opcoes" class="conta__avatar-opcoes" aria-label="Avatares ilustrados"></div>
+    </section>
+    <section class="editor-perfil__dados" aria-labelledby="editor-dados-titulo">
+      <h2 id="editor-dados-titulo">Sobre você</h2>
+      <div class="conta__campos-duplos">
+        <label class="conta__campo"><span>Como quer ser chamado</span><input id="nome" name="nome" type="text" autocomplete="name" maxlength="80" required></label>
+        <label class="conta__campo"><span>@usuário</span><input id="usuario" name="usuario" type="text" readonly></label>
+      </div>
+      <label class="conta__campo conta__campo--inteiro"><span>Biografia</span><textarea name="bio" maxlength="280" rows="2"></textarea></label>
+      <label class="conta__campo"><span>De onde é</span><input id="local" name="local" type="text" maxlength="80"></label>
+      <div class="conta__visibilidade">
+        <label class="conta__aceite"><input name="bioVisivel" type="checkbox" checked><span>Biografia pública</span></label>
+        <label class="conta__aceite"><input name="localVisivel" type="checkbox" checked><span>Localização pública</span></label>
+      </div>
+    </section>
+    <fieldset class="conta__sociais editor-perfil__sociais">
+      <legend>Links no perfil público</legend>
+      <label class="conta__campo"><span>Site</span><input id="site" name="site" type="url" placeholder="https://..." maxlength="300"></label>
+      <label class="conta__campo"><span>Instagram</span><input id="instagram" name="instagram" type="text" placeholder="@usuario" maxlength="51"></label>
+      <label class="conta__campo"><span>TikTok</span><input id="tiktok" name="tiktok" type="text" placeholder="@usuario" maxlength="51"></label>
+      <label class="conta__campo"><span>X</span><input id="x" name="x" type="text" placeholder="@usuario" maxlength="51"></label>
+      <label class="conta__campo"><span>Facebook</span><input id="facebook" name="facebook" type="text" placeholder="@usuario" maxlength="51"></label>
+      <label class="conta__campo"><span>WhatsApp</span><input id="whatsapp" name="whatsapp" type="tel" placeholder="5511999999999" maxlength="20"></label>
+    </fieldset>
+  </form>
+  <section class="editor-perfil__recomendadas" aria-labelledby="editor-recomendadas-titulo">
+    <div class="conta__subtitulo"><div><h2 id="editor-recomendadas-titulo">Ferramentas recomendadas</h2><p class="suave pequeno">Escolha até cinco ferramentas que você já usou.</p></div></div>
+    <form id="form-recomendadas" class="conta__form conta__form--sem-caixa"><div id="opcoes-recomendadas" class="conta__recomendadas"></div></form>
+  </section>
       </section>
 
       <section class="conta__aba" data-conta-painel="aparencia" hidden>

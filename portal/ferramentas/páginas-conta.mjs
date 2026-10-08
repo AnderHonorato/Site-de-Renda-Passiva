@@ -57,6 +57,53 @@ function quadro(titulo, descricao, interior, id) {
   </div></section>`;
 }
 
+/** Os grupos ocupam linhas reais do formulário, sem criar linhas implícitas vazias. */
+function editorPerfil(t, en) {
+  return `<form id="form-perfil" class="conta__form editor-perfil">
+    <section class="editor-perfil__imagem" aria-labelledby="editor-imagem-titulo">
+      <div class="conta__editor-avatar">
+        <div id="avatar-preview" class="conta__avatar"></div>
+        <div><strong id="editor-imagem-titulo">${en ? 'Profile image' : 'Imagem do perfil'}</strong><p class="suave pequeno">${en ? 'Photo or illustrated avatar.' : 'Foto ou avatar ilustrado.'}</p></div>
+      </div>
+      <div class="ações editor-perfil__foto-acoes">
+        <label class="botão botão--linha conta__upload" for="foto-perfil">${ícone('imagem')}${en ? 'Use photo' : 'Usar foto'}</label>
+        <input class="sr-só" id="foto-perfil" type="file" accept="image/png,image/jpeg,image/webp">
+        <button class="botão botão--linha" id="recortar-foto" type="button" hidden>${ícone('imagem')}${en ? 'Crop' : 'Recortar'}</button>
+        <button class="botão botão--texto" id="remover-foto" type="button" hidden>${ícone('lixeira')}${en ? 'Remove photo' : 'Remover foto'}</button>
+      </div>
+      <input name="avatar" type="hidden" value="sol">
+      <p class="editor-perfil__rotulo">${en ? 'Illustrated avatars' : 'Avatares ilustrados'}</p>
+      <div id="avatar-opcoes" class="conta__avatar-opcoes" aria-label="${en ? 'Illustrated avatars' : 'Avatares ilustrados'}"></div>
+    </section>
+    <section class="editor-perfil__dados" aria-labelledby="editor-dados-titulo">
+      <h2 id="editor-dados-titulo">${en ? 'About you' : 'Sobre você'}</h2>
+      <div class="conta__campos-duplos">
+        ${campo('nome', t.conta[2], 'text', 'autocomplete="name" maxlength="80" required')}
+        ${campo('usuario', t.conta[3], 'text', 'readonly')}
+      </div>
+      <label class="conta__campo conta__campo--inteiro"><span>${escapar(t.conta[4])}</span><textarea name="bio" maxlength="280" rows="2"></textarea></label>
+      ${campo('local', t.conta[5], 'text', 'maxlength="80"')}
+      <div class="conta__visibilidade">
+        <label class="conta__aceite"><input name="bioVisivel" type="checkbox" checked><span>${en ? 'Public bio' : 'Biografia pública'}</span></label>
+        <label class="conta__aceite"><input name="localVisivel" type="checkbox" checked><span>${en ? 'Public location' : 'Localização pública'}</span></label>
+      </div>
+    </section>
+    <fieldset class="conta__sociais editor-perfil__sociais">
+      <legend>${en ? 'Links on your public profile' : 'Links no perfil público'}</legend>
+      ${campo('site', 'Site', 'url', 'placeholder="https://..." maxlength="300"')}
+      ${campo('instagram', 'Instagram', 'text', 'placeholder="@usuario" maxlength="51"')}
+      ${campo('tiktok', 'TikTok', 'text', 'placeholder="@usuario" maxlength="51"')}
+      ${campo('x', 'X', 'text', 'placeholder="@usuario" maxlength="51"')}
+      ${campo('facebook', 'Facebook', 'text', 'placeholder="@usuario" maxlength="51"')}
+      ${campo('whatsapp', 'WhatsApp', 'tel', 'placeholder="5511999999999" maxlength="20"')}
+    </fieldset>
+  </form>
+  <section class="editor-perfil__recomendadas" aria-labelledby="editor-recomendadas-titulo">
+    <div class="conta__subtitulo"><div><h2 id="editor-recomendadas-titulo">${en ? 'Recommended tools' : 'Ferramentas recomendadas'}</h2><p class="suave pequeno">${en ? 'Choose up to five tools you have used.' : 'Escolha até cinco ferramentas que você já usou.'}</p></div></div>
+    <form id="form-recomendadas" class="conta__form conta__form--sem-caixa"><div id="opcoes-recomendadas" class="conta__recomendadas"></div></form>
+  </section>`;
+}
+
 
 /** Cadastro mantém seus dados e segurança; atividade e visual ficam na edição do perfil. */
 function separarCadastro(html,en){
@@ -82,7 +129,7 @@ export function paginasConta(ctx) {
   const prefixo = ctx.idioma.pasta;
   const raiz = prefixo ? '../' : '';
   const en = ctx.código === 'en';
-  const montarConta = () => quadro(t.conta[0], t.conta[1], `<div id="conta-conteudo" hidden>
+  const montarConta = (editar = false) => quadro(t.conta[0], t.conta[1], `<div id="conta-conteudo" hidden>
       <nav class="conta__acoes-rapidas" aria-label="${en ? 'Quick actions' : 'Ações rápidas'}">
         <button class="conta__acao" type="button" data-conta-aba="perfil">${ícone('pessoas')}<span>${en ? 'Profile' : 'Perfil'}</span></button>
         <button class="conta__acao" type="button" data-conta-aba="trabalhos">${ícone('pasta')}<span>${en ? 'Works' : 'Trabalhos'}</span></button>
@@ -103,7 +150,7 @@ export function paginasConta(ctx) {
       </nav>
 
       <section class="conta__aba" data-conta-painel="perfil">
-        <form id="form-perfil" class="conta__form conta__form--compacta">
+        ${editar ? editorPerfil(t, en) : `<form id="form-perfil" class="conta__form conta__form--compacta">
           <div class="conta__editor-avatar">
             <div id="avatar-preview" class="conta__avatar"></div>
             <div>
@@ -141,7 +188,7 @@ export function paginasConta(ctx) {
         </form>
 
         <div class="conta__subtitulo"><div><h2>${en ? 'Recommended tools' : 'Ferramentas recomendadas'}</h2><p class="suave pequeno">${en ? 'Choose up to five tools you have used.' : 'Escolha até cinco ferramentas que você já usou.'}</p></div></div>
-        <form id="form-recomendadas" class="conta__form conta__form--sem-caixa"><div id="opcoes-recomendadas" class="conta__recomendadas"></div></form>
+        <form id="form-recomendadas" class="conta__form conta__form--sem-caixa"><div id="opcoes-recomendadas" class="conta__recomendadas"></div></form>`}
       </section>
 
       <section class="conta__aba" data-conta-painel="aparencia" hidden>
@@ -224,7 +271,7 @@ export function paginasConta(ctx) {
     ['recuperar-senha.html', 'recuperar', quadro(t.recuperar[0], t.recuperar[1], `<form id="form-recuperar" class="conta__form">${campo('email', t.recuperar[2], 'email', 'autocomplete="email" required')}<button class="botão botão--primário" type="submit">${escapar(t.recuperar[3])}</button></form>`, 'recuperar')],
     ['redefinir-senha.html', 'redefinir', quadro(t.redefinir[0], t.redefinir[1], `<form id="form-redefinir" class="conta__form">${campo('senha', t.redefinir[2], 'password', 'autocomplete="new-password" minlength="12" maxlength="128" required')}<button class="botão botão--primário" type="submit">${escapar(t.redefinir[3])}</button></form>`, 'redefinir')],
     ['conta/index.html','conta',montarConta()],
-    ['conta/perfil.html','conta',montarConta().replace(/Minha conta/g, 'Editar perfil').replace(/My account/g, 'Edit profile')],
+    ['conta/perfil.html','conta',montarConta(true).replace(/Minha conta/g, 'Editar perfil').replace(/My account/g, 'Edit profile').replace('class="conta conta--modal"', 'class="conta conta--modal conta--editor"')],
     ['niveis.html', 'niveis', quadro(t.niveis[0], t.niveis[1], `<div id="niveis-progresso"></div>
       <section class="niveis__bloco"><h2>${en ? 'How the level grows' : 'Como o nível sobe'}</h2><p>${en ? 'A registered tool use adds 2 XP; an eligible chat message adds 1 XP. Earned achievement stages add bonuses. Daily limits apply to repeated activity.' : 'Um uso registrado de ferramenta soma 2 XP; uma mensagem válida no chat soma 1 XP. Patamares de conquistas desbloqueados acrescentam bônus. Atividades repetidas têm limites diários.'}</p><p>${en ? 'Rewards you have earned stay in your collection, even if you later remove a favorite or saved work. On your profile, choose and order up to five featured achievements, then save your choices.' : 'As conquistas recebidas continuam na sua coleção, mesmo se depois você retirar um favorito ou apagar um trabalho salvo. No perfil, escolha e ordene até cinco conquistas em destaque e salve sua seleção.'}</p></section>
       <section class="niveis__bloco"><h2>${en ? 'Medals' : 'Medalhas'}</h2><div class="niveis__lista">

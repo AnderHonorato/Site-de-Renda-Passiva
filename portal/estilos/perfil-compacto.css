@@ -1,0 +1,93 @@
+/* Carteira do membro: identificação e ações juntas, evolução em uma faixa própria. */
+.conta.conta--modal .conta__painel#perfil { padding:0; }
+.conta.conta--modal .perfil-comunidade__hero--compacto {
+  grid-template-columns:108px minmax(0,1fr);
+  grid-template-areas:"avatar identidade" "jornada jornada" "conquistas conquistas";
+  align-items:start;justify-items:stretch;text-align:left;min-height:0;
+}
+.perfil-comunidade__hero--compacto .perfil-comunidade__visual { grid-area:avatar;gap:8px;align-self:center; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__rank { margin:0;gap:4px;font-size:.65rem;text-align:center;line-height:1.2; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__rank .selo-rank { width:28px;height:28px; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__identidade { grid-area:identidade;display:flex;flex-wrap:wrap;align-items:center;gap:5px 10px; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__superior { width:100%;margin:0 0 3px;gap:5px;justify-content:flex-start; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__identidade h2 { margin:0;font-size:1.65rem!important;line-height:1.15;overflow-wrap:anywhere; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__handle { margin:0;font-size:.76rem;overflow-wrap:anywhere; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__bio { width:100%;max-width:none;margin:0!important;line-height:1.45;overflow-wrap:anywhere; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__meta { margin:0!important;justify-content:flex-start;gap:5px; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__sociais { margin:0;justify-content:flex-start; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__acoes { width:100%;margin-top:4px;justify-content:flex-start;flex-wrap:wrap; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__acoes .botão { min-height:34px;padding:6px 12px;font-size:.74rem; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__jornada { grid-area:jornada;max-width:none;width:100%;margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;border-top:1px solid var(--borda);padding-top:10px;align-items:baseline; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__jornada>b { font-size:1.45rem; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__jornada>span { text-align:right;font-size:.72rem; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__jornada>progress,.perfil-comunidade__hero--compacto .perfil-comunidade__proximo { grid-column:1/-1; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__conquistas { grid-area:conquistas;max-width:none;margin:0;padding:0;border:0;border-radius:0;background:none; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__conquistas-topo { margin:0 0 6px; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__conquistas-topo h3 { font-size:.73rem; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__colecao { margin:0;padding:0;border:0;font-size:.69rem; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__medalhas { grid-template-columns:repeat(5,minmax(0,1fr));gap:7px; }
+.perfil-comunidade__hero--compacto .perfil-comunidade__medalhas .medalha { grid-template-rows:56px auto;min-height:80px;border-radius:14px;background:color-mix(in srgb,var(--superfície) 70%,transparent); }
+.perfil-comunidade__hero--compacto .medalha__simbolo { width:56px;height:56px;animation:none; }
+.perfil-comunidade__hero--compacto .medalha__rotulo { font-size:.65rem; }
+.perfil-comunidade__estatisticas>div { padding:10px 12px;gap:2px; }
+.perfil-comunidade__estatisticas b { font-size:1.25rem; }
+.perfil-comunidade__estatisticas span { font-size:.7rem; }
+.perfil-comunidade__mais-menu[popover] { position:fixed;inset:auto;margin:0;width:190px;max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);overflow-y:auto; }
+.perfil-comunidade__mais-menu[popover]:not(:popover-open) { display:none; }
+
+/* A cor de cada patamar banha o fundo; o anel mantém a medida real, sem girar o valor. */
+.emblema-progresso { --cor-emblema:var(--marca);position:relative;display:grid;place-items:center;width:100%;height:100%;aspect-ratio:1;isolation:isolate;color:var(--cor-emblema); }
+.emblema-progresso[data-tier="1"] { --cor-emblema:#aa784f; }
+.emblema-progresso[data-tier="2"] { --cor-emblema:#8095a6; }
+.emblema-progresso[data-tier="3"] { --cor-emblema:#b59237; }
+.emblema-progresso[data-tier="4"] { --cor-emblema:#489e98; }
+.emblema-progresso[data-tier="5"] { --cor-emblema:#b65c85; }
+.emblema-progresso[data-tier="6"] { --cor-emblema:#8b78c3; }
+.emblema-progresso[data-tier="7"] { --cor-emblema:#c5a055; }
+.emblema-progresso::before { content:"";position:absolute;inset:6%;border-radius:50%;z-index:-1;background:radial-gradient(circle,color-mix(in srgb,var(--cor-emblema) 28%,var(--superfície)),transparent 72%);animation:emblema-aura 4s ease-in-out infinite alternate; }
+.emblema-progresso[data-desbloqueada="nao"]::before { animation:none;opacity:.35; }
+.emblema-progresso[data-movimento="pausado"]::before,.emblema-progresso[data-movimento="pausado"] .emblema-progresso__valor { animation-play-state:paused; }
+.emblema-progresso>.emblema { width:62%!important;height:70%!important;position:relative;filter:drop-shadow(0 2px 3px color-mix(in srgb,var(--cor-emblema) 25%,transparent)); }
+.emblema-progresso>.emblema-progresso__anel { position:absolute;inset:0;width:100%!important;height:100%!important;overflow:visible;transform:rotate(-90deg);fill:none;stroke-width:3; }
+.emblema-progresso__trilho { stroke:color-mix(in srgb,var(--cor-emblema) 18%,var(--borda)); }
+.emblema-progresso__valor { stroke:var(--cor-emblema);stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:calc(100 - var(--percentual-emblema));animation:emblema-progresso-chega .85s ease both; }
+.colecao-conquistas { padding:14px; }
+.colecao-conquistas__topo h2 { margin:0!important; }
+.colecao-conquistas__topo p { margin:4px 0 10px; }
+.colecao-conquistas__resumo { margin-bottom:10px; }
+.colecao-conquistas__grade { grid-template-columns:repeat(3,minmax(0,1fr));gap:8px; }
+.colecao-conquistas__card { grid-template-columns:58px minmax(0,1fr);padding:10px;gap:7px; }
+.colecao-conquistas__simbolo { width:58px;height:58px;background:none; }
+.colecao-conquistas__texto h3 { font-size:.82rem; }
+.colecao-conquistas__texto p { margin:5px 0;font-size:.7rem;line-height:1.4; }
+.colecao-conquistas__etapas span { width:21px;height:21px;font-size:.66rem; }
+.colecao-conquistas__escolhas { grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:12px;padding-top:10px; }
+.colecao-conquistas__escolhas>b,.colecao-conquistas__status { grid-column:1/-1; }
+.colecao-conquistas__ordem { padding:5px 7px;border:1px solid var(--borda);border-radius:10px;background:var(--superfície-2);font-size:.71rem; }
+.colecao-conquistas__ordem .botão { min-width:30px;min-height:30px;padding:3px; }
+@keyframes emblema-aura { from { opacity:.55;transform:scale(.92); } to { opacity:1;transform:scale(1.09); } }
+@keyframes emblema-progresso-chega { from { stroke-dashoffset:100; } }
+@media(max-width:900px) { .colecao-conquistas__grade { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:520px) {
+  .conta.conta--modal .perfil-comunidade__hero--compacto { grid-template-columns:60px minmax(0,1fr);gap:8px!important;padding:12px!important; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__avatar { width:58px!important;height:58px!important;border-radius:18px!important; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__avatar>.avatar-biblioteca { width:38px!important;height:38px!important; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__avatar>.avatar-foto { border-radius:15px; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__rank { display:grid;justify-items:center;font-size:.58rem;gap:2px; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__identidade h2 { font-size:1.15rem!important; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__superior { gap:3px; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__superior>* { min-height:21px;font-size:.58rem;padding:2px 6px; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__tempo { width:100%; }
+  .conta.conta--modal .perfil-comunidade__hero--compacto .perfil-comunidade__meta,.conta.conta--modal .perfil-comunidade__hero--compacto .perfil-comunidade__sociais { justify-content:flex-start; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__chip { font-size:.62rem;min-height:24px;padding:3px 6px; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__jornada { grid-template-columns:1fr;gap:3px; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__jornada>span { text-align:left;font-size:.66rem; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__proximo { font-size:.63rem; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__medalhas { grid-template-columns:repeat(3,minmax(0,1fr));gap:5px; }
+  .perfil-comunidade__hero--compacto .perfil-comunidade__medalhas .medalha { min-height:70px;grid-template-rows:48px auto; }
+  .perfil-comunidade__hero--compacto .medalha__simbolo { width:48px;height:48px; }
+  .colecao-conquistas__grade { grid-template-columns:1fr; }
+  .colecao-conquistas__escolhas { grid-template-columns:1fr; }
+  .perfil-comunidade__estatisticas>div { padding:8px; }
+}
+@media(prefers-reduced-motion:reduce) { .emblema-progresso::before,.emblema-progresso__valor { animation:none; } }

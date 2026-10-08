@@ -1,5 +1,5 @@
 import { api } from './comum.js';
-import { criarIconeMedalha } from '../../núcleo/emblemas.js';
+import { criarProgressoEmblema } from '../../núcleo/progresso-emblema.js';
 
 export function escolherDestaques(perfil) {
   const ganhas=(perfil.medalhas||[]).filter(m=>m.desbloqueada).sort((a,b)=>b.tier-a.tier||b.valor-a.valor);
@@ -47,11 +47,10 @@ export function montarColecao(perfil, {proprio=false, ingles=false, detalhe, aoS
     for(const medalha of filtradas){
       const card=el('article','colecao-conquistas__card');card.dataset.desbloqueada=medalha.desbloqueada?'sim':'nao';card.dataset.tier=String(medalha.tier||0);
       const simbolo=el('button','colecao-conquistas__simbolo');simbolo.type='button';simbolo.dataset.conquista=medalha.id;
-      simbolo.setAttribute('aria-label',t('Ver conquista: ','View achievement: ')+medalha.nome);simbolo.append(criarIconeMedalha(medalha));simbolo.addEventListener('click',()=>detalhe?.(simbolo,medalha));
+      simbolo.setAttribute('aria-label',t('Ver conquista: ','View achievement: ')+medalha.nome);simbolo.append(criarProgressoEmblema(medalha,{ingles}));simbolo.addEventListener('click',()=>detalhe?.(simbolo,medalha));
       const texto=el('div','colecao-conquistas__texto');
       texto.append(el('h3','',medalha.nome),el('span','colecao-conquistas__patamar',medalha.desbloqueada?medalha.patamar:t('Ainda bloqueada','Locked')),el('p','',medalha.descricao));
-      const progresso=el('progress');progresso.max=100;progresso.value=medalha.completa?100:Number(medalha.percentual)||0;progresso.setAttribute('aria-label',t('Progresso: ','Progress: ')+medalha.nome);
-      texto.append(progresso,el('small','',medalha.completa?t('Todos os marcos conquistados','All milestones earned'):`${medalha.valor} / ${medalha.meta} · ${t('próximo marco','next milestone')}`));
+      texto.append(el('small','',medalha.completa?t('Todos os marcos conquistados','All milestones earned'):`${medalha.valor} / ${medalha.meta} · ${t('próximo marco','next milestone')}`));
       card.append(simbolo,texto);
       const etapas=el('div','colecao-conquistas__etapas');
       for(const etapa of medalha.etapas||[]){const marco=el('span','',etapa.desbloqueada?'✓':'◇');marco.dataset.ganha=etapa.desbloqueada?'sim':'nao';marco.title=`${etapa.nome}: ${etapa.meta}`;marco.setAttribute('aria-label',`${etapa.nome}: ${etapa.meta} · ${etapa.desbloqueada?t('conquistada','earned'):t('bloqueada','locked')}`);etapas.append(marco);}

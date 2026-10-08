@@ -1,0 +1,99 @@
+/* Edição: foto, identidade e links são grupos compactos, com todos os campos à vista. */
+.conta.conta--modal.conta--editor .conta__painel { padding: 0; }
+.conta.conta--modal.conta--editor #conta-conteudo { gap: 8px; }
+.conta.conta--modal.conta--editor .conta__acoes-rapidas { padding: 5px; gap: 5px; margin: 0; }
+.conta.conta--modal.conta--editor .conta__acao { min-height: 34px; padding: 6px 8px; flex-direction: row; }
+.conta.conta--modal.conta--editor .conta-resumo { margin: 0; padding: 8px 10px; gap: 9px; }
+.conta.conta--modal.conta--editor .conta__abas { margin: 0; padding-block: 5px; }
+.conta.conta--modal #form-perfil.editor-perfil {
+  grid-template-columns: minmax(200px, .65fr) minmax(0, 1.35fr);
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.editor-perfil__imagem,
+.editor-perfil__dados,
+.editor-perfil__recomendadas {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--superfície) 94%, var(--marca-fraca));
+}
+.editor-perfil__imagem { display: grid; align-content: start; gap: 8px; }
+.editor-perfil__dados { display: grid; align-content: start; gap: 8px; }
+.editor-perfil__dados h2,
+.editor-perfil__recomendadas h2 { margin: 0; font: 750 .8rem var(--fonte-título); }
+.conta.conta--modal #form-perfil.editor-perfil .conta__editor-avatar {
+  grid-column: auto;
+  padding: 0;
+  border: 0;
+  gap: 8px;
+}
+.editor-perfil .conta__editor-avatar .conta__avatar { width: 60px; height: 60px; }
+.editor-perfil__foto-acoes { gap: 5px; }
+.editor-perfil__foto-acoes .botão { min-height: 34px; padding: 6px 8px; font-size: .68rem; }
+.editor-perfil__rotulo { margin: 0; color: var(--tinta-média); font-size: .68rem; font-weight: 700; }
+.conta.conta--modal #form-perfil.editor-perfil .conta__avatar-opcoes {
+  grid-column: auto;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+}
+.editor-perfil .conta__avatar-opcao { aspect-ratio: auto; min-height: 36px; border-radius: 9px; }
+.editor-perfil .conta__avatar-opcao svg { width: 25px; height: 25px; }
+.conta.conta--modal #form-perfil.editor-perfil .conta__campos-duplos,
+.conta.conta--modal #form-perfil.editor-perfil .conta__campo--inteiro,
+.conta.conta--modal #form-perfil.editor-perfil label:has(#local),
+.conta.conta--modal #form-perfil.editor-perfil .conta__visibilidade {
+  grid-column: auto;
+}
+.editor-perfil .conta__campo { min-width: 0; gap: 3px; font-size: .7rem; }
+.editor-perfil .conta__campo input,
+.editor-perfil .conta__campo select { min-height: 34px; padding: 7px 9px; }
+.editor-perfil .conta__campo textarea { min-height: 58px; padding: 7px 9px; line-height: 1.4; }
+.editor-perfil .conta__visibilidade { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 0; }
+.editor-perfil .conta__aceite { font-size: .68rem; gap: 5px; }
+.conta.conta--modal #form-perfil.editor-perfil .editor-perfil__sociais {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 8px 12px 12px;
+  gap: 8px 10px;
+  border-radius: 14px;
+}
+.conta--editor .editor-perfil__recomendadas { margin-top: 12px; padding: 10px 12px; }
+.conta--editor .editor-perfil__recomendadas .conta__subtitulo { margin: 0 0 8px; }
+.conta--editor .editor-perfil__recomendadas .conta__subtitulo p { margin: 3px 0 0; }
+.conta--editor .editor-perfil__recomendadas #form-recomendadas { padding: 0; border: 0; }
+.conta--editor .editor-perfil__recomendadas .conta__recomendadas { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.conta--editor .editor-perfil__recomendadas .conta__recomendada { min-height: 42px; padding: 5px 7px; }
+.conta--editor .editor-perfil__recomendadas .conta__recomendada-texto { min-width: 0; }
+
+@media (max-width: 820px) and (min-width: 641px) {
+  .conta.conta--modal #form-perfil.editor-perfil > .editor-perfil__dados { grid-column: 2 !important; }
+  .conta.conta--modal #form-perfil.editor-perfil > .editor-perfil__sociais { grid-column: 1 / -1 !important; }
+}
+@media (max-width: 640px) {
+  .conta.conta--modal.conta--editor .conta__acoes-rapidas { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .conta.conta--modal.conta--editor .conta-resumo { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .conta.conta--modal.conta--editor .conta-resumo > .botão { grid-column: auto; justify-self: end; min-height: 32px; padding: 6px; font-size: .62rem; }
+  .conta.conta--modal.conta--editor .conta-resumo > .botão svg { display: none; }
+  .conta.conta--modal #form-perfil.editor-perfil { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .editor-perfil__imagem { grid-template-columns: 1fr 1fr; gap: 6px 10px; padding: 10px; }
+  .conta.conta--modal #form-perfil.editor-perfil .conta__editor-avatar { grid-column: 1; grid-row: 1 / 3; }
+  .editor-perfil__foto-acoes { grid-column: 2; grid-row: 1 / 3; align-content: center; }
+  .editor-perfil__rotulo { grid-column: 1 / -1; }
+  .conta.conta--modal #form-perfil.editor-perfil .conta__avatar-opcoes { grid-column: 1 / -1; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; }
+  .editor-perfil .conta__avatar-opcao { min-height: 32px; }
+  .editor-perfil .conta__avatar-opcao svg { width: 23px; height: 23px; }
+  .editor-perfil .conta__campos-duplos { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .conta.conta--modal #form-perfil.editor-perfil .editor-perfil__sociais { grid-column: 1 !important; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 8px 10px 10px; }
+  .conta--editor .editor-perfil__recomendadas .conta__recomendadas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 360px) {
+  .editor-perfil__imagem { grid-template-columns: minmax(0, 1fr); }
+  .conta.conta--modal #form-perfil.editor-perfil .conta__editor-avatar { grid-column: 1; grid-row: auto; }
+  .editor-perfil__foto-acoes { grid-column: 1; grid-row: auto; }
+  .conta.conta--modal #form-perfil.editor-perfil .conta__avatar-opcoes { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+}

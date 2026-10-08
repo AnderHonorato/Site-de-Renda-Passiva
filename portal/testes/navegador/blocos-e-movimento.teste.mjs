@@ -105,6 +105,10 @@ test('busca fica junto do sino e abre somente um campo curto para a esquerda', {
       const sinoAberto=await página.locator('#abrir-notificações').boundingBox();assert.ok(Math.abs(sino.x-sinoAberto.x)<1,'sino mantém sua posição');
       await página.locator('#busca-topo-campo').fill('porcentagem');
       await página.waitForSelector('#busca-topo-sugestões:not([hidden])');
+      const sugestoes=await página.locator('#busca-topo-sugestões').boundingBox();
+      assert.ok(Math.abs(sugestoes.width-aberta.width)<2,'sugestões acompanham a largura curta do campo');
+      assert.ok(Math.abs(sugestoes.x+sugestoes.width-(fechada.x+fechada.width))<2,'sugestões também ancoradas na lupa, sem ocupar a tela inteira');
+      await página.screenshot({path:join(RAIZ,`.execucao/busca-compacta-${viewport.width}-v1.3.3.png`)});
       await página.keyboard.press('Escape');
       assert.equal(await página.locator('#busca-topo').getAttribute('data-aberta'),'não');
       await página.click('#abrir-notificações');
