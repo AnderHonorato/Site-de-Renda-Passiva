@@ -244,7 +244,7 @@ function páginaDeTexto(ctx, { chave, arquivo, atual }) {
       raiz,
       atual,
       alternativas: alternativasDe(arquivo, ctx),
-      conteúdo: `    <section class="largura prosa topo-página">\n      <h1>${escapar(título)}</h1>\n${chave==='ajuda'&&editorial.textos?.['ajuda.introducao']?.[ctx.código]?`<p>${escapar(editorial.textos['ajuda.introducao'][ctx.código])}</p>`:''}\n${blocosEmHtml(ctx.lista(`${chave}.corpo`))}\n    </section>`,
+      conteúdo: `    <section class="largura prosa topo-página">\n      <h1>${escapar(título)}</h1>\n${chave==='ajuda'&&editorial.textos?.['ajuda.introducao']?.[ctx.código]?`<p>${escapar(editorial.textos['ajuda.introducao'][ctx.código])}</p>\n`:''}${blocosEmHtml(ctx.lista(`${chave}.corpo`))}\n    </section>`,
     }),
   };
 }

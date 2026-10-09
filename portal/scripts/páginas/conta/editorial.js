@@ -1,8 +1,13 @@
 import { api,en,estado,mensagemErro,obterSessao } from './comum.js';
+import { tituloRegistro,dataRegistro } from './registros.js';
 let atual,planos=[],ocupado=false;
 const cat=document.getElementById('editorial-catalogo'),txt=document.getElementById('editorial-textos'),regras=document.getElementById('editorial-regras');
 const el=(tag,texto)=>{const n=document.createElement(tag);if(texto!==undefined)n.textContent=texto;return n;};
-function preencherItem(){const tipo=cat.elements.tipo.value,id=cat.elements.namedItem('item').value,base=atual.base[tipo].find(i=>(i.slug||i.id)===id);if(!base)return;
+function preencherItem(){const tipo=cat.elements.tipo.value,id=cat.elements.namedItem('item').value,base=atual.base[tipo].find(i=>(i.slug||i.id)===id);
+  for(const fs of cat.querySelectorAll('fieldset'))fs.disabled=!base||atual.publicando;
+  cat.querySelector('[type="submit"]').disabled=ocupado||atual.publicando||!base;
+  document.getElementById('editorial-sem-itens').hidden=!!base;
+  if(!base){for(const l of ['pt-BR','en']){cat.elements[`nome_${l}`].value='';cat.elements[`resumo_${l}`].value='';}return;}
   for(const l of ['pt-BR','en']){const v=atual.rascunho[tipo][id]?.[l]||base[l];cat.elements[`nome_${l}`].value=v.nome;cat.elements[`resumo_${l}`].value=v.resumo;cat.elements[`nome_${l}`].maxLength=tipo==='ferramentas'?80:60;cat.elements[`resumo_${l}`].maxLength=tipo==='ferramentas'?130:160;}
 }
 function filtrar(){const tipo=cat.elements.tipo.value,antes=cat.elements.namedItem('item').value,filtro=cat.elements.filtro.value.toLocaleLowerCase();cat.elements.namedItem('item').replaceChildren();
@@ -23,11 +28,12 @@ function preencher(){for(const f of [cat,txt,regras])f.hidden=false;document.get
   }
 }
 async function executar(acao){if(ocupado)return;ocupado=true;const botoes=[...document.querySelectorAll('#editorial button')];botoes.forEach(b=>b.disabled=true);
-  try{await acao();estado(en?'Saved.':'Salvo.');}catch(e){estado(mensagemErro(e),true);}finally{ocupado=false;botoes.forEach(b=>b.disabled=b.id==='editorial-atualizar'?false:!atual||(b.id!=='editorial-recuperar'&&atual.publicando));}
+  try{await acao();estado(en?'Saved.':'Salvo.');}catch(e){estado(mensagemErro(e),true);}finally{ocupado=false;botoes.forEach(b=>b.disabled=b.id==='editorial-atualizar'?false:!atual||(b.id!=='editorial-recuperar'&&atual.publicando));if(atual)cat.querySelector('[type="submit"]').disabled=atual.publicando||!cat.elements.namedItem('item').value;}
 }
 async function salvar(rascunho){atual=await api('/api/admin/editorial',{metodo:'PUT',dados:{versao:atual.versao,dados:rascunho}});preencher();await historico();}
 async function historico(){const {revisoes}=await api('/api/admin/editorial/historico'),area=document.getElementById('editorial-historico');area.replaceChildren();
-  for(const r of revisoes){const p=el('p',`${r.versao} · ${r.acao} · ${r.criado_em} `),b=el('button',en?'Restore to draft':'Restaurar como rascunho');b.type='button';b.className='botão botão--linha';b.onclick=()=>executar(async()=>{atual=await api('/api/admin/editorial/restaurar',{metodo:'POST',dados:{id:r.id,versao:atual.versao}});preencher();await historico();});p.append(b);area.append(p);}
+  if(!revisoes.length)area.append(el('p',en?'No revisions yet. Saving a draft creates its history.':'Ainda não há revisões. Salvar um rascunho cria seu histórico.'));
+  for(const r of revisoes){const p=el('article'),info=el('div'),b=el('button',en?'Restore to draft':'Restaurar como rascunho');p.className='registro-admin';info.append(el('strong',`${en?'Version':'Versão'} ${r.versao} · ${tituloRegistro(r.acao,en)}`),el('small',dataRegistro(r.criado_em,en)));b.type='button';b.className='botão botão--linha';b.setAttribute('aria-label',(en?'Restore version ':'Restaurar versão ')+r.versao);b.onclick=()=>executar(async()=>{atual=await api('/api/admin/editorial/restaurar',{metodo:'POST',dados:{id:r.id,versao:atual.versao}});preencher();await historico();});p.append(info,b);area.append(p);}
 }
 async function carregar(){const s=await obterSessao();if(s.usuario?.papel!=='admin')throw {message:'acesso_negado'};[atual,{planos}]=await Promise.all([api('/api/admin/editorial'),api('/api/planos')]);preencher();await historico();}
 cat.elements.tipo.onchange=filtrar;cat.elements.filtro.oninput=filtrar;cat.elements.namedItem('item').onchange=preencherItem;txt.elements.chave.onchange=preencherTexto;

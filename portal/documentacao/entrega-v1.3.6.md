@@ -26,6 +26,8 @@
 
 ## Pendências preservadas
 
+O editor altera nomes e resumos dos itens existentes e os textos `inicio.titulo`, `inicio.descricao`, `ajuda.introducao` e `planos.introducao`. Não cadastra ferramentas/categorias novas nem modifica slugs, fórmulas ou campos de cálculo. As regras de XP valem para ações futuras, sem recalcular saldo anterior; cotas de favoritos, trabalhos e armazenamento podem ser publicadas, enquanto capacidade de lote e marcos de nível permanecem definidos no código. O painel de erros mostra somente data, método e código genérico, sem pilha, endereço IP ou conteúdo da requisição. Janelas comuns de requisições ficam em memória; persistem os bloqueios e suas reincidências. Publicar exige acesso de escrita à pasta do portal e execução de Node no servidor.
+
 - Ferramentas planejadas, tradução completa de cada ferramenta, processamento remoto avançado, revisão visual adicional do modal de evolução e testes em dispositivo físico.
 - SMTP, domínio/HTTPS e implantação operacional, restauração de backup em ambiente separado, aprovação/IDs reais do AdSense e consentimento de anúncios aplicável.
 - Os materiais fora de `portal/` permanecem intocados. Arquivos de execução privados, contas, bancos, capturas e modelos não devem entrar no commit ou pacote público.

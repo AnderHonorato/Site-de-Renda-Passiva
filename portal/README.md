@@ -1,4 +1,4 @@
-# Portal — versão 1.3.6
+# Portal — versão 1.3.7
 
 O portal escolhido é o da porta **4400**. A identidade visual e as 65 ferramentas prontas foram preservadas. Conta e chat usam uma API separada, na mesma origem através do proxy do portal. O catálogo tem 208 itens; os planejados continuam identificados como planejados.
 
@@ -75,7 +75,7 @@ npm run publicar
 
 O exemplo `../documentação/hospedagem/portal-v1.1.conf.exemplo` encaminha também SSE. Use `PORTAL_PROXY_CONFIAVEL=1` somente com proxy local que sobrescreve `X-Forwarded-For` com o IP real; isso permite limites por visitante. Requisições diretas não podem escolher seu IP por cabeçalho.
 
-Estado: `../CHECKLIST.md` e `../documentação/plano-portal-principal.md`. A entrega mais recente, com a administração editorial, bloqueios persistentes e resultados dos testes, está em [`documentacao/entrega-v1.3.6.md`](documentacao/entrega-v1.3.6.md).
+Estado: `../CHECKLIST.md` e `../documentação/plano-portal-principal.md`. Administração editorial e bloqueios persistentes: [`documentacao/entrega-v1.3.6.md`](documentacao/entrega-v1.3.6.md). Refinamento do editor, verificação visual e estado atual: [`documentacao/entrega-v1.3.7.md`](documentacao/entrega-v1.3.7.md).
 
 Auditoria atual do pedido original: [`documentacao/pendencias-prompt-original-2026-10-08.md`](documentacao/pendencias-prompt-original-2026-10-08.md). Ela distingue as funções entregues das lacunas da primeira fase, expansões posteriores e dependências de produção.
 

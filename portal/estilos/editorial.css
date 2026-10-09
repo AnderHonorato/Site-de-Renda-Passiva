@@ -10,3 +10,6 @@
 #editorial fieldset legend { font-size:.8rem;font-weight:650; }
 #editorial-pontos,#editorial-limites fieldset { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }
 #editorial .conta__campo span { font-size:.8rem; }
+#editorial .registro-admin,#operacao .registro-admin { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:10px 0;border-bottom:1px solid var(--borda);font-size:.84rem; }
+#editorial .registro-admin div,#operacao .registro-admin div { min-width:0;flex:1 1 150px;overflow-wrap:anywhere; }
+#editorial .registro-admin small,#operacao .registro-admin small { display:block;margin-top:4px;color:var(--tinta-suave); }

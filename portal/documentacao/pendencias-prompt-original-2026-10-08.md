@@ -17,8 +17,8 @@ Comparação do super prompt anexado em `02fda86f-ec72-476d-b593-0f02eb85b7d3/Te
 | Item | Estado e trabalho restante | Evidência atual |
 |---|---|---|
 | Limpar planilha / ferramenta em etapas | Entregue na v1.3.4: importa XLSX/CSV/TSV, seleciona aba, compara duplicatas pelas colunas escolhidas, preserva primeira ou última ocorrência e oferece carregar/configurar/revisar/baixar. Importa valores salvos; não recalcula fórmulas nem preserva estilos. | [entrega-v1.3.4.md](entrega-v1.3.4.md), `scripts/ferramentas/limpar-planilha.js`, `scripts/cálculos/importar-planilha.js` |
-| Administração de catálogo e conteúdo | Falta painel/rotas de ferramentas, categorias, textos com histórico, configuração de limites e regras de pontos, logs/erros. As seis áreas administrativas atuais não cobrem tudo isso. | `admin/`, `servidor/iniciar.mjs`, `servidor/perfil.mjs` |
-| Bloqueio progressivo de abuso | Parcial: janela de requisições em memória e resposta JSON 429/Retry-After. Faltam reincidência minutos→horas, persistência após reinício, consulta/desbloqueio no admin e páginas HTML 429/erro genérico nos dois idiomas. | `servidor/iniciar.mjs` (`limites`, `conferirLimite`) |
+| Administração de catálogo e conteúdo | Núcleo entregue na v1.3.6: nomes e resumos de ferramentas/categorias existentes, quatro textos públicos em PT/EN, rascunho, histórico, restauração e publicação; regras de XP, cotas de conta e consulta de registros. A v1.3.7 refina filtros e histórico. Criar ferramentas/categorias novas, editar campos/fórmulas e traduzir todo o conteúdo das ferramentas continuam fora desse editor. | [entrega-v1.3.6.md](entrega-v1.3.6.md), [entrega-v1.3.7.md](entrega-v1.3.7.md), `admin/editorial/`, `admin/operacao/` |
+| Bloqueio progressivo de abuso | Entregue na v1.3.6: reincidência com esperas de minutos até horas, bloqueios persistentes, consulta/liberação no admin e respostas HTML 429/erro genérico em PT/EN. As janelas comuns continuam em memória; bloqueios e reincidências persistem. Limiares de tráfego são definidos no código; implantação atrás de proxy e carga em produção ainda precisam de validação. | `servidor/trafego.mjs`, `servidor/iniciar.mjs`, [entrega-v1.3.6.md](entrega-v1.3.6.md) |
 | Inglês completo | Parcial: moldura, catálogo, conta/admin e textos legais bilíngues; 65 páginas de ferramenta ainda só em português, com aviso honesto. Falta traduzir instruções, campos, resultados, validações e exemplos dessas ferramentas. | `ferramentas/gerar.mjs`, `dados/traduções/`, `scripts/ferramentas/`, ausência de `en/f/` |
 | Testes e aceite final | Há testes de código/Chromium; falta aceitação do visual corrente pelo proprietário e conferência física em outro dispositivo da LAN, som e desempenho em aparelho real. | `testes/navegador/`, logs privados em `.execucao/` |
 
@@ -54,7 +54,7 @@ Correções urgentes entregues: falha opcional dos anúncios deixa de interrompe
 
 1. **Concluído na v1.3.4:** importação XLSX e ferramenta em etapas.
 2. **Concluído na v1.3.5:** diferenciar Premium e implementar missões/eventos/ranking de recompensas.
-3. Administração do catálogo/conteúdo/pontos e proteção progressiva persistente.
+3. **Núcleo concluído na v1.3.6, refinado na v1.3.7:** administração de conteúdo/pontos/cotas e proteção persistente. Ampliação editorial para cadastrar ferramentas/categorias e outros conteúdos é trabalho restante.
 4. Inglês das ferramentas e nova validação de desempenho/acessibilidade.
 5. Preparar produção e validar domínio, e-mail, anúncios e backup/restauração.
 
@@ -65,3 +65,7 @@ Importação de planilhas e fluxo em quatro etapas concluídos. A leitura XLSX o
 ## Continuação v1.3.5 — 09/10/2026
 
 Premium diferenciado por quantidade e armazenamento; trabalhos listados em páginas leves. Missões/eventos/ranking integrados ao perfil próprio, com resgates únicos no servidor, notificações e celebração coerente com o tema. Administração bilíngue de eventos e participação opcional no ranking. 1.125 testes unitários, cinco cenários da API e 42 cenários distintos de navegador aprovados; banco real copiado e 23 tabelas existentes preservadas na ativação. Evidências e limites em [entrega-v1.3.5.md](entrega-v1.3.5.md). A próxima etapa é administração de catálogo/conteúdo/pontos e proteção progressiva persistente.
+
+## Continuação v1.3.6 e v1.3.7 — 09/10/2026
+
+Editor administrativo e proteção de tráfego integrados ao servidor local, com publicação explícita e controle de acesso. A retomada da v1.3.7 trata lista filtrada vazia, histórico legível e datas UTC. O banco ativo e seu backup passaram no `quick_check`; as 27 tabelas anteriores foram comparadas pelo conteúdo e permaneceram idênticas. As cinco tabelas novas são de editorial e operação. A próxima etapa da ordem original é tradução das ferramentas e validação de desempenho/acessibilidade; testes físicos, aceite do proprietário e publicação externa continuam pendentes.
