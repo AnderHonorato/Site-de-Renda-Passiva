@@ -6,7 +6,7 @@ Comparação do super prompt anexado em `02fda86f-ec72-476d-b593-0f02eb85b7d3/Te
 
 - Início, busca, catálogo, recentes/favoritos locais, tema claro/escuro, navegação responsiva e estados de falha isolados. Fonte do cabeçalho em `ferramentas/modelo-de-página.mjs`; páginas regeneradas.
 - 65 ferramentas funcionais entre 208 entradas do catálogo. As 143 planejadas têm ficha descritiva e não simulam processamento. O pedido da primeira fase exigia seis ferramentas, não as 208.
-- Preço de venda, ponto de equilíbrio, margem de contribuição, juntar PDF e contador de texto disponíveis e testados. Limpar planilha disponível, com escopo parcial descrito abaixo.
+- Preço de venda, ponto de equilíbrio, margem de contribuição, juntar PDF e contador de texto disponíveis e testados. Limpar planilha completado em etapas na v1.3.4, com os limites de importação documentados na entrega.
 - Cadastro, login, sessão, perfil, preferência de tema, foto recortada localmente, exportação/exclusão de conta, favoritos sincronizados e trabalhos reabríveis. API em `servidor/iniciar.mjs`, armazenamento privado em SQLite.
 - Administração de usuários/planos manuais, suporte, chat/moderação, novidades, publicidade e banners prioritários (`admin/*`).
 - Níveis/medalhas calculados da atividade, notificações persistentes, celebração em fila, sons opcionais, banners/molduras por nível e estados com movimento reduzido.
@@ -16,7 +16,7 @@ Comparação do super prompt anexado em `02fda86f-ec72-476d-b593-0f02eb85b7d3/Te
 
 | Item | Estado e trabalho restante | Evidência atual |
 |---|---|---|
-| Limpar planilha / ferramenta em etapas | Parcial: recebe texto/CSV colado e exporta CSV/XLSX. Falta importar arquivo XLSX, selecionar aba, escolher colunas que definem duplicidade e a linha a preservar; fluxo enviar/configurar/revisar/exportar. | `scripts/ferramentas/limpar-planilha.js`, `scripts/cálculos/tabular.js` |
+| Limpar planilha / ferramenta em etapas | Entregue na v1.3.4: importa XLSX/CSV/TSV, seleciona aba, compara duplicatas pelas colunas escolhidas, preserva primeira ou última ocorrência e oferece carregar/configurar/revisar/baixar. Importa valores salvos; não recalcula fórmulas nem preserva estilos. | [entrega-v1.3.4.md](entrega-v1.3.4.md), `scripts/ferramentas/limpar-planilha.js`, `scripts/cálculos/importar-planilha.js` |
 | Administração de catálogo e conteúdo | Falta painel/rotas de ferramentas, categorias, textos com histórico, configuração de limites e regras de pontos, logs/erros. As seis áreas administrativas atuais não cobrem tudo isso. | `admin/`, `servidor/iniciar.mjs`, `servidor/perfil.mjs` |
 | Bloqueio progressivo de abuso | Parcial: janela de requisições em memória e resposta JSON 429/Retry-After. Faltam reincidência minutos→horas, persistência após reinício, consulta/desbloqueio no admin e páginas HTML 429/erro genérico nos dois idiomas. | `servidor/iniciar.mjs` (`limites`, `conferirLimite`) |
 | Inglês completo | Parcial: moldura, catálogo, conta/admin e textos legais bilíngues; 65 páginas de ferramenta ainda só em português, com aviso honesto. Falta traduzir instruções, campos, resultados, validações e exemplos dessas ferramentas. | `ferramentas/gerar.mjs`, `dados/traduções/`, `scripts/ferramentas/`, ausência de `en/f/` |
@@ -52,8 +52,12 @@ Correções urgentes entregues: falha opcional dos anúncios deixa de interrompe
 
 ## Ordem de continuidade
 
-1. Completar a importação XLSX e a ferramenta em etapas.
+1. **Concluído na v1.3.4:** importação XLSX e ferramenta em etapas.
 2. Diferenciar Premium e implementar missões/eventos/ranking de recompensas.
 3. Administração do catálogo/conteúdo/pontos e proteção progressiva persistente.
 4. Inglês das ferramentas e nova validação de desempenho/acessibilidade.
 5. Preparar produção e validar domínio, e-mail, anúncios e backup/restauração.
+
+## Continuação v1.3.4 — 09/10/2026
+
+Importação de planilhas e fluxo em quatro etapas concluídos. A leitura XLSX ocorre em trabalhador local; abas, chaves por coluna, primeira/última ocorrência, reabertura e arquivos completos foram conferidos. 1.116 testes unitários, oito cenários da ferramenta e uma regressão do conversor aprovados. Limites e evidências em [entrega-v1.3.4.md](entrega-v1.3.4.md).

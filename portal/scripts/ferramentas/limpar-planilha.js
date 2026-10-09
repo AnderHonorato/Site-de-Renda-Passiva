@@ -1,105 +1,70 @@
-/** Limpeza de planilha: duplicadas, vazias, espaços e padronização de caixa. */
-import { montarFerramenta, texto, ErroDeEntrada, baixarCsv, baixarPlanilha, nomeDeArquivo } from '../núcleo/montador.js';
-import { lerCsv, limparTabela, detectarSeparador } from '../cálculos/tabular.js';
+/** Limpeza em etapas: carregar, configurar, revisar e exportar, no navegador. */
+import { montarFerramenta, ErroDeEntrada, baixarCsv, baixarPlanilha, nomeDeArquivo } from '../núcleo/montador.js';
+import { limparTabela } from '../cálculos/tabular.js';
+import { lerDadosTexto } from '../cálculos/importar-planilha.js';
+import { ligarEtapasPlanilha } from './auxiliares/etapas-planilha.js';
 
-const LIMITE_DE_LINHAS = 50000;
+const numero = n => n.toLocaleString('pt-BR');
+export function limparNaTela(dados, fonte = {}) {
+  let tabela, colunas;
+  try { ({ linhas: tabela, colunas } = lerDadosTexto(dados.conteúdo)); }
+  catch (erro) { throw new ErroDeEntrada(erro.message, 'conteúdo'); }
+  let colunasChave;
+  try { colunasChave = dados.colunasChave ? JSON.parse(dados.colunasChave) : undefined; }
+  catch { throw new ErroDeEntrada('Escolha colunas válidas para comparar as duplicadas.', 'colunasChave'); }
+  let r;
+  try {
+    r = limparTabela(tabela, {
+      comCabeçalho: dados.comCabeçalho === 'sim', removerDuplicadas: dados.removerDuplicadas === 'sim',
+      removerVazias: dados.removerVazias === 'sim', aparar: dados.aparar === 'sim', espaçosDuplos: dados.espaçosDuplos === 'sim',
+      caixa: dados.caixa, colunasChave, manter: dados.manter || 'primeira',
+    });
+  } catch (erro) { throw new ErroDeEntrada(erro.message, 'colunasChave'); }
+  const cabecalho = r.cabeçalho ?? Array.from({ length: colunas }, (_, i) => `Coluna ${i+1}`);
+  const finais = r.cabeçalho ? [r.cabeçalho, ...r.linhas] : r.linhas;
+  const nome = nomeDeArquivo((fonte.nome || 'planilha').replace(/\.[^.]*$/, '') + '-limpa');
+  const chaves = colunasChave ?? Array.from({ length: colunas }, (_, i) => i);
+  const descricaoChaves = chaves.length === colunas && new Set(chaves).size === colunas
+    ? `Todas as ${colunas} colunas`
+    : `${chaves.slice(0, 4).map(i => cabecalho[i] || `Coluna ${i+1}`).join(', ')}${chaves.length > 4 ? ` e mais ${chaves.length - 4}` : ''}`;
+  const observacoes = [...(fonte.avisos || []), 'A prévia mostra até 20 linhas e 12 colunas. Os arquivos baixados incluem todas as linhas e colunas do resultado.', 'A importação e a limpeza ficam no navegador. Se tocar em Salvar trabalho, os dados e configurações são enviados à sua conta.'];
+  if (!r.cabeçalho) observacoes.push('A saída não acrescenta cabeçalhos: a primeira linha original continua sendo dado.');
+  if (!r.linhas.length) observacoes.push('Nenhuma linha de dados restou após a limpeza. Confira as opções antes de baixar.');
+  return {
+    valor: `${numero(r.linhas.length)} linhas limpas`,
+    resumo: `De ${numero(tabela.length - (r.cabeçalho ? 1 : 0))} para ${numero(r.linhas.length)}${fonte.aba ? ` · aba ${fonte.aba}` : ''}.`,
+    linhas: [['Linhas duplicadas removidas', numero(r.removidas.duplicadas)], ['Linhas vazias removidas', numero(r.removidas.vazias)], ['Colunas preservadas', String(colunas)], ['Comparação de duplicadas', dados.removerDuplicadas === 'sim' ? descricaoChaves : 'Desligada'], ['Ocorrência preservada', dados.manter === 'ultima' ? 'Última' : 'Primeira']],
+    tabela: { cabeçalho: cabecalho.slice(0, 12), linhas: r.linhas.slice(0, 20).map(l => l.slice(0, 12)), semExportação: true },
+    arquivos: [{ rótulo: 'Baixar CSV completo', gerar: () => baixarCsv(finais, nome) }, { rótulo: 'Baixar XLSX completo', ícone: 'planilha', gerar: () => baixarPlanilha(finais, nome, { aba: 'Dados limpos' }) }],
+    observações: observacoes, tabelaCompleta: finais,
+  };
+}
 
 export default {
   instruções: {
-    passos: [
-      'Copie as células direto da sua planilha e cole no campo, ou cole o conteúdo de um arquivo CSV.',
-      'Marque o que você quer limpar. Por padrão, remove linhas duplicadas e vazias e apara espaços.',
-      'Toque em Limpar. O resumo diz exatamente quantas linhas saíram e por quê.',
-      'Baixe em CSV ou em planilha .xlsx e abra de volta no Excel ou no Google Planilhas.',
-    ],
-    exemplo: {
-      texto: 'Uma lista exportada de um sistema com 1.200 linhas costuma voltar com dezenas de repetidas e espaços sobrando. '
-        + 'Colar aqui e limpar resolve em um passo, e o arquivo baixado já abre certo com acentos.',
-    },
-    limites: `Até ${LIMITE_DE_LINHAS.toLocaleString('pt-BR')} linhas. O separador é detectado sozinho `
-      + '(ponto e vírgula, vírgula, tabulação ou barra vertical), respeitando aspas e quebras de linha dentro das células. '
-      + 'Tudo é processado no seu navegador: o arquivo não é enviado a lugar nenhum. '
-      + 'A comparação de duplicadas é feita pela linha inteira, depois das outras limpezas.',
-    perguntas: [
-      { p: 'Por que o Excel abre o CSV com acentos errados?', r: 'Porque ele espera a marca de codificação no começo do arquivo. O CSV gerado aqui já inclui essa marca, então abre certo. Se ainda assim quiser garantir, baixe o .xlsx.' },
-      { p: 'Duplicada é linha inteira igual ou só a primeira coluna?', r: 'Linha inteira. Duas pessoas com o mesmo nome mas telefones diferentes continuam sendo duas linhas.' },
-    ],
+    passos: ['Escolha um XLSX, CSV ou TSV, ou cole as células da planilha. No XLSX, escolha a aba.', 'Configure as limpezas, as colunas que identificam duplicadas e se quer preservar a primeira ou a última ocorrência.', 'Revise as contagens e a amostra. Você pode voltar e ajustar as opções.', 'Confirme e baixe o resultado completo em CSV ou XLSX.'],
+    exemplo: { texto: 'Em uma lista de clientes, selecione a coluna e-mail e mantenha a última ocorrência para preservar o cadastro mais recente de cada endereço. Nome, telefone e todas as outras colunas continuam na saída.' },
+    limites: 'Até 10 MB por arquivo, 50.000 linhas, 256 colunas, 500.000 células e 5 milhões de caracteres por aba. A primeira linha conta no limite. Importa os valores exibidos de uma aba do XLSX, sem preservar fórmulas, estilos, gráficos ou macros. Arquivos com senha, XLS, ODS e ZIP64 não são aceitos; salve como XLSX simples ou CSV. Importar e limpar não envia os dados; Salvar trabalho envia dados e configurações para a sua conta.',
+    perguntas: [{ p: 'Como identifico uma duplicata pelo e-mail?', r: 'Na etapa Configurar, marque somente a coluna e-mail. Todas as demais colunas serão preservadas na linha escolhida. A comparação usa os valores após as limpezas de texto configuradas.' }, { p: 'O que acontece com fórmulas?', r: 'A ferramenta importa os resultados já salvos no arquivo, sem recalcular ou exportar fórmulas. Fórmulas sem resultado salvo ficam vazias e a tela avisa; recalcule e salve o original no Excel antes de importar.' }, { p: 'A primeira linha sempre vira cabeçalho?', r: 'Você escolhe. Se desmarcar a opção, a primeira linha continua sendo dado e a exportação não acrescenta cabeçalhos.' }],
   },
-
   montar(raiz, ferramenta) {
+    let fonte = {};
     montarFerramenta(raiz, ferramenta, {
-      rótuloDaAção: 'Limpar',
-      demorada: true,
+      rótuloDaAção: 'Revisar limpeza', demorada: true,
       campos: [
-        {
-          nome: 'conteúdo', rótulo: 'Cole os dados aqui', tipo: 'área', linhas: 10,
-          exemplo: 'nome;email\nAna;ana@exemplo.com\nAna;ana@exemplo.com',
-        },
+        { nome: 'arquivo', rótulo: 'Arquivo XLSX, CSV ou TSV', tipo: 'file', dica: 'Até 10 MB. Importação no seu aparelho.' },
+        { nome: 'conteúdo', rótulo: 'Ou cole os dados aqui', tipo: 'área', linhas: 6, exemplo: 'nome;email\nAna;ana@exemplo.com\nAna;ana@exemplo.com' },
         { nome: 'comCabeçalho', rótulo: 'A primeira linha é o cabeçalho', tipo: 'caixa', padrão: true },
         { nome: 'removerDuplicadas', rótulo: 'Remover linhas duplicadas', tipo: 'caixa', padrão: true },
+        { nome: 'colunasChave', rótulo: 'Colunas que identificam uma duplicata', tipo: 'text', padrão: '' },
+        { nome: 'manter', rótulo: 'Qual ocorrência preservar', tipo: 'seleção', padrão: 'primeira', opções: [{ valor: 'primeira', rótulo: 'Primeira ocorrência' }, { valor: 'ultima', rótulo: 'Última ocorrência' }] },
         { nome: 'removerVazias', rótulo: 'Remover linhas vazias', tipo: 'caixa', padrão: true },
         { nome: 'aparar', rótulo: 'Aparar espaços nas pontas', tipo: 'caixa', padrão: true },
         { nome: 'espaçosDuplos', rótulo: 'Reduzir espaços repetidos', tipo: 'caixa', padrão: true },
-        {
-          nome: 'caixa', rótulo: 'Padronizar maiúsculas e minúsculas', tipo: 'seleção', padrão: 'nenhuma',
-          opções: [
-            { valor: 'nenhuma', rótulo: 'Não mexer' },
-            { valor: 'primeira', rótulo: 'Primeira Letra Maiúscula' },
-            { valor: 'maiúsculas', rótulo: 'TUDO MAIÚSCULO' },
-            { valor: 'minúsculas', rótulo: 'tudo minúsculo' },
-          ],
-        },
+        { nome: 'caixa', rótulo: 'Padronizar maiúsculas e minúsculas', tipo: 'seleção', padrão: 'nenhuma', opções: [{ valor: 'nenhuma', rótulo: 'Não mexer' }, { valor: 'primeira', rótulo: 'Primeira letra maiúscula' }, { valor: 'maiúsculas', rótulo: 'TUDO MAIÚSCULO' }, { valor: 'minúsculas', rótulo: 'tudo minúsculo' }] },
       ],
-      calcular(dados) {
-        const conteúdo = texto(dados, 'conteúdo', { rótulo: 'Dados', máximo: 5000000 });
-        const separador = detectarSeparador(conteúdo);
-        const tabela = lerCsv(conteúdo, { separador });
-
-        if (tabela.length === 0) throw new ErroDeEntrada('Não encontrei dados no que foi colado.', 'conteúdo');
-        if (tabela.length > LIMITE_DE_LINHAS) {
-          throw new ErroDeEntrada(
-            `São ${tabela.length.toLocaleString('pt-BR')} linhas e o limite é ${LIMITE_DE_LINHAS.toLocaleString('pt-BR')}. Divida o arquivo em partes.`,
-            'conteúdo',
-          );
-        }
-
-        const r = limparTabela(tabela, {
-          comCabeçalho: dados.comCabeçalho === 'sim',
-          removerDuplicadas: dados.removerDuplicadas === 'sim',
-          removerVazias: dados.removerVazias === 'sim',
-          aparar: dados.aparar === 'sim',
-          espaçosDuplos: dados.espaçosDuplos === 'sim',
-          caixa: dados.caixa,
-        });
-
-        const cabeçalho = r.cabeçalho ?? r.linhas[0]?.map((_, i) => `Coluna ${i + 1}`) ?? [];
-        const linhasFinais = [cabeçalho, ...r.linhas];
-        const nome = nomeDeArquivo('planilha-limpa');
-        const amostra = r.linhas.slice(0, 20);
-
-        const nomeDoSeparador = { ';': 'ponto e vírgula', ',': 'vírgula', '\t': 'tabulação', '|': 'barra vertical' }[separador];
-
-        return {
-          valor: `${r.linhas.length.toLocaleString('pt-BR')} linhas limpas`,
-          resumo: `De ${(tabela.length - (r.cabeçalho ? 1 : 0)).toLocaleString('pt-BR')} para ${r.linhas.length.toLocaleString('pt-BR')} · separador detectado: ${nomeDoSeparador}.`,
-          linhas: [
-            ['Linhas duplicadas removidas', r.removidas.duplicadas.toLocaleString('pt-BR')],
-            ['Linhas vazias removidas', r.removidas.vazias.toLocaleString('pt-BR')],
-            ['Colunas', String(cabeçalho.length)],
-            ['Linhas no resultado', r.linhas.length.toLocaleString('pt-BR')],
-          ],
-          tabela: { cabeçalho, linhas: amostra, semExportação: true },
-          arquivos: [
-            { rótulo: 'Baixar CSV', gerar: () => baixarCsv(linhasFinais, nome) },
-            { rótulo: 'Baixar planilha', ícone: 'planilha', gerar: () => baixarPlanilha(linhasFinais, nome, { aba: 'Dados limpos' }) },
-          ],
-          observações: [
-            amostra.length < r.linhas.length
-              ? `A tabela na tela mostra as primeiras ${amostra.length} linhas. Os arquivos trazem todas as ${r.linhas.length.toLocaleString('pt-BR')}.`
-              : 'Nada foi enviado a servidor: a limpeza aconteceu no seu navegador.',
-          ],
-        };
-      },
+      calcular: dados => limparNaTela(dados, fonte),
+      aoMontar: () => { fonte = ligarEtapasPlanilha(raiz); },
     });
   },
 };

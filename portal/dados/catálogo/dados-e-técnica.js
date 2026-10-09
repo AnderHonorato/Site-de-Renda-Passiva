@@ -117,10 +117,10 @@ export const ferramentas = [
   {
     id: 'F030', slug: 'limpar-planilha', nome: 'Limpeza de planilha', cat: 'planilhas',
     ícone: 'planilha', tarefas: ['organizar'], status: 'pronta',
-    resumo: 'Remove linhas duplicadas e vazias, apara espaços, padroniza maiúsculas e exporta CSV ou XLSX.',
+    resumo: 'Importa XLSX ou CSV, escolhe a aba, remove duplicadas por colunas e exporta a planilha limpa.',
     problema: 'Deixar uma lista exportada de outro sistema utilizável.',
-    entra: 'Arquivo CSV ou texto colado, com o separador detectado automaticamente.',
-    processa: 'Interpreta o CSV respeitando aspas, aplica as limpezas escolhidas e recalcula os totais.',
+    entra: 'Arquivo XLSX, CSV, TSV ou texto colado, com seleção de aba e separador detectado.',
+    processa: 'Limpa os valores, compara duplicadas pelas colunas escolhidas e preserva a primeira ou a última ocorrência.',
     sai: 'Tabela limpa, contagem do que foi removido e arquivo para baixar.',
     exporta: ['csv', 'xlsx', 'copiar'], plano: 'gratuito', local: true,
     unifica: ['Remover linhas duplicadas', 'Aparar espaços', 'Padronizar texto de planilha'],

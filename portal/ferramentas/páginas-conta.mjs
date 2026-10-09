@@ -59,7 +59,7 @@ function quadro(titulo, descricao, interior, id) {
 
 /** Os grupos ocupam linhas reais do formulário, sem criar linhas implícitas vazias. */
 function editorPerfil(t, en) {
-  return `<form id="form-perfil" class="conta__form editor-perfil">
+  return `<form id="form-perfil" class="conta__form conta__form--compacta editor-perfil">
     <section class="editor-perfil__imagem" aria-labelledby="editor-imagem-titulo">
       <div class="conta__editor-avatar">
         <div id="avatar-preview" class="conta__avatar"></div>

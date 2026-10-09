@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Limpeza de planilha — Ferramentas do Ander</title>
-  <meta name="description" content="Remove linhas duplicadas e vazias, apara espaços, padroniza maiúsculas e exporta CSV ou XLSX.">
+  <meta name="description" content="Importa XLSX ou CSV, escolhe a aba, remove duplicadas por colunas e exporta a planilha limpa.">
   <meta name="theme-color" content="#f5f2ed" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#171717" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="../../recursos/ícone.svg" type="image/svg+xml">
@@ -25,10 +25,11 @@
   <link rel="stylesheet" href="../../estilos/banner-prioritario.css">
   <link rel="stylesheet" href="../../estilos/perfil-compacto.css">
   <link rel="stylesheet" href="../../estilos/editor-perfil.css">
+  <link rel="stylesheet" href="../../estilos/limpeza-planilha.css">
   <script src="../../scripts/núcleo/tema-inicial.js"></script>
   <script type="module" src="../../scripts/núcleo/página-de-ferramenta.js"></script>
   <meta property="og:title" content="Limpeza de planilha — Ferramentas do Ander">
-  <meta property="og:description" content="Remove linhas duplicadas e vazias, apara espaços, padroniza maiúsculas e exporta CSV ou XLSX.">
+  <meta property="og:description" content="Importa XLSX ou CSV, escolhe a aba, remove duplicadas por colunas e exporta a planilha limpa.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary">
 </head>
@@ -123,7 +124,7 @@
         <span class="ferramenta-topo__ícone"><span class="ícone-vivo" data-estado="carregando"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 4.5v15M15 4.5v15"/></svg><img class="ícone-vivo__animado" data-viva="ícone" data-fonte="../../recursos/ícones-animados/planilha.svg" alt="" width="22" height="22" decoding="async"></span></span>
         <div>
           <h1>Limpeza de planilha</h1>
-          <p>Remove linhas duplicadas e vazias, apara espaços, padroniza maiúsculas e exporta CSV ou XLSX.</p>
+          <p>Importa XLSX ou CSV, escolhe a aba, remove duplicadas por colunas e exporta a planilha limpa.</p>
         </div>
         <div class="ferramenta-topo__ações">
           <button class="ícone-botão favorito" type="button" data-favorito="limpar-planilha" aria-pressed="false" aria-label="Salvar nos favoritos"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 4.5h11a1 1 0 0 1 1 1V20l-6.5-3.8L5.5 20V5.5a1 1 0 0 1 1-1Z"/></svg></button>
@@ -134,7 +135,7 @@
       <div class="ferramenta-área">
       <dl class="ficha">
         <div><dt>Para que serve</dt><dd>Deixar uma lista exportada de outro sistema utilizável.</dd></div>
-        <div><dt>Você informa</dt><dd>Arquivo CSV ou texto colado, com o separador detectado automaticamente.</dd></div>
+        <div><dt>Você informa</dt><dd>Arquivo XLSX, CSV, TSV ou texto colado, com seleção de aba e separador detectado.</dd></div>
         <div><dt>Você recebe</dt><dd>Tabela limpa, contagem do que foi removido e arquivo para baixar.</dd></div>
         <div><dt>Onde processa</dt><dd>No seu navegador. Nada é enviado.</dd></div>
         <div><dt>Você pode levar</dt><dd>CSV, planilha Excel, copiar</dd></div>
@@ -147,7 +148,7 @@
         <aside class="ferramenta-lado">
           <div class="painel">
             <p class="rótulo">Como funciona a conta</p>
-            <p class="pequeno t-1">Interpreta o CSV respeitando aspas, aplica as limpezas escolhidas e recalcula os totais.</p>
+            <p class="pequeno t-1">Limpa os valores, compara duplicadas pelas colunas escolhidas e preserva a primeira ou a última ocorrência.</p>
             <p class="pequeno suave">Esta ferramenta reúne: Remover linhas duplicadas · Aparar espaços · Padronizar texto de planilha.</p>
           </div>
           <div class="painel"><p class="rótulo b-2">Ferramentas relacionadas</p><div class="relacionadas"><a href="../divisao-de-contas/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.8a3 3 0 0 1 0 5.6"/><path d="M17.5 14.8a5.5 5.5 0 0 1 3 4.7"/></svg>Divisão de contas</a><a href="../csv-e-json/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 4.5v15M15 4.5v15"/></svg>CSV e JSON</a><a href="../limpador-de-texto/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>Limpeza de texto</a><a href="../remover-linhas-duplicadas-de-texto/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/></svg>Remover linhas duplicadas</a><a href="../juntar-pdf/"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8l-4.5-4.5Z"/><path d="M14 3.5V8h4.5"/><path d="M9 13h6M9 16.5h4"/></svg>Juntar PDF</a></div></div>
@@ -158,7 +159,7 @@
 
       <section class="seção prosa" id="como-usar">
         <h2>Como usar</h2>
-        <div id="instruções"><ol><li>Copie as células direto da sua planilha e cole no campo, ou cole o conteúdo de um arquivo CSV.</li><li>Marque o que você quer limpar. Por padrão, remove linhas duplicadas e vazias e apara espaços.</li><li>Toque em Limpar. O resumo diz exatamente quantas linhas saíram e por quê.</li><li>Baixe em CSV ou em planilha .xlsx e abra de volta no Excel ou no Google Planilhas.</li></ol><h3>Exemplo</h3><p>Uma lista exportada de um sistema com 1.200 linhas costuma voltar com dezenas de repetidas e espaços sobrando. Colar aqui e limpar resolve em um passo, e o arquivo baixado já abre certo com acentos.</p><h3>Limites e premissas</h3><p>Até 50.000 linhas. O separador é detectado sozinho (ponto e vírgula, vírgula, tabulação ou barra vertical), respeitando aspas e quebras de linha dentro das células. Tudo é processado no seu navegador: o arquivo não é enviado a lugar nenhum. A comparação de duplicadas é feita pela linha inteira, depois das outras limpezas.</p><h3>Perguntas frequentes</h3><details><summary>Por que o Excel abre o CSV com acentos errados?</summary><p>Porque ele espera a marca de codificação no começo do arquivo. O CSV gerado aqui já inclui essa marca, então abre certo. Se ainda assim quiser garantir, baixe o .xlsx.</p></details><details><summary>Duplicada é linha inteira igual ou só a primeira coluna?</summary><p>Linha inteira. Duas pessoas com o mesmo nome mas telefones diferentes continuam sendo duas linhas.</p></details></div>
+        <div id="instruções"><ol><li>Escolha um XLSX, CSV ou TSV, ou cole as células da planilha. No XLSX, escolha a aba.</li><li>Configure as limpezas, as colunas que identificam duplicadas e se quer preservar a primeira ou a última ocorrência.</li><li>Revise as contagens e a amostra. Você pode voltar e ajustar as opções.</li><li>Confirme e baixe o resultado completo em CSV ou XLSX.</li></ol><h3>Exemplo</h3><p>Em uma lista de clientes, selecione a coluna e-mail e mantenha a última ocorrência para preservar o cadastro mais recente de cada endereço. Nome, telefone e todas as outras colunas continuam na saída.</p><h3>Limites e premissas</h3><p>Até 10 MB por arquivo, 50.000 linhas, 256 colunas, 500.000 células e 5 milhões de caracteres por aba. A primeira linha conta no limite. Importa os valores exibidos de uma aba do XLSX, sem preservar fórmulas, estilos, gráficos ou macros. Arquivos com senha, XLS, ODS e ZIP64 não são aceitos; salve como XLSX simples ou CSV. Importar e limpar não envia os dados; Salvar trabalho envia dados e configurações para a sua conta.</p><h3>Perguntas frequentes</h3><details><summary>Como identifico uma duplicata pelo e-mail?</summary><p>Na etapa Configurar, marque somente a coluna e-mail. Todas as demais colunas serão preservadas na linha escolhida. A comparação usa os valores após as limpezas de texto configuradas.</p></details><details><summary>O que acontece com fórmulas?</summary><p>A ferramenta importa os resultados já salvos no arquivo, sem recalcular ou exportar fórmulas. Fórmulas sem resultado salvo ficam vazias e a tela avisa; recalcule e salve o original no Excel antes de importar.</p></details><details><summary>A primeira linha sempre vira cabeçalho?</summary><p>Você escolhe. Se desmarcar a opção, a primeira linha continua sendo dado e a exportação não acrescenta cabeçalhos.</p></details></div>
       </section>
       <div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>
     </div>

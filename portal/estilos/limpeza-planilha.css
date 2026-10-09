@@ -1,0 +1,20 @@
+.limpeza-etapas__nav { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:18px; }
+.limpeza-etapas__nav button { min-height:40px;padding:8px 6px;border:1px solid var(--borda);border-radius:var(--raio-pílula);background:var(--superfície);color:var(--tinta-média);font:600 .8rem var(--fonte);cursor:pointer; }
+.limpeza-etapas__nav [aria-current="step"] { color:var(--marca);background:var(--marca-fraca);border-color:var(--marca); }
+.limpeza-etapas__nav button:disabled { opacity:.45;cursor:default; }
+.limpeza-etapas__carregar { display:grid;gap:14px; }
+.limpeza-etapas__carregar [type="file"] { width:100%;min-width:0; }
+.limpeza-etapas__carregar>.botão { justify-self:start; }
+.limpeza-etapas__situacao { margin:0;color:var(--tinta-média);font-size:.84rem;overflow-wrap:anywhere; }
+.limpeza-etapas__erro { margin:0;padding:12px;border:1px solid var(--erro);border-radius:var(--raio-p);color:var(--erro);font-size:.84rem; }
+.limpeza-etapas [data-campo="colunasChave"] { grid-column:1/-1; }
+.limpeza-etapas__colunas { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px;max-height:220px;overflow:auto;padding:8px;border:1px solid var(--borda);border-radius:var(--raio-p);background:var(--superfície); }
+.limpeza-etapas__colunas label { display:flex;align-items:center;gap:7px;min-height:34px;min-width:0;font-size:.8rem;color:var(--tinta-média);cursor:pointer; }
+.limpeza-etapas__colunas span { overflow-wrap:anywhere; }
+.limpeza-etapas .limpeza-etapas__colunas input[type="checkbox"] { width:18px;height:18px;min-height:0;padding:0;margin:0;flex:0 0 18px;accent-color:var(--marca); }
+.limpeza-etapas__revisao { display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;padding:12px;border:1px solid var(--borda);border-radius:var(--raio);background:var(--superfície); }
+.limpeza-etapas__revisao p { width:100%;margin:0 0 4px;font-size:.84rem;color:var(--tinta-média); }
+.limpeza-etapas [hidden] { display:none!important; }
+.limpeza-etapas #resultado { min-width:0; }
+.limpeza-etapas .resultado__linhas b { overflow-wrap:anywhere;min-width:75px; }
+@media(max-width:460px) { .limpeza-etapas__nav { gap:4px; }.limpeza-etapas__nav button { font-size:.66rem;padding:6px 2px; }.limpeza-etapas__colunas { grid-template-columns:1fr; } }

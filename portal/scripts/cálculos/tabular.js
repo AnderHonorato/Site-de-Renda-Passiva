@@ -60,6 +60,7 @@ export function lerCsv(texto, { separador } = {}) {
     }
     célula += c;
   }
+  if (dentroDeAspas) throw new Error('O CSV tem uma célula com aspas abertas. Confira o arquivo ou a colagem.');
   linha.push(célula);
   linhas.push(linha);
 
@@ -74,6 +75,7 @@ export function lerCsv(texto, { separador } = {}) {
  * @param {{
  *   comCabeçalho?: boolean, aparar?: boolean, removerVazias?: boolean,
  *   removerDuplicadas?: boolean, espaçosDuplos?: boolean,
+ *   colunasChave?: number[], manter?: 'primeira'|'ultima',
  *   caixa?: 'nenhuma'|'maiúsculas'|'minúsculas'|'primeira'
  * }} opções
  * @returns {{cabeçalho: string[]|null, linhas: string[][], removidas: {vazias: number, duplicadas: number}}}
@@ -81,7 +83,7 @@ export function lerCsv(texto, { separador } = {}) {
 export function limparTabela(tabela, opções = {}) {
   const {
     comCabeçalho = true, aparar = true, removerVazias = true,
-    removerDuplicadas = true, espaçosDuplos = true, caixa = 'nenhuma',
+    removerDuplicadas = true, espaçosDuplos = true, caixa = 'nenhuma', colunasChave, manter = 'primeira',
   } = opções;
 
   if (!Array.isArray(tabela) || tabela.length === 0) {
@@ -114,13 +116,20 @@ export function limparTabela(tabela, opções = {}) {
 
   let duplicadas = 0;
   if (removerDuplicadas) {
+    const largura = tabela.reduce((max, linha) => Math.max(max, linha.length), 0);
+    if (colunasChave !== undefined && (!Array.isArray(colunasChave) || !colunasChave.length || colunasChave.some(i => !Number.isInteger(i) || i < 0 || i >= largura))) {
+      throw new Error('Escolha pelo menos uma coluna válida para comparar as duplicadas.');
+    }
+    if (!['primeira', 'ultima'].includes(manter)) throw new Error('Escolha manter a primeira ou a última ocorrência.');
     const vistas = new Set();
+    if (manter === 'ultima') linhas.reverse();
     linhas = linhas.filter((l) => {
-      const chave = l.join('');
+      const chave = JSON.stringify(colunasChave ? colunasChave.map(i => l[i] ?? '') : l);
       if (vistas.has(chave)) { duplicadas += 1; return false; }
       vistas.add(chave);
       return true;
     });
+    if (manter === 'ultima') linhas.reverse();
   }
 
   return { cabeçalho, linhas, removidas: { vazias, duplicadas } };
