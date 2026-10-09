@@ -2,20 +2,25 @@
   "planos": [
     {
       "id": "gratuito",
+      "dados_maximo_bytes": 20480,
+      "armazenamento_maximo_bytes": 61440,
       "limites": { "favoritos": 10, "trabalhos": 3, "lote_arquivos": 3 },
       "recursos": []
     },
     {
       "id": "plus",
+      "dados_maximo_bytes": 65536,
+      "armazenamento_maximo_bytes": 8388608,
       "limites": { "favoritos": 500, "trabalhos": 500, "lote_arquivos": 100 },
       "recursos": ["lote_grande", "exportar_xlsx_cenarios", "historico"]
     },
     {
       "id": "premium",
+      "dados_maximo_bytes": 524288,
+      "armazenamento_maximo_bytes": 33554432,
       "herda": "plus",
-      "limites": { "favoritos": 500, "trabalhos": 500, "lote_arquivos": 100 },
-      "recursos": ["lote_grande", "exportar_xlsx_cenarios", "historico"],
-      "provisorio": true
+      "limites": { "favoritos": 500, "trabalhos": 2000, "lote_arquivos": 100 },
+      "recursos": ["historico", "trabalhos_maiores"]
     }
   ]
 }

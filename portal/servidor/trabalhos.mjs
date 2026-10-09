@@ -12,39 +12,43 @@ export function limitesDoPlano(id = 'gratuito') {
 }
 
 export function planosPublicos() {
-  return configuracao.planos.map(({ id, limites, provisorio = false }) => ({ id, limites: { ...limites }, provisorio }));
+  return configuracao.planos.map(({ id, limites, dados_maximo_bytes, armazenamento_maximo_bytes, provisorio = false }) => ({ id, limites: { ...limites }, dados_maximo_bytes, armazenamento_maximo_bytes, provisorio }));
 }
 
-export function dadosDeTrabalhoValidos(valor) {
+export function limiteDadosDoPlano(id = 'gratuito') { return (porId.get(id) || porId.get('gratuito')).dados_maximo_bytes; }
+export function limiteArmazenamento(id = 'gratuito') { return (porId.get(id) || porId.get('gratuito')).armazenamento_maximo_bytes; }
+export function bytesUsados(db,id) { return Number(db.prepare('SELECT coalesce(sum(length(CAST(dados AS BLOB))),0) total FROM trabalhos WHERE usuario_id=?').get(id).total); }
+
+export function dadosDeTrabalhoValidos(valor, plano = 'gratuito') {
   if (!valor || typeof valor !== 'object' || Array.isArray(valor)) return false;
   try {
     const json = JSON.stringify(valor);
-    return Buffer.byteLength(json, 'utf8') <= DADOS_MAXIMO_BYTES;
+    return Buffer.byteLength(json, 'utf8') <= limiteDadosDoPlano(plano);
   } catch {
     return false;
   }
 }
 
-export function validarNovoTrabalho({ ferramenta_slug, titulo, dados, situacao = 'salvo' } = {}) {
+export function validarNovoTrabalho({ ferramenta_slug, titulo, dados, situacao = 'salvo' } = {}, plano = 'gratuito') {
   return typeof ferramenta_slug === 'string' && ferramenta_slug.length <= 100 && SLUG.test(ferramenta_slug)
     && typeof titulo === 'string' && titulo.trim().length >= 1 && titulo.trim().length <= 120
-    && dadosDeTrabalhoValidos(dados) && SITUACOES.has(situacao);
+    && dadosDeTrabalhoValidos(dados, plano) && SITUACOES.has(situacao);
 }
 
-export function validarEdicaoTrabalho({ titulo, dados, situacao } = {}) {
+export function validarEdicaoTrabalho({ titulo, dados, situacao } = {}, plano = 'gratuito') {
   if (titulo !== undefined && (typeof titulo !== 'string' || titulo.trim().length < 1 || titulo.trim().length > 120)) return false;
-  if (dados !== undefined && !dadosDeTrabalhoValidos(dados)) return false;
+  if (dados !== undefined && !dadosDeTrabalhoValidos(dados, plano)) return false;
   if (situacao !== undefined && !SITUACOES.has(situacao)) return false;
   return titulo !== undefined || dados !== undefined || situacao !== undefined;
 }
 
-export function trabalhoPublico(linha, ferramenta) {
+export function trabalhoPublico(linha, ferramenta, incluirDados = true) {
   return {
     id: linha.id,
     ferramenta_slug: linha.ferramenta_slug,
     ferramenta_nome: ferramenta?.nome || linha.ferramenta_slug,
     titulo: linha.titulo,
-    dados: JSON.parse(linha.dados),
+    ...(incluirDados ? { dados: JSON.parse(linha.dados) } : {}),
     situacao: linha.situacao,
     criado_em: linha.criado_em,
     atualizado_em: linha.atualizado_em,

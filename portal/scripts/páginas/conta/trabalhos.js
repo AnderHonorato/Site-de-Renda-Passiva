@@ -1,4 +1,6 @@
 import { api, en, estado, mensagemErro, obterSessao } from './comum.js';
+let limiteAtual = 0;
+let paginaAtual = 1;
 
 try {
   const sessao = await obterSessao();
@@ -102,7 +104,7 @@ function cartão(trabalho) {
       await api(`/api/trabalhos/${trabalho.id}`, { metodo: 'DELETE' });
       item.remove();
       estado(en ? 'Work deleted.' : 'Trabalho apagado.');
-      await atualizarResumo();
+      await carregar();
     } catch (erro) {
       estado(mensagemErro(erro), true);
       apagar.disabled = false;
@@ -113,14 +115,14 @@ function cartão(trabalho) {
   return item;
 }
 
-let limiteAtual = 0;
 async function atualizarResumo() {
-  const resposta = await api('/api/trabalhos');
+  const resposta = await api(`/api/trabalhos?pagina=${paginaAtual}`);
   limiteAtual = resposta.limite ?? 0;
   const resumo = document.getElementById('trabalhos-resumo');
   if (resumo) resumo.textContent = en
-    ? `${resposta.trabalhos.length} of ${limiteAtual} saved works used.`
-    : `${resposta.trabalhos.length} de ${limiteAtual} trabalhos salvos usados.`;
+    ? `${resposta.total??resposta.trabalhos.length} of ${limiteAtual} saved works used.`
+    : `${resposta.total??resposta.trabalhos.length} de ${limiteAtual} trabalhos salvos usados.`;
+  if(resumo&&resposta.armazenamento){const a=resposta.armazenamento;resumo.textContent+=` · ${(a.usado/1024).toLocaleString(en?'en':'pt-BR',{maximumFractionDigits:1})} / ${(a.maximo/1024).toLocaleString(en?'en':'pt-BR')} KiB`;}
   return resposta;
 }
 
@@ -128,6 +130,13 @@ async function carregar() {
   const area = document.getElementById('lista-trabalhos');
   area.replaceChildren();
   const resposta = await atualizarResumo();
+  if(paginaAtual>1&&paginaAtual>(resposta.paginas||1)){paginaAtual--;return carregar();}
+  let paginas=document.getElementById('trabalhos-paginas');if(!paginas){paginas=document.createElement('div');paginas.id='trabalhos-paginas';paginas.className='ações';area.after(paginas);}paginas.replaceChildren();
+  if((resposta.paginas||1)>1){
+    const anterior=botao(en?'Previous':'Anterior'),proxima=botao(en?'Next':'Próxima'),info=document.createElement('span');info.textContent=`${paginaAtual} / ${resposta.paginas}`;anterior.disabled=paginaAtual===1;proxima.disabled=paginaAtual===resposta.paginas;
+    for(const [b,delta]of [[anterior,-1],[proxima,1]])b.onclick=async()=>{anterior.disabled=proxima.disabled=true;paginaAtual+=delta;try{await carregar();}catch(e){paginaAtual-=delta;estado(mensagemErro(e),true);anterior.disabled=paginaAtual===1;proxima.disabled=paginaAtual===resposta.paginas;}};
+    paginas.append(anterior,info,proxima);
+  }
   for (const trabalho of resposta.trabalhos) area.append(cartão(trabalho));
   if (!resposta.trabalhos.length) {
     const vazio = document.createElement('div');

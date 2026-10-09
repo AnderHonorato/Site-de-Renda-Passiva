@@ -20,6 +20,7 @@ import { íconeVivo, arteViva } from '../scripts/núcleo/ícone-animado.js';
 import { gerarÍconesAnimados } from './ícones-animados.mjs';
 import { lerRegistro, atualizarRegistro, montarFeed } from './lançamentos.mjs';
 import { paginasConta } from './páginas-conta.mjs';
+import { apresentarPlanos } from './painel-planos.mjs';
 import { instrucoesEmHtml } from '../scripts/núcleo/instruções.js';
 import { basePublica, completarSeo } from './seo.mjs';
 
@@ -185,7 +186,8 @@ function páginasDoIdioma(ctx) {
     descrição: en ? 'Free public tools and manually granted Plus and Premium accounts without automatic billing.' : 'Ferramentas públicas gratuitas e contas Plus e Premium liberadas manualmente, sem cobrança automática.',
     base: '', raiz: en ? '../' : '', atual: '', anunciosPermitidos: false,
     alternativas: { 'pt-BR': en ? '../planos.html' : 'planos.html', en: en ? 'planos.html' : 'en/planos.html' },
-    conteúdo: `<section class="largura seção prosa"><h1>${en ? 'Plans' : 'Planos'}</h1><p>${en ? 'Public browser tools remain free and do not require an account. Plus and Premium are granted manually by an administrator. There is no automatic charge or checkout.' : 'As ferramentas públicas do navegador continuam gratuitas e não exigem conta. Plus e Premium são liberados manualmente pelo administrador. Não há cobrança automática nem checkout.'}</p><h2>${en ? 'Free' : 'Grátis'}</h2><p>${en ? 'Use public tools, create a profile, participate in moderated chat, save up to 10 favorites and keep up to 3 saved works in your account.' : 'Use as ferramentas públicas, crie um perfil, participe do chat moderado, guarde até 10 favoritos e mantenha até 3 trabalhos salvos na conta.'}</p><h2>Plus</h2><p>${en ? 'Manually granted Plus accounts do not display ads and can keep up to 500 favorites and 500 saved works. Large-batch limits remain controlled by each supported tool.' : 'Contas Plus liberadas manualmente não exibem anúncios e podem manter até 500 favoritos e 500 trabalhos salvos. Os limites de lotes grandes continuam controlados por cada ferramenta compatível.'}</p><h2>Premium</h2><p>${en ? 'Premium currently inherits the Plus account quotas while its final additional limits are still being defined. No unavailable Premium benefit is promised here.' : 'Premium herda por enquanto as cotas de conta do Plus enquanto os limites adicionais finais ainda são definidos. Nenhum benefício Premium indisponível é prometido aqui.'}</p><p><a class="botão" href="conta/mensagens.html">${en ? 'Ask the administrator through your account' : 'Peça ao administrador pela sua conta'}</a></p></section>`,
+    estilos: ['conta.css'],
+    conteúdo: `<section class="largura seção prosa"><h1>${en ? 'Plans' : 'Planos'}</h1><p>${en ? 'Public browser tools remain free. Plus and Premium are granted manually by an administrator; there is no automatic charge or checkout.' : 'As ferramentas públicas continuam gratuitas. Plus e Premium são liberados manualmente pelo administrador; não há cobrança automática nem checkout.'}</p>${apresentarPlanos(en)}<p><a class="botão" href="conta/mensagens.html">${en ? 'Request plan activation' : 'Solicitar ativação do plano'}</a></p></section>`,
   });
   return [
     [`${pasta}index.html`, páginaInicial(ctx)],

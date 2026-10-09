@@ -8,6 +8,7 @@ import { criarSeloRank } from '../../núcleo/ranks.js';
 import { progressoDeRank, rankDoNivel } from '../../../dados/recompensas.js';
 import { escolherDestaques, montarColecao } from './colecao-conquistas.js';
 import { criarProgressoEmblema } from '../../núcleo/progresso-emblema.js';
+import { ligarMissoes } from './missoes.js';
 
 const usuario = new URLSearchParams(location.search).get('usuario');
 const area = document.getElementById('perfil-pessoa');
@@ -403,6 +404,7 @@ async function carregar() {
     }
     area.append(estatisticas);
     area.append(montarColecao(perfil,{proprio:perfil.usuario===sessao.usuario.usuario,ingles:en,detalhe:mostrarDetalhe,aoSalvar:async selecionadas=>{perfil.conquistas_destaque=selecionadas;await carregar();}}));
+    if(perfil.usuario===sessao.usuario.usuario)ligarMissoes(area,sessao,{ingles:en,raiz,aoAtualizar:carregar});
 
     const recomendadas = perfil.ferramentas_recomendadas || [];
     const usadas = (perfil.ferramentas_mais_usadas || []).map(f => f.slug);

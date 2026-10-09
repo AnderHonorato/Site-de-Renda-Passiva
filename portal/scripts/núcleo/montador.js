@@ -261,6 +261,10 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       } catch (erro) {
         if (erro?.message === 'limite_do_plano') {
           avisar(emInglês ? 'Your plan reached its saved-work limit. Manage your saved works or request a plan change.' : 'Seu plano atingiu o limite de trabalhos salvos. Gerencie os salvos ou peça uma mudança de plano.');
+        } else if (erro?.message === 'limite_armazenamento_do_plano') {
+          avisar(emInglês ? 'Your saved-work storage is full. Remove unneeded works or request a plan change. Your local result and downloads remain available.' : 'O espaço dos seus trabalhos salvos está cheio. Remova trabalhos que não precisa ou peça uma mudança de plano. O resultado e os downloads locais continuam disponíveis.');
+        } else if (erro?.message === 'limite_dados_do_plano') {
+          avisar(emInglês ? 'These saved values exceed your plan’s size limit. Reduce the data or request a plan change. Your local result and downloads remain available.' : 'Estes valores ultrapassam o espaço por trabalho do seu plano. Reduza os dados ou peça uma mudança de plano. O resultado e os downloads locais continuam disponíveis.');
         } else if (erro?.indisponivel) {
           avisar(emInglês ? 'Could not save now. Your result remains on this screen.' : 'Não foi possível salvar agora. Seu resultado continua nesta tela.');
         } else {

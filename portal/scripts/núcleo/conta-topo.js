@@ -114,6 +114,7 @@ export function renderizarContaTopo(fim, sessao, { base = './', idioma = 'pt' } 
   );
 
   const sair = document.createElement('button');
+  if(sessao.usuario.papel==='admin')navegacao.append(link(txt(idioma,'Eventos e missões','Events and missions'),`${base}admin/eventos/`,'estrela'));
   sair.type = 'button';
   sair.className = 'conta-topo__item conta-topo__sair';
   sair.innerHTML = ícone('seta');

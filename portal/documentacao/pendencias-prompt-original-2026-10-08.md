@@ -24,8 +24,8 @@ Comparação do super prompt anexado em `02fda86f-ec72-476d-b593-0f02eb85b7d3/Te
 
 ## Pedidos posteriores ainda parciais
 
-- **Premium:** `servidor/servidor-planos.json` ainda declara Premium provisório, com as mesmas cotas do Plus (500 favoritos, 500 trabalhos, lote de 100). Falta implementar diferenciação útil; a escolha de uma proposta foi delegada ao agente pelo proprietário, não exige pedir os números novamente.
-- **Recompensas da referência:** entregues escolha persistente e ordenação de até cinco destaques, filtros da coleção, oito marcos por família, conquistas permanentes, nove ranks distintos e XP faltante para o próximo rank. O chat tem salas/conversa/participantes, agrupamento de mensagens e datas, preservando o tema do portal. Faltam missões/eventos e ranking com privacidade; presença online exige API própria. A referência foi capturada com a instalação existente do Crawl4AI: cinco páginas e 90 recursos públicos. Isso não revela regras privadas nem constitui cópia integral funcional do backend.
+- **Premium:** diferenciação implementada na v1.3.5: 2.000 trabalhos, 512 KiB por trabalho e 32 MiB totais, contra 500/64 KiB/8 MiB do Plus. Favoritos e capacidade nominal de lote preservados. Planos, conta e API usam a mesma configuração; liberação permanece manual. Detalhes em [entrega-v1.3.5.md](entrega-v1.3.5.md).
+- **Recompensas da referência:** entregues escolha persistente e ordenação de até cinco destaques, filtros da coleção, oito marcos por família, conquistas permanentes, nove ranks distintos e XP faltante para o próximo rank. A v1.3.5 acrescenta missões diária/semanal, eventos administráveis, celebrações/notificações e ranking opcional autenticado com bloqueios. O chat tem salas/conversa/participantes, agrupamento de mensagens e datas, preservando o tema do portal. Presença online exige API própria e continua pendente. A referência foi capturada com a instalação existente do Crawl4AI: cinco páginas e 90 recursos públicos. Isso não revela regras privadas nem constitui cópia integral funcional do backend.
 - **Ferramentas posteriores:** conversões/serviço de arquivos e outras planejadas são ondas separadas; o contrato de processamento local das ferramentas atuais continua. Não tratar o serviço remoto como entregue.
 - **Backup de C:\Projetos:** somente uma parte foi enviada ao Drive. Os manifestos e pontos de retomada foram preservados. Backup integral, ensaio de restauração e liberação de espaço não estão concluídos. O pedido de não apagar nada continua vigente.
 
@@ -53,7 +53,7 @@ Correções urgentes entregues: falha opcional dos anúncios deixa de interrompe
 ## Ordem de continuidade
 
 1. **Concluído na v1.3.4:** importação XLSX e ferramenta em etapas.
-2. Diferenciar Premium e implementar missões/eventos/ranking de recompensas.
+2. **Concluído na v1.3.5:** diferenciar Premium e implementar missões/eventos/ranking de recompensas.
 3. Administração do catálogo/conteúdo/pontos e proteção progressiva persistente.
 4. Inglês das ferramentas e nova validação de desempenho/acessibilidade.
 5. Preparar produção e validar domínio, e-mail, anúncios e backup/restauração.
@@ -61,3 +61,7 @@ Correções urgentes entregues: falha opcional dos anúncios deixa de interrompe
 ## Continuação v1.3.4 — 09/10/2026
 
 Importação de planilhas e fluxo em quatro etapas concluídos. A leitura XLSX ocorre em trabalhador local; abas, chaves por coluna, primeira/última ocorrência, reabertura e arquivos completos foram conferidos. 1.116 testes unitários, oito cenários da ferramenta e uma regressão do conversor aprovados. Limites e evidências em [entrega-v1.3.4.md](entrega-v1.3.4.md).
+
+## Continuação v1.3.5 — 09/10/2026
+
+Premium diferenciado por quantidade e armazenamento; trabalhos listados em páginas leves. Missões/eventos/ranking integrados ao perfil próprio, com resgates únicos no servidor, notificações e celebração coerente com o tema. Administração bilíngue de eventos e participação opcional no ranking. 1.125 testes unitários, cinco cenários da API e 42 cenários distintos de navegador aprovados; banco real copiado e 23 tabelas existentes preservadas na ativação. Evidências e limites em [entrega-v1.3.5.md](entrega-v1.3.5.md). A próxima etapa é administração de catálogo/conteúdo/pontos e proteção progressiva persistente.

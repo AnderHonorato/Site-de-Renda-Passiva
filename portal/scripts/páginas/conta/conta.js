@@ -117,8 +117,10 @@ async function carregarPlanos(){
     for(const plano of resposta.planos||[]){const cartao=elemento('article','painel');cartao.dataset.plano=plano.id;
       cartao.append(elemento('h3','',plano.id==='gratuito'?(en?'Free':'Grátis'):plano.id==='plus'?'Plus':'Premium'));
       for(const [chave,nome]of [['favoritos',en?'favorites':'favoritos'],['trabalhos',en?'saved works':'trabalhos salvos']])cartao.append(elemento('p','',`${plano.limites[chave]} ${nome}`));
+      if(plano.dados_maximo_bytes)cartao.append(elemento('p','',`${plano.dados_maximo_bytes/1024} KiB ${en?'of saved data per work':'de dados salvos por trabalho'}`));
+      if(plano.armazenamento_maximo_bytes)cartao.append(elemento('p','',`${plano.armazenamento_maximo_bytes>=1048576?`${plano.armazenamento_maximo_bytes/1048576} MiB`:`${plano.armazenamento_maximo_bytes/1024} KiB`} ${en?'total saved-work storage':'de espaço total para trabalhos'}`));
       if(plano.id!=='gratuito')cartao.append(elemento('p','',en?'No advertising':'Sem publicidade'));
-      if(plano.provisorio)cartao.append(elemento('small','suave',en?'Currently inherits Plus limits.':'Por enquanto, herda os limites do Plus.'));
+      if(plano.id==='premium')cartao.append(elemento('small','suave',en?'For larger lists, spreadsheets and a larger project archive.':'Para listas, planilhas e um arquivo maior de projetos.'));
       if(plano.id===contaAtual.plano)cartao.append(elemento('strong','',en?'Your current plan':'Seu plano atual'));
       area.append(cartao);
     }

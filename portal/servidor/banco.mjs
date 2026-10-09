@@ -1,6 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
+import { iniciarRecompensas } from './recompensas.mjs';
 
 export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.meta.dirname, '.execucao', 'portal.sqlite')) {
   mkdirSync(dirname(caminho), { recursive: true });
@@ -173,5 +174,6 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
   db.prepare("DELETE FROM mensagens WHERE criado_em < datetime('now','-90 days') AND sala_id NOT IN (SELECT id FROM salas WHERE tipo='direta')").run();
   db.prepare("DELETE FROM mensagens WHERE criado_em < datetime('now','-48 hours') AND sala_id IN (SELECT id FROM salas WHERE tipo='direta')").run();
   db.prepare('DELETE FROM sessoes WHERE expira_em < ?').run(Date.now());
+  iniciarRecompensas(db);
   return db;
 }

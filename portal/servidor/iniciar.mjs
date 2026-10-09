@@ -6,12 +6,13 @@ import { abrirBanco } from './banco.mjs';
 import { hash, token, erro, cookies, senhaHash, hashDummy, comparar, corpo } from './seguranca.mjs';
 import { ferramentasProntas, ferramentaPorSlug } from '../dados/catálogo.js';
 import { categorias } from '../dados/categorias.js';
-import { limitesDoPlano, planosPublicos, trabalhoPublico, validarEdicaoTrabalho, validarNovoTrabalho } from './trabalhos.mjs';
+import { limitesDoPlano, limiteDadosDoPlano, limiteArmazenamento, bytesUsados, dadosDeTrabalhoValidos, planosPublicos, trabalhoPublico, validarEdicaoTrabalho, validarNovoTrabalho } from './trabalhos.mjs';
 import { AVATARES, medalhasDoUsuario, nivelDePontos, personalizacoesDoNivel, progressoDeNivel, validarPersonalizacao, validarSociais } from './perfil.mjs';
 import { progressoDeRank } from '../dados/recompensas.js';
 import { MAX_IMAGEM, itemAdmin, novidadesPublicas, removerNovidade, salvarImagem, salvarNovidade } from './novidades.mjs';
 import { configuracaoPublicidade, salvarPublicidade } from './publicidade.mjs';
 import { iniciarBanners, tratarBanners } from './banners.mjs';
+import { tratarRecompensas, registrarAtividadeRecompensa } from './recompensas.mjs';
 
 const agora = () => Date.now();
 const nomeSessao = process.env.URL_PUBLICA?.startsWith('https://') ? '__Host-sessao' : 'sessao';
@@ -195,6 +196,7 @@ async function rota(req,res){
     const u=sessao(req);return json(res,200,{usuario:usuarioPublico(u),chat_habilitado:chatAtivo(),chat_aceito:!!u?.chat_aceito_em});
   }
   proteger(req);
+  if(await tratarRecompensas(req,res,{db:banco,json,exigir,admin,corpo,registrarAdmin,nivelDoUsuario}))return;
   if(p==='/api/admin/publicidade'&&m==='GET') { admin(req);return json(res,200,{config:configuracaoPublicidade(banco),local:process.env.NODE_ENV!=='production'}); }
   if(p==='/api/admin/publicidade'&&m==='PUT') {
     const u=admin(req),config=salvarPublicidade(banco,await corpo(req));registrarAdmin(u,'editar_publicidade',null,{ativo:config.ativo,demonstracao:config.demonstracao});return json(res,200,{config});
@@ -287,7 +289,8 @@ async function rota(req,res){
     const trabalhos=banco.prepare('SELECT ferramenta_slug,titulo,dados,situacao,criado_em,atualizado_em FROM trabalhos WHERE usuario_id=? ORDER BY atualizado_em DESC').all(u.id).map(item=>({...item,dados:JSON.parse(item.dados)}));
     const denuncias=banco.prepare('SELECT id,alvo_usuario_id,mensagem_id,motivo,situacao,criado_em FROM denuncias WHERE denunciante_id=?').all(u.id);
     const conquistas=medalhasDoUsuario(banco,u),destaques=banco.prepare('SELECT selecionadas FROM perfil_conquistas_destaque WHERE usuario_id=?').get(u.id);
-    return json(res,200,{usuario:usuarioPublico(u),mensagens,amizades,bloqueios,favoritos,trabalhos,suporte,denuncias,uso,conquistas,conquistas_destaque:destaques?listaSegura(destaques.selecionadas):null});
+    const recompensas={preferencia:banco.prepare('SELECT ranking FROM recompensas_preferencias WHERE usuario_id=?').get(u.id)||{ranking:0},resgates:banco.prepare('SELECT chave,titulo_pt,titulo_en,xp,criado_em FROM recompensas_resgates WHERE usuario_id=?').all(u.id),usos:banco.prepare('SELECT dia,slug FROM recompensas_usos WHERE usuario_id=?').all(u.id)};
+    return json(res,200,{usuario:usuarioPublico(u),mensagens,amizades,bloqueios,favoritos,trabalhos,suporte,denuncias,uso,conquistas,recompensas,conquistas_destaque:destaques?listaSegura(destaques.selecionadas):null});
   }
   if(m==='DELETE'&&p==='/api/conta'){
     const u=exigir(req),b=await corpo(req);if(!await comparar(b.senha,u.senha_hash))throw erro(403,'senha_invalida');
@@ -299,8 +302,9 @@ async function rota(req,res){
   }
   const usoRota=p.match(/^\/api\/ferramentas\/([a-z0-9-]{2,80})\/uso$/);
   if(usoRota&&m==='POST'){
-    const u=exigir(req),slug=usoRota[1];if(!ferramentaPorSlug[slug])throw erro(404,'ferramenta_nao_localizada');conferirLimite(`uso:${u.id}:${slug}`,30,3600000);
+    const u=exigir(req),slug=usoRota[1];if(ferramentaPorSlug[slug]?.status!=='pronta')throw erro(404,'ferramenta_nao_localizada');conferirLimite(`uso:${u.id}:${slug}`,30,3600000);
     banco.prepare('INSERT INTO uso_ferramentas(usuario_id,slug,total) VALUES(?,?,1) ON CONFLICT(usuario_id,slug) DO UPDATE SET total=total+1,ultimo_uso_em=CURRENT_TIMESTAMP').run(u.id,slug);
+    registrarAtividadeRecompensa(banco,u.id,slug);
     const dia=new Date().toISOString().slice(0,10),hoje=u.pontos_dia===dia?u.pontos_hoje:0;
     if(hoje<100)banco.prepare('UPDATE usuarios SET pontos=pontos+2,pontos_dia=?,pontos_hoje=? WHERE id=?').run(dia,hoje+2,u.id);
     const atualizado=banco.prepare('SELECT * FROM usuarios WHERE id=?').get(u.id);
@@ -320,14 +324,17 @@ async function rota(req,res){
   if(p==='/api/trabalhos'&&m==='GET'){
     const u=exigir(req),situacao=url.searchParams.get('situacao');
     if(situacao!==null&&!['em_aberto','salvo'].includes(situacao))throw erro(400,'dados_invalidos');
-    const linhas=situacao
-      ? banco.prepare('SELECT * FROM trabalhos WHERE usuario_id=? AND situacao=? ORDER BY atualizado_em DESC,id DESC').all(u.id,situacao)
-      : banco.prepare('SELECT * FROM trabalhos WHERE usuario_id=? ORDER BY atualizado_em DESC,id DESC').all(u.id);
-    return json(res,200,{trabalhos:linhas.map(x=>trabalhoPublico(x,ferramentaPorSlug[x.ferramenta_slug])),limite:limitesDoPlano(u.plano).trabalhos});
+    const pagina=Number(url.searchParams.get('pagina')||1);if(!Number.isSafeInteger(pagina)||pagina<1||pagina>100000)throw erro(400,'dados_invalidos');
+    const filtro=situacao?' AND situacao=?':'',args=situacao?[u.id,situacao]:[u.id];
+    const total=Number(banco.prepare(`SELECT count(*) total FROM trabalhos WHERE usuario_id=?${filtro}`).get(...args).total);
+    const linhas=banco.prepare(`SELECT id,ferramenta_slug,titulo,situacao,criado_em,atualizado_em FROM trabalhos WHERE usuario_id=?${filtro} ORDER BY atualizado_em DESC,id DESC LIMIT 50 OFFSET ?`).all(...args,(pagina-1)*50);
+    return json(res,200,{trabalhos:linhas.map(x=>trabalhoPublico(x,ferramentaPorSlug[x.ferramenta_slug],false)),total,pagina,paginas:Math.max(1,Math.ceil(total/50)),limite:limitesDoPlano(u.plano).trabalhos,dados_maximo_bytes:limiteDadosDoPlano(u.plano),armazenamento:{usado:bytesUsados(banco,u.id),maximo:limiteArmazenamento(u.plano)}});
   }
   if(p==='/api/trabalhos'&&m==='POST'){
-    const u=exigir(req),b=await corpo(req);
-    if(!validarNovoTrabalho(b))throw erro(400,'dados_invalidos');
+    exigir(req);const b=await corpo(req,limiteDadosDoPlano('premium')+8192),u=exigir(req);
+    if(b.dados&&typeof b.dados==='object'&&!Array.isArray(b.dados)&&!dadosDeTrabalhoValidos(b.dados,u.plano))throw erro(403,'limite_dados_do_plano');
+    if(!validarNovoTrabalho(b,u.plano))throw erro(400,'dados_invalidos');
+    if(bytesUsados(banco,u.id)+Buffer.byteLength(JSON.stringify(b.dados),'utf8')>limiteArmazenamento(u.plano))throw erro(403,'limite_armazenamento_do_plano');
     const ferramenta=ferramentaPorSlug[b.ferramenta_slug];if(!ferramenta||ferramenta.status!=='pronta')throw erro(404,'ferramenta_nao_localizada');
     const limite=limitesDoPlano(u.plano).trabalhos,total=banco.prepare('SELECT count(*) total FROM trabalhos WHERE usuario_id=?').get(u.id).total;
     if(total>=limite)throw erro(403,'limite_do_plano');
@@ -343,9 +350,14 @@ async function rota(req,res){
     return json(res,200,{trabalho:trabalhoPublico(linha,ferramentaPorSlug[linha.ferramenta_slug])});
   }
   if(trabalhoRota&&m==='PATCH'){
-    const u=exigir(req),id=+trabalhoRota[1],linha=banco.prepare('SELECT * FROM trabalhos WHERE id=? AND usuario_id=?').get(id,u.id);
+    const u=exigir(req),id=+trabalhoRota[1];
+    if(!banco.prepare('SELECT id FROM trabalhos WHERE id=? AND usuario_id=?').get(id,u.id))throw erro(404,'trabalho_inexistente');
+    const b=await corpo(req,limiteDadosDoPlano('premium')+8192),atualSessao=exigir(req);
+    const linha=banco.prepare('SELECT * FROM trabalhos WHERE id=? AND usuario_id=?').get(id,atualSessao.id);
     if(!linha)throw erro(404,'trabalho_inexistente');
-    const b=await corpo(req);if(!validarEdicaoTrabalho(b))throw erro(400,'dados_invalidos');
+    if(b.dados&&typeof b.dados==='object'&&!Array.isArray(b.dados)&&!dadosDeTrabalhoValidos(b.dados,atualSessao.plano))throw erro(403,'limite_dados_do_plano');
+    if(!validarEdicaoTrabalho(b,atualSessao.plano))throw erro(400,'dados_invalidos');
+    if(b.dados!==undefined){const novo=Buffer.byteLength(JSON.stringify(b.dados),'utf8'),antigo=Buffer.byteLength(linha.dados,'utf8');if(novo>antigo&&bytesUsados(banco,u.id)-antigo+novo>limiteArmazenamento(atualSessao.plano))throw erro(403,'limite_armazenamento_do_plano');}
     const titulo=b.titulo===undefined?linha.titulo:b.titulo.trim(),dados=b.dados===undefined?linha.dados:JSON.stringify(b.dados),situacao=b.situacao??linha.situacao;
     banco.prepare('UPDATE trabalhos SET titulo=?,dados=?,situacao=?,atualizado_em=CURRENT_TIMESTAMP WHERE id=? AND usuario_id=?').run(titulo,dados,situacao,id,u.id);
     const atualizado=banco.prepare('SELECT * FROM trabalhos WHERE id=?').get(id);
@@ -418,6 +430,7 @@ async function rota(req,res){
       if(medalha.tier>(vistas.get(medalha.id)??-1))conquistas.push(item);
     }
     for(const item of notificacoes)item.data=registros.find(v=>v.tipo===item.chave.split(':')[0])?.visto_em||u.criado_em;
+    for(const r of banco.prepare('SELECT id,titulo_pt,titulo_en,xp,criado_em FROM recompensas_resgates WHERE usuario_id=? ORDER BY id DESC LIMIT 30').all(u.id))notificacoes.push({tipo:'missao',chave:`missao:${r.id}`,resgate_id:r.id,titulo_pt:r.titulo_pt,titulo_en:r.titulo_en,xp:r.xp,data:r.criado_em});
     return json(res,200,{conquistas,notificacoes});
   }
   if(p==='/api/conquistas/receber'&&m==='POST'){

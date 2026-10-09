@@ -4,6 +4,7 @@ import { rankDoNivel } from '../../dados/recompensas.js';
 import { tocarSom } from './sons.js';
 import { api } from './api.js';
 import { registrarFonte } from './notificações.js';
+import { ícone } from './ícones.js';
 
 const en = () => document.documentElement.lang === 'en';
 
@@ -25,12 +26,13 @@ function celebrar(conquista) {
   const conteudo=elemento('div','conquista__conteudo');
   const etiqueta=elemento('p','conquista__etiqueta',en()?'A new milestone':'Uma nova conquista');
   const palco=elemento('div','conquista__palco');
-  const nivel=conquista.tipo==='nivel';
-  palco.append(nivel?criarSeloRank(conquista.nivel,{ingles:en()}):criarIconeMedalha(conquista.medalha));
-  palco.dataset.tier=String(conquista.medalha?.tier??Math.min(7,Math.floor(conquista.nivel/2)));
-  const titulo=elemento('h2','',nivel?(en()?`Level ${conquista.nivel} unlocked!`:`Nível ${conquista.nivel} desbloqueado!`):(conquista.medalha.nome));titulo.id='conquista-titulo';
+  const nivel=conquista.tipo==='nivel',missao=conquista.tipo==='missao';
+  if(missao)dialogo.classList.add('conquista--missao');
+  if(missao){const selo=elemento('div','conquista__missao');const estrela=elemento('span');estrela.innerHTML=ícone('estrela');selo.append(estrela,elemento('b','',`+${conquista.xp} XP`));palco.append(selo);}else palco.append(nivel?criarSeloRank(conquista.nivel,{ingles:en()}):criarIconeMedalha(conquista.medalha));
+  palco.dataset.tier=String(missao?3:conquista.medalha?.tier??Math.min(7,Math.floor(conquista.nivel/2)));
+  const titulo=elemento('h2','',missao?conquista.titulo:nivel?(en()?`Level ${conquista.nivel} unlocked!`:`Nível ${conquista.nivel} desbloqueado!`):(conquista.medalha.nome));titulo.id='conquista-titulo';
   const rank=nivel?rankDoNivel(conquista.nivel):null;
-  const texto=elemento('p','',nivel?`${en()?rank.nome_en:rank.nome} ${rank.subnivel} · ${en()?'Explore the profile styles you have unlocked.':'Confira os visuais que você desbloqueou no perfil.'}`:`${conquista.medalha.patamar} · ${conquista.medalha.descricao}`);texto.id='conquista-texto';
+  const texto=elemento('p','',missao?(en()?`Mission completed! ${conquista.xp} XP have been added to your progress.`:`Missão concluída! ${conquista.xp} XP foram acrescentados à sua evolução.`):nivel?`${en()?rank.nome_en:rank.nome} ${rank.subnivel} · ${en()?'Explore the profile styles you have unlocked.':'Confira os visuais que você desbloqueou no perfil.'}`:`${conquista.medalha.patamar} · ${conquista.medalha.descricao}`);texto.id='conquista-texto';
   const continuar=elemento('button','botão botão--primário',en()?'Continue':'Continuar');continuar.type='button';continuar.addEventListener('click',()=>dialogo.close());
   conteudo.append(etiqueta,palco,titulo,texto,continuar);dialogo.append(luz,conteudo);document.body.append(dialogo);
   dialogo.showModal();tocarSom(nivel?'nivel':'conquista');
@@ -59,10 +61,10 @@ export function conferirConquistas(sessao){
     const base=document.documentElement.dataset.raizIdioma||'./';
     const itens=(resposta.notificacoes||resposta.conquistas||[]).map(item=>({
       id:`conquista:${sessao.usuario.id}:${item.chave}`,
-      título:item.tipo==='nivel'?(en()?`Level ${item.nivel} unlocked`:`Nível ${item.nivel} desbloqueado`):item.medalha.nome,
-      texto:item.tipo==='nivel'?(en()?'See your progress on your profile.':'Veja sua evolução no perfil.'):`${item.medalha.patamar} · ${item.medalha.descricao}`,
-      link:`${base}perfil.html?usuario=${encodeURIComponent(sessao.usuario.usuario)}&conquista=${encodeURIComponent(item.chave)}`,
-      data:item.data||new Date().toISOString(),origem:'conquista',conquista:item,
+      título:item.tipo==='missao'?(en()?item.titulo_en:item.titulo_pt):item.tipo==='nivel'?(en()?`Level ${item.nivel} unlocked`:`Nível ${item.nivel} desbloqueado`):item.medalha.nome,
+      texto:item.tipo==='missao'?`+${item.xp} XP · ${en()?'Reward received.':'Recompensa recebida.'}`:item.tipo==='nivel'?(en()?'See your progress on your profile.':'Veja sua evolução no perfil.'):`${item.medalha.patamar} · ${item.medalha.descricao}`,
+      link:`${base}perfil.html?usuario=${encodeURIComponent(sessao.usuario.usuario)}&${item.tipo==='missao'?'missao':'conquista'}=${encodeURIComponent(item.tipo==='missao'?item.resgate_id:item.chave)}${item.tipo==='missao'?'#missoes':''}`,
+      data:item.data||new Date().toISOString(),origem:'conquista',...(item.tipo==='missao'?{}:{conquista:item}),
     }));
     registrarFonte('conquistas',{carregar:async()=>itens});
     for(const item of resposta.conquistas||[]){if(!item?.chave||enfileiradas.has(item.chave))continue;enfileiradas.add(item.chave);fila.push(item);}
@@ -71,6 +73,7 @@ export function conferirConquistas(sessao){
   return pedido;
 }
 /** Prévia explícita de um avanço; o uso real recebe os marcos confirmados pela API. */
+export function celebrarMissao({titulo,xp}) { fila.push({tipo:'missao',titulo,xp});void consumirFila(); }
 export function mostrarNovoNivel(anterior,atual){
   if(!Number.isInteger(Number(atual))||Number(atual)<=Number(anterior))return;
   fila.push({tipo:'nivel',nivel:Number(atual)});void consumirFila();
