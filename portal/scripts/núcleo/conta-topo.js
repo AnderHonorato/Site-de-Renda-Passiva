@@ -115,6 +115,7 @@ export function renderizarContaTopo(fim, sessao, { base = './', idioma = 'pt' } 
 
   const sair = document.createElement('button');
   if(sessao.usuario.papel==='admin')navegacao.append(link(txt(idioma,'Eventos e missões','Events and missions'),`${base}admin/eventos/`,'estrela'));
+  if(sessao.usuario.papel==='admin')navegacao.append(link(txt(idioma,'Catálogo e regras','Catalog and rules'),`${base}admin/editorial/`,'grade'),link(txt(idioma,'Tráfego e registros','Traffic and logs'),`${base}admin/operacao/`,'escudo'));
   sair.type = 'button';
   sair.className = 'conta-topo__item conta-topo__sair';
   sair.innerHTML = ícone('seta');

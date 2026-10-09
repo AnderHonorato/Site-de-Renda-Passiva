@@ -1,18 +1,21 @@
 import { createServer } from 'node:http';
-import { appendFileSync, mkdirSync } from 'node:fs';
+import { appendFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { networkInterfaces } from 'node:os';
 import { abrirBanco } from './banco.mjs';
 import { hash, token, erro, cookies, senhaHash, hashDummy, comparar, corpo } from './seguranca.mjs';
-import { ferramentasProntas, ferramentaPorSlug } from '../dados/catálogo.js';
+import { ferramentasProntas } from '../dados/catálogo.js';
 import { categorias } from '../dados/categorias.js';
-import { limitesDoPlano, limiteDadosDoPlano, limiteArmazenamento, bytesUsados, dadosDeTrabalhoValidos, planosPublicos, trabalhoPublico, validarEdicaoTrabalho, validarNovoTrabalho } from './trabalhos.mjs';
+import { aplicarLimitesPublicados, limitesDoPlano, limiteDadosDoPlano, limiteArmazenamento, bytesUsados, dadosDeTrabalhoValidos, planosPublicos, trabalhoPublico, validarEdicaoTrabalho, validarNovoTrabalho } from './trabalhos.mjs';
 import { AVATARES, medalhasDoUsuario, nivelDePontos, personalizacoesDoNivel, progressoDeNivel, validarPersonalizacao, validarSociais } from './perfil.mjs';
 import { progressoDeRank } from '../dados/recompensas.js';
 import { MAX_IMAGEM, itemAdmin, novidadesPublicas, removerNovidade, salvarImagem, salvarNovidade } from './novidades.mjs';
 import { configuracaoPublicidade, salvarPublicidade } from './publicidade.mjs';
 import { iniciarBanners, tratarBanners } from './banners.mjs';
 import { tratarRecompensas, registrarAtividadeRecompensa } from './recompensas.mjs';
+import { criarEditorial,catalogoOriginal } from './editorial.mjs';
+import { criarProtecao } from './trafego.mjs';
+import { CABEÇALHOS_DE_SEGURANÇA } from '../ferramentas/política-de-segurança.mjs';
 
 const agora = () => Date.now();
 const nomeSessao = process.env.URL_PUBLICA?.startsWith('https://') ? '__Host-sessao' : 'sessao';
@@ -28,7 +31,12 @@ const banco = abrirBanco();
 iniciarBanners(banco);
 for(const c of categorias)banco.prepare("INSERT OR IGNORE INTO salas(id,tipo,nome) VALUES(?,'categoria',?)").run(`categoria-${c.id}`,c.nome);
 for(const f of ferramentasProntas)banco.prepare("INSERT OR IGNORE INTO salas(id,tipo,nome) VALUES(?,'ferramenta',?)").run(`ferramenta-${f.slug}`,f.nome);
-const limites = new Map();
+const protecao=criarProtecao(banco);
+const ferramentaPorSlug={...catalogoOriginal};
+let regrasPontos;
+function aplicarConfiguracao(config){regrasPontos=config.pontos;aplicarLimitesPublicados(config.limites);for(const [slug,f]of Object.entries(catalogoOriginal))ferramentaPorSlug[slug]={...f,...config.ferramentas[slug]?.['pt-BR'],categoriaNome:config.categorias[f.cat]?.['pt-BR']?.nome||f.categoriaNome};}
+const editor=criarEditorial(banco,{aoPublicar:aplicarConfiguracao});
+aplicarConfiguracao(editor.publicado());
 const ouvintes = new Set();
 const reservados = new Set(['admin','administrador','suporte','moderador','sistema','root','api','conta','perfil','chat','null','undefined']);
 
@@ -65,7 +73,13 @@ function chatAtivo(){return process.env.PORTAL_CHAT_LOCAL==='1' && process.env.N
 function exigirChat(req){if(!chatAtivo())throw erro(503,'chat_indisponivel');const u=exigir(req);if(!u.chat_aceito_em)throw erro(403,'aceite_chat_necessario');if(u.banido_em)throw erro(403,'chat_banido');return u;}
 function validoUsuario(x){return typeof x==='string' && /^[a-z][a-z0-9_]{2,19}$/.test(x.toLowerCase()) && !reservados.has(x.toLowerCase());}
 function senhaValida(x){return typeof x==='string' && x.length>=12 && x.length<=128;}
-function conferirLimite(chave,max,janela){const tempo=agora();let l=limites.get(chave)||[];l=l.filter(t=>t>tempo-janela);if(l.length>=max){const e=erro(429,'muitas_tentativas');e.retryAfter=Math.max(1,Math.ceil((l[0]+janela-tempo)/1000));throw e;}l.push(tempo);limites.set(chave,l);if(limites.size>10000)for(const [k,v] of limites)if(v.at(-1)<tempo-janela)limites.delete(k);}
+function conferirLimite(chave,max,janela){protecao.conferir(chave,max,janela);}
+function creditarAtividade(u,tipo){
+  const dia=new Date().toISOString().slice(0,10),hoje=u.pontos_dia===dia?u.pontos_hoje:0;
+  const cap=tipo==='uso'?regrasPontos.limite_diario:regrasPontos.limite_chat;
+  const ganho=Math.max(0,Math.min(tipo==='uso'?regrasPontos.por_uso:regrasPontos.por_mensagem,cap-hoje));
+  if(ganho)banco.prepare('UPDATE usuarios SET pontos=pontos+?,pontos_dia=?,pontos_hoje=? WHERE id=?').run(ganho,dia,hoje+ganho,u.id);
+}
 function proteger(req){
   if(['GET','HEAD','OPTIONS'].includes(req.method))return;
   if(!origensPermitidas.has(req.headers.origin) || req.headers['sec-fetch-site']==='cross-site')throw erro(403,'origem_invalida');
@@ -188,7 +202,8 @@ function imagemValida(buffer,mime){
 async function rota(req,res){
   const url=new URL(req.url,'http://localhost');const p=url.pathname;const m=req.method;
   if(!p.startsWith('/api/'))throw erro(404,'nao_encontrado');
-  conferirLimite(`global:${ip(req)}`,180,60000);
+  // Um administrador autenticado ainda pode consultar e desfazer bloqueios da própria rede.
+  if(!p.startsWith('/api/admin/operacao')||sessao(req)?.papel!=='admin')conferirLimite(`global:${ip(req)}`,180,60000);
   if(m==='OPTIONS'){res.writeHead(204,{'Allow':'GET,POST,PUT,PATCH,DELETE,OPTIONS'});res.end();return;}
   if(await tratarBanners(req,res,{banco,json,admin,proteger,corpo,corpoBinario,registrarAdmin}))return;
   if(m==='GET'&&p==='/api/autenticacao/sessao'){
@@ -196,7 +211,16 @@ async function rota(req,res){
     const u=sessao(req);return json(res,200,{usuario:usuarioPublico(u),chat_habilitado:chatAtivo(),chat_aceito:!!u?.chat_aceito_em});
   }
   proteger(req);
-  if(await tratarRecompensas(req,res,{db:banco,json,exigir,admin,corpo,registrarAdmin,nivelDoUsuario}))return;
+  if(await tratarRecompensas(req,res,{db:banco,json,exigir,admin,corpo,registrarAdmin,nivelDoUsuario,pontos:()=>regrasPontos}))return;
+  if(p==='/api/regras-pontos'&&m==='GET')return json(res,200,{pontos:regrasPontos});
+  if(p==='/api/admin/editorial'&&m==='GET'){admin(req);return json(res,200,editor.painel());}
+  if(p==='/api/admin/editorial'&&m==='PUT'){admin(req);const b=await corpo(req,262144),u=admin(req);const r=editor.salvar(b.dados,b.versao);registrarAdmin(u,'salvar_editorial',null,{versao:r.versao});return json(res,200,r);}
+  if(p==='/api/admin/editorial/historico'&&m==='GET'){admin(req);return json(res,200,{revisoes:editor.historico()});}
+  if(p==='/api/admin/editorial/restaurar'&&m==='POST'){admin(req);const b=await corpo(req),u=admin(req),r=editor.restaurar(b.id,b.versao);registrarAdmin(u,'restaurar_editorial',null,{id:b.id,versao:r.versao});return json(res,200,r);}
+  if(p==='/api/admin/editorial/publicar'&&m==='POST'){admin(req);const b=await corpo(req),u=admin(req),r=await editor.publicar(b.versao);registrarAdmin(u,'publicar_editorial',null,{versao:r.publicada_versao});return json(res,200,r);}
+  if(p==='/api/admin/editorial/recuperar'&&m==='POST'){const u=admin(req);await editor.recuperar();registrarAdmin(u,'recuperar_editorial',null);return json(res,200,editor.painel());}
+  if(p==='/api/admin/operacao'&&m==='GET'){admin(req);return json(res,200,{bloqueios:protecao.listar(),erros:banco.prepare('SELECT * FROM operacao_erros ORDER BY id DESC LIMIT 100').all(),auditoria:banco.prepare('SELECT id,acao,alvo_id,criado_em FROM auditoria_admin ORDER BY id DESC LIMIT 100').all()});}
+  if(p==='/api/admin/operacao/desbloquear'&&m==='POST'){admin(req);const b=await corpo(req),u=admin(req);protecao.desbloquear(b.id,b.versao);registrarAdmin(u,'desbloquear_trafego',null,{identificador:b.id});return json(res,200,{ok:true});}
   if(p==='/api/admin/publicidade'&&m==='GET') { admin(req);return json(res,200,{config:configuracaoPublicidade(banco),local:process.env.NODE_ENV!=='production'}); }
   if(p==='/api/admin/publicidade'&&m==='PUT') {
     const u=admin(req),config=salvarPublicidade(banco,await corpo(req));registrarAdmin(u,'editar_publicidade',null,{ativo:config.ativo,demonstracao:config.demonstracao});return json(res,200,{config});
@@ -305,8 +329,7 @@ async function rota(req,res){
     const u=exigir(req),slug=usoRota[1];if(ferramentaPorSlug[slug]?.status!=='pronta')throw erro(404,'ferramenta_nao_localizada');conferirLimite(`uso:${u.id}:${slug}`,30,3600000);
     banco.prepare('INSERT INTO uso_ferramentas(usuario_id,slug,total) VALUES(?,?,1) ON CONFLICT(usuario_id,slug) DO UPDATE SET total=total+1,ultimo_uso_em=CURRENT_TIMESTAMP').run(u.id,slug);
     registrarAtividadeRecompensa(banco,u.id,slug);
-    const dia=new Date().toISOString().slice(0,10),hoje=u.pontos_dia===dia?u.pontos_hoje:0;
-    if(hoje<100)banco.prepare('UPDATE usuarios SET pontos=pontos+2,pontos_dia=?,pontos_hoje=? WHERE id=?').run(dia,hoje+2,u.id);
+    creditarAtividade(u,'uso');
     const atualizado=banco.prepare('SELECT * FROM usuarios WHERE id=?').get(u.id);
     return json(res,200,{ok:true,nivel:nivelDoUsuario(atualizado),pontos_evolucao:pontosDeEvolucao(atualizado)});
   }
@@ -563,7 +586,7 @@ async function rota(req,res){
       banco.exec('COMMIT');
     }catch(e){try{banco.exec('ROLLBACK');}catch{}throw e;}
     const msg=banco.prepare('SELECT m.*,a.nome,a.usuario,a.avatar,a.avatar_foto IS NOT NULL autor_tem_foto,a.papel,a.pontos,a.criado_em autor_criado_em,r.id resposta_id,r.texto resposta_texto,ra.usuario resposta_usuario FROM mensagens m JOIN usuarios a ON a.id=m.autor_id LEFT JOIN mensagens r ON r.id=m.resposta_a LEFT JOIN usuarios ra ON ra.id=r.autor_id WHERE m.id=?').get(mensagemId);
-    const dia=new Date().toISOString().slice(0,10),hoje=u.pontos_dia===dia?u.pontos_hoje:0;if(hoje<20)banco.prepare('UPDATE usuarios SET pontos=pontos+1,pontos_dia=?,pontos_hoje=? WHERE id=?').run(dia,hoje+1,u.id);
+    creditarAtividade(u,'mensagem');
     const publica=mensagemPublica(msg,u.id);avisar({sala:id,salaId:id,mensagem:publica});return json(res,201,{mensagem:publica,midiaId});
   }
   const progressoMidia=p.match(/^\/api\/chat\/midias\/(\d+)\/progresso$/);
@@ -604,7 +627,7 @@ async function rota(req,res){
     if(b.respostaA!==undefined&&b.respostaA!==null){respostaA=Number(b.respostaA);if(!Number.isInteger(respostaA)||!banco.prepare('SELECT 1 FROM mensagens WHERE id=? AND sala_id=? AND removida_em IS NULL').get(respostaA,id))throw erro(400,'resposta_invalida');}
     const r=banco.prepare('INSERT INTO mensagens(sala_id,autor_id,texto,resposta_a) VALUES(?,?,?,?)').run(id,u.id,texto,respostaA);
     const msg=banco.prepare(`SELECT m.*,a.nome,a.usuario,a.avatar,a.avatar_foto IS NOT NULL autor_tem_foto,a.papel,a.pontos,a.criado_em autor_criado_em,r.id resposta_id,r.texto resposta_texto,ra.usuario resposta_usuario FROM mensagens m JOIN usuarios a ON a.id=m.autor_id LEFT JOIN mensagens r ON r.id=m.resposta_a LEFT JOIN usuarios ra ON ra.id=r.autor_id WHERE m.id=?`).get(Number(r.lastInsertRowid));
-    const dia=new Date().toISOString().slice(0,10),hoje=u.pontos_dia===dia?u.pontos_hoje:0;if(hoje<20)banco.prepare('UPDATE usuarios SET pontos=pontos+1,pontos_dia=?,pontos_hoje=? WHERE id=?').run(dia,hoje+1,u.id);
+    creditarAtividade(u,'mensagem');
     const publica=mensagemPublica(msg,u.id);avisar({sala:id,salaId:id,mensagem:publica});return json(res,201,{mensagem:publica,expira_em:sala.tipo==='direta'?48:null});
   }
   if(p==='/api/chat/denuncias'&&m==='POST'){
@@ -662,8 +685,21 @@ async function rota(req,res){
   throw erro(404,'nao_encontrado');
 }
 
-export function iniciar({porta=Number(process.env.PORTAL_API_PORTA||4870),host='127.0.0.1'}={}){
-  const servidor=createServer((req,res)=>{Promise.resolve(rota(req,res)).catch(e=>{if(res.headersSent){res.end();return;}json(res,e.status||500,{erro:e.codigo||'erro_interno'},e.status===429?{'Retry-After':String(e.retryAfter||2)}:{});});});
+export async function iniciar({porta=Number(process.env.PORTAL_API_PORTA||4870),host='127.0.0.1'}={}){
+  void editor.recuperar().catch(()=>{try{protecao.registrarErro('OUTRO');}catch{}});
+  const servidor=createServer({maxHeaderSize:16384,headersTimeout:10000,requestTimeout:30000},(req,res)=>{Promise.resolve(rota(req,res)).catch(e=>{
+    if(res.headersSent){res.end();return;}const status=e.status||500,headers=status===429?{'Retry-After':String(e.retryAfter||2)}:{};
+    if(status>=500)try{protecao.registrarErro(req.method);}catch{}
+    if([429,500].includes(status)&&req.headers.accept?.includes('text/html')){
+      const en=req.headers['accept-language']?.startsWith('en');
+      try{let html=readFileSync(new URL(`../${en?'en/':''}${status===429?'429.html':'erro.html'}`,import.meta.url),'utf8');
+        const raizHtml=en?'/en/':'/';html=html.replace(/(href|src)="([^"]*)"/g,(t,a,v)=>{if(!v||v.startsWith('#')||/^(?:[a-z]+:|\/)/i.test(v))return t;const u=new URL(v,'http://portal'+raizHtml);return `${a}="${u.pathname}${u.search}${u.hash}"`;}).replace(/data-raiz="[^"]*"/,'data-raiz="/"').replace(/data-raiz-idioma="[^"]*"/,`data-raiz-idioma="${raizHtml}"`);
+        if(status===429)html=html.replace('</h1>',`</h1><p>${en?'Try again after':'Tente novamente após'} ${Number(e.retryAfter||2)} ${en?'seconds.':'segundos.'}</p>`);
+        res.writeHead(status,{...CABEÇALHOS_DE_SEGURANÇA,...headers,'Cache-Control':'no-store','Content-Type':'text/html; charset=utf-8'});res.end(html);return;
+      }catch{}
+    }
+    json(res,status,{erro:e.codigo||'erro_interno'},headers);
+  });});
   const limpar=setInterval(()=>{
     try{
       banco.prepare("DELETE FROM mensagens WHERE criado_em < datetime('now','-90 days') AND sala_id NOT IN (SELECT id FROM salas WHERE tipo='direta')").run();

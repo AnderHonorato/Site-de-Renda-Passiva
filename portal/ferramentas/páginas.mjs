@@ -13,6 +13,8 @@ import { site } from '../dados/site.js';
 import { blocosEmHtml, emLinha } from '../scripts/núcleo/texto-rico.js';
 import { montarPágina, escapar } from './modelo-de-página.mjs';
 import { faixa } from './ondas.mjs';
+import { editorial } from '../dados/editorial-publicado.js';
+const textoEditorial=(chave,ctx,padrao)=>editorial.textos?.[chave]?.[ctx.código]||padrao;
 
 /** Caminho (sem extensão) da ilustração animada de uma categoria; "mini" é o recorte para cartões pequenos. */
 export function arteDaCategoria(id, mini = false) {
@@ -69,7 +71,7 @@ export function páginaInicial(ctx) {
   const conteúdo = `    <section class="largura abertura">
       <div class="abertura__grade">
         <div class="cascata">
-          <h1 class="abertura__título">${emLinha(t('início.pergunta'))}</h1>
+          <h1 class="abertura__título">${editorial.textos?.['inicio.titulo']?.[ctx.código]?escapar(editorial.textos['inicio.titulo'][ctx.código]):emLinha(t('início.pergunta'))}</h1>${editorial.textos?.['inicio.descricao']?.[ctx.código]?`\n          <p>${escapar(editorial.textos['inicio.descricao'][ctx.código])}</p>`:''}
           <p class="abertura__linha">${linha}</p>
           <div id="bloco-busca">
           <div class="busca">
@@ -126,7 +128,7 @@ export function páginaInicial(ctx) {
   return montarPágina({
     ctx,
     título: t('início.título'),
-    descrição: t('início.descrição', { prontas }),
+    descrição: textoEditorial('inicio.descricao',ctx,t('início.descrição', { prontas })),
     base,
     raiz,
     atual: 'início',
@@ -242,7 +244,7 @@ function páginaDeTexto(ctx, { chave, arquivo, atual }) {
       raiz,
       atual,
       alternativas: alternativasDe(arquivo, ctx),
-      conteúdo: `    <section class="largura prosa topo-página">\n      <h1>${escapar(título)}</h1>\n${blocosEmHtml(ctx.lista(`${chave}.corpo`))}\n    </section>`,
+      conteúdo: `    <section class="largura prosa topo-página">\n      <h1>${escapar(título)}</h1>\n${chave==='ajuda'&&editorial.textos?.['ajuda.introducao']?.[ctx.código]?`<p>${escapar(editorial.textos['ajuda.introducao'][ctx.código])}</p>`:''}\n${blocosEmHtml(ctx.lista(`${chave}.corpo`))}\n    </section>`,
     }),
   };
 }

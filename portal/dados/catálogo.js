@@ -14,6 +14,7 @@ import { ferramentas as pdf } from './catálogo/pdf.js';
 import { ferramentas as avançadas } from './catálogo/avançadas.js';
 import { categoriaPorId as categoriaPorIdAtiva, categoriasDoIdioma } from './categorias.js';
 import { normalizarIdioma } from './idiomas.js';
+import { editorial } from './editorial-publicado.js';
 
 const BRUTAS = [
   ...finanças,
@@ -60,12 +61,13 @@ function normalizar(bruta, categoriaPorId = categoriaPorIdAtiva) {
  * @param {Record<string, {nome: string, resumo: string, tags: string[], intenções: string[]}> | null} traduções
  * @param {{categorias: object, tarefas: object} | null} traduçõesDeCategorias
  */
-export function catálogoDoIdioma(traduções = null, traduçõesDeCategorias = null) {
-  const { categoriaPorId } = categoriasDoIdioma(traduçõesDeCategorias);
+export function catálogoDoIdioma(traduções = null, traduçõesDeCategorias = null, usarEditorial = true) {
+  const { categoriaPorId } = categoriasDoIdioma(traduçõesDeCategorias, usarEditorial);
   const todas = BRUTAS.map((bruta) => {
     const t = traduções?.[bruta.id];
     if (traduções && !t) throw new Error(`Sem tradução para ${bruta.id}`);
-    return normalizar(t ? { ...bruta, nome: t.nome, resumo: t.resumo, tags: t.tags, intenções: t.intenções } : bruta, categoriaPorId);
+    const base=t ? { ...bruta, nome: t.nome, resumo: t.resumo, tags: t.tags, intenções: t.intenções } : bruta;
+    return normalizar({...base,...(usarEditorial?editorial.ferramentas?.[bruta.slug]?.[traduções?'en':'pt-BR']:{})}, categoriaPorId);
   });
   const ferramentas = Object.freeze(todas.sort((a, b) => a.id.localeCompare(b.id, 'pt-BR')));
   return Object.freeze({

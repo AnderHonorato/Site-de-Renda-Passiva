@@ -15,9 +15,9 @@ function csrf() {
   try { return decodeURIComponent(valor || ''); } catch { return ''; }
 }
 
-export async function api(caminho, { metodo = 'GET', dados, signal } = {}) {
+export async function api(caminho, { metodo = 'GET', dados, signal, prazoMs = prazo } = {}) {
   const controlador = new AbortController();
-  const temporizador = setTimeout(() => controlador.abort(), prazo);
+  const temporizador = setTimeout(() => controlador.abort(), Math.max(1000,Math.min(45000,prazoMs)));
   const cancelar = () => controlador.abort();
   signal?.addEventListener('abort', cancelar, { once: true });
   try {

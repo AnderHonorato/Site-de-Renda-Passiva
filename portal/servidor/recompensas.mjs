@@ -32,11 +32,11 @@ export function periodoAtual(agora = new Date()) {
 function distintas(db,id,inicio,fim) { return Number(db.prepare('SELECT count(DISTINCT slug) total FROM recompensas_usos WHERE usuario_id=? AND dia>=? AND dia<=?').get(id,inicio,fim).total); }
 export function registrarAtividadeRecompensa(db,id,slug,agora = new Date()) { db.prepare('INSERT OR IGNORE INTO recompensas_usos(usuario_id,dia,slug) VALUES(?,?,?)').run(id,periodoAtual(agora).hoje,slug); }
 
-export function painelRecompensas(db,id,agora = new Date()) {
+export function painelRecompensas(db,id,agora = new Date(),pontos={diaria:5,semanal:15}) {
   const p=periodoAtual(agora),resgates=db.prepare('SELECT * FROM recompensas_resgates WHERE usuario_id=? ORDER BY id DESC LIMIT 30').all(id);
   const propostas=[
-    {tipo:'diaria',chave:`diaria:${p.hoje}`,titulo_pt:'Dois desafios resolvidos',titulo_en:'Two challenges solved',texto_pt:'Conclua resultados em duas ferramentas diferentes hoje.',texto_en:'Complete results in two different tools today.',inicio:p.hoje,fim:p.hoje,meta:2,xp:5},
-    {tipo:'semanal',chave:`semanal:${p.inicioSemana}`,titulo_pt:'Explore cinco ferramentas',titulo_en:'Explore five tools',texto_pt:'Conclua resultados em cinco ferramentas diferentes nesta semana.',texto_en:'Complete results in five different tools this week.',inicio:p.inicioSemana,fim:p.fimSemana,meta:5,xp:15},
+    {tipo:'diaria',chave:`diaria:${p.hoje}`,titulo_pt:'Dois desafios resolvidos',titulo_en:'Two challenges solved',texto_pt:'Conclua resultados em duas ferramentas diferentes hoje.',texto_en:'Complete results in two different tools today.',inicio:p.hoje,fim:p.hoje,meta:2,xp:pontos.diaria},
+    {tipo:'semanal',chave:`semanal:${p.inicioSemana}`,titulo_pt:'Explore cinco ferramentas',titulo_en:'Explore five tools',texto_pt:'Conclua resultados em cinco ferramentas diferentes nesta semana.',texto_en:'Complete results in five different tools this week.',inicio:p.inicioSemana,fim:p.fimSemana,meta:5,xp:pontos.semanal},
     ...db.prepare('SELECT * FROM recompensas_eventos WHERE ativo=1 AND fim>=? ORDER BY inicio,id LIMIT 20').all(p.hoje).map(e=>({...e,tipo:'evento',evento_id:e.id,chave:`evento:${e.id}`}))
   ];
   const missoes=propostas.map(m=>{
@@ -46,11 +46,11 @@ export function painelRecompensas(db,id,agora = new Date()) {
   return {missoes,resgates,ranking:!!db.prepare('SELECT ranking FROM recompensas_preferencias WHERE usuario_id=?').get(id)?.ranking,hoje:p.hoje};
 }
 
-export function resgatarRecompensa(db,id,b,agora = new Date()) {
+export function resgatarRecompensa(db,id,b,agora = new Date(),pontos) {
   if(!b||!['diaria','semanal','evento'].includes(b.tipo)||(b.tipo==='evento'&&(!Number.isSafeInteger(b.evento_id)||b.evento_id<1)))throw erro(400,'dados_invalidos');
   db.exec('BEGIN IMMEDIATE');
   try {
-    const m=painelRecompensas(db,id,agora).missoes.find(m=>m.tipo===b.tipo&&(m.tipo!=='evento'||m.evento_id===b.evento_id));
+    const m=painelRecompensas(db,id,agora,pontos).missoes.find(m=>m.tipo===b.tipo&&(m.tipo!=='evento'||m.evento_id===b.evento_id));
     if(!m||m.agendada)throw erro(409,'missao_indisponivel');
     if(m.resgatada){db.exec('COMMIT');return {resgatada:false,missao:m};}
     if(!m.disponivel)throw erro(409,'missao_incompleta');
@@ -80,16 +80,16 @@ export function validarEvento(b) {
   return {...v,inicio:b.inicio,fim:b.fim,meta:b.meta,xp:b.xp,ativo:b.ativo?1:0};
 }
 
-export async function tratarRecompensas(req,res,{db,json,exigir,admin,corpo,registrarAdmin,nivelDoUsuario}) {
+export async function tratarRecompensas(req,res,{db,json,exigir,admin,corpo,registrarAdmin,nivelDoUsuario,pontos=()=>undefined}) {
   const p=new URL(req.url,'http://localhost').pathname,m=req.method;
-  if(p==='/api/recompensas'&&m==='GET'){const u=exigir(req);json(res,200,painelRecompensas(db,u.id));return true;}
+  if(p==='/api/recompensas'&&m==='GET'){const u=exigir(req);json(res,200,painelRecompensas(db,u.id,new Date(),pontos()));return true;}
   if(p==='/api/recompensas/ranking'&&m==='GET'){const u=exigir(req);json(res,200,{participantes:rankingRecompensas(db,u.id)});return true;}
   if(p==='/api/recompensas/preferencias'&&m==='PATCH'){
     exigir(req);const b=await corpo(req),u=exigir(req);if(typeof b.ranking!=='boolean')throw erro(400,'dados_invalidos');
     db.prepare('INSERT INTO recompensas_preferencias(usuario_id,ranking) VALUES(?,?) ON CONFLICT(usuario_id) DO UPDATE SET ranking=excluded.ranking').run(u.id,b.ranking?1:0);json(res,200,{ranking:b.ranking});return true;
   }
   if(p==='/api/recompensas/resgatar'&&m==='POST'){
-    exigir(req);const b=await corpo(req),u=exigir(req),r=resgatarRecompensa(db,u.id,b);const atual=db.prepare('SELECT * FROM usuarios WHERE id=?').get(u.id);
+    exigir(req);const b=await corpo(req),u=exigir(req),r=resgatarRecompensa(db,u.id,b,new Date(),pontos());const atual=db.prepare('SELECT * FROM usuarios WHERE id=?').get(u.id);
     json(res,200,{...r,nivel:nivelDoUsuario(atual)});return true;
   }
   if(p==='/api/admin/recompensas/eventos'&&m==='GET'){admin(req);json(res,200,{eventos:db.prepare('SELECT * FROM recompensas_eventos ORDER BY id DESC LIMIT 100').all()});return true;}

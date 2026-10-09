@@ -1,0 +1,12 @@
+#editorial details,#operacao details { margin:12px 0;padding:12px;border:1px solid var(--borda);border-radius:var(--raio);background:var(--superfície); }
+#editorial summary,#operacao summary { cursor:pointer;font-weight:650;font-size:.9rem; }
+#editorial fieldset { min-width:0;margin:8px 0;padding:12px;border:1px solid var(--borda);border-radius:12px; }
+#editorial .conta__form,#editorial select,#editorial input,#editorial textarea { min-width:0;max-width:100%; }
+#editorial .ações,#operacao .ações { flex-wrap:wrap; }
+#editorial .botão,#operacao .botão { white-space:normal;max-width:100%;font-size:.8rem; }
+#editorial-historico p,#operacao p { overflow-wrap:anywhere;font-size:.84rem; }
+#editorial-historico p { padding:8px 0;border-bottom:1px solid var(--borda); }
+#operacao-bloqueios .painel { margin:8px 0;padding:12px;font-size:.84rem;display:grid;gap:8px; }
+#editorial fieldset legend { font-size:.8rem;font-weight:650; }
+#editorial-pontos,#editorial-limites fieldset { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }
+#editorial .conta__campo span { font-size:.8rem; }

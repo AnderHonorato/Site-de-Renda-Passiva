@@ -28,10 +28,11 @@ Fonte: `documentação/plano-portal-principal.md` e decisões 24–36 de `ander-
 ## Ondas seguintes do plano original
 
 - [x] Trabalhos salvos com reabertura, renomear/apagar e cotas reais de Grátis/Plus aplicadas no servidor.
-- [ ] Cotas adicionais finais do Premium; até a definição, Premium herda explicitamente as cotas do Plus.
-- [ ] Admin de ferramentas, textos com histórico, categorias, limites e regras de pontos.
+- [x] Cotas adicionais do Premium: limites ampliados de trabalhos e tamanho individual (v1.3.5).
+- [x] Admin de ferramentas, textos com histórico, categorias, limites e regras de pontos, com rascunho/publicação e recuperação (v1.3.6).
 - [x] Boas-vindas/novidades editáveis no admin, com português/inglês, imagem, ordem, publicação/retirada programadas e revisão para reaparecer só quando inédita; apresentação existente preservada.
-- [ ] Edição administrativa das regras de pontos e revisão visual do modal de evolução.
+- [x] Edição administrativa das regras de pontos e cotas, com validação no servidor (v1.3.6).
+- [ ] Revisão visual adicional do modal de evolução.
 - [ ] Tradução de todas as ferramentas; moldura/telas de conta já bilíngues.
 - [ ] Processamento isolado no servidor, conversões avançadas e ferramentas planejadas (ondas 16/17).
 - [ ] Domínio/HTTPS, contato responsável, SMTP/procedimento de recuperação, restauração de backup e produção.

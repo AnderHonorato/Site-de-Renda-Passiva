@@ -3,6 +3,9 @@ import { site } from '../dados/site.js';
 import { ícone } from '../scripts/núcleo/ícones.js';
 import { gerarPainelBanners } from './painel-banners.mjs';
 import { painelEventos } from './painel-eventos.mjs';
+import { painelEditorial,painelOperacao } from './painel-editorial.mjs';
+import { editorial } from '../dados/editorial-publicado.js';
+import { planosPublicos } from '../servidor/trabalhos.mjs';
 
 const textos = {
   'pt-BR': {
@@ -22,6 +25,8 @@ const textos = {
     publicidade: ['Publicidade', 'Configure os blocos de anúncios e confira as posições na prévia local.'],
     banners: ['Avisos prioritários', 'Crie avisos abaixo do cabeçalho, com imagem, textos, links e carrossel.'],
     eventos: ['Eventos e missões', 'Publique desafios de ferramentas diferentes e acompanhe sua programação.'],
+    editorial: ['Catálogo, conteúdo e regras', 'Revise rascunhos e publique alterações com histórico.'],
+    operacao: ['Tráfego e registros', 'Consulte bloqueios persistentes, auditoria e erros internos.'],
   },
   en: {
     entrar: ['Sign in', 'Access your account to chat and save your preferences.', 'Email', 'Password', 'Sign in', 'Create account', 'Forgot password'],
@@ -40,6 +45,8 @@ const textos = {
     publicidade: ['Advertising', 'Configure ad units and inspect their positions in the local preview.'],
     banners: ['Priority announcements', 'Create announcements below the header with images, text, links, and a carousel.'],
     eventos: ['Events and missions', 'Publish challenges using different tools and manage their schedule.'],
+    editorial: ['Catalog, content and rules', 'Review drafts and publish changes with revision history.'],
+    operacao: ['Traffic and logs', 'Inspect persistent restrictions, audits and internal errors.'],
   },
 };
 
@@ -276,7 +283,7 @@ export function paginasConta(ctx) {
     ['conta/index.html','conta',montarConta()],
     ['conta/perfil.html','conta',montarConta(true).replace(/Minha conta/g, 'Editar perfil').replace(/My account/g, 'Edit profile').replace('class="conta conta--modal"', 'class="conta conta--modal conta--editor"')],
     ['niveis.html', 'niveis', quadro(t.niveis[0], t.niveis[1], `<div id="niveis-progresso"></div>
-      <section class="niveis__bloco"><h2>${en ? 'How the level grows' : 'Como o nível sobe'}</h2><p>${en ? 'A registered tool use adds 2 XP; an eligible chat message adds 1 XP. Earned achievement stages add bonuses. Daily limits apply to repeated activity.' : 'Um uso registrado de ferramenta soma 2 XP; uma mensagem válida no chat soma 1 XP. Patamares de conquistas desbloqueados acrescentam bônus. Atividades repetidas têm limites diários.'}</p><p>${en ? 'Rewards you have earned stay in your collection, even if you later remove a favorite or saved work. On your profile, choose and order up to five featured achievements, then save your choices.' : 'As conquistas recebidas continuam na sua coleção, mesmo se depois você retirar um favorito ou apagar um trabalho salvo. No perfil, escolha e ordene até cinco conquistas em destaque e salve sua seleção.'}</p></section>
+      <section class="niveis__bloco"><h2>${en ? 'How the level grows' : 'Como o nível sobe'}</h2><p>${en ? `A registered tool use adds ${editorial.pontos?.por_uso??2} XP; an eligible chat message adds ${editorial.pontos?.por_mensagem??1} XP. Earned achievement stages add bonuses. Daily limits apply to repeated activity.` : `Um uso registrado de ferramenta soma ${editorial.pontos?.por_uso??2} XP; uma mensagem válida no chat soma ${editorial.pontos?.por_mensagem??1} XP. Patamares de conquistas desbloqueados acrescentam bônus. Atividades repetidas têm limites diários.`}</p><p>${en ? 'Rewards you have earned stay in your collection, even if you later remove a favorite or saved work. On your profile, choose and order up to five featured achievements, then save your choices.' : 'As conquistas recebidas continuam na sua coleção, mesmo se depois você retirar um favorito ou apagar um trabalho salvo. No perfil, escolha e ordene até cinco conquistas em destaque e salve sua seleção.'}</p></section>
       <section class="niveis__bloco"><h2>${en ? 'Medals' : 'Medalhas'}</h2><div class="niveis__lista">
         <article id="explorador"><b>${en ? 'Explorer' : 'Explorador'}</b><p>${en ? 'Use different tools.' : 'Use ferramentas diferentes.'}</p></article>
         <article id="pratica"><b>${en ? 'Hands on' : 'Mão na massa'}</b><p>${en ? 'Complete tool uses.' : 'Conclua usos de ferramentas.'}</p></article>
@@ -290,7 +297,7 @@ export function paginasConta(ctx) {
     ['admin/chat/index.html', 'moderar', quadro(t.moderar[0], t.moderar[1], `<nav class="conta__links"><a href="../usuarios/">${en ? 'Users' : 'Usuários'}</a><a href="../suporte/">${en ? 'Support' : 'Suporte'}</a></nav><button class="botão" id="atualizar-denuncias" type="button">${escapar(t.moderar[2])}</button><div id="denuncias"></div>`, 'moderar')],
     ['perfil.html', 'perfil', quadro(t.perfil[0], t.perfil[1], '<div id="perfil-pessoa"></div>', 'perfil')],
     ['conta/mensagens.html', 'suporte', quadro(t.suporte[0], t.suporte[1], `<form id="form-suporte" class="conta__form">${campo('assunto', en ? 'Subject' : 'Assunto', 'text', 'minlength="3" maxlength="100" required')}<label class="conta__campo"><span>${en ? 'Message' : 'Mensagem'}</span><textarea name="texto" minlength="10" maxlength="2000" rows="5" required></textarea></label><button class="botão" type="submit">${en ? 'Send message' : 'Enviar mensagem'}</button></form><div id="lista-suporte"></div>`, 'suporte')],
-    ['conta/trabalhos.html', 'trabalhos', quadro(t.trabalhos[0], t.trabalhos[1], `<div class="conta__trabalhos-cabeçalho"><p id="trabalhos-resumo" class="suave pequeno"></p><a class="botão botão--linha" href="../ferramentas.html">${en ? 'Open tools' : 'Abrir ferramentas'}</a></div><div id="lista-trabalhos"></div><div id="trabalhos-paginas" class="ações"></div><p class="suave pequeno">${en ? 'Free: 3 saved works / 20 KiB each. Plus: 500 / 64 KiB. Premium: 2,000 / 512 KiB. Original files remain local.' : 'Grátis: 3 trabalhos / 20 KiB cada. Plus: 500 / 64 KiB. Premium: 2.000 / 512 KiB. Os arquivos originais continuam locais.'}</p>`, 'trabalhos')],
+    ['conta/trabalhos.html', 'trabalhos', quadro(t.trabalhos[0], t.trabalhos[1], `<div class="conta__trabalhos-cabeçalho"><p id="trabalhos-resumo" class="suave pequeno"></p><a class="botão botão--linha" href="../ferramentas.html">${en ? 'Open tools' : 'Abrir ferramentas'}</a></div><div id="lista-trabalhos"></div><div id="trabalhos-paginas" class="ações"></div><p class="suave pequeno">${planosPublicos().map(p=>`${p.id}: ${p.limites.trabalhos} / ${p.dados_maximo_bytes/1024} KiB`).join(' · ')}. ${en?'Original files remain local.':'Os arquivos originais continuam locais.'}</p>`, 'trabalhos')],
     ['admin/usuarios/index.html', 'usuarios', quadro(t.usuarios[0], t.usuarios[1], '<div id="lista-usuarios"></div>', 'usuarios')],
     ['admin/suporte/index.html', 'adminSuporte', quadro(t.adminSuporte[0], t.adminSuporte[1], '<div id="lista-admin-suporte"></div>', 'admin-suporte')],
     ['admin/novidades/index.html', 'novidades', quadro(t.novidades[0], t.novidades[1], `<nav class="conta__links"><a href="../chat/">${en ? 'Moderation' : 'Moderação'}</a><a href="../usuarios/">${en ? 'Users' : 'Usuários'}</a><a href="../suporte/">${en ? 'Support' : 'Suporte'}</a></nav>
@@ -323,6 +330,8 @@ export function paginasConta(ctx) {
       </form><p id="publicidade-status" class="suave"></p><nav class="conta__links"><a href="../../ferramentas.html">${en ? 'Inspect catalog' : 'Conferir catálogo'}</a><a href="../../">${en ? 'Inspect home page' : 'Conferir início'}</a></nav>`,'publicidade')],
     ['admin/banners/index.html','banners',quadro(t.banners[0],t.banners[1],gerarPainelBanners(en),'banners')],
     ['admin/eventos/index.html','eventos',quadro(t.eventos[0],t.eventos[1],painelEventos(en),'eventos')],
+    ['admin/editorial/index.html','editorial',quadro(t.editorial[0],t.editorial[1],painelEditorial(en),'editorial')],
+    ['admin/operacao/index.html','operacao',quadro(t.operacao[0],t.operacao[1],painelOperacao(en),'operacao')],
   ];
   return paginas.map(([arquivo, chave, conteúdoOriginal]) => {
     const conteúdo = arquivo === 'conta/index.html' ? separarCadastro(conteúdoOriginal, en) : conteúdoOriginal;
@@ -335,6 +344,6 @@ export function paginasConta(ctx) {
       : { 'pt-BR': atualNoIdioma, en: `${'../'.repeat(profundidade)}en/${arquivo}` };
     const titulo=arquivo==='conta/perfil.html'?(en?'Edit profile':'Editar perfil'):t[chave][0];
     return [`${prefixo}${arquivo}`, montarPágina({ctx, título: `${titulo} — ${site.nome}`, descrição: t[chave][1], base, raiz: raizSite, conteúdo,
-      scripts: [`páginas/conta/${chave === 'adminSuporte' ? 'admin-suporte' : chave}.js`], estilos: ['conta.css', ...(['perfil','eventos'].includes(chave)?['recompensas.css']:[])], semÍndice: true, alternativas})];
+      scripts: [`páginas/conta/${chave === 'adminSuporte' ? 'admin-suporte' : chave}.js`], estilos: ['conta.css', ...(['editorial','operacao'].includes(chave)?['editorial.css']:[]), ...(['perfil','eventos'].includes(chave)?['recompensas.css']:[])], semÍndice: true, alternativas})];
   });
 }

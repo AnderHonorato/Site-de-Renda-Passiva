@@ -1,7 +1,12 @@
 import { readFileSync } from 'node:fs';
+import { editorial } from '../dados/editorial-publicado.js';
 
 const configuracao = JSON.parse(readFileSync(new URL('./servidor-planos.json', import.meta.url), 'utf8'));
 const porId = new Map(configuracao.planos.map((plano) => [plano.id, plano]));
+export function aplicarLimitesPublicados(limites = {}) {
+  for(const original of configuracao.planos)porId.set(original.id,{...original,...limites[original.id],limites:{...original.limites,...limites[original.id]?.limites}});
+}
+aplicarLimitesPublicados(editorial.limites);
 const SITUACOES = new Set(['em_aberto', 'salvo']);
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 export const DADOS_MAXIMO_BYTES = 20 * 1024;
@@ -12,7 +17,7 @@ export function limitesDoPlano(id = 'gratuito') {
 }
 
 export function planosPublicos() {
-  return configuracao.planos.map(({ id, limites, dados_maximo_bytes, armazenamento_maximo_bytes, provisorio = false }) => ({ id, limites: { ...limites }, dados_maximo_bytes, armazenamento_maximo_bytes, provisorio }));
+  return [...porId.values()].map(({ id, limites, dados_maximo_bytes, armazenamento_maximo_bytes, provisorio = false }) => ({ id, limites: { ...limites }, dados_maximo_bytes, armazenamento_maximo_bytes, provisorio }));
 }
 
 export function limiteDadosDoPlano(id = 'gratuito') { return (porId.get(id) || porId.get('gratuito')).dados_maximo_bytes; }

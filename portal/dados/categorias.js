@@ -3,6 +3,7 @@
  * A ordem aqui é a ordem mostrada no menu e na página inicial.
  */
 import { normalizarIdioma } from './idiomas.js';
+import { editorial } from './editorial-publicado.js';
 
 const CATEGORIAS_PT = Object.freeze([
   { id: 'dinheiro', nome: 'Dinheiro e preços', ícone: 'dinheiro', resumo: 'Preço, margem, juros, parcelas e divisão de contas.' },
@@ -43,10 +44,12 @@ const TAREFAS_PT = Object.freeze([
  * de dados/traduções/en/categorias.js, troca só nome e resumo e mantém ids, ícones e ordem.
  * @param {{categorias: Record<string, {nome: string, resumo: string}>, tarefas: Record<string, string>} | null} traduções
  */
-export function categoriasDoIdioma(traduções = null) {
-  const categorias = traduções
+export function categoriasDoIdioma(traduções = null, usarEditorial = true) {
+  const originais = traduções
     ? Object.freeze(CATEGORIAS_PT.map((c) => Object.freeze({ ...c, ...traduções.categorias[c.id] })))
     : CATEGORIAS_PT;
+  const idioma=traduções?'en':'pt-BR';
+  const categorias=Object.freeze(originais.map(c=>Object.freeze({...c,...(usarEditorial?editorial.categorias?.[c.id]?.[idioma]:{})})));
   const tarefas = traduções
     ? Object.freeze(TAREFAS_PT.map((t) => Object.freeze({ ...t, nome: traduções.tarefas[t.id] })))
     : TAREFAS_PT;

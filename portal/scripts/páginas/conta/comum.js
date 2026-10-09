@@ -63,11 +63,18 @@ export function ligar(formId, ação) {
 export function mensagemErro(erro) {
   if (erro.indisponivel) return en ? 'Service unavailable. Please try again shortly.' : 'Serviço indisponível. Tente novamente em instantes.';
   const codigos = {
+    acesso_negado: en ? 'Access restricted to administrators.' : 'Acesso restrito a administradores.',
     credenciais_invalidas: en ? 'Check your email and password.' : 'Confira seu e-mail e sua senha.',
     email_em_uso: en ? 'This email is already in use.' : 'Este e-mail já está em uso.',
     usuario_em_uso: en ? 'This username is already in use.' : 'Este @usuário já está em uso.',
     senha_invalida: en ? 'Check your password.' : 'Confira sua senha.',
     dados_invalidos: en ? 'Check the fields and try again.' : 'Confira os campos e tente novamente.',
+    editorial_alterado: en ? 'Another edit changed this draft. Refresh before saving.' : 'Outra edição alterou o rascunho. Atualize antes de salvar.',
+    nome_repetido: en ? 'Another tool already uses this name.' : 'Outra ferramenta já usa esse nome.',
+    cotas_fora_de_ordem: en ? 'Plus quotas must cover Free, and Premium must cover Plus.' : 'As cotas do Plus devem cobrir as do Grátis, e as do Premium devem cobrir as do Plus.',
+    publicacao_em_andamento: en ? 'A publication is running or needs recovery. Refresh the panel.' : 'Há uma publicação em andamento ou aguardando recuperação. Atualize o painel.',
+    publicacao_falhou: en ? 'Publishing failed. The previous version was kept; check the panel to recover if needed.' : 'A publicação falhou. A versão anterior foi preservada; confira o painel para recuperar, se necessário.',
+    bloqueio_alterado: en ? 'This restriction changed. Refresh before releasing it.' : 'A restrição mudou. Atualize antes de liberar.',
     evento_alterado: en ? 'This event was edited elsewhere. Reload before saving.' : 'Este evento foi editado em outro lugar. Recarregue antes de salvar.',
     limite_eventos: en ? 'Pause an event before publishing more than 20.' : 'Pause um evento antes de publicar mais de 20.',
     limite_dados_do_plano: en ? 'These saved values exceed your plan size limit.' : 'Estes valores ultrapassam o espaço por trabalho do seu plano.',

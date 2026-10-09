@@ -6,7 +6,7 @@
  *
  * Uso: node portal/ferramentas/gerar.mjs
  */
-import { mkdir, writeFile, rm } from 'node:fs/promises';
+import { mkdir, writeFile, rm, rename } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { montarPágina, escapar } from './modelo-de-página.mjs';
@@ -21,6 +21,8 @@ import { gerarÍconesAnimados } from './ícones-animados.mjs';
 import { lerRegistro, atualizarRegistro, montarFeed } from './lançamentos.mjs';
 import { paginasConta } from './páginas-conta.mjs';
 import { apresentarPlanos } from './painel-planos.mjs';
+import { editorial } from '../dados/editorial-publicado.js';
+import { paginasErros } from './paginas-erros.mjs';
 import { instrucoesEmHtml } from '../scripts/núcleo/instruções.js';
 import { basePublica, completarSeo } from './seo.mjs';
 
@@ -187,13 +189,14 @@ function páginasDoIdioma(ctx) {
     base: '', raiz: en ? '../' : '', atual: '', anunciosPermitidos: false,
     alternativas: { 'pt-BR': en ? '../planos.html' : 'planos.html', en: en ? 'planos.html' : 'en/planos.html' },
     estilos: ['conta.css'],
-    conteúdo: `<section class="largura seção prosa"><h1>${en ? 'Plans' : 'Planos'}</h1><p>${en ? 'Public browser tools remain free. Plus and Premium are granted manually by an administrator; there is no automatic charge or checkout.' : 'As ferramentas públicas continuam gratuitas. Plus e Premium são liberados manualmente pelo administrador; não há cobrança automática nem checkout.'}</p>${apresentarPlanos(en)}<p><a class="botão" href="conta/mensagens.html">${en ? 'Request plan activation' : 'Solicitar ativação do plano'}</a></p></section>`,
+    conteúdo: `<section class="largura seção prosa"><h1>${en ? 'Plans' : 'Planos'}</h1><p>${escapar(editorial.textos?.['planos.introducao']?.[ctx.código] || (en ? 'Public browser tools remain free. Plus and Premium are granted manually by an administrator; there is no automatic charge or checkout.' : 'As ferramentas públicas continuam gratuitas. Plus e Premium são liberados manualmente pelo administrador; não há cobrança automática nem checkout.'))}</p>${apresentarPlanos(en)}<p><a class="botão" href="conta/mensagens.html">${en ? 'Request plan activation' : 'Solicitar ativação do plano'}</a></p></section>`,
   });
   return [
     [`${pasta}index.html`, páginaInicial(ctx)],
     [`${pasta}ferramentas.html`, páginaDeCatálogo(ctx)],
     [`${pasta}salvos.html`, páginaDeSalvos(ctx)],
     [`${pasta}404.html`, página404(ctx)],
+    ...paginasErros(ctx),
     ...páginasInstitucionais(ctx).map((p) => [`${pasta}${p.arquivo}`, p.html]),
     ...paginasConta(ctx),
     [`${pasta}cookies.html`, cookies],
@@ -204,7 +207,8 @@ function páginasDoIdioma(ctx) {
 async function escrever(caminhoRelativo, conteúdo) {
   const destino = join(RAIZ, caminhoRelativo);
   await mkdir(dirname(destino), { recursive: true });
-  await writeFile(destino, conteúdo, 'utf8');
+  const temporario=destino+'.gerando';
+  try{await writeFile(temporario,conteúdo,'utf8');await rename(temporario,destino);}finally{await rm(temporario,{force:true});}
 }
 
 async function principal() {
@@ -222,8 +226,7 @@ async function principal() {
     const modulo = await import(new URL(`../scripts/ferramentas/${ferramenta.slug}.js`, import.meta.url));
     definicoes.set(ferramenta.slug, (modulo.default || modulo.definição)?.instruções);
   }
-  await rm(join(RAIZ, 'f'), { recursive: true, force: true });
-  await rm(join(RAIZ, 'en'), { recursive: true, force: true });
+  // Preserva as páginas disponíveis durante a publicação; cada arquivo é trocado por rename.
   await gerarÍconesAnimados();
 
   // Lançamentos: registra as ferramentas que ficaram prontas desde a última geração e monta o feed do sino.
