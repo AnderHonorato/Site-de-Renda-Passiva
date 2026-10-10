@@ -56,3 +56,12 @@ Essas pendências já eram ondas separadas do plano do Claude e não estão conc
 - [ ] Referência Grok: Drive identificou `grok-workspace.zip`, mas bloqueou download por classificação de malware/spam; o conteúdo da animação não foi visualizado.
 
 Não houve implantação em domínio público nem ativação de anúncios reais/campanhas pagas. Os arquivos privados de execução, bancos, backups e imagens de testes não entram na publicação.
+
+## Continuação de 09/10/2026 após v1.3.7
+
+- [x] Modal de nível, medalha e missão não corta descrições compridas em telas muito baixas; rolagem acessível sem trilho lateral visível e visual orgânico preservado.
+- [x] Teste de navegador de 320 × 240 px acrescentado: 8/8 testes do arquivo de recompensas aprovados.
+- [x] Gerador 131 saídas; suíte Node 1.130/1.130; verificador 130 páginas, 215 scripts, 208 itens, sem problemas.
+- [ ] Tradução integral das ferramentas, desempenho e acessibilidade em aparelho físico, AdSense real e preparação de produção continuam pendentes.
+
+Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.

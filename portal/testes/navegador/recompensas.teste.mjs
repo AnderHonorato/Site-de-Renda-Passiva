@@ -83,3 +83,20 @@ test('celebração com título de 100 caracteres cabe em tela baixa e o botão p
     const modal=await pagina.locator('dialog.conquista').boundingBox(),b=await pagina.locator('dialog.conquista button').boundingBox();assert.ok(b.y>=modal.y&&b.y+b.height<=modal.y+modal.height+1);assert.equal(await pagina.locator('dialog.conquista').evaluate(n=>n.scrollHeight<=n.clientHeight+1),true);await pagina.getByRole('button',{name:'Continuar',exact:true}).click();assert.deepEqual(erros,[]);
   }finally{await c.close();}
 });
+
+test('celebração extensa em tela muito baixa permite alcançar a ação sem barra lateral visível',{skip:pular},async()=>{
+  const {c,pagina,erros}=await contexto({width:320,height:240},'dark','Conquista especial '.repeat(20));
+  try{
+    await pagina.goto(BASE+'/perfil.html?usuario=demo#missoes',{waitUntil:'networkidle'});
+    await pagina.getByRole('button',{name:'Receber 5 XP',exact:true}).click();
+    const dialogo=pagina.locator('dialog.conquista');
+    await dialogo.waitFor({state:'visible'});
+    const medidas=await dialogo.evaluate(no=>({altura:no.clientHeight,conteudo:no.scrollHeight,rolagem:getComputedStyle(no).overflowY,borda:no.getBoundingClientRect().bottom}));
+    assert.equal(medidas.rolagem,'auto','o conteúdo pode rolar, em vez de ser cortado');
+    assert.ok(medidas.conteudo>medidas.altura,'o teste exerce a situação de conteúdo extenso');
+    assert.ok(medidas.borda<=240+1,'o modal permanece dentro da tela');
+    await dialogo.getByRole('button',{name:'Continuar'}).click();
+    assert.equal(await pagina.locator('dialog.conquista[open]').count(),0);
+    assert.deepEqual(erros,[]);
+  }finally{await c.close();}
+});

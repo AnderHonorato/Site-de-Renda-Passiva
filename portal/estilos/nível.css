@@ -26,7 +26,9 @@
 .emblema__brilho { transform-origin:32px 32px; animation:emblema-cintila 3.6s ease-in-out infinite; }
 @keyframes emblema-cintila { 0%,100% { opacity:.4; transform:scale(.96); } 50% { opacity:1; transform:scale(1.05); } }
 
-.conquista { position:fixed; isolation:isolate; width:min(440px,calc(100vw - 28px)); max-height:calc(100dvh - 28px); overflow:clip; padding:0; border:1px solid color-mix(in srgb,var(--marca) 25%,var(--borda)); border-radius:32px 32px 56px 56px; background:radial-gradient(ellipse at 50% 35%,var(--marca-fraca),transparent 70%),var(--superfície); color:var(--tinta); box-shadow:0 30px 100px #0004; animation:conquista-chega .55s cubic-bezier(.2,.8,.25,1) both; }
+.conquista { position:fixed; isolation:isolate; width:min(440px,calc(100vw - 28px)); max-height:calc(100dvh - 28px); overflow-x:hidden; overflow-y:auto; scrollbar-width:none; overscroll-behavior:contain; padding:0; border:1px solid color-mix(in srgb,var(--marca) 25%,var(--borda)); border-radius:32px 32px 56px 56px; background:radial-gradient(ellipse at 50% 35%,var(--marca-fraca),transparent 70%),var(--superfície); color:var(--tinta); box-shadow:0 30px 100px #0004; animation:conquista-chega .55s cubic-bezier(.2,.8,.25,1) both; }
+/* Rolagem só quando necessária, inclusive com zoom e teclado; sem trilho lateral sobre o selo. */
+.conquista::-webkit-scrollbar { display:none; }
 .conquista::backdrop,.avatar-recorte::backdrop { background:#111a; backdrop-filter:blur(7px); }
 .conquista__conteudo { position:relative; z-index:1; text-align:center; padding:30px 28px; }
 .conquista__etiqueta { margin:0; font-size:.72rem; font-weight:750; letter-spacing:.16em; text-transform:uppercase; color:var(--marca); }
