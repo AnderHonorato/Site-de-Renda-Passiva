@@ -8,6 +8,13 @@
   <title>Ferramentas do Ander</title>
   <link rel="stylesheet" href="./estilos.css">
   <script type="module" src="./app.js"></script>
+<style>
+.dica-atalho-portal{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;color:var(--cor-sutil,#786e65);font-size:12px;letter-spacing:.045em;margin:17px 0}
+.dica-atalho-portal kbd{display:inline-flex;justify-content:center;align-items:center;padding:4px 8px;min-width:26px;border:1px solid currentColor;border-radius:8px;color:var(--cor-texto,#5a4d43);background:color-mix(in srgb,var(--cor-fundo,#f8eee3) 70%,transparent);font:600 12px ui-monospace,monospace;box-shadow:0 2px 0 #66513f14}
+.dica-atalho-portal kbd:first-of-type{animation:piscar-atalho 6s ease-in-out infinite}
+@keyframes piscar-atalho{0%,85%,100%{transform:translateY(0)}90%{transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){.dica-atalho-portal kbd{animation:none!important}}
+</style>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -33,6 +40,7 @@
         <p class="rotulo">Tudo no mesmo lugar</p>
         <h1>Ferramentas úteis sem caça ao botão certo.</h1>
         <p class="hero__texto">Busque, abra, volte ao que usou recentemente e descubra ferramentas relacionadas. As funções públicas continuam acessíveis sem cadastro.</p>
+<p class="dica-atalho-portal" aria-label="Atalho de busca">⌘ ENCONTRE RÁPIDO <kbd>/</kbd> para pesquisar <kbd>Esc</kbd> para limpar</p>
       </div>
       <div class="busca-wrap">
         <label for="busca">O que você precisa fazer?</label>
@@ -122,5 +130,23 @@
       <p class="muted">Nenhum provedor é simulado. Sem configuração real, o portal informa que a integração ainda não está ativa.</p>
     </form>
   </dialog>
+<script>
+/* Atalho acessível do catálogo; não intercepta edição de formulários. */
+document.addEventListener('keydown', evento => {
+  const alvo = evento.target;
+  if (!(alvo instanceof HTMLElement) || evento.altKey || evento.ctrlKey || evento.metaKey) return;
+  const escrevendo = alvo.isContentEditable || ['INPUT','TEXTAREA','SELECT'].includes(alvo.tagName);
+  const busca = document.getElementById('busca');
+  if (evento.key === '/' && !escrevendo && busca instanceof HTMLInputElement) {
+    evento.preventDefault();
+    busca.focus();
+    busca.select();
+  }
+  if (evento.key === 'Escape' && document.activeElement === busca && busca instanceof HTMLInputElement && busca.value) {
+    busca.value = '';
+    busca.dispatchEvent(new Event('input',{bubbles:true}));
+  }
+});
+</script>
 </body>
 </html>
