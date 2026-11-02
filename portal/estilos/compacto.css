@@ -120,3 +120,60 @@ body:has(dialog.ajuda-modal[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .ajuda-modal, .ajuda-modal::backdrop { animation: none !important; }
 }
+
+/* Recomendações ficam fora da ajuda, discretas abaixo do trabalho. */
+.relacionadas-faixa { min-width: 0; margin-top: 9px; padding: 0 1px; }
+.relacionadas-faixa__topo { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 5px 12px; margin: 0 0 8px; }
+.relacionadas-faixa__topo h2 { margin: 0; font-size: .9rem; font-weight: 600; }
+.relacionadas-faixa__nota { color: var(--tinta-suave); font-size: .72rem; }
+.relacionadas--compactas { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; min-width: 0; }
+.relacionadas--compactas .relacionadas__item {
+  min-width: 0; min-height: 64px; padding: 9px 10px; border: 1px solid var(--borda);
+  background: var(--superfície); border-radius: 12px;
+  display: grid; grid-template-columns: 23px minmax(0, 1fr); gap: 5px 8px;
+  align-items: center; align-content: center; text-decoration: none; color: var(--tinta);
+  box-shadow: none; transition: border-color .15s ease, background .15s ease;
+}
+.relacionadas--compactas .relacionadas__item:hover { border-color: var(--marca); background: var(--marca-fraca); }
+.relacionadas__ícone { display: grid; place-items: center; width: 23px; height: 23px; color: var(--marca); }
+.relacionadas__ícone svg { width: 19px; height: 19px; }
+.relacionadas__nome { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden; font-size: .79rem; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+.relacionadas--compactas .relacionadas__item[data-visitada="sim"] {
+  background: var(--superfície-2); border-color: var(--borda);
+}
+.relacionadas__visto {
+  grid-column: 2; display: inline-flex; align-items: center; gap: 3px;
+  color: var(--ok); font-size: .67rem; font-weight: 600; line-height: 1.2;
+}
+.relacionadas__visto[hidden] { display: none; }
+.relacionadas__visto svg { width: 13px; height: 13px; color: var(--ok); }
+@media (min-width: 768px) and (max-width: 1100px) {
+  .relacionadas--compactas { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+  .relacionadas-faixa { margin-top: 8px; }
+  .relacionadas-faixa__nota { display: none; }
+  .relacionadas--compactas {
+    display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden;
+    padding: 2px 2px 9px; scroll-snap-type: x proximity;
+    overscroll-behavior-inline: contain;
+  }
+  .relacionadas--compactas .relacionadas__item {
+    flex: 0 0 clamp(166px, 57vw, 224px); min-height: 66px;
+    scroll-snap-align: start; padding: 9px 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .relacionadas--compactas .relacionadas__item { transition: none; }
+}
+
+/* "Visto" também nas listas do catálogo, com selo mínimo para não aumentar os cards. */
+.ferramenta-linha__visto {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 6px; border-radius: 999px;
+  background: var(--ok-fraca); color: var(--ok);
+  font-size: .65rem; font-weight: 600; line-height: 1.1; letter-spacing: 0;
+}
+.ferramenta-linha__visto svg { width: 12px; height: 12px; color: var(--ok); }
+.ferramenta-linha[data-visitada="sim"] { border-left: 2px solid var(--ok); }

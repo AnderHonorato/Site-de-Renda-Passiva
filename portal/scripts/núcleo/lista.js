@@ -2,7 +2,7 @@
 import { escapar } from './texto.js';
 import { ícone } from './ícones.js';
 import { íconeVivo, imagemDoTema, conferirÍconesVivos } from './ícone-animado.js';
-import { lerFavoritos, alternarFavorito } from './preferências.js';
+import { lerFavoritos, lerVisualizadas, alternarFavorito } from './preferências.js';
 import { avisar } from './interface.js';
 import { t, éInglês, raizDoSite } from './idioma.js';
 
@@ -19,10 +19,10 @@ import { t, éInglês, raizDoSite } from './idioma.js';
  * apaga o filtro aplicado é pior do que não ter link.
  *
  * @param {object} f ferramenta do catálogo
- * @param {{base?: string, favoritada?: boolean}} [opções]
+ * @param {{base?: string, favoritada?: boolean, visualizada?: boolean}} [opções]
  * @returns {string}
  */
-export function linhaDeFerramenta(f, { base = raizDoSite, favoritada = false } = {}) {
+export function linhaDeFerramenta(f, { base = raizDoSite, favoritada = false, visualizada = false } = {}) {
   const planejada = f.status === 'planejada';
   const selo = planejada
     ? `<span class="etiqueta">${escapar(t('lista.planejada'))}</span>`
@@ -30,13 +30,15 @@ export function linhaDeFerramenta(f, { base = raizDoSite, favoritada = false } =
   // As ferramentas ainda são só em português (Onda 9): na lista em inglês o link avisa disso.
   const idiomaDoLink = éInglês && !planejada;
   const avisoDeIdioma = idiomaDoLink ? `<span class="etiqueta">${escapar(t('lista.versãoSóEmPortuguês'))}</span>` : '';
+  const seloVisualizada = visualizada && !planejada
+    ? `<span class="ferramenta-linha__visto">${ícone('confere')} Visto</span>` : '';
 
   const alvo = planejada
     ? `<button type="button" class="ferramenta-linha__nome ferramenta-linha__alvo" data-ficha="${escapar(f.slug)}"
         aria-expanded="false">${escapar(f.nome)}${selo}</button>`
-    : `<a class="ferramenta-linha__nome ferramenta-linha__alvo" href="${escapar(`${base}f/${f.slug}/`)}"${idiomaDoLink ? ' hreflang="pt-BR"' : ''}>${escapar(f.nome)}${selo}${avisoDeIdioma}</a>`;
+    : `<a class="ferramenta-linha__nome ferramenta-linha__alvo" href="${escapar(`${base}f/${f.slug}/`)}"${idiomaDoLink ? ' hreflang="pt-BR"' : ''}>${escapar(f.nome)}${selo}${avisoDeIdioma}${seloVisualizada}</a>`;
 
-  return `<div class="ferramenta-linha" data-status="${f.status}" data-slug="${escapar(f.slug)}">
+  return `<div class="ferramenta-linha" data-status="${f.status}" data-visitada="${visualizada && !planejada ? 'sim' : 'nao'}" data-slug="${escapar(f.slug)}">
   <span class="ferramenta-linha__ícone">${planejada ? ícone(f.ícone) : íconeVivo(f.ícone, { base, tamanho: 23 })}</span>
   <span class="ferramenta-linha__texto">
     ${alvo}
@@ -77,18 +79,39 @@ function fichaDaPlanejada(f) {
  */
 export function desenharLista(contêiner, lista, { base = raizDoSite, vazio = t('lista.nenhuma'), anuncios = false } = {}) {
   const favoritos = new Set(lerFavoritos());
+  const visualizadas = new Set(lerVisualizadas());
   if (lista.length === 0) {
     contêiner.innerHTML = `<p class="vazio">${imagemDoTema(`${base}recursos/ilustrações/estado-vazio`, { classe: 'vazio__desenho', largura: 160, altura: 120 })}${escapar(vazio)}</p>`;
     return;
   }
   contêiner.innerHTML = lista
-    .map((f,i) => linhaDeFerramenta(f, { base, favoritada: favoritos.has(f.slug) })+(anuncios && [11,23].includes(i) && i+1<lista.length ? '<div data-anuncio-posicao="lista" class="publicidade-vazia"></div>' : ''))
+    .map((f,i) => linhaDeFerramenta(f, { base, favoritada: favoritos.has(f.slug), visualizada: visualizadas.has(f.slug) })+(anuncios && [11,23].includes(i) && i+1<lista.length ? '<div data-anuncio-posicao="lista" class="publicidade-vazia"></div>' : ''))
     .join('');
   conferirÍconesVivos(contêiner);
   // Um bloqueador de anúncios pode impedir até o download deste módulo opcional.
   // A lista precisa estar desenhada e utilizável independentemente da publicidade.
   if (anuncios) void import('../publicidade/anúncios-condicionais.js')
     .then(({ iniciarPublicidade }) => iniciarPublicidade()).catch(() => {});
+}
+
+/** Atualiza os selos quando alguém volta do histórico do navegador, sem perder filtros. */
+export function atualizarMarcasVisualizadas(contêiner) {
+  const visualizadas = new Set(lerVisualizadas());
+  for (const linha of contêiner.querySelectorAll('.ferramenta-linha[data-status="pronta"]')) {
+    const visto = visualizadas.has(linha.dataset.slug);
+    linha.dataset.visitada = visto ? 'sim' : 'nao';
+    const link = linha.querySelector('a.ferramenta-linha__alvo');
+    if (!link) continue;
+    const selo = link.querySelector('.ferramenta-linha__visto');
+    if (visto && !selo) {
+      const novo = document.createElement('span');
+      novo.className = 'ferramenta-linha__visto';
+      novo.innerHTML = ícone('confere') + ' Visto';
+      link.append(novo);
+    } else if (!visto && selo) {
+      selo.remove();
+    }
+  }
 }
 
 /**
@@ -98,6 +121,9 @@ export function desenharLista(contêiner, lista, { base = raizDoSite, vazio = t(
  * @param {() => void} [aoMudar] chamado depois de alternar um favorito
  */
 export function ligarLista(contêiner, catálogo, aoMudar) {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('pageshow', () => atualizarMarcasVisualizadas(contêiner));
+  }
   contêiner.addEventListener('click', (evento) => {
     const alvo = evento.target instanceof Element ? evento.target : null;
     if (!alvo) return;

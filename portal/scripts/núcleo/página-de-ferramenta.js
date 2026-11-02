@@ -6,7 +6,7 @@
  * do que o próprio módulo declara — assim a documentação nunca descola do código.
  */
 import { ferramentaPorSlug } from '../../dados/catálogo.js';
-import { registrarUso, éFavorito, alternarFavorito } from './preferências.js';
+import { registrarUso, registrarVisualizacao, lerVisualizadas, éFavorito, alternarFavorito } from './preferências.js';
 import { escapar } from './texto.js';
 import { avisar } from './interface.js';
 import { isolarBloco, carregarBloco } from './isolar-bloco.js';
@@ -81,11 +81,36 @@ function ligarAjuda() {
   diálogo.addEventListener('close', () => botão.focus());
 }
 
+/** Diferencia visualmente atalhos já abertos e coloca os novos primeiro. */
+function sinalizarVisualizadas() {
+  const contêiner = document.querySelector('.relacionadas--compactas');
+  if (!contêiner) return;
+  const jáAbertas = new Set(lerVisualizadas());
+  const cartões = Array.from(contêiner.querySelectorAll('[data-relacionada]'));
+  for (const cartão of cartões) {
+    const visualizada = jáAbertas.has(cartão.dataset.relacionada);
+    cartão.dataset.visitada = visualizada ? 'sim' : 'nao';
+    const selo = cartão.querySelector('[data-visto]');
+    if (selo) selo.hidden = !visualizada;
+    const nome = cartão.querySelector('.relacionadas__nome')?.textContent?.trim() ?? '';
+    cartão.setAttribute('aria-label', visualizada
+      ? nome + ' — já visualizada neste aparelho'
+      : nome + ' — ainda não visualizada');
+  }
+  // Novas recomendações antes das vistas, mantendo a ordem de relevância de cada grupo.
+  cartões.sort((a, b) => Number(a.dataset.visitada === 'sim') - Number(b.dataset.visitada === 'sim'));
+  contêiner.replaceChildren(...cartões);
+}
+
 async function iniciar() {
   if (!raiz || !ferramenta) return;
   ligarAjuda();
   isolarBloco('favorito', ligarFavorito);
+  registrarVisualizacao(slug);
   registrarUso(slug);
+  sinalizarVisualizadas();
+  // Ao voltar pelo navegador (bfcache), atualiza a marca das páginas visitadas.
+  window.addEventListener('pageshow', sinalizarVisualizadas);
   // A ferramenta é um bloco à parte: se o módulo dela não carregar ou quebrar ao montar, só a
   // área dela mostra a mensagem (com "Tentar de novo"); o cabeçalho e o resto da página seguem.
   await isolarBloco('ferramenta', async (tentativa) => {

@@ -5,6 +5,7 @@ import { avisar } from './interface.js';
 
 const LIMITE_FAVORITOS = 60;
 const LIMITE_RECENTES = 12;
+const LIMITE_VISUALIZADAS = 450;
 
 /** @returns {string[]} slugs favoritados */
 export function lerFavoritos() {
@@ -92,6 +93,25 @@ export function registrarUso(slug) {
   const atuais = lerRecentes().filter((s) => s !== slug);
   atuais.unshift(slug);
   gravar('recentes', atuais.slice(0, LIMITE_RECENTES));
+}
+
+/**
+ * Histórico completo de páginas de ferramentas que já foram abertas neste aparelho.
+ * É separado dos 12 "recentes" e não é sincronizado com contas ou servidores.
+ * Incorpora os recentes antigos para preservar visitas anteriores à atualização.
+ * @returns {string[]}
+ */
+export function lerVisualizadas() {
+  const lista = ler('visualizadas', []);
+  const gravadas = Array.isArray(lista) ? lista : [];
+  return [...new Set([...gravadas, ...lerRecentes()].filter(slugValido))].slice(-LIMITE_VISUALIZADAS);
+}
+
+/** Registra a abertura efetiva da página, não só o clique em uma recomendação. */
+export function registrarVisualizacao(slug) {
+  if (!slugValido(slug)) return false;
+  const antigas = lerVisualizadas().filter((item) => item !== slug);
+  return gravar('visualizadas', [...antigas, slug].slice(-LIMITE_VISUALIZADAS));
 }
 
 export function limparRecentes() {
