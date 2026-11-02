@@ -77,6 +77,9 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     r=await pedir('/api/amizades','POST',{usuario:'alice'});assert.equal(r.data.estado,'pendente');
     cookie=alice.cookie;csrf=alice.csrf;
     r=await pedir('/api/amizades/aceitar','POST',{usuario:'bob'});assert.equal(r.status,200);const privada=r.data.sala;
+    // O chat aplica um intervalo mínimo de 2 segundos entre mensagens do mesmo usuário,
+    // inclusive entre salas diferentes. O teste aguarda essa regra real sem desativá-la.
+    await aguardar(2100);
     r=await pedir(`/api/chat/salas/${privada}/mensagens`,'POST',{texto:'mensagem privada'});assert.equal(r.status,201);const idPrivado=r.data.mensagem.id;
     cookie='';csrf='';await pedir('/api/autenticacao/sessao');
     r=await pedir('/api/autenticacao/criar-conta','POST',{nome:'Charlie',email:'charlie@example.com',usuario:'charlie',senha:'senha-forte-charlie-123',idade:22,aceitaTermos:true});assert.equal(r.status,201);await pedir('/api/chat/aceite','POST',{aceito:true});
