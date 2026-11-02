@@ -73,3 +73,5 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Páginas de conta, administração e erros marcadas como noindex no pacote GitHub Pages; publicadas sem mudar interface.
 - [x] Testes adicionados para URLs públicas e exclusão das telas privadas.
 - [ ] Validar indexação real no Google Search Console; tradução integral e teste físico continuam pendentes.
+
+- [x] Pipeline de publicação ampliado para executar toda a suíte de testes e verificação estrutural antes de publicar; qualquer falha bloqueia o deploy.
