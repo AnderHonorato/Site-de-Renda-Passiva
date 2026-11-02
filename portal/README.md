@@ -190,3 +190,7 @@ O portal agora tem 89 ferramentas prontas entre as 208 entradas. Ambas usam o mo
 - **Regex (F038):** executa padrões somente em Worker descartável, interrompe a execução ao passar de 1,6 s para mitigar travamentos, destaca matches com texto HTML escapado, expõe capturas nomeadas e numeradas, substituição JS e resultados exportáveis. Limite de 30 mil caracteres de entrada e 150 correspondências exibidas. A proteção reduz risco de ReDoS, não é uma garantia universal para uso em backend.
 - **UUID (F037):** gera em lote até 200 UUID v4, códigos hexadecimais ou códigos legíveis sem caracteres ambíguos. Usa Web Crypto e amostragem sem viés, aceita prefixo seguro, baixa TXT e permite exportação CSV/Excel. Sem sincronização dos identificadores com contas e sem promessas de unicidade global.
 Ambas mantêm o layout compacto, ajuda em modal, faixa de relacionadas abaixo do conteúdo e selo Visto.
+
+
+## Rastreamento de campanhas — UTM profissional
+O montador e leitor de UTM (F042) foi ativado. Monta links com origem, mídia, campanha, termo e conteúdo; preserva parâmetros externos e fragmentos e normaliza maiúsculas/espaços. O modo Auditor identifica parâmetros essenciais ausentes e duplicatas, e avisa quando há UTMs não padronizadas. Exporta tabela em CSV/Excel, sem integrar Analytics ou enviar URLs à conta do portal. URLs devem usar HTTP/HTTPS sem credenciais embutidas.
