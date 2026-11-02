@@ -192,3 +192,10 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [ ] F038 laboratório Regex com Worker e tempo máximo.
 - [ ] F207 formatador seguro com parsers reais.
 - [ ] F208 editor Mermaid local.
+
+
+## Continuação — Desenvolvimento profissional
+- [x] Regex: regex isolado em Web Worker, timeout, substituição, grupos, prévia com destaque e proteção XSS.
+- [x] UUID v4 e códigos legíveis em lote: fonte criptográfica, prefixo, exportação TXT/CSV/XLSX e limite de 200.
+- [ ] Verificar execução e performance da busca Regex em dispositivos reais e em padrões extremos.
+- [ ] Próximas ferramentas profissionais: formatação de código e diagramas por texto.
