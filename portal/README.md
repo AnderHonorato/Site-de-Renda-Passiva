@@ -169,3 +169,8 @@ A ferramenta **Conferência de pedido** compara SKU e quantidades do pedido e da
 
 ## Terceira rodada logística: etiquetas e comparação de fretes
 A ferramenta **Etiqueta de expedição** gera até 80 etiquetas genéricas, quatro por A4, com numeração e exportação PDF/CSV/XLSX. A identificação não é etiqueta oficial de postagem e não emite código de rastreio. Dados pessoais de etiquetas e romaneios são processados no navegador; nestas duas ferramentas o salvamento de trabalhos na conta está bloqueado. A ferramenta **Calculadora de frete** compara de 2 a 20 transportadoras a partir de preços e fatores **informados manualmente** por transportadora; não consulta cotações reais nem afirma calcular seguro, pedágio ou taxas externas.
+
+
+## Produtividade e funil de vendas — quatro novas ferramentas
+
+A rodada implementa **Matriz de Eisenhower**, **Plano de ação 5W2H**, **Pauta de reunião** e **Funil de vendas**. As ferramentas usam os componentes do portal compacto e a ajuda em modal, sem redesenho ou dependências externas. Eisenhower, 5W2H e Pauta geram PDF local; todas oferecem tabela exportável em CSV/Excel. A Pauta soma minutos e calcula início/término estimado; o Funil usa uma mesma coorte, recusa aumentos artificiais entre etapas e diferencia conversão real de taxa não calculável. As ferramentas não criam automaticamente tarefas, eventos no calendário nem enviam dados para serviços externos. Tradução de ferramentas permanece para a última etapa.

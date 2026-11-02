@@ -164,3 +164,13 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Comparação de frete: fator de cubagem por transportadora, preços digitados e ranking de estimativas.
 - [x] Bloqueio de salvamento remoto de nomes/endereços para etiquetas e romaneio.
 - [ ] Validação visual de impressão em escala de 100% em diferentes impressoras.
+
+
+## Continuação — Produtividade
+
+- [x] Matriz de Eisenhower: quatro quadrantes, urgência/importância, tabela e PDF.
+- [x] Plano de ação 5W2H: sete respostas completas, PDF e planilha.
+- [x] Pauta de reunião: duração por assunto, horários previstos, PDF e planilha.
+- [x] Funil de vendas: conversão por etapa e geral, gargalo e tabela com barras.
+- [x] Preservar design compacto, ajuda modal, relacionadas fora do modal e indicador Visto.
+- [ ] Tradução ao final; backend em nuvem depende de hospedagem habilitada.
