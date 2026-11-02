@@ -199,3 +199,10 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] UUID v4 e códigos legíveis em lote: fonte criptográfica, prefixo, exportação TXT/CSV/XLSX e limite de 200.
 - [ ] Verificar execução e performance da busca Regex em dispositivos reais e em padrões extremos.
 - [ ] Próximas ferramentas profissionais: formatação de código e diagramas por texto.
+
+
+## UTM para marketing/e-commerce
+- [x] Montar link UTM com cinco parâmetros, preservando consulta anterior e fragmento.
+- [x] Auditar UTMs duplicados, ausentes e desconhecidos; exportar tabela.
+- [x] Bloquear URL com esquema de execução e credenciais embutidas.
+- [ ] Conferir manualmente campanhas reais antes de anunciar; não há integração com Analytics.

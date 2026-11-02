@@ -242,12 +242,12 @@ export const ferramentas = [
   },
   {
     id: 'F042', slug: 'utm', nome: 'Montador e leitor de UTM', cat: 'marketing',
-    ícone: 'alvo', tarefas: ['criar', 'analisar'], status: 'planejada',
+    ícone: 'alvo', tarefas: ['criar', 'analisar'], status: 'pronta',
     resumo: 'Monta URLs com parâmetros de campanha e lê os parâmetros de uma URL existente.',
     problema: 'Marcar campanhas sem errar o padrão dos parâmetros.',
     entra: 'URL base e os campos de campanha.',
-    processa: 'Codifica e normaliza os valores, avisando sobre maiúsculas e espaços.',
-    sai: 'URL final e tabela de parâmetros.', exporta: ['copiar'], plano: 'gratuito', local: true,
+    processa: 'Normaliza UTMs para minúsculas e underscores, preserva parâmetros não UTM e audita ausências ou duplicatas.',
+    sai: 'URL final e auditoria de cinco parâmetros com avisos e tabela CSV/Excel.', exporta: ['copiar', 'csv', 'xlsx'], plano: 'gratuito', local: true,
     tags: ['utm', 'campanha', 'analytics'], intenções: ['criar link com utm'],
   },
   {

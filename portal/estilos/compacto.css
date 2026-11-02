@@ -353,3 +353,7 @@ body:has(dialog.ajuda-modal[open]) { overflow: hidden; }
 /* Lotes de IDs podem ter até 200 linhas sem alongar a página no celular. */
 #ferramenta[data-slug="uuid"] .tabela-rolagem {max-height:320px;overflow:auto;overscroll-behavior:contain;}
 #ferramenta[data-slug="regex"] .tabela-rolagem {max-height:380px;overflow:auto;overscroll-behavior:contain;}
+
+/* URLs longas no resultado UTM não podem provocar rolagem horizontal. */
+#ferramenta[data-slug="utm"] .resultado,
+#ferramenta[data-slug="utm"] .resultado__linhas li {min-width:0;overflow-wrap:anywhere;word-break:break-word;}
