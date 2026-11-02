@@ -174,3 +174,13 @@ A ferramenta **Etiqueta de expedição** gera até 80 etiquetas genéricas, quat
 ## Produtividade e funil de vendas — quatro novas ferramentas
 
 A rodada implementa **Matriz de Eisenhower**, **Plano de ação 5W2H**, **Pauta de reunião** e **Funil de vendas**. As ferramentas usam os componentes do portal compacto e a ajuda em modal, sem redesenho ou dependências externas. Eisenhower, 5W2H e Pauta geram PDF local; todas oferecem tabela exportável em CSV/Excel. A Pauta soma minutos e calcula início/término estimado; o Funil usa uma mesma coorte, recusa aumentos artificiais entre etapas e diferencia conversão real de taxa não calculável. As ferramentas não criam automaticamente tarefas, eventos no calendário nem enviam dados para serviços externos. Tradução de ferramentas permanece para a última etapa.
+
+
+## Referências profissionais da lista de 50 sites — segurança e acessibilidade
+
+Da lista enviada (Squoosh, regex101, CodeBeautify, VirusTotal, Have I Been Pwned e similares), duas ferramentas planejadas foram implementadas sem replicar código ou marca de terceiros:
+
+- **Gerador de hash** (F036): hashes SHA-1/256/384/512 de texto UTF-8 ou arquivo de até 25 MB, checksum opcional e comparação, usando Web Crypto no navegador. SHA-1 aparece apenas por compatibilidade e recebe alerta de risco. Hash não verifica malware nem consulta VirusTotal. O formulário nunca grava o conteúdo na conta do portal.
+- **Verificador de contraste WCAG 2.2** (F080): comparação AA/AAA para texto normal e grande, prévia de cores e sugestão calculada de texto que passe em AA. Avalia somente duas cores sólidas, sem prometer conformidade total do site.
+
+O portal agora tem 89 ferramentas prontas entre as 208 entradas. Ambas usam o montador de ferramentas e o design compacto comum, modal Como funciona e recomendações distintas no final.

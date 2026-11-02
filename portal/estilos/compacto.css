@@ -313,3 +313,23 @@ body:has(dialog.ajuda-modal[open]) { overflow: hidden; }
 }
 .ferramenta-linha__visto svg { width: 12px; height: 12px; color: var(--ok); }
 .ferramenta-linha[data-visitada="sim"] { border-left: 2px solid var(--ok); }
+
+/* Verificação de contraste e resultado de hash: compactos, legíveis em telas pequenas. */
+#ferramenta .campo[hidden] { display: none !important; }
+#ferramenta .resultado__linhas li b { overflow-wrap: anywhere; word-break: break-word; }
+.contraste-amostra {
+  margin-top: 12px;
+  display: grid;
+  gap: 5px;
+  padding: clamp(16px, 2vw, 22px);
+  min-height: 84px;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  transition: background-color .12s linear, color .12s linear;
+}
+.contraste-amostra[hidden] { display: none !important; }
+.contraste-amostra span { font-size: .74rem; }
+.contraste-amostra strong { font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.3; }
+@media (prefers-reduced-motion: reduce) {
+  .contraste-amostra { transition: none !important; }
+}

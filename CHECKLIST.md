@@ -174,3 +174,13 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Funil de vendas: conversão por etapa e geral, gargalo e tabela com barras.
 - [x] Preservar design compacto, ajuda modal, relacionadas fora do modal e indicador Visto.
 - [ ] Tradução ao final; backend em nuvem depende de hospedagem habilitada.
+
+
+## Inspirações dos 50 sites — rodada acessibilidade/segurança
+- [x] F036 Hash: comparação de checksums, SHA-256 padrão, arquivos locais e não envio à conta.
+- [x] F080 Contraste: WCAG 2.2 AA/AAA, prévia de cores e sugestão de cor acessível.
+- [ ] F038 Regex avançado: usar Worker com interrupção por tempo para evitar travamento.
+- [ ] F076 Imagens: compressão com comparação de qualidade e peso em bytes.
+- [ ] F207 Código: formatação SQL/JS/CSS/HTML com parsers reais e sem executar trechos.
+- [ ] F208 Fluxos Mermaid: renderização SVG/PNG local e validação contra HTML inseguro.
+- [ ] APIs de vazamento e malware só com termos, limites e privacidade verificados.
