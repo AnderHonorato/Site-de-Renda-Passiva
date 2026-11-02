@@ -72,40 +72,46 @@ function páginaDeFerramenta(f, instruções) {
           <p>${escapar(f.resumo)}</p>
         </div>
         <div class="ferramenta-topo__ações">
+          <button class="botão botão--linha ferramenta-topo__ajuda" type="button" data-como-funciona aria-haspopup="dialog" aria-controls="dialogo-como-funciona">${ícone('ajuda')}Como funciona</button>
           <button class="ícone-botão favorito" type="button" data-favorito="${escapar(f.slug)}" aria-pressed="false" aria-label="Salvar nos favoritos">${ícone('marcador')}</button>
         </div>
         ${arteViva(`../../${arteDaCategoria(f.cat)}`, { classe: 'ferramenta-topo__arte', largura: 480, altura: 200, tipo: 'topo' })}
       </header>
 
       <div class="ferramenta-área">
-      <dl class="ficha">
-        <div><dt>Para que serve</dt><dd>${escapar(f.problema)}</dd></div>
-        <div><dt>Você informa</dt><dd>${escapar(f.entra)}</dd></div>
-        <div><dt>Você recebe</dt><dd>${escapar(f.sai)}</dd></div>
-        <div><dt>Onde processa</dt><dd>${f.local ? 'No seu navegador. Nada é enviado.' : 'Exige servidor; o aviso aparece antes do envio.'}</dd></div>
-        <div><dt>Você pode levar</dt><dd>${escapar(exporta)}</dd></div>
-      </dl>
-
-      <div class="ferramenta-corpo">
-        <div class="painel" id="ferramenta" data-slug="${escapar(f.slug)}">
-          <noscript><p>Esta ferramenta precisa de JavaScript para calcular. O processamento continua sendo feito no seu navegador.</p></noscript>
-        </div>
-        <aside class="ferramenta-lado">
-          <div class="painel">
-            <p class="rótulo">Como funciona a conta</p>
-            <p class="pequeno t-1">${escapar(f.processa)}</p>
-            ${unificadas}
+        <div class="ferramenta-corpo">
+          <div class="painel" id="ferramenta" data-slug="${escapar(f.slug)}">
+            <noscript><p>Esta ferramenta precisa de JavaScript para calcular. As instruções e informações continuam disponíveis na página.</p></noscript>
           </div>
-          ${relacionadas ? `<div class="painel"><p class="rótulo b-2">Ferramentas relacionadas</p><div class="relacionadas">${relacionadas}</div></div>` : ''}
-        </aside>
+        </div>
       </div>
 
-      </div>
-
-      <section class="seção prosa" id="como-usar">
-        <h2>Como usar</h2>
-        <div id="instruções">${instrucoesEmHtml(instruções)}</div>
-      </section>
+      <dialog class="diálogo ajuda-modal" id="dialogo-como-funciona" aria-labelledby="titulo-como-funciona" aria-describedby="resumo-como-funciona">
+        <div class="diálogo__topo ajuda-modal__topo">
+          <div><p class="rótulo">Ajuda da ferramenta</p><h2 id="titulo-como-funciona">Como funciona</h2></div>
+          <button class="botão botão--linha ajuda-modal__fechar" type="button" data-fechar-ajuda>${ícone('fechar')}Fechar</button>
+        </div>
+        <div class="diálogo__corpo ajuda-modal__corpo">
+          <p class="ajuda-modal__resumo" id="resumo-como-funciona">${escapar(f.resumo)}</p>
+          <section class="prosa ajuda-modal__instrucoes" id="como-usar" aria-labelledby="titulo-passos">
+            <h3 id="titulo-passos">Passo a passo</h3>
+            <div id="instruções">${instrucoesEmHtml(instruções)}</div>
+          </section>
+          <details class="ajuda-modal__extra">
+            <summary>O que entra, o que sai e onde processa</summary>
+            <dl class="ficha">
+              <div><dt>Para que serve</dt><dd>${escapar(f.problema)}</dd></div>
+              <div><dt>Você informa</dt><dd>${escapar(f.entra)}</dd></div>
+              <div><dt>Você recebe</dt><dd>${escapar(f.sai)}</dd></div>
+              <div><dt>Onde processa</dt><dd>${f.local ? 'No seu navegador. Nada é enviado.' : 'Exige servidor; o aviso aparece antes do envio.'}</dd></div>
+              <div><dt>Você pode levar</dt><dd>${escapar(exporta)}</dd></div>
+            </dl>
+            <p class="pequeno t-2"><strong>Como é calculado:</strong> ${escapar(f.processa)}</p>
+            ${unificadas}
+          </details>
+          ${relacionadas ? '<details class="ajuda-modal__extra"><summary>Ferramentas relacionadas</summary><div class="relacionadas">' + relacionadas + '</div></details>' : ''}
+        </div>
+      </dialog>
       ${f.cat !== 'estudos' ? '<div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>' : ''}
     </div>`;
 

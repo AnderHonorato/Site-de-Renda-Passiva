@@ -65,8 +65,25 @@ function escreverInstruções(instruções = {}) {
   alvo.innerHTML = partes.join('');
 }
 
+function ligarAjuda() {
+  const botão = document.querySelector('[data-como-funciona]');
+  const diálogo = document.getElementById('dialogo-como-funciona');
+  const fechar = diálogo?.querySelector('[data-fechar-ajuda]');
+  if (!botão || !diálogo || !fechar) return;
+  botão.addEventListener('click', () => {
+    if (!diálogo.open) diálogo.showModal();
+  });
+  fechar.addEventListener('click', () => diálogo.close());
+  diálogo.addEventListener('click', (evento) => {
+    if (evento.target === diálogo) diálogo.close();
+  });
+  // O diálogo nativo mantém o foco dentro da ajuda e aceita Escape.
+  diálogo.addEventListener('close', () => botão.focus());
+}
+
 async function iniciar() {
   if (!raiz || !ferramenta) return;
+  ligarAjuda();
   isolarBloco('favorito', ligarFavorito);
   registrarUso(slug);
   // A ferramenta é um bloco à parte: se o módulo dela não carregar ou quebrar ao montar, só a
