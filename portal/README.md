@@ -152,3 +152,8 @@ O catálogo mantém 208 entradas, com 73 ferramentas realmente funcionais. Sem m
 - **Ticket médio e conversão:** indicadores e cenários de aumento relativo de ticket/conversão para um volume informado de visitantes; resultados sem denominador são explicitamente não calculáveis.
 
 Cada ferramenta possui cálculos locais, seção Como usar, validação de entrada por campo e testes Node. A hospedagem do backend permanece bloqueada pelo fim do período gratuito do Railway; as 73 ferramentas rodam diretamente no GitHub Pages sem depender do backend. Tradução integral somente depois do núcleo funcional.
+
+
+## Ficha de cliente — armazenamento 100% local
+
+A ferramenta de vendas **Ficha de cliente** é funcional e trabalha somente com o armazenamento do navegador, com busca tolerante a acentos, cadastro/edição/exclusão confirmada, histórico e observações. Os registros têm IDs locais e datas de criação/alteração. O backup JSON possui versão e validações de tamanho, campos, IDs e integridade; a importação **substitui** o cadastro inteiro somente após confirmação. A planilha XLSX é gerada com valores textuais (não como fórmulas). **Não há sincronização com contas nem API de cadastro**: o botão "Salvar trabalho" e o registro remoto de uso foram desativados especificamente aqui. Isso não altera outras ferramentas. O backup e a planilha **não são criptografados** e contêm dados pessoais legíveis; devem ser protegidos pelo usuário. Limite de 250 fichas e 2 MB por arquivo de restauração. Limpeza de dados do site pode apagar as fichas, portanto oferecemos backup antes de qualquer exclusão definitiva.
