@@ -61,7 +61,12 @@ export default {
   },
   montar(raiz, ferramenta) {
     let clientes = [], bloqueado = false, editando = null, painel = null;
-    try { clientes = validarListaFichas(ler(CHAVE, [])); } catch { bloqueado = true; }
+    try {
+      // Uma falha de JSON não pode ser confundida com cadastro vazio e sobrescrita.
+      const bruto = typeof localStorage === 'undefined' ? null : localStorage.getItem('portal.' + CHAVE);
+      if (bruto !== null) JSON.parse(bruto);
+      clientes = validarListaFichas(ler(CHAVE, []));
+    } catch { bloqueado = true; }
 
     function atualizarLista() {
       if (!painel) return;
@@ -120,7 +125,7 @@ export default {
           const resultado = guardarFicha(clientes, dados, { id: editando });
           persistir(resultado.clientes);
           editando = null;
-          raiz.querySelector('#formulário [type="submit"]').textContent = 'Salvar ficha neste aparelho';
+          raiz.querySelector('#formulário [type="submit"]').innerHTML = ícone('confere') + 'Salvar ficha neste aparelho';
           return {
             valor: resultado.editado ? 'Ficha atualizada' : 'Cliente cadastrado',
             resumo: resultado.cliente.nome + ' foi salvo somente neste aparelho.',
@@ -167,9 +172,14 @@ export default {
         const novo = () => {
           editando = null;
           formulario.reset();
-          formulario.querySelector('[type="submit"]').textContent = 'Salvar ficha neste aparelho';
+          formulario.querySelector('[type="submit"]').innerHTML = ícone('confere') + 'Salvar ficha neste aparelho';
           formulario.querySelector('[name="nome"]').focus();
         };
+        // O botão Limpar do montador também encerra o modo de edição.
+        formulario.addEventListener('reset', () => {
+          editando = null;
+          formulario.querySelector('[type="submit"]').innerHTML = ícone('confere') + 'Salvar ficha neste aparelho';
+        });
         painel.querySelector('#ficha-clientes-busca').addEventListener('input', atualizarLista);
         painel.addEventListener('click', (evento) => {
           const botão = evento.target.closest('button');
@@ -181,7 +191,7 @@ export default {
             if (!ficha) return;
             editando = ficha.id;
             preencherFormulário(formulario, ficha);
-            formulario.querySelector('[type="submit"]').textContent = 'Atualizar ficha neste aparelho';
+            formulario.querySelector('[type="submit"]').innerHTML = ícone('confere') + 'Atualizar ficha neste aparelho';
             formulario.scrollIntoView({ block: 'start' });
             formulario.querySelector('[name="nome"]').focus();
             return;

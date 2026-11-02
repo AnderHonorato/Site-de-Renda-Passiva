@@ -18,6 +18,7 @@ test('ficha desativa salvar na API e registro remoto de uso, sem alterar padrão
   const montador = await readFile(new URL('../scripts/núcleo/montador.js', import.meta.url), 'utf8');
   assert.match(fonte, /permitirSalvarTrabalho:\s*false/);
   assert.match(fonte, /registrarUsoAtivo:\s*false/);
+  assert.match(fonte, /formulario\.addEventListener\('reset'/);
   assert.match(montador, /permitirSalvarTrabalho = true/);
   assert.match(montador, /registrarUsoAtivo = true/);
   assert.match(montador, /if \(permitirSalvarTrabalho\) botões\.push/);
