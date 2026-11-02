@@ -49,9 +49,16 @@ function páginaDeFerramenta(f, instruções) {
     .filter((o) => o.slug !== f.slug && !declaradas.includes(o)
       && (o.cat === f.cat || o.tarefas.some((t) => f.tarefas.includes(t))))
     .sort((a, b) => (a.status === b.status ? 0 : a.status === 'pronta' ? -1 : 1));
+  // Só oferecemos atalhos que já funcionam. Os planejados continuam no catálogo.
   const relacionadas = [...declaradas, ...semelhantes]
+    .filter((o) => o.status === 'pronta')
+    .filter((o, indice, lista) => lista.findIndex((c) => c.slug === o.slug) === indice)
     .slice(0, 5)
-    .map((o) => `<a href="${o.status === 'pronta' ? `../${o.slug}/` : `../../ferramentas.html#${o.slug}`}">${ícone(o.ícone)}${escapar(o.nome)}</a>`)
+    .map((o) => `<a class="relacionadas__item" data-relacionada="${escapar(o.slug)}" data-visitada="nao" href="../${escapar(o.slug)}/">
+       <span class="relacionadas__ícone">${ícone(o.ícone)}</span>
+       <span class="relacionadas__nome">${escapar(o.nome)}</span>
+       <span class="relacionadas__visto" data-visto hidden>${ícone('confere')} Já visualizada</span>
+     </a>`)
     .join('');
 
   const unificadas = f.unifica.length
@@ -84,6 +91,13 @@ function páginaDeFerramenta(f, instruções) {
             <noscript><p>Esta ferramenta precisa de JavaScript para calcular. As instruções e informações continuam disponíveis na página.</p></noscript>
           </div>
         </div>
+        ${relacionadas ? `<section class="relacionadas-faixa" aria-labelledby="titulo-relacionadas">
+          <div class="relacionadas-faixa__topo">
+            <h2 id="titulo-relacionadas">Ferramentas relacionadas</h2>
+            <span class="relacionadas-faixa__nota">✓ Já visualizadas neste aparelho</span>
+          </div>
+          <nav class="relacionadas relacionadas--compactas" aria-label="Outras ferramentas úteis">${relacionadas}</nav>
+        </section>` : ''}
       </div>
 
       <dialog class="diálogo ajuda-modal" id="dialogo-como-funciona" aria-labelledby="titulo-como-funciona" aria-describedby="resumo-como-funciona">
@@ -109,7 +123,6 @@ function páginaDeFerramenta(f, instruções) {
             <p class="pequeno t-2"><strong>Como é calculado:</strong> ${escapar(f.processa)}</p>
             ${unificadas}
           </details>
-          ${relacionadas ? '<details class="ajuda-modal__extra"><summary>Ferramentas relacionadas</summary><div class="relacionadas">' + relacionadas + '</div></details>' : ''}
         </div>
       </dialog>
       ${f.cat !== 'estudos' ? '<div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>' : ''}
