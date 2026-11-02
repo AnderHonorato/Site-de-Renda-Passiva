@@ -165,7 +165,7 @@ export const ferramentas = [
     problema: 'Converter valores sem depender de cotação inventada pelo site.',
     entra: 'Valor, moedas de origem e destino, cotação manual e tarifa fixa opcional.',
     processa: 'Multiplica pela cotação manual informada e desconta a tarifa fixa em moeda de destino.',
-    sai: 'Valor convertido com a cotação e a data usadas.',
+    sai: 'Valor bruto, tarifa e valor líquido usando a cotação manual informada.',
     exporta: ['copiar'], plano: 'gratuito', local: true,
     tags: ['moeda', 'dólar', 'euro', 'câmbio'], intenções: ['converter dólar para real'],
   },
