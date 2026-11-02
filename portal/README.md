@@ -6,16 +6,14 @@ Camada unificada para os seis produtos existentes do repositório. O portal não
 
 - busca instantânea por nome, categoria e descrição;
 - filtros por categoria;
-- 49 ferramentas reais agrupadas em seis áreas, com links diretos para cada página funcional;
+- 49 ferramentas reais agrupadas em seis áreas;
 - histórico local de vistos recentemente;
-- favoritos locais com botão de estrela por ferramenta;
-- alternância entre tema claro e escuro, respeitando o sistema na primeira visita;
 - faixa de avisos rolante;
 - banners rotativos a cada 30 segundos;
 - animações suaves ao rolar com respeito a `prefers-reduced-motion`;
 - modal de boas-vindas na primeira visita;
 - ajuda rápida;
-- atalho `/` para focar a busca e `Esc` para limpar;
+- atalho `/` para focar a busca;
 - dicas flutuantes periódicas;
 - layout responsivo para celular e computador;
 - rotas preparadas para Google, Apple e X sem simular login quando o backend não estiver configurado;
@@ -114,8 +112,3 @@ Para conta, Prisma e sincronização de downloads, publique o portal em um ambie
 5. adicionar editor visual com prévia para recorte de imagem/PDF e confirmação antes de baixar;
 6. ampliar o catálogo sem criar páginas vazias ou ferramentas de fachada;
 7. executar auditoria visual em mobile e desktop antes de integrar ao `main`.
-
-
-## Evolução de novembro de 2026
-
-O catálogo agora abre as páginas individuais das 49 ferramentas, em vez de redirecionar sempre para a lista da categoria. Foram adicionados favoritos por dispositivo, tema claro/escuro e um único tratamento de atalhos de teclado. Essa etapa é 100% estática e não simula login nem histórico de downloads. O registro real de downloads e a sincronização de conta permanecem pendentes de backend e testes.
