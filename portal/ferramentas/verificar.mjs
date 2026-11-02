@@ -8,7 +8,7 @@
  * Uso: node portal/ferramentas/verificar.mjs
  */
 import { readdir, readFile, stat } from 'node:fs/promises';
-import { join, dirname, relative, resolve } from 'node:path';
+import { join, dirname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ferramentas, ferramentasProntas, conferirCatálogo } from '../dados/catálogo.js';
 import { nomesDeÍcone } from '../scripts/núcleo/ícones.js';
@@ -91,6 +91,9 @@ for (const arquivo of [...scripts, ...dados, join(RAIZ, 'ferramentas', 'gerar.mj
 const PRÉVIAS = ['vitrine/vitrine.html'];
 const páginas = await listar(RAIZ, (c) => c.endsWith('.html') && !PRÉVIAS.includes(relative(RAIZ, c).replace(/\\/g, '/')));
 const títulos = new Map();
+const sitemapGerado = await readFile(join(RAIZ, 'sitemap.xml'), 'utf8').catch(() => '');
+const baseSitemap = sitemapGerado.match(/<loc>(https:\/\/[^<]+)<\/loc>/u)?.[1];
+const origemPublica = baseSitemap ? new URL(baseSitemap) : null;
 
 for (const página of páginas) {
   const html = await readFile(página, 'utf8');
@@ -111,7 +114,21 @@ for (const página of páginas) {
   const esperado = relativo.startsWith('en/') ? 'en' : 'pt-BR';
   if (!html.includes(`<html lang="${esperado}"`)) reclamar(`${relativo} deveria declarar <html lang="${esperado}">.`);
   // hreflang recíproco: a página equivalente existe e aponta de volta para esta.
-  const resolverPar = (de, destino) => resolve(dirname(de), destino === './' ? 'index.html' : destino.endsWith('/') ? join(destino, 'index.html') : destino);
+  const resolverPar = (de, destino) => {
+    // Produção e Pages usam hreflang HTTPS absoluto. Só aceitamos a URL base
+    // declarada no sitemap e continuamos conferindo o HTML local correspondente.
+    if (/^https?:\/\//u.test(destino)) {
+      if (!origemPublica) return null;
+      const url = new URL(destino);
+      if (url.origin !== origemPublica.origin || !url.pathname.startsWith(origemPublica.pathname)
+          || url.search || url.hash) return null;
+      const relativo = decodeURI(url.pathname.slice(origemPublica.pathname.length));
+      const arquivo = relativo.endsWith('/') ? join(relativo, 'index.html') : relativo;
+      const local = resolve(RAIZ, arquivo);
+      return local.startsWith(RAIZ + sep) ? local : null;
+    }
+    return resolve(dirname(de), destino === './' ? 'index.html' : destino.endsWith('/') ? join(destino, 'index.html') : destino);
+  };
   for (const [, código, destino] of html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g)) {
     if (código === 'x-default') continue;
     const alvoDoPar = resolverPar(página, destino);
