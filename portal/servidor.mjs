@@ -1,6 +1,6 @@
 import http from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
-import { extname, join, normalize } from 'node:path';
+import { extname, isAbsolute, join, normalize, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const raizRepositorio = fileURLToPath(new URL('../', import.meta.url));
@@ -18,12 +18,14 @@ const tipos = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-
 
 function json(res,status,dados){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'});res.end(JSON.stringify(dados))}
 function caminhoSeguro(url){
-  const pathname = decodeURIComponent(new URL(url,'http://local').pathname);
-  const pedido = pathname==='/' ? '/portal/index.html' : pathname;
-  const limpo = normalize(pedido).replace(/^[/\\]+/, '').replace(/^([.][.][/\\])+/, '');
-  const absoluto = join(raizRepositorio, limpo);
-  if(!absoluto.startsWith(raizRepositorio)) return null;
-  return absoluto;
+  try {
+    const pathname = decodeURIComponent(new URL(url,'http://local').pathname);
+    const pedido = pathname==='/' ? '/portal/index.html' : pathname;
+    const absoluto = join(raizRepositorio,normalize(pedido).replace(/^[/\\]+/,''));
+    const caminhoRelativo = relative(raizRepositorio,absoluto);
+    if(caminhoRelativo==='..'||caminhoRelativo.startsWith('..'+sep)||isAbsolute(caminhoRelativo)) return null;
+    return absoluto;
+  } catch { return null; }
 }
 
 const servidor=http.createServer(async(req,res)=>{

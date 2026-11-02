@@ -8,13 +8,6 @@
   <title>Ferramentas do Ander</title>
   <link rel="stylesheet" href="./estilos.css">
   <script type="module" src="./app.js"></script>
-<style>
-.dica-atalho-portal{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;color:var(--cor-sutil,#786e65);font-size:12px;letter-spacing:.045em;margin:17px 0}
-.dica-atalho-portal kbd{display:inline-flex;justify-content:center;align-items:center;padding:4px 8px;min-width:26px;border:1px solid currentColor;border-radius:8px;color:var(--cor-texto,#5a4d43);background:color-mix(in srgb,var(--cor-fundo,#f8eee3) 70%,transparent);font:600 12px ui-monospace,monospace;box-shadow:0 2px 0 #66513f14}
-.dica-atalho-portal kbd:first-of-type{animation:piscar-atalho 6s ease-in-out infinite}
-@keyframes piscar-atalho{0%,85%,100%{transform:translateY(0)}90%{transform:translateY(-3px)}}
-@media(prefers-reduced-motion:reduce){.dica-atalho-portal kbd{animation:none!important}}
-</style>
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -29,6 +22,7 @@
       <span><strong>Ferramentas</strong><small>por Ander</small></span>
     </a>
     <nav class="topo__acoes" aria-label="Ações principais">
+      <button class="botao botao--fantasma" id="botao-tema" type="button" aria-label="Alternar tema">Tema escuro</button>
       <button class="botao botao--fantasma" id="botao-ajuda" type="button">Ajuda</button>
       <button class="botao" id="botao-conta" type="button">Entrar</button>
     </nav>
@@ -53,6 +47,14 @@
       <button class="banner__seta" id="banner-anterior" type="button" aria-label="Banner anterior">‹</button>
       <div class="banner__conteudo" id="banner-conteudo"></div>
       <button class="banner__seta" id="banner-proximo" type="button" aria-label="Próximo banner">›</button>
+    </section>
+
+    <section class="secao revelar" id="favoritos">
+      <div class="secao__cabecalho">
+        <div><p class="rotulo">Acesso rápido</p><h2>Favoritos</h2></div>
+      </div>
+      <p class="muted" id="favoritos-vazio">Use a estrela nos cartões para guardar suas ferramentas favoritas neste dispositivo.</p>
+      <div class="grade grade--compacta" id="grade-favoritos" hidden></div>
     </section>
 
     <section class="secao revelar" id="recentes" hidden>
@@ -85,7 +87,7 @@
       <h2>Perguntas frequentes</h2>
       <details><summary>Preciso criar conta?</summary><p>Não para usar as ferramentas públicas. A conta serve para sincronizar histórico, preferências e downloads entre aparelhos quando o backend estiver conectado.</p></details>
       <details><summary>Meus arquivos são enviados para algum servidor?</summary><p>As ferramentas atuais foram projetadas para processar no navegador sempre que possível. Cada ferramenta deve informar quando um recurso exigir servidor.</p></details>
-      <details><summary>Onde ficam os downloads?</summary><p>No modo local, o portal registra apenas nome, ferramenta e data no seu navegador. Com conta conectada, o histórico poderá ser sincronizado via banco.</p></details>
+      <details><summary>Onde ficam os downloads?</summary><p>Os arquivos baixados ficam na pasta de downloads do navegador. O histórico de downloads na conta ainda está em desenvolvimento.</p></details>
       <details><summary>Como peço ajuda numa ferramenta?</summary><p>Use o botão Ajuda no topo. O painel explica o fluxo básico e mostra atalhos para as categorias.</p></details>
     </section>
   </main>
@@ -130,23 +132,6 @@
       <p class="muted">Nenhum provedor é simulado. Sem configuração real, o portal informa que a integração ainda não está ativa.</p>
     </form>
   </dialog>
-<script>
-/* Atalho acessível do catálogo; não intercepta edição de formulários. */
-document.addEventListener('keydown', evento => {
-  const alvo = evento.target;
-  if (!(alvo instanceof HTMLElement) || evento.altKey || evento.ctrlKey || evento.metaKey) return;
-  const escrevendo = alvo.isContentEditable || ['INPUT','TEXTAREA','SELECT'].includes(alvo.tagName);
-  const busca = document.getElementById('busca');
-  if (evento.key === '/' && !escrevendo && busca instanceof HTMLInputElement) {
-    evento.preventDefault();
-    busca.focus();
-    busca.select();
-  }
-  if (evento.key === 'Escape' && document.activeElement === busca && busca instanceof HTMLInputElement && busca.value) {
-    busca.value = '';
-    busca.dispatchEvent(new Event('input',{bubbles:true}));
-  }
-});
-</script>
+
 </body>
 </html>
