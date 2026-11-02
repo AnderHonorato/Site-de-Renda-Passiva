@@ -140,3 +140,13 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Casos de teste sobre integridade de backup, dados duplicados, edição, limite, busca e exclusão.
 - [ ] Traduzir ferramentas somente depois do restante do portal, conforme prioridade do proprietário.
 - [ ] Hospedagem do backend em nuvem requer conta ativa, domínio e backup persistente (Railway expirado).
+
+
+## Rodada de estoque e logística — 02/11/2026
+- [x] Ponto de reposição: prazo, consumo, segurança, estoque atual e recebimentos no prazo.
+- [x] Giro de estoque: CMV/estoque médio e dias de permanência, com casos sem vendas ou sem estoque.
+- [x] Curva ABC: ranking por valor ou quantidade, estabilidade e exportação de tabela CSV/Excel.
+- [x] Cubagem: até 80 tipos, dimensões em cm, quantidade e m³ somados em tabela.
+- [x] Peso volumétrico: cubagem, quantidade, peso real e fator informado pela transportadora.
+- [x] Layout compacto, relacionadas abaixo e selo Visto preservados pelo montador comum.
+- [ ] Tradução dos módulos somente após concluir o site; hospedagem de APIs continua dependendo de plano ativo.

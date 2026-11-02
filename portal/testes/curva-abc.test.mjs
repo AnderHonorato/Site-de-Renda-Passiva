@@ -9,10 +9,10 @@ test('classifica itens com contribuição acumulada e desempate estável',()=>{
  assert.deepEqual(r.classes,{A:1,B:1,C:1});
  assert.equal(r.itens[2].acumulado,100);
 });
-test('o maior item que sozinho cruza 80% fica em A',()=>{
+test('o maior item que sozinho cruza 80% fica em A e a cauda após 95% é C',()=>{
  const r=classificarCurvaABC([{nome:'Líder',valor:950},{nome:'Outro',valor:50}]);
  assert.equal(r.itens[0].classe,'A');
- assert.equal(r.itens[1].classe,'B');
+ assert.equal(r.itens[1].classe,'C');
 });
 test('a tabela inclui classe e permite CSV/Excel sem dependências extras',()=>{
  const r=calcularCurvaABCNaTela(base);
