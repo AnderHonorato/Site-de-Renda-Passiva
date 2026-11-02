@@ -75,3 +75,4 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [ ] Validar indexação real no Google Search Console; tradução integral e teste físico continuam pendentes.
 
 - [x] Pipeline de publicação ampliado para executar toda a suíte de testes e verificação estrutural antes de publicar; qualquer falha bloqueia o deploy.
+- [x] Teste de recuperação do servidor corrigido para aceitar o separador nativo de caminhos no Windows e no Linux.

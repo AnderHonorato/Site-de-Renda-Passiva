@@ -4,7 +4,7 @@ import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { join, resolve, sep } from 'node:path';
 
 const raiz = resolve(import.meta.dirname, '..');
 const esperar = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -59,7 +59,7 @@ test('no-ar recupera API e site juntos e encerra seus processos', { timeout: 60_
     if (processo.exitCode === null && processo.connected) processo.send({ tipo: 'encerrar' });
     await aguardar(() => processo.exitCode !== null, 'limpeza do processo de teste falhou');
     // A pasta foi criada pelo próprio teste e fica exclusivamente dentro do temporário.
-    assert.ok(resolve(pasta).startsWith(resolve(tmpdir()) + '\\'));
+    assert.ok(resolve(pasta).startsWith(resolve(tmpdir()) + sep));
     await rm(pasta, { recursive: true, force: true });
   }
 });
