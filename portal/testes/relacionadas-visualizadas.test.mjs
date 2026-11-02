@@ -11,15 +11,22 @@ test('recomendações ficam fora do modal em todas as páginas com alternativas 
   for (const f of ferramentasProntas) {
     const html = await lerArquivo('../f/' + f.slug + '/index.html');
     const modal = html.indexOf('<dialog class="diálogo ajuda-modal"');
+    const modalFechado = html.indexOf('</dialog>', modal);
+    const anuncio = html.indexOf('data-anuncio-posicao="resultado"', modalFechado);
+    const formulario = html.indexOf('<div class="ferramenta-área">');
+    const corpoFechado = html.indexOf('</div>', html.indexOf('</div>', html.indexOf('id="ferramenta"')) + 1);
     const fora = html.indexOf('<section class="relacionadas-faixa"');
     assert.ok(modal > 0, f.slug);
-    assert.ok(!html.slice(modal, html.indexOf('</dialog>', modal)).includes('Ferramentas relacionadas'), f.slug);
+    assert.ok(!html.slice(modal, modalFechado).includes('Ferramentas relacionadas'), f.slug);
     if (fora !== -1) {
       comRecomendacoes++;
-      assert.ok(fora < modal, f.slug);
-      assert.match(html.slice(fora, modal), /class="relacionadas relacionadas--compactas"/);
-      assert.match(html.slice(fora, modal), /data-visto hidden/);
-      for (const link of html.slice(fora, modal).matchAll(/data-relacionada="([^"]+)"[^>]*href="\.\.\/([^/]+)\/"/g)) {
+      // A faixa é irmã de .ferramenta-área; não participa da ordem flex do formulário.
+      assert.ok(fora > formulario && fora > corpoFechado && fora > modalFechado, f.slug);
+      if (anuncio !== -1) assert.ok(fora > anuncio, f.slug);
+      assert.match(html.slice(fora), /class="relacionadas relacionadas--compactas"/);
+      assert.match(html.slice(fora), /data-visto hidden/);
+      assert.match(html.slice(fora), /EXPLORE TAMBÉM/);
+      for (const link of html.slice(fora).matchAll(/data-relacionada="([^"]+)"[^>]*href="\.\.\/([^/]+)\/"/g)) {
         assert.equal(link[1], link[2], 'link errado ' + f.slug);
         assert.ok(ferramentasProntas.some((t) => t.slug === link[1]), 'link não pronto ' + link[1]);
       }
@@ -34,6 +41,9 @@ test('faixa no celular permite deslizar horizontalmente sem alongar a tela', asy
   assert.match(css, /\.relacionadas--compactas \.relacionadas__item\[data-visitada="sim"\]/);
   assert.match(css, /overflow-x: auto/);
   assert.match(css, /scroll-snap-type: x proximity/);
+  assert.match(css, /background: var\(--descoberta-fundo\)/);
+  assert.match(css, /--descoberta-fundo: var\(--rodapé-fundo\)/);
+  assert.match(css, /\.relacionadas--compactas \.relacionadas__item\[data-visitada="sim"\]/);
   assert.match(css, /@media \(max-width: 767px\)/);
 });
 

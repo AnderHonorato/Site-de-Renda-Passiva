@@ -91,13 +91,6 @@ function páginaDeFerramenta(f, instruções) {
             <noscript><p>Esta ferramenta precisa de JavaScript para calcular. As instruções e informações continuam disponíveis na página.</p></noscript>
           </div>
         </div>
-        ${relacionadas ? `<section class="relacionadas-faixa" aria-labelledby="titulo-relacionadas">
-          <div class="relacionadas-faixa__topo">
-            <h2 id="titulo-relacionadas">Ferramentas relacionadas</h2>
-            <span class="relacionadas-faixa__nota">✓ Já visualizadas neste aparelho</span>
-          </div>
-          <nav class="relacionadas relacionadas--compactas" aria-label="Outras ferramentas úteis">${relacionadas}</nav>
-        </section>` : ''}
       </div>
 
       <dialog class="diálogo ajuda-modal" id="dialogo-como-funciona" aria-labelledby="titulo-como-funciona" aria-describedby="resumo-como-funciona">
@@ -126,6 +119,17 @@ function páginaDeFerramenta(f, instruções) {
         </div>
       </dialog>
       ${f.cat !== 'estudos' ? '<div data-anuncio-posicao="resultado" class="publicidade-vazia"></div>' : ''}
+      ${relacionadas ? `<section class="relacionadas-faixa" aria-labelledby="titulo-relacionadas">
+        <div class="relacionadas-faixa__topo">
+          <div class="relacionadas-faixa__títulos">
+            <span class="relacionadas-faixa__etiqueta">EXPLORE TAMBÉM</span>
+            <h2 id="titulo-relacionadas">Ferramentas relacionadas</h2>
+            <p>Outras ferramentas úteis para a sua próxima tarefa.</p>
+          </div>
+          <span class="relacionadas-faixa__nota">${ícone('confere')} As que você já abriu ficam marcadas</span>
+        </div>
+        <nav class="relacionadas relacionadas--compactas" aria-label="Explorar outras ferramentas úteis">${relacionadas}</nav>
+      </section>` : ''}
     </div>`;
 
   return montarPágina({
