@@ -9,10 +9,10 @@ export function validarOpcoes({qualidade,largura,formato},dimensoes){
  if(!Number.isInteger(dimensoes.largura)||!Number.isInteger(dimensoes.altura)||
  dimensoes.largura<1||dimensoes.altura<1||dimensoes.largura*dimensoes.altura>LIMITES.pixels)
  throw new ErroDeEntrada('Imagem acima de 24 megapixels ou dimensões inválidas.','arquivo');
- const largura=w===0?dimensoes.largura:Math.min(w,dimensoes.largura);
- const altura=Math.max(1,Math.round(dimensoes.altura*largura/dimensoes.largura));
- if(largura>LIMITES.lado||altura>LIMITES.lado)throw new ErroDeEntrada('Imagem excede 8192 pixels de lado. Reduza a largura.','largura');
- return {qualidade:q/100,largura,altura,tipo:formato==='jpeg'?'image/jpeg':'image/webp',extensao:formato==='jpeg'?'jpg':'webp'};
+ const larguraFinal=w===0?dimensoes.largura:Math.min(w,dimensoes.largura);
+ const altura=Math.max(1,Math.round(dimensoes.altura*larguraFinal/dimensoes.largura));
+ if(larguraFinal>LIMITES.lado||altura>LIMITES.lado)throw new ErroDeEntrada('Imagem excede 8192 pixels de lado. Reduza a largura.','largura');
+ return {qualidade:q/100,largura:larguraFinal,altura,tipo:formato==='jpeg'?'image/jpeg':'image/webp',extensao:formato==='jpeg'?'jpg':'webp'};
 }
 export function compararTamanhos(original,final){
  if(!Number.isFinite(original)||original<=0||!Number.isFinite(final)||final<=0)throw new Error('Tamanhos inválidos.');
