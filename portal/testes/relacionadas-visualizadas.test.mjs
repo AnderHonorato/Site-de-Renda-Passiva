@@ -72,3 +72,13 @@ test('página registra abertura e mostra selo de visitada ordenando novas primei
   assert.match(js, /contêiner\.replaceChildren\(\.\.\.cartões\)/);
   assert.match(js, /aria-label/);
 });
+
+test('catálogo também distingue as ferramentas vistas sem ocupar outro card', async () => {
+  const lista = await lerArquivo('../scripts/núcleo/lista.js');
+  const css = await lerArquivo('../estilos/compacto.css');
+  assert.match(lista, /const visualizadas = new Set\(lerVisualizadas\(\)\)/);
+  assert.match(lista, /visualizada: visualizadas\.has\(f\.slug\)/);
+  assert.match(lista, /ferramenta-linha__visto/);
+  assert.match(css, /\.ferramenta-linha__visto/);
+  assert.match(css, /\.ferramenta-linha\[data-visitada="sim"\]/);
+});

@@ -167,3 +167,13 @@ body:has(dialog.ajuda-modal[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .relacionadas--compactas .relacionadas__item { transition: none; }
 }
+
+/* "Visto" também nas listas do catálogo, com selo mínimo para não aumentar os cards. */
+.ferramenta-linha__visto {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 6px; border-radius: 999px;
+  background: var(--ok-fraca); color: var(--ok);
+  font-size: .65rem; font-weight: 600; line-height: 1.1; letter-spacing: 0;
+}
+.ferramenta-linha__visto svg { width: 12px; height: 12px; color: var(--ok); }
+.ferramenta-linha[data-visitada="sim"] { border-left: 2px solid var(--ok); }
