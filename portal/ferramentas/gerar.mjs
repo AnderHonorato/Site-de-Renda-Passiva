@@ -163,6 +163,22 @@ function íconeDoSite() {
 `;
 }
 
+function robots(base = basePublica()) {
+  if (!base) return 'User-agent: *\nDisallow: /\n';
+  const prefixo = new URL(base).pathname;
+  const privados = [
+    'admin/', 'en/admin/', 'api/', 'conta/', 'en/conta/',
+    'perfil.html', 'en/perfil.html', 'salvos.html', 'en/salvos.html',
+  ];
+  return [
+    'User-agent: *',
+    'Allow: ' + prefixo,
+    ...privados.map((caminho) => 'Disallow: ' + prefixo + caminho),
+    'Sitemap: ' + base + 'sitemap.xml',
+    '',
+  ].join('\n');
+}
+
 function sitemap(base = basePublica()) {
   if (!base) return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>\n';
   const páginasDoIdioma = ['', 'ferramentas.html', 'ajuda.html', 'privacidade.html', 'termos.html'];
@@ -254,7 +270,7 @@ async function principal() {
     ['vitrine/vitrine-números.js', númerosDaVitrine()],
     ['sitemap.xml', sitemap()],
     ['dados/novidades.json', `${JSON.stringify(feed)}\n`],
-    ['robots.txt', basePublica() ? `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /en/admin/\nDisallow: /api/\nDisallow: /conta/\nDisallow: /en/conta/\nDisallow: /perfil.html\nDisallow: /en/perfil.html\nDisallow: /salvos.html\nDisallow: /en/salvos.html\nSitemap: ${basePublica()}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n'],
+    ['robots.txt', robots()],
     ...ferramentasGeradas,
   ];
 

@@ -110,3 +110,10 @@ O cabeçalho, sessão, chat, busca e avisos são inicializados em blocos indepen
 O gerador inclui instruções, exemplos, limites e perguntas reais no HTML das 65 ferramentas. Títulos, descrições, Open Graph e dados estruturados descrevem cada ferramenta. Canonical, hreflang absoluto e sitemap exigem um domínio HTTPS real em `URL_PUBLICA` ou `PORTAL_URL_SITE`; na prévia local o sitemap fica vazio e o robots impede indexação. `npm run gerar` lê `.env` quando existir.
 
 O roteiro para Search Console, conteúdo e campanhas está em [busca e publicidade](../documentação/busca-e-publicidade-2026-10-07.md). A preparação técnica não representa indexação confirmada, aprovação de anúncios ou campanha paga ativa.
+
+
+## Continuação — SEO da publicação pública no GitHub Pages
+
+A prévia estática publica as ferramentas locais sem PC ligado. O workflow agora gera sitemap e URLs canônicas HTTPS com o caminho completo da subpasta de publicação. A preparação verifica as páginas do sitemap e marca login, conta, administração, erros e outras páginas que dependem da API como noindex, mantendo visual e scripts.
+
+A indexação não é garantida. Ainda é preciso validar cobertura no Search Console, implementar a hospedagem da API para login/chat, e configurar AdSense com consentimento. Arquivos robots.txt em subpastas do GitHub Pages não controlam o domínio raiz; as páginas privadas são protegidas de indexação por metatags HTML.
