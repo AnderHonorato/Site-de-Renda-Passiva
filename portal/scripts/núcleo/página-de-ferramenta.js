@@ -6,7 +6,7 @@
  * do que o próprio módulo declara — assim a documentação nunca descola do código.
  */
 import { ferramentaPorSlug } from '../../dados/catálogo.js';
-import { registrarUso, registrarVisualizacao, lerVisualizadas, éFavorito, alternarFavorito } from './preferências.js';
+import { registrarVisualizacao, lerVisualizadas, éFavorito, alternarFavorito } from './preferências.js';
 import { escapar } from './texto.js';
 import { avisar } from './interface.js';
 import { isolarBloco, carregarBloco } from './isolar-bloco.js';
@@ -107,7 +107,8 @@ async function iniciar() {
   ligarAjuda();
   isolarBloco('favorito', ligarFavorito);
   registrarVisualizacao(slug);
-  registrarUso(slug);
+  // Abrir a página registra uma visita, não uma execução concluída.
+  // O montador registra o uso somente quando a ferramenta entrega um resultado.
   sinalizarVisualizadas();
   // Ao voltar pelo navegador (bfcache), atualiza a marca das páginas visitadas.
   window.addEventListener('pageshow', sinalizarVisualizadas);
