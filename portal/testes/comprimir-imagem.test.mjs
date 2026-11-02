@@ -19,7 +19,7 @@ test('bloqueia valores inválidos e imagens gigantes',()=>{
 test('compara tamanhos inclusive quando a saída cresce',()=>{
  assert.equal(compararTamanhos(1000,700).economia,300);
  assert.equal(compararTamanhos(1000,1200).menor,false);
- assert.equal(compararTamanhos(1000,1200).percentual,-20);
+ assert.ok(Math.abs(compararTamanhos(1000,1200).percentual+20)<1e-10);
  assert.throws(()=>compararTamanhos(0,2));
 });
 test('rejeita arquivo ausente, grande e não imagem antes de decodificar',async()=>{
