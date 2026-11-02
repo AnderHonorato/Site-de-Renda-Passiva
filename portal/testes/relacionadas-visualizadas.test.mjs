@@ -82,3 +82,11 @@ test('catálogo também distingue as ferramentas vistas sem ocupar outro card', 
   assert.match(css, /\.ferramenta-linha__visto/);
   assert.match(css, /\.ferramenta-linha\[data-visitada="sim"\]/);
 });
+
+test('voltar pelo histórico atualiza selos sem exigir recarregar a página', async () => {
+  const pagina = await lerArquivo('../scripts/núcleo/página-de-ferramenta.js');
+  const lista = await lerArquivo('../scripts/núcleo/lista.js');
+  assert.match(pagina, /window\.addEventListener\('pageshow', sinalizarVisualizadas\)/);
+  assert.match(lista, /window\.addEventListener\('pageshow', \(\) => atualizarMarcasVisualizadas\(contêiner\)\)/);
+  assert.match(lista, /link\.append\(novo\)/);
+});

@@ -109,6 +109,8 @@ async function iniciar() {
   registrarVisualizacao(slug);
   registrarUso(slug);
   sinalizarVisualizadas();
+  // Ao voltar pelo navegador (bfcache), atualiza a marca das páginas visitadas.
+  window.addEventListener('pageshow', sinalizarVisualizadas);
   // A ferramenta é um bloco à parte: se o módulo dela não carregar ou quebrar ao montar, só a
   // área dela mostra a mensagem (com "Tentar de novo"); o cabeçalho e o resto da página seguem.
   await isolarBloco('ferramenta', async (tentativa) => {

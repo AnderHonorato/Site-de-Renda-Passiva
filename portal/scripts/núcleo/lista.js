@@ -94,6 +94,26 @@ export function desenharLista(contêiner, lista, { base = raizDoSite, vazio = t(
     .then(({ iniciarPublicidade }) => iniciarPublicidade()).catch(() => {});
 }
 
+/** Atualiza os selos quando alguém volta do histórico do navegador, sem perder filtros. */
+export function atualizarMarcasVisualizadas(contêiner) {
+  const visualizadas = new Set(lerVisualizadas());
+  for (const linha of contêiner.querySelectorAll('.ferramenta-linha[data-status="pronta"]')) {
+    const visto = visualizadas.has(linha.dataset.slug);
+    linha.dataset.visitada = visto ? 'sim' : 'nao';
+    const link = linha.querySelector('a.ferramenta-linha__alvo');
+    if (!link) continue;
+    const selo = link.querySelector('.ferramenta-linha__visto');
+    if (visto && !selo) {
+      const novo = document.createElement('span');
+      novo.className = 'ferramenta-linha__visto';
+      novo.innerHTML = ícone('confere') + ' Visto';
+      link.append(novo);
+    } else if (!visto && selo) {
+      selo.remove();
+    }
+  }
+}
+
 /**
  * Liga os botões de favorito e as fichas das planejadas. Chamar uma vez por contêiner.
  * @param {HTMLElement} contêiner
@@ -101,6 +121,9 @@ export function desenharLista(contêiner, lista, { base = raizDoSite, vazio = t(
  * @param {() => void} [aoMudar] chamado depois de alternar um favorito
  */
 export function ligarLista(contêiner, catálogo, aoMudar) {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('pageshow', () => atualizarMarcasVisualizadas(contêiner));
+  }
   contêiner.addEventListener('click', (evento) => {
     const alvo = evento.target instanceof Element ? evento.target : null;
     if (!alvo) return;
