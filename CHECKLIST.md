@@ -110,3 +110,22 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [ ] Ativar API na nuvem: Railway exige assinatura após encerramento do teste; sem contratação automática.
 
 - [ ] Traduzir somente após concluir as funcionalidades, conforme decisão do proprietário.
+
+
+## Continuação — 02/11/2026 — ferramentas de vendas
+
+- [x] Pedido de venda: subtotal, desconto, frete, total, PDF A4 e planilha Excel; sem confundir com nota fiscal.
+
+- [x] Follow-up: modelos locais, cinco objetivos, três tons e cópia sem envio automático.
+
+- [x] Meta de faturamento: metas diária, semanal útil e por vendedor; estimativa de vendas e prazo esgotado.
+
+- [x] Ticket médio e conversão: simulações relativas, limites de conversão e casos sem denominadores.
+
+- [x] Mantidos módulos, marca, estilos, gerador e 208 itens do catálogo; 73 ferramentas prontas.
+
+- [ ] Ficha de cliente com dados locais e exportação segura (próxima etapa separada).
+
+- [ ] Backend persistente em nuvem e recuperação de senha por e-mail seguem pendentes; Railway pede plano.
+
+- [ ] Tradução completa somente depois das funcionalidades, conforme decisão do proprietário.

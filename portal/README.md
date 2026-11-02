@@ -137,3 +137,18 @@ O comando de nuvem valida ambiente/HTTPS/volume e executa API no loopback, com s
 ## Nova rodada: quatro ferramentas completas (antes da tradução)
 
 O catálogo agora oferece Fluxo de caixa (saldo por data de corte, projeção e exportação PDF/CSV/XLSX), Conversor de moedas com cotação **manual**, ROI/ROAS/CAC/LTV com hipóteses explícitas, e Rateio de custos proporcional com conciliação dos centavos e exportação PDF/CSV/XLSX. Cada ferramenta mantém o montador comum, visual, cálculo local, validação por campo, seção Como usar e testes Node. As quatro passaram da categoria planejada para pronta; nenhum dado bancário nem cotação ao vivo é consultado automaticamente. A implementação evita adicionar dependências externas, telas duplicadas ou processamento remoto.
+
+
+## Nova rodada: operações comerciais — quatro ferramentas prontas
+
+O catálogo mantém 208 entradas, com 73 ferramentas realmente funcionais. Sem mudar a identidade visual, foram entregues:
+
+- **Pedido de venda:** linhas de itens, quantidade, preço unitário, desconto, frete, número, cliente e condições; PDF A4 e XLSX locais. Não emite nota fiscal ou registra pagamento.
+
+- **Mensagem de follow-up:** cinco objetivos e três tons para mensagens editáveis; não dispara SMS, e-mail ou WhatsApp automaticamente.
+
+- **Meta de faturamento:** valor que falta para o mês, metas por dia útil, até cinco dias úteis e vendedor, com vendas estimadas pelo ticket e tratamento de prazo esgotado.
+
+- **Ticket médio e conversão:** indicadores e cenários de aumento relativo de ticket/conversão para um volume informado de visitantes; resultados sem denominador são explicitamente não calculáveis.
+
+Cada ferramenta possui cálculos locais, seção Como usar, validação de entrada por campo e testes Node. A hospedagem do backend permanece bloqueada pelo fim do período gratuito do Railway; as 73 ferramentas rodam diretamente no GitHub Pages sem depender do backend. Tradução integral somente depois do núcleo funcional.
