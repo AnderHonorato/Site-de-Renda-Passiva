@@ -1,0 +1,39 @@
+{
+  "slug": "peso-volumetrico",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Peso volumétrico",
+    "en": "Dimensional weight"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o peso cubado de um volume e compara com o peso real para o frete.",
+    "en": "Calculates a package's dimensional weight and compares it with actual weight for shipping."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular peso cubado do frete"
+    ],
+    "en": [
+      "calculate dimensional weight for shipping"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "peso volumétrico",
+      "peso cubado",
+      "frete"
+    ],
+    "en": [
+      "dimensional weight",
+      "volumetric weight",
+      "shipping"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

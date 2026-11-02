@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/entrar">
+  <meta name="af-acesso" content="publico">
+  <title data-texto="entrar.titulo_pagina"></title>
+  <meta name="description" data-texto-content="entrar.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/entrar/entrar.css">
+  <script type="module" src="/estatico/paginas/entrar/entrar.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo entrar">
+    <div class="entrar__cartao superficie">
+      <div class="entrar__marca">
+        <span class="entrar__monograma" aria-hidden="true" data-texto="compartilhado.marca.monograma"></span>
+      </div>
+
+      <div class="abas entrar__abas" role="tablist" data-texto-aria-label="entrar.abas_rotulo">
+        <button type="button" class="abas__aba" role="tab" id="entrar-aba-entrar" aria-controls="entrar-painel-entrar" aria-selected="true" data-aba="entrar" data-texto="entrar.abas.entrar"></button>
+        <button type="button" class="abas__aba" role="tab" id="entrar-aba-criar" aria-controls="entrar-painel-criar" aria-selected="false" tabindex="-1" data-aba="criar" data-texto="entrar.abas.criar"></button>
+      </div>
+
+      <div class="abas__painel entrar__painel" id="entrar-painel-entrar" role="tabpanel" aria-labelledby="entrar-aba-entrar">
+        <p class="texto-2 entrar__legenda" data-texto="entrar.formulario_entrar.legenda"></p>
+
+        <p class="entrar__erro-geral" id="entrar-erro-entrar-geral" role="alert" hidden></p>
+
+        <form class="entrar__formulario" data-formulario="entrar" novalidate>
+          <label class="campo" for="entrar-campo-email">
+            <span class="campo__rotulo" data-texto="entrar.campos.email"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="email" name="email" id="entrar-campo-email" autocomplete="email" required>
+            </span>
+            <span class="campo__erro" id="entrar-erro-email"></span>
+          </label>
+
+          <label class="campo" for="entrar-campo-senha">
+            <span class="entrar__rotulo-linha">
+              <span class="campo__rotulo" data-texto="entrar.campos.senha"></span>
+              <a class="entrar__esqueci" href="/recuperar-senha" data-texto="entrar.formulario_entrar.esqueci"></a>
+            </span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="password" name="senha" id="entrar-campo-senha" autocomplete="current-password" required>
+            </span>
+            <span class="campo__erro" id="entrar-erro-senha"></span>
+          </label>
+
+          <div class="entrar__acoes">
+            <button type="submit" class="botao botao--primario botao--largo" data-texto="entrar.formulario_entrar.enviar"></button>
+          </div>
+        </form>
+      </div>
+
+      <div class="abas__painel entrar__painel" id="entrar-painel-criar" role="tabpanel" aria-labelledby="entrar-aba-criar" hidden>
+        <p class="texto-2 entrar__legenda" data-texto="entrar.formulario_criar.legenda"></p>
+
+        <p class="entrar__erro-geral" id="entrar-erro-criar-geral" role="alert" hidden></p>
+
+        <form class="entrar__formulario" data-formulario="criar" novalidate>
+          <label class="campo" for="criar-campo-nome">
+            <span class="campo__rotulo" data-texto="entrar.campos.nome"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="text" name="nome" id="criar-campo-nome" autocomplete="name" maxlength="80" required>
+            </span>
+            <span class="campo__erro" id="criar-erro-nome"></span>
+          </label>
+
+          <label class="campo" for="criar-campo-email">
+            <span class="campo__rotulo" data-texto="entrar.campos.email"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="email" name="email" id="criar-campo-email" autocomplete="email" maxlength="254" required>
+            </span>
+            <span class="campo__erro" id="criar-erro-email"></span>
+          </label>
+
+          <label class="campo" for="criar-campo-senha">
+            <span class="campo__rotulo" data-texto="entrar.campos.senha"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="password" name="senha" id="criar-campo-senha" autocomplete="new-password" minlength="10" maxlength="200" required>
+            </span>
+            <span class="campo__ajuda" data-texto="entrar.campos.senha_ajuda"></span>
+            <span class="campo__erro" id="criar-erro-senha"></span>
+          </label>
+
+          <label class="marcador" for="criar-campo-termos">
+            <input type="checkbox" name="aceitou_termos" id="criar-campo-termos" required>
+            <span class="entrar__termos-texto">
+              <span data-texto="entrar.formulario_criar.termos_antes"></span>
+              <a href="/termos" data-texto="entrar.formulario_criar.termos_link"></a>
+              <span data-texto="entrar.formulario_criar.termos_meio"></span>
+              <a href="/privacidade" data-texto="entrar.formulario_criar.termos_privacidade_link"></a>
+              <span data-texto="entrar.formulario_criar.termos_depois"></span>
+            </span>
+          </label>
+          <span class="campo__erro entrar__erro-termos" id="criar-erro-termos"></span>
+
+          <div class="entrar__acoes">
+            <button type="submit" class="botao botao--primario botao--largo" data-texto="entrar.formulario_criar.enviar"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

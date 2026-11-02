@@ -1,0 +1,39 @@
+{
+  "slug": "hash",
+  "estado": "planejada",
+  "categoria": "seguranca",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Gerador de hash",
+    "en": "Hash generator"
+  },
+  "descricao": {
+    "pt-BR": "SHA-1, SHA-256, SHA-384 e SHA-512 de texto ou arquivo, para conferir integridade.",
+    "en": "SHA-1, SHA-256, SHA-384, and SHA-512 of text or a file, to check integrity."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "conferir hash do arquivo"
+    ],
+    "en": [
+      "check a file's hash"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "hash",
+      "sha256",
+      "integridade"
+    ],
+    "en": [
+      "hash",
+      "sha256",
+      "integrity check"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

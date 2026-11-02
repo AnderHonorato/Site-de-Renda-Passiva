@@ -1,0 +1,66 @@
+/* termos.css — texto legal em colunas curtas, com índice de âncoras. */
+
+.pagina-legal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-7);
+  max-width: 68ch;
+  padding-block: var(--espaco-6) var(--espaco-9);
+  margin-inline: auto;
+}
+
+.pagina-legal__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.pagina-legal__intro {
+  margin: 0;
+  font-size: 17px;
+}
+
+.pagina-legal__indice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2) var(--espaco-4);
+  padding: var(--espaco-4);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-controle);
+  background: var(--cor-recuo);
+  font-size: 14px;
+}
+
+.pagina-legal__secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  padding-top: var(--espaco-5);
+  border-top: 1px solid var(--cor-linha);
+  scroll-margin-top: var(--espaco-6);
+}
+
+.pagina-legal__secao > p {
+  margin: 0;
+}
+
+.pagina-legal__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin: 0;
+  padding-left: var(--espaco-5);
+  font-size: 15px;
+  color: var(--cor-texto-2);
+}
+
+.pagina-legal__link {
+  color: var(--cor-destaque);
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .pagina-legal {
+    padding-block: var(--espaco-5) var(--espaco-7);
+  }
+}

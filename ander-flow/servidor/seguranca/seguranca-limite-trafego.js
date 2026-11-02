@@ -1,0 +1,236 @@
+// seguranca-limite-trafego.js — limitador de tráfego progressivo (§9.2 dos contratos).
+// Contadores por janela fixa em memória; bloqueio persistido em `limites_trafego` para
+// sobreviver a reinícios. Progressão de bloqueio por reincidência: 1 → 5 → 15 → 60 → 360 →
+// 1440 min (6ª reincidência em diante). Reincidência zera após 24 h sem infração.
+import { createHash } from 'node:crypto';
+import { criarErro } from '../servidor-erros.js';
+
+const DURACOES_BLOQUEIO_MIN = [1, 5, 15, 60, 360, 1440];
+const JANELA_REINCIDENCIA_MS = 24 * 60 * 60 * 1000;
+const MAXIMO_CHAVES_EM_MEMORIA = 50000;
+const INTERVALO_LIMPEZA_MS = 10 * 60 * 1000;
+const RETENCAO_OCIOSA_MS = 24 * 60 * 60 * 1000;
+
+const REGEX_EMAIL = /[^\s|:]+@[^\s|:]+/g;
+const REGEX_IPV4 = /\b(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\b/g;
+
+function hashCurto(texto) {
+  return createHash('sha256').update(texto).digest('hex').slice(0, 8);
+}
+
+/** Mascara e-mails (hash curto) e último octeto de IPv4, para uso em log. */
+export function resumirChave(chave) {
+  const texto = String(chave);
+  const semEmail = texto.replace(REGEX_EMAIL, (email) => `email:${hashCurto(email.toLowerCase())}`);
+  return semEmail.replace(REGEX_IPV4, (_m, a, b, c) => `${a}.${b}.${c}.xxx`);
+}
+
+/** req.ip normalizado (IPv4 mapeado em IPv6 → IPv4). */
+export function chaveIp(req) {
+  const ip = req?.ip ?? '';
+  return ip.startsWith('::ffff:') ? ip.slice(7) : ip;
+}
+
+function duracaoBloqueioMin(reincidencias) {
+  const indice = Math.min(reincidencias, DURACOES_BLOQUEIO_MIN.length) - 1;
+  return DURACOES_BLOQUEIO_MIN[Math.max(indice, 0)];
+}
+
+export function criarLimitador({ banco, regras, agora = () => Date.now(), registrarLog = () => {} }) {
+  const memoria = new Map();
+
+  const consultaBloqueio = banco.prepare(
+    'SELECT reincidencias, bloqueado_ate, ultima_infracao_em FROM limites_trafego WHERE grupo = ? AND chave = ?',
+  );
+  const upsertBloqueio = banco.prepare(`
+    INSERT INTO limites_trafego (grupo, chave, reincidencias, bloqueado_ate, ultima_infracao_em)
+    VALUES (@grupo, @chave, @reincidencias, @bloqueado_ate, @ultima_infracao_em)
+    ON CONFLICT (grupo, chave) DO UPDATE SET
+      reincidencias = excluded.reincidencias,
+      bloqueado_ate = excluded.bloqueado_ate,
+      ultima_infracao_em = excluded.ultima_infracao_em
+  `);
+  const apagaBloqueio = banco.prepare('DELETE FROM limites_trafego WHERE grupo = ? AND chave = ?');
+  const listaBloqueiosAtivos = banco.prepare(
+    'SELECT grupo, chave, reincidencias, bloqueado_ate FROM limites_trafego WHERE bloqueado_ate IS NOT NULL',
+  );
+
+  function chaveMemoria(grupo, chave) {
+    return `${grupo}\u0000${chave}`;
+  }
+
+  function limparChaveMaisAntiga() {
+    const primeira = memoria.keys().next();
+    if (!primeira.done) memoria.delete(primeira.value);
+  }
+
+  function estadoDe(grupo, chave) {
+    const chaveMem = chaveMemoria(grupo, chave);
+    let estado = memoria.get(chaveMem);
+    if (estado) return estado;
+
+    const linha = consultaBloqueio.get(grupo, chave);
+    const agoraMs = agora();
+    estado = {
+      contagem: 0,
+      inicioJanelaMs: agoraMs,
+      reincidencias: linha?.reincidencias ?? 0,
+      bloqueadoAteMs: linha?.bloqueado_ate ? Date.parse(linha.bloqueado_ate) : null,
+      ultimaInfracaoMs: linha?.ultima_infracao_em ? Date.parse(linha.ultima_infracao_em) : null,
+      ultimaAtividadeMs: agoraMs,
+    };
+    if (memoria.size >= MAXIMO_CHAVES_EM_MEMORIA) limparChaveMaisAntiga();
+    memoria.set(chaveMem, estado);
+    return estado;
+  }
+
+  function persistirBloqueio(grupo, chave, estado) {
+    upsertBloqueio.run({
+      grupo,
+      chave,
+      reincidencias: estado.reincidencias,
+      bloqueado_ate: new Date(estado.bloqueadoAteMs).toISOString(),
+      ultima_infracao_em: new Date(estado.ultimaInfracaoMs).toISOString(),
+    });
+  }
+
+  function registrarInfracao(grupo, chave, estado) {
+    const agoraMs = agora();
+    if (estado.ultimaInfracaoMs != null && agoraMs - estado.ultimaInfracaoMs > JANELA_REINCIDENCIA_MS) {
+      estado.reincidencias = 0;
+    }
+    estado.reincidencias += 1;
+    estado.ultimaInfracaoMs = agoraMs;
+    const minutos = duracaoBloqueioMin(estado.reincidencias);
+    estado.bloqueadoAteMs = agoraMs + minutos * 60 * 1000;
+    persistirBloqueio(grupo, chave, estado);
+    registrarLog('aviso', 'bloqueio_trafego', {
+      grupo,
+      chave_resumo: resumirChave(chave),
+      segundos: minutos * 60,
+    });
+    return { bloqueado: true, segundosRestantes: minutos * 60 };
+  }
+
+  function verificarBloqueioAtivo(estado) {
+    if (estado.bloqueadoAteMs == null) return null;
+    const restanteMs = estado.bloqueadoAteMs - agora();
+    if (restanteMs <= 0) return null;
+    return { bloqueado: true, segundosRestantes: Math.ceil(restanteMs / 1000) };
+  }
+
+  function contarRequisicao(grupo, chave, { limite, janelaSegundos }) {
+    const estado = estadoDe(grupo, chave);
+    estado.ultimaAtividadeMs = agora();
+
+    const bloqueioAtivo = verificarBloqueioAtivo(estado);
+    if (bloqueioAtivo) return bloqueioAtivo;
+
+    const agoraMs = agora();
+    if (agoraMs - estado.inicioJanelaMs >= janelaSegundos * 1000) {
+      estado.inicioJanelaMs = agoraMs;
+      estado.contagem = 0;
+    }
+    estado.contagem += 1;
+    if (estado.contagem > limite) {
+      return registrarInfracao(grupo, chave, estado);
+    }
+    return { bloqueado: false, segundosRestantes: 0 };
+  }
+
+  function middleware(grupo, { chave }) {
+    const regra = regras[grupo];
+    if (!regra) throw new Error(`Grupo de limite de tráfego desconhecido: "${grupo}"`);
+    return function limitarTrafego(req, res, next) {
+      const chaveValor = chave(req);
+      const resultado = contarRequisicao(grupo, chaveValor, regra);
+      if (resultado.bloqueado) {
+        res.set('Retry-After', String(resultado.segundosRestantes));
+        return next(
+          criarErro(429, 'muitas_tentativas', {
+            tentar_de_novo_em_segundos: resultado.segundosRestantes,
+            minutos: Math.ceil(resultado.segundosRestantes / 60),
+          }),
+        );
+      }
+      next();
+    };
+  }
+
+  function registrarFalha(grupo, chave) {
+    const regra = regras[grupo];
+    if (!regra || regra.limiteFalhas == null) {
+      throw new Error(`Grupo de falhas desconhecido: "${grupo}"`);
+    }
+    const estado = estadoDe(grupo, chave);
+    estado.ultimaAtividadeMs = agora();
+
+    const bloqueioAtivo = verificarBloqueioAtivo(estado);
+    if (bloqueioAtivo) return bloqueioAtivo;
+
+    const agoraMs = agora();
+    if (agoraMs - estado.inicioJanelaMs >= regra.janelaSegundos * 1000) {
+      estado.inicioJanelaMs = agoraMs;
+      estado.contagem = 0;
+    }
+    estado.contagem += 1;
+    if (estado.contagem > regra.limiteFalhas) {
+      return registrarInfracao(grupo, chave, estado);
+    }
+    return { bloqueado: false, segundosRestantes: 0 };
+  }
+
+  function limparFalhas(grupo, chave) {
+    const estado = estadoDe(grupo, chave);
+    estado.contagem = 0;
+    estado.inicioJanelaMs = agora();
+    estado.ultimaAtividadeMs = agora();
+  }
+
+  function verificar(grupo, chave) {
+    const estado = estadoDe(grupo, chave);
+    return verificarBloqueioAtivo(estado) ?? { bloqueado: false, segundosRestantes: 0 };
+  }
+
+  function listarBloqueios() {
+    const agoraMs = agora();
+    return listaBloqueiosAtivos
+      .all()
+      .filter((linha) => Date.parse(linha.bloqueado_ate) > agoraMs)
+      .map((linha) => ({
+        grupo: linha.grupo,
+        chave: linha.chave,
+        reincidencias: linha.reincidencias,
+        bloqueado_ate: linha.bloqueado_ate,
+      }));
+  }
+
+  function desbloquear(grupo, chave) {
+    apagaBloqueio.run(grupo, chave);
+    memoria.delete(chaveMemoria(grupo, chave));
+  }
+
+  function limparExpirados() {
+    const agoraMs = agora();
+    for (const [chaveMem, estado] of memoria) {
+      const bloqueado = estado.bloqueadoAteMs != null && estado.bloqueadoAteMs > agoraMs;
+      if (!bloqueado && agoraMs - estado.ultimaAtividadeMs > RETENCAO_OCIOSA_MS) {
+        memoria.delete(chaveMem);
+      }
+    }
+  }
+
+  const intervaloLimpeza = setInterval(limparExpirados, INTERVALO_LIMPEZA_MS);
+  intervaloLimpeza.unref?.();
+
+  return {
+    middleware,
+    registrarFalha,
+    limparFalhas,
+    verificar,
+    listarBloqueios,
+    desbloquear,
+    // Exposto só para os testes conseguirem encerrar o processo sem esperar o intervalo.
+    _pararLimpezaParaTestes: () => clearInterval(intervaloLimpeza),
+  };
+}

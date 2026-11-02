@@ -1,0 +1,37 @@
+{
+  "slug": "giro-de-estoque",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Giro de estoque",
+    "en": "Inventory turnover"
+  },
+  "descricao": {
+    "pt-BR": "Calcula quantas vezes o estoque girou no período e o tempo médio de permanência.",
+    "en": "Calculates how many times inventory turned over in the period and the average days on hand."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular giro de estoque"
+    ],
+    "en": [
+      "calculate inventory turnover"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "giro de estoque",
+      "estoque médio"
+    ],
+    "en": [
+      "inventory turnover",
+      "average inventory"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

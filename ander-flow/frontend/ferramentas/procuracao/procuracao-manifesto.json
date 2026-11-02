@@ -1,0 +1,37 @@
+{
+  "slug": "procuracao",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Gerador de procuração",
+    "en": "Power of attorney generator"
+  },
+  "descricao": {
+    "pt-BR": "Monta uma procuração simples com outorgante, outorgado e poderes concedidos.",
+    "en": "Builds a simple power of attorney with grantor, grantee, and the powers granted."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer uma procuração simples"
+    ],
+    "en": [
+      "draft a simple power of attorney"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "procuração",
+      "poderes"
+    ],
+    "en": [
+      "power of attorney",
+      "granted powers"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,33 @@
+{
+  "trabalho": {
+    "titulo_pagina": "Trabalho — Ander Flow",
+    "descricao_pagina": "Seus trabalhos em aberto, seus salvos e o uso do mês.",
+    "resumo_zero": "Nenhum trabalho em aberto agora.",
+    "resumo_um": "1 trabalho em aberto.",
+    "resumo": "{quantidade} trabalhos em aberto.",
+    "em_aberto": {
+      "titulo": "Em aberto",
+      "meta": "{ferramenta} · atualizado {tempo}",
+      "retomar": "Retomar",
+      "excluir_rotulo": "Excluir {titulo}",
+      "confirmar_titulo": "Excluir este trabalho?",
+      "confirmar_texto": "\"{titulo}\" será apagado e não pode ser recuperado.",
+      "excluido": "Trabalho excluído",
+      "vazio_titulo": "Nada em aberto por aqui",
+      "vazio_texto": "Comece uma ferramenta e o rascunho aparece aqui para você retomar depois."
+    },
+    "salvos": {
+      "titulo": "Salvos",
+      "organizar": "Organizar",
+      "vazio": "Você ainda não salvou nenhuma ferramenta."
+    },
+    "mes": {
+      "titulo": "Seu mês",
+      "documentos": "Documentos gerados",
+      "ferramentas_usadas": "Ferramentas usadas",
+      "lote_titulo": "Lote no seu plano",
+      "lote_gratis": "Até {limite_lote_gratis} arquivos por vez no grátis",
+      "lote_plus": "Até {limite_lote_plus} arquivos por vez no Plus"
+    }
+  }
+}

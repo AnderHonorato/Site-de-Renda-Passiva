@@ -1,0 +1,39 @@
+{
+  "slug": "lista-de-tarefas",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Lista de tarefas",
+    "en": "Task list"
+  },
+  "descricao": {
+    "pt-BR": "Organiza tarefas por prioridade e prazo, com marcação de concluído.",
+    "en": "Organizes tasks by priority and deadline, with a done checkbox."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "organizar minhas tarefas do dia"
+    ],
+    "en": [
+      "organize my tasks for the day"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "lista de tarefas",
+      "to-do",
+      "prioridade"
+    ],
+    "en": [
+      "task list",
+      "to-do",
+      "priority"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

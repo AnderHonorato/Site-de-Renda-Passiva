@@ -1,0 +1,33 @@
+{
+  "entrar": {
+    "titulo_pagina": "Entrar — Ander Flow",
+    "descricao_pagina": "Entre na sua conta ou crie uma nova para sincronizar salvos e histórico entre aparelhos.",
+    "abas_rotulo": "Entrar ou criar conta",
+    "abas": {
+      "entrar": "Entrar",
+      "criar": "Criar conta"
+    },
+    "campos": {
+      "nome": "Nome",
+      "email": "E-mail",
+      "senha": "Senha",
+      "senha_ajuda": "Pelo menos 10 caracteres."
+    },
+    "formulario_entrar": {
+      "legenda": "A conta só sincroniza salvos e histórico entre aparelhos. As ferramentas continuam funcionando sem ela.",
+      "enviar": "Entrar",
+      "enviando": "Entrando…",
+      "esqueci": "Esqueci minha senha"
+    },
+    "formulario_criar": {
+      "legenda": "Grátis, sem cartão. Só pedimos e-mail e senha.",
+      "enviar": "Criar conta grátis",
+      "enviando": "Criando conta…",
+      "termos_antes": "Ao criar a conta você aceita os ",
+      "termos_link": "termos de uso",
+      "termos_meio": " e a ",
+      "termos_privacidade_link": "política de privacidade",
+      "termos_depois": ". Nenhum arquivo processado nas ferramentas é enviado para o servidor."
+    }
+  }
+}

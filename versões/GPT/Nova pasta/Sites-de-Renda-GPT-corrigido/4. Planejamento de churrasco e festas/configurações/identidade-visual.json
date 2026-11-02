@@ -1,0 +1,13 @@
+{
+  "fundo": "#fbf0e6",
+  "neutra": "#8c7b70",
+  "destaque": "#df6a52",
+  "secundária": "#5f9670",
+  "destaques": {
+    "brasa": "#c9502e",
+    "coral": "#e0664f",
+    "limão": "#8a9a2c",
+    "verde": "#4f9466",
+    "céu": "#4a8ac0"
+  }
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="130 0 300 200" role="img" aria-labelledby="t">
+  <title id="t">Uma etiqueta de preço balançando ao lado de uma proposta aprovada</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #ece5d8; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .etiqueta { transform-origin: 196px 30px; animation: balanca 3.4s ease-in-out infinite; }
+    @keyframes balanca { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(9deg); } }
+    .visto { animation: surge 4s ease-in-out infinite; }
+    @keyframes surge { 0%, 20% { transform: scale(0); } 35%, 85% { transform: scale(1); } 100% { transform: scale(0); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="178" rx="150" ry="9"/>
+  <g class="etiqueta">
+    <path d="M196 30v36" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M168 76a8 8 0 0 1 8-8h40a8 8 0 0 1 8 8v78a8 8 0 0 1-8 8h-40a8 8 0 0 1-8-8z" fill="#d97757" stroke="#1a1a1a" stroke-width="3"/>
+    <circle cx="196" cy="84" r="5.5" fill="#fffdf9" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="182" cy="110" r="5" fill="none" stroke="#1a1a1a" stroke-width="3"/><circle cx="210" cy="136" r="5" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+    <path d="M212 106l-30 34" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+  <rect x="280" y="40" width="110" height="126" rx="14" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+  <rect x="298" y="60" width="74" height="8" rx="4" fill="#ddd6cc"/><rect x="298" y="80" width="54" height="8" rx="4" fill="#ddd6cc"/><rect x="298" y="100" width="66" height="8" rx="4" fill="#ddd6cc"/>
+  <g class="visto o"><circle cx="360" cy="140" r="17" fill="#3d4451" stroke="#1a1a1a" stroke-width="3"/><path d="M351 140l7 7 11-13" fill="none" stroke="#fffdf9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+</svg>

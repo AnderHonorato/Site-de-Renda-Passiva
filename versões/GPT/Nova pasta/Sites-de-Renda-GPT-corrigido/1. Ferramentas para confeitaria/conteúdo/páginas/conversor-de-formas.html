@@ -1,0 +1,110 @@
+<!--página
+{
+  "título": "Conversor de formas",
+  "descrição": "Descubra o fator de conversão de massa entre duas formas de assar de mesma altura, pela razão entre as áreas.",
+  "destaque": "framboesa",
+  "navegação": "ferramentas",
+  "script": "páginas/conversor-de-formas.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Conversor de formas</h1>
+    <p class="ferramenta-resumo">Descubra quantas vezes mais (ou menos) massa uma forma diferente precisa, na mesma altura, pela razão entre as áreas das duas formas. O tempo de forno não escala junto: uma forma maior e mais rasa costuma assar mais rápido, e uma mais funda, mais devagar.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-formas" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Forma de origem</legend>
+        <div class="campo">
+          <label for="origem-tipo">Formato</label>
+          <select id="origem-tipo" class="entrada seleção" data-seletor-de-forma="origem">
+            <option value="redonda">Redonda</option>
+            <option value="quadrada">Quadrada</option>
+            <option value="retangular">Retangular</option>
+          </select>
+        </div>
+        <div data-campos-de-forma="origem-redonda">
+          <div class="campo"><label for="origem-diâmetro">Diâmetro (cm)</label><input id="origem-diâmetro" class="entrada" type="text" inputmode="decimal" placeholder="Ex.: 20" aria-describedby="origem-diâmetro-erro"><p id="origem-diâmetro-erro" class="campo-erro" hidden></p></div>
+        </div>
+        <div data-campos-de-forma="origem-quadrada" hidden>
+          <div class="campo"><label for="origem-lado">Lado (cm)</label><input id="origem-lado" class="entrada" type="text" inputmode="decimal" placeholder="Ex.: 20" aria-describedby="origem-lado-erro"><p id="origem-lado-erro" class="campo-erro" hidden></p></div>
+        </div>
+        <div data-campos-de-forma="origem-retangular" hidden>
+          <div class="campo"><label for="origem-largura">Largura (cm)</label><input id="origem-largura" class="entrada" type="text" inputmode="decimal" placeholder="Ex.: 20" aria-describedby="origem-largura-erro"><p id="origem-largura-erro" class="campo-erro" hidden></p></div>
+          <div class="campo"><label for="origem-comprimento">Comprimento (cm)</label><input id="origem-comprimento" class="entrada" type="text" inputmode="decimal" placeholder="Ex.: 30" aria-describedby="origem-comprimento-erro"><p id="origem-comprimento-erro" class="campo-erro" hidden></p></div>
+        </div>
+        <div class="campo">
+          <label for="quantidade-original">Quantidade de massa na forma de origem (opcional)</label>
+          <input id="quantidade-original" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 1000 (g, ml ou a unidade que você usar)" aria-describedby="quantidade-original-ajuda quantidade-original-erro">
+          <p id="quantidade-original-ajuda" class="campo-ajuda">Se informada, mostramos a quantidade convertida na mesma unidade.</p>
+          <p id="quantidade-original-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Forma de destino</legend>
+        <div class="campo">
+          <label for="destino-tipo">Formato</label>
+          <select id="destino-tipo" class="entrada seleção" data-seletor-de-forma="destino">
+            <option value="redonda">Redonda</option>
+            <option value="quadrada">Quadrada</option>
+            <option value="retangular">Retangular</option>
+          </select>
+        </div>
+        <div data-campos-de-forma="destino-redonda">
+          <div class="campo"><label for="destino-diâmetro">Diâmetro (cm)</label><input id="destino-diâmetro" class="entrada" type="text" inputmode="decimal" placeholder="Ex.: 30" aria-describedby="destino-diâmetro-erro"><p id="destino-diâmetro-erro" class="campo-erro" hidden></p></div>
+        </div>
+        <div data-campos-de-forma="destino-quadrada" hidden>
+          <div class="campo"><label for="destino-lado">Lado (cm)</label><input id="destino-lado" class="entrada" type="text" inputmode="decimal" placeholder="Ex.: 25" aria-describedby="destino-lado-erro"><p id="destino-lado-erro" class="campo-erro" hidden></p></div>
+        </div>
+        <div data-campos-de-forma="destino-retangular" hidden>
+          <div class="campo"><label for="destino-largura">Largura (cm)</label><input id="destino-largura" class="entrada" type="text" inputmode="decimal" placeholder="Ex.: 25" aria-describedby="destino-largura-erro"><p id="destino-largura-erro" class="campo-erro" hidden></p></div>
+          <div class="campo"><label for="destino-comprimento">Comprimento (cm)</label><input id="destino-comprimento" class="entrada" type="text" inputmode="decimal" placeholder="Ex.: 35" aria-describedby="destino-comprimento-erro"><p id="destino-comprimento-erro" class="campo-erro" hidden></p></div>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular conversão</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#square-stack"></use></svg>
+        <p class="estado-vazio-título">O fator de conversão aparece aqui</p>
+        <p>Escolha as duas formas com suas medidas e toque em Calcular conversão.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Fator de conversão</p>
+          <p class="resultado-valor" data-fator></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <div class="aviso aviso-alerta">
+          <p>O tempo de cocção não escala com a área. Acompanhe o ponto de cozimento da nova forma em vez de manter o mesmo tempo do forno.</p>
+        </div>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse valor</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>O fator considera as duas formas com a mesma altura de massa: é a razão entre as áreas (destino ÷ origem).</li>
+    <li>Formas redondas usam a área do círculo, quadradas o lado ao quadrado e retangulares largura × comprimento.</li>
+    <li>Cocção não escala automaticamente: forma maior e mais rasa geralmente assa mais rápido; mais funda, mais devagar.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-formas" class="botão botão-primário">Calcular conversão</button>
+</div>

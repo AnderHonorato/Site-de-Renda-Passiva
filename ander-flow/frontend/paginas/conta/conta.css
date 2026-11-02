@@ -1,0 +1,101 @@
+/* conta.css — perfil, preferências, plano e uso, senha, dados e exclusão (docs/contratos.md §11
+   bloco "Conta"). */
+
+.conta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-6);
+  padding-block: var(--espaco-7) var(--espaco-8);
+}
+
+.conta__grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-5);
+  align-items: start;
+}
+
+.conta__secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.conta__secao--perigo {
+  border-color: var(--cor-erro);
+}
+
+.conta__cabecalho-secao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+
+.conta__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.conta__acoes {
+  display: flex;
+  gap: var(--espaco-3);
+  margin-top: var(--espaco-1);
+}
+
+.conta__preferencia {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.conta__uso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.conta__uso-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--espaco-2);
+}
+
+.conta__uso-numeros {
+  font-variant-numeric: tabular-nums;
+}
+
+.conta__ver-planos {
+  align-self: flex-start;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.conta__erro-geral {
+  margin: 0;
+  padding: var(--espaco-3);
+  border-radius: var(--raio-controle);
+  background: var(--cor-erro-suave);
+  color: var(--cor-erro);
+  font-size: 14px;
+}
+
+.conta__exclusao {
+  border-top: 1px solid var(--cor-linha);
+  padding-top: var(--espaco-4);
+}
+
+@media (max-width: 1023px) {
+  .conta__grade {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .conta {
+    gap: var(--espaco-5);
+    padding-block: var(--espaco-5) var(--espaco-7);
+  }
+}

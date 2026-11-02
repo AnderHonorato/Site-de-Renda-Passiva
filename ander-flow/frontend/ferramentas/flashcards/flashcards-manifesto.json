@@ -1,0 +1,39 @@
+{
+  "slug": "flashcards",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Flashcards",
+    "en": "Flashcards"
+  },
+  "descricao": {
+    "pt-BR": "Cria flashcards com pergunta na frente e resposta no verso, para cortar e estudar.",
+    "en": "Creates flashcards with a question on the front and answer on the back, ready to cut and study."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "criar flashcards para estudar"
+    ],
+    "en": [
+      "create flashcards to study"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "flashcards",
+      "memorização",
+      "estudo"
+    ],
+    "en": [
+      "flashcards",
+      "memorization",
+      "studying"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

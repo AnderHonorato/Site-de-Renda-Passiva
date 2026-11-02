@@ -1,0 +1,67 @@
+@charset "UTF-8";
+/* Sincronizado de compartilhado/estilos/componentes/navegação-inferior.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/navegação-inferior.css
+   Barra fixa de 5 destinos no celular — o app fica com cara de aplicativo.
+   Some no computador, onde a navegação completa já está no cabeçalho. */
+
+.navegação-inferior {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--camada-navegação);
+  height: calc(var(--altura-navegação-inferior) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--cor-superfície-elevada);
+  border-top: 1px solid var(--cor-divisória);
+  box-shadow: var(--sombra-m);
+  transition: transform var(--duração-painel) var(--curva-suave);
+}
+
+/* Recolhe temporariamente quando o teclado virtual está aberto, para não
+   disputar espaço com o campo em foco; configurarTecladoVirtual() controla a
+   classe no <html>. */
+html.teclado-aberto .navegação-inferior {
+  transform: translateY(100%);
+}
+
+.navegação-inferior-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 44px;
+  padding: var(--espaço-1) 2px;
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  border: 0;
+  background: none;
+}
+.navegação-inferior-item .ícone {
+  width: 22px;
+  height: 22px;
+  transition: transform var(--duração-controle) var(--curva-suave);
+}
+.navegação-inferior-item[aria-current="page"],
+.navegação-inferior-item[data-ativo] {
+  color: var(--cor-texto-destaque);
+}
+.navegação-inferior-item[aria-current="page"] .ícone,
+.navegação-inferior-item[data-ativo] .ícone {
+  transform: translateY(-2px);
+}
+.navegação-inferior-item:active .ícone {
+  transform: scale(0.9);
+}
+
+@media (min-width: 768px) {
+  .navegação-inferior {
+    display: none;
+  }
+}

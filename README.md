@@ -1,165 +1,37 @@
-# Sites de Renda Passiva
+# Ferramentas do Ander — portal v1.1.0
 
-Portal de ferramentas úteis em PT-BR, com seis produtos independentes e uma base comum.
+O produto atual está em `portal/`, na porta **4400**: 208 ferramentas no catálogo, 65 prontas. As pastas antigas e `ander-flow/` permanecem como referência. O portal mantém sua identidade visual e o processamento local das ferramentas. Conta opcional, favoritos sincronizados, suporte, chat e moderação agora usam uma API e um SQLite próprios.
 
-## Estado da arquitetura
+## Iniciar
 
-O frontend continua estático e roda no navegador. A partir desta versão, existe uma API opcional em `backend/` para recursos que realmente precisam de servidor: contas, sessões, histórico de downloads, vistos recentes, avisos e banners. A persistência usa Prisma.
+Node 22.14 ou superior. Dentro de `portal`:
 
-> O login social Google, Apple e X está preparado no modelo e nas variáveis de ambiente. A validação OAuth de produção depende das credenciais dos respectivos provedores; nunca coloque client secret no frontend.
-
-## Dependências
-
-Requisitos:
-- Node.js 20+
-- npm
-
-Frontend:
-
-```bash
-npm install
-npm run preparar
-npm run sincronizar
-```
-
-Backend:
-
-```bash
-cd backend
-npm install
-Copy-Item .env.example .env
-npm run prisma:generate
-npm run prisma:migrate -- --name inicial
+```powershell
+npm run gerar
 npm run dev
 ```
 
-API local: `http://127.0.0.1:4490`
+Abra `http://127.0.0.1:4400/`. A API fica em loopback na 4870; o site encaminha `/api/` na mesma origem. O comando habilita o chat em desenvolvimento. Anúncios vêm desligados; sem anúncio preenchido, nenhum espaço é reservado.
 
-## Desenvolvimento
+Após criar sua conta, o administrador é concedido por comando local: `npm run admin:criar -- seu-email@exemplo.com`. Não há administrador ou senha de fábrica. As contas e os arquivos das ferramentas antigas não foram importados nem substituídos.
 
-Raiz:
+## Estado e instruções
 
-```bash
-npm run gerar
-npm run testar
-npm run verificar
-npm run construir
-```
+- [Checklist atual](CHECKLIST.md): concluído, testado e pendente.
+- [Entrega v1.1.0](documentação/entrega-portal-v1.1.0.md): evidências e limites da validação.
+- [Operação do portal](portal/README.md): login, recuperação, banco, anúncios e comandos.
+- [Plano original](documentação/plano-portal-principal.md): ondas restantes do pedido ao Claude.
+- [Decisões anteriores](ander-flow/docs/decisoes.md): continuidade do produto.
+- [Histórico de versões](documentação/histórico-de-versões.md).
 
-Para rodar um produto específico, entre na pasta dele e use seu `npm run servir`.
-
-## Encerrar processos
-
-PowerShell:
+## Conferir
 
 ```powershell
-Get-NetTCPConnection -LocalPort 4311,4312,4313,4314,4315,4316,4490 -ErrorAction SilentlyContinue |
-  Select-Object OwningProcess,LocalPort |
-  Sort-Object LocalPort
-
-Stop-Process -Id <PID> -Force
+cd portal
+npm run conferir
+npm run testar:api
 ```
 
-CMD:
+`npm run publicar` gera o pacote estático, sem fazer deploy e sem copiar banco/API. Login e chat exigem os processos Node, HTTPS e configuração operacional para abertura pública. AdSense real depende dos IDs e aprovação do proprietário e do consentimento regional aplicável. Recuperação de senha em produção ainda usa procedimento local, pois não há SMTP integrado.
 
-```cmd
-netstat -ano | findstr ":4311 :4312 :4313 :4314 :4315 :4316 :4490"
-taskkill /PID <PID> /F
-```
-
-Não mate processos aleatórios: o Windows já tem drama suficiente.
-
-## Prisma
-
-O schema fica em `backend/prisma/schema.prisma`.
-
-Desenvolvimento usa SQLite:
-
-```
-DATABASE_URL="file:./dev.db"
-```
-
-Produção deve usar PostgreSQL ou outro banco gerenciado compatível. O banco guarda metadados e relações. PDFs, imagens e outros binários devem ficar em storage de objetos, com apenas a referência armazenada em `Download.storageKey`.
-
-## Login e conta
-
-O backend possui:
-- User
-- Session
-- Download
-- RecentView
-- Notice
-- Banner
-
-A home pode consumir `/api/recent` para vistos recentes. A página de downloads pode consumir `/api/downloads`. Avisos e banners podem vir de `/api/notices` e `/api/banners`.
-
-Para OAuth real, configure:
-
-```
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-APPLE_CLIENT_ID=
-APPLE_CLIENT_SECRET=
-X_CLIENT_ID=
-X_CLIENT_SECRET=
-PUBLIC_BASE_URL=
-SESSION_SECRET=
-```
-
-O fluxo de produção deve validar o retorno do provedor no servidor, localizar/criar o usuário, criar uma sessão e devolver somente um token de sessão seguro.
-
-## Publicação
-
-Frontend estático:
-
-```bash
-npm run construir
-```
-
-O pacote publicável de cada produto é gerado em sua pasta `publicação/`.
-
-Backend:
-1. Escolha um host Node.
-2. Configure as variáveis do `.env`.
-3. Use PostgreSQL em produção.
-4. Execute `npm run prisma:generate`.
-5. Execute a migração de produção.
-6. Inicie com `npm start`.
-7. Coloque HTTPS e um proxy reverso na frente da API.
-8. Configure CORS apenas para os domínios reais dos seis sites.
-
-## UX Plus
-
-As regras detalhadas estão em `documentação/UX-PLUS.md`. A lista completa de evolução está em `documentação/100-funcionalidades.md`.
-
-Princípio central:
-
-**o usuário precisa entender o que a ferramenta faz, enviar o arquivo, ajustar visualmente, conferir o resultado e só então baixar.**
-
-Recursos planejados/implementados nesta linha:
-- ajuda contextual por ferramenta;
-- dicas flutuantes;
-- notificações em faixa horizontal com modal;
-- banners finos configuráveis, carrossel de 30 s, hover/swipe;
-- ferramentas similares;
-- vistos recentemente;
-- boas-vindas;
-- FAQ;
-- animações de entrada no scroll com respeito a `prefers-reduced-motion`;
-- processamento visual e estado “arquivo pronto para download”;
-- editores visuais para recorte de imagem/PDF;
-- histórico de downloads por conta;
-- identidade visual consistente em PDF/Excel.
-
-## Segurança
-
-Nunca versionar `.env`, banco SQLite de desenvolvimento, tokens ou client secrets. Em produção, valide autenticação no servidor, limite uploads, gere nomes de arquivos seguros e use autorização por usuário para downloads.
-
-## Estrutura
-
-- `compartilhado/`: base comum dos seis produtos.
-- `1. Ferramentas para confeitaria/` até `6. Moldes de caixas e embalagens/`: produtos.
-- `backend/`: API opcional + Prisma.
-- `documentação/`: arquitetura, UX e roadmap.
-
-Licença: © 2026 Anderson.
+As 143 ferramentas planejadas, trabalhos salvos, administração completa de conteúdo e processamento avançado seguem no checklist. Não estão marcados como concluídos.

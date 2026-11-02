@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/">
+  <meta name="af-acesso" content="publico">
+  <title data-texto="principal.titulo_pagina"></title>
+  <meta name="description" data-texto-content="principal.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/principal/principal.css">
+  <script type="module" src="/estatico/paginas/principal/principal.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo principal">
+    <div class="principal__dobra">
+      <!-- incluir: principal-busca -->
+
+      <aside class="principal__lateral">
+        <section class="superficie principal__retomar" hidden>
+          <div class="principal__cabecalho-bloco">
+            <h2 class="sobretitulo" data-texto="principal.retomar.titulo"></h2>
+            <button type="button" class="botao botao--fantasma botao--pequeno" data-acao="limpar-recentes" data-texto="principal.retomar.limpar"></button>
+          </div>
+          <ul class="principal__retomar-lista"></ul>
+        </section>
+
+        <section class="superficie superficie--recuo principal__plano">
+          <h2 class="sobretitulo" data-texto="principal.plano.titulo"></h2>
+          <p class="texto-2" data-texto="principal.plano.texto"></p>
+          <a class="principal__plano-link" href="/planos" data-texto="principal.plano.link"></a>
+        </section>
+      </aside>
+    </div>
+
+    <section class="principal__categorias">
+      <div class="principal__cabecalho-bloco">
+        <h2 class="principal__subtitulo" data-texto="principal.categorias.titulo"></h2>
+        <a class="principal__catalogo-link" href="/ferramentas" data-texto="principal.categorias.ver_catalogo"></a>
+      </div>
+      <ul class="principal__grade-categorias" data-estado="carregando">
+        <li class="esqueleto"></li>
+        <li class="esqueleto"></li>
+        <li class="esqueleto"></li>
+        <li class="esqueleto"></li>
+      </ul>
+      <p class="texto-2 texto-pequeno principal__nota-categorias" hidden></p>
+    </section>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

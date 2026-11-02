@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("comparador-de-aparelhos",14,"Comparador de aparelhos","Compare dois aparelhos no mesmo período de utilização.","Consumo = W × horas / 1.000. Economia no período = diferença de kWh × tarifa. Compara apenas energia sob potência constante, sem inferir desempenho equivalente.",[h.numero('potenciaA','Potência do aparelho A (W)',100),h.numero('potenciaB','Potência do aparelho B (W)',60),h.numero('horas','Horas de uso no período',100),h.numero('tarifa','Tarifa (R$/kWh)',1)],async d=>{const a=h.n(d.potenciaA)*h.n(d.horas)/1000,b=h.n(d.potenciaB)*h.n(d.horas)/1000,t=h.n(d.tarifa);return h.resultado(a===b?'Mesmo consumo':(a<b?'A':'B')+' consome menos','A: '+h.f(a)+' kWh; '+h.reais(a*t),'B: '+h.f(b)+' kWh; '+h.reais(b*t),'Diferença: '+h.f(Math.abs(a-b))+' kWh; '+h.reais(Math.abs(a-b)*t));});
+

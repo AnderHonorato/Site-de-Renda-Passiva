@@ -1,0 +1,78 @@
+@charset "UTF-8";
+/* compartilhado/estilos/utilitários.css
+   Classes auxiliares de layout e visibilidade responsiva. `.não-imprimir` e
+   `.somente-impressão` não têm efeito aqui — a troca acontece em impressão.css;
+   nesta folha elas só existem para não ficarem "undefined" antes da impressão.
+
+   `[hidden]` sempre vence: base.css define `[hidden] { display: none !important; }`,
+   e `!important` prevalece sobre qualquer `display` sem `!important` — inclusive
+   `.consentimento`, `.faixa-de-apoio` e `.espaço-publicitário` — não importa a
+   ordem de concatenação ou a especificidade da regra do componente. Por isso
+   nenhum componente precisa repetir essa regra por conta própria. */
+
+.somente-celular { display: revert; }
+.somente-computador { display: none; }
+
+@media (min-width: 768px) {
+  .somente-celular { display: none; }
+  .somente-computador { display: revert; }
+}
+
+.não-imprimir { display: revert; }
+.somente-impressão { display: none; }
+
+/* Empilhamento vertical com espaço consistente */
+.empilhar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+.empilhar-pequeno { gap: var(--espaço-2); }
+.empilhar-grande { gap: var(--espaço-6); }
+
+/* Agrupamento horizontal que quebra linha em telas estreitas */
+.agrupar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaço-3);
+}
+
+/* Linha com um item "empurrado" para a direita */
+.espalhar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaço-3);
+}
+
+.centralizar-texto { text-align: center; }
+
+.largura-total { width: 100%; }
+
+.sem-margem { margin: 0; }
+
+.itens-esticados { align-items: stretch; }
+
+/* Ícone inline menor que o padrão de 22px (ex.: junto de um link de rodapé) */
+.ícone-pequeno { width: 16px; height: 16px; }
+
+/* Espaçamento superior avulso, quando o ritmo vertical do bloco anterior não
+   é suficiente (ex.: rótulo de uma variação de estado numa página de
+   documentação de componentes). */
+.espaço-acima-2 { margin-top: var(--espaço-2); }
+.espaço-acima-3 { margin-top: var(--espaço-3); }
+.espaço-acima-5 { margin-top: var(--espaço-5); }
+
+.rolagem-horizontal-contida {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* Impede que a página inteira role para os lados — cinto de segurança global */
+html, body {
+  overflow-x: hidden;
+}

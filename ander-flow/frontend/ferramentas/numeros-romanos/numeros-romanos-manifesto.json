@@ -1,0 +1,37 @@
+{
+  "slug": "numeros-romanos",
+  "estado": "planejada",
+  "categoria": "calculo",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Números romanos",
+    "en": "Roman numerals"
+  },
+  "descricao": {
+    "pt-BR": "Converte entre algarismos romanos e decimais, validando a grafia.",
+    "en": "Converts between Roman numerals and decimal numbers, validating the spelling."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "converter número romano"
+    ],
+    "en": [
+      "convert a roman numeral"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "romano",
+      "algarismo"
+    ],
+    "en": [
+      "roman numeral",
+      "numeral"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

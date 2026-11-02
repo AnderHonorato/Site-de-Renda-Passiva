@@ -1,0 +1,37 @@
+{
+  "slug": "extrair-texto-de-pdf",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Extrair texto do PDF",
+    "en": "Extract text from PDF"
+  },
+  "descricao": {
+    "pt-BR": "Puxa o texto de um PDF para copiar ou editar, página por página.",
+    "en": "Pulls the text out of a PDF to copy or edit, page by page."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "copiar texto de um pdf"
+    ],
+    "en": [
+      "copy text from a pdf"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "extrair texto do pdf",
+      "pdf para texto"
+    ],
+    "en": [
+      "extract text from pdf",
+      "pdf to text"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

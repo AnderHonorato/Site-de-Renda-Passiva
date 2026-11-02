@@ -1,0 +1,7 @@
+{
+  "name": "portal-api",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.14" },
+  "scripts": { "start": "node iniciar.mjs", "test": "node --test ../testes/api/*.test.mjs" }
+}

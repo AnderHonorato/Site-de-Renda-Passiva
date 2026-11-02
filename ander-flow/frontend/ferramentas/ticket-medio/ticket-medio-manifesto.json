@@ -1,0 +1,37 @@
+{
+  "slug": "ticket-medio",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 70,
+  "nome": {
+    "pt-BR": "Ticket médio e conversão",
+    "en": "Average order value and conversion"
+  },
+  "descricao": {
+    "pt-BR": "Ticket médio, taxa de conversão e o efeito de melhorar cada um deles.",
+    "en": "Average order value, conversion rate, and the impact of improving each one."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "melhorar minhas vendas"
+    ],
+    "en": [
+      "improve my sales"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ticket médio",
+      "conversão"
+    ],
+    "en": [
+      "average order value",
+      "conversion"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

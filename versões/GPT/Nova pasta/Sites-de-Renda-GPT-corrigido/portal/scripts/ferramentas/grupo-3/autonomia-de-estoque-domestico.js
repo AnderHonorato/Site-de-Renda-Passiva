@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("autonomia-de-estoque-domestico",14,"Autonomia de estoque doméstico","Planeje quantos dias um produto dura pelo consumo informado.","Duração = quantidade disponível / consumo diário. Quantidade necessária = consumo diário × dias planejados. Use a mesma unidade para estoque e consumo; desconsidera validade e perdas.",[h.texto('produto','Produto e unidade','Arroz (g)','text'),h.numero('estoque','Quantidade disponível',5000),h.numero('diario','Consumo diário',200),h.numero('dias','Dias a planejar',30,1,366)],async d=>{const p=h.requerido(d.produto,'Produto',100),e=h.n(d.estoque),c=h.positivo(d.diario,'Consumo diário'),dias=h.inteiro(d.dias,'Dias',1,366);return h.resultado(h.f(e/c)+' dias de duração','Produto: '+p,'Dias completos atendidos: '+Math.floor(e/c),'Quantidade adicional necessária: '+h.f(Math.max(0,c*dias-e)));});
+

@@ -1,0 +1,57 @@
+{
+  "cookies": {
+    "titulo_pagina": "Cookies — Ander Flow",
+    "descricao_pagina": "Os poucos cookies que o Ander Flow usa, o que fica guardado no seu navegador e como apagar tudo.",
+    "sobretitulo": "Transparência",
+    "titulo": "Cookies",
+    "intro": "Usamos poucos cookies, todos para o funcionamento do próprio site. Nenhum é de rastreamento ou de publicidade.",
+    "usados": {
+      "titulo": "Cookies que usamos",
+      "coluna_nome": "Cookie",
+      "coluna_para_que": "Para que serve",
+      "coluna_duracao": "Duração",
+      "af_sessao": {
+        "nome": "af_sessao",
+        "para_que": "Identifica sua sessão depois de entrar na conta; só o servidor lê, nunca o JavaScript da página",
+        "duracao": "Enquanto a sessão estiver ativa"
+      },
+      "af_csrf": {
+        "nome": "af_csrf",
+        "para_que": "Protege formulários e ações da conta contra requisições falsas de outros sites",
+        "duracao": "Enquanto você navega no site"
+      },
+      "idioma": {
+        "nome": "idioma",
+        "para_que": "Guarda se o site deve aparecer em português ou inglês",
+        "duracao": "Até você trocar de idioma ou limpar os cookies"
+      },
+      "tema": {
+        "nome": "tema",
+        "para_que": "Guarda se o site deve aparecer no tema claro ou escuro",
+        "duracao": "Até você trocar de tema ou limpar os cookies"
+      }
+    },
+    "armazenamento": {
+      "titulo": "Armazenamento local do navegador",
+      "texto": "Além dos cookies, algumas preferências e listas ficam guardadas no armazenamento local do navegador (localStorage), nunca enviadas ao servidor:",
+      "chaves": {
+        "tema": "af-tema",
+        "idioma": "af-idioma",
+        "salvos": "af-salvos-locais",
+        "recentes": "af-recentes",
+        "primeira_visita": "af-primeira-visita",
+        "popup": "af-popup-visto-<aviso>",
+        "rascunho": "af-rascunho-<ferramenta>"
+      }
+    },
+    "terceiros": {
+      "titulo": "Cookies de terceiros",
+      "texto": "Não usamos cookies de rastreamento, de publicidade nem de redes sociais de terceiros."
+    },
+    "gerenciar": {
+      "titulo": "Como apagar ou bloquear",
+      "texto": "Você pode apagar os cookies e o armazenamento local nas configurações do próprio navegador, a qualquer momento.",
+      "consequencia": "Apagando tudo, você sai da conta (se estiver conectado) e perde as preferências de idioma e tema salvas apenas no aparelho."
+    }
+  }
+}

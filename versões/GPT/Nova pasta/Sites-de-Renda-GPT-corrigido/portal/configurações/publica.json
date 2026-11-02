@@ -1,0 +1,6 @@
+{
+ "criador":{"nome":"Anderson","portfolio":"","contato":""},
+ "publicacao":{"enderecoBase":""},
+ "apoio":{"ativo":false,"chave":"","nome":"","cidade":""},
+ "publicidade":{"ativa":false,"publicador":"","bloco":"","cmpConfigurada":false}
+}

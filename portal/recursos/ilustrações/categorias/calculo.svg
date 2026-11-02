@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" role="img" aria-labelledby="t">
+  <title id="t">Uma calculadora com teclas acendendo e símbolos de conta flutuando</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #e3e6ec; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .tecla { animation: acende 4.8s steps(1, end) infinite; }
+    .t2 { animation-delay: .8s; } .t3 { animation-delay: 1.6s; } .t4 { animation-delay: 2.4s; } .t5 { animation-delay: 3.2s; } .t6 { animation-delay: 4s; }
+    @keyframes acende { 0% { fill: #d97757; } 16% { fill: #6b7280; } 100% { fill: #6b7280; } }
+    .visor { transform-box: fill-box; transform-origin: right; animation: soma 4.8s steps(1, end) infinite; }
+    @keyframes soma { 0% { transform: scaleX(.25); } 17% { transform: scaleX(.55); } 34% { transform: scaleX(.8); } 51% { transform: scaleX(.4); } 68% { transform: scaleX(1); } 85% { transform: scaleX(.65); } }
+    .flutua { animation: flutua 3.6s ease-in-out infinite; }
+    .f2 { animation-delay: .9s; } .f3 { animation-delay: 1.8s; } .f4 { animation-delay: 2.7s; }
+    @keyframes flutua { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(8deg); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="180" rx="90" ry="8"/>
+  <rect x="180" y="20" width="120" height="156" rx="20" fill="#3d4451" stroke="#1a1a1a" stroke-width="3"/>
+  <rect x="194" y="34" width="92" height="34" rx="9" fill="#fffdf9"/>
+  <rect class="visor" x="198" y="44" width="84" height="14" rx="4" fill="#1a1a1a"/>
+  <g stroke="#1a1a1a" stroke-width="2">
+    <circle class="tecla" cx="204" cy="94" r="10" fill="#6b7280"/><circle class="tecla t2" cx="240" cy="94" r="10" fill="#6b7280"/><circle class="tecla t3" cx="276" cy="94" r="10" fill="#6b7280"/>
+    <circle class="tecla t4" cx="204" cy="124" r="10" fill="#6b7280"/><circle class="tecla t5" cx="240" cy="124" r="10" fill="#6b7280"/><circle class="tecla t6" cx="276" cy="124" r="10" fill="#6b7280"/>
+  </g>
+  <rect x="194" y="146" width="92" height="20" rx="10" fill="#d97757" stroke="#1a1a1a" stroke-width="2"/>
+  <g class="flutua o" fill="none" stroke="#d97757" stroke-width="6" stroke-linecap="round"><path d="M118 62v26M105 75h26"/></g>
+  <g class="flutua f2 o" fill="none" stroke="#3d4451" stroke-width="6" stroke-linecap="round"><path d="M352 52h26"/></g>
+  <g class="flutua f3 o" fill="none" stroke="#d97757" stroke-width="6" stroke-linecap="round"><path d="M108 132l22 22M130 132l-22 22"/></g>
+  <g class="flutua f4 o" fill="none" stroke="#3d4451" stroke-width="6" stroke-linecap="round"><path d="M352 146h26"/><circle cx="365" cy="132" r="2.5" fill="#3d4451"/><circle cx="365" cy="160" r="2.5" fill="#3d4451"/></g>
+</svg>

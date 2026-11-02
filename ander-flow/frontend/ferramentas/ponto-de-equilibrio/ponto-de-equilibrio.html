@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <title data-texto="ponto-de-equilibrio.titulo_pagina"></title>
+  <meta name="description" data-texto-content="ponto-de-equilibrio.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/compartilhado/compartilhado-ferramenta.css">
+  <script type="module" src="/estatico/ferramentas/ponto-de-equilibrio/ponto-de-equilibrio.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo ferramenta">
+    <nav class="migalhas" data-texto-aria-label="compartilhado.ferramenta.migalhas_rotulo">
+      <ol>
+        <li><a href="/ferramentas" data-texto="compartilhado.cabecalho.ferramentas"></a></li>
+        <li><a href="/ferramentas?categoria=dinheiro" data-texto="compartilhado.categorias.dinheiro.nome"></a></li>
+        <li><span aria-current="page" data-texto="ponto-de-equilibrio.titulo"></span></li>
+      </ol>
+    </nav>
+
+    <header class="ferramenta__cabecalho">
+      <div class="ferramenta__titulo-linha">
+        <h1 class="titulo-display titulo-display--2" data-texto="ponto-de-equilibrio.titulo"></h1>
+        <button type="button" class="botao-icone" data-acao="favoritar">
+          <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-estrela"></use></svg>
+        </button>
+      </div>
+      <p class="texto-2 ferramenta__resumo" data-texto="ponto-de-equilibrio.resumo"></p>
+      <p class="nota-local">
+        <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-cadeado"></use></svg>
+        <span data-texto="compartilhado.ferramenta.processamento_local"></span>
+      </p>
+    </header>
+
+    <div class="ferramenta__corpo">
+      <form class="ferramenta__formulario" novalidate>
+        <fieldset class="ferramenta__grupo">
+          <legend class="ferramenta__grupo-titulo" data-texto="ponto-de-equilibrio.grupos.mes"></legend>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="ponto-de-equilibrio.campos.custos_fixos"></span>
+            <span class="campo__controle">
+              <span class="campo__prefixo" aria-hidden="true" data-texto="compartilhado.simbolos.moeda"></span>
+              <input class="campo__entrada" id="campo-custosFixos" type="text" inputmode="decimal" autocomplete="off"
+                     data-texto-aria-label="ponto-de-equilibrio.campos.custos_fixos">
+            </span>
+            <span class="campo__ajuda" data-texto="ponto-de-equilibrio.campos.custos_fixos_ajuda"></span>
+            <span class="campo__erro" id="erro-custosFixos" role="alert"></span>
+          </label>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="ponto-de-equilibrio.campos.lucro"></span>
+            <span class="campo__controle">
+              <span class="campo__prefixo" aria-hidden="true" data-texto="compartilhado.simbolos.moeda"></span>
+              <input class="campo__entrada" id="campo-lucroDesejado" type="text" inputmode="decimal" autocomplete="off"
+                     data-texto-aria-label="ponto-de-equilibrio.campos.lucro">
+            </span>
+            <span class="campo__ajuda" data-texto="ponto-de-equilibrio.campos.lucro_ajuda"></span>
+            <span class="campo__erro" id="erro-lucroDesejado" role="alert"></span>
+          </label>
+        </fieldset>
+
+        <fieldset class="ferramenta__grupo">
+          <legend class="ferramenta__grupo-titulo" data-texto="ponto-de-equilibrio.grupos.venda"></legend>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="ponto-de-equilibrio.campos.preco"></span>
+            <span class="campo__controle">
+              <span class="campo__prefixo" aria-hidden="true" data-texto="compartilhado.simbolos.moeda"></span>
+              <input class="campo__entrada" id="campo-preco" type="text" inputmode="decimal" autocomplete="off"
+                     data-texto-aria-label="ponto-de-equilibrio.campos.preco">
+            </span>
+            <span class="campo__erro" id="erro-preco" role="alert"></span>
+          </label>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="ponto-de-equilibrio.campos.custo_variavel"></span>
+            <span class="campo__controle">
+              <span class="campo__prefixo" aria-hidden="true" data-texto="compartilhado.simbolos.moeda"></span>
+              <input class="campo__entrada" id="campo-custoVariavel" type="text" inputmode="decimal" autocomplete="off"
+                     data-texto-aria-label="ponto-de-equilibrio.campos.custo_variavel">
+            </span>
+            <span class="campo__ajuda" data-texto="ponto-de-equilibrio.campos.custo_variavel_ajuda"></span>
+            <span class="campo__erro" id="erro-custoVariavel" role="alert"></span>
+          </label>
+
+          <label class="campo">
+            <span class="campo__rotulo" data-texto="ponto-de-equilibrio.campos.percentual"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" id="campo-percentualVariavel" type="text" inputmode="decimal" autocomplete="off"
+                     data-texto-aria-label="ponto-de-equilibrio.campos.percentual">
+              <span class="campo__sufixo" aria-hidden="true" data-texto="compartilhado.simbolos.percentual"></span>
+            </span>
+            <span class="campo__ajuda" data-texto="ponto-de-equilibrio.campos.percentual_ajuda"></span>
+            <span class="campo__erro" id="erro-percentualVariavel" role="alert"></span>
+          </label>
+        </fieldset>
+
+        <div class="ferramenta__acoes">
+          <button type="submit" class="botao botao--primario" data-texto="ponto-de-equilibrio.acoes.calcular"></button>
+          <button type="button" class="botao botao--fantasma" data-acao="exemplo" data-texto="compartilhado.ferramenta.preencher_exemplo"></button>
+        </div>
+      </form>
+
+      <div class="ferramenta__resultado">
+        <div class="resultado superficie--tinta">
+          <p class="resultado__rotulo" data-texto="ponto-de-equilibrio.resultado.titulo"></p>
+          <p class="resultado__valor" id="resultado-quantidade" aria-live="polite">—</p>
+          <div class="resultado__linhas">
+            <div class="resultado__linha resultado__linha--destaque">
+              <span class="resultado__linha-rotulo" data-texto="ponto-de-equilibrio.resultado.receita"></span>
+              <span class="resultado__linha-valor" id="resultado-receita">—</span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="ponto-de-equilibrio.resultado.margem_unitaria"></span>
+              <span class="resultado__linha-valor" id="resultado-margem">—</span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="ponto-de-equilibrio.resultado.indice"></span>
+              <span class="resultado__linha-valor" id="resultado-indice">—</span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="ponto-de-equilibrio.resultado.por_dia"></span>
+              <span class="resultado__linha-valor" id="resultado-por-dia">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ferramenta__exportar">
+          <button type="button" class="botao botao--secundario botao--pequeno" data-acao="copiar">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-copiar"></use></svg>
+            <span data-texto="compartilhado.acoes.copiar"></span>
+          </button>
+          <button type="button" class="botao botao--secundario botao--pequeno" data-acao="pdf">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-pdf"></use></svg>
+            <span data-texto="compartilhado.acoes.pdf"></span>
+          </button>
+          <button type="button" class="botao botao--secundario botao--pequeno so-sessao" data-acao="salvar-trabalho">
+            <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-salvos"></use></svg>
+            <span data-texto="compartilhado.ferramenta.salvar_trabalho"></span>
+          </button>
+        </div>
+
+        <div class="conta-formula">
+          <p class="sobretitulo" data-texto="compartilhado.ferramenta.a_conta"></p>
+          <code id="conta-formula-texto"></code>
+          <p class="texto-pequeno texto-2" data-texto="ponto-de-equilibrio.conta.nota"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ferramenta__ajuda">
+      <section>
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.como_usar"></h2>
+        <ol class="passos">
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="ponto-de-equilibrio.como_usar.um"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="ponto-de-equilibrio.como_usar.dois"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="ponto-de-equilibrio.como_usar.tres"></p></li>
+        </ol>
+      </section>
+
+      <section class="perguntas">
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.perguntas"></h2>
+        <details>
+          <summary data-texto="ponto-de-equilibrio.perguntas.fixo_variavel.pergunta"></summary>
+          <p data-texto="ponto-de-equilibrio.perguntas.fixo_variavel.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="ponto-de-equilibrio.perguntas.servico.pergunta"></summary>
+          <p data-texto="ponto-de-equilibrio.perguntas.servico.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="ponto-de-equilibrio.perguntas.nao_fecha.pergunta"></summary>
+          <p data-texto="ponto-de-equilibrio.perguntas.nao_fecha.resposta"></p>
+        </details>
+      </section>
+
+      <aside class="ferramenta__lateral">
+        <h2 class="sobretitulo" data-texto="compartilhado.ferramenta.relacionadas"></h2>
+        <ul class="relacionadas"></ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

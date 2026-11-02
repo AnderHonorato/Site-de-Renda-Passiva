@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("tempo-de-leitura",7,"Tempo de leitura","Estime minutos de leitura na velocidade informada.","Número de palavras dividido por palavras por minuto; leitura real varia por pessoa e conteúdo.",[T('texto','Texto','Um texto para ler com calma.'),N('velocidade','Palavras por minuto',200,1,2000)],async d=>{const q=palavras(texto(d,'texto')).length,v=n(d,'velocidade',1,2000);return {resumo:fmt(q/v)+' minutos',linhas:[q+' palavras',Math.ceil(q/v*60)+' segundos estimados']};});
+

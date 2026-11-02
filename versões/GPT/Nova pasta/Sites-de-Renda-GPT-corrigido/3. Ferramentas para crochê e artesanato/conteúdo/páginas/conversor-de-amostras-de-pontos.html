@@ -1,0 +1,92 @@
+<!--página
+{
+  "título": "Conversor de amostras de pontos",
+  "descrição": "Calcule quantos pontos usar para uma largura desejada a partir da sua amostra, com aviso quando o total não é múltiplo do padrão de pontos.",
+  "destaque": "ameixa",
+  "navegação": "ferramentas",
+  "script": "páginas/conversor-de-amostras-de-pontos.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Conversor de amostras de pontos</h1>
+    <p class="ferramenta-resumo">Trabalhe uma amostra quadrada com a sua linha e agulha, meça quantos pontos ela tem numa largura conhecida e calcule quantos pontos usar para a largura que você quer.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-amostra" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Sua amostra</legend>
+        <div class="campo">
+          <label for="pontos-da-amostra">Pontos da amostra</label>
+          <input id="pontos-da-amostra" name="pontos-da-amostra" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 20" aria-describedby="pontos-da-amostra-erro">
+          <p id="pontos-da-amostra-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="largura-da-amostra">Largura da amostra (cm)</label>
+          <input id="largura-da-amostra" name="largura-da-amostra" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 10" aria-describedby="largura-da-amostra-erro">
+          <p id="largura-da-amostra-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <div class="campo">
+        <label for="largura-desejada">Largura desejada (cm)</label>
+        <input id="largura-desejada" name="largura-desejada" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 35" aria-describedby="largura-desejada-erro">
+        <p id="largura-desejada-erro" class="campo-erro" hidden></p>
+      </div>
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Padrão de pontos (opcional)</legend>
+        <div class="campo">
+          <label for="múltiplo-do-padrão">Múltiplo da repetição do ponto</label>
+          <input id="múltiplo-do-padrão" name="múltiplo-do-padrão" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 8" aria-describedby="múltiplo-do-padrão-ajuda múltiplo-do-padrão-erro">
+          <p id="múltiplo-do-padrão-ajuda" class="campo-ajuda">Quantos pontos tem uma repetição do padrão (ponto ajuda, ponto fantasia...). Deixe em branco se sua peça não segue um padrão repetido.</p>
+          <p id="múltiplo-do-padrão-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="pontos-de-borda">Pontos de borda (fora da repetição)</label>
+          <input id="pontos-de-borda" name="pontos-de-borda" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="0" aria-describedby="pontos-de-borda-erro">
+          <p id="pontos-de-borda-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular pontos</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#ruler"></use></svg>
+        <p class="estado-vazio-título">A quantidade de pontos aparece aqui</p>
+        <p>Preencha a amostra e a largura desejada e toque em Calcular pontos.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Pontos para a largura desejada</p>
+          <p class="resultado-valor" data-pontos></p>
+        </div>
+        <div class="aviso aviso-alerta" data-aviso-múltiplo hidden>
+          <p data-texto-múltiplo></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse número</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Pontos por cm = pontos da amostra ÷ largura da amostra; multiplicado pela largura desejada.</li>
+    <li>Com o múltiplo do padrão preenchido, avisamos quando o total não fecha a repetição e sugerimos os dois valores mais próximos — sem aplicar ajuste sozinho.</li>
+    <li>A tensão do crochê muda de pessoa para pessoa: refaça a amostra se trocar de linha ou agulha.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-amostra" class="botão botão-primário">Calcular pontos</button>
+</div>

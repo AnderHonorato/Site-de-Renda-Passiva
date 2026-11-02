@@ -1,0 +1,52 @@
+/* salvos.css — página /salvos: lista densa de favoritos, oferta de juntar e estado vazio. */
+
+.salvos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+  padding-block: var(--espaco-7) var(--espaco-8);
+  max-width: 760px;
+}
+
+.salvos__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.salvos__resumo {
+  margin: 0;
+}
+
+.salvos__juntar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.salvos__juntar-titulo {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 600;
+}
+
+.salvos__juntar-texto {
+  margin: 0;
+  font-size: 14px;
+}
+
+.salvos__juntar-acoes {
+  display: flex;
+  gap: var(--espaco-2);
+  flex-wrap: wrap;
+}
+
+.salvos__lista {
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .salvos {
+    padding-block: var(--espaco-5) var(--espaco-7);
+  }
+}

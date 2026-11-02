@@ -1,0 +1,70 @@
+@charset "UTF-8";
+/* Sincronizado de compartilhado/estilos/componentes/ferramenta.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/ferramenta.css
+   Estrutura de uma página de ferramenta: cabeçalho editorial, formulário e
+   resultado lado a lado no computador, empilhados no celular. */
+
+.ferramenta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-6);
+}
+
+.ferramenta-cabeçalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  max-width: 68ch;
+}
+
+.ferramenta-corpo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espaço-5);
+  align-items: start;
+}
+
+@media (min-width: 860px) {
+  .ferramenta-corpo {
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: var(--espaço-6);
+  }
+}
+
+.ferramenta-formulário {
+  padding: var(--espaço-5);
+  background: var(--cor-superfície);
+  border-radius: var(--raio-g);
+}
+.ferramenta-formulário .campo:last-of-type { margin-bottom: 0; }
+
+.ferramenta-resultado {
+  padding: var(--espaço-5);
+  background: var(--cor-superfície-elevada);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+
+/* Premissas assumidas pelo cálculo, listadas junto do resultado */
+.premissas {
+  margin: 0;
+  padding: var(--espaço-3) var(--espaço-4);
+  background: var(--cor-superfície);
+  border-radius: var(--raio-m);
+  font-size: 12.5px;
+  color: var(--cor-texto-suave);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.premissas li {
+  display: flex;
+  gap: 6px;
+}
+.premissas li::before {
+  content: "•";
+  color: var(--cor-texto-destaque);
+}

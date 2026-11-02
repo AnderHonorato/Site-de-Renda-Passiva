@@ -1,0 +1,20 @@
+{
+  "categorias": [
+    { "id": "dinheiro",        "ordem": 1,  "icone": "dinheiro" },
+    { "id": "vendas",          "ordem": 2,  "icone": "vendas" },
+    { "id": "calculo",         "ordem": 3,  "icone": "calculo" },
+    { "id": "datas",           "ordem": 4,  "icone": "calendario" },
+    { "id": "texto",           "ordem": 5,  "icone": "texto" },
+    { "id": "documentos",      "ordem": 6,  "icone": "documento" },
+    { "id": "planilhas",       "ordem": 7,  "icone": "planilha" },
+    { "id": "imagens",         "ordem": 8,  "icone": "imagem" },
+    { "id": "desenvolvimento", "ordem": 9,  "icone": "codigo" },
+    { "id": "seguranca",       "ordem": 10, "icone": "chave" },
+    { "id": "trabalho",        "ordem": 11, "icone": "pessoas" },
+    { "id": "operacoes",       "ordem": 12, "icone": "caixa" },
+    { "id": "marketing",       "ordem": 13, "icone": "megafone" },
+    { "id": "produtividade",   "ordem": 14, "icone": "lista" },
+    { "id": "estudos",         "ordem": 15, "icone": "livro" },
+    { "id": "oficio",          "ordem": 16, "icone": "ferramenta" }
+  ]
+}

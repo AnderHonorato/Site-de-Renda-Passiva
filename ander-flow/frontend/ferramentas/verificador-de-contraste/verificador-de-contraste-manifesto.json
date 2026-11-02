@@ -1,0 +1,39 @@
+{
+  "slug": "verificador-de-contraste",
+  "estado": "planejada",
+  "categoria": "imagens",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "imagem",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Verificador de contraste de cores",
+    "en": "Color contrast checker"
+  },
+  "descricao": {
+    "pt-BR": "Confere se a combinação de cor do texto e do fundo atende às regras de acessibilidade.",
+    "en": "Checks whether a text and background color combination meets accessibility rules."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "esse texto tem contraste suficiente"
+    ],
+    "en": [
+      "does this text have enough contrast"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "contraste",
+      "acessibilidade",
+      "wcag"
+    ],
+    "en": [
+      "contrast",
+      "accessibility",
+      "wcag"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

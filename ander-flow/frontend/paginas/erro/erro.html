@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="">
+  <meta name="af-acesso" content="publico">
+  <title data-texto="erro.{codigo}.titulo_pagina"></title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/estatico/paginas/erro/erro.css">
+  <script type="module" src="/estatico/paginas/erro/erro.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo erro">
+    <p class="sobretitulo erro__codigo" data-texto="erro.{codigo}.etiqueta"></p>
+    <h1 class="titulo-display titulo-display--2" data-texto="erro.{codigo}.titulo"></h1>
+    <p class="erro__texto texto-2" data-texto="erro.{codigo}.texto"></p>
+
+    <form class="erro__busca" action="/ferramentas" method="get">
+      <label class="visualmente-oculto" for="erro-busca" data-texto="compartilhado.busca.rotulo"></label>
+      <div class="busca-intencao">
+        <svg class="icone busca-intencao__icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-busca"></use></svg>
+        <input class="busca-intencao__entrada" id="erro-busca" name="busca" type="search" data-texto-placeholder="compartilhado.busca.placeholder">
+      </div>
+      <button class="botao botao--primario" type="submit" data-texto="erro.acoes.buscar"></button>
+    </form>
+
+    <p class="erro__atalhos">
+      <a href="/ferramentas" data-texto="compartilhado.acoes.ir_para_catalogo"></a>
+      <span aria-hidden="true">·</span>
+      <a href="/" data-texto="erro.acoes.ir_para_inicio"></a>
+    </p>
+
+    <section class="erro__mais-usadas" hidden>
+      <h2 class="sobretitulo" data-texto="erro.mais_usadas.titulo"></h2>
+      <ul class="lista-densa erro__lista"></ul>
+    </section>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

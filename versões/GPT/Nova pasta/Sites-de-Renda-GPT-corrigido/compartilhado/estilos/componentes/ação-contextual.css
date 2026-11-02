@@ -1,0 +1,40 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/ação-contextual.css
+   <div class="ação-contextual"> — a ação principal da ferramenta (Calcular,
+   Gerar, Imprimir…) ao alcance do polegar no celular, presa acima da
+   navegação inferior. No computador ela some e o formulário mostra o botão
+   equivalente marcado com .somente-computador. */
+
+.ação-contextual {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--altura-navegação-inferior) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--camada-ação);
+  display: flex;
+  align-items: center;
+  min-height: var(--altura-ação-contextual);
+  padding: var(--espaço-2) var(--espaço-4);
+  background: color-mix(in srgb, var(--cor-superfície-elevada) 96%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid var(--cor-divisória);
+  box-shadow: var(--sombra-m);
+  transition: bottom var(--duração-painel) var(--curva-suave);
+}
+
+.ação-contextual .botão {
+  flex: 1;
+}
+
+/* Teclado virtual aberto: a navegação inferior recolhe (translateY 100%) —
+   a ação desce para a borda real da viewport visível e continua acessível. */
+html.teclado-aberto .ação-contextual {
+  bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .ação-contextual {
+    display: none;
+  }
+}

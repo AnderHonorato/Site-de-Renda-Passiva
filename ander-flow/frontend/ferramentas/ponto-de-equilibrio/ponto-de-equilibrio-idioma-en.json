@@ -1,0 +1,68 @@
+{
+  "ponto-de-equilibrio": {
+    "titulo_pagina": "Break-even point — Ander Flow",
+    "descricao_pagina": "How much you need to sell in a month to cover your costs, in units and in revenue. The calculation runs in your browser.",
+    "titulo": "Break-even point",
+    "resumo": "Enter what goes out every month and what comes in with each sale. The tool tells you how many units and how much revenue pay the bills — and what is missing for the profit you want.",
+    "grupos": {
+      "mes": "What goes out every month",
+      "venda": "What comes in with each sale"
+    },
+    "campos": {
+      "custos_fixos": "Fixed costs for the month",
+      "custos_fixos_ajuda": "Rent, wages, internet, accountant — what you pay even selling nothing.",
+      "lucro": "Profit you want for the month",
+      "lucro_ajuda": "Optional. Leave it empty to calculate breaking even only.",
+      "preco": "Selling price per unit",
+      "custo_variavel": "Variable cost per unit",
+      "custo_variavel_ajuda": "What only exists when you sell: raw material, packaging, outbound shipping.",
+      "percentual": "Percentage taken out of the price",
+      "percentual_ajuda": "Card fee, commission and tax added up, as a percentage of the price."
+    },
+    "acoes": {
+      "calcular": "Calculate break-even point"
+    },
+    "resultado": {
+      "titulo": "You need to sell",
+      "unidades": "{quantidade} units",
+      "receita": "Revenue needed",
+      "margem_unitaria": "Contribution margin per unit",
+      "indice": "Margin ratio",
+      "por_dia": "Average per day (30-day month)"
+    },
+    "conta": {
+      "formula": "quantity = (fixed costs + profit) ÷ contribution margin per unit",
+      "linha": "{quantidade} = {alvo} ÷ {margem}",
+      "nota": "The margin per unit already subtracts the variable cost and the percentage taken out of the price. If it is zero or negative, no quantity closes the equation."
+    },
+    "erros": {
+      "numero_invalido": "Enter a valid number.",
+      "valor_negativo": "The value cannot be negative.",
+      "preco_invalido": "Enter the selling price to calculate.",
+      "percentual_acima_do_limite": "The percentage taken out of the price needs to be below 100%.",
+      "margem_nao_positiva": "Each sale leaves nothing: the variable cost plus the percentage reach the price. Raise the price or lower the cost."
+    },
+    "trabalho": {
+      "titulo_padrao": "Break-even point — {quantidade} units"
+    },
+    "como_usar": {
+      "um": "Add up everything that leaves the till every month even when you sell nothing. That is the **fixed cost**.",
+      "dois": "Enter the price and what goes out with each sale: variable cost in reais and percentage of the price.",
+      "tres": "If you want a profit beyond breaking even, write the amount. The quantity goes up with it."
+    },
+    "perguntas": {
+      "fixo_variavel": {
+        "pergunta": "How do I know whether a cost is fixed or variable?",
+        "resposta": "Ask yourself: if I sell nothing this month, do I still pay it? If yes, it is fixed. If it only shows up when there is a sale, it is variable."
+      },
+      "servico": {
+        "pergunta": "Does it work for services, not only for products?",
+        "resposta": "It does. Instead of a unit, think of an appointment, an hour or a contract: the price is what you charge and the variable cost is what you spend to deliver that service."
+      },
+      "nao_fecha": {
+        "pergunta": "What if the equation never closes?",
+        "resposta": "When the margin per unit is zero or negative, selling more only grows the loss. Before chasing volume, review the price, the variable cost or the fees."
+      }
+    }
+  }
+}

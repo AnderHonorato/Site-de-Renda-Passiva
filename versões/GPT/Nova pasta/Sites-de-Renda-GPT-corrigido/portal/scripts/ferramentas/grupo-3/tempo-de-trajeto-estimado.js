@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("tempo-de-trajeto-estimado",15,"Tempo de trajeto estimado","Calcule uma duração pela distância, velocidade média e pausas.","Minutos = distância / velocidade média × 60 + pausas. Velocidade constante representa uma média declarada; não é sugestão de velocidade e não prevê trânsito.",[h.numero('distancia','Distância (km)',180),h.numero('velocidade','Velocidade média (km/h)',60),h.numero('pausa','Pausas totais (min)',30)],async d=>{const total=h.n(d.distancia)/h.positivo(d.velocidade,'Velocidade média')*60+h.n(d.pausa),seg=Math.round(total*60),horas=Math.floor(seg/3600),min=Math.floor(seg%3600/60),s=seg%60;return h.resultado(horas+' h '+min+' min'+(s?' '+s+' s':''),'Tempo calculado: '+h.f(total)+' minutos','Estimativa sem condições de tráfego.');});
+

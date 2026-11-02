@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pt-BR" data-raiz="../" data-prefixo="doce-ofício" data-destaque="pistache" data-tipo="ferramenta" data-anúncios="sim" data-página="orçamento">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Orçamento ao cliente — Doce Ofício</title>
+  <meta name="description" content="Monte um orçamento com itens, quantidades e preços. Baixe em PDF ou planilha, imprima ou compartilhe um link, sem revelar custo interno.">
+  <meta name="author" content="Anderson">
+  <meta name="theme-color" content="#f8eee3">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" href="../recursos/ícones/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../recursos/fontes/figtree-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../estilos/site.css">
+  <script type="module" src="../scripts/iniciar-aplicação.js"></script>
+  <script type="module" src="../scripts/páginas/orçamento.js"></script>
+</head>
+<body>
+  <a class="pular-para-conteúdo" href="#conteúdo">Pular para o conteúdo</a>
+  <header class="cabeçalho não-imprimir">
+    <a class="cabeçalho-marca logotipo" href="../index.html" aria-label="Doce Ofício — página inicial"><svg class="marca-símbolo" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#marca"></use></svg><span>Doce <em>Ofício</em></span></a>
+    <nav class="cabeçalho-navegação" aria-label="Navegação principal">
+      <a class="cabeçalho-link" href="../páginas/ferramentas.html" aria-current="page">Ferramentas</a>
+      <a class="cabeçalho-link" href="../páginas/salvos.html">Salvos</a>
+      <a class="cabeçalho-link" href="../páginas/metodologia.html">Metodologia</a>
+      <a class="cabeçalho-link" href="../páginas/sobre.html">Sobre</a>
+      <a class="botão botão-primário cabeçalho-apoiar" href="../páginas/apoiar.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#apoiar"></use></svg><span>Apoiar por Pix</span></a>
+    </nav>
+  </header>
+  <main id="conteúdo" class="conteúdo" tabindex="-1">
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Orçamento ao cliente</h1>
+    <p class="ferramenta-resumo">Monte uma proposta comercial com os itens, quantidades e preços que você escolher. O orçamento mostra só informações comerciais: nunca o custo interno nem a margem das suas ferramentas.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-orçamento" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Quem emite e para quem</legend>
+        <div class="campo">
+          <label for="emissor-nome">Seu nome ou nome do negócio</label>
+          <input id="emissor-nome" name="emissor-nome" class="entrada" type="text" maxlength="80" autocomplete="off" placeholder="Ex.: Ateliê da Ana Doces" aria-describedby="emissor-nome-ajuda emissor-nome-erro">
+          <p id="emissor-nome-ajuda" class="campo-ajuda">Aparece no orçamento como quem está oferecendo os itens.</p>
+          <p id="emissor-nome-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="emissor-contato">Seu contato (opcional)</label>
+          <input id="emissor-contato" name="emissor-contato" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: WhatsApp (11) 90000-0000" aria-describedby="emissor-contato-erro">
+          <p id="emissor-contato-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="cliente-nome">Nome do cliente (opcional)</label>
+          <input id="cliente-nome" name="cliente-nome" class="entrada" type="text" maxlength="80" autocomplete="off" placeholder="Ex.: Marcela" aria-describedby="cliente-nome-erro">
+          <p id="cliente-nome-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="título-orçamento">Título do orçamento (opcional)</label>
+          <input id="título-orçamento" name="título" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Doces para festa de 15 anos" aria-describedby="título-orçamento-erro">
+          <p id="título-orçamento-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Itens do orçamento</legend>
+        <div class="linhas-editáveis" data-linhas-de-itens>
+          <div class="linha-editável" data-linha>
+            <div class="campo"><label for="item-descrição-0">Item</label><input id="item-descrição-0" class="entrada" type="text" maxlength="120" data-campo="descrição" placeholder="Ex.: Brigadeiro gourmet" aria-describedby="item-erro-0"></div>
+            <div class="campo campo-estreito"><label for="item-quantidade-0">Quantidade</label><input id="item-quantidade-0" class="entrada" type="text" inputmode="decimal" data-campo="quantidade" placeholder="Ex.: 50"></div>
+            <div class="campo campo-estreito"><label for="item-unidade-0">Unidade</label><input id="item-unidade-0" class="entrada" type="text" maxlength="12" data-campo="unidade" placeholder="un."></div>
+            <div class="campo campo-estreito"><label for="item-preço-0">Preço unitário (R$)</label><input id="item-preço-0" class="entrada" type="text" inputmode="decimal" data-campo="preço" placeholder="Ex.: 2,29"></div>
+            <button type="button" class="botão botão-ícone botão-fantasma" data-remover-linha aria-label="Remover item">
+              <svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#remover"></use></svg>
+            </button>
+          </div>
+          <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-item>
+            <svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#adicionar"></use></svg>
+            <span>Adicionar item</span>
+          </button>
+        </div>
+        <p class="campo-erro" id="itens-erro" hidden></p>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Condições (opcional)</legend>
+        <div class="campo">
+          <label for="prazo">Prazo de entrega</label>
+          <input id="prazo" name="prazo" class="entrada" type="text" maxlength="80" autocomplete="off" placeholder="Ex.: 5 dias úteis após a confirmação" aria-describedby="prazo-erro">
+          <p id="prazo-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="validade">Validade da proposta (dias)</label>
+          <input id="validade" name="validade" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 7" aria-describedby="validade-ajuda validade-erro">
+          <p id="validade-ajuda" class="campo-ajuda">Deixe em branco se não quiser mostrar uma data-limite.</p>
+          <p id="validade-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="desconto">Desconto total (R$, opcional)</label>
+          <input id="desconto" name="desconto" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="desconto-erro">
+          <p id="desconto-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="observações">Observações</label>
+          <textarea id="observações" name="observações" class="entrada área-de-texto" maxlength="600" rows="3" placeholder="Ex.: Valores sujeitos a alteração conforme disponibilidade de ingredientes." aria-describedby="observações-erro"></textarea>
+          <p id="observações-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#calcular"></use></svg>Gerar orçamento</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#receipt"></use></svg>
+        <p class="estado-vazio-título">Seu orçamento aparece aqui</p>
+        <p>Preencha quem emite, ao menos um item e toque em Gerar orçamento.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="área-de-impressão" data-documento></div>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-primário" data-baixar-pdf><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-baixar-planilha><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#exportar"></use></svg>Baixar planilha</button>
+          <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+          <button type="button" class="botão botão-secundário" data-copiar><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#copiar"></use></svg>Copiar texto</button>
+          <button type="button" class="botão botão-secundário" data-compartilhar><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#link-externo"></use></svg>Compartilhar link</button>
+        </div>
+        <p class="campo-ajuda não-imprimir">O link contém os dados deste orçamento. Quem receber o link poderá vê-lo.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do orçamento">
+    <li>O orçamento mostra apenas o que você escolhe informar: itens, quantidades e preços. Custo interno e margem não aparecem aqui.</li>
+    <li>O link compartilhado guarda os dados só no próprio link (não em um servidor); qualquer pessoa com o link pode abri-lo.</li>
+    <li>Nada é enviado automaticamente ao cliente: você decide como entregar o PDF, a planilha, a impressão ou o link.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-orçamento" class="botão botão-primário">Gerar orçamento</button>
+</div>
+  </main>
+
+  <footer class="rodapé-institucional">
+    <div class="rodapé-conteúdo">
+      <div class="rodapé-autoria">
+        <p class="rodapé-marca logotipo"><svg class="marca-símbolo" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#marca"></use></svg><span>Doce <em>Ofício</em></span></p>
+        <p class="rodapé-criador">Criado por <strong>Anderson</strong></p>
+      </div>
+      <nav class="rodapé-links não-imprimir" aria-label="Institucional">
+        <ul>
+          <li><a href="../páginas/sobre.html">Sobre</a></li>
+          <li><a href="../páginas/metodologia.html">Metodologia</a></li>
+          <li><a href="../páginas/contato.html">Contato</a></li>
+          <li><a href="../páginas/política-de-privacidade.html">Política de privacidade</a></li>
+          <li><a href="../páginas/termos-de-uso.html">Termos de uso</a></li>
+          <li><button type="button" class="botão-link" data-abrir-preferências-de-privacidade>Preferências de privacidade</button></li>
+        </ul>
+      </nav>
+      <p class="rodapé-direitos">© 2026 Doce Ofício · versão 1.0.0 · Ferramentas gratuitas. Resultados são estimativas baseadas nos dados informados.</p>
+    </div>
+  </footer>
+
+  <nav class="navegação-inferior não-imprimir" aria-label="Navegação do aplicativo">
+    <a class="navegação-inferior-item" href="../index.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#início"></use></svg><span>Início</span></a>
+    <a class="navegação-inferior-item" href="../páginas/ferramentas.html" aria-current="page"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#ferramentas"></use></svg><span>Ferramentas</span></a>
+    <a class="navegação-inferior-item" href="../páginas/salvos.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#salvos"></use></svg><span>Salvos</span></a>
+    <a class="navegação-inferior-item" href="../páginas/apoiar.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#apoiar"></use></svg><span>Apoiar</span></a>
+    <button type="button" class="navegação-inferior-item" data-abrir-menu-mais aria-haspopup="dialog" aria-controls="menu-mais"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#mais"></use></svg><span>Mais</span></button>
+  </nav>
+
+  <dialog id="menu-mais" class="diálogo menu-mais" aria-labelledby="menu-mais-título">
+    <div class="diálogo-cabeçalho">
+      <h2 id="menu-mais-título" class="diálogo-título">Mais opções</h2>
+      <button type="button" class="botão botão-ícone botão-fantasma" data-fechar-diálogo aria-label="Fechar menu"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#fechar"></use></svg></button>
+    </div>
+    <nav aria-label="Mais opções">
+      <ul class="menu-mais-lista">
+        <li><a class="menu-mais-link" href="../páginas/sobre.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#informação"></use></svg><span>Sobre</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/metodologia.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#lista"></use></svg><span>Metodologia</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/contato.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#contato"></use></svg><span>Contato</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/política-de-privacidade.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#privacidade"></use></svg><span>Política de privacidade</span></a></li>
+        <li><a class="menu-mais-link" href="../páginas/termos-de-uso.html"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#documento"></use></svg><span>Termos de uso</span></a></li>
+        <li><button type="button" class="menu-mais-link" data-abrir-preferências-de-privacidade><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#privacidade"></use></svg><span>Preferências de privacidade</span></button></li>
+      </ul>
+    </nav>
+  </dialog>
+
+  <section id="consentimento" class="consentimento não-imprimir" aria-labelledby="consentimento-título" hidden>
+    <div class="consentimento-texto">
+      <h2 id="consentimento-título" class="consentimento-título">Sua privacidade</h2>
+      <p>Guardamos no seu aparelho apenas o necessário para lembrar suas escolhas e os dados que você decidir salvar. Recursos opcionais, como publicidade, só são carregados se você permitir. Rejeitar não limita nenhuma ferramenta. <a href="../páginas/política-de-privacidade.html">Política de privacidade</a>.</p>
+    </div>
+    <div class="consentimento-ações">
+      <button type="button" class="botão botão-secundário" data-consentimento="rejeitar">Rejeitar opcionais</button>
+      <button type="button" class="botão botão-secundário" data-consentimento="personalizar">Personalizar</button>
+      <button type="button" class="botão botão-primário" data-consentimento="aceitar">Aceitar opcionais</button>
+    </div>
+  </section>
+  <dialog id="preferências-de-privacidade" class="diálogo" aria-labelledby="preferências-título">
+    <form method="dialog" class="diálogo-formulário" data-formulário-de-privacidade>
+      <div class="diálogo-cabeçalho">
+        <h2 id="preferências-título" class="diálogo-título">Preferências de privacidade</h2>
+        <button type="button" class="botão botão-ícone botão-fantasma" data-fechar-diálogo aria-label="Fechar preferências"><svg class="ícone" aria-hidden="true" focusable="false"><use href="../recursos/ícones/ícones.svg#fechar"></use></svg></button>
+      </div>
+      <div class="diálogo-corpo">
+        <div class="opção-de-privacidade">
+          <p class="opção-de-privacidade-título">Necessário <span class="etiqueta etiqueta-secundária">Sempre ativo</span></p>
+          <p class="campo-ajuda">Armazenamento local para guardar esta escolha e os itens que você salvar. Não é enviado a servidores.</p>
+        </div>
+        <div class="opção-de-privacidade">
+          <label class="interruptor">
+            <input type="checkbox" name="publicidade" role="switch" data-preferência="publicidade">
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            <span class="opção-de-privacidade-título">Publicidade</span>
+          </label>
+          <p class="campo-ajuda" data-estado-da-publicidade>Permite carregar anúncios do Google AdSense, que podem usar cookies e identificadores. Enquanto a publicidade não estiver ativa neste site, nada é carregado.</p>
+        </div>
+        <p class="campo-ajuda">Este site não usa ferramentas de medição de audiência. Você pode mudar sua escolha a qualquer momento em “Preferências de privacidade”, no rodapé ou no menu Mais.</p>
+      </div>
+      <div class="diálogo-ações">
+        <button type="submit" value="rejeitar" class="botão botão-secundário">Rejeitar opcionais</button>
+        <button type="submit" value="salvar" class="botão botão-primário">Salvar escolhas</button>
+      </div>
+    </form>
+  </dialog>
+  <div class="região-de-mensagens não-imprimir" role="status" aria-live="polite" data-região-de-mensagens></div>
+</body>
+</html>

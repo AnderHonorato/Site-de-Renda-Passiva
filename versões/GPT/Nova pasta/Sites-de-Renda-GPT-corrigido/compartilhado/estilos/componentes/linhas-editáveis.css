@@ -1,0 +1,53 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/linhas-editáveis.css
+   Listas dinâmicas dentro de um formulário (ex.: ingredientes, itens de uma
+   lista de compras) — cada linha tem seus campos e um botão de remover. */
+
+.linhas-editáveis {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  margin-bottom: var(--espaço-4);
+}
+
+.linha-editável {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--espaço-2);
+  padding: var(--espaço-2);
+  border-radius: var(--raio-m);
+  transition: opacity var(--duração-controle) var(--curva-suave),
+    transform var(--duração-controle) var(--curva-suave);
+}
+.linha-editável .campo {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+.linha-editável .botão-ícone {
+  flex: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .linha-editável {
+    animation: entrada-com-subida var(--duração-controle) var(--curva-suave) both;
+  }
+}
+
+.linha-editável[data-saindo] {
+  opacity: 0;
+  transform: translateX(12px);
+}
+
+.linhas-editáveis-adicionar {
+  align-self: flex-start;
+}
+
+@media (max-width: 480px) {
+  .linha-editável {
+    flex-wrap: wrap;
+  }
+  .linha-editável .campo {
+    flex-basis: 100%;
+  }
+}

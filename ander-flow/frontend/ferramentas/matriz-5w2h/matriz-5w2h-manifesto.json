@@ -1,0 +1,37 @@
+{
+  "slug": "matriz-5w2h",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Plano de ação 5W2H",
+    "en": "5W2H action plan"
+  },
+  "descricao": {
+    "pt-BR": "Organiza a ação em o quê, por quê, quem, quando, onde, como e quanto custa.",
+    "en": "Organizes an action into what, why, who, when, where, how, and how much it costs."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar plano de ação 5w2h"
+    ],
+    "en": [
+      "build a 5w2h action plan"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "5w2h",
+      "plano de ação"
+    ],
+    "en": [
+      "5w2h",
+      "action plan"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

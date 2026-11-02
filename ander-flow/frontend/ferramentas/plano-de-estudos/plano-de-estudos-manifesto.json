@@ -1,0 +1,39 @@
+{
+  "slug": "plano-de-estudos",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Plano de estudos",
+    "en": "Study plan"
+  },
+  "descricao": {
+    "pt-BR": "Monta uma grade semanal de estudos por disciplina, com minutos por sessão e pausas.",
+    "en": "Builds a weekly study schedule by subject, with minutes per session and breaks."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar plano de estudos da semana"
+    ],
+    "en": [
+      "build a weekly study plan"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "plano de estudos",
+      "grade semanal",
+      "rotina de estudo"
+    ],
+    "en": [
+      "study plan",
+      "weekly schedule",
+      "study routine"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

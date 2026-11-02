@@ -1,0 +1,5 @@
+.consentimento { position:fixed; left:16px; right:16px; bottom:calc(var(--altura-barra-inferior) + 16px); z-index:80; max-width:900px; margin-inline:auto; box-shadow:var(--sombra-3); }
+.consentimento__acoes { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:16px; }
+.consentimento-opcoes { margin-block:24px; }
+@media(min-width:900px) { .consentimento { bottom:16px; } }
+@media print { .consentimento { display:none; } }

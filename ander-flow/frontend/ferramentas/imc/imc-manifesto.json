@@ -1,0 +1,39 @@
+{
+  "slug": "imc",
+  "estado": "planejada",
+  "categoria": "calculo",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "IMC e faixa de peso",
+    "en": "BMI and weight range"
+  },
+  "descricao": {
+    "pt-BR": "Índice de massa corporal, faixa de referência e peso correspondente à faixa.",
+    "en": "Body mass index, reference range, and the weight matching that range."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular imc"
+    ],
+    "en": [
+      "calculate bmi"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "imc",
+      "peso",
+      "altura"
+    ],
+    "en": [
+      "bmi",
+      "weight",
+      "height"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

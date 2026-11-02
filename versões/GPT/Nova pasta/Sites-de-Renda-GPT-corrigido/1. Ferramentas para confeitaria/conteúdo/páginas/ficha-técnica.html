@@ -1,0 +1,61 @@
+<!--página
+{
+  "título": "Ficha técnica de receita",
+  "descrição": "Gere uma ficha técnica imprimível de uma receita salva, com ingredientes, quantidades, rendimento e custo por unidade.",
+  "destaque": "caramelo",
+  "navegação": "ferramentas",
+  "script": "páginas/ficha-técnica.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Ficha técnica de receita</h1>
+    <p class="ferramenta-resumo">Escolha uma receita salva na ferramenta Custo da receita e gere uma ficha técnica imprimível, com ingredientes, quantidades, rendimento, tempo de preparo e custo por unidade — útil para padronizar o preparo na sua cozinha.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-ficha" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Receita</legend>
+        <div class="campo">
+          <label for="receita-da-ficha">Receita salva</label>
+          <select id="receita-da-ficha" class="entrada seleção" aria-describedby="receita-da-ficha-erro"></select>
+          <p id="receita-da-ficha-erro" class="campo-erro" hidden></p>
+        </div>
+        <p class="aviso aviso-informação" data-sem-receitas hidden>Você ainda não salvou nenhuma receita. Use a ferramenta <a href="{{raiz}}páginas/custo-da-receita.html">Custo da receita</a> primeiro.</p>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#clipboard-list"></use></svg>Gerar ficha técnica</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#clipboard-list"></use></svg>
+        <p class="estado-vazio-título">A ficha técnica aparece aqui</p>
+        <p>Escolha uma receita salva e toque em Gerar ficha técnica.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="área-de-impressão evitar-quebra" data-ficha></div>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir ficha</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas">
+    <li>A ficha usa os dados salvos na ferramenta Custo da receita; edite a receita lá para atualizar a ficha.</li>
+    <li>O custo por unidade é uma estimativa interna, útil para padronizar o preparo — não é o preço de venda.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-ficha" class="botão botão-primário">Gerar ficha técnica</button>
+</div>

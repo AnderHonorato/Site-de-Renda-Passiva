@@ -1,0 +1,27 @@
+{
+  "catalogo": {
+    "titulo_pagina": "Todas as ferramentas — Ander Flow",
+    "descricao_pagina": "As {ferramentas_total} ferramentas do Ander Flow, por categoria, com o que já está pronto e o que está planejado.",
+    "titulo": "Todas as ferramentas",
+    "resumo": "{ferramentas_prontas} prontas para usar e {ferramentas_planejadas} planejadas. Planejada aparece como planejada — nada de botão que não faz nada.",
+    "filtros": {
+      "titulo": "Categorias",
+      "estado": "Situação",
+      "todas": "Todas",
+      "limpar": "Limpar filtros",
+      "categoria_todas": "Todas as categorias"
+    },
+    "contagem": {
+      "parcial": "{visiveis} de {total} ferramentas",
+      "total": "{total} ferramentas"
+    },
+    "favorito": {
+      "guardar": "Guardar {nome} nos salvos",
+      "tirar": "Tirar {nome} dos salvos",
+      "guardado": "{nome} foi para os salvos",
+      "removido": "{nome} saiu dos salvos",
+      "limite_titulo": "Os salvos deste aparelho encheram",
+      "limite_texto": "Sem conta, dá para guardar até {limite} ferramentas neste aparelho. Entrando na conta, elas passam a acompanhar você em qualquer aparelho."
+    }
+  }
+}

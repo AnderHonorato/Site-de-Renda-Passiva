@@ -1,0 +1,80 @@
+<!--página
+{
+  "título": "Lista de compras da produção",
+  "descrição": "Some os ingredientes de várias receitas salvas × quantidade de lotes e descubra quantas embalagens inteiras comprar de cada um.",
+  "destaque": "caramelo",
+  "navegação": "ferramentas",
+  "script": "páginas/lista-de-compras.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Lista de compras da produção</h1>
+    <p class="ferramenta-resumo">Escolha as receitas salvas e quantos lotes de cada uma você vai produzir. A ferramenta soma os ingredientes iguais, calcula quantas embalagens inteiras comprar (arredondando para cima) e o que sobra em estoque.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-produção" class="ferramenta-formulário" data-formulário-produção novalidate>
+      <div class="aviso aviso-informação" data-sem-receitas hidden>
+        <p>Você ainda não salvou nenhuma receita. Use a ferramenta <a href="{{raiz}}páginas/custo-da-receita.html">Custo da receita</a> para salvar uma antes de montar a lista de compras.</p>
+      </div>
+      <fieldset class="grupo-de-campos">
+        <legend>Receitas da produção</legend>
+        <div class="linhas-editáveis" data-linhas-de-produção></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-produção>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar receita</span>
+        </button>
+        <p class="campo-erro" id="produção-erro" hidden></p>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular lista</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#shopping-basket"></use></svg>
+        <p class="estado-vazio-título">Sua lista aparece aqui</p>
+        <p>Escolha as receitas e os lotes de cada uma, e toque em Calcular lista.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Custo total das compras</p>
+          <p class="resultado-valor" data-custo-total></p>
+        </div>
+        <div class="área-de-impressão">
+          <div class="tabela-rolável">
+            <table class="tabela" data-tabela-de-compras>
+              <caption>Lista de compras</caption>
+              <thead>
+                <tr><th scope="col">Ingrediente</th><th scope="col">Necessário</th><th scope="col">Embalagens a comprar</th><th scope="col">Custo</th><th scope="col">Sobra</th></tr>
+              </thead>
+              <tbody data-corpo-da-tabela></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-copiar><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#copiar"></use></svg>Copiar lista</button>
+          <button type="button" class="botão botão-secundário" data-imprimir><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Ingredientes com o mesmo nome em receitas diferentes são somados; se aparecerem em unidades incompatíveis (massa e volume, por exemplo), a ferramenta avisa em vez de somar errado.</li>
+    <li>O preço e a embalagem usados na compra vêm da primeira receita em que o ingrediente aparece; ajuste a receita salva se o pacote comprado for diferente.</li>
+    <li>Embalagens são sempre inteiras, arredondadas para cima: não é possível comprar uma fração de pacote.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-produção" class="botão botão-primário">Calcular lista</button>
+</div>

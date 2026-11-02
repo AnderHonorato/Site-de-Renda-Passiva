@@ -1,0 +1,35 @@
+{
+  "erro": {
+    "404": {
+      "titulo_pagina": "Essa página não existe — Ander Flow",
+      "etiqueta": "Página não encontrada",
+      "titulo": "Essa não existe.",
+      "texto": "Pode ser um link antigo — algumas ferramentas mudaram de nome quando o catálogo foi reorganizado. A busca resolve mais rápido que voltar."
+    },
+    "403": {
+      "titulo_pagina": "Sem permissão — Ander Flow",
+      "etiqueta": "Sem permissão",
+      "titulo": "Essa parte não é sua.",
+      "texto": "Sua conta não tem permissão para abrir esta página. Se você acha que deveria ter, fale com o administrador pela tela de avisos."
+    },
+    "429": {
+      "titulo_pagina": "Muitas tentativas — Ander Flow",
+      "etiqueta": "Muitas tentativas",
+      "titulo": "Você bateu na porta rápido demais.",
+      "texto": "Para proteger o site, as tentativas ficam bloqueadas por alguns minutos. Tente de novo em {minutos} minutos — as ferramentas continuam funcionando no seu navegador."
+    },
+    "500": {
+      "titulo_pagina": "Algo deu errado — Ander Flow",
+      "etiqueta": "Erro do servidor",
+      "titulo": "Algo deu errado do nosso lado.",
+      "texto": "O problema não foi você. Tente de novo em instantes; se continuar, a busca e o catálogo costumam voltar primeiro."
+    },
+    "acoes": {
+      "buscar": "Buscar",
+      "ir_para_inicio": "Voltar ao início"
+    },
+    "mais_usadas": {
+      "titulo": "As mais usadas"
+    }
+  }
+}

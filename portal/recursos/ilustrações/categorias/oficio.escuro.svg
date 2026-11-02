@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" role="img" aria-labelledby="t">
+  <title id="t">Um rolo de tinta pintando uma parede enquanto um martelo bate</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #ece5d8; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    :root { --tinta: #e9e4dc; --fundo: #2a2723; --sombra: #000; --sombra-alfa: .4; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .tinta { animation: pinta 5s ease-in-out infinite; }
+    @keyframes pinta { 0%, 8% { transform: scaleX(0); } 70%, 92% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+    .rolo { animation: anda 5s ease-in-out infinite; }
+    @keyframes anda { 0%, 8% { transform: translateX(0); } 70%, 92% { transform: translateX(196px); } 100% { transform: translateX(0); } }
+    .martelo { transform-origin: 402px 168px; animation: bate 1.8s ease-in-out infinite; }
+    @keyframes bate { 0%, 55%, 100% { transform: rotate(-30deg); } 70% { transform: rotate(8deg); } 80% { transform: rotate(-6deg); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="184" rx="160" ry="9"/>
+  <rect x="120" y="34" width="240" height="128" rx="10" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+  <rect class="tinta e" x="126" y="40" width="228" height="116" rx="6" fill="#e8a58d" opacity=".9"/>
+  <g class="rolo"><rect x="128" y="62" width="40" height="18" rx="7" fill="#3d4451" stroke="#1a1a1a" stroke-width="3"/>
+    <path d="M168 71h10v22h-26v16" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="144" y="108" width="14" height="30" rx="5" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3"/></g>
+  <rect x="386" y="150" width="68" height="14" rx="4" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3"/>
+  <g class="martelo"><rect x="398" y="96" width="9" height="72" rx="4" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3"/><rect x="380" y="82" width="44" height="22" rx="6" fill="#3d4451" stroke="#1a1a1a" stroke-width="3"/></g>
+</svg>

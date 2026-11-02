@@ -1,0 +1,31 @@
+{
+  "recuperar-senha": {
+    "titulo_pagina": "Recuperar senha — Ander Flow",
+    "descricao_pagina": "Peça um link para criar uma nova senha da sua conta Ander Flow.",
+    "pedido": {
+      "titulo": "Recuperar senha",
+      "legenda": "Informe o e-mail da sua conta. Se ele existir, enviamos um link para criar uma nova senha.",
+      "campo_email": "E-mail",
+      "enviar": "Enviar link",
+      "enviando": "Enviando…",
+      "sucesso_titulo": "Se esse e-mail existir, o link chegou",
+      "sucesso_texto": "Confira sua caixa de entrada. O link vale por 1 hora.",
+      "voltar": "Voltar para entrar"
+    },
+    "redefinir": {
+      "titulo": "Nova senha",
+      "legenda": "Escolha uma nova senha com pelo menos 10 caracteres.",
+      "campo_senha": "Nova senha",
+      "campo_confirmar": "Confirmar nova senha",
+      "enviar": "Salvar nova senha",
+      "enviando": "Salvando…",
+      "sucesso_titulo": "Senha alterada",
+      "sucesso_texto": "Sua senha foi trocada. Entre com ela para continuar.",
+      "ir_para_entrar": "Ir para entrar",
+      "pedir_novo": "Link expirado? Peça um novo"
+    },
+    "erros": {
+      "senha_nao_confere": "As senhas não são iguais."
+    }
+  }
+}

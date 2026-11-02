@@ -1,0 +1,43 @@
+{
+  "slug": "gerador-de-formulas",
+  "estado": "planejada",
+  "categoria": "planilhas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "planilha",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Montador de fórmulas de planilha",
+    "en": "Spreadsheet formula builder"
+  },
+  "descricao": {
+    "pt-BR": "Monta PROCV, PROCX, SOMASES, CONT.SES e SE aninhado a partir de perguntas simples.",
+    "en": "Builds VLOOKUP, XLOOKUP, SUMIFS, COUNTIFS, and nested IF formulas from simple questions."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "como fazer procv"
+    ],
+    "en": [
+      "how to do a vlookup"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "procv",
+      "procx",
+      "somases",
+      "fórmula",
+      "excel"
+    ],
+    "en": [
+      "vlookup",
+      "xlookup",
+      "sumifs",
+      "formula",
+      "excel"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

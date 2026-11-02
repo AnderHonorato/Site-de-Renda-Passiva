@@ -1,0 +1,78 @@
+@charset "UTF-8";
+/* compartilhado/estilos/impressão.css
+   Regras de impressão. Concatenado por último em estilos/site.css.
+   `#fff`/`#000` aqui são deliberados, não variáveis do tema: a seção 6 do
+   contrato exige "texto preto em fundo branco" na impressão — papel e tinta
+   são absolutos, independentes da paleta do produto (que usa color-mix() e
+   transparências que não fazem sentido numa folha impressa). */
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  html, body {
+    overflow-x: visible;
+    background: #fff !important;
+    color: #000 !important;
+    padding-bottom: 0 !important;
+  }
+
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  a { color: #000 !important; text-decoration: underline; }
+
+  .não-imprimir,
+  .cabeçalho,
+  .navegação-inferior,
+  .rodapé-institucional,
+  .faixa-de-apoio,
+  .consentimento,
+  .espaço-publicitário,
+  .região-de-mensagens,
+  .ação-contextual,
+  dialog,
+  .diálogo {
+    display: none !important;
+  }
+
+  .somente-impressão {
+    display: revert !important;
+  }
+
+  .conteúdo {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .quebra-de-página {
+    break-before: page;
+  }
+
+  .evitar-quebra {
+    break-inside: avoid;
+  }
+
+  img, svg, .ícone {
+    filter: none !important;
+  }
+
+  .área-de-impressão {
+    width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #000 !important;
+  }
+
+  table, .tabela {
+    border-color: #000 !important;
+  }
+}

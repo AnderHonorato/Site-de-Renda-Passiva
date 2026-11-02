@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i > :nth-child(2) { transform-origin: left center; animation: marca 2.4s ease-in-out infinite; }
+    @keyframes marca { 0% { transform: scaleX(0); opacity: .3; } 45%, 100% { transform: scaleX(1); opacity: 1; } }
+    #i > :nth-child(1) { animation: respira 2.4s ease-in-out infinite; }
+    @keyframes respira { 0%, 100% { transform: scale(.94); } 50% { transform: scale(1.04); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><circle cx="12" cy="12" r="8"/><path d="m8.4 12.2 2.6 2.6 4.6-5"/></g>
+</svg>

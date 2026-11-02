@@ -1,0 +1,68 @@
+{
+  "margem-de-contribuicao": {
+    "titulo_pagina": "Contribution margin — Ander Flow",
+    "descricao_pagina": "How much of each sale is left to pay the fixed cost and become profit. The calculation runs in your browser.",
+    "titulo": "Contribution margin",
+    "resumo": "It is what is left from each sale after everything that only exists because of it. That amount is what pays the fixed cost of the month — and whatever goes beyond it is profit.",
+    "grupos": {
+      "venda": "One sale",
+      "mes": "The whole month (optional)"
+    },
+    "campos": {
+      "preco": "Selling price",
+      "custo_variavel": "Variable cost per unit",
+      "custo_variavel_ajuda": "Raw material, packaging, outbound shipping — what only goes out when you sell.",
+      "percentual": "Percentage taken out of the price",
+      "percentual_ajuda": "Card fee, commission and tax added up, as a percentage of the price.",
+      "quantidade": "Quantity sold in the month",
+      "quantidade_ajuda": "Optional. Use it to see the total for the month.",
+      "custos_fixos": "Fixed costs for the month",
+      "custos_fixos_ajuda": "Optional. Use it to know whether the month closes in the black."
+    },
+    "acoes": {
+      "calcular": "Calculate margin"
+    },
+    "resultado": {
+      "titulo": "Left per sale",
+      "indice": "Margin ratio",
+      "total": "Total margin for the month",
+      "resultado": "Result after the fixed cost",
+      "equilibrio": "Sales to break even in the month",
+      "unidades": "{quantidade} units",
+      "margem_negativa": "The margin is negative: each sale grows the loss. Selling more does not fix it — review the price, the variable cost or the fees."
+    },
+    "conta": {
+      "formula": "margin = price − variable cost − price × percentage",
+      "linha": "{margem} = {preco} − {custo} − {preco} × {percentual}",
+      "nota": "The ratio is the margin divided by the price: how much of every real sold is left to pay the fixed cost."
+    },
+    "erros": {
+      "numero_invalido": "Enter a valid number.",
+      "valor_negativo": "The value cannot be negative.",
+      "preco_invalido": "Enter the selling price to calculate.",
+      "percentual_acima_do_limite": "The percentage taken out of the price needs to be below 100%."
+    },
+    "trabalho": {
+      "titulo_padrao": "Contribution margin — {margem} per sale"
+    },
+    "como_usar": {
+      "um": "Start with **one** sale: price, variable cost and the percentage taken out of the price.",
+      "dois": "What is left is the contribution margin. It is not profit yet: it is the money that will pay the fixed cost.",
+      "tres": "Enter the quantity for the month and the fixed cost to see whether the month closes in the black and how many sales break even."
+    },
+    "perguntas": {
+      "lucro": {
+        "pergunta": "Is contribution margin the same as profit?",
+        "resposta": "No. It is what is left from the sale before the fixed cost. It only becomes profit once the sum of the margins for the month pays rent, wages and everything else that does not depend on selling."
+      },
+      "varios": {
+        "pergunta": "I have several products. How do I use it?",
+        "resposta": "Calculate one at a time. Comparing the margin of each product shows which one really holds the business up — sometimes the best seller is not the biggest contributor."
+      },
+      "indice": {
+        "pergunta": "What is the margin ratio for?",
+        "resposta": "It tells you how much of every real sold stays with you. It is useful to compare products with very different prices, where the amount in reais is misleading."
+      }
+    }
+  }
+}

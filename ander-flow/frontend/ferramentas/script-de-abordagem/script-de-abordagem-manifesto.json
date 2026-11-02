@@ -1,0 +1,39 @@
+{
+  "slug": "script-de-abordagem",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 90,
+  "nome": {
+    "pt-BR": "Script de abordagem",
+    "en": "Sales approach script"
+  },
+  "descricao": {
+    "pt-BR": "Monta o roteiro de abordagem de vendas por etapa: contato, apresentação e fechamento.",
+    "en": "Builds a sales approach script by stage: contact, presentation, and closing."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "roteiro para abordar cliente"
+    ],
+    "en": [
+      "script for approaching a customer"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "script de vendas",
+      "abordagem",
+      "objeções"
+    ],
+    "en": [
+      "sales script",
+      "approach",
+      "objections"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

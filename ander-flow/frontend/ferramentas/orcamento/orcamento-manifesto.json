@@ -1,0 +1,55 @@
+{
+  "slug": "orcamento",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Orçamento e proposta",
+    "en": "Quote and proposal"
+  },
+  "descricao": {
+    "pt-BR": "Monta o orçamento com itens, desconto e validade; exporta PDF, planilha e link para o cliente.",
+    "en": "Builds a quote with line items, discount, and validity period; exports as PDF, spreadsheet, and a link for the client."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer um orçamento",
+      "mandar proposta para o cliente",
+      "orçamento em pdf"
+    ],
+    "en": [
+      "make a quote",
+      "send a proposal to a client",
+      "quote as a pdf"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "orçamento",
+      "proposta",
+      "cliente",
+      "pdf",
+      "excel",
+      "encomenda",
+      "bolo",
+      "festa",
+      "obra"
+    ],
+    "en": [
+      "quote",
+      "proposal",
+      "client",
+      "pdf",
+      "excel",
+      "custom order",
+      "cake",
+      "party",
+      "construction job"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "lista-de-convidados",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 170,
+  "nome": {
+    "pt-BR": "Lista de convidados",
+    "en": "Guest list"
+  },
+  "descricao": {
+    "pt-BR": "Conta confirmados, pendentes e recusados de um evento, com os nomes salvos no aparelho.",
+    "en": "Tracks confirmed, pending, and declined guests for an event, with names saved on your device."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "controlar confirmação de convidados do evento"
+    ],
+    "en": [
+      "track guest confirmations for an event"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "lista de convidados",
+      "confirmação de presença",
+      "evento"
+    ],
+    "en": [
+      "guest list",
+      "rsvp",
+      "event"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

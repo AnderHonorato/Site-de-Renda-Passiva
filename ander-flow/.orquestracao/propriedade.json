@@ -1,0 +1,309 @@
+{
+  "A1a-servidor": [
+    "servidor/servidor.js",
+    "servidor/servidor-configuracao.js",
+    "servidor/servidor-porta.js",
+    "servidor/servidor-tratador-erros.js",
+    "servidor/servidor-cookies.js",
+    "servidor/servidor-controle.js",
+    "scripts/scripts-iniciar.js",
+    "scripts/scripts-parar.js",
+    "testes/testes-unidade/servidor-nucleo-*",
+    "testes/testes-integracao/servidor-nucleo-*"
+  ],
+  "A1b-montador": [
+    "servidor/servidor-montador-paginas.js",
+    "servidor/servidor-idioma.js",
+    "servidor/servidor-catalogo.js",
+    "servidor/rotas/idioma/**",
+    "servidor/rotas/ferramentas/**",
+    "testes/testes-unidade/montador-*",
+    "testes/testes-integracao/montador-*",
+    "testes/testes-unidade/idioma-*",
+    "testes/testes-integracao/idioma-*",
+    "testes/testes-unidade/catalogo-*",
+    "testes/testes-integracao/catalogo-*",
+    "testes/testes-unidade/ferramentas-rotas-*",
+    "testes/testes-integracao/ferramentas-rotas-*"
+  ],
+  "A2-banco": [
+    "banco/**",
+    "!banco/migracoes/banco-migracao-001-inicial.sql",
+    "scripts/scripts-admin-criar.js",
+    "testes/testes-unidade/banco-*",
+    "testes/testes-integracao/banco-*",
+    "testes/testes-unidade/admin-criar-*",
+    "testes/testes-integracao/admin-criar-*"
+  ],
+  "A3-visual": [
+    "frontend/compartilhado/*.css",
+    "frontend/compartilhado/compartilhado-icones.svg",
+    "frontend/compartilhado/compartilhado-favicon.svg",
+    "frontend/compartilhado/compartilhado-cabeca.html",
+    "frontend/compartilhado/compartilhado-cabecalho.html",
+    "frontend/compartilhado/compartilhado-rodape.html",
+    "frontend/compartilhado/compartilhado-navegacao-celular.html",
+    "frontend/paginas/vitrine/**",
+    "!frontend/paginas/vitrine/**/*-idioma-en.json"
+  ],
+  "A4-idioma-tema": [
+    "frontend/compartilhado/compartilhado-{idioma,tema,tema-inicial,api,formatar,busca,aviso,sessao,cabecalho,primeira-visita,pagina,ferramenta}.js",
+    "scripts/scripts-verificar-{idiomas,nomes,textos-fixos}.js",
+    "testes/testes-unidade/compartilhado-*",
+    "testes/testes-integracao/compartilhado-*",
+    "testes/testes-unidade/verificar-*",
+    "testes/testes-integracao/verificar-*"
+  ],
+  "A5-seguranca": [
+    "servidor/seguranca/**",
+    "testes/testes-unidade/seguranca-*",
+    "testes/testes-integracao/seguranca-*"
+  ],
+  "A12-manifestos": [
+    "frontend/ferramentas/*/*-manifesto.json",
+    "!frontend/ferramentas/preco-de-venda/**",
+    "!frontend/ferramentas/margem-de-contribuicao/**",
+    "!frontend/ferramentas/ponto-de-equilibrio/**",
+    "!frontend/ferramentas/contador-de-texto/**",
+    "!frontend/ferramentas/juntar-pdf/**",
+    "!frontend/ferramentas/limpar-planilha/**"
+  ],
+  "A6a-autenticacao": [
+    "servidor/rotas/autenticacao/**",
+    "servidor/rotas/conta/**",
+    "testes/testes-unidade/autenticacao-*",
+    "testes/testes-integracao/autenticacao-*",
+    "testes/testes-unidade/conta-*",
+    "testes/testes-integracao/conta-*"
+  ],
+  "A6b-dados-usuario": [
+    "servidor/rotas/{favoritos,trabalhos,avisos,mensagens,planos}/**",
+    "testes/testes-unidade/favoritos-*",
+    "testes/testes-integracao/favoritos-*",
+    "testes/testes-unidade/trabalhos-*",
+    "testes/testes-integracao/trabalhos-*",
+    "testes/testes-unidade/avisos-*",
+    "testes/testes-integracao/avisos-*",
+    "testes/testes-unidade/mensagens-*",
+    "testes/testes-integracao/mensagens-*",
+    "testes/testes-unidade/planos-*",
+    "testes/testes-integracao/planos-*"
+  ],
+  "A7a-inicio-catalogo": [
+    "frontend/paginas/principal/**",
+    "!frontend/paginas/principal/**/*-idioma-en.json",
+    "frontend/paginas/catalogo/**",
+    "!frontend/paginas/catalogo/**/*-idioma-en.json",
+    "testes/testes-unidade/principal-*",
+    "testes/testes-integracao/principal-*",
+    "testes/testes-unidade/catalogo-*",
+    "testes/testes-integracao/catalogo-*"
+  ],
+  "A7b-paginas-publicas": [
+    "frontend/paginas/planos/**",
+    "!frontend/paginas/planos/**/*-idioma-en.json",
+    "frontend/paginas/privacidade/**",
+    "!frontend/paginas/privacidade/**/*-idioma-en.json",
+    "frontend/paginas/termos/**",
+    "!frontend/paginas/termos/**/*-idioma-en.json",
+    "frontend/paginas/cookies/**",
+    "!frontend/paginas/cookies/**/*-idioma-en.json",
+    "frontend/paginas/erro/**",
+    "!frontend/paginas/erro/**/*-idioma-en.json",
+    "testes/testes-unidade/paginas-publicas-*",
+    "testes/testes-integracao/paginas-publicas-*"
+  ],
+  "A8a-entrar-conta": [
+    "frontend/paginas/entrar/**",
+    "!frontend/paginas/entrar/**/*-idioma-en.json",
+    "frontend/paginas/recuperar-senha/**",
+    "!frontend/paginas/recuperar-senha/**/*-idioma-en.json",
+    "frontend/paginas/conta/**",
+    "!frontend/paginas/conta/**/*-idioma-en.json",
+    "testes/testes-unidade/paginas-conta-*",
+    "testes/testes-integracao/paginas-conta-*"
+  ],
+  "A8b-trabalho-avisos": [
+    "frontend/paginas/avisos/**",
+    "!frontend/paginas/avisos/**/*-idioma-en.json",
+    "frontend/paginas/trabalho/**",
+    "!frontend/paginas/trabalho/**/*-idioma-en.json",
+    "frontend/paginas/salvos/**",
+    "!frontend/paginas/salvos/**/*-idioma-en.json",
+    "frontend/compartilhado/compartilhado-popup.js",
+    "testes/testes-unidade/paginas-trabalho-*",
+    "testes/testes-integracao/paginas-trabalho-*"
+  ],
+  "A9a1-preco-margem": [
+    "frontend/ferramentas/preco-de-venda/**",
+    "!frontend/ferramentas/preco-de-venda/**/*-idioma-en.json",
+    "frontend/ferramentas/margem-de-contribuicao/**",
+    "!frontend/ferramentas/margem-de-contribuicao/**/*-idioma-en.json",
+    "testes/testes-unidade/preco-de-venda-*",
+    "testes/testes-integracao/preco-de-venda-*",
+    "testes/testes-unidade/margem-de-contribuicao-*",
+    "testes/testes-integracao/margem-de-contribuicao-*"
+  ],
+  "A9a2-equilibrio-contador": [
+    "frontend/ferramentas/ponto-de-equilibrio/**",
+    "!frontend/ferramentas/ponto-de-equilibrio/**/*-idioma-en.json",
+    "frontend/ferramentas/contador-de-texto/**",
+    "!frontend/ferramentas/contador-de-texto/**/*-idioma-en.json",
+    "testes/testes-unidade/ponto-de-equilibrio-*",
+    "testes/testes-integracao/ponto-de-equilibrio-*",
+    "testes/testes-unidade/contador-de-texto-*",
+    "testes/testes-integracao/contador-de-texto-*"
+  ],
+  "A9b1-juntar-pdf": [
+    "frontend/ferramentas/juntar-pdf/**",
+    "!frontend/ferramentas/juntar-pdf/**/*-idioma-en.json",
+    "testes/testes-unidade/juntar-pdf-*",
+    "testes/testes-integracao/juntar-pdf-*"
+  ],
+  "A9b2-limpar-planilha": [
+    "frontend/ferramentas/limpar-planilha/**",
+    "!frontend/ferramentas/limpar-planilha/**/*-idioma-en.json",
+    "testes/testes-unidade/limpar-planilha-*",
+    "testes/testes-integracao/limpar-planilha-*"
+  ],
+  "A10a-admin-api": [
+    "servidor/rotas/admin/**",
+    "testes/testes-unidade/admin-api-*",
+    "testes/testes-integracao/admin-api-*"
+  ],
+  "A10b-admin-tela": [
+    "frontend/paginas/admin/**",
+    "!frontend/paginas/admin/**/*-idioma-en.json",
+    "testes/testes-unidade/admin-tela-*",
+    "testes/testes-integracao/admin-tela-*"
+  ],
+  "A11-traducao-en": [
+    "**/*-idioma-en.json"
+  ],
+  "A13-testes": [
+    "testes/**"
+  ],
+  "A14-readme": [
+    "README.md"
+  ],
+  "C1-correcoes-front": [
+    "frontend/compartilhado/compartilhado-formatar.js",
+    "frontend/compartilhado/compartilhado-cabecalho.js",
+    "frontend/compartilhado/compartilhado-cabecalho.css",
+    "frontend/paginas/principal/principal.js",
+    "frontend/paginas/admin/admin-ferramentas.js",
+    "frontend/paginas/admin/admin.css",
+    "testes/testes-unidade/compartilhado-*",
+    "testes/testes-unidade/principal-*",
+    "testes/testes-unidade/admin-tela-*"
+  ],
+  "C2-correcoes-servidor": [
+    "servidor/servidor.js",
+    "servidor/servidor-controle.js",
+    "scripts/scripts-iniciar.js",
+    "scripts/scripts-parar.js",
+    "servidor/seguranca/seguranca-limite-trafego.js",
+    "servidor/rotas/trabalhos/**",
+    "testes/testes-unidade/servidor-nucleo-*",
+    "testes/testes-integracao/servidor-nucleo-*",
+    "testes/testes-unidade/seguranca-*",
+    "testes/testes-integracao/seguranca-*",
+    "testes/testes-integracao/trabalhos-*"
+  ],
+  "A15-motores": [
+    "frontend/compartilhado/compartilhado-motor-*",
+    "scripts/scripts-gerar-ferramentas.js",
+    "package.json",
+    "frontend/ferramentas/porcentagem/**",
+    "frontend/ferramentas/regra-de-tres/**",
+    "frontend/ferramentas/juros/**",
+    "frontend/ferramentas/transformador-de-caixa/**",
+    "frontend/ferramentas/removedor-de-acentos/**",
+    "frontend/ferramentas/base64/**",
+    "testes/testes-unidade/compartilhado-motor-*",
+    "testes/testes-unidade/scripts-gerar-*",
+    "testes/testes-unidade/porcentagem-*",
+    "testes/testes-unidade/regra-de-tres-*",
+    "testes/testes-unidade/juros-*",
+    "testes/testes-unidade/transformador-de-caixa-*",
+    "testes/testes-unidade/removedor-de-acentos-*",
+    "testes/testes-unidade/base64-*",
+    "frontend/compartilhado/compartilhado-ferramenta-formulario.js"
+  ],
+  "E1-especificacao": [
+    "docs/catalogo/catalogo-dinheiro.md",
+    "docs/catalogo/catalogo-calculo.md",
+    "docs/catalogo/catalogo-datas.md",
+    "docs/catalogo/catalogo-vendas.md",
+    "docs/catalogo/catalogo-operacoes.md",
+    "docs/catalogo/catalogo-marketing.md"
+  ],
+  "E2-especificacao": [
+    "docs/catalogo/catalogo-trabalho.md",
+    "docs/catalogo/catalogo-oficio.md",
+    "docs/catalogo/catalogo-produtividade.md",
+    "docs/catalogo/catalogo-estudos.md"
+  ],
+  "E3-especificacao": [
+    "docs/catalogo/catalogo-documentos.md",
+    "docs/catalogo/catalogo-texto.md",
+    "docs/catalogo/catalogo-planilhas.md",
+    "docs/catalogo/catalogo-imagens.md",
+    "docs/catalogo/catalogo-desenvolvimento.md",
+    "docs/catalogo/catalogo-seguranca.md"
+  ],
+  "A16-boas-vindas": [
+    "banco/migracoes/banco-migracao-002-*",
+    "servidor/rotas/boas-vindas/**",
+    "servidor/servidor-midia.js",
+    "frontend/compartilhado/compartilhado-boas-vindas.*",
+    "frontend/compartilhado/compartilhado-popup.js",
+    "frontend/compartilhado/compartilhado-pagina.js",
+    "frontend/compartilhado/compartilhado-idioma-pt-br.json",
+    "frontend/compartilhado/compartilhado-idioma-en.json",
+    "frontend/compartilhado/compartilhado-componentes.css",
+    "frontend/paginas/admin/admin-boas-vindas.js",
+    "frontend/paginas/admin/admin.html",
+    "frontend/paginas/admin/admin.js",
+    "frontend/paginas/admin/admin.css",
+    "frontend/paginas/admin/admin-idioma-pt-br.json",
+    "frontend/paginas/admin/admin-idioma-en.json",
+    "banco/sementes/banco-sementes.js",
+    "servidor/seguranca/seguranca-limite-trafego-regras.json",
+    "testes/testes-unidade/boas-vindas-*",
+    "testes/testes-integracao/boas-vindas-*",
+    "testes/testes-visuais/boas-vindas-*"
+  ],
+  "A17-anuncios": [
+    "banco/migracoes/banco-migracao-003-*",
+    "servidor/rotas/anuncios/**",
+    "servidor/servidor-anuncios.js",
+    "servidor/servidor-montador-paginas.js",
+    "servidor/seguranca/seguranca-cabecalhos.js",
+    "frontend/compartilhado/compartilhado-anuncios.*",
+    "frontend/compartilhado/compartilhado-primeira-visita.js",
+    "frontend/compartilhado/compartilhado-base.css",
+    "frontend/compartilhado/compartilhado-idioma-pt-br.json",
+    "frontend/compartilhado/compartilhado-idioma-en.json",
+    "frontend/paginas/principal/principal.html",
+    "frontend/paginas/catalogo/catalogo.html",
+    "frontend/paginas/vitrine/vitrine.html",
+    "frontend/paginas/cookies/**",
+    "frontend/paginas/privacidade/**",
+    "frontend/ferramentas/preco-de-venda/preco-de-venda.html",
+    "frontend/ferramentas/margem-de-contribuicao/margem-de-contribuicao.html",
+    "frontend/ferramentas/ponto-de-equilibrio/ponto-de-equilibrio.html",
+    "frontend/ferramentas/contador-de-texto/contador-de-texto.html",
+    "frontend/ferramentas/juntar-pdf/juntar-pdf.html",
+    "frontend/ferramentas/limpar-planilha/limpar-planilha.html",
+    "frontend/paginas/admin/admin-anuncios.js",
+    "frontend/paginas/admin/admin.html",
+    "frontend/paginas/admin/admin.js",
+    "frontend/paginas/admin/admin.css",
+    "frontend/paginas/admin/admin-idioma-pt-br.json",
+    "frontend/paginas/admin/admin-idioma-en.json",
+    "testes/testes-unidade/anuncios-*",
+    "testes/testes-integracao/anuncios-*",
+    "testes/testes-visuais/anuncios-*"
+  ]
+}

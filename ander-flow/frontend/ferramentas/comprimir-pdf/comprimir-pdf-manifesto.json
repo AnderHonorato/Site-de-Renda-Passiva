@@ -1,0 +1,37 @@
+{
+  "slug": "comprimir-pdf",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "plus",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Comprimir PDF",
+    "en": "Compress PDF"
+  },
+  "descricao": {
+    "pt-BR": "Reduz o tamanho do arquivo PDF recomprimindo as imagens internas.",
+    "en": "Reduces PDF file size by recompressing the images inside it."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "diminuir tamanho do pdf"
+    ],
+    "en": [
+      "reduce PDF file size"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "comprimir pdf",
+      "reduzir tamanho"
+    ],
+    "en": [
+      "compress pdf",
+      "reduce size"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

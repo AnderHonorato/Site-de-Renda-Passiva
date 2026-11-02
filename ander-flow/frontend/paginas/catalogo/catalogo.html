@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/ferramentas">
+  <meta name="af-acesso" content="publico">
+  <title data-texto="catalogo.titulo_pagina"></title>
+  <meta name="description" data-texto-content="catalogo.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/catalogo/catalogo.css">
+  <script type="module" src="/estatico/paginas/catalogo/catalogo.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo catalogo">
+    <header class="catalogo__cabecalho">
+      <h1 class="titulo-display titulo-display--3" data-texto="catalogo.titulo"></h1>
+      <p class="texto-2 catalogo__resumo" data-texto="catalogo.resumo"></p>
+    </header>
+
+    <div class="catalogo__corpo">
+      <aside class="catalogo__filtros">
+        <h2 class="sobretitulo" data-texto="catalogo.filtros.titulo"></h2>
+        <nav class="catalogo__categorias" data-texto-aria-label="catalogo.filtros.titulo"></nav>
+
+        <h2 class="sobretitulo catalogo__filtros-titulo-2" data-texto="catalogo.filtros.estado"></h2>
+        <div class="opcoes catalogo__estados" role="group" data-texto-aria-label="catalogo.filtros.estado">
+          <label class="opcao">
+            <input type="radio" name="catalogo-estado" value="todas" checked>
+            <span data-texto="catalogo.filtros.todas"></span>
+          </label>
+          <label class="opcao">
+            <input type="radio" name="catalogo-estado" value="pronta">
+            <span data-texto="compartilhado.ferramenta.estado_pronta"></span>
+          </label>
+          <label class="opcao">
+            <input type="radio" name="catalogo-estado" value="planejada">
+            <span data-texto="compartilhado.ferramenta.estado_planejada"></span>
+          </label>
+        </div>
+      </aside>
+
+      <section class="catalogo__resultado">
+        <form class="catalogo__busca" role="search" action="/ferramentas" method="get">
+          <label class="visualmente-oculto" for="catalogo-busca" data-texto="compartilhado.busca.rotulo"></label>
+          <div class="busca-intencao">
+            <svg class="icone busca-intencao__icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-busca"></use></svg>
+            <input class="busca-intencao__entrada" id="catalogo-busca" name="busca" type="search" autocomplete="off"
+                   data-texto-placeholder="compartilhado.busca.placeholder">
+            <span class="busca-intencao__atalho" aria-hidden="true">/</span>
+          </div>
+        </form>
+
+        <div class="catalogo__barra">
+          <p class="catalogo__contagem" aria-live="polite"></p>
+          <button type="button" class="botao botao--fantasma botao--pequeno catalogo__limpar" hidden data-texto="catalogo.filtros.limpar"></button>
+        </div>
+
+        <div class="estado estado--carregando catalogo__carregando">
+          <p class="estado__titulo" data-texto="compartilhado.estados.carregando"></p>
+        </div>
+
+        <ul class="lista-densa catalogo__lista" hidden></ul>
+
+        <div class="estado estado--vazio catalogo__vazio" hidden>
+          <p class="estado__titulo catalogo__vazio-titulo"></p>
+          <p class="estado__texto" data-texto="compartilhado.estados.sem_resultados_dica"></p>
+          <button type="button" class="botao botao--secundario estado__acao catalogo__limpar-vazio" data-texto="catalogo.filtros.limpar"></button>
+        </div>
+
+        <div class="estado estado--erro catalogo__erro" hidden>
+          <p class="estado__titulo" data-texto="compartilhado.estados.erro_titulo"></p>
+          <p class="estado__texto" data-texto="compartilhado.estados.erro_texto"></p>
+          <button type="button" class="botao botao--secundario estado__acao catalogo__recarregar" data-texto="compartilhado.acoes.tentar_de_novo"></button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

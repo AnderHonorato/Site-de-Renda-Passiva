@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i { transform-box: view-box; transform-origin: 12px 5px; animation: aperta 1.8s ease-in-out infinite; }
+    @keyframes aperta { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(.82, 1.06); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><path d="M4 5.5h16l-6 7v6l-4 2v-8l-6-7Z"/></g>
+</svg>

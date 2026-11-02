@@ -1,0 +1,120 @@
+<!--página
+{
+  "título": "Custo do material",
+  "descrição": "Calcule o custo proporcional de um fio ou material a partir do preço de compra, da quantidade comprada e do quanto você consumiu na peça.",
+  "destaque": "lavanda",
+  "navegação": "ferramentas",
+  "script": "páginas/custo-do-material.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Custo do material</h1>
+    <p class="ferramenta-resumo">Informe quanto você pagou, a quantidade que comprou e o quanto consumiu na peça. O custo é sempre proporcional: metade da quantidade comprada custa metade do preço.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-material" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>O que você comprou</legend>
+        <div class="campo">
+          <label for="preço-de-compra">Preço de compra (R$)</label>
+          <input id="preço-de-compra" name="preço-de-compra" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 20,00" aria-describedby="preço-de-compra-ajuda preço-de-compra-erro">
+          <p id="preço-de-compra-ajuda" class="campo-ajuda">O que você pagou por esse material (novelo, retalho, pacote de miçangas...).</p>
+          <p id="preço-de-compra-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="grupo-de-campos grupo-de-campos-duas-colunas">
+          <div class="campo">
+            <label for="quantidade-comprada">Quantidade comprada</label>
+            <input id="quantidade-comprada" name="quantidade-comprada" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 100" aria-describedby="quantidade-comprada-erro">
+            <p id="quantidade-comprada-erro" class="campo-erro" hidden></p>
+          </div>
+          <div class="campo">
+            <label for="unidade-comprada">Unidade da compra</label>
+            <select id="unidade-comprada" name="unidade-comprada" class="entrada seleção">
+              <option value="g">Gramas (g)</option>
+              <option value="kg">Quilos (kg)</option>
+              <option value="m">Metros (m)</option>
+              <option value="cm">Centímetros (cm)</option>
+              <option value="un">Unidades (un.)</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="grupo-de-campos">
+        <legend>O que você consumiu nesta peça</legend>
+        <div class="grupo-de-campos grupo-de-campos-duas-colunas">
+          <div class="campo">
+            <label for="consumo">Consumo nesta peça</label>
+            <input id="consumo" name="consumo" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 25" aria-describedby="consumo-erro">
+            <p id="consumo-erro" class="campo-erro" hidden></p>
+          </div>
+          <div class="campo">
+            <label for="unidade-consumo">Unidade do consumo</label>
+            <select id="unidade-consumo" name="unidade-consumo" class="entrada seleção">
+              <option value="g">Gramas (g)</option>
+              <option value="kg">Quilos (kg)</option>
+              <option value="m">Metros (m)</option>
+              <option value="cm">Centímetros (cm)</option>
+              <option value="un">Unidades (un.)</option>
+            </select>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="metros-por-100g">Metros que o fio rende a cada 100 g (opcional)</label>
+          <input id="metros-por-100g" name="metros-por-100g" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 200" aria-describedby="metros-por-100g-ajuda metros-por-100g-erro">
+          <p id="metros-por-100g-ajuda" class="campo-ajuda">Preencha só se comprou em uma unidade (peso) e consumiu em outra (comprimento), ou o contrário. Essa relação vem da etiqueta do fio — nunca presumimos uma densidade genérica.</p>
+          <p id="metros-por-100g-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular custo</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#spool"></use></svg>
+        <p class="estado-vazio-título">O custo do material aparece aqui</p>
+        <p>Preencha o preço de compra, a quantidade e o consumo e toque em Calcular custo.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Custo proporcional</p>
+          <p class="resultado-valor" data-custo-proporcional></p>
+        </div>
+        <div class="aviso aviso-informação" data-aviso-conversão hidden>
+          <p>O consumo foi convertido usando a relação de metros por 100 g que você informou.</p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse valor</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+        <form id="formulário-salvar-material" class="campo" novalidate>
+          <label for="nome-do-material">Nome para salvar este material</label>
+          <input id="nome-do-material" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Novelo Alegria rosa" aria-describedby="nome-do-material-erro">
+          <p id="nome-do-material-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>O custo é sempre proporcional à quantidade comprada: metade da quantidade custa metade do preço.</li>
+    <li>Peso (g, kg) e comprimento (m, cm) só se convertem entre si com a relação daquele fio específico — nunca com uma densidade genérica.</li>
+    <li>“Unidades” (un.) nunca se converte com peso ou comprimento.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-material" class="botão botão-primário">Calcular custo</button>
+</div>

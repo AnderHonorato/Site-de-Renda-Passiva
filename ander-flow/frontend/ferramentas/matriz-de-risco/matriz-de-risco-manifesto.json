@@ -1,0 +1,37 @@
+{
+  "slug": "matriz-de-risco",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 110,
+  "nome": {
+    "pt-BR": "Matriz de risco",
+    "en": "Risk matrix"
+  },
+  "descricao": {
+    "pt-BR": "Classifica riscos por probabilidade e impacto, numa grade de calor.",
+    "en": "Classifies risks by likelihood and impact on a heat-map grid."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar matriz de risco do projeto"
+    ],
+    "en": [
+      "build a project risk matrix"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "matriz de risco",
+      "probabilidade e impacto"
+    ],
+    "en": [
+      "risk matrix",
+      "likelihood and impact"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

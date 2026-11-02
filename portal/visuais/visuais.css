@@ -1,0 +1,289 @@
+/**
+ * Quatro propostas visuais para o portal, sobre o mesmo conteúdo.
+ *
+ * Tudo é escolhido por `[data-visual]` no elemento raiz, para a comparação ser
+ * justa: mesma estrutura, mesmos textos, mesma densidade. O que muda é a cor,
+ * o fundo, a tipografia, a forma dos blocos e o tratamento dos ícones.
+ *
+ * Esta pasta é material de decisão, não faz parte do site publicado.
+ */
+
+/* ============================== base comum ============================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  background: var(--fundo);
+  color: var(--tinta);
+  transition: background .2s ease, color .2s ease;
+}
+
+.régua {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 10px 16px;
+  background: #16130f; color: #f4efe8;
+  font-family: system-ui, sans-serif; font-size: 13px;
+}
+.régua strong { font-size: 13px; }
+.régua button {
+  border: 1px solid #4a4038; background: #241f19; color: #f4efe8;
+  border-radius: 999px; padding: 7px 13px; cursor: pointer;
+  font: inherit; font-weight: 600;
+}
+.régua button[aria-pressed="true"] { background: #f4efe8; color: #16130f; border-color: #f4efe8; }
+.régua span { opacity: .7; }
+
+.palco { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter) 40px; }
+.oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+/* ------------------------------ cabeçalho ------------------------------ */
+.topo {
+  display: flex; align-items: center; gap: 14px;
+  padding: var(--topo-pad) 0;
+  border-bottom: var(--topo-borda);
+  background: var(--topo-fundo);
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  color: var(--topo-tinta);
+}
+.marca { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+.marca i {
+  width: var(--selo); height: var(--selo); border-radius: var(--selo-raio);
+  display: grid; place-items: center;
+  background: var(--selo-fundo); color: var(--selo-tinta);
+  box-shadow: var(--selo-sombra);
+}
+.marca i svg { width: 60%; height: 60%; }
+.marca b { display: block; font-size: 16px; letter-spacing: -.02em; }
+.marca small { display: block; font-size: 11px; opacity: .65; font-weight: 600; }
+.topo nav { margin-left: auto; display: flex; gap: 6px; align-items: center; }
+.topo nav a {
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  color: inherit; opacity: .8; padding: 7px 11px; border-radius: 8px;
+}
+.topo nav a:hover { opacity: 1; background: var(--topo-hover); }
+.topo nav .ação {
+  background: var(--ação); color: var(--ação-tinta); opacity: 1;
+  border-radius: var(--raio-botão); padding: 9px 15px; box-shadow: var(--sombra-botão);
+}
+
+/* -------------------------------- herói -------------------------------- */
+.herói { padding: var(--herói-pad) 0 18px; position: relative; }
+.herói h1 {
+  font-family: var(--fonte-título); font-weight: var(--peso-título);
+  font-size: var(--tam-título); line-height: 1.08; letter-spacing: var(--letra-título);
+  margin: 0 0 8px; max-width: 16ch;
+}
+.herói h1 em { font-style: normal; color: var(--destaque); }
+.herói p { margin: 0 0 16px; font-size: 15px; color: var(--tinta-suave); max-width: 52ch; }
+
+.busca { position: relative; max-width: 560px; }
+.busca input {
+  width: 100%; height: 50px; padding: 0 16px 0 44px;
+  border: var(--campo-borda); border-radius: var(--raio-campo);
+  background: var(--campo-fundo); color: var(--tinta);
+  font: inherit; font-size: 15px; outline: none;
+  box-shadow: var(--campo-sombra);
+}
+.busca svg { position: absolute; left: 14px; top: 15px; width: 20px; height: 20px; color: var(--tinta-suave); }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.chips span {
+  font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 999px;
+  background: var(--chip-fundo); color: var(--chip-tinta); border: var(--chip-borda);
+}
+
+/* ------------------------------ categorias ----------------------------- */
+.faixa { padding: 8px 0 4px; display: flex; align-items: baseline; justify-content: space-between; }
+.faixa h2 { font-size: 15px; margin: 0; font-weight: 800; letter-spacing: -.01em; }
+.faixa a { font-size: 13px; color: var(--destaque); text-decoration: none; font-weight: 600; }
+
+.grade { display: grid; gap: var(--grade-gap); grid-template-columns: repeat(auto-fill, minmax(min(190px, 100%), 1fr)); }
+.cat {
+  display: flex; align-items: center; gap: 11px;
+  padding: var(--cat-pad); min-height: var(--cat-altura);
+  border: var(--cartão-borda); border-radius: var(--raio-cartão);
+  background: var(--cartão-fundo); box-shadow: var(--cartão-sombra);
+  text-decoration: none; color: inherit;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.cat:hover { transform: translateY(-2px); box-shadow: var(--cartão-sombra-alta); }
+/* A cor vem da própria categoria: é o que tira a sensação de "tudo igual". */
+.cat i {
+  width: var(--ícone-caixa); height: var(--ícone-caixa); flex: 0 0 var(--ícone-caixa);
+  border-radius: var(--ícone-raio); display: grid; place-items: center;
+  background: var(--ícone-fundo, color-mix(in srgb, var(--cor) 16%, transparent));
+  color: var(--ícone-tinta, var(--cor));
+  box-shadow: var(--ícone-sombra);
+}
+.cat i svg { width: 55%; height: 55%; }
+.cat b { display: block; font-size: 13.5px; font-weight: 700; }
+.cat small { display: block; font-size: 11.5px; color: var(--tinta-suave); }
+
+/* ---------------------------- lista/ferramentas ------------------------ */
+.lista { display: grid; gap: var(--grade-gap); grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
+.ferr {
+  display: grid; grid-template-columns: var(--ícone-caixa) 1fr auto; gap: 12px; align-items: center;
+  padding: var(--cat-pad); border: var(--cartão-borda); border-radius: var(--raio-cartão);
+  background: var(--cartão-fundo); box-shadow: var(--cartão-sombra); text-decoration: none; color: inherit;
+  border-left: var(--ferr-faixa);
+}
+.ferr i {
+  width: var(--ícone-caixa); height: var(--ícone-caixa); border-radius: var(--ícone-raio);
+  display: grid; place-items: center;
+  background: var(--ícone-fundo, color-mix(in srgb, var(--cor) 16%, transparent));
+  color: var(--ícone-tinta, var(--cor)); box-shadow: var(--ícone-sombra);
+}
+.ferr i svg { width: 55%; height: 55%; }
+.ferr b { font-size: 14px; display: block; font-weight: 700; }
+.ferr small { font-size: 12px; color: var(--tinta-suave); display: block;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ferr u { text-decoration: none; color: var(--tinta-suave); }
+
+/* ------------------------------- resultado ----------------------------- */
+.painel {
+  border: var(--cartão-borda); border-radius: var(--raio-cartão);
+  background: var(--cartão-fundo); padding: 16px; box-shadow: var(--cartão-sombra);
+}
+.campos { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(160px,100%), 1fr)); }
+.campo label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.campo input {
+  width: 100%; height: 38px; padding: 0 10px; font: inherit; font-size: 14px;
+  border: var(--campo-borda); border-radius: var(--raio-campo); background: var(--campo-fundo); color: var(--tinta);
+}
+.botão {
+  margin-top: 12px; border: 0; cursor: pointer; font: inherit; font-weight: 700; font-size: 14px;
+  padding: 11px 18px; border-radius: var(--raio-botão);
+  background: var(--ação); color: var(--ação-tinta); box-shadow: var(--sombra-botão);
+}
+.saída {
+  margin-top: 14px; padding: 14px; border-radius: var(--raio-cartão);
+  background: var(--saída-fundo); border-left: 3px solid var(--destaque);
+}
+.saída p { margin: 0; }
+.saída .valor { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+.saída .nota { font-size: 12.5px; color: var(--tinta-suave); margin-top: 3px; }
+
+/* ================================ A — modelo ============================ */
+/* Artesanal e quente, na linha da pasta modelo/, mas com cor por categoria. */
+[data-visual="a"] {
+  --fonte: "Figtree", system-ui, sans-serif;
+  --fonte-título: "Caprasimo", Georgia, serif;
+  --peso-título: 400; --tam-título: 40px; --letra-título: -.01em;
+  --gutter: 22px; --fundo: #f7f0e6; --tinta: #2a201a; --tinta-suave: #71604f;
+  --destaque: #b5502c; --ação: #b5502c; --ação-tinta: #fff9f2;
+  --topo-fundo: transparent; --topo-tinta: #2a201a; --topo-pad: 16px;
+  --topo-borda: 2px dashed #e0cdb4; --topo-hover: #efe2cf;
+  --selo: 40px; --selo-raio: 14px; --selo-fundo: #b5502c; --selo-tinta: #fff9f2;
+  --selo-sombra: 3px 3px 0 #e8b98e;
+  --herói-pad: 26px;
+  --cartão-fundo: #fffdf8; --cartão-borda: 2px solid #e6d5bd;
+  --cartão-sombra: 3px 3px 0 #ece0cd; --cartão-sombra-alta: 5px 5px 0 #e0cdb4;
+  --raio-cartão: 16px; --raio-botão: 999px; --raio-campo: 14px;
+  --campo-fundo: #fffdf8; --campo-borda: 2px solid #ddc9ae; --campo-sombra: 3px 3px 0 #ece0cd;
+  --chip-fundo: transparent; --chip-tinta: #71604f; --chip-borda: 1.5px dashed #c9b193;
+  --ícone-caixa: 38px; --ícone-raio: 12px; --ícone-sombra: 2px 2px 0 rgba(0,0,0,.07);
+  --cat-pad: 12px 13px; --cat-altura: 62px; --grade-gap: 10px;
+  --saída-fundo: #f3e7d5; --sombra-botão: 3px 3px 0 #7d3319;
+  --ferr-faixa: 2px solid #e6d5bd;
+}
+
+/* ============================ B — aplicativo ============================ */
+/* Convencional e colorido, na linha de portais de ferramentas conhecidos. */
+[data-visual="b"] {
+  --fonte: "Figtree", system-ui, sans-serif;
+  --fonte-título: "Figtree", system-ui, sans-serif;
+  --peso-título: 800; --tam-título: 38px; --letra-título: -.035em;
+  --gutter: 22px; --fundo: #f4f6fb; --tinta: #14203a; --tinta-suave: #64748b;
+  --destaque: #2563eb; --ação: #2563eb; --ação-tinta: #ffffff;
+  --topo-fundo: #ffffff; --topo-tinta: #14203a; --topo-pad: 14px;
+  --topo-borda: 1px solid #e2e8f0; --topo-hover: #eef2ff;
+  --selo: 38px; --selo-raio: 11px;
+  --selo-fundo: linear-gradient(135deg, #2563eb, #7c3aed); --selo-tinta: #fff;
+  --selo-sombra: 0 6px 16px rgba(37,99,235,.35);
+  --herói-pad: 30px;
+  --cartão-fundo: #ffffff; --cartão-borda: 1px solid #e6ebf4;
+  --cartão-sombra: 0 1px 3px rgba(20,32,58,.06); --cartão-sombra-alta: 0 10px 24px rgba(20,32,58,.12);
+  --raio-cartão: 14px; --raio-botão: 10px; --raio-campo: 10px;
+  --campo-fundo: #fff; --campo-borda: 1px solid #d7dfec; --campo-sombra: 0 1px 2px rgba(20,32,58,.05);
+  --chip-fundo: #fff; --chip-tinta: #475569; --chip-borda: 1px solid #dbe3f0;
+  --ícone-caixa: 40px; --ícone-raio: 11px;
+  --ícone-fundo: var(--cor); --ícone-tinta: #fff;
+  --ícone-sombra: 0 4px 10px color-mix(in srgb, var(--cor) 40%, transparent);
+  --cat-pad: 12px 13px; --cat-altura: 64px; --grade-gap: 12px;
+  --saída-fundo: #eff4ff; --sombra-botão: 0 6px 16px rgba(37,99,235,.3);
+  --ferr-faixa: 1px solid #e6ebf4;
+}
+
+/* ============================== C — sóbrio ============================== */
+/* Ferramenta de trabalho: pouca cor, muito contraste, densidade alta. */
+[data-visual="c"] {
+  --fonte: "Figtree", system-ui, sans-serif;
+  --fonte-título: "Figtree", system-ui, sans-serif;
+  --peso-título: 700; --tam-título: 30px; --letra-título: -.025em;
+  --gutter: 20px; --fundo: #ffffff; --tinta: #10151c; --tinta-suave: #5b6673;
+  --destaque: #0f766e; --ação: #10151c; --ação-tinta: #ffffff;
+  --topo-fundo: #10151c; --topo-tinta: #e8edf3; --topo-pad: 12px;
+  --topo-borda: 1px solid #10151c; --topo-hover: rgba(255,255,255,.1);
+  --selo: 32px; --selo-raio: 7px; --selo-fundo: #0f766e; --selo-tinta: #fff; --selo-sombra: none;
+  --herói-pad: 24px;
+  --cartão-fundo: #ffffff; --cartão-borda: 1px solid #dde3ea;
+  --cartão-sombra: none; --cartão-sombra-alta: 0 2px 8px rgba(16,21,28,.1);
+  --raio-cartão: 6px; --raio-botão: 6px; --raio-campo: 6px;
+  --campo-fundo: #fff; --campo-borda: 1px solid #c9d2dc; --campo-sombra: none;
+  --chip-fundo: #f1f4f8; --chip-tinta: #3d4854; --chip-borda: 1px solid #dde3ea;
+  --ícone-caixa: 30px; --ícone-raio: 6px;
+  --ícone-fundo: transparent; --ícone-tinta: var(--cor); --ícone-sombra: none;
+  --cat-pad: 9px 11px; --cat-altura: 50px; --grade-gap: 6px;
+  --saída-fundo: #f1f4f8; --sombra-botão: none;
+  /* Cada linha ganha um traço na cor da categoria: distingue sem enfeitar. */
+  --ferr-faixa: 3px solid var(--cor);
+}
+[data-visual="c"] .cat { border-left: 3px solid var(--cor); }
+
+/* ============================== D — vivo ================================ */
+/* Escuro e contrastado, cor forte por categoria. Nada de tela vazia. */
+[data-visual="d"] {
+  --fonte: "Figtree", system-ui, sans-serif;
+  --fonte-título: "Figtree", system-ui, sans-serif;
+  --peso-título: 800; --tam-título: 42px; --letra-título: -.04em;
+  --gutter: 22px; --fundo: #0d1017; --tinta: #eef2f8; --tinta-suave: #97a3b6;
+  --destaque: #ffb23f; --ação: linear-gradient(135deg, #ffb23f, #ff7a3d); --ação-tinta: #1a1206;
+  --topo-fundo: rgba(20,25,35,.85); --topo-tinta: #eef2f8; --topo-pad: 14px;
+  --topo-borda: 1px solid #222a38; --topo-hover: #1b2230;
+  --selo: 38px; --selo-raio: 12px;
+  --selo-fundo: linear-gradient(135deg, #ffb23f, #ff7a3d); --selo-tinta: #1a1206;
+  --selo-sombra: 0 6px 20px rgba(255,140,60,.45);
+  --herói-pad: 34px;
+  --cartão-fundo: #161b25; --cartão-borda: 1px solid #242c3a;
+  --cartão-sombra: none; --cartão-sombra-alta: 0 10px 30px rgba(0,0,0,.55);
+  --raio-cartão: 14px; --raio-botão: 10px; --raio-campo: 10px;
+  --campo-fundo: #11161f; --campo-borda: 1px solid #2c3546; --campo-sombra: none;
+  --chip-fundo: #1b2230; --chip-tinta: #b9c4d4; --chip-borda: 1px solid #2c3546;
+  --ícone-caixa: 40px; --ícone-raio: 12px;
+  --ícone-fundo: color-mix(in srgb, var(--cor) 22%, #0d1017);
+  --ícone-tinta: var(--cor);
+  --ícone-sombra: inset 0 0 0 1px color-mix(in srgb, var(--cor) 35%, transparent);
+  --cat-pad: 12px 13px; --cat-altura: 64px; --grade-gap: 10px;
+  --saída-fundo: #1b2230; --sombra-botão: 0 8px 22px rgba(255,140,60,.3);
+  --ferr-faixa: 1px solid #242c3a;
+}
+[data-visual="d"] .herói::before {
+  content: ""; position: absolute; inset: -40px -10% auto; height: 260px; z-index: -1;
+  background: radial-gradient(60% 100% at 20% 0%, rgba(255,140,60,.18), transparent 70%),
+              radial-gradient(50% 90% at 80% 10%, rgba(94,129,255,.16), transparent 70%);
+}
+[data-visual="d"] .cat:hover { border-color: color-mix(in srgb, var(--cor) 55%, transparent); }
+
+/* ------------------------------- celular ------------------------------- */
+@media (max-width: 640px) {
+  .topo nav a:not(.ação) { display: none; }
+  .herói h1 { font-size: calc(var(--tam-título) * .7); }
+}
+
+/* Espaçamentos que antes eram atributo style, agora em classe. */
+.faixa--espaçada { margin-top: 26px; }
+.régua a { color: inherit; }
+.régua__fim { margin-left: auto; }

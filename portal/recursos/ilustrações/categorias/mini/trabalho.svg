@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="114 0 300 200" role="img" aria-labelledby="t">
+  <title id="t">Um crachá com foto e um relógio marcando a jornada</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #ece5d8; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .cracha { transform-origin: 190px 20px; animation: balanca 4s ease-in-out infinite; }
+    @keyframes balanca { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+    .ponteiro { transform-origin: 350px 100px; animation: gira 8s linear infinite; }
+    .hora { transform-origin: 350px 100px; animation: gira 96s linear infinite; }
+    @keyframes gira { to { transform: rotate(360deg); } }
+    .visto { stroke-dasharray: 40; animation: desenha 4s ease-in-out infinite; }
+    @keyframes desenha { 0%, 20% { stroke-dashoffset: 40; } 50%, 90% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 40; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="182" rx="150" ry="9"/>
+  <g class="cracha">
+    <path d="M178 20h24v22h-24z" fill="#3d4451" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="128" y="40" width="124" height="134" rx="16" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+    <rect x="178" y="50" width="24" height="7" rx="3.5" fill="#ddd6cc"/>
+    <circle cx="190" cy="92" r="20" fill="#e8a58d" stroke="#1a1a1a" stroke-width="3"/>
+    <path d="M154 134a36 28 0 0 1 72 0v4H154z" fill="#d97757" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="146" y="148" width="68" height="7" rx="3.5" fill="#ddd6cc"/><rect x="146" y="161" width="44" height="7" rx="3.5" fill="#ddd6cc"/>
+    <path class="visto" d="M218 156l7 7 13-15" fill="none" stroke="#3d4451" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle cx="350" cy="100" r="50" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+  <path d="M350 62v8M350 130v8M312 100h8M380 100h8" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M350 100l0-26" class="hora" stroke="#3d4451" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <line class="ponteiro" x1="350" y1="100" x2="350" y2="68" stroke="#d97757" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="350" cy="100" r="5" fill="#1a1a1a"/>
+</svg>

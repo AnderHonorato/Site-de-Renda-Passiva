@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i > :nth-child(2) { transform-origin: center top; animation: estica 2.2s ease-in-out infinite; }
+    #i > :nth-child(1) { animation: balanca 2.2s ease-in-out infinite; }
+    @keyframes estica { 0%, 100% { transform: scaleY(.4); } 50% { transform: scaleY(1); } }
+    @keyframes balanca { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(1.2px); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><path d="M5 6.5V5h14v1.5"/><path d="M12 5v14"/><path d="M9 19h6"/></g>
+</svg>

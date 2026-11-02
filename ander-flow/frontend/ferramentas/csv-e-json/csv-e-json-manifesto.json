@@ -1,0 +1,41 @@
+{
+  "slug": "csv-e-json",
+  "estado": "planejada",
+  "categoria": "planilhas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "planilha",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "CSV e JSON",
+    "en": "CSV and JSON"
+  },
+  "descricao": {
+    "pt-BR": "Converte CSV em JSON e JSON em CSV, com separador e cabeçalho configuráveis.",
+    "en": "Converts CSV to JSON and JSON to CSV, with configurable delimiter and header."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "converter csv para json"
+    ],
+    "en": [
+      "convert csv to json"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "csv",
+      "json",
+      "converter",
+      "dados"
+    ],
+    "en": [
+      "csv",
+      "json",
+      "convert",
+      "data"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

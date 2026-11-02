@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="115 0 300 200" role="img" aria-labelledby="t">
+  <title id="t">Um calendário com um dia destacado percorrendo a grade e um relógio girando</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #f6e3da; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .dia { animation: anda 6s steps(1, end) infinite; }
+    @keyframes anda { 0% { transform: translate(0, 0); } 16% { transform: translate(30px, 0); } 33% { transform: translate(60px, 0); } 50% { transform: translate(60px, 26px); } 66% { transform: translate(30px, 26px); } 83% { transform: translate(0, 26px); } }
+    .ponteiro { transform-origin: 360px 104px; animation: gira 6s linear infinite; }
+    .hora { transform-origin: 360px 104px; animation: gira 48s linear infinite; }
+    @keyframes gira { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="178" rx="150" ry="9"/>
+  <rect x="124" y="34" width="150" height="136" rx="16" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+  <path d="M124 50a16 16 0 0 1 16-16h118a16 16 0 0 1 16 16v20H124z" fill="#d97757" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="158" y="24" width="10" height="22" rx="5" fill="#3d4451" stroke="#1a1a1a" stroke-width="2.5"/><rect x="230" y="24" width="10" height="22" rx="5" fill="#3d4451" stroke="#1a1a1a" stroke-width="2.5"/>
+  <g fill="#ddd6cc"><rect x="146" y="86" width="22" height="18" rx="5"/><rect x="176" y="86" width="22" height="18" rx="5"/><rect x="206" y="86" width="22" height="18" rx="5"/><rect x="236" y="86" width="22" height="18" rx="5"/>
+    <rect x="146" y="112" width="22" height="18" rx="5"/><rect x="176" y="112" width="22" height="18" rx="5"/><rect x="206" y="112" width="22" height="18" rx="5"/><rect x="236" y="112" width="22" height="18" rx="5"/>
+    <rect x="146" y="138" width="22" height="18" rx="5"/><rect x="176" y="138" width="22" height="18" rx="5"/><rect x="206" y="138" width="22" height="18" rx="5"/></g>
+  <rect class="dia" x="146" y="86" width="22" height="18" rx="5" fill="#d97757" stroke="#1a1a1a" stroke-width="2"/>
+  <circle cx="360" cy="104" r="46" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+  <g stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"><path d="M360 68v7M360 133v7M324 104h7M389 104h7"/></g>
+  <line class="hora" x1="360" y1="104" x2="360" y2="90" stroke="#3d4451" stroke-width="6" stroke-linecap="round"/>
+  <line class="ponteiro" x1="360" y1="104" x2="360" y2="76" stroke="#d97757" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="360" cy="104" r="5" fill="#1a1a1a"/>
+<style>*{animation:none!important;transition:none!important}</style></svg>

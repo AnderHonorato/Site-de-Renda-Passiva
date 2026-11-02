@@ -1,0 +1,27 @@
+{
+  "slug": "limpar-planilha",
+  "estado": "pronta",
+  "categoria": "planilhas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "planilha",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Limpar planilha",
+    "en": "Clean spreadsheet"
+  },
+  "descricao": {
+    "pt-BR": "Remove linhas duplicadas e vazias, apara espaços, padroniza e-mail e exporta CSV ou XLSX. Tudo no seu navegador.",
+    "en": "Removes duplicate and empty rows, trims spaces, standardizes email and exports CSV or XLSX. All in your browser."
+  },
+  "intencoes": {
+    "pt-BR": ["tirar duplicados da planilha", "limpar csv", "remover linhas duplicadas do excel"],
+    "en": ["remove duplicates from spreadsheet", "clean csv", "remove duplicate rows from excel"]
+  },
+  "etiquetas": {
+    "pt-BR": ["csv", "planilha", "duplicadas", "limpar", "excel"],
+    "en": ["csv", "spreadsheet", "duplicates", "clean", "excel"]
+  },
+  "relacionadas": ["comparar-planilhas", "csv-e-json"],
+  "recursos_plus": []
+}

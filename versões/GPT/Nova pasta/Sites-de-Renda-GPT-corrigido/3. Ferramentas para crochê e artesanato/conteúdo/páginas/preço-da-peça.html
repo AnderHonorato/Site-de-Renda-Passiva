@@ -1,0 +1,154 @@
+<!--página
+{
+  "título": "Preço da peça",
+  "descrição": "Some materiais, mão de obra, embalagem e custos adicionais para chegar ao custo do artesanato e ao preço mínimo da peça, com margem, taxas e comparação com o seu preço.",
+  "destaque": "malva",
+  "navegação": "ferramentas",
+  "script": "páginas/preço-da-peça.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Preço da peça</h1>
+    <p class="ferramenta-resumo">Some materiais, mão de obra, embalagem e outros custos — essa soma é o custo do artesanato, conferida antes de aplicar a margem e as taxas. O resultado não é preço de mercado: é o mínimo para cobrir o que você informou.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-peça" class="ferramenta-formulário" novalidate>
+      <div class="campo">
+        <label for="perfil">Tipo de peça</label>
+        <select id="perfil" name="perfil" class="entrada seleção">
+          <option value="crochê">Peça de crochê</option>
+          <option value="amigurumi">Amigurumi</option>
+          <option value="peça-artesanal">Outra peça artesanal</option>
+          <option value="personalizado">Personalizado</option>
+        </select>
+        <p class="campo-ajuda" data-ajuda-perfil>Liste as linhas, agulhas de uso único e aviamentos usados nesta peça.</p>
+      </div>
+
+      <fieldset class="grupo-de-campos">
+        <legend>Materiais</legend>
+        <div class="linhas-editáveis" data-linhas-de-materiais></div>
+        <button type="button" class="botão botão-secundário linhas-editáveis-adicionar" data-adicionar-material>
+          <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#adicionar"></use></svg>
+          <span>Adicionar material</span>
+        </button>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Mão de obra</legend>
+        <div class="campo">
+          <label for="horas">Horas gastas nesta peça</label>
+          <input id="horas" name="horas" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 2" aria-describedby="horas-erro">
+          <p id="horas-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="valor-hora">Valor da sua hora (R$)</label>
+          <input id="valor-hora" name="valor-hora" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 15,00" aria-describedby="valor-hora-ajuda valor-hora-erro">
+          <p id="valor-hora-ajuda" class="campo-ajuda">Calcule em Valor da hora e traga o resultado para cá.</p>
+          <p id="valor-hora-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Outros custos</legend>
+        <div class="campo">
+          <label for="embalagem">Embalagem (R$)</label>
+          <input id="embalagem" name="embalagem" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="embalagem-erro">
+          <p id="embalagem-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="custos-adicionais">Custos adicionais (R$)</label>
+          <input id="custos-adicionais" name="custos-adicionais" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="custos-adicionais-ajuda custos-adicionais-erro">
+          <p id="custos-adicionais-ajuda" class="campo-ajuda">Frete de compra, taxa de plataforma fixa ou outro custo que não é material nem hora.</p>
+          <p id="custos-adicionais-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Margem, taxas e conjunto</legend>
+        <div class="campo">
+          <label for="margem">Margem desejada sobre o preço de venda (%)</label>
+          <input id="margem" name="margem" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 30" aria-describedby="margem-ajuda margem-erro">
+          <p id="margem-ajuda" class="campo-ajuda">Parte do preço de venda que sobra depois do custo e das taxas.</p>
+          <p id="margem-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="taxas">Taxas sobre a venda (%)</label>
+          <input id="taxas" name="taxas" class="entrada" type="text" inputmode="decimal" autocomplete="off" value="0" aria-describedby="taxas-ajuda taxas-erro">
+          <p id="taxas-ajuda" class="campo-ajuda">Maquininha, feira ou aplicativo. Percentual do preço de venda.</p>
+          <p id="taxas-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="quantidade-do-conjunto">Peças no conjunto</label>
+          <input id="quantidade-do-conjunto" name="quantidade-do-conjunto" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="1" aria-describedby="quantidade-do-conjunto-ajuda quantidade-do-conjunto-erro">
+          <p id="quantidade-do-conjunto-ajuda" class="campo-ajuda">Quantas peças iguais formam o conjunto vendido junto (1 se é peça avulsa).</p>
+          <p id="quantidade-do-conjunto-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="arredondamento">Arredondamento do preço por peça</label>
+          <select id="arredondamento" name="arredondamento" class="entrada seleção">
+            <option value="acima">Para cima, ao centavo</option>
+            <option value="próximo">Ao centavo mais próximo</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <div class="campo">
+        <label for="preço-informado">Seu preço para comparar (R$, opcional)</label>
+        <input id="preço-informado" name="preço-informado" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 60,00" aria-describedby="preço-informado-ajuda preço-informado-erro">
+        <p id="preço-informado-ajuda" class="campo-ajuda">Informe o preço que você cobra ou pensa em cobrar, por peça, para ver se ele cobre o mínimo calculado.</p>
+        <p id="preço-informado-erro" class="campo-erro" hidden></p>
+      </div>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular preço</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#tag"></use></svg>
+        <p class="estado-vazio-título">O preço da peça aparece aqui</p>
+        <p>Preencha materiais, mão de obra e margem e toque em Calcular preço.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Preço mínimo por peça</p>
+          <p class="resultado-valor" data-preço-peça></p>
+        </div>
+        <div class="aviso" data-aviso-comparação hidden>
+          <p data-texto-comparação></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a esse valor</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+        <form id="formulário-salvar-peça" class="campo" novalidate>
+          <label for="nome-da-peça">Nome para salvar esta ficha</label>
+          <input id="nome-da-peça" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Amigurumi coelho pequeno" aria-describedby="nome-da-peça-erro">
+          <p id="nome-da-peça-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Custo do artesanato = materiais + horas × valor da hora + embalagem + custos adicionais, somado antes da margem.</li>
+    <li>Margem e taxas são percentuais do preço de venda e precisam somar menos de 100%.</li>
+    <li>Nenhum preço de mercado é consultado: a comparação usa só o preço que você informar.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-peça" class="botão botão-primário">Calcular preço</button>
+</div>

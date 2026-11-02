@@ -1,0 +1,39 @@
+{
+  "slug": "rateio-de-custos",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Rateio de custos",
+    "en": "Cost allocation"
+  },
+  "descricao": {
+    "pt-BR": "Distribui um custo comum entre setores, produtos ou pessoas por critério escolhido.",
+    "en": "Distributes a shared cost across departments, products, or people by a chosen criterion."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "dividir custo entre setores"
+    ],
+    "en": [
+      "split a cost across departments"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "rateio",
+      "custo indireto",
+      "proporcional"
+    ],
+    "en": [
+      "cost allocation",
+      "overhead cost",
+      "proportional"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

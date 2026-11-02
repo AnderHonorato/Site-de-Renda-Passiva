@@ -1,0 +1,271 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<defs>
+
+<symbol id="icone-busca" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="11" cy="11" r="6.2"/><path d="m15.6 15.6 3.4 3.4"/>
+</g></symbol>
+
+<symbol id="icone-seta-direita" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M5 12h13"/><path d="m12.5 6.5 6 5.5-6 5.5"/>
+</g></symbol>
+
+<symbol id="icone-seta-esquerda" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M19 12H6"/><path d="m11.5 6.5-6 5.5 6 5.5"/>
+</g></symbol>
+
+<symbol id="icone-seta-cima" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 19V6"/><path d="m6.5 11.5 5.5-6 5.5 6"/>
+</g></symbol>
+
+<symbol id="icone-seta-baixo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 5v13"/><path d="m6.5 12.5 5.5 6 5.5-6"/>
+</g></symbol>
+
+<symbol id="icone-chevron-direita" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="m9 5 7 7-7 7"/>
+</g></symbol>
+
+<symbol id="icone-chevron-baixo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="m5 9 7 7 7-7"/>
+</g></symbol>
+
+<symbol id="icone-fechar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M6 6l12 12"/><path d="M18 6 6 18"/>
+</g></symbol>
+
+<symbol id="icone-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/>
+</g></symbol>
+
+<symbol id="icone-inicio" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 18.5V9.2l8-5 8 5v9.3"/><path d="M4 18.5h16"/><path d="M9.5 18.5v-5h5v5"/>
+</g></symbol>
+
+<symbol id="icone-ferramentas" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 7h10"/><circle cx="17" cy="7" r="2"/>
+<path d="M9 12h11"/><circle cx="6" cy="12" r="2"/>
+<path d="M4 17h10"/><circle cx="17" cy="17" r="2"/>
+</g></symbol>
+
+<symbol id="icone-salvos" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 4.6 13.9 9l4.6.4-3.5 3.1 1 4.6L12 14.6 7.9 17.1l1-4.6L5.4 9.4 10.1 9z"/>
+</g></symbol>
+
+<symbol id="icone-conta" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="12" cy="10.2" r="2.6"/><path d="M7.2 17.5a5 5 0 0 1 9.6 0"/>
+</g></symbol>
+
+<symbol id="icone-trabalho" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="4" y="8" width="16" height="10.4" rx="2"/><path d="M9 8V6.4A2 2 0 0 1 11 4.4h2A2 2 0 0 1 15 6.4V8"/><path d="M4 12.8h16"/>
+</g></symbol>
+
+<symbol id="icone-planos" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="3.6" y="6" width="16.8" height="12" rx="2.4"/><path d="M9.5 6v12" stroke-dasharray="2 2.4"/>
+</g></symbol>
+
+<symbol id="icone-estrela" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 4.6 13.9 9l4.6.4-3.5 3.1 1 4.6L12 14.6 7.9 17.1l1-4.6L5.4 9.4 10.1 9z"/>
+</g></symbol>
+
+<symbol id="icone-estrela-cheia" viewBox="0 0 24 24"><g fill="currentColor" stroke="none">
+<path d="M12 4.6 13.9 9l4.6.4-3.5 3.1 1 4.6L12 14.6 7.9 17.1l1-4.6L5.4 9.4 10.1 9z"/>
+</g></symbol>
+
+<symbol id="icone-copiar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="8" y="8" width="11.4" height="11.4" rx="2.2"/><path d="M15.4 8V6.6A2.2 2.2 0 0 0 13.2 4.4H6.6A2.2 2.2 0 0 0 4.4 6.6v6.6a2.2 2.2 0 0 0 2.2 2.2H8"/>
+</g></symbol>
+
+<symbol id="icone-pdf" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M13.6 3.6H7.4A2.4 2.4 0 0 0 5 6v12a2.4 2.4 0 0 0 2.4 2.4h9.2A2.4 2.4 0 0 0 19 18V9z"/><path d="M13.6 3.6V9H19"/><path d="M8.8 14.2h6.4"/><path d="M8.8 17h4"/>
+</g></symbol>
+
+<symbol id="icone-planilha" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="3.6" y="5" width="16.8" height="14" rx="2.4"/><path d="M3.6 9.6h16.8M9.6 9.6V19M14.4 9.6V19"/>
+</g></symbol>
+
+<symbol id="icone-baixar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 4.4v10"/><path d="m8 10.6 4 4 4-4"/><path d="M4.8 18.2h14.4"/>
+</g></symbol>
+
+<symbol id="icone-enviar-arquivo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 18.4V8.4"/><path d="m8 12.2 4-4 4 4"/><path d="M4.8 18.2h14.4"/>
+</g></symbol>
+
+<symbol id="icone-arquivo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M13.6 3.6H7.4A2.4 2.4 0 0 0 5 6v12a2.4 2.4 0 0 0 2.4 2.4h9.2A2.4 2.4 0 0 0 19 18V9z"/><path d="M13.6 3.6V9H19"/><path d="M8.8 13.4h6.4M8.8 16.6h4.2"/>
+</g></symbol>
+
+<symbol id="icone-cadeado" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="4.6" y="10.4" width="14.8" height="9.2" rx="2.2"/><path d="M8.2 10.4V7.8a3.8 3.8 0 0 1 7.6 0v2.6"/>
+</g></symbol>
+
+<symbol id="icone-aviso" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="8"/><path d="M12 8.4v4.4"/><path d="M12 16.2h.01"/>
+</g></symbol>
+
+<symbol id="icone-sucesso" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="8"/><path d="m8.6 12.4 2.4 2.4 4.4-5.2"/>
+</g></symbol>
+
+<symbol id="icone-erro" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="8"/><path d="m9.5 9.5 5 5"/><path d="m14.5 9.5-5 5"/>
+</g></symbol>
+
+<symbol id="icone-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="8"/><path d="M12 11v5"/><path d="M12 7.6h.01"/>
+</g></symbol>
+
+<symbol id="icone-sol" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="4.2"/><path d="M12 3.6v2.4"/><path d="M12 18v2.4"/><path d="M4.7 4.7l1.7 1.7"/><path d="M17.6 17.6l1.7 1.7"/><path d="M3.6 12h2.4"/><path d="M18 12h2.4"/><path d="M4.7 19.3l1.7-1.7"/><path d="M17.6 6.4l1.7-1.7"/>
+</g></symbol>
+
+<symbol id="icone-lua" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M19 13.6A8 8 0 1 1 10.4 5a6.4 6.4 0 0 0 8.6 8.6z"/>
+</g></symbol>
+
+<symbol id="icone-idioma" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="8"/><path d="M4 12h16"/><path d="M12 4c2.4 2.2 3.6 5 3.6 8s-1.2 5.8-3.6 8c-2.4-2.2-3.6-5-3.6-8s1.2-5.8 3.6-8z"/>
+</g></symbol>
+
+<symbol id="icone-sair" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M9 4.4H6.6A2.2 2.2 0 0 0 4.4 6.6v10.8a2.2 2.2 0 0 0 2.2 2.2H9"/><path d="M15 16l4.4-4-4.4-4"/><path d="M19.4 12H9.8"/>
+</g></symbol>
+
+<symbol id="icone-editar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M15.2 4.6a2 2 0 0 1 2.8 2.8L8.6 16.8l-3.6.8.8-3.6z"/>
+</g></symbol>
+
+<symbol id="icone-excluir" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M5.4 7.4h13.2"/><path d="M9.4 7.4V5.6a1.6 1.6 0 0 1 1.6-1.6h2a1.6 1.6 0 0 1 1.6 1.6v1.8"/><path d="M7.4 7.4 8.2 18a2 2 0 0 0 2 1.8h3.6a2 2 0 0 0 2-1.8l.8-10.6"/>
+</g></symbol>
+
+<symbol id="icone-mais" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 5v14"/><path d="M5 12h14"/>
+</g></symbol>
+
+<symbol id="icone-menos" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M5 12h14"/>
+</g></symbol>
+
+<symbol id="icone-arrastar" viewBox="0 0 24 24"><g fill="currentColor" stroke="none">
+<circle cx="9" cy="6.5" r="1.1"/><circle cx="15" cy="6.5" r="1.1"/><circle cx="9" cy="12" r="1.1"/><circle cx="15" cy="12" r="1.1"/><circle cx="9" cy="17.5" r="1.1"/><circle cx="15" cy="17.5" r="1.1"/>
+</g></symbol>
+
+<symbol id="icone-filtro" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4.4 5h15.2"/><path d="M7.6 12h8.8"/><path d="M10.4 19h3.2"/>
+</g></symbol>
+
+<symbol id="icone-ordenar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M7 4.4v14.4"/><path d="m4 7.4 3-3 3 3"/><path d="M17 19.6V5.2"/><path d="m20 16.6-3 3-3-3"/>
+</g></symbol>
+
+<symbol id="icone-relogio" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="8"/><path d="M12 7.4V12l3 1.9"/>
+</g></symbol>
+
+<symbol id="icone-calendario" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="4" y="5.4" width="16" height="14.6" rx="2.2"/><path d="M4 9.8h16"/><path d="M8 3.6v3.2"/><path d="M16 3.6v3.2"/>
+</g></symbol>
+
+<symbol id="icone-dinheiro" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="8"/><path d="M14.4 9.6c-.4-.9-1.3-1.4-2.4-1.4-1.5 0-2.6.9-2.6 2 0 1.2 1 1.7 2.6 2 1.6.3 2.6.8 2.6 2 0 1.1-1.1 2-2.6 2-1.1 0-2-.5-2.4-1.4"/><path d="M12 6.8v1.4"/><path d="M12 15.8v1.4"/>
+</g></symbol>
+
+<symbol id="icone-vendas" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4.4 16.4 9.8 11l3.6 3.4 6.2-6.6"/><path d="M15.4 7.8h4.2V12"/>
+</g></symbol>
+
+<symbol id="icone-calculo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="5" y="3.6" width="14" height="16.8" rx="2.4"/><path d="M8.6 8h6.8"/><path d="M8.6 12h.01M12 12h.01M15.4 12h.01M8.6 15.6h.01M12 15.6h.01M15.4 15.6h.01"/>
+</g></symbol>
+
+<symbol id="icone-texto" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M5 6.4h14"/><path d="M5 12h14"/><path d="M5 17.6h9"/>
+</g></symbol>
+
+<symbol id="icone-documento" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M13.6 3.6H7.4A2.4 2.4 0 0 0 5 6v12a2.4 2.4 0 0 0 2.4 2.4h9.2A2.4 2.4 0 0 0 19 18V9z"/><path d="M13.6 3.6V9H19"/><path d="M8.6 12.2h6.8"/>
+</g></symbol>
+
+<symbol id="icone-imagem" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="3.6" y="5" width="16.8" height="14" rx="2.4"/><circle cx="8.6" cy="9.8" r="1.5"/><path d="m4.6 16.6 4.2-4.2 3.3 3.3 2.9-2.9 4.4 4.4"/>
+</g></symbol>
+
+<symbol id="icone-codigo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="m8.8 8.4-4 3.6 4 3.6"/><path d="m15.2 8.4 4 3.6-4 3.6"/><path d="m13.4 5.6-2.8 12.8"/>
+</g></symbol>
+
+<symbol id="icone-chave" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="8.2" cy="8.2" r="3.4"/><path d="m10.6 10.6 8 8"/><path d="m15.4 15.4 2-2"/><path d="m17.6 17.6 2-2"/>
+</g></symbol>
+
+<symbol id="icone-pessoas" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="9" cy="8.4" r="2.6"/><path d="M4 19a5 5 0 0 1 10 0"/><circle cx="17" cy="9.4" r="2.2"/><path d="M15 12a4.6 4.6 0 0 1 5.4 3.4"/>
+</g></symbol>
+
+<symbol id="icone-caixa" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 4.4 6 7.6v8.8l6 3.2 6-3.2V7.6z"/><path d="m6 7.6 6 3.2 6-3.2"/><path d="M12 10.8v8.8"/>
+</g></symbol>
+
+<symbol id="icone-megafone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 10.4v3.2l3.2.8 7.2 3.2V6.4L7.2 9.6z"/><path d="M14.4 8.4a3.6 3.6 0 0 1 0 7.2"/><path d="M7.6 14.4 8.4 18a1.4 1.4 0 0 0 2.7-.4l-.3-3"/>
+</g></symbol>
+
+<symbol id="icone-lista" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="5.4" cy="6.4" r="1" fill="currentColor"/><path d="M9 6.4h10.6"/><circle cx="5.4" cy="12" r="1" fill="currentColor"/><path d="M9 12h10.6"/><circle cx="5.4" cy="17.6" r="1" fill="currentColor"/><path d="M9 17.6h10.6"/>
+</g></symbol>
+
+<symbol id="icone-livro" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4.4 5.6a2 2 0 0 1 2-1.2H12v14.8H6.4a2 2 0 0 0-2 1.2z"/><path d="M19.6 5.6a2 2 0 0 0-2-1.2H12v14.8h5.6a2 2 0 0 1 2 1.2z"/>
+</g></symbol>
+
+<symbol id="icone-ferramenta" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M9.6 14.4 4.8 19.2"/><path d="M13.5 5.4a4 4 0 1 0-5 5l-1 1 4 4 1-1a4 4 0 0 0 5-5l-2.2 2.2-2-2z"/>
+</g></symbol>
+
+<symbol id="icone-sino" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M6.4 10.4a5.6 5.6 0 0 1 11.2 0c0 4 1.4 5.6 1.4 5.6H5s1.4-1.6 1.4-5.6z"/><path d="M10.2 19.2a2 2 0 0 0 3.6 0"/>
+</g></symbol>
+
+<symbol id="icone-mensagem" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4.8 6.4h14.4a1.6 1.6 0 0 1 1.6 1.6v7.2a1.6 1.6 0 0 1-1.6 1.6H9.6l-3.6 3v-3H4.8a1.6 1.6 0 0 1-1.6-1.6V8a1.6 1.6 0 0 1 1.6-1.6z"/>
+</g></symbol>
+
+<symbol id="icone-escudo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 4.2 5.4 9.1 7.9 17h8.2l2.5-7.9z"/>
+</g></symbol>
+
+<symbol id="icone-usuario" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="8.6" r="3.4"/><path d="M5.4 19.4a6.6 6.6 0 0 1 13.2 0"/>
+</g></symbol>
+
+<symbol id="icone-grafico" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4.8 19.2V9.6"/><path d="M12 19.2V4.8"/><path d="M19.2 19.2v-6.4"/><path d="M3.6 19.2h16.8"/>
+</g></symbol>
+
+<symbol id="icone-marca-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+<path d="m5 12.5 4.5 4.5L19 7"/>
+</g></symbol>
+
+<symbol id="icone-olho" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M3.2 12S6.5 6.4 12 6.4 20.8 12 20.8 12 17.5 17.6 12 17.6 3.2 12 3.2 12Z"/><circle cx="12" cy="12" r="2.6"/>
+</g></symbol>
+
+<symbol id="icone-olho-fechado" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M3.2 12S6.5 6.4 12 6.4 20.8 12 20.8 12 17.5 17.6 12 17.6 3.2 12 3.2 12Z"/><path d="M4 4.4l16 15.2"/>
+</g></symbol>
+
+<symbol id="icone-lote" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 4.4 4.8 8.4 12 12.4l7.2-4z"/><path d="m4.8 12.4 7.2 4 7.2-4"/><path d="m4.8 16.4 7.2 4 7.2-4"/>
+</g></symbol>
+
+<symbol id="icone-desfazer" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M6 10h9.2a4.4 4.4 0 0 1 0 8.8H12"/><path d="m9 6.4-4.6 3.6L9 13.6"/>
+</g></symbol>
+
+<symbol id="icone-externo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M9.6 14.4 19.2 4.8"/><path d="M13.2 4.8h6v6"/><path d="M18.8 13.2v4.4a1.6 1.6 0 0 1-1.6 1.6H6a1.6 1.6 0 0 1-1.6-1.6V6.8A1.6 1.6 0 0 1 6 5.2h4.4"/>
+</g></symbol>
+
+</defs>
+</svg>

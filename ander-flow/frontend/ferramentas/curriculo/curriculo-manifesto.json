@@ -1,0 +1,39 @@
+{
+  "slug": "curriculo",
+  "estado": "planejada",
+  "categoria": "documentos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "documento",
+  "ordem": 110,
+  "nome": {
+    "pt-BR": "Gerador de currículo",
+    "en": "Resume builder"
+  },
+  "descricao": {
+    "pt-BR": "Monta um currículo organizado com experiência, formação e habilidades.",
+    "en": "Builds an organized resume with experience, education, and skills."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer um currículo"
+    ],
+    "en": [
+      "make a resume"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "currículo",
+      "emprego",
+      "vaga"
+    ],
+    "en": [
+      "resume",
+      "job",
+      "job opening"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

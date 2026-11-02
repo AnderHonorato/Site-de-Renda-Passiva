@@ -1,0 +1,30 @@
+/* Carregamento e recuperação usam as mesmas superfícies e silhuetas do portal. */
+.topo-sessao { position:relative;display:flex;align-items:center;flex:none; }
+.topo-sessao:empty { display:none; }
+.esqueleto-conta { display:flex;align-items:center;gap:8px;min-height:40px;padding:4px 10px 4px 4px;border:1px solid var(--borda);border-radius:var(--raio-pílula);background:var(--superfície); }
+.esqueleto-conta__avatar { display:block;width:32px;height:32px;border-radius:50%; }
+.esqueleto-conta__nome { display:block;width:72px;height:12px;border-radius:var(--raio-pílula); }
+.esqueleto-conta__avatar,.esqueleto-conta__nome,.esqueleto-chat {
+  background:linear-gradient(100deg,var(--superfície-3) 20%,var(--marca-fraca) 48%,var(--superfície-3) 75%);
+  background-size:220% 100%;animation:esqueleto-passa 1.6s ease-in-out infinite;
+}
+.chat-carregamento { position:fixed;right:22px;bottom:24px;z-index:94;display:grid;justify-items:end;gap:10px;max-width:min(340px,calc(100vw - 24px)); }
+.esqueleto-chat { display:block;width:56px;height:56px;border:1px solid var(--borda);border-radius:18px;box-shadow:var(--sombra-1); }
+.bloco-falhou--discreto { padding:12px 15px;text-align:left;justify-content:flex-start;gap:0;border-radius:var(--raio-g);font-size:var(--t-sm); }
+.bloco-falhou--discreto .bloco-falhou__título { font-size:var(--t-sm); }
+.bloco-falhou--discreto .pequeno { font-size:var(--t-xs); }
+.bloco-falhou--discreto .ações { gap:6px; }
+.bloco-falhou--discreto .botão { min-height:32px;font-size:var(--t-xs);padding:6px 12px; }
+.topo-sessao > .bloco-falhou--discreto,.busca-topo > .bloco-falhou--discreto,.notificações > .bloco-falhou--discreto {
+  position:absolute;top:calc(100% + 10px);right:0;width:min(310px,calc(100vw - 24px));z-index:80;
+}
+/* O recado de sessão fica abaixo do cabeçalho e não pode criar uma parede invisível sobre
+   pesquisa, tema, idioma ou conta. Só as ações dele recebem o ponteiro. */
+.topo-sessao > .bloco-falhou--discreto { pointer-events:none; }
+.topo-sessao > .bloco-falhou--discreto button { pointer-events:auto; }
+.busca-topo > .bloco-falhou--discreto { left:0;right:auto; }
+[data-estado-bloco="erro"] .esqueleto-conta__avatar,[data-estado-bloco="erro"] .esqueleto-conta__nome,[data-estado-bloco="erro"] .esqueleto-chat { animation:none; }
+@keyframes esqueleto-passa { from { background-position:100% 0; } to { background-position:-100% 0; } }
+@media(max-width:760px) { .chat-carregamento { right:12px;bottom:calc(70px + env(safe-area-inset-bottom)); }.esqueleto-chat { width:50px;height:50px;border-radius:16px; } }
+@media(max-width:420px) { .esqueleto-conta { padding:3px;min-height:38px; }.esqueleto-conta__nome { display:none; } }
+@media(prefers-reduced-motion:reduce) { .esqueleto-conta__avatar,.esqueleto-conta__nome,.esqueleto-chat { animation:none; } }

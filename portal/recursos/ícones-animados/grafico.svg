@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i > :nth-child(2), #i > :nth-child(3), #i > :nth-child(4) { transform-origin: bottom center; animation: sobe 2.4s ease-in-out infinite; }
+    #i > :nth-child(3) { animation-delay: .2s; } #i > :nth-child(4) { animation-delay: .4s; }
+    @keyframes sobe { 0%, 100% { transform: scaleY(.45); } 45% { transform: scaleY(1.08); } 65% { transform: scaleY(1); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><path d="M4.5 19.5h15"/><rect x="6" y="11" width="3.2" height="6"/><rect x="11.4" y="7" width="3.2" height="10"/><rect x="16.8" y="13.5" width="3.2" height="3.5"/></g>
+</svg>

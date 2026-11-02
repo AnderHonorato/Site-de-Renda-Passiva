@@ -1,0 +1,5 @@
+import * as h from './helpers.js';
+function luminancia(s){if(!/^#[0-9a-f]{6}$/i.test(String(s)))throw new Error('Use cores HEX com seis dígitos, como #112233.');const a=[1,3,5].map(i=>parseInt(s.slice(i,i+2),16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return .2126*a[0]+.7152*a[1]+.0722*a[2];}
+export default h.tool("verificador-de-contraste",13,"Verificador de contraste","Compare duas cores e os limiares de contraste WCAG.","Cores sRGB opacas. Razão = (luminância maior + 0,05)/(menor + 0,05). WCAG 2.x AA exige 4,5:1 em texto normal e 3:1 em texto grande; AAA exige 7:1 e 4,5:1. Não avalia outros critérios de acessibilidade.",[{nome:'frente',rotulo:'Cor do texto',tipo:'color',valor:'#000000'},{nome:'fundo',rotulo:'Cor do fundo',tipo:'color',valor:'#ffffff'}],async d=>{const a=luminancia(d.frente),b=luminancia(d.fundo),r=(Math.max(a,b)+.05)/(Math.min(a,b)+.05);return h.resultado(h.f(r,2)+':1','AA texto normal: '+(r>=4.5?'passa':'não passa'),'AA texto grande: '+(r>=3?'passa':'não passa'),'AAA texto normal: '+(r>=7?'passa':'não passa'),'AAA texto grande: '+(r>=4.5?'passa':'não passa'),'Texto grande: pelo menos 18 pt regular ou 14 pt em negrito.');});
+
+

@@ -1,0 +1,39 @@
+{
+  "slug": "calculadora-de-nps",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 100,
+  "nome": {
+    "pt-BR": "Calculadora de NPS",
+    "en": "NPS calculator"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o Net Promoter Score a partir das notas de 0 a 10 dadas pelos clientes.",
+    "en": "Calculates the Net Promoter Score from customer ratings of 0 to 10."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular nps da pesquisa de satisfação"
+    ],
+    "en": [
+      "calculate NPS from a satisfaction survey"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "nps",
+      "satisfação do cliente",
+      "pesquisa"
+    ],
+    "en": [
+      "nps",
+      "customer satisfaction",
+      "survey"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

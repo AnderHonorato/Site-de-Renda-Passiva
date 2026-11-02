@@ -1,0 +1,27 @@
+{
+  "slug": "preco-de-venda",
+  "estado": "pronta",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Preço de venda",
+    "en": "Selling price"
+  },
+  "descricao": {
+    "pt-BR": "Preço mínimo, preço com a margem que você quer e quanto sobra por venda.",
+    "en": "Minimum price, price with the margin you want, and what is left per sale."
+  },
+  "intencoes": {
+    "pt-BR": ["quanto cobrar pelo meu produto", "calcular preço de venda", "preço com margem e taxa do cartão"],
+    "en": ["how much to charge for my product", "calculate selling price", "price with margin and card fee"]
+  },
+  "etiquetas": {
+    "pt-BR": ["margem", "markup", "taxa do cartão", "imposto"],
+    "en": ["margin", "markup", "card fee", "tax"]
+  },
+  "relacionadas": ["margem-de-contribuicao", "ponto-de-equilibrio"],
+  "recursos_plus": ["xlsx"]
+}

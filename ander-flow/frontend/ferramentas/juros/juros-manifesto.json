@@ -1,0 +1,49 @@
+{
+  "slug": "juros",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Calculadora de juros",
+    "en": "Interest calculator"
+  },
+  "descricao": {
+    "pt-BR": "Juros simples e compostos, com aportes mensais e tabela período a período.",
+    "en": "Simple and compound interest, with monthly contributions and a period-by-period table."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto rende meu dinheiro",
+      "juros compostos",
+      "simular poupança",
+      "valor futuro"
+    ],
+    "en": [
+      "how much will my money earn",
+      "compound interest",
+      "simulate a savings account",
+      "future value"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "juros",
+      "rendimento",
+      "investimento",
+      "poupança",
+      "montante"
+    ],
+    "en": [
+      "interest",
+      "return",
+      "investment",
+      "savings",
+      "future value"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

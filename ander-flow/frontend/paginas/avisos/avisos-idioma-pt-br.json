@@ -1,0 +1,26 @@
+{
+  "avisos": {
+    "titulo_pagina": "Avisos — Ander Flow",
+    "descricao_pagina": "Avisos do sistema e mensagens com o administrador.",
+    "titulo": "Avisos",
+    "abas": {
+      "rotulo": "Avisos e mensagens",
+      "sistema": "Avisos do sistema",
+      "mensagens": "Mensagens"
+    },
+    "sistema": {
+      "vazio_texto": "Nenhum aviso no momento.",
+      "explicacao": "Aviso do sistema é informativo. Mensagem é conversa com o administrador.",
+      "marcar_todos": "Marcar tudo como lido",
+      "marcados": "Avisos marcados como lidos"
+    },
+    "mensagens": {
+      "convite_titulo": "Entre para conversar com o administrador",
+      "convite_texto": "Mensagens ficam guardadas na sua conta e são respondidas por um administrador.",
+      "vazio_titulo": "Nenhuma mensagem ainda",
+      "vazio_texto": "Escreva sua primeira mensagem para o administrador.",
+      "campo_rotulo": "Sua mensagem",
+      "campo_placeholder": "Escreva sua mensagem"
+    }
+  }
+}

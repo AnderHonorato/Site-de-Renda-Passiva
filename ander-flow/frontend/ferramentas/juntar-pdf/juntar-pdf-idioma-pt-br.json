@@ -1,0 +1,69 @@
+{
+  "juntar-pdf": {
+    "titulo_pagina": "Juntar PDF — Ander Flow",
+    "descricao_pagina": "Junte vários PDFs em um só, na ordem que você escolher. Os arquivos são lidos no seu navegador e não saem do aparelho.",
+    "titulo": "Juntar PDF",
+    "resumo": "Escolha os arquivos, coloque na ordem certa e baixe um PDF só. Tudo acontece no seu navegador: nenhum arquivo é enviado para servidor.",
+    "enviar": {
+      "titulo": "Solte os PDFs aqui",
+      "texto": "Ou escolha os arquivos do seu aparelho. A ordem da lista é a ordem do documento final.",
+      "escolher": "Escolher arquivos",
+      "limite": "No grátis, até {limite_lote_gratis} arquivos por vez. Cada arquivo pode ter até 100 MB."
+    },
+    "acoes": {
+      "juntar": "Juntar PDFs",
+      "baixar": "Baixar PDF juntado"
+    },
+    "progresso": {
+      "titulo": "Montando o PDF…",
+      "pagina": "Página {pagina} de {total}"
+    },
+    "resultado": {
+      "titulo": "PDF pronto",
+      "paginas": "{quantidade} páginas",
+      "arquivos": "Arquivos juntados",
+      "tamanho": "Tamanho do arquivo",
+      "nome_arquivo": "juntado.pdf",
+      "pronto": "PDF montado. É só baixar."
+    },
+    "vazio": {
+      "titulo": "Nada para juntar ainda",
+      "texto": "Escolha pelo menos dois PDFs para começar."
+    },
+    "tamanho": {
+      "mb": "{valor} MB",
+      "kb": "{valor} kB"
+    },
+    "plus": {
+      "titulo": "Processar {quantidade} arquivos de uma vez",
+      "texto": "No grátis o lote vai até {limite} arquivos. O Plus libera 100 por vez."
+    },
+    "erros": {
+      "arquivo_nao_pdf": "\"{nome}\" não é um PDF de verdade — o conteúdo do arquivo não confere.",
+      "pdf_protegido": "\"{nome}\" está protegido por senha. Abra e salve sem senha antes de juntar.",
+      "pdf_corrompido": "Não consegui ler \"{nome}\". O arquivo parece estar danificado.",
+      "arquivo_grande_demais": "\"{nome}\" passa de 100 MB.",
+      "poucos_arquivos": "Escolha pelo menos dois PDFs.",
+      "limite_de_arquivos": "Seu plano permite juntar até {limite} arquivos por vez."
+    },
+    "como_usar": {
+      "um": "Escolha ou solte os PDFs. Eles são lidos **no seu navegador**, sem envio para servidor.",
+      "dois": "Arraste pela lista, ou use as setas, para deixar na ordem que o documento final deve ter.",
+      "tres": "Clique em juntar e baixe o arquivo. O original continua intacto no seu aparelho."
+    },
+    "perguntas": {
+      "envio": {
+        "pergunta": "Meus arquivos são enviados para algum servidor?",
+        "resposta": "Não. A junção usa uma biblioteca que roda dentro da página. Se você desligar a internet depois de abrir a ferramenta, ela continua funcionando."
+      },
+      "senha": {
+        "pergunta": "E se o PDF tiver senha?",
+        "resposta": "PDF protegido não pode ser juntado sem a senha. Abra o arquivo no leitor de PDF, salve uma cópia sem proteção e use essa cópia aqui."
+      },
+      "lote": {
+        "pergunta": "Por que o grátis limita a quantidade?",
+        "resposta": "O lote grande é o recurso do Plus. O limite é verificado no servidor: o código que libera 100 arquivos só é entregue para quem tem Plus. Como o processamento acontece no seu navegador, quem mexer no próprio código consegue contornar — está dito assim, sem fingir."
+      }
+    }
+  }
+}

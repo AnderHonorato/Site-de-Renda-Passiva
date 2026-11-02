@@ -1,0 +1,150 @@
+/* Movimento: tempos, curvas e entradas do portal.
+ *
+ * Regras da casa:
+ * - só `opacity` e `transform` se mexem; nada empurra o texto (sem salto de layout);
+ * - o estado final de toda animação é o estado natural do elemento: se o CSS do movimento
+ *   não carregar, ou se a pessoa pedir menos movimento, a página fica igual, só parada;
+ * - cada entrada tem uma razão: mostrar o que apareceu ou confirmar o que a pessoa fez.
+ *   Nada se mexe sem motivo e nada em laço, fora as ilustrações dos estados de erro.
+ * O bloco `prefers-reduced-motion` de núcleo.css já reduz tudo a um quadro só. */
+
+:root {
+  --mov-rápido: 140ms;
+  --mov-médio: 280ms;
+  --mov-lento: 520ms;
+  --curva-saída: cubic-bezier(.22, 1, .36, 1);
+  --curva-mola: cubic-bezier(.34, 1.56, .64, 1);
+  --curva-suave: cubic-bezier(.4, 0, .2, 1);
+  --desloca-entrada: 12px;
+}
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(var(--desloca-entrada)); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes surgir { from { opacity: 0; } to { opacity: 1; } }
+@keyframes descer {
+  from { opacity: 0; transform: translateY(-6px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes saltar {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+@keyframes virar {
+  from { opacity: 0; transform: rotate(-80deg) scale(.55); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes revelar-resultado {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes erguer-valor {
+  from { opacity: .35; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Uma peça que entra. O atraso vem das classes .atraso-1 a .atraso-4. */
+.entra { animation: entrar var(--mov-lento) var(--curva-saída) both; animation-delay: var(--atraso, 0ms); }
+.atraso-1 { --atraso: 70ms; }
+.atraso-2 { --atraso: 140ms; }
+.atraso-3 { --atraso: 210ms; }
+.atraso-4 { --atraso: 280ms; }
+
+/* Filhos que entram em cascata, um depois do outro (até 12; do 13º em diante entram juntos). */
+.cascata > * { animation: entrar var(--mov-lento) var(--curva-saída) both; animation-delay: 540ms; }
+.cascata > :nth-child(1) { animation-delay: 0ms; }
+.cascata > :nth-child(2) { animation-delay: 45ms; }
+.cascata > :nth-child(3) { animation-delay: 90ms; }
+.cascata > :nth-child(4) { animation-delay: 135ms; }
+.cascata > :nth-child(5) { animation-delay: 180ms; }
+.cascata > :nth-child(6) { animation-delay: 225ms; }
+.cascata > :nth-child(7) { animation-delay: 270ms; }
+.cascata > :nth-child(8) { animation-delay: 315ms; }
+.cascata > :nth-child(9) { animation-delay: 360ms; }
+.cascata > :nth-child(10) { animation-delay: 405ms; }
+.cascata > :nth-child(11) { animation-delay: 450ms; }
+.cascata > :nth-child(12) { animation-delay: 495ms; }
+
+/* Confirmações: o botão responde ao toque. */
+.pulso { animation: saltar var(--mov-médio) var(--curva-mola); }
+.virada { animation: virar var(--mov-médio) var(--curva-mola); }
+
+/* Resultado da ferramenta: aparece da primeira vez; nas atualizações só o valor se ergue. */
+.resultado[data-novo="sim"] { animation: revelar-resultado var(--mov-médio) var(--curva-saída); }
+.resultado[data-atualizado="sim"] .resultado__valor { animation: erguer-valor var(--mov-rápido) var(--curva-saída); }
+
+/* Menu de categorias abre descendo do botão. */
+.menu-categorias__painel:not([hidden]) { animation: descer var(--mov-médio) var(--curva-saída); transform-origin: top left; }
+
+/* Mensagem de bloco que falhou entra suave, sem desviar a atenção do resto da página. */
+.bloco-falhou { animation: surgir var(--mov-médio) var(--curva-suave) both; }
+
+/* Ilustrações de erro: vêm de arquivos SVG com a própria animação, que já respeita o movimento reduzido. */
+.ilustração { display: block; width: min(100%, 320px); height: auto; }
+
+/* ---------- Troca de tema: um rolo de pintura desce pela tela ----------
+   Os tempos e o trajeto ficam em scripts/núcleo/transição-de-tema.js (Web Animations). Aqui só a
+   aparência: a camada de tinta (cor do tema novo), o rolo com textura que gira, o cabo e as gotas. */
+.transição-tema {
+  position: fixed; inset: 0; z-index: 2000; overflow: hidden; pointer-events: all;
+  --tt-tinta: #171717; --tt-borda: #6b7280; --tt-brilho: rgba(255, 255, 255, .16); --tt-linha: #1a1a1a;
+}
+/* Escurecendo, o rolo leva tinta grafite sobre a página clara; clareando, tinta marfim sobre a escura. */
+.transição-tema[data-direção="clarear"] { --tt-tinta: #f5f2ed; --tt-borda: #c9b89b; --tt-brilho: rgba(255, 255, 255, .75); --tt-linha: #e9e4dc; }
+
+.tt__tinta { position: absolute; inset: 0; background: var(--tt-tinta); clip-path: inset(0 0 100% 0); }
+
+.rolo { position: absolute; left: 0; top: 0; width: 100%; height: 64px; transform: translateY(-120px); will-change: transform; }
+.rolo__corpo {
+  position: absolute; left: -26px; top: 8px; width: calc(100% - 96px); height: 48px;
+  border: 3px solid var(--tt-borda); border-radius: 26px; background-color: var(--tt-tinta);
+  /* 1º: brilho de cima e sombra de baixo (cilindro); 2º: a trama da lã, que gira com o rolo. */
+  background-image:
+    linear-gradient(180deg, var(--tt-brilho) 0%, rgba(255, 255, 255, 0) 30%, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, .28) 100%),
+    repeating-linear-gradient(180deg, rgba(120, 120, 120, .22) 0 3px, rgba(120, 120, 120, 0) 3px 11px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .25);
+}
+.rolo__cabo { position: absolute; right: 0; top: 0; width: 130px; height: 120px; overflow: visible; transform-origin: 0 32px; animation: tt-mão 520ms ease-in-out infinite alternate; }
+.rolo__arame { fill: none; stroke: #4a505c; stroke-width: 6; stroke-linecap: round; }
+.rolo__tampa { fill: #4a505c; stroke: var(--tt-linha); stroke-width: 3; }
+.rolo__punho { fill: #d97757; stroke: var(--tt-linha); stroke-width: 3; }
+.rolo__costelas { fill: none; stroke: var(--tt-linha); stroke-width: 2.5; stroke-linecap: round; opacity: .45; }
+@keyframes tt-mão { from { transform: rotate(-2.4deg); } to { transform: rotate(2.4deg); } }
+
+/* Gotas que escorrem da borda de baixo do rolo, cada uma no seu tempo. */
+.rolo__gota {
+  position: absolute; top: calc(100% - 5px); width: 9px; height: 20px; margin-left: -4px;
+  border-radius: 50% 50% 50% 50% / 28% 28% 72% 72%; background: var(--tt-tinta);
+  transform-origin: top center; animation: tt-gota 640ms ease-in-out infinite alternate;
+}
+@keyframes tt-gota { from { transform: scaleY(.45); } to { transform: scaleY(1.25); } }
+
+/* ---------- Respostas ao passar o mouse ----------
+   Só em aparelhos com mouse e sem "reduzir movimento"; só transform e opacity, que não pedem
+   recálculo de layout. Cada área responde de um jeito, para o site parecer vivo sem ficar barulhento. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ferramenta-linha, .categoria-cartão, .intenções__lista button, .relacionadas a, .acesso-rápido a { transition-property: transform, border-color, background-color, box-shadow, color; transition-duration: .22s; transition-timing-function: var(--curva-mola, ease); }
+  .ferramenta-linha:hover { transform: translateY(-2px); }
+  .ferramenta-linha__ícone, .ferramenta-linha__seta, .favorito, .categoria-cartão__ícone { transition: transform .26s var(--curva-mola, ease), color .15s ease, background-color .15s ease; }
+  .ferramenta-linha:hover .ferramenta-linha__ícone { transform: rotate(-7deg) scale(1.1); }
+  .ferramenta-linha:hover .ferramenta-linha__seta { transform: translateX(4px); }
+  .favorito:hover { transform: scale(1.18) rotate(-6deg); }
+  .favorito:active { transform: scale(.92); }
+
+  .categoria-cartão:hover { transform: translateY(-3px); }
+  .categoria-cartão__arte img { transition: transform .5s var(--curva-mola, ease); }
+  .categoria-cartão:hover .categoria-cartão__arte img { transform: scale(1.08); }
+  .categoria-cartão:hover .categoria-cartão__ícone { transform: rotate(8deg) scale(1.12); }
+
+  .intenções__lista button:hover { transform: translateY(-2px) rotate(-1deg); }
+  .relacionadas a:hover, .acesso-rápido a:hover { transform: translateX(3px); }
+
+  .ícone-botão:hover { transform: translateY(-1px) scale(1.06); }
+  .ícone-botão:active, .botão:active { transform: scale(.95); }
+  .ícone-botão { transition-property: transform, background-color, color, border-color; }
+
+  .rodapé a { transition: transform .18s ease, color .15s ease; display: inline-block; }
+  .rodapé li a:hover { transform: translateX(3px); }
+}

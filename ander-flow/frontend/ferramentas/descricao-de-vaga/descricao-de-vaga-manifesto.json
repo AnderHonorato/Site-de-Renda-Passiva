@@ -1,0 +1,39 @@
+{
+  "slug": "descricao-de-vaga",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Descrição de vaga",
+    "en": "Job posting"
+  },
+  "descricao": {
+    "pt-BR": "Monta o anúncio da vaga com responsabilidades, requisitos e benefícios.",
+    "en": "Builds a job posting with responsibilities, requirements, and benefits."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "escrever descrição de vaga"
+    ],
+    "en": [
+      "write a job posting"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "vaga",
+      "anúncio de emprego",
+      "recrutamento"
+    ],
+    "en": [
+      "job opening",
+      "job posting",
+      "recruiting"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

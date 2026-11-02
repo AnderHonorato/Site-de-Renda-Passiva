@@ -1,0 +1,33 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/etiquetas.css */
+
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaço-1);
+  padding: 4px var(--espaço-3);
+  border-radius: var(--raio-pílula);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  background: var(--cor-superfície);
+  color: var(--cor-texto);
+}
+.etiqueta .ícone { width: 14px; height: 14px; }
+
+.etiqueta-destaque {
+  background: var(--cor-destaque-100);
+  color: var(--cor-destaque-800);
+}
+
+.etiqueta-secundária {
+  background: var(--cor-secundária-100);
+  color: var(--cor-secundária-800);
+}
+
+.etiqueta-contorno {
+  background: transparent;
+  border: 1.5px solid var(--cor-texto-destaque);
+  color: var(--cor-texto-destaque);
+}

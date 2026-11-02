@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i > :nth-child(3) { transform-origin: left center; animation: escreve 2.4s ease-in-out infinite; }
+    #i > :nth-child(2) { animation: dobra 2.4s ease-in-out infinite; }
+    @keyframes escreve { 0% { transform: scaleX(0); } 55%, 100% { transform: scaleX(1); } }
+    @keyframes dobra { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8l-4.5-4.5Z"/><path d="M14 3.5V8h4.5"/><path d="M9 13h6M9 16.5h4"/></g>
+</svg>

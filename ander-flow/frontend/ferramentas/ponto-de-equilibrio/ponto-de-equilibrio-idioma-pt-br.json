@@ -1,0 +1,68 @@
+{
+  "ponto-de-equilibrio": {
+    "titulo_pagina": "Ponto de equilíbrio — Ander Flow",
+    "descricao_pagina": "Quanto você precisa vender no mês para cobrir os custos, em quantidade e em faturamento. O cálculo roda no seu navegador.",
+    "titulo": "Ponto de equilíbrio",
+    "resumo": "Informe o que sai todo mês e o que entra em cada venda. A ferramenta diz quantas unidades e quanto de faturamento pagam a conta — e o que falta para o lucro que você quer.",
+    "grupos": {
+      "mes": "O que sai todo mês",
+      "venda": "O que entra em cada venda"
+    },
+    "campos": {
+      "custos_fixos": "Custos fixos do mês",
+      "custos_fixos_ajuda": "Aluguel, salários, internet, contador — o que você paga mesmo vendendo zero.",
+      "lucro": "Lucro que você quer no mês",
+      "lucro_ajuda": "Opcional. Deixe vazio para calcular só o empate.",
+      "preco": "Preço de venda por unidade",
+      "custo_variavel": "Custo variável por unidade",
+      "custo_variavel_ajuda": "O que só existe quando vende: matéria-prima, embalagem, frete de envio.",
+      "percentual": "Percentual que sai do preço",
+      "percentual_ajuda": "Taxa de cartão, comissão e imposto somados, em percentual do preço."
+    },
+    "acoes": {
+      "calcular": "Calcular ponto de equilíbrio"
+    },
+    "resultado": {
+      "titulo": "Você precisa vender",
+      "unidades": "{quantidade} unidades",
+      "receita": "Faturamento necessário",
+      "margem_unitaria": "Margem de contribuição por unidade",
+      "indice": "Índice de margem",
+      "por_dia": "Média por dia (mês de 30 dias)"
+    },
+    "conta": {
+      "formula": "quantidade = (custos fixos + lucro) ÷ margem de contribuição por unidade",
+      "linha": "{quantidade} = {alvo} ÷ {margem}",
+      "nota": "A margem por unidade já desconta o custo variável e o percentual que sai do preço. Se ela for zero ou negativa, nenhuma quantidade fecha a conta."
+    },
+    "erros": {
+      "numero_invalido": "Informe um número válido.",
+      "valor_negativo": "O valor não pode ser negativo.",
+      "preco_invalido": "Informe o preço de venda para calcular.",
+      "percentual_acima_do_limite": "O percentual que sai do preço precisa ser menor que 100%.",
+      "margem_nao_positiva": "Cada venda não deixa nada: o custo variável mais o percentual chegam ao preço. Aumente o preço ou reduza o custo."
+    },
+    "trabalho": {
+      "titulo_padrao": "Ponto de equilíbrio — {quantidade} unidades"
+    },
+    "como_usar": {
+      "um": "Some tudo o que sai do caixa todo mês mesmo sem vender nada. Esse é o **custo fixo**.",
+      "dois": "Informe o preço e o que sai em cada venda: custo variável em reais e percentual sobre o preço.",
+      "tres": "Se quiser um lucro além de empatar, escreva o valor. A quantidade sobe junto."
+    },
+    "perguntas": {
+      "fixo_variavel": {
+        "pergunta": "Como sei se um custo é fixo ou variável?",
+        "resposta": "Pergunte: se eu não vender nada este mês, ainda pago? Se sim, é fixo. Se só aparece quando há venda, é variável."
+      },
+      "servico": {
+        "pergunta": "Serve para serviço, não só para produto?",
+        "resposta": "Serve. No lugar de unidade, pense em atendimento, hora ou contrato: o preço é o valor cobrado e o custo variável é o que você gasta para entregar aquele serviço."
+      },
+      "nao_fecha": {
+        "pergunta": "E se a conta não fechar de jeito nenhum?",
+        "resposta": "Quando a margem por unidade é zero ou negativa, vender mais só aumenta o prejuízo. Antes de buscar volume, reveja preço, custo variável ou as taxas."
+      }
+    }
+  }
+}

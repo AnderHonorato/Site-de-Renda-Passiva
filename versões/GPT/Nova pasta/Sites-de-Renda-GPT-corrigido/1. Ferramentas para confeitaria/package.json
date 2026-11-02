@@ -1,0 +1,16 @@
+{
+  "name": "ferramentas-para-confeitaria",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Ferramentas gratuitas para confeitaria: custo da receita, preço de venda, ajuste de quantidades, lista de compras e orçamento.",
+  "license": "SEE LICENSE IN LICENÇA.txt",
+  "scripts": {
+    "gerar": "node ferramentas/gerar-páginas.mjs",
+    "servir": "node ferramentas/servir.mjs . --porta 4311",
+    "testar": "node --test \"testes/**/*.test.js\"",
+    "verificar": "node ferramentas/verificar-projeto.mjs",
+    "construir": "node ferramentas/construir.mjs",
+    "visualizar": "node ferramentas/servir.mjs publicação --porta 4321"
+  }
+}

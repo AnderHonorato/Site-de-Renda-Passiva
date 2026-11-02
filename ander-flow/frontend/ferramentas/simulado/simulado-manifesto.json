@@ -1,0 +1,39 @@
+{
+  "slug": "simulado",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Montador de simulado",
+    "en": "Practice test builder"
+  },
+  "descricao": {
+    "pt-BR": "Monta um simulado a partir de um banco de questões, com correção automática.",
+    "en": "Builds a practice test from a question bank, with automatic grading."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar um simulado de prova"
+    ],
+    "en": [
+      "build a practice test"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "simulado",
+      "banco de questões",
+      "correção"
+    ],
+    "en": [
+      "practice test",
+      "question bank",
+      "grading"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

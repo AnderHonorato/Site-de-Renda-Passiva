@@ -1,0 +1,83 @@
+@charset "UTF-8";
+/* Sincronizado de compartilhado/estilos/componentes/notificações.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/notificações.css
+   Região de mensagens (`.região-de-mensagens[role="status"]`), preenchida por
+   interface/exibir-mensagem.js. No topo no celular, canto inferior direito no
+   computador — nunca no mesmo canto do consentimento. */
+
+.região-de-mensagens {
+  position: fixed;
+  z-index: var(--camada-mensagens);
+  top: calc(env(safe-area-inset-top, 0px) + var(--espaço-3));
+  left: var(--espaço-3);
+  right: var(--espaço-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .região-de-mensagens {
+    top: auto;
+    left: auto;
+    bottom: var(--espaço-5);
+    right: var(--espaço-5);
+    width: min(360px, calc(100vw - var(--espaço-5) * 2));
+    align-items: flex-end;
+  }
+}
+
+.mensagem {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaço-2);
+  width: 100%;
+  padding: var(--espaço-3) var(--espaço-4);
+  border-radius: var(--raio-m);
+  background: var(--cor-superfície-elevada);
+  box-shadow: var(--sombra-m);
+  font-size: 14px;
+  line-height: 1.4;
+  border-left: 4px solid var(--cor-texto-destaque);
+}
+.mensagem .ícone {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+.mensagem p { margin: 0; }
+
+.mensagem-sucesso { border-left-color: var(--cor-sucesso); }
+.mensagem-sucesso .ícone { color: var(--cor-sucesso); }
+
+.mensagem-erro { border-left-color: var(--cor-erro); }
+.mensagem-erro .ícone { color: var(--cor-erro); }
+
+.mensagem-informação { border-left-color: var(--cor-secundária-700); }
+.mensagem-informação .ícone { color: var(--cor-secundária-700); }
+
+.mensagem-aviso { border-left-color: var(--cor-aviso); }
+.mensagem-aviso .ícone { color: var(--cor-aviso); }
+
+.mensagem-fechar {
+  margin-left: auto;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  color: var(--cor-texto-suave);
+}
+.mensagem-fechar .ícone { width: 16px; height: 16px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .mensagem {
+    animation: entrada-com-subida var(--duração-controle) var(--curva-suave) both;
+  }
+}
+
+.mensagem[data-saindo] {
+  animation: entrada-suave var(--duração-controle) var(--curva-suave) reverse both;
+}

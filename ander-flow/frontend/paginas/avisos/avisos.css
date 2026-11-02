@@ -1,0 +1,187 @@
+/* avisos.css — página /avisos: abas "Avisos do sistema" / "Mensagens", lista e conversa. */
+
+.avisos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+  padding-block: var(--espaco-7) var(--espaco-8);
+  max-width: 760px;
+}
+
+.avisos__cabecalho h1 {
+  margin: 0;
+}
+
+.avisos__aba-mensagens {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.avisos__contador {
+  min-width: 19px;
+  text-align: center;
+}
+
+.avisos__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.avisos__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4) var(--espaco-3);
+  border-bottom: 1px solid var(--cor-linha);
+  cursor: default;
+}
+
+.avisos__item--nao-lido {
+  background: var(--cor-recuo);
+  border-radius: var(--raio-controle);
+  cursor: pointer;
+}
+
+.avisos__item-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: var(--raio-etiqueta);
+  background: var(--cor-superficie);
+  color: var(--cor-destaque);
+}
+
+.avisos__item-textos {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.avisos__item-titulo {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.avisos__item-corpo {
+  margin: 0;
+  font-size: 14px;
+}
+
+.avisos__item-link {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.avisos__item-tempo {
+  flex: none;
+  white-space: nowrap;
+}
+
+.avisos__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding-top: var(--espaco-3);
+  border-top: 1px solid var(--cor-linha);
+}
+
+.avisos__marcar-todos {
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-destaque);
+  cursor: pointer;
+}
+
+.avisos__marcar-todos:hover {
+  color: var(--cor-destaque-forte);
+}
+
+.avisos__mensagens-convite {
+  padding: var(--espaco-6) 0;
+}
+
+.avisos__conversa {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.avisos__mensagens-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.avisos__mensagem {
+  max-width: 82%;
+}
+
+.avisos__mensagem-corpo {
+  margin: 0;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-controle);
+  font-size: 14.5px;
+  white-space: pre-wrap;
+}
+
+.avisos__mensagem--usuario {
+  align-self: flex-end;
+}
+
+.avisos__mensagem--usuario .avisos__mensagem-corpo {
+  background: var(--cor-recuo);
+  color: var(--cor-texto);
+}
+
+.avisos__mensagem--admin {
+  align-self: flex-start;
+}
+
+.avisos__mensagem--admin .avisos__mensagem-corpo {
+  background: var(--cor-tinta);
+  color: var(--cor-sobre-tinta);
+}
+
+.avisos__forma-mensagem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+}
+
+.avisos__campo-mensagem {
+  flex: 1;
+}
+
+.avisos__mensagem-entrada {
+  resize: vertical;
+}
+
+@media (max-width: 767px) {
+  .avisos {
+    padding-block: var(--espaco-5) var(--espaco-7);
+  }
+
+  .avisos__forma-mensagem {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .avisos__mensagem {
+    max-width: 100%;
+  }
+}

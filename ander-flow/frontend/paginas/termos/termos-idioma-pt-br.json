@@ -1,0 +1,60 @@
+{
+  "termos": {
+    "titulo_pagina": "Termos de uso — Ander Flow",
+    "descricao_pagina": "As regras de uso do Ander Flow: o que o serviço faz, o que se espera de quem usa e como funcionam os planos.",
+    "sobretitulo": "Transparência",
+    "titulo": "Termos de uso",
+    "intro": "Estes termos explicam o que o Ander Flow oferece e o que esperamos de quem usa o site. Se algo aqui não bater com o que o site realmente faz, isso é um erro nosso — avise pelas mensagens da conta.",
+    "indice": {
+      "titulo": "Ir para a seção",
+      "servico": "O serviço",
+      "conta": "Conta",
+      "uso": "Uso aceitável",
+      "planos": "Planos",
+      "calculos": "Cálculos",
+      "disponibilidade": "Disponibilidade",
+      "encerramento": "Encerrar a conta",
+      "mudancas": "Mudanças"
+    },
+    "servico": {
+      "titulo": "O que é o Ander Flow",
+      "texto": "O Ander Flow reúne ferramentas de cálculo e de arquivo para o dia a dia. A maior parte funciona sem conta, com o processamento rodando no seu navegador. Algumas ferramentas e recursos maiores fazem parte do plano Plus."
+    },
+    "conta": {
+      "titulo": "Sua conta",
+      "texto": "Ao criar uma conta, você garante que o e-mail e o nome informados são verdadeiros e é responsável por manter a senha em segredo. Avise o administrador se suspeitar de uso indevido da sua conta."
+    },
+    "uso": {
+      "titulo": "Uso aceitável",
+      "texto": "Ao usar o Ander Flow, você concorda em não:",
+      "itens": {
+        "abuso": "Sobrecarregar o serviço de propósito ou tentar burlar as proteções contra abuso",
+        "limite": "Tentar contornar os limites do plano Grátis usando várias contas ou outros meios",
+        "terceiros": "Usar as ferramentas para violar direitos de terceiros ou a lei"
+      }
+    },
+    "planos": {
+      "titulo": "Planos",
+      "texto": "O plano Grátis não tem prazo para terminar. O plano Plus libera lote maior, marca própria nos documentos e histórico entre aparelhos.",
+      "pagamento": "Hoje o pagamento do Plus não é automático: você combina com o administrador por fora do site e, depois de confirmado, ele libera o plano manualmente na sua conta. Isso pode mudar no futuro, e esta página será atualizada quando mudar.",
+      "link": "Ver os planos"
+    },
+    "calculos": {
+      "titulo": "Os cálculos das ferramentas",
+      "texto": "As ferramentas ajudam a calcular e organizar informação, mas você é responsável por confirmar os números antes de qualquer decisão importante — o Ander Flow não substitui orientação profissional em questões contábeis, jurídicas ou fiscais."
+    },
+    "disponibilidade": {
+      "titulo": "Disponibilidade",
+      "texto": "Fazemos o possível para manter o site no ar, mas não garantimos disponibilidade contínua nem tempo de resposta mínimo. Manutenções e instabilidades podem acontecer."
+    },
+    "encerramento": {
+      "titulo": "Encerrar a conta",
+      "texto": "Você pode excluir sua conta quando quiser, sem precisar de justificativa; isso apaga a conta e os dados relacionados a ela. Também podemos suspender contas que violem estes termos.",
+      "acao": "Ir para minha conta"
+    },
+    "mudancas": {
+      "titulo": "Mudanças nestes termos",
+      "texto": "Podemos atualizar estes termos conforme o serviço evolui. Mudanças importantes serão avisadas pela página de avisos do site."
+    }
+  }
+}

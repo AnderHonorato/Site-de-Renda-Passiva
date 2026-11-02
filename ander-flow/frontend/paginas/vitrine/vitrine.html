@@ -1,0 +1,404 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/vitrine">
+  <meta name="af-acesso" content="dev">
+  <title data-texto="vitrine.titulo_pagina"></title>
+  <meta name="description" data-texto-content="vitrine.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/vitrine/vitrine.css">
+</head>
+<body>
+  <a class="pular-para-conteudo" href="#conteudo" data-texto="compartilhado.pular_para_conteudo"></a>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo vitrine">
+
+    <section class="vitrine__secao">
+      <p class="sobretitulo" data-texto="vitrine.rotulo"></p>
+      <h1 class="titulo-display titulo-display--2" data-texto="vitrine.titulo"></h1>
+      <p class="texto-2" data-texto="vitrine.introducao"></p>
+    </section>
+
+    <!-- ===== Tipografia ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.tipografia.titulo"></h2>
+      <div class="vitrine__amostras">
+        <h1 class="titulo-display titulo-display--1" data-texto="vitrine.tipografia.exemplo"></h1>
+        <h2 class="titulo-display titulo-display--2" data-texto="vitrine.tipografia.exemplo"></h2>
+        <h3 class="titulo-display titulo-display--3" data-texto="vitrine.tipografia.exemplo"></h3>
+        <h4 class="titulo-display titulo-display--4" data-texto="vitrine.tipografia.exemplo"></h4>
+        <p class="sobretitulo" data-texto="vitrine.tipografia.sobretitulo"></p>
+        <p data-texto="vitrine.tipografia.corpo"></p>
+        <p class="texto-2" data-texto="vitrine.tipografia.corpo"></p>
+        <p class="texto-pequeno" data-texto="vitrine.tipografia.corpo"></p>
+      </div>
+    </section>
+
+    <!-- ===== Botões ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.botoes.titulo"></h2>
+      <div class="vitrine__linha">
+        <button type="button" class="botao botao--primario" data-texto="vitrine.botoes.primario"></button>
+        <button type="button" class="botao botao--secundario" data-texto="vitrine.botoes.secundario"></button>
+        <button type="button" class="botao botao--fantasma" data-texto="vitrine.botoes.fantasma"></button>
+        <button type="button" class="botao botao--perigo" data-texto="vitrine.botoes.perigo"></button>
+        <button type="button" class="botao botao--primario botao--pequeno" data-texto="vitrine.botoes.pequeno"></button>
+        <button type="button" class="botao-icone" data-texto-aria-label="vitrine.botoes.icone">
+          <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-editar"></use></svg>
+        </button>
+      </div>
+      <button type="button" class="botao botao--primario botao--largo" data-texto="vitrine.botoes.largo"></button>
+    </section>
+
+    <!-- ===== Campos e controles ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.campos.titulo"></h2>
+      <div class="vitrine__grade-2">
+        <label class="campo">
+          <span class="campo__rotulo" data-texto="vitrine.campos.custo"></span>
+          <span class="campo__controle">
+            <span class="campo__prefixo">R$</span>
+            <input class="campo__entrada" type="text" value="38,40">
+          </span>
+        </label>
+
+        <label class="campo campo--erro">
+          <span class="campo__rotulo" data-texto="vitrine.campos.margem"></span>
+          <span class="campo__controle">
+            <input class="campo__entrada" type="text" value="96" aria-invalid="true" aria-describedby="vitrine-erro-margem">
+            <span class="campo__sufixo">%</span>
+          </span>
+          <span class="campo__erro" id="vitrine-erro-margem" data-texto="vitrine.campos.erro_exemplo"></span>
+        </label>
+
+        <label class="campo">
+          <span class="campo__rotulo" data-texto="vitrine.campos.deslizante"></span>
+          <input class="deslizante" type="range" min="0" max="95" value="30">
+        </label>
+
+        <div class="campo">
+          <span class="campo__rotulo" data-texto="vitrine.campos.opcoes"></span>
+          <div class="opcoes" role="radiogroup">
+            <label class="opcao"><input type="radio" name="vitrine-opcoes" checked><span data-texto="vitrine.campos.opcao_a"></span></label>
+            <label class="opcao"><input type="radio" name="vitrine-opcoes"><span data-texto="vitrine.campos.opcao_b"></span></label>
+            <label class="opcao"><input type="radio" name="vitrine-opcoes"><span data-texto="vitrine.campos.opcao_c"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="vitrine__linha">
+        <label class="marcador"><input type="checkbox" checked><span data-texto="vitrine.campos.marcador"></span></label>
+        <span class="marcador"><span class="interruptor" role="switch" aria-checked="true" tabindex="0"></span><span data-texto="vitrine.campos.interruptor"></span></span>
+      </div>
+    </section>
+
+    <!-- ===== Abas, pílulas, busca e migalhas ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.navegacao.titulo"></h2>
+
+      <nav class="migalhas" data-texto-aria-label="vitrine.navegacao.migalhas_rotulo">
+        <ol>
+          <li><a href="#" data-texto="vitrine.navegacao.migalha_1"></a></li>
+          <li><a href="#" data-texto="vitrine.navegacao.migalha_2"></a></li>
+          <li><span aria-current="page" data-texto="vitrine.navegacao.migalha_3"></span></li>
+        </ol>
+      </nav>
+
+      <div class="abas" role="tablist">
+        <button type="button" class="abas__aba" role="tab" aria-selected="true" data-texto="vitrine.navegacao.aba_1"></button>
+        <button type="button" class="abas__aba" role="tab" aria-selected="false" data-texto="vitrine.navegacao.aba_2"></button>
+      </div>
+
+      <div class="vitrine__linha">
+        <a href="#" class="pilula" data-texto="vitrine.navegacao.pilula_1"></a>
+        <a href="#" class="pilula" data-texto="vitrine.navegacao.pilula_2"></a>
+        <a href="#" class="pilula" data-texto="vitrine.navegacao.pilula_3"></a>
+      </div>
+
+      <div class="busca-intencao">
+        <svg class="icone busca-intencao__icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-busca"></use></svg>
+        <input class="busca-intencao__entrada" type="text" data-texto-placeholder="vitrine.navegacao.busca_placeholder">
+        <span class="busca-intencao__atalho">/</span>
+      </div>
+    </section>
+
+    <!-- ===== Superfícies e etiquetas ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.superficies.titulo"></h2>
+      <div class="vitrine__grade-3">
+        <div class="superficie">
+          <p class="sobretitulo" data-texto="vitrine.superficies.papel"></p>
+        </div>
+        <div class="superficie superficie--recuo">
+          <p class="sobretitulo" data-texto="vitrine.superficies.recuo"></p>
+        </div>
+        <div class="superficie superficie--tinta">
+          <p class="sobretitulo" data-texto="vitrine.superficies.tinta"></p>
+        </div>
+      </div>
+
+      <div class="vitrine__linha">
+        <span class="etiqueta etiqueta--gratis" data-texto="vitrine.etiquetas.gratis"></span>
+        <span class="etiqueta etiqueta--plus" data-texto="vitrine.etiquetas.plus"></span>
+        <span class="etiqueta etiqueta--pronta" data-texto="vitrine.etiquetas.pronta"></span>
+        <span class="etiqueta etiqueta--planejada" data-texto="vitrine.etiquetas.planejada"></span>
+        <span class="etiqueta etiqueta--aviso" data-texto="vitrine.etiquetas.aviso"></span>
+        <span class="etiqueta etiqueta--erro" data-texto="vitrine.etiquetas.erro"></span>
+      </div>
+    </section>
+
+    <!-- ===== Lista densa ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.lista.titulo"></h2>
+      <ul class="lista-densa">
+        <li class="lista-densa__item">
+          <a class="lista-densa__ligacao" href="#">
+            <svg class="icone lista-densa__icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-calculo"></use></svg>
+            <span class="lista-densa__nome" data-texto="vitrine.lista.item_1_nome"></span>
+            <span class="lista-densa__descricao" data-texto="vitrine.lista.item_1_descricao"></span>
+            <span class="lista-densa__meta" data-texto="compartilhado.ferramenta.estado_pronta"></span>
+          </a>
+          <button type="button" class="botao-icone lista-densa__favorito" data-texto-aria-label="compartilhado.ferramenta.favoritar">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-estrela"></use></svg>
+          </button>
+        </li>
+        <li class="lista-densa__item lista-densa__item--planejada">
+          <span class="lista-densa__ligacao">
+            <svg class="icone lista-densa__icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-grafico"></use></svg>
+            <span class="lista-densa__nome" data-texto="vitrine.lista.item_2_nome"></span>
+            <span class="lista-densa__descricao" data-texto="vitrine.lista.item_2_descricao"></span>
+            <span class="lista-densa__meta" data-texto="compartilhado.ferramenta.estado_planejada"></span>
+          </span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== Ferramenta: resultado e a conta ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.resultado.titulo"></h2>
+      <div class="vitrine__grade-2">
+        <div class="superficie--tinta resultado">
+          <p class="resultado__rotulo" data-texto="vitrine.resultado.rotulo"></p>
+          <p class="resultado__valor">R$ 74,41</p>
+          <div class="resultado__linhas">
+            <div class="resultado__linha"><span class="resultado__linha-rotulo" data-texto="vitrine.resultado.linha_1"></span><span class="resultado__linha-valor">R$ 44,50</span></div>
+            <div class="resultado__linha"><span class="resultado__linha-rotulo" data-texto="vitrine.resultado.linha_2"></span><span class="resultado__linha-valor">R$ 7,59</span></div>
+            <div class="resultado__linha resultado__linha--destaque"><span class="resultado__linha-rotulo" data-texto="vitrine.resultado.linha_3"></span><span class="resultado__linha-valor">R$ 22,32</span></div>
+          </div>
+        </div>
+        <div class="conta-formula">
+          <p class="sobretitulo" data-texto="compartilhado.ferramenta.a_conta"></p>
+          <code>preço = custo ÷ (1 − margem − taxa − imposto)</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Passos, perguntas e etapas ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.passos.titulo"></h2>
+
+      <ol class="etapas">
+        <li class="etapas__item etapas__item--feita"><span class="etapas__numero"><svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg></span><span data-texto="vitrine.passos.etapa_1"></span></li>
+        <li class="etapas__item etapas__item--atual" aria-current="step"><span class="etapas__numero">2</span><span data-texto="vitrine.passos.etapa_2"></span></li>
+        <li class="etapas__item"><span class="etapas__numero">3</span><span data-texto="vitrine.passos.etapa_3"></span></li>
+        <li class="etapas__item"><span class="etapas__numero">4</span><span data-texto="vitrine.passos.etapa_4"></span></li>
+      </ol>
+
+      <ol class="passos">
+        <li class="passos__item"><span class="passos__numero">1</span><p data-texto="vitrine.passos.item_1"></p></li>
+        <li class="passos__item"><span class="passos__numero">2</span><p data-texto="vitrine.passos.item_2"></p></li>
+      </ol>
+
+      <div class="perguntas">
+        <details>
+          <summary data-texto="vitrine.passos.pergunta_1"></summary>
+          <p data-texto="vitrine.passos.resposta_1"></p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===== Arquivos ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.arquivos.titulo"></h2>
+      <div class="soltar-arquivos">
+        <svg class="icone icone--32" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-enviar-arquivo"></use></svg>
+        <p class="soltar-arquivos__titulo" data-texto="vitrine.arquivos.titulo_area"></p>
+        <p class="soltar-arquivos__texto" data-texto="vitrine.arquivos.texto_area"></p>
+      </div>
+      <ul class="lista-arquivos">
+        <li class="lista-arquivos__item">
+          <svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-arquivo"></use></svg>
+          <span data-texto="vitrine.arquivos.item_1"></span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== Tabela e paginação ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.tabela.titulo"></h2>
+      <table class="tabela">
+        <thead>
+          <tr>
+            <th data-texto="vitrine.tabela.coluna_nome"></th>
+            <th data-texto="vitrine.tabela.coluna_status"></th>
+            <th data-texto="vitrine.tabela.coluna_acoes"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-texto="vitrine.tabela.linha_1_nome"></td>
+            <td><span class="etiqueta etiqueta--pronta" data-texto="compartilhado.ferramenta.estado_pronta"></span></td>
+            <td class="tabela__acoes">
+              <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-editar"></use></svg>
+              <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-excluir"></use></svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="paginacao">
+        <span data-texto="vitrine.tabela.mostrando"></span>
+        <span class="paginacao__acoes">
+          <button type="button" class="botao botao--secundario botao--pequeno" data-texto="compartilhado.acoes.voltar"></button>
+          <button type="button" class="botao botao--secundario botao--pequeno" data-texto="vitrine.tabela.proxima"></button>
+        </span>
+      </div>
+    </section>
+
+    <!-- ===== Estados ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.estados.titulo"></h2>
+      <div class="vitrine__grade-3">
+        <div class="superficie estado estado--vazio">
+          <svg class="icone icone--32 estado__icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-salvos"></use></svg>
+          <p class="estado__titulo" data-texto="compartilhado.estados.vazio_titulo"></p>
+          <p class="estado__texto" data-texto="vitrine.estados.vazio_texto"></p>
+          <a class="botao botao--secundario botao--pequeno estado__acao" href="#" data-texto="compartilhado.acoes.ir_para_catalogo"></a>
+        </div>
+        <div class="superficie estado estado--erro">
+          <svg class="icone icone--32 estado__icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-erro"></use></svg>
+          <p class="estado__titulo" data-texto="compartilhado.estados.erro_titulo"></p>
+          <p class="estado__texto" data-texto="compartilhado.estados.erro_texto"></p>
+          <button type="button" class="botao botao--secundario botao--pequeno estado__acao" data-texto="compartilhado.acoes.tentar_de_novo"></button>
+        </div>
+        <div class="superficie estado estado--carregando">
+          <p class="estado__titulo" data-texto="compartilhado.estados.processando"></p>
+          <progress class="progresso" value="72" max="100"></progress>
+          <p class="progresso__rotulo"><span data-texto="vitrine.estados.pagina_x_de_y"></span><span>72%</span></p>
+        </div>
+      </div>
+
+      <div class="vitrine__grade-3">
+        <div class="esqueleto vitrine__esqueleto-amostra"></div>
+        <div class="bloqueio-plano">
+          <p class="bloqueio-plano__titulo" data-texto="vitrine.estados.bloqueio_titulo"></p>
+          <p class="bloqueio-plano__texto" data-texto="vitrine.estados.bloqueio_texto"></p>
+          <span class="bloqueio-plano__preco">R$ 14,90/mês</span>
+          <button type="button" class="botao botao--primario botao--pequeno" data-texto="compartilhado.plano.ver_plus"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Retorno ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.retorno.titulo"></h2>
+      <div class="vitrine__linha">
+        <div class="aviso-flutuante aviso-flutuante--sucesso" role="status">
+          <svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-sucesso"></use></svg>
+          <span data-texto="vitrine.retorno.aviso_sucesso"></span>
+        </div>
+        <div class="aviso-flutuante aviso-flutuante--erro" role="status">
+          <svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-erro"></use></svg>
+          <span data-texto="compartilhado.erros.erro_interno"></span>
+        </div>
+      </div>
+
+      <div class="superficie vitrine__confirmacao-amostra">
+        <p class="modal__titulo" data-texto="compartilhado.confirmacao.titulo"></p>
+        <p class="modal__texto" data-texto="compartilhado.confirmacao.texto_excluir"></p>
+        <div class="modal__acoes">
+          <button type="button" class="botao botao--secundario" data-texto="compartilhado.acoes.cancelar"></button>
+          <button type="button" class="botao botao--perigo" data-texto="compartilhado.acoes.excluir"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Ícones ===== -->
+    <section class="vitrine__secao">
+      <h2 class="titulo-display titulo-display--3" data-texto="vitrine.icones.titulo"></h2>
+      <div class="vitrine__icones">
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-busca"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.busca"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-seta-direita"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.seta_direita"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-seta-esquerda"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.seta_esquerda"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-seta-cima"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.seta_cima"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-seta-baixo"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.seta_baixo"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-chevron-direita"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.chevron_direita"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-chevron-baixo"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.chevron_baixo"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-fechar"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.fechar"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-menu"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.menu"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-inicio"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.inicio"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-ferramentas"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.ferramentas"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-salvos"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.salvos"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-conta"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.conta"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-trabalho"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.trabalho"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-planos"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.planos"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-estrela"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.estrela"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-estrela-cheia"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.estrela_cheia"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-copiar"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.copiar"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-pdf"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.pdf"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-planilha"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.planilha"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-baixar"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.baixar"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-enviar-arquivo"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.enviar_arquivo"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-arquivo"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.arquivo"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-cadeado"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.cadeado"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-aviso"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.aviso"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-sucesso"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.sucesso"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-erro"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.erro"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-info"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.info"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-sol"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.sol"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-lua"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.lua"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-idioma"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.idioma"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-sair"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.sair"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-editar"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.editar"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-excluir"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.excluir"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-mais"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.mais"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-menos"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.menos"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-arrastar"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.arrastar"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-filtro"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.filtro"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-ordenar"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.ordenar"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-relogio"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.relogio"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-calendario"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.calendario"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-dinheiro"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.dinheiro"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-vendas"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.vendas"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-calculo"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.calculo"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-texto"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.texto"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-documento"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.documento"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-imagem"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.imagem"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-codigo"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.codigo"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-chave"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.chave"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-pessoas"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.pessoas"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-caixa"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.caixa"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-megafone"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.megafone"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-lista"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.lista"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-livro"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.livro"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-ferramenta"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.ferramenta"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-sino"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.sino"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-mensagem"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.mensagem"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-escudo"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.escudo"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-usuario"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.usuario"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-grafico"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.grafico"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-marca-check"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.marca_check"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-olho"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.olho"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-olho-fechado"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.olho_fechado"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-lote"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.lote"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-desfazer"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.desfazer"></span></div>
+        <div class="vitrine__icone-item"><svg class="icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-externo"></use></svg><span class="texto-pequeno" data-texto="vitrine.icones.externo"></span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

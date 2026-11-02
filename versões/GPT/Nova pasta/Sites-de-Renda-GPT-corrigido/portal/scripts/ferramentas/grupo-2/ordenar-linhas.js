@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("ordenar-linhas",7,"Ordenar linhas","Ordene uma lista em português, com números em ordem natural.","Intl.Collator pt-BR, opção numeric. Linhas vazias são removidas.",[T('texto','Um item por linha','banana\nabacaxi'),S('ordem','Ordem','asc',[['asc','Crescente'],['desc','Decrescente']])],async d=>{const a=lista(d,'texto'),m=opcao(d,'ordem',['asc','desc']),c=new Intl.Collator('pt-BR',{numeric:true});a.sort((x,y)=>c.compare(x,y)*(m==='asc'?1:-1));return saidaTexto(a.join('\n'),[a.length+' linhas']);});
+

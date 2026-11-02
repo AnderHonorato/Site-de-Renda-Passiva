@@ -12,3 +12,9 @@ modelo/_ds/industry-*/
 modelo/_ds/modernist-*/
 modelo/_ds/nocturne-*/
 .claude/settings.local.json
+portal/vitrine/midia/
+portal/servidor/.execucao/
+portal/.execucao/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm

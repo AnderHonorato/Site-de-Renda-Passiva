@@ -1,0 +1,39 @@
+{
+  "slug": "divisorias-de-caixa",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 140,
+  "nome": {
+    "pt-BR": "Divisórias de caixa",
+    "en": "Box dividers"
+  },
+  "descricao": {
+    "pt-BR": "Gera o molde das divisórias internas de uma caixa pelo número de compartimentos.",
+    "en": "Generates the template for a box's internal dividers based on the number of compartments."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer divisórias para dentro da caixa"
+    ],
+    "en": [
+      "make dividers to fit inside a box"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "divisórias",
+      "caixa",
+      "organização de embalagem"
+    ],
+    "en": [
+      "dividers",
+      "box",
+      "packaging organization"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

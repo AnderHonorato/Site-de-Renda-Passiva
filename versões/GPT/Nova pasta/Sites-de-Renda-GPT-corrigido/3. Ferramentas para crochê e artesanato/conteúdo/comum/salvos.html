@@ -1,0 +1,38 @@
+<!--página
+{
+  "título": "Salvos neste aparelho",
+  "descrição": "O que você salvou em {{marca}} fica só neste navegador. Abra, duplique, exclua, exporte ou importe uma cópia de segurança.",
+  "destaque": "principal",
+  "navegação": "salvos",
+  "tipo": "institucional",
+  "indexar": false
+}
+-->
+<section class="salvos" aria-labelledby="salvos-título" data-salvos>
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Neste aparelho</p>
+    <h1 id="salvos-título">Salvos</h1>
+    <p class="ferramenta-resumo">Tudo o que você salva fica apenas neste navegador, neste aparelho. Nada é enviado a servidores. Exporte uma cópia de segurança para não perder seus dados ao limpar o navegador ou trocar de aparelho.</p>
+  </header>
+
+  <div class="aviso aviso-alerta" data-salvos-indisponível hidden>
+    <p>Este navegador não permite guardar dados (modo privado ou bloqueio). As ferramentas funcionam normalmente, mas nada pode ser salvo aqui.</p>
+  </div>
+
+  <div class="lista-de-salvos" data-salvos-coleções aria-live="polite"></div>
+
+  <section class="faixa faixa-suave" aria-labelledby="cópia-título">
+    <div class="faixa-conteúdo">
+    <div>
+      <h2 id="cópia-título">Cópia de segurança</h2>
+      <p>Exporte um arquivo com tudo o que está salvo e importe-o em outro navegador. Somente cópias geradas por {{marca}} são aceitas; itens com formato estranho são ignorados.</p>
+    </div>
+    <div class="ações-do-formulário">
+      <button type="button" class="botão botão-secundário" data-exportar-cópia><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#exportar"></use></svg>Exportar cópia</button>
+      <button type="button" class="botão botão-secundário" data-importar-cópia><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#importar"></use></svg>Importar cópia</button>
+      <input type="file" accept="application/json,.json" data-arquivo-de-cópia hidden>
+      <button type="button" class="botão botão-perigo" data-apagar-dados-locais><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#excluir"></use></svg>Apagar itens salvos</button>
+    </div>
+    </div>
+  </section>
+</section>

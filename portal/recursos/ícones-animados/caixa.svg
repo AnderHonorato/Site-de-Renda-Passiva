@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i { transform-box: view-box; transform-origin: 12px 21px; animation: quica 1.8s ease-in-out infinite; }
+    @keyframes quica { 0%, 100% { transform: translateY(0) scale(1.06, .94); } 40% { transform: translateY(-3px) scale(.96, 1.04); } 70% { transform: translateY(0) scale(1.04, .96); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><path d="M12 3.5 4 7.5v9l8 4 8-4v-9l-8-4Z"/><path d="m4 7.5 8 4 8-4"/><path d="M12 11.5v9"/></g>
+</svg>

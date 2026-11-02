@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("contador-de-palavras",7,"Contador de palavras","Conte palavras, caracteres e espaços do texto.","Palavras são grupos de letras ou números, com apóstrofos e hífens internos. Caracteres usam pontos de código Unicode; emojis compostos podem contar mais de um.",[T('texto','Texto','Olá, mundo!')],async d=>{const s=texto(d,'texto');return {resumo:palavras(s).length+' palavras',linhas:[Array.from(s).length+' caracteres incluindo espaços',Array.from(s.replace(/\s/g,'')).length+' caracteres sem espaços',s.split(/\r?\n/).length+' linhas']};});
+

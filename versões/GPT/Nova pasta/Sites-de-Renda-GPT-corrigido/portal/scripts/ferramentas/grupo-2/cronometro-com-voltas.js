@@ -1,0 +1,2 @@
+import {definir} from './comum.js';import {montarRelogio} from './relogios.js';
+export default {...definir('cronometro-com-voltas',10,'Cronômetro com voltas','Meça tarefas, pause e registre voltas.','Usa performance.now(), relógio monotônico. O valor exibido é recalculado pelo tempo decorrido, não pela contagem de intervalos. Estado temporário; recarregar a página reinicia.',[],async()=>({resumo:'Use os controles do cronômetro abaixo.',linhas:['Iniciar, pausar e retomar preservam o tempo; Reiniciar apaga as voltas.']})),montar:el=>montarRelogio(el)};

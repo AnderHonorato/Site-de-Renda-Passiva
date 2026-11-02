@@ -1,0 +1,68 @@
+{
+  "planos": {
+    "titulo_pagina": "Planos — Ander Flow",
+    "descricao_pagina": "Grátis para o dia a dia, sem limite de uso. O Plus libera lote maior, marca própria e histórico.",
+    "hero": {
+      "titulo": "Quase tudo é grátis. Sempre foi o plano.",
+      "resumo": "{ferramentas_prontas} ferramentas já estão prontas para usar, sem conta e sem limite de uso. {ferramentas_plus} delas são exclusivas do Plus, para quem processa em volume e precisa da própria marca no documento."
+    },
+    "gratis": {
+      "nome": "Grátis",
+      "preco": "R$ 0",
+      "preco_detalhe": "para sempre",
+      "descricao": "Para o dia a dia de quem resolve uma coisa de cada vez.",
+      "recursos": {
+        "ferramentas": "Todas as ferramentas prontas, menos as exclusivas do Plus",
+        "uso": "Uso ilimitado, sem conta",
+        "exportar": "Exporta PDF, CSV e imagem",
+        "lote": "Lote de até {limite_lote_gratis} arquivos por vez",
+        "favoritos": "Até {limite_favoritos_gratis} ferramentas nos favoritos",
+        "trabalhos": "Até {limite_trabalhos_gratis} trabalhos salvos"
+      },
+      "acao": "Usar agora"
+    },
+    "plus": {
+      "etiqueta": "Mais escolhido",
+      "nome": "Plus",
+      "preco_mensal": "{preco_plus_mensal}",
+      "preco_mensal_detalhe": "por mês",
+      "preco_anual": "ou {preco_plus_anual} por ano — dois meses grátis",
+      "descricao": "Para quem entrega documento para cliente e processa arquivo em lote.",
+      "recursos": {
+        "tudo": "Todas as ferramentas, incluindo as {ferramentas_plus} exclusivas do Plus",
+        "lote": "Lote de até {limite_lote_plus} arquivos por vez",
+        "marca": "Documento exportado com a sua marca",
+        "historico": "Histórico e sincronia entre aparelhos"
+      },
+      "acao": "Assinar o Plus",
+      "acao_detalhe": "Pagamento ainda não é automático — veja como funciona abaixo",
+      "modal": {
+        "titulo": "O pagamento do Plus ainda não é automático",
+        "texto": "Assinar o Plus aqui não cobra nada agora. O pagamento ainda não está integrado: combine com o administrador por fora e, depois de confirmado, ele libera o seu plano Plus manualmente pela conta.",
+        "entendi": "Entendi"
+      }
+    },
+    "nota_local": {
+      "texto": "Nenhum plano muda como o cálculo funciona: tudo continua rodando no seu navegador. O que o Plus libera é volume, marca e histórico — nunca o resultado."
+    },
+    "perguntas": {
+      "titulo": "Perguntas sobre os planos",
+      "pagamento": {
+        "pergunta": "Clicar em \"Assinar o Plus\" cobra alguma coisa?",
+        "resposta": "Não. O pagamento ainda não está integrado ao site. O botão só explica como pedir a liberação — nenhum valor é cobrado por aqui."
+      },
+      "liberacao": {
+        "pergunta": "Como eu consigo o Plus, então?",
+        "resposta": "Combine o pagamento com o administrador por fora do site. Depois de confirmado, ele libera o plano Plus manualmente na sua conta, em /admin."
+      },
+      "cancelar": {
+        "pergunta": "Como cancelo o Plus?",
+        "resposta": "Fale com o administrador. Enquanto o pagamento não for automático, o cancelamento também é feito manualmente na sua conta."
+      },
+      "gratis_para_sempre": {
+        "pergunta": "O plano Grátis vai continuar existindo?",
+        "resposta": "Sim. A maior parte das ferramentas é gratuita e sem limite de uso — o Plus existe só para quem precisa de volume maior, marca própria e histórico."
+      }
+    }
+  }
+}

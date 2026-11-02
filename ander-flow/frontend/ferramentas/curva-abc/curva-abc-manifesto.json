@@ -1,0 +1,37 @@
+{
+  "slug": "curva-abc",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Curva ABC de produtos",
+    "en": "ABC product classification"
+  },
+  "descricao": {
+    "pt-BR": "Classifica os produtos em A, B e C pela participação no faturamento ou saída.",
+    "en": "Classifies products into A, B, and C tiers by their share of revenue or sales volume."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer curva abc dos produtos"
+    ],
+    "en": [
+      "run an ABC analysis of products"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "curva abc",
+      "classificação de produtos"
+    ],
+    "en": [
+      "abc analysis",
+      "product classification"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" role="img" aria-labelledby="t">
+  <title id="t">O símbolo de sinal sem conexão, cortado por um traço</title>
+  <style>
+    :root { --tinta: #1a1a1a; --sombra: #1a1a1a; --sombra-alfa: .07; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    ellipse[opacity] { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .arco { animation: buscar 2.4s ease-in-out infinite; }
+    .a2 { animation-delay: .3s; }
+    .a3 { animation-delay: .6s; }
+    @keyframes buscar { 0%, 100% { opacity: .22; } 40% { opacity: 1; } }
+    .corte { stroke-dasharray: 190; animation: riscar 3.2s ease-in-out infinite; }
+    @keyframes riscar { 0%, 15% { stroke-dashoffset: 190; } 45%, 100% { stroke-dashoffset: 0; } }
+    @media (prefers-reduced-motion: reduce) { .arco, .corte { animation: none; opacity: 1; stroke-dashoffset: 0; } }
+  </style>
+  <ellipse cx="160" cy="214" rx="96" ry="11" fill="#1a1a1a" opacity=".07"/>
+  <g fill="none" stroke="#3d4451" stroke-width="14" stroke-linecap="round">
+    <path class="arco a1" d="M82 100a110 110 0 0 1 156 0"/>
+    <path class="arco a2" d="M107 128a76 76 0 0 1 106 0"/>
+    <path class="arco a3" d="M132 156a40 40 0 0 1 56 0"/>
+  </g>
+  <circle cx="160" cy="184" r="11" fill="#3d4451"/>
+  <line class="corte" x1="104" y1="56" x2="224" y2="196" stroke="#d97757" stroke-width="9" stroke-linecap="round"/>
+</svg>

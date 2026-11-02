@@ -1,0 +1,47 @@
+{
+  "slug": "divisao-de-contas",
+  "estado": "planejada",
+  "categoria": "dinheiro",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "dinheiro",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Divisão de contas",
+    "en": "Splitting the bill"
+  },
+  "descricao": {
+    "pt-BR": "Quem pagou o quê, quanto cada um deve e o menor número de transferências para acertar.",
+    "en": "Who paid for what, how much each person owes, and the fewest transfers needed to settle up."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "rachar a conta",
+      "dividir despesas da viagem",
+      "quem deve pra quem"
+    ],
+    "en": [
+      "split the bill",
+      "split trip expenses",
+      "who owes who"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "rachar",
+      "dividir conta",
+      "rateio",
+      "despesas",
+      "viagem"
+    ],
+    "en": [
+      "split the bill",
+      "divide expenses",
+      "cost sharing",
+      "expenses",
+      "trip"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

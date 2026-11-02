@@ -1,0 +1,39 @@
+{
+  "slug": "molde-de-caixa",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 120,
+  "nome": {
+    "pt-BR": "Molde de caixa",
+    "en": "Box template"
+  },
+  "descricao": {
+    "pt-BR": "Gera o molde de uma caixa retangular simples ou com tampa separada, pelas medidas internas.",
+    "en": "Generates the template for a simple rectangular box or one with a separate lid, from the internal dimensions."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "gerar molde de caixa nas minhas medidas"
+    ],
+    "en": [
+      "generate a box template with my measurements"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "molde de caixa",
+      "embalagem",
+      "planificação"
+    ],
+    "en": [
+      "box template",
+      "packaging",
+      "box layout"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

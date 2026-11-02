@@ -1,0 +1,41 @@
+{
+  "slug": "estatistica-descritiva",
+  "estado": "planejada",
+  "categoria": "planilhas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "planilha",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Estatística de uma coluna",
+    "en": "Column statistics"
+  },
+  "descricao": {
+    "pt-BR": "Média, mediana, moda, desvio padrão, quartis e detecção de valores fora da curva.",
+    "en": "Mean, median, mode, standard deviation, quartiles, and outlier detection."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular média e desvio"
+    ],
+    "en": [
+      "calculate mean and standard deviation"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "média",
+      "mediana",
+      "desvio padrão",
+      "estatística"
+    ],
+    "en": [
+      "mean",
+      "median",
+      "standard deviation",
+      "statistics"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

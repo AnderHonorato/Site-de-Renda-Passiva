@@ -1,0 +1,39 @@
+{
+  "slug": "ata-de-reuniao",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Ata de reunião",
+    "en": "Meeting minutes"
+  },
+  "descricao": {
+    "pt-BR": "Registra pauta, presentes, decisões e ações combinadas numa reunião.",
+    "en": "Records the agenda, attendees, decisions, and action items from a meeting."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "fazer a ata da reunião"
+    ],
+    "en": [
+      "write up meeting minutes"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ata de reunião",
+      "decisões",
+      "registro"
+    ],
+    "en": [
+      "meeting minutes",
+      "decisions",
+      "record"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,49 @@
+{
+  "slug": "porcentagem",
+  "estado": "planejada",
+  "categoria": "calculo",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Calculadora de porcentagem",
+    "en": "Percentage calculator"
+  },
+  "descricao": {
+    "pt-BR": "Porcentagem de um valor, aumento, desconto, diferença percentual e quanto A é de B.",
+    "en": "Percentage of a value, increase, discount, percentage difference, and what percent A is of B."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular desconto",
+      "quanto por cento de aumento",
+      "quanto é 15% de um valor",
+      "diferença percentual entre dois valores"
+    ],
+    "en": [
+      "calculate a discount",
+      "what percent increase is that",
+      "what is 15% of a value",
+      "percentage difference between two values"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "porcentagem",
+      "desconto",
+      "aumento",
+      "acréscimo",
+      "variação"
+    ],
+    "en": [
+      "percentage",
+      "discount",
+      "increase",
+      "markup",
+      "variation"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

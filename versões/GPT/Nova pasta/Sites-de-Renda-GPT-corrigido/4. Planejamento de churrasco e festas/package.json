@@ -1,0 +1,16 @@
+{
+  "name": "planejamento-de-churrasco-e-festas",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Planejadores gratuitos de churrasco, festa infantil e almoço: quantidades, lista de compras, orçamento e divisão de despesas.",
+  "license": "SEE LICENSE IN LICENÇA.txt",
+  "scripts": {
+    "gerar": "node ferramentas/gerar-páginas.mjs",
+    "servir": "node ferramentas/servir.mjs . --porta 4314",
+    "testar": "node --test \"testes/**/*.test.js\"",
+    "verificar": "node ferramentas/verificar-projeto.mjs",
+    "construir": "node ferramentas/construir.mjs",
+    "visualizar": "node ferramentas/servir.mjs publicação --porta 4324"
+  }
+}

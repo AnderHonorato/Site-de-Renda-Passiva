@@ -1,0 +1,69 @@
+{
+  "juntar-pdf": {
+    "titulo_pagina": "Merge PDF — Ander Flow",
+    "descricao_pagina": "Merge several PDFs into one, in the order you choose. The files are read in your browser and never leave your device.",
+    "titulo": "Merge PDF",
+    "resumo": "Pick the files, put them in the right order and download a single PDF. Everything happens in your browser: no file is sent to a server.",
+    "enviar": {
+      "titulo": "Drop the PDFs here",
+      "texto": "Or pick the files from your device. The order of the list is the order of the final document.",
+      "escolher": "Choose files",
+      "limite": "On Free, up to {limite_lote_gratis} files at a time. Each file can be up to 100 MB."
+    },
+    "acoes": {
+      "juntar": "Merge PDFs",
+      "baixar": "Download merged PDF"
+    },
+    "progresso": {
+      "titulo": "Building the PDF…",
+      "pagina": "Page {pagina} of {total}"
+    },
+    "resultado": {
+      "titulo": "PDF ready",
+      "paginas": "{quantidade} pages",
+      "arquivos": "Files merged",
+      "tamanho": "File size",
+      "nome_arquivo": "merged.pdf",
+      "pronto": "PDF built. Just download it."
+    },
+    "vazio": {
+      "titulo": "Nothing to merge yet",
+      "texto": "Pick at least two PDFs to start."
+    },
+    "tamanho": {
+      "mb": "{valor} MB",
+      "kb": "{valor} kB"
+    },
+    "plus": {
+      "titulo": "Process {quantidade} files at once",
+      "texto": "On Free the batch goes up to {limite} files. Plus unlocks 100 at a time."
+    },
+    "erros": {
+      "arquivo_nao_pdf": "\"{nome}\" is not really a PDF — the file content does not match.",
+      "pdf_protegido": "\"{nome}\" is password protected. Open it and save it without a password before merging.",
+      "pdf_corrompido": "I could not read \"{nome}\". The file looks damaged.",
+      "arquivo_grande_demais": "\"{nome}\" is over 100 MB.",
+      "poucos_arquivos": "Pick at least two PDFs.",
+      "limite_de_arquivos": "Your plan allows merging up to {limite} files at a time."
+    },
+    "como_usar": {
+      "um": "Pick or drop the PDFs. They are read **in your browser**, with no upload to a server.",
+      "dois": "Drag them in the list, or use the arrows, to set the order the final document should have.",
+      "tres": "Click merge and download the file. The originals stay untouched on your device."
+    },
+    "perguntas": {
+      "envio": {
+        "pergunta": "Are my files sent to any server?",
+        "resposta": "No. The merge uses a library that runs inside the page. If you turn off the internet after opening the tool, it keeps working."
+      },
+      "senha": {
+        "pergunta": "What if the PDF has a password?",
+        "resposta": "A protected PDF cannot be merged without the password. Open the file in your PDF reader, save an unprotected copy and use that copy here."
+      },
+      "lote": {
+        "pergunta": "Why does Free limit the quantity?",
+        "resposta": "The big batch is the Plus feature. The limit is checked on the server: the code that unlocks 100 files is only delivered to whoever has Plus. Since the processing happens in your browser, anyone who edits the code themselves can get around it — we say it plainly, without pretending."
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "calculadora-de-frete",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 100,
+  "nome": {
+    "pt-BR": "Calculadora de frete",
+    "en": "Shipping cost calculator"
+  },
+  "descricao": {
+    "pt-BR": "Estima o frete por peso, cubagem e distância, e compara transportadoras.",
+    "en": "Estimates shipping cost by weight, dimensional volume, and distance, and compares carriers."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "comparar frete de transportadoras"
+    ],
+    "en": [
+      "compare shipping costs between carriers"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "frete",
+      "transportadora",
+      "cotação de frete"
+    ],
+    "en": [
+      "shipping",
+      "carrier",
+      "freight quote"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

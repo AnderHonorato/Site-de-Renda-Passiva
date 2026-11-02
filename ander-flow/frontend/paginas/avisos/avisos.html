@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/avisos">
+  <meta name="af-acesso" content="publico">
+  <title data-texto="avisos.titulo_pagina"></title>
+  <meta name="description" data-texto-content="avisos.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/avisos/avisos.css">
+  <script type="module" src="/estatico/paginas/avisos/avisos.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo avisos">
+    <header class="avisos__cabecalho">
+      <h1 class="titulo-display titulo-display--3" data-texto="avisos.titulo"></h1>
+    </header>
+
+    <div class="superficie avisos__painel">
+      <div class="abas" role="tablist" data-texto-aria-label="avisos.abas.rotulo">
+        <button type="button" class="abas__aba" id="avisos-aba-sistema" role="tab" aria-selected="true" aria-controls="avisos-painel-sistema" data-texto="avisos.abas.sistema"></button>
+        <button type="button" class="abas__aba avisos__aba-mensagens" id="avisos-aba-mensagens" role="tab" aria-selected="false" aria-controls="avisos-painel-mensagens">
+          <span data-texto="avisos.abas.mensagens"></span>
+          <span class="etiqueta etiqueta--aviso avisos__contador" hidden></span>
+        </button>
+      </div>
+
+      <section class="abas__painel avisos__painel-sistema" id="avisos-painel-sistema" role="tabpanel" aria-labelledby="avisos-aba-sistema">
+        <div class="estado estado--carregando avisos__sistema-carregando">
+          <p class="estado__titulo" data-texto="compartilhado.estados.carregando"></p>
+        </div>
+
+        <ul class="avisos__lista" hidden></ul>
+
+        <div class="estado estado--vazio avisos__sistema-vazio" hidden>
+          <p class="estado__titulo" data-texto="compartilhado.estados.vazio_titulo"></p>
+          <p class="estado__texto" data-texto="avisos.sistema.vazio_texto"></p>
+        </div>
+
+        <div class="estado estado--erro avisos__sistema-erro" hidden>
+          <p class="estado__titulo" data-texto="compartilhado.estados.erro_titulo"></p>
+          <p class="estado__texto" data-texto="compartilhado.estados.erro_texto"></p>
+          <button type="button" class="botao botao--secundario estado__acao avisos__sistema-recarregar" data-texto="compartilhado.acoes.tentar_de_novo"></button>
+        </div>
+
+        <div class="avisos__rodape so-sessao">
+          <span class="texto-pequeno texto-2" data-texto="avisos.sistema.explicacao"></span>
+          <button type="button" class="avisos__marcar-todos" data-texto="avisos.sistema.marcar_todos"></button>
+        </div>
+      </section>
+
+      <section class="abas__painel avisos__painel-mensagens" id="avisos-painel-mensagens" role="tabpanel" aria-labelledby="avisos-aba-mensagens" hidden>
+        <div class="estado avisos__mensagens-convite so-anonimo">
+          <p class="estado__titulo" data-texto="avisos.mensagens.convite_titulo"></p>
+          <p class="estado__texto" data-texto="avisos.mensagens.convite_texto"></p>
+          <a class="botao botao--primario estado__acao" href="/entrar?volta=%2Favisos%3Faba%3Dmensagens" data-texto="compartilhado.cabecalho.entrar"></a>
+        </div>
+
+        <div class="avisos__conversa so-sessao">
+          <div class="estado estado--carregando avisos__mensagens-carregando">
+            <p class="estado__titulo" data-texto="compartilhado.estados.carregando"></p>
+          </div>
+
+          <ul class="avisos__mensagens-lista" hidden></ul>
+
+          <div class="estado estado--vazio avisos__mensagens-vazio" hidden>
+            <p class="estado__titulo" data-texto="avisos.mensagens.vazio_titulo"></p>
+            <p class="estado__texto" data-texto="avisos.mensagens.vazio_texto"></p>
+          </div>
+
+          <div class="estado estado--erro avisos__mensagens-erro" hidden>
+            <p class="estado__titulo" data-texto="compartilhado.estados.erro_titulo"></p>
+            <p class="estado__texto" data-texto="compartilhado.estados.erro_texto"></p>
+            <button type="button" class="botao botao--secundario estado__acao avisos__mensagens-recarregar" data-texto="compartilhado.acoes.tentar_de_novo"></button>
+          </div>
+
+          <form class="avisos__forma-mensagem" novalidate>
+            <label class="campo avisos__campo-mensagem">
+              <span class="campo__rotulo visualmente-oculto" data-texto="avisos.mensagens.campo_rotulo"></span>
+              <span class="campo__controle">
+                <textarea class="campo__entrada avisos__mensagem-entrada" rows="2" maxlength="2000" data-texto-placeholder="avisos.mensagens.campo_placeholder"></textarea>
+              </span>
+              <span class="campo__erro avisos__mensagem-erro" hidden></span>
+            </label>
+            <button type="submit" class="botao botao--primario avisos__mensagem-enviar" data-texto="compartilhado.acoes.enviar"></button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

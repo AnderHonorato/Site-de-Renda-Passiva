@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="90 0 300 200" role="img" aria-labelledby="t">
+  <title id="t">Uma planilha com células acendendo em onda</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #ece5d8; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    :root { --tinta: #e9e4dc; --fundo: #2a2723; --sombra: #000; --sombra-alfa: .4; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .cel { animation: onda 4.8s ease-in-out infinite; opacity: .12; }
+    .c1 { animation-delay: 0s; } .c2 { animation-delay: .35s; } .c3 { animation-delay: .7s; } .c4 { animation-delay: 1.05s; } .c5 { animation-delay: 1.4s; } .c6 { animation-delay: 1.75s; }
+    @keyframes onda { 0%, 100% { opacity: .12; } 25%, 45% { opacity: .85; } }
+    .barra { animation: sobe 4.8s ease-in-out infinite; }
+    @keyframes sobe { 0%, 100% { transform: scaleY(.4); } 40% { transform: scaleY(1); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="180" rx="150" ry="9"/>
+  <rect x="116" y="30" width="248" height="142" rx="14" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+  <path d="M116 44a14 14 0 0 1 14-14h220a14 14 0 0 1 14 14v18H116z" fill="#3d4451" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <g stroke="#ddd6cc" stroke-width="2"><path d="M178 62v108M240 62v108M302 62v108"/><path d="M116 96h248M116 130h248"/></g>
+  <g fill="#d97757"><rect class="cel c1" x="122" y="68" width="50" height="22" rx="4"/><rect class="cel c2" x="184" y="68" width="50" height="22" rx="4"/><rect class="cel c3" x="246" y="68" width="50" height="22" rx="4"/><rect class="cel c4" x="308" y="68" width="50" height="22" rx="4"/>
+    <rect class="cel c3" x="122" y="102" width="50" height="22" rx="4"/><rect class="cel c4" x="184" y="102" width="50" height="22" rx="4"/><rect class="cel c5" x="246" y="102" width="50" height="22" rx="4"/><rect class="cel c6" x="308" y="102" width="50" height="22" rx="4"/>
+    <rect class="cel c5" x="122" y="136" width="50" height="28" rx="4"/><rect class="cel c6" x="184" y="136" width="50" height="28" rx="4"/></g>
+  <g stroke="#1a1a1a" stroke-width="2"><rect class="barra b" x="256" y="140" width="12" height="22" rx="3" fill="#c9b89b"/><rect class="barra b" x="274" y="132" width="12" height="30" rx="3" fill="#3d4451"/><rect class="barra b" x="292" y="144" width="12" height="18" rx="3" fill="#d97757"/></g>
+</svg>

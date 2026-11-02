@@ -1,0 +1,39 @@
+{
+  "slug": "organograma",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 90,
+  "nome": {
+    "pt-BR": "Gerador de organograma",
+    "en": "Org chart generator"
+  },
+  "descricao": {
+    "pt-BR": "Monta o organograma da equipe a partir dos cargos e das relações de hierarquia.",
+    "en": "Builds the team's org chart from job titles and reporting relationships."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar organograma da empresa"
+    ],
+    "en": [
+      "build the company's org chart"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "organograma",
+      "hierarquia",
+      "estrutura"
+    ],
+    "en": [
+      "org chart",
+      "hierarchy",
+      "structure"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

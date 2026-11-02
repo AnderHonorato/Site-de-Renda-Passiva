@@ -1,0 +1,77 @@
+{
+  "privacidade": {
+    "titulo_pagina": "Privacy — Ander Flow",
+    "descricao_pagina": "What runs in your browser, what the account keeps, which cookies we use and how to export or delete your data.",
+    "sobretitulo": "Transparency",
+    "titulo": "Privacy",
+    "intro": "Most of Ander Flow does all the maths inside your browser: what you type into a tool never leaves your device, unless you create an account and choose to keep it. This page explains exactly what is stored, where and why.",
+    "indice": {
+      "titulo": "Go to section",
+      "navegador": "In the browser",
+      "conta": "In the account",
+      "sessao": "Session and cookies",
+      "aparelho": "On the device only",
+      "uso": "Usage and statistics",
+      "trafego": "Traffic blocking",
+      "rastreador": "Trackers and ads",
+      "direitos": "Your rights"
+    },
+    "navegador": {
+      "titulo": "What runs in your browser",
+      "texto": "The tools calculate and transform files on your own device. Without an account, nothing you type or upload into a tool reaches the server — the result never leaves the browser."
+    },
+    "conta": {
+      "titulo": "What the account keeps",
+      "texto": "If you create an account, we start keeping only what it needs to work:",
+      "itens": {
+        "identificacao": "E-mail and name, to identify the account and talk to you",
+        "senha": "A hash of the password (never the plain password — not even we can read it)",
+        "favoritos": "The tools you keep in favorites, up to {limite_favoritos_gratis} on the Free plan",
+        "trabalhos": "The work you save in each tool, up to {limite_trabalhos_gratis} on the Free plan",
+        "mensagens": "The messages exchanged with the administrator through the site",
+        "preferencias": "Language, theme (light/dark) and the account plan"
+      }
+    },
+    "sessao": {
+      "titulo": "Session and cookies",
+      "texto": "We use few cookies, all of them for the site itself to work — none for advertising:",
+      "itens": {
+        "af_sessao": "af_sessao — identifies your session after you sign in; only the server reads it (HttpOnly)",
+        "af_csrf": "af_csrf — protects forms against fake requests from other sites",
+        "idioma_tema": "idioma and tema — keep your language and appearance preference"
+      },
+      "registro": "While the session exists, we keep the IP and the browser used to sign in; this helps protect your account and is erased when the session ends."
+    },
+    "aparelho": {
+      "titulo": "What stays on your device only",
+      "texto": "These keys live in the browser local storage (localStorage) and are never sent to the server:",
+      "chaves": {
+        "tema": "af-tema",
+        "idioma": "af-idioma",
+        "salvos": "af-salvos-locais",
+        "recentes": "af-recentes",
+        "primeira_visita": "af-primeira-visita",
+        "popup": "af-popup-visto-<aviso>",
+        "rascunho": "af-rascunho-<ferramenta>"
+      },
+      "nunca_enviado": "Clearing the browser data erases all of this — including the favorites and recent tools of anyone without an account."
+    },
+    "uso": {
+      "titulo": "Usage and statistics",
+      "texto": "We count how many times each tool is used per day, without keeping the IP or the processed content. With an account, we also add up your usage per tool and per month, only to show your own summary in /conta."
+    },
+    "trafego": {
+      "titulo": "Traffic blocking",
+      "texto": "To prevent abuse — such as trying many passwords or making too many requests in a short time — the server temporarily keeps the IP of whoever goes over the limit. That record exists only while the block lasts and is erased afterwards."
+    },
+    "rastreador": {
+      "titulo": "Trackers and ads",
+      "texto": "We do not use third-party trackers, we do not sell data and we do not show ads from any ad network."
+    },
+    "direitos": {
+      "titulo": "Your rights (LGPD)",
+      "texto": "You can download a copy of all your data or delete your account and everything related to it, at any time, on your account page.",
+      "acao": "Go to my account"
+    }
+  }
+}

@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <title data-texto="juntar-pdf.titulo_pagina"></title>
+  <meta name="description" data-texto-content="juntar-pdf.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/compartilhado/compartilhado-ferramenta.css">
+  <link rel="stylesheet" href="/estatico/ferramentas/juntar-pdf/juntar-pdf.css">
+  <script type="module" src="/estatico/ferramentas/juntar-pdf/juntar-pdf.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo ferramenta">
+    <nav class="migalhas" data-texto-aria-label="compartilhado.ferramenta.migalhas_rotulo">
+      <ol>
+        <li><a href="/ferramentas" data-texto="compartilhado.cabecalho.ferramentas"></a></li>
+        <li><a href="/ferramentas?categoria=documentos" data-texto="compartilhado.categorias.documentos.nome"></a></li>
+        <li><span aria-current="page" data-texto="juntar-pdf.titulo"></span></li>
+      </ol>
+    </nav>
+
+    <header class="ferramenta__cabecalho">
+      <div class="ferramenta__titulo-linha">
+        <h1 class="titulo-display titulo-display--2" data-texto="juntar-pdf.titulo"></h1>
+        <button type="button" class="botao-icone" data-acao="favoritar">
+          <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-estrela"></use></svg>
+        </button>
+      </div>
+      <p class="texto-2 ferramenta__resumo" data-texto="juntar-pdf.resumo"></p>
+      <p class="nota-local">
+        <svg class="icone icone--16" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-cadeado"></use></svg>
+        <span data-texto="compartilhado.ferramenta.arquivo_local"></span>
+      </p>
+    </header>
+
+    <div class="ferramenta__corpo juntar-pdf__corpo">
+      <form class="ferramenta__formulario" novalidate>
+        <div class="soltar-arquivos" id="area-soltar">
+          <svg class="icone icone--32" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-enviar-arquivo"></use></svg>
+          <p class="soltar-arquivos__titulo" data-texto="juntar-pdf.enviar.titulo"></p>
+          <p class="soltar-arquivos__texto texto-2" data-texto="juntar-pdf.enviar.texto"></p>
+          <label class="botao botao--secundario">
+            <span data-texto="juntar-pdf.enviar.escolher"></span>
+            <input class="visualmente-oculto" id="campo-arquivos" type="file" accept="application/pdf,.pdf" multiple
+                   data-texto-aria-label="juntar-pdf.enviar.escolher">
+          </label>
+          <p class="texto-pequeno texto-2" data-texto="juntar-pdf.enviar.limite"></p>
+        </div>
+
+        <ul class="lista-arquivos" id="lista-arquivos"></ul>
+
+        <p class="campo__erro" id="erro-arquivos" role="alert"></p>
+
+        <div class="bloqueio-plano" hidden></div>
+
+        <div class="ferramenta__acoes">
+          <button type="submit" class="botao botao--primario" id="botao-juntar" disabled data-texto="juntar-pdf.acoes.juntar"></button>
+          <button type="button" class="botao botao--fantasma" data-acao="limpar" data-texto="compartilhado.acoes.limpar"></button>
+        </div>
+      </form>
+
+      <div class="ferramenta__resultado">
+        <div class="estado estado--carregando juntar-pdf__progresso" hidden>
+          <p class="estado__titulo" data-texto="juntar-pdf.progresso.titulo"></p>
+          <p class="estado__texto" id="progresso-texto"></p>
+          <progress class="progresso" id="progresso-barra" max="100" value="0"></progress>
+          <button type="button" class="botao botao--secundario estado__acao" data-acao="cancelar" data-texto="compartilhado.acoes.cancelar"></button>
+        </div>
+
+        <div class="resultado superficie--tinta juntar-pdf__resumo" hidden>
+          <p class="resultado__rotulo" data-texto="juntar-pdf.resultado.titulo"></p>
+          <p class="resultado__valor" id="resultado-paginas" aria-live="polite"></p>
+          <div class="resultado__linhas">
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="juntar-pdf.resultado.arquivos"></span>
+              <span class="resultado__linha-valor" id="resultado-arquivos"></span>
+            </div>
+            <div class="resultado__linha">
+              <span class="resultado__linha-rotulo" data-texto="juntar-pdf.resultado.tamanho"></span>
+              <span class="resultado__linha-valor" id="resultado-tamanho"></span>
+            </div>
+          </div>
+          <button type="button" class="botao botao--primario botao--largo" data-acao="baixar" data-texto="juntar-pdf.acoes.baixar"></button>
+        </div>
+
+        <div class="estado estado--vazio juntar-pdf__vazio">
+          <p class="estado__titulo" data-texto="juntar-pdf.vazio.titulo"></p>
+          <p class="estado__texto" data-texto="juntar-pdf.vazio.texto"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ferramenta__ajuda">
+      <section>
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.como_usar"></h2>
+        <ol class="passos">
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="juntar-pdf.como_usar.um"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="juntar-pdf.como_usar.dois"></p></li>
+          <li class="passos__item"><span class="passos__numero" aria-hidden="true"></span><p data-texto="juntar-pdf.como_usar.tres"></p></li>
+        </ol>
+      </section>
+
+      <section class="perguntas">
+        <h2 class="titulo-display titulo-display--4" data-texto="compartilhado.ferramenta.perguntas"></h2>
+        <details>
+          <summary data-texto="juntar-pdf.perguntas.envio.pergunta"></summary>
+          <p data-texto="juntar-pdf.perguntas.envio.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="juntar-pdf.perguntas.senha.pergunta"></summary>
+          <p data-texto="juntar-pdf.perguntas.senha.resposta"></p>
+        </details>
+        <details>
+          <summary data-texto="juntar-pdf.perguntas.lote.pergunta"></summary>
+          <p data-texto="juntar-pdf.perguntas.lote.resposta"></p>
+        </details>
+      </section>
+
+      <aside class="ferramenta__lateral">
+        <h2 class="sobretitulo" data-texto="compartilhado.ferramenta.relacionadas"></h2>
+        <ul class="relacionadas"></ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

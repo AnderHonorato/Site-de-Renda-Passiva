@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/admin">
+  <meta name="af-acesso" content="admin">
+  <title data-texto="admin.titulo_pagina"></title>
+  <meta name="description" data-texto-content="admin.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/admin/admin.css">
+  <script type="module" src="/estatico/paginas/admin/admin.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo admin">
+    <div class="admin__grade">
+      <aside class="admin__lateral">
+        <nav class="admin__nav" data-texto-aria-label="admin.nav.rotulo">
+          <a class="admin__nav-item" data-secao-link="ferramentas" href="/admin?secao=ferramentas">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-ferramentas"></use></svg>
+            <span class="admin__nav-nome" data-texto="admin.nav.ferramentas"></span>
+            <span class="admin__nav-contagem" data-contagem="ferramentas"></span>
+          </a>
+          <a class="admin__nav-item" data-secao-link="usuarios" href="/admin?secao=usuarios">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-pessoas"></use></svg>
+            <span class="admin__nav-nome" data-texto="admin.nav.usuarios"></span>
+            <span class="admin__nav-contagem" data-contagem="usuarios"></span>
+          </a>
+          <a class="admin__nav-item" data-secao-link="avisos" href="/admin?secao=avisos">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-megafone"></use></svg>
+            <span class="admin__nav-nome" data-texto="admin.nav.avisos"></span>
+            <span class="admin__nav-contagem" data-contagem="avisos"></span>
+          </a>
+          <a class="admin__nav-item" data-secao-link="bloqueios" href="/admin?secao=bloqueios">
+            <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-escudo"></use></svg>
+            <span class="admin__nav-nome" data-texto="admin.nav.bloqueios"></span>
+            <span class="admin__nav-contagem" data-contagem="bloqueios"></span>
+          </a>
+        </nav>
+      </aside>
+
+      <div class="admin__corpo">
+        <div class="admin__alerta" hidden>
+          <svg class="icone icone--20" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-aviso"></use></svg>
+          <p class="admin__alerta-texto"></p>
+          <a class="botao botao--secundario botao--pequeno" href="/admin?secao=bloqueios" data-texto="admin.alerta.ver_bloqueios"></a>
+        </div>
+
+        <!-- ===== Ferramentas ===== -->
+        <section class="admin__secao" data-secao-painel="ferramentas" hidden>
+          <header class="admin__cabecalho">
+            <div>
+              <h1 class="titulo-display titulo-display--3" data-texto="admin.ferramentas.titulo"></h1>
+              <p class="texto-2 admin__resumo" data-secao-resumo="ferramentas"></p>
+            </div>
+          </header>
+
+          <div class="estado estado--carregando admin__carregando" data-secao-estado="ferramentas">
+            <p class="estado__titulo" data-texto="admin.carregando"></p>
+          </div>
+
+          <div class="admin__tabela-bloco" hidden>
+            <table class="tabela">
+              <thead>
+                <tr>
+                  <th data-texto="admin.ferramentas.coluna_nome"></th>
+                  <th data-texto="admin.ferramentas.coluna_slug"></th>
+                  <th data-texto="admin.ferramentas.coluna_categoria"></th>
+                  <th data-texto="admin.ferramentas.coluna_plano"></th>
+                  <th data-texto="admin.ferramentas.coluna_status"></th>
+                  <th data-texto="admin.ferramentas.coluna_usos"></th>
+                  <th data-texto="admin.ferramentas.coluna_acoes"></th>
+                </tr>
+              </thead>
+              <tbody class="admin-ferramentas__corpo"></tbody>
+            </table>
+            <div class="paginacao">
+              <span class="admin-ferramentas__mostrando"></span>
+              <span class="paginacao__acoes">
+                <button type="button" class="botao botao--secundario botao--pequeno admin-ferramentas__anterior" data-texto="compartilhado.acoes.voltar"></button>
+                <button type="button" class="botao botao--secundario botao--pequeno admin-ferramentas__proxima" data-texto="admin.proxima"></button>
+              </span>
+            </div>
+          </div>
+
+          <div class="estado estado--vazio admin-ferramentas__vazio" hidden>
+            <p class="estado__titulo" data-texto="admin.ferramentas.vazio_titulo"></p>
+          </div>
+
+          <div class="estado estado--erro admin-ferramentas__erro" hidden>
+            <p class="estado__titulo" data-texto="admin.erro_titulo"></p>
+            <p class="estado__texto" data-texto="admin.erro_texto"></p>
+            <button type="button" class="botao botao--secundario estado__acao admin-ferramentas__recarregar" data-texto="admin.tentar_de_novo"></button>
+          </div>
+        </section>
+
+        <!-- ===== Usuários ===== -->
+        <section class="admin__secao" data-secao-painel="usuarios" hidden>
+          <header class="admin__cabecalho">
+            <div>
+              <h1 class="titulo-display titulo-display--3" data-texto="admin.usuarios.titulo"></h1>
+              <p class="texto-2 admin__resumo" data-secao-resumo="usuarios"></p>
+            </div>
+          </header>
+
+          <form class="admin-usuarios__busca" role="search">
+            <label class="visualmente-oculto" for="admin-usuarios-busca" data-texto="admin.usuarios.busca_rotulo"></label>
+            <div class="busca-intencao admin__busca-intencao">
+              <svg class="icone busca-intencao__icone" aria-hidden="true"><use href="/estatico/compartilhado/compartilhado-icones.svg#icone-busca"></use></svg>
+              <input class="busca-intencao__entrada" id="admin-usuarios-busca" type="search" autocomplete="off" data-texto-placeholder="admin.usuarios.busca_placeholder">
+            </div>
+          </form>
+
+          <div class="estado estado--carregando admin__carregando" data-secao-estado="usuarios">
+            <p class="estado__titulo" data-texto="admin.carregando"></p>
+          </div>
+
+          <div class="admin__tabela-bloco" hidden>
+            <table class="tabela">
+              <thead>
+                <tr>
+                  <th data-texto="admin.usuarios.coluna_nome"></th>
+                  <th data-texto="admin.usuarios.coluna_email"></th>
+                  <th data-texto="admin.usuarios.coluna_plano"></th>
+                  <th data-texto="admin.usuarios.coluna_papel"></th>
+                  <th data-texto="admin.usuarios.coluna_situacao"></th>
+                  <th data-texto="admin.usuarios.coluna_criado"></th>
+                  <th data-texto="admin.usuarios.coluna_acesso"></th>
+                  <th data-texto="admin.usuarios.coluna_acoes"></th>
+                </tr>
+              </thead>
+              <tbody class="admin-usuarios__corpo"></tbody>
+            </table>
+            <div class="paginacao">
+              <span class="admin-usuarios__mostrando"></span>
+              <span class="paginacao__acoes">
+                <button type="button" class="botao botao--secundario botao--pequeno admin-usuarios__anterior" data-texto="compartilhado.acoes.voltar"></button>
+                <button type="button" class="botao botao--secundario botao--pequeno admin-usuarios__proxima" data-texto="admin.proxima"></button>
+              </span>
+            </div>
+          </div>
+
+          <div class="estado estado--vazio admin-usuarios__vazio" hidden>
+            <p class="estado__titulo admin-usuarios__vazio-titulo"></p>
+          </div>
+
+          <div class="estado estado--erro admin-usuarios__erro" hidden>
+            <p class="estado__titulo" data-texto="admin.erro_titulo"></p>
+            <p class="estado__texto" data-texto="admin.erro_texto"></p>
+            <button type="button" class="botao botao--secundario estado__acao admin-usuarios__recarregar" data-texto="admin.tentar_de_novo"></button>
+          </div>
+        </section>
+
+        <!-- ===== Avisos e mensagens ===== -->
+        <section class="admin__secao" data-secao-painel="avisos" hidden>
+          <header class="admin__cabecalho">
+            <h1 class="titulo-display titulo-display--3" data-texto="admin.avisos.titulo"></h1>
+          </header>
+
+          <div class="abas" role="tablist">
+            <button type="button" class="abas__aba" role="tab" id="admin-aba-avisos" aria-selected="true" aria-controls="admin-painel-avisos" data-texto="admin.avisos.aba_avisos"></button>
+            <button type="button" class="abas__aba" role="tab" id="admin-aba-mensagens" aria-selected="false" aria-controls="admin-painel-mensagens" data-texto="admin.avisos.aba_mensagens"></button>
+          </div>
+
+          <div class="abas__painel" id="admin-painel-avisos" role="tabpanel" aria-labelledby="admin-aba-avisos">
+            <div class="admin__cabecalho admin__cabecalho--linha">
+              <span></span>
+              <button type="button" class="botao botao--primario botao--pequeno admin-avisos__novo" data-texto="admin.avisos.novo"></button>
+            </div>
+
+            <div class="estado estado--carregando" data-secao-estado="avisos">
+              <p class="estado__titulo" data-texto="admin.carregando"></p>
+            </div>
+
+            <div class="admin__tabela-bloco" hidden>
+              <table class="tabela">
+                <thead>
+                  <tr>
+                    <th data-texto="admin.avisos.coluna_titulo"></th>
+                    <th data-texto="admin.avisos.coluna_tipo"></th>
+                    <th data-texto="admin.avisos.coluna_publico"></th>
+                    <th data-texto="admin.avisos.coluna_vigencia"></th>
+                    <th data-texto="admin.avisos.coluna_status"></th>
+                    <th data-texto="admin.avisos.coluna_acoes"></th>
+                  </tr>
+                </thead>
+                <tbody class="admin-avisos__corpo"></tbody>
+              </table>
+            </div>
+
+            <div class="estado estado--vazio admin-avisos__vazio" hidden>
+              <p class="estado__titulo" data-texto="admin.avisos.vazio_titulo"></p>
+            </div>
+
+            <div class="estado estado--erro admin-avisos__erro" hidden>
+              <p class="estado__titulo" data-texto="admin.erro_titulo"></p>
+              <p class="estado__texto" data-texto="admin.erro_texto"></p>
+              <button type="button" class="botao botao--secundario estado__acao admin-avisos__recarregar" data-texto="admin.tentar_de_novo"></button>
+            </div>
+          </div>
+
+          <div class="abas__painel" id="admin-painel-mensagens" role="tabpanel" aria-labelledby="admin-aba-mensagens" hidden>
+            <div class="admin-mensagens__grade">
+              <div class="admin-mensagens__lista-bloco">
+                <div class="estado estado--carregando" data-secao-estado="mensagens">
+                  <p class="estado__titulo" data-texto="admin.carregando"></p>
+                </div>
+                <ul class="admin-mensagens__lista" hidden></ul>
+                <div class="estado estado--vazio admin-mensagens__vazio" hidden>
+                  <p class="estado__titulo" data-texto="admin.mensagens.vazio_titulo"></p>
+                </div>
+                <div class="estado estado--erro admin-mensagens__erro" hidden>
+                  <p class="estado__titulo" data-texto="admin.erro_titulo"></p>
+                  <button type="button" class="botao botao--secundario estado__acao admin-mensagens__recarregar" data-texto="admin.tentar_de_novo"></button>
+                </div>
+              </div>
+
+              <div class="admin-mensagens__conversa">
+                <div class="estado estado--vazio admin-mensagens__sem-selecao">
+                  <p class="estado__titulo" data-texto="admin.mensagens.escolha_conversa"></p>
+                </div>
+                <div class="admin-mensagens__thread" hidden>
+                  <div class="admin-mensagens__linhas"></div>
+                  <form class="admin-mensagens__form">
+                    <label class="campo">
+                      <span class="campo__rotulo" data-texto="admin.mensagens.campo_resposta"></span>
+                      <span class="campo__controle">
+                        <textarea class="campo__entrada admin-mensagens__entrada" rows="3" maxlength="2000" required></textarea>
+                      </span>
+                      <span class="campo__erro"></span>
+                    </label>
+                    <div class="admin__form-acoes">
+                      <button type="submit" class="botao botao--primario admin-mensagens__enviar" data-texto="admin.mensagens.responder"></button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Bloqueios ===== -->
+        <section class="admin__secao" data-secao-painel="bloqueios" hidden>
+          <header class="admin__cabecalho">
+            <div>
+              <h1 class="titulo-display titulo-display--3" data-texto="admin.bloqueios.titulo"></h1>
+              <p class="texto-2 admin__resumo" data-secao-resumo="bloqueios"></p>
+            </div>
+          </header>
+
+          <div class="estado estado--carregando admin__carregando" data-secao-estado="bloqueios">
+            <p class="estado__titulo" data-texto="admin.carregando"></p>
+          </div>
+
+          <div class="admin__tabela-bloco" hidden>
+            <table class="tabela">
+              <thead>
+                <tr>
+                  <th data-texto="admin.bloqueios.coluna_grupo"></th>
+                  <th data-texto="admin.bloqueios.coluna_chave"></th>
+                  <th data-texto="admin.bloqueios.coluna_reincidencias"></th>
+                  <th data-texto="admin.bloqueios.coluna_ate"></th>
+                  <th data-texto="admin.bloqueios.coluna_acoes"></th>
+                </tr>
+              </thead>
+              <tbody class="admin-bloqueios__corpo"></tbody>
+            </table>
+          </div>
+
+          <div class="estado estado--vazio admin-bloqueios__vazio" hidden>
+            <p class="estado__titulo" data-texto="admin.bloqueios.vazio_titulo"></p>
+          </div>
+
+          <div class="estado estado--erro admin-bloqueios__erro" hidden>
+            <p class="estado__titulo" data-texto="admin.erro_titulo"></p>
+            <p class="estado__texto" data-texto="admin.erro_texto"></p>
+            <button type="button" class="botao botao--secundario estado__acao admin-bloqueios__recarregar" data-texto="admin.tentar_de_novo"></button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

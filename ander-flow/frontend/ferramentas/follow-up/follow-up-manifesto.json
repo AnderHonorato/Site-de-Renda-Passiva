@@ -1,0 +1,37 @@
+{
+  "slug": "follow-up",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 50,
+  "nome": {
+    "pt-BR": "Mensagem de follow-up",
+    "en": "Follow-up message"
+  },
+  "descricao": {
+    "pt-BR": "Monta a mensagem de retomada de contato a partir do contexto da negociação.",
+    "en": "Drafts a message to re-engage a lead based on the negotiation's context."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "cliente sumiu o que escrevo"
+    ],
+    "en": [
+      "client went quiet, what do I write"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "follow-up",
+      "retomar contato"
+    ],
+    "en": [
+      "follow-up",
+      "re-engage"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

@@ -1,0 +1,41 @@
+{
+  "slug": "calculadora-de-churrasco",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 150,
+  "nome": {
+    "pt-BR": "Calculadora de churrasco e almoço em grupo",
+    "en": "Barbecue and group lunch calculator"
+  },
+  "descricao": {
+    "pt-BR": "Calcula carnes, acompanhamentos e bebidas a partir do número de convidados e do apetite.",
+    "en": "Calculates meat, side dishes, and drinks based on guest count and appetite."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanta carne comprar para o churrasco",
+      "quantidade de comida para o almoço"
+    ],
+    "en": [
+      "how much meat to buy for a barbecue",
+      "how much food for the lunch"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "churrasco",
+      "almoço em grupo",
+      "quantidade de comida"
+    ],
+    "en": [
+      "barbecue",
+      "group lunch",
+      "food quantity"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

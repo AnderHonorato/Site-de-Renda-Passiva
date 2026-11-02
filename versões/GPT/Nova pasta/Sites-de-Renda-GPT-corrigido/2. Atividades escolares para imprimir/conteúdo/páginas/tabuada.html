@@ -1,0 +1,142 @@
+<!--página
+{
+  "título": "Tabuada",
+  "descrição": "Gere folhas de tabuada por fator, em ordem sequencial ou embaralhada por semente, com gabarito em página separada e PDF para imprimir.",
+  "destaque": "girassol",
+  "navegação": "ferramentas",
+  "script": "páginas/tabuada.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Gerador para imprimir</p>
+    <h1 id="título-ferramenta">Tabuada</h1>
+    <p class="ferramenta-resumo">Escolha os fatores que quer treinar e o intervalo de multiplicadores. A ordem pode ser sequencial (fator por fator) ou embaralhada pela semente, com gabarito em página separada.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-tabuada" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos">
+        <legend>Fatores a treinar</legend>
+        <div class="opções" role="group" aria-label="Fatores incluídos" data-fatores>
+          <label class="opção"><input type="checkbox" name="fator" value="2"> 2</label>
+          <label class="opção"><input type="checkbox" name="fator" value="3"> 3</label>
+          <label class="opção"><input type="checkbox" name="fator" value="4"> 4</label>
+          <label class="opção"><input type="checkbox" name="fator" value="5" checked> 5</label>
+          <label class="opção"><input type="checkbox" name="fator" value="6"> 6</label>
+          <label class="opção"><input type="checkbox" name="fator" value="7" checked> 7</label>
+          <label class="opção"><input type="checkbox" name="fator" value="8"> 8</label>
+          <label class="opção"><input type="checkbox" name="fator" value="9"> 9</label>
+          <label class="opção"><input type="checkbox" name="fator" value="10"> 10</label>
+        </div>
+        <p id="fatores-erro" class="campo-erro" hidden></p>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Multiplicadores e ordem</legend>
+        <div class="campo">
+          <label for="multiplicador-mínimo">Do multiplicador</label>
+          <input id="multiplicador-mínimo" name="multiplicador-mínimo" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="1" aria-describedby="multiplicador-mínimo-erro">
+          <p id="multiplicador-mínimo-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="multiplicador-máximo">Até o multiplicador</label>
+          <input id="multiplicador-máximo" name="multiplicador-máximo" class="entrada" type="text" inputmode="numeric" autocomplete="off" value="10" aria-describedby="multiplicador-máximo-erro">
+          <p id="multiplicador-máximo-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <span class="campo-ajuda">Ordem dos exercícios</span>
+          <div class="segmentado" role="radiogroup" aria-label="Ordem dos exercícios">
+            <label class="opção"><input type="radio" name="ordem" value="sequencial" checked> Sequencial</label>
+            <label class="opção"><input type="radio" name="ordem" value="embaralhada"> Embaralhada</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>Cabeçalho e semente</legend>
+        <div class="campo">
+          <label for="título-da-atividade">Nome da atividade (opcional)</label>
+          <input id="título-da-atividade" name="título-da-atividade" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Treino da tabuada do 7">
+        </div>
+        <div class="campo">
+          <label class="interruptor">
+            <input type="checkbox" id="com-cabeçalho" name="com-cabeçalho" checked>
+            <span class="interruptor-trilho" aria-hidden="true"></span>
+            Incluir campos de Nome e Data
+          </label>
+        </div>
+        <div class="campo">
+          <label for="semente">Semente (só usada na ordem embaralhada)</label>
+          <div class="campo-semente">
+            <input id="semente" name="semente" class="entrada" type="text" inputmode="numeric" autocomplete="off" aria-describedby="semente-erro">
+            <button type="button" id="botão-nova-semente" class="botão botão-secundário botão-ícone" aria-label="Sortear nova semente"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#refresh-cw"></use></svg></button>
+          </div>
+          <p id="semente-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Gerar tabuada</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#grid-3x3"></use></svg>
+        <p class="estado-vazio-título">Sua tabuada aparece aqui</p>
+        <p>Escolha os fatores e toque em Gerar tabuada.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="ações-do-formulário não-imprimir">
+          <button type="button" class="botão botão-secundário" data-ação="baixar-pdf"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#baixar"></use></svg>Baixar PDF</button>
+          <button type="button" class="botão botão-secundário" data-ação="imprimir"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#imprimir"></use></svg>Imprimir</button>
+        </div>
+
+        <div class="área-de-impressão">
+          <article class="folha-de-atividade" data-folha-atividade>
+            <header class="cabeçalho-da-atividade" data-cabeçalho-da-atividade>
+              <h3 class="cabeçalho-da-atividade-título" data-título-impresso></h3>
+              <div class="cabeçalho-da-atividade-campos" data-campos-impressos hidden>
+                <span>Nome:</span>
+                <span>Data:</span>
+              </div>
+            </header>
+            <div data-conteúdo-da-atividade></div>
+          </article>
+
+          <article class="folha-de-atividade quebra-de-página" data-folha-gabarito>
+            <header class="cabeçalho-da-atividade">
+              <h3 class="cabeçalho-da-atividade-título" data-título-gabarito></h3>
+            </header>
+            <div data-conteúdo-do-gabarito></div>
+          </article>
+        </div>
+
+        <p class="campo-ajuda" data-resumo-da-semente></p>
+
+        <form id="formulário-salvar" class="campo não-imprimir" novalidate>
+          <label for="nome-do-registro">Nome para salvar esta configuração</label>
+          <input id="nome-do-registro" name="nome" class="entrada" type="text" maxlength="120" autocomplete="off" placeholder="Ex.: Tabuada do 7 — turma A" aria-describedby="nome-do-registro-erro">
+          <p id="nome-do-registro-erro" class="campo-erro" hidden></p>
+          <div class="ações-do-formulário">
+            <button type="submit" class="botão botão-secundário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#salvar"></use></svg>Salvar neste aparelho</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do gerador">
+    <li>A ordem embaralhada usa a semente exibida; a mesma semente e os mesmos fatores sempre produzem a mesma ordem.</li>
+    <li>Este gerador não afirma alinhamento com a BNCC nem garante eficácia pedagógica: é uma ferramenta de apoio à preparação de material.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-tabuada" class="botão botão-primário">Gerar tabuada</button>
+</div>

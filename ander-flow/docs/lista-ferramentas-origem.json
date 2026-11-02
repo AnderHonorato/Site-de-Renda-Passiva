@@ -1,0 +1,2341 @@
+[
+ {
+  "slug": "contador-de-texto",
+  "nome": "Contador de texto",
+  "categoria": "texto",
+  "resumo": "Conta caracteres, palavras, frases e parágrafos, e estima o tempo de leitura.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quantas palavras tem esse texto",
+   "contar caracteres para o twitter"
+  ],
+  "etiquetas": [
+   "contar palavras",
+   "caracteres",
+   "tempo de leitura"
+  ]
+ },
+ {
+  "slug": "limpador-de-texto",
+  "nome": "Limpeza de texto",
+  "categoria": "texto",
+  "resumo": "Remove espaços duplicados, linhas vazias e quebras de linha soltas.",
+  "plano": "gratuito",
+  "intencoes": [
+   "tirar espaço duplo do texto",
+   "limpar texto colado do pdf"
+  ],
+  "etiquetas": [
+   "limpar texto",
+   "espaços",
+   "quebra de linha"
+  ]
+ },
+ {
+  "slug": "comparador-de-textos",
+  "nome": "Comparar dois textos",
+  "categoria": "texto",
+  "resumo": "Mostra as diferenças entre duas versões de um texto, linha a linha.",
+  "plano": "gratuito",
+  "intencoes": [
+   "o que mudou entre essas duas versões"
+  ],
+  "etiquetas": [
+   "comparar texto",
+   "diff",
+   "diferença"
+  ]
+ },
+ {
+  "slug": "transformador-de-caixa",
+  "nome": "Maiúsculas e minúsculas",
+  "categoria": "texto",
+  "resumo": "Converte o texto para maiúsculas, minúsculas, Cada Palavra ou frase normal.",
+  "plano": "gratuito",
+  "intencoes": [
+   "transformar texto em maiúsculas",
+   "tirar caixa alta"
+  ],
+  "etiquetas": [
+   "maiúscula",
+   "minúscula",
+   "caixa alta",
+   "título"
+  ]
+ },
+ {
+  "slug": "removedor-de-acentos",
+  "nome": "Remover acentos",
+  "categoria": "texto",
+  "resumo": "Remove acentos e caracteres especiais do texto, mantendo a pontuação.",
+  "plano": "gratuito",
+  "intencoes": [
+   "tirar acento do texto"
+  ],
+  "etiquetas": [
+   "remover acento",
+   "normalizar texto"
+  ]
+ },
+ {
+  "slug": "remover-linhas-duplicadas-de-texto",
+  "nome": "Remover linhas duplicadas",
+  "categoria": "texto",
+  "resumo": "Remove linhas repetidas de uma lista de texto, mantendo a primeira ocorrência.",
+  "plano": "gratuito",
+  "intencoes": [
+   "tirar linhas repetidas da lista"
+  ],
+  "etiquetas": [
+   "duplicadas",
+   "lista",
+   "linhas repetidas"
+  ]
+ },
+ {
+  "slug": "ordenador-de-linhas",
+  "nome": "Ordenar linhas",
+  "categoria": "texto",
+  "resumo": "Ordena as linhas de um texto em ordem alfabética, numérica, reversa ou aleatória.",
+  "plano": "gratuito",
+  "intencoes": [
+   "colocar lista em ordem alfabética"
+  ],
+  "etiquetas": [
+   "ordenar",
+   "lista alfabética"
+  ]
+ },
+ {
+  "slug": "modelo-de-mensagem",
+  "nome": "Modelo de mensagem",
+  "categoria": "texto",
+  "resumo": "Preenche modelos de aviso, cobrança e agradecimento com os dados informados.",
+  "plano": "gratuito",
+  "intencoes": [
+   "escrever mensagem de cobrança educada",
+   "modelo de aviso"
+  ],
+  "etiquetas": [
+   "modelo de mensagem",
+   "aviso",
+   "cobrança"
+  ]
+ },
+ {
+  "slug": "extrator-de-contatos-em-texto",
+  "nome": "Extrair e-mails e telefones de um texto",
+  "categoria": "texto",
+  "resumo": "Localiza e lista e-mails, telefones e links soltos dentro de um texto.",
+  "plano": "gratuito",
+  "intencoes": [
+   "tirar os emails desse texto",
+   "achar telefones no texto"
+  ],
+  "etiquetas": [
+   "extrair email",
+   "extrair telefone",
+   "links"
+  ]
+ },
+ {
+  "slug": "juntar-pdf",
+  "nome": "Juntar PDF",
+  "categoria": "documentos",
+  "resumo": "Junta vários arquivos PDF em um único documento, na ordem escolhida.",
+  "plano": "gratuito",
+  "intencoes": [
+   "juntar vários pdf em um só"
+  ],
+  "etiquetas": [
+   "juntar pdf",
+   "unir pdf",
+   "mesclar"
+  ]
+ },
+ {
+  "slug": "dividir-pdf",
+  "nome": "Dividir PDF e extrair páginas",
+  "categoria": "documentos",
+  "resumo": "Divide um PDF em partes ou extrai só as páginas escolhidas.",
+  "plano": "gratuito",
+  "intencoes": [
+   "tirar só uma página do pdf",
+   "dividir pdf em partes"
+  ],
+  "etiquetas": [
+   "dividir pdf",
+   "extrair páginas",
+   "separar pdf"
+  ]
+ },
+ {
+  "slug": "girar-e-numerar-pdf",
+  "nome": "Girar e numerar páginas do PDF",
+  "categoria": "documentos",
+  "resumo": "Gira páginas na orientação certa e adiciona numeração no rodapé.",
+  "plano": "gratuito",
+  "intencoes": [
+   "página do pdf está de lado",
+   "numerar páginas do pdf"
+  ],
+  "etiquetas": [
+   "girar pdf",
+   "numerar página",
+   "paginação"
+  ]
+ },
+ {
+  "slug": "protecao-de-pdf",
+  "nome": "Marca d'água e senha no PDF",
+  "categoria": "documentos",
+  "resumo": "Adiciona marca d'água de texto ou protege o PDF com senha de abertura.",
+  "plano": "plus",
+  "intencoes": [
+   "colocar marca d'água no pdf",
+   "proteger pdf com senha"
+  ],
+  "etiquetas": [
+   "marca d'água",
+   "proteger pdf",
+   "senha no pdf"
+  ]
+ },
+ {
+  "slug": "comprimir-pdf",
+  "nome": "Comprimir PDF",
+  "categoria": "documentos",
+  "resumo": "Reduz o tamanho do arquivo PDF recomprimindo as imagens internas.",
+  "plano": "plus",
+  "intencoes": [
+   "diminuir tamanho do pdf"
+  ],
+  "etiquetas": [
+   "comprimir pdf",
+   "reduzir tamanho"
+  ]
+ },
+ {
+  "slug": "extrair-texto-de-pdf",
+  "nome": "Extrair texto do PDF",
+  "categoria": "documentos",
+  "resumo": "Puxa o texto de um PDF para copiar ou editar, página por página.",
+  "plano": "gratuito",
+  "intencoes": [
+   "copiar texto de um pdf"
+  ],
+  "etiquetas": [
+   "extrair texto do pdf",
+   "pdf para texto"
+  ]
+ },
+ {
+  "slug": "declaracao",
+  "nome": "Gerador de declaração",
+  "categoria": "documentos",
+  "resumo": "Monta declarações simples (residência, próprio punho, para os fins que couber) em PDF.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer uma declaração de residência"
+  ],
+  "etiquetas": [
+   "declaração",
+   "documento simples"
+  ]
+ },
+ {
+  "slug": "procuracao",
+  "nome": "Gerador de procuração",
+  "categoria": "documentos",
+  "resumo": "Monta uma procuração simples com outorgante, outorgado e poderes concedidos.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer uma procuração simples"
+  ],
+  "etiquetas": [
+   "procuração",
+   "poderes"
+  ]
+ },
+ {
+  "slug": "contrato-simples",
+  "nome": "Contrato simples de prestação de serviço",
+  "categoria": "documentos",
+  "resumo": "Monta um contrato curto de prestação de serviço com objeto, valor e prazo.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer um contrato simples de serviço"
+  ],
+  "etiquetas": [
+   "contrato",
+   "prestação de serviço"
+  ]
+ },
+ {
+  "slug": "checklist",
+  "nome": "Checklist para imprimir",
+  "categoria": "documentos",
+  "resumo": "Monta uma lista de tarefas com caixas de marcar, para qualquer finalidade.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer um checklist para imprimir"
+  ],
+  "etiquetas": [
+   "checklist",
+   "lista de tarefas"
+  ]
+ },
+ {
+  "slug": "pop",
+  "nome": "Procedimento operacional padrão (POP)",
+  "categoria": "documentos",
+  "resumo": "Monta um POP com objetivo, materiais, passo a passo e responsável.",
+  "plano": "gratuito",
+  "intencoes": [
+   "documentar um processo da empresa"
+  ],
+  "etiquetas": [
+   "pop",
+   "procedimento",
+   "processo"
+  ]
+ },
+ {
+  "slug": "curriculo",
+  "nome": "Gerador de currículo",
+  "categoria": "documentos",
+  "resumo": "Monta um currículo organizado com experiência, formação e habilidades.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer um currículo"
+  ],
+  "etiquetas": [
+   "currículo",
+   "emprego",
+   "vaga"
+  ]
+ },
+ {
+  "slug": "etiquetas",
+  "nome": "Etiquetas para imprimir",
+  "categoria": "documentos",
+  "resumo": "Calcula quantas etiquetas de um tamanho cabem numa folha A4 e gera o PDF de corte.",
+  "plano": "gratuito",
+  "intencoes": [
+   "imprimir etiquetas em folha a4"
+  ],
+  "etiquetas": [
+   "etiquetas",
+   "rótulos",
+   "imprimir"
+  ]
+ },
+ {
+  "slug": "redimensionar-imagens-em-lote",
+  "nome": "Redimensionar imagens em lote",
+  "categoria": "imagens",
+  "resumo": "Redimensiona várias imagens de uma vez para o tamanho ou peso desejado.",
+  "plano": "plus",
+  "intencoes": [
+   "redimensionar várias fotos de uma vez"
+  ],
+  "etiquetas": [
+   "redimensionar imagem",
+   "lote",
+   "tamanho"
+  ]
+ },
+ {
+  "slug": "cortar-imagem",
+  "nome": "Cortar imagem",
+  "categoria": "imagens",
+  "resumo": "Corta a imagem livremente ou numa proporção pronta para post, story ou capa.",
+  "plano": "gratuito",
+  "intencoes": [
+   "cortar imagem para o instagram",
+   "recortar foto"
+  ],
+  "etiquetas": [
+   "cortar imagem",
+   "recorte",
+   "redes sociais",
+   "story"
+  ]
+ },
+ {
+  "slug": "converter-formato-de-imagem",
+  "nome": "Converter formato de imagem",
+  "categoria": "imagens",
+  "resumo": "Converte entre JPG, PNG, WebP e outros formatos de imagem.",
+  "plano": "gratuito",
+  "intencoes": [
+   "converter png para jpg",
+   "transformar imagem em webp"
+  ],
+  "etiquetas": [
+   "converter imagem",
+   "jpg",
+   "png",
+   "webp"
+  ]
+ },
+ {
+  "slug": "comprimir-imagem",
+  "nome": "Comprimir imagem",
+  "categoria": "imagens",
+  "resumo": "Reduz o peso da imagem controlando a qualidade, sem trocar o formato.",
+  "plano": "gratuito",
+  "intencoes": [
+   "deixar a imagem mais leve"
+  ],
+  "etiquetas": [
+   "comprimir imagem",
+   "otimizar imagem",
+   "peso"
+  ]
+ },
+ {
+  "slug": "gerador-de-favicon",
+  "nome": "Gerador de favicon",
+  "categoria": "imagens",
+  "resumo": "Gera o favicon do site em vários tamanhos a partir de uma imagem.",
+  "plano": "gratuito",
+  "intencoes": [
+   "gerar favicon do site"
+  ],
+  "etiquetas": [
+   "favicon",
+   "ícone do site"
+  ]
+ },
+ {
+  "slug": "remover-metadados-de-imagem",
+  "nome": "Remover metadados da imagem",
+  "categoria": "imagens",
+  "resumo": "Apaga dados de localização, câmera e data escondidos dentro do arquivo da foto.",
+  "plano": "gratuito",
+  "intencoes": [
+   "tirar localização da foto",
+   "remover exif"
+  ],
+  "etiquetas": [
+   "metadados",
+   "exif",
+   "privacidade da foto"
+  ]
+ },
+ {
+  "slug": "extrator-de-paleta-de-cores",
+  "nome": "Extrair paleta de cores da imagem",
+  "categoria": "imagens",
+  "resumo": "Identifica as cores predominantes de uma imagem e devolve os códigos hexadecimais.",
+  "plano": "gratuito",
+  "intencoes": [
+   "pegar as cores dessa imagem"
+  ],
+  "etiquetas": [
+   "paleta de cores",
+   "extrair cor",
+   "hexadecimal"
+  ]
+ },
+ {
+  "slug": "verificador-de-contraste",
+  "nome": "Verificador de contraste de cores",
+  "categoria": "imagens",
+  "resumo": "Confere se a combinação de cor do texto e do fundo atende às regras de acessibilidade.",
+  "plano": "gratuito",
+  "intencoes": [
+   "esse texto tem contraste suficiente"
+  ],
+  "etiquetas": [
+   "contraste",
+   "acessibilidade",
+   "wcag"
+  ]
+ },
+ {
+  "slug": "calendario-editorial",
+  "nome": "Calendário editorial",
+  "categoria": "marketing",
+  "resumo": "Organiza os posts do mês por data, rede social e status de produção.",
+  "plano": "gratuito",
+  "intencoes": [
+   "planejar postagens do mês"
+  ],
+  "etiquetas": [
+   "calendário editorial",
+   "conteúdo",
+   "rede social"
+  ]
+ },
+ {
+  "slug": "gerador-de-titulos",
+  "nome": "Gerador de títulos",
+  "categoria": "marketing",
+  "resumo": "Sugere variações de título para post, anúncio ou e-mail a partir do assunto.",
+  "plano": "gratuito",
+  "intencoes": [
+   "sugestão de título para o post"
+  ],
+  "etiquetas": [
+   "título",
+   "headline",
+   "copywriting"
+  ]
+ },
+ {
+  "slug": "gerador-de-descricao-de-produto",
+  "nome": "Gerador de descrição de produto",
+  "categoria": "marketing",
+  "resumo": "Monta a descrição de um produto a partir de características e benefícios informados.",
+  "plano": "gratuito",
+  "intencoes": [
+   "escrever descrição de produto para anúncio"
+  ],
+  "etiquetas": [
+   "descrição de produto",
+   "anúncio",
+   "loja"
+  ]
+ },
+ {
+  "slug": "briefing-criativo",
+  "nome": "Briefing criativo",
+  "categoria": "marketing",
+  "resumo": "Organiza objetivo, público, tom e referências antes de pedir uma peça de conteúdo.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer um briefing para o designer"
+  ],
+  "etiquetas": [
+   "briefing",
+   "conteúdo",
+   "criação"
+  ]
+ },
+ {
+  "slug": "regra-de-tres",
+  "nome": "Regra de três",
+  "categoria": "cálculo",
+  "resumo": "Proporção direta e inversa, com a conta montada passo a passo.",
+  "plano": "gratuito",
+  "intencoes": [
+   "regra de três",
+   "se 3 custam x quanto custam 7"
+  ],
+  "etiquetas": [
+   "regra de três",
+   "proporção",
+   "proporcional"
+  ]
+ },
+ {
+  "slug": "conversor-de-unidades",
+  "nome": "Conversor de unidades",
+  "categoria": "cálculo",
+  "resumo": "Massa, comprimento, área, volume, temperatura, velocidade, tempo e dados digitais.",
+  "plano": "gratuito",
+  "intencoes": [
+   "converter unidades",
+   "quantos gramas tem uma xícara",
+   "celsius para fahrenheit"
+  ],
+  "etiquetas": [
+   "converter",
+   "metro",
+   "quilo",
+   "litro",
+   "celsius",
+   "polegada",
+   "byte"
+  ]
+ },
+ {
+  "slug": "calculadora-de-datas",
+  "nome": "Calculadora de datas",
+  "categoria": "datas",
+  "resumo": "Diferença entre datas, somar ou subtrair prazos, dias úteis, idade e dia da semana.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quantos dias faltam",
+   "calcular prazo em dias úteis",
+   "qual minha idade exata"
+  ],
+  "etiquetas": [
+   "data",
+   "prazo",
+   "dias úteis",
+   "idade",
+   "vencimento"
+  ]
+ },
+ {
+  "slug": "calculadora-de-horas",
+  "nome": "Calculadora de horas",
+  "categoria": "datas",
+  "resumo": "Soma jornadas com intervalo, calcula carga horária, extras e saldo de banco de horas.",
+  "plano": "gratuito",
+  "intencoes": [
+   "somar horas trabalhadas",
+   "calcular hora extra",
+   "fechar o ponto"
+  ],
+  "etiquetas": [
+   "horas",
+   "ponto",
+   "jornada",
+   "hora extra",
+   "banco de horas"
+  ]
+ },
+ {
+  "slug": "json",
+  "nome": "JSON: validar e formatar",
+  "categoria": "desenvolvimento",
+  "resumo": "Valida, indenta, minifica, ordena chaves e aponta o erro com linha e coluna.",
+  "plano": "gratuito",
+  "intencoes": [
+   "meu json está inválido",
+   "formatar json"
+  ],
+  "etiquetas": [
+   "json",
+   "formatar",
+   "validar",
+   "api"
+  ]
+ },
+ {
+  "slug": "base64",
+  "nome": "Base64: codificar e decodificar",
+  "categoria": "desenvolvimento",
+  "resumo": "Texto e arquivo para Base64 e de volta, com suporte a UTF-8 e URL-safe.",
+  "plano": "gratuito",
+  "intencoes": [
+   "converter para base64"
+  ],
+  "etiquetas": [
+   "base64",
+   "codificar",
+   "decodificar"
+  ]
+ },
+ {
+  "slug": "gerador-de-senhas",
+  "nome": "Gerador de senhas",
+  "categoria": "segurança",
+  "resumo": "Senhas fortes, PIN, senha de Wi-Fi e frase-senha, com medidor de força real.",
+  "plano": "gratuito",
+  "intencoes": [
+   "criar senha forte",
+   "gerar pin",
+   "senha do wifi"
+  ],
+  "etiquetas": [
+   "senha",
+   "pin",
+   "wifi",
+   "segurança",
+   "aleatório"
+  ]
+ },
+ {
+  "slug": "validador-cpf-cnpj",
+  "nome": "Validador de CPF e CNPJ",
+  "categoria": "segurança",
+  "resumo": "Confere os dígitos verificadores de CPF e CNPJ e formata o número.",
+  "plano": "gratuito",
+  "intencoes": [
+   "esse cpf é válido",
+   "conferir cnpj"
+  ],
+  "etiquetas": [
+   "cpf",
+   "cnpj",
+   "validar",
+   "documento"
+  ]
+ },
+ {
+  "slug": "qr-code",
+  "nome": "Gerador de QR Code",
+  "categoria": "imagens",
+  "resumo": "QR Code de link, texto, Wi-Fi ou contato, com download em PNG e SVG.",
+  "plano": "gratuito",
+  "intencoes": [
+   "gerar qr code"
+  ],
+  "etiquetas": [
+   "qr code",
+   "wifi",
+   "link",
+   "contato"
+  ]
+ },
+ {
+  "slug": "limpar-planilha",
+  "nome": "Limpeza de planilha",
+  "categoria": "planilhas",
+  "resumo": "Remove linhas duplicadas e vazias, apara espaços, padroniza maiúsculas e exporta CSV ou XLSX.",
+  "plano": "gratuito",
+  "intencoes": [
+   "tirar duplicados da planilha",
+   "limpar csv"
+  ],
+  "etiquetas": [
+   "csv",
+   "planilha",
+   "duplicadas",
+   "limpar",
+   "excel"
+  ]
+ },
+ {
+  "slug": "csv-e-json",
+  "nome": "CSV e JSON",
+  "categoria": "planilhas",
+  "resumo": "Converte CSV em JSON e JSON em CSV, com separador e cabeçalho configuráveis.",
+  "plano": "gratuito",
+  "intencoes": [
+   "converter csv para json"
+  ],
+  "etiquetas": [
+   "csv",
+   "json",
+   "converter",
+   "dados"
+  ]
+ },
+ {
+  "slug": "comparar-planilhas",
+  "nome": "Comparar duas planilhas",
+  "categoria": "planilhas",
+  "resumo": "Mostra o que entrou, o que saiu e o que mudou entre duas versões da mesma lista.",
+  "plano": "gratuito",
+  "intencoes": [
+   "o que mudou entre as duas planilhas"
+  ],
+  "etiquetas": [
+   "comparar",
+   "diferença",
+   "planilha"
+  ]
+ },
+ {
+  "slug": "estatistica-descritiva",
+  "nome": "Estatística de uma coluna",
+  "categoria": "planilhas",
+  "resumo": "Média, mediana, moda, desvio padrão, quartis e detecção de valores fora da curva.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular média e desvio"
+  ],
+  "etiquetas": [
+   "média",
+   "mediana",
+   "desvio padrão",
+   "estatística"
+  ]
+ },
+ {
+  "slug": "gerador-de-formulas",
+  "nome": "Montador de fórmulas de planilha",
+  "categoria": "planilhas",
+  "resumo": "Monta PROCV, PROCX, SOMASES, CONT.SES e SE aninhado a partir de perguntas simples.",
+  "plano": "gratuito",
+  "intencoes": [
+   "como fazer procv"
+  ],
+  "etiquetas": [
+   "procv",
+   "procx",
+   "somases",
+   "fórmula",
+   "excel"
+  ]
+ },
+ {
+  "slug": "dados-de-teste",
+  "nome": "Gerador de dados de teste",
+  "categoria": "planilhas",
+  "resumo": "Gera listas fictícias de pessoas, produtos e pedidos para testar planilhas e sistemas.",
+  "plano": "gratuito",
+  "intencoes": [
+   "gerar dados para teste"
+  ],
+  "etiquetas": [
+   "dados falsos",
+   "teste",
+   "mock"
+  ]
+ },
+ {
+  "slug": "hash",
+  "nome": "Gerador de hash",
+  "categoria": "segurança",
+  "resumo": "SHA-1, SHA-256, SHA-384 e SHA-512 de texto ou arquivo, para conferir integridade.",
+  "plano": "gratuito",
+  "intencoes": [
+   "conferir hash do arquivo"
+  ],
+  "etiquetas": [
+   "hash",
+   "sha256",
+   "integridade"
+  ]
+ },
+ {
+  "slug": "uuid",
+  "nome": "Gerador de identificadores",
+  "categoria": "desenvolvimento",
+  "resumo": "UUID v4, identificadores curtos e códigos legíveis, em lote.",
+  "plano": "gratuito",
+  "intencoes": [
+   "gerar uuid"
+  ],
+  "etiquetas": [
+   "uuid",
+   "id",
+   "código"
+  ]
+ },
+ {
+  "slug": "regex",
+  "nome": "Testador de expressão regular",
+  "categoria": "desenvolvimento",
+  "resumo": "Testa padrões com destaque das correspondências, grupos e substituição.",
+  "plano": "gratuito",
+  "intencoes": [
+   "testar regex"
+  ],
+  "etiquetas": [
+   "regex",
+   "expressão regular"
+  ]
+ },
+ {
+  "slug": "timestamp",
+  "nome": "Conversor de timestamp",
+  "categoria": "desenvolvimento",
+  "resumo": "Unix, milissegundos e ISO 8601 em data legível, com fuso escolhido.",
+  "plano": "gratuito",
+  "intencoes": [
+   "converter timestamp"
+  ],
+  "etiquetas": [
+   "timestamp",
+   "unix",
+   "iso"
+  ]
+ },
+ {
+  "slug": "url-e-codificacao",
+  "nome": "Codificador de URL e HTML",
+  "categoria": "desenvolvimento",
+  "resumo": "Codifica e decodifica URL, parâmetros de consulta e entidades HTML.",
+  "plano": "gratuito",
+  "intencoes": [
+   "codificar url"
+  ],
+  "etiquetas": [
+   "url",
+   "encode",
+   "html"
+  ]
+ },
+ {
+  "slug": "gerador-de-link-whatsapp",
+  "nome": "Link de WhatsApp",
+  "categoria": "marketing",
+  "resumo": "Monta o link wa.me com número e mensagem pronta, mais o QR Code correspondente.",
+  "plano": "gratuito",
+  "intencoes": [
+   "criar link do whatsapp"
+  ],
+  "etiquetas": [
+   "whatsapp",
+   "link",
+   "wa.me"
+  ]
+ },
+ {
+  "slug": "utm",
+  "nome": "Montador e leitor de UTM",
+  "categoria": "marketing",
+  "resumo": "Monta URLs com parâmetros de campanha e lê os parâmetros de uma URL existente.",
+  "plano": "gratuito",
+  "intencoes": [
+   "criar link com utm"
+  ],
+  "etiquetas": [
+   "utm",
+   "campanha",
+   "analytics"
+  ]
+ },
+ {
+  "slug": "cronometro",
+  "nome": "Cronômetro e temporizador",
+  "categoria": "produtividade",
+  "resumo": "Cronômetro com voltas, temporizador regressivo e ciclos de foco.",
+  "plano": "gratuito",
+  "intencoes": [
+   "marcar o tempo"
+  ],
+  "etiquetas": [
+   "cronômetro",
+   "timer",
+   "pomodoro",
+   "foco"
+  ]
+ },
+ {
+  "slug": "sorteio",
+  "nome": "Sorteio",
+  "categoria": "produtividade",
+  "resumo": "Sorteia números, nomes e divide participantes em times, sem repetição quando pedido.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer um sorteio",
+   "dividir times",
+   "sortear nomes"
+  ],
+  "etiquetas": [
+   "sorteio",
+   "sortear",
+   "times",
+   "amigo secreto",
+   "rifa"
+  ]
+ },
+ {
+  "slug": "imc",
+  "nome": "IMC e faixa de peso",
+  "categoria": "cálculo",
+  "resumo": "Índice de massa corporal, faixa de referência e peso correspondente à faixa.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular imc"
+  ],
+  "etiquetas": [
+   "imc",
+   "peso",
+   "altura"
+  ]
+ },
+ {
+  "slug": "numeros-romanos",
+  "nome": "Números romanos",
+  "categoria": "cálculo",
+  "resumo": "Converte entre algarismos romanos e decimais, validando a grafia.",
+  "plano": "gratuito",
+  "intencoes": [
+   "converter número romano"
+  ],
+  "etiquetas": [
+   "romano",
+   "algarismo"
+  ]
+ },
+ {
+  "slug": "escala-e-proporcao",
+  "nome": "Escala e proporção",
+  "categoria": "cálculo",
+  "resumo": "Redimensiona medidas mantendo proporção e converte escalas de planta.",
+  "plano": "gratuito",
+  "intencoes": [
+   "redimensionar mantendo proporção"
+  ],
+  "etiquetas": [
+   "escala",
+   "proporção",
+   "planta"
+  ]
+ },
+ {
+  "slug": "calendario-do-mes",
+  "nome": "Calendário para imprimir",
+  "categoria": "datas",
+  "resumo": "Calendário mensal ou anual com feriados e espaço para anotações, em PDF.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calendário para imprimir"
+  ],
+  "etiquetas": [
+   "calendário",
+   "imprimir",
+   "feriados"
+  ]
+ },
+ {
+  "slug": "contagem-regressiva",
+  "nome": "Contagem regressiva",
+  "categoria": "datas",
+  "resumo": "Acompanha quanto falta para uma data importante, com link para compartilhar.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto falta para a data"
+  ],
+  "etiquetas": [
+   "contagem regressiva",
+   "prazo"
+  ]
+ },
+ {
+  "slug": "fuso-horario",
+  "nome": "Fuso horário e reunião",
+  "categoria": "datas",
+  "resumo": "Compara horários entre cidades e sugere janelas comuns para reunião.",
+  "plano": "gratuito",
+  "intencoes": [
+   "que horas são lá"
+  ],
+  "etiquetas": [
+   "fuso",
+   "reunião",
+   "horário"
+  ]
+ },
+ {
+  "slug": "porcentagem",
+  "nome": "Calculadora de porcentagem",
+  "categoria": "cálculo",
+  "resumo": "Porcentagem de um valor, aumento, desconto, diferença percentual e quanto A é de B.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular desconto",
+   "quanto por cento de aumento",
+   "quanto é 15% de um valor",
+   "diferença percentual entre dois valores"
+  ],
+  "etiquetas": [
+   "porcentagem",
+   "desconto",
+   "aumento",
+   "acréscimo",
+   "variação"
+  ]
+ },
+ {
+  "slug": "preco-de-venda",
+  "nome": "Preço de venda",
+  "categoria": "dinheiro",
+  "resumo": "Preço a partir do custo, com margem sobre a venda, markup, taxas e impostos.",
+  "plano": "gratuito",
+  "intencoes": [
+   "por quanto devo vender",
+   "calcular margem de lucro",
+   "formar preço de venda",
+   "markup"
+  ],
+  "etiquetas": [
+   "preço",
+   "margem",
+   "markup",
+   "lucro",
+   "taxa",
+   "imposto",
+   "bolo",
+   "doce",
+   "salgado",
+   "peça",
+   "produto",
+   "quanto cobrar"
+  ]
+ },
+ {
+  "slug": "juros",
+  "nome": "Calculadora de juros",
+  "categoria": "dinheiro",
+  "resumo": "Juros simples e compostos, com aportes mensais e tabela período a período.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto rende meu dinheiro",
+   "juros compostos",
+   "simular poupança",
+   "valor futuro"
+  ],
+  "etiquetas": [
+   "juros",
+   "rendimento",
+   "investimento",
+   "poupança",
+   "montante"
+  ]
+ },
+ {
+  "slug": "parcelamento",
+  "nome": "Simulador de parcelamento",
+  "categoria": "dinheiro",
+  "resumo": "Parcela pela Tabela Price, custo total do crédito e comparação com o pagamento à vista.",
+  "plano": "gratuito",
+  "intencoes": [
+   "vale a pena parcelar",
+   "calcular parcela",
+   "quanto fica por mês"
+  ],
+  "etiquetas": [
+   "parcela",
+   "financiamento",
+   "crediário",
+   "price",
+   "à vista"
+  ]
+ },
+ {
+  "slug": "divisao-de-contas",
+  "nome": "Divisão de contas",
+  "categoria": "dinheiro",
+  "resumo": "Quem pagou o quê, quanto cada um deve e o menor número de transferências para acertar.",
+  "plano": "gratuito",
+  "intencoes": [
+   "rachar a conta",
+   "dividir despesas da viagem",
+   "quem deve pra quem"
+  ],
+  "etiquetas": [
+   "rachar",
+   "dividir conta",
+   "rateio",
+   "despesas",
+   "viagem"
+  ]
+ },
+ {
+  "slug": "preco-por-unidade",
+  "nome": "Preço por unidade",
+  "categoria": "dinheiro",
+  "resumo": "Compara embalagens de tamanhos diferentes e mostra qual sai mais barata de verdade.",
+  "plano": "gratuito",
+  "intencoes": [
+   "qual embalagem compensa",
+   "preço por quilo",
+   "comparar preços de embalagens"
+  ],
+  "etiquetas": [
+   "comparar preço",
+   "embalagem",
+   "custo por kg",
+   "litro",
+   "supermercado"
+  ]
+ },
+ {
+  "slug": "numero-por-extenso",
+  "nome": "Número por extenso",
+  "categoria": "dinheiro",
+  "resumo": "Escreve números e valores em reais por extenso, para recibos e contratos.",
+  "plano": "gratuito",
+  "intencoes": [
+   "escrever valor por extenso",
+   "número por extenso"
+  ],
+  "etiquetas": [
+   "extenso",
+   "recibo",
+   "cheque",
+   "contrato",
+   "reais"
+  ]
+ },
+ {
+  "slug": "orcamento",
+  "nome": "Orçamento e proposta",
+  "categoria": "vendas",
+  "resumo": "Monta o orçamento com itens, desconto e validade; exporta PDF, planilha e link para o cliente.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer um orçamento",
+   "mandar proposta para o cliente",
+   "orçamento em pdf"
+  ],
+  "etiquetas": [
+   "orçamento",
+   "proposta",
+   "cliente",
+   "pdf",
+   "excel",
+   "encomenda",
+   "bolo",
+   "festa",
+   "obra"
+  ]
+ },
+ {
+  "slug": "recibo",
+  "nome": "Gerador de recibo",
+  "categoria": "documentos",
+  "resumo": "Recibo de pagamento com valor por extenso, dados das partes e PDF pronto para assinar.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer um recibo",
+   "comprovante de pagamento"
+  ],
+  "etiquetas": [
+   "recibo",
+   "pagamento",
+   "comprovante",
+   "assinatura"
+  ]
+ },
+ {
+  "slug": "comissao",
+  "nome": "Calculadora de comissão",
+  "categoria": "vendas",
+  "resumo": "Comissão simples, escalonada por faixa de meta e comissão líquida após descontos.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular comissão",
+   "comissão escalonada"
+  ],
+  "etiquetas": [
+   "comissão",
+   "vendedor",
+   "meta"
+  ]
+ },
+ {
+  "slug": "ponto-de-equilibrio",
+  "nome": "Ponto de equilíbrio",
+  "categoria": "dinheiro",
+  "resumo": "Quanto precisa vender para cobrir os custos, em valor e em quantidade.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto preciso vender para pagar as despesas"
+  ],
+  "etiquetas": [
+   "ponto de equilíbrio",
+   "break even",
+   "margem de contribuição"
+  ]
+ },
+ {
+  "slug": "fluxo-de-caixa",
+  "nome": "Fluxo de caixa",
+  "categoria": "dinheiro",
+  "resumo": "Entradas e saídas por período, saldo acumulado e projeção simples.",
+  "plano": "gratuito",
+  "intencoes": [
+   "organizar meu caixa",
+   "quando vou ficar no vermelho"
+  ],
+  "etiquetas": [
+   "fluxo de caixa",
+   "contas a pagar",
+   "contas a receber"
+  ]
+ },
+ {
+  "slug": "conversor-de-moedas",
+  "nome": "Conversor de moedas",
+  "categoria": "dinheiro",
+  "resumo": "Converte valores entre moedas com a cotação informada por você.",
+  "plano": "gratuito",
+  "intencoes": [
+   "converter dólar para real"
+  ],
+  "etiquetas": [
+   "moeda",
+   "dólar",
+   "euro",
+   "câmbio"
+  ]
+ },
+ {
+  "slug": "roi-e-metricas",
+  "nome": "ROI, ROAS, CAC e LTV",
+  "categoria": "marketing",
+  "resumo": "Retorno de investimento, retorno de anúncio, custo de aquisição e valor do cliente.",
+  "plano": "gratuito",
+  "intencoes": [
+   "a campanha deu retorno"
+  ],
+  "etiquetas": [
+   "roi",
+   "roas",
+   "cac",
+   "ltv",
+   "campanha"
+  ]
+ },
+ {
+  "slug": "rateio-de-custos",
+  "nome": "Rateio de custos",
+  "categoria": "dinheiro",
+  "resumo": "Distribui um custo comum entre setores, produtos ou pessoas por critério escolhido.",
+  "plano": "gratuito",
+  "intencoes": [
+   "dividir custo entre setores"
+  ],
+  "etiquetas": [
+   "rateio",
+   "custo indireto",
+   "proporcional"
+  ]
+ },
+ {
+  "slug": "pedido-de-venda",
+  "nome": "Pedido de venda",
+  "categoria": "vendas",
+  "resumo": "Pedido com itens, condições e prazo de entrega, pronto para PDF.",
+  "plano": "gratuito",
+  "intencoes": [
+   "registrar pedido do cliente"
+  ],
+  "etiquetas": [
+   "pedido",
+   "venda"
+  ]
+ },
+ {
+  "slug": "ficha-de-cliente",
+  "nome": "Ficha de cliente",
+  "categoria": "vendas",
+  "resumo": "Cadastro simples de clientes salvo no próprio aparelho, com busca e exportação.",
+  "plano": "gratuito",
+  "intencoes": [
+   "guardar meus clientes"
+  ],
+  "etiquetas": [
+   "cliente",
+   "cadastro",
+   "crm"
+  ]
+ },
+ {
+  "slug": "follow-up",
+  "nome": "Mensagem de follow-up",
+  "categoria": "vendas",
+  "resumo": "Monta a mensagem de retomada de contato a partir do contexto da negociação.",
+  "plano": "gratuito",
+  "intencoes": [
+   "cliente sumiu o que escrevo"
+  ],
+  "etiquetas": [
+   "follow-up",
+   "retomar contato"
+  ]
+ },
+ {
+  "slug": "meta-de-faturamento",
+  "nome": "Meta de faturamento",
+  "categoria": "vendas",
+  "resumo": "Quanto vender por dia, semana e vendedor para bater a meta do mês.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto preciso vender por dia"
+  ],
+  "etiquetas": [
+   "meta",
+   "faturamento"
+  ]
+ },
+ {
+  "slug": "ticket-medio",
+  "nome": "Ticket médio e conversão",
+  "categoria": "vendas",
+  "resumo": "Ticket médio, taxa de conversão e o efeito de melhorar cada um deles.",
+  "plano": "gratuito",
+  "intencoes": [
+   "melhorar minhas vendas"
+  ],
+  "etiquetas": [
+   "ticket médio",
+   "conversão"
+  ]
+ },
+ {
+  "slug": "quiz-de-multipla-escolha",
+  "nome": "Quiz de múltipla escolha",
+  "categoria": "estudos",
+  "resumo": "Monta um quiz com perguntas, alternativas e gabarito, pronto para aplicar.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar um quiz para os alunos",
+   "fazer prova de múltipla escolha"
+  ],
+  "etiquetas": [
+   "quiz",
+   "múltipla escolha",
+   "prova"
+  ]
+ },
+ {
+  "slug": "flashcards",
+  "nome": "Flashcards",
+  "categoria": "estudos",
+  "resumo": "Cria flashcards com pergunta na frente e resposta no verso, para cortar e estudar.",
+  "plano": "gratuito",
+  "intencoes": [
+   "criar flashcards para estudar"
+  ],
+  "etiquetas": [
+   "flashcards",
+   "memorização",
+   "estudo"
+  ]
+ },
+ {
+  "slug": "plano-de-estudos",
+  "nome": "Plano de estudos",
+  "categoria": "estudos",
+  "resumo": "Monta uma grade semanal de estudos por disciplina, com minutos por sessão e pausas.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar plano de estudos da semana"
+  ],
+  "etiquetas": [
+   "plano de estudos",
+   "grade semanal",
+   "rotina de estudo"
+  ]
+ },
+ {
+  "slug": "resumo-esquematico",
+  "nome": "Modelo de resumo esquemático",
+  "categoria": "estudos",
+  "resumo": "Organiza um resumo de estudo em tópicos, palavras-chave e perguntas de revisão.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer um resumo esquemático para estudar"
+  ],
+  "etiquetas": [
+   "resumo",
+   "anotação",
+   "revisão"
+  ]
+ },
+ {
+  "slug": "simulado",
+  "nome": "Montador de simulado",
+  "categoria": "estudos",
+  "resumo": "Monta um simulado a partir de um banco de questões, com correção automática.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar um simulado de prova"
+  ],
+  "etiquetas": [
+   "simulado",
+   "banco de questões",
+   "correção"
+  ]
+ },
+ {
+  "slug": "certificado",
+  "nome": "Gerador de certificado",
+  "categoria": "estudos",
+  "resumo": "Monta certificados de participação ou conclusão com nome, curso e carga horária.",
+  "plano": "plus",
+  "intencoes": [
+   "gerar certificado para os alunos"
+  ],
+  "etiquetas": [
+   "certificado",
+   "participação",
+   "curso"
+  ]
+ },
+ {
+  "slug": "tabuada",
+  "nome": "Tabuada para imprimir",
+  "categoria": "estudos",
+  "resumo": "Gera folhas de tabuada por fator, em ordem ou embaralhada, com gabarito separado.",
+  "plano": "gratuito",
+  "intencoes": [
+   "folha de tabuada para imprimir"
+  ],
+  "etiquetas": [
+   "tabuada",
+   "multiplicação",
+   "matemática"
+  ]
+ },
+ {
+  "slug": "caca-palavras",
+  "nome": "Caça-palavras",
+  "categoria": "estudos",
+  "resumo": "Monta um caça-palavras com as palavras escolhidas, com gabarito em página separada.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar caça-palavras para imprimir"
+  ],
+  "etiquetas": [
+   "caça-palavras",
+   "atividade escolar"
+  ]
+ },
+ {
+  "slug": "caligrafia",
+  "nome": "Folha de caligrafia",
+  "categoria": "estudos",
+  "resumo": "Gera folhas de caligrafia com o texto escolhido e linhas-guia de base e altura.",
+  "plano": "gratuito",
+  "intencoes": [
+   "folha de caligrafia personalizada"
+  ],
+  "etiquetas": [
+   "caligrafia",
+   "letra cursiva",
+   "treino de escrita"
+  ]
+ },
+ {
+  "slug": "papel-quadriculado",
+  "nome": "Papel quadriculado para imprimir",
+  "categoria": "estudos",
+  "resumo": "Gera papel quadriculado em tamanho real, com quadrado de calibração para conferir a impressão.",
+  "plano": "gratuito",
+  "intencoes": [
+   "papel quadriculado para imprimir"
+  ],
+  "etiquetas": [
+   "papel quadriculado",
+   "milimetrado",
+   "grade"
+  ]
+ },
+ {
+  "slug": "bingo-de-numeros",
+  "nome": "Bingo de números",
+  "categoria": "estudos",
+  "resumo": "Gera cartelas de bingo sem repetição, com lista de sorteio separada para conduzir o jogo.",
+  "plano": "gratuito",
+  "intencoes": [
+   "gerar cartelas de bingo para a turma"
+  ],
+  "etiquetas": [
+   "bingo",
+   "cartela",
+   "sorteio"
+  ]
+ },
+ {
+  "slug": "operacoes-matematicas",
+  "nome": "Folha de operações matemáticas",
+  "categoria": "estudos",
+  "resumo": "Gera folhas de adição, subtração, multiplicação e divisão, com gabarito separado.",
+  "plano": "gratuito",
+  "intencoes": [
+   "folha de continhas para treinar"
+  ],
+  "etiquetas": [
+   "operações matemáticas",
+   "continhas",
+   "exercício de matemática"
+  ]
+ },
+ {
+  "slug": "mapa-mental",
+  "nome": "Montador de mapa mental",
+  "categoria": "estudos",
+  "resumo": "Organiza um tema central e seus ramos em um mapa mental visual.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar mapa mental para estudar"
+  ],
+  "etiquetas": [
+   "mapa mental",
+   "organização de ideias"
+  ]
+ },
+ {
+  "slug": "linha-do-tempo",
+  "nome": "Linha do tempo",
+  "categoria": "estudos",
+  "resumo": "Organiza eventos em ordem cronológica numa linha do tempo visual.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar linha do tempo para o trabalho"
+  ],
+  "etiquetas": [
+   "linha do tempo",
+   "cronologia",
+   "história"
+  ]
+ },
+ {
+  "slug": "rotina-de-revisao",
+  "nome": "Rotina de revisão espaçada",
+  "categoria": "estudos",
+  "resumo": "Calcula as datas de revisão de um conteúdo pela repetição espaçada.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quando devo revisar essa matéria"
+  ],
+  "etiquetas": [
+   "revisão espaçada",
+   "memorização",
+   "repetição"
+  ]
+ },
+ {
+  "slug": "custo-de-receita",
+  "nome": "Custo de receita",
+  "categoria": "ofício",
+  "resumo": "Calcula o custo total e por unidade de uma receita a partir dos ingredientes.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular custo da receita",
+   "quanto custa fazer esse doce"
+  ],
+  "etiquetas": [
+   "custo de receita",
+   "ficha de custo",
+   "ingredientes",
+   "bolo",
+   "doce",
+   "salgado",
+   "confeitaria",
+   "cozinha"
+  ]
+ },
+ {
+  "slug": "ajuste-de-receita",
+  "nome": "Ajuste de quantidade e rendimento da receita",
+  "categoria": "ofício",
+  "resumo": "Escala a receita para outra quantidade e ajusta o rendimento por perdas de produção.",
+  "plano": "gratuito",
+  "intencoes": [
+   "aumentar a receita para mais porções",
+   "quanto sobra depois da perda"
+  ],
+  "etiquetas": [
+   "ajuste de receita",
+   "escalar receita",
+   "perda de produção"
+  ]
+ },
+ {
+  "slug": "ficha-tecnica",
+  "nome": "Ficha técnica de produto",
+  "categoria": "ofício",
+  "resumo": "Documenta ingredientes, modo de preparo, custo e rendimento de um produto artesanal.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer a ficha técnica do produto"
+  ],
+  "etiquetas": [
+   "ficha técnica",
+   "padronização",
+   "receita"
+  ]
+ },
+ {
+  "slug": "custo-de-material-artesanal",
+  "nome": "Custo de material artesanal",
+  "categoria": "ofício",
+  "resumo": "Calcula o custo dos materiais usados numa peça artesanal a partir do consumo de cada um.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular custo de material da peça artesanal"
+  ],
+  "etiquetas": [
+   "custo de material",
+   "artesanato",
+   "consumo de insumo"
+  ]
+ },
+ {
+  "slug": "valor-da-hora",
+  "nome": "Valor da hora de trabalho",
+  "categoria": "ofício",
+  "resumo": "Calcula quanto cobrar por hora de trabalho a partir da renda desejada e das horas disponíveis.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto cobrar por hora de trabalho"
+  ],
+  "etiquetas": [
+   "valor da hora",
+   "precificação de mão de obra"
+  ]
+ },
+ {
+  "slug": "calculadora-de-tinta",
+  "nome": "Calculadora de tinta",
+  "categoria": "ofício",
+  "resumo": "Calcula os litros de tinta necessários pela área e demãos, e compara o custo das embalagens.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quantos litros de tinta comprar",
+   "qual lata de tinta compensa mais"
+  ],
+  "etiquetas": [
+   "tinta",
+   "pintura",
+   "rendimento de tinta"
+  ]
+ },
+ {
+  "slug": "piso-por-caixa",
+  "nome": "Piso por caixa",
+  "categoria": "ofício",
+  "resumo": "Calcula quantas caixas de piso ou revestimento comprar a partir da área e da margem de corte.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quantas caixas de piso comprar"
+  ],
+  "etiquetas": [
+   "piso",
+   "revestimento",
+   "reforma"
+  ]
+ },
+ {
+  "slug": "quantidade-de-rodape",
+  "nome": "Quantidade de rodapé",
+  "categoria": "ofício",
+  "resumo": "Calcula quantas barras de rodapé comprar a partir do perímetro do cômodo e da perda.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto rodapé comprar"
+  ],
+  "etiquetas": [
+   "rodapé",
+   "reforma",
+   "acabamento"
+  ]
+ },
+ {
+  "slug": "papel-de-parede",
+  "nome": "Papel de parede",
+  "categoria": "ofício",
+  "resumo": "Calcula faixas e rolos de papel de parede considerando a altura e a repetição da estampa.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quantos rolos de papel de parede comprar"
+  ],
+  "etiquetas": [
+   "papel de parede",
+   "revestimento de parede"
+  ]
+ },
+ {
+  "slug": "area-de-rejunte",
+  "nome": "Área e quantidade de rejunte",
+  "categoria": "ofício",
+  "resumo": "Estima o volume e a massa de rejunte a partir da área revestida e da medida da peça.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto rejunte comprar"
+  ],
+  "etiquetas": [
+   "rejunte",
+   "revestimento",
+   "massa de rejunte"
+  ]
+ },
+ {
+  "slug": "area-de-paredes",
+  "nome": "Área de paredes e tetos",
+  "categoria": "ofício",
+  "resumo": "Soma a área de paredes e tetos, descontando portas e janelas marcadas.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular área da parede para reforma"
+  ],
+  "etiquetas": [
+   "área de parede",
+   "metragem",
+   "reforma"
+  ]
+ },
+ {
+  "slug": "molde-de-caixa",
+  "nome": "Molde de caixa",
+  "categoria": "ofício",
+  "resumo": "Gera o molde de uma caixa retangular simples ou com tampa separada, pelas medidas internas.",
+  "plano": "gratuito",
+  "intencoes": [
+   "gerar molde de caixa nas minhas medidas"
+  ],
+  "etiquetas": [
+   "molde de caixa",
+   "embalagem",
+   "planificação"
+  ]
+ },
+ {
+  "slug": "molde-de-envelope",
+  "nome": "Molde de envelope",
+  "categoria": "ofício",
+  "resumo": "Gera o molde de um envelope no tamanho certo para o cartão ou papel que ele vai guardar.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer molde de envelope sob medida"
+  ],
+  "etiquetas": [
+   "envelope",
+   "molde",
+   "papelaria"
+  ]
+ },
+ {
+  "slug": "divisorias-de-caixa",
+  "nome": "Divisórias de caixa",
+  "categoria": "ofício",
+  "resumo": "Gera o molde das divisórias internas de uma caixa pelo número de compartimentos.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer divisórias para dentro da caixa"
+  ],
+  "etiquetas": [
+   "divisórias",
+   "caixa",
+   "organização de embalagem"
+  ]
+ },
+ {
+  "slug": "calculadora-de-churrasco",
+  "nome": "Calculadora de churrasco e almoço em grupo",
+  "categoria": "ofício",
+  "resumo": "Calcula carnes, acompanhamentos e bebidas a partir do número de convidados e do apetite.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanta carne comprar para o churrasco",
+   "quantidade de comida para o almoço"
+  ],
+  "etiquetas": [
+   "churrasco",
+   "almoço em grupo",
+   "quantidade de comida"
+  ]
+ },
+ {
+  "slug": "festa-infantil",
+  "nome": "Planejador de festa infantil",
+  "categoria": "ofício",
+  "resumo": "Organiza salgados, doces, bolo e bebidas de uma festa infantil por número de convidados.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto salgado comprar para festa infantil"
+  ],
+  "etiquetas": [
+   "festa infantil",
+   "aniversário",
+   "quantidade de comida"
+  ]
+ },
+ {
+  "slug": "lista-de-convidados",
+  "nome": "Lista de convidados",
+  "categoria": "ofício",
+  "resumo": "Conta confirmados, pendentes e recusados de um evento, com os nomes salvos no aparelho.",
+  "plano": "gratuito",
+  "intencoes": [
+   "controlar confirmação de convidados do evento"
+  ],
+  "etiquetas": [
+   "lista de convidados",
+   "confirmação de presença",
+   "evento"
+  ]
+ },
+ {
+  "slug": "cronograma-de-evento",
+  "nome": "Cronograma do evento",
+  "categoria": "ofício",
+  "resumo": "Calcula o horário de início de cada etapa de preparação a partir do horário da festa.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar cronograma do evento"
+  ],
+  "etiquetas": [
+   "cronograma de evento",
+   "organização de festa",
+   "horário"
+  ]
+ },
+ {
+  "slug": "ferias",
+  "nome": "Cálculo de férias",
+  "categoria": "trabalho",
+  "resumo": "Calcula o valor das férias com um terço constitucional e o abono pecuniário.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular valor das férias",
+   "quanto vou receber de férias"
+  ],
+  "etiquetas": [
+   "férias",
+   "abono pecuniário",
+   "um terço"
+  ]
+ },
+ {
+  "slug": "rescisao-estimada",
+  "nome": "Estimativa de rescisão",
+  "categoria": "trabalho",
+  "resumo": "Estima o valor da rescisão por tipo de desligamento, com aviso, férias e décimo terceiro.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto vou receber de rescisão"
+  ],
+  "etiquetas": [
+   "rescisão",
+   "demissão",
+   "aviso prévio"
+  ]
+ },
+ {
+  "slug": "salario-liquido-estimado",
+  "nome": "Salário líquido estimado",
+  "categoria": "trabalho",
+  "resumo": "Estima o salário líquido a partir do bruto, descontando INSS e IRRF pela tabela vigente.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quanto sobra do salário depois do desconto"
+  ],
+  "etiquetas": [
+   "salário líquido",
+   "inss",
+   "irrf",
+   "holerite"
+  ]
+ },
+ {
+  "slug": "escala-de-trabalho",
+  "nome": "Escala de trabalho",
+  "categoria": "trabalho",
+  "resumo": "Monta a escala da equipe por turno e folga, incluindo padrões como 12x36 e 6x1.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar escala de trabalho da equipe"
+  ],
+  "etiquetas": [
+   "escala",
+   "turno",
+   "12x36",
+   "folga"
+  ]
+ },
+ {
+  "slug": "avaliacao-de-desempenho",
+  "nome": "Avaliação de desempenho",
+  "categoria": "trabalho",
+  "resumo": "Monta um formulário de avaliação por competências com nota e comentário.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer avaliação de desempenho do funcionário"
+  ],
+  "etiquetas": [
+   "avaliação de desempenho",
+   "competências",
+   "feedback"
+  ]
+ },
+ {
+  "slug": "descricao-de-vaga",
+  "nome": "Descrição de vaga",
+  "categoria": "trabalho",
+  "resumo": "Monta o anúncio da vaga com responsabilidades, requisitos e benefícios.",
+  "plano": "gratuito",
+  "intencoes": [
+   "escrever descrição de vaga"
+  ],
+  "etiquetas": [
+   "vaga",
+   "anúncio de emprego",
+   "recrutamento"
+  ]
+ },
+ {
+  "slug": "roteiro-de-entrevista",
+  "nome": "Roteiro de entrevista",
+  "categoria": "trabalho",
+  "resumo": "Monta o roteiro de perguntas da entrevista por competência avaliada.",
+  "plano": "gratuito",
+  "intencoes": [
+   "roteiro de perguntas para entrevista"
+  ],
+  "etiquetas": [
+   "entrevista",
+   "roteiro",
+   "recrutamento"
+  ]
+ },
+ {
+  "slug": "plano-de-onboarding",
+  "nome": "Plano de onboarding",
+  "categoria": "trabalho",
+  "resumo": "Monta o cronograma dos primeiros dias de um novo funcionário, por etapa e responsável.",
+  "plano": "gratuito",
+  "intencoes": [
+   "planejar integração de novo funcionário"
+  ],
+  "etiquetas": [
+   "onboarding",
+   "integração",
+   "novo funcionário"
+  ]
+ },
+ {
+  "slug": "organograma",
+  "nome": "Gerador de organograma",
+  "categoria": "trabalho",
+  "resumo": "Monta o organograma da equipe a partir dos cargos e das relações de hierarquia.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar organograma da empresa"
+  ],
+  "etiquetas": [
+   "organograma",
+   "hierarquia",
+   "estrutura"
+  ]
+ },
+ {
+  "slug": "estoque-minimo",
+  "nome": "Estoque mínimo e de segurança",
+  "categoria": "operações",
+  "resumo": "Calcula o estoque mínimo e de segurança a partir do consumo e do prazo de reposição.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular estoque mínimo"
+  ],
+  "etiquetas": [
+   "estoque mínimo",
+   "estoque de segurança"
+  ]
+ },
+ {
+  "slug": "ponto-de-reposicao",
+  "nome": "Ponto de reposição",
+  "categoria": "operações",
+  "resumo": "Calcula em qual quantidade fazer o novo pedido para não zerar o estoque.",
+  "plano": "gratuito",
+  "intencoes": [
+   "quando fazer o próximo pedido de estoque"
+  ],
+  "etiquetas": [
+   "ponto de reposição",
+   "pedido de compra"
+  ]
+ },
+ {
+  "slug": "giro-de-estoque",
+  "nome": "Giro de estoque",
+  "categoria": "operações",
+  "resumo": "Calcula quantas vezes o estoque girou no período e o tempo médio de permanência.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular giro de estoque"
+  ],
+  "etiquetas": [
+   "giro de estoque",
+   "estoque médio"
+  ]
+ },
+ {
+  "slug": "curva-abc",
+  "nome": "Curva ABC de produtos",
+  "categoria": "operações",
+  "resumo": "Classifica os produtos em A, B e C pela participação no faturamento ou saída.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer curva abc dos produtos"
+  ],
+  "etiquetas": [
+   "curva abc",
+   "classificação de produtos"
+  ]
+ },
+ {
+  "slug": "cubagem",
+  "nome": "Cálculo de cubagem",
+  "categoria": "operações",
+  "resumo": "Calcula o volume ocupado por uma carga a partir das medidas de cada volume.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular cubagem da carga"
+  ],
+  "etiquetas": [
+   "cubagem",
+   "volume de carga",
+   "m³"
+  ]
+ },
+ {
+  "slug": "peso-volumetrico",
+  "nome": "Peso volumétrico",
+  "categoria": "operações",
+  "resumo": "Calcula o peso cubado de um volume e compara com o peso real para o frete.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular peso cubado do frete"
+  ],
+  "etiquetas": [
+   "peso volumétrico",
+   "peso cubado",
+   "frete"
+  ]
+ },
+ {
+  "slug": "romaneio",
+  "nome": "Romaneio de carga",
+  "categoria": "operações",
+  "resumo": "Monta o romaneio com os volumes, pesos e destinatários de uma expedição.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer romaneio de carga"
+  ],
+  "etiquetas": [
+   "romaneio",
+   "expedição",
+   "carga"
+  ]
+ },
+ {
+  "slug": "etiqueta-de-expedicao",
+  "nome": "Etiqueta de expedição",
+  "categoria": "operações",
+  "resumo": "Gera etiquetas de volume com remetente, destinatário e numeração da carga.",
+  "plano": "gratuito",
+  "intencoes": [
+   "gerar etiqueta para a caixa da entrega"
+  ],
+  "etiquetas": [
+   "etiqueta de expedição",
+   "volume",
+   "transporte"
+  ]
+ },
+ {
+  "slug": "conferencia-de-pedido",
+  "nome": "Conferência de pedido",
+  "categoria": "operações",
+  "resumo": "Confere os itens separados contra a lista do pedido e aponta o que falta ou sobra.",
+  "plano": "gratuito",
+  "intencoes": [
+   "conferir pedido antes de despachar"
+  ],
+  "etiquetas": [
+   "conferência",
+   "separação de pedido",
+   "picking"
+  ]
+ },
+ {
+  "slug": "calculadora-de-frete",
+  "nome": "Calculadora de frete",
+  "categoria": "operações",
+  "resumo": "Estima o frete por peso, cubagem e distância, e compara transportadoras.",
+  "plano": "gratuito",
+  "intencoes": [
+   "comparar frete de transportadoras"
+  ],
+  "etiquetas": [
+   "frete",
+   "transportadora",
+   "cotação de frete"
+  ]
+ },
+ {
+  "slug": "lista-de-tarefas",
+  "nome": "Lista de tarefas",
+  "categoria": "produtividade",
+  "resumo": "Organiza tarefas por prioridade e prazo, com marcação de concluído.",
+  "plano": "gratuito",
+  "intencoes": [
+   "organizar minhas tarefas do dia"
+  ],
+  "etiquetas": [
+   "lista de tarefas",
+   "to-do",
+   "prioridade"
+  ]
+ },
+ {
+  "slug": "quadro-kanban",
+  "nome": "Quadro Kanban",
+  "categoria": "produtividade",
+  "resumo": "Organiza tarefas em colunas de a fazer, fazendo e feito, com arrastar e soltar.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar um quadro kanban"
+  ],
+  "etiquetas": [
+   "kanban",
+   "quadro de tarefas",
+   "andamento"
+  ]
+ },
+ {
+  "slug": "matriz-eisenhower",
+  "nome": "Matriz de Eisenhower",
+  "categoria": "produtividade",
+  "resumo": "Separa as tarefas em urgente, importante, nenhum dos dois ou ambos.",
+  "plano": "gratuito",
+  "intencoes": [
+   "priorizar tarefas urgentes e importantes"
+  ],
+  "etiquetas": [
+   "matriz de eisenhower",
+   "prioridade",
+   "urgente e importante"
+  ]
+ },
+ {
+  "slug": "matriz-5w2h",
+  "nome": "Plano de ação 5W2H",
+  "categoria": "produtividade",
+  "resumo": "Organiza a ação em o quê, por quê, quem, quando, onde, como e quanto custa.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar plano de ação 5w2h"
+  ],
+  "etiquetas": [
+   "5w2h",
+   "plano de ação"
+  ]
+ },
+ {
+  "slug": "plano-de-acao",
+  "nome": "Plano de ação com responsáveis",
+  "categoria": "produtividade",
+  "resumo": "Lista ações, responsáveis e prazos, com acompanhamento de status.",
+  "plano": "gratuito",
+  "intencoes": [
+   "organizar ações e responsáveis da reunião"
+  ],
+  "etiquetas": [
+   "plano de ação",
+   "responsáveis",
+   "prazo"
+  ]
+ },
+ {
+  "slug": "ata-de-reuniao",
+  "nome": "Ata de reunião",
+  "categoria": "produtividade",
+  "resumo": "Registra pauta, presentes, decisões e ações combinadas numa reunião.",
+  "plano": "gratuito",
+  "intencoes": [
+   "fazer a ata da reunião"
+  ],
+  "etiquetas": [
+   "ata de reunião",
+   "decisões",
+   "registro"
+  ]
+ },
+ {
+  "slug": "pauta-de-reuniao",
+  "nome": "Pauta de reunião",
+  "categoria": "produtividade",
+  "resumo": "Organiza os assuntos da reunião com tempo estimado para cada um.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar pauta da reunião"
+  ],
+  "etiquetas": [
+   "pauta de reunião",
+   "roteiro",
+   "tempo de reunião"
+  ]
+ },
+ {
+  "slug": "cronograma-de-projeto",
+  "nome": "Cronograma de projeto",
+  "categoria": "produtividade",
+  "resumo": "Organiza as etapas de um projeto em uma linha do tempo com datas e responsáveis.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar cronograma do projeto"
+  ],
+  "etiquetas": [
+   "cronograma",
+   "projeto",
+   "linha do tempo"
+  ]
+ },
+ {
+  "slug": "matriz-de-risco",
+  "nome": "Matriz de risco",
+  "categoria": "produtividade",
+  "resumo": "Classifica riscos por probabilidade e impacto, numa grade de calor.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar matriz de risco do projeto"
+  ],
+  "etiquetas": [
+   "matriz de risco",
+   "probabilidade e impacto"
+  ]
+ },
+ {
+  "slug": "matriz-raci",
+  "nome": "Matriz RACI",
+  "categoria": "produtividade",
+  "resumo": "Define quem é responsável, aprovador, consultado e informado em cada atividade.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar matriz raci"
+  ],
+  "etiquetas": [
+   "raci",
+   "responsabilidades",
+   "papéis do projeto"
+  ]
+ },
+ {
+  "slug": "funil-de-vendas",
+  "nome": "Funil de vendas",
+  "categoria": "vendas",
+  "resumo": "Acompanha quantos leads passam por cada etapa até virar venda, com taxa de conversão.",
+  "plano": "gratuito",
+  "intencoes": [
+   "montar funil de vendas"
+  ],
+  "etiquetas": [
+   "funil de vendas",
+   "conversão",
+   "leads"
+  ]
+ },
+ {
+  "slug": "script-de-abordagem",
+  "nome": "Script de abordagem",
+  "categoria": "vendas",
+  "resumo": "Monta o roteiro de abordagem de vendas por etapa: contato, apresentação e fechamento.",
+  "plano": "gratuito",
+  "intencoes": [
+   "roteiro para abordar cliente"
+  ],
+  "etiquetas": [
+   "script de vendas",
+   "abordagem",
+   "objeções"
+  ]
+ },
+ {
+  "slug": "calculadora-de-nps",
+  "nome": "Calculadora de NPS",
+  "categoria": "vendas",
+  "resumo": "Calcula o Net Promoter Score a partir das notas de 0 a 10 dadas pelos clientes.",
+  "plano": "gratuito",
+  "intencoes": [
+   "calcular nps da pesquisa de satisfação"
+  ],
+  "etiquetas": [
+   "nps",
+   "satisfação do cliente",
+   "pesquisa"
+  ]
+ },
+ {
+  "slug": "previsao-de-vendas",
+  "nome": "Previsão de vendas",
+  "categoria": "vendas",
+  "resumo": "Projeta as vendas dos próximos meses a partir do histórico e de uma taxa de crescimento.",
+  "plano": "gratuito",
+  "intencoes": [
+   "prever vendas dos próximos meses"
+  ],
+  "etiquetas": [
+   "previsão de vendas",
+   "projeção",
+   "tendência"
+  ]
+ }
+]

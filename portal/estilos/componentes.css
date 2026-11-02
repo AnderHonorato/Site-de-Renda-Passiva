@@ -1,0 +1,447 @@
+/* Componentes reutilizáveis. Densidade alta: nada de bloco gigante. */
+
+/* ---------- Botões ---------- */
+.botão {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  min-height: 40px; padding: 0 18px;
+  border: 1px solid transparent; border-radius: var(--raio-pílula);
+  font-size: var(--t-sm); font-weight: 600; line-height: 1;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  background: var(--acento); color: var(--acento-sobre);
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+.botão:hover { background: var(--acento-forte); color: var(--acento-sobre); transform: translateY(-1px); }
+.botão:active { transform: translateY(0); }
+.botão[disabled], .botão[aria-disabled="true"] { opacity: .5; cursor: not-allowed; transform: none; }
+.botão svg { width: 16px; height: 16px; }
+.botão--linha { background: var(--superfície); color: var(--tinta); border-color: var(--borda-forte); }
+.botão--linha:hover { background: var(--superfície-3); color: var(--tinta); border-color: var(--tinta); }
+.botão--texto { background: none; color: var(--marca); box-shadow: none; padding: 0 8px; }
+.botão--texto:hover { background: var(--marca-fraca); color: var(--marca); }
+.botão--g { min-height: 48px; padding: 0 24px; font-size: var(--t-base); }
+.botão--bloco { width: 100%; }
+
+.ações { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Etiquetas ---------- */
+.etiqueta {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 8px; border-radius: 999px;
+  font-size: var(--t-xs); font-weight: 500; line-height: 1.6;
+  background: var(--superfície-3); color: var(--tinta-média); border: 1px solid var(--borda);
+}
+.etiqueta--marca { background: var(--marca-fraca); color: var(--marca); border-color: transparent; }
+.etiqueta--ok { background: var(--ok-fraca); color: var(--ok); border-color: transparent; }
+.etiqueta--atenção { background: var(--atenção-fraca); color: var(--atenção); border-color: transparent; }
+.etiqueta--info { background: var(--info-fraca); color: var(--info); border-color: transparent; }
+.etiqueta svg { width: 12px; height: 12px; }
+
+/* ---------- Filtros em pílula ---------- */
+/* min-width:0 é obrigatório: como item de grade, o padrão min-width:auto faz a
+   faixa rolável empurrar a largura do documento inteiro, e o navegador do
+   celular responde encolhendo a página em vez de mostrar barra de rolagem. */
+.pílulas {
+  display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  padding-bottom: 2px; min-width: 0;
+  /* Sombra que revela que a faixa continua para o lado. */
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+}
+.pílulas:hover, .pílulas:focus-within { -webkit-mask-image: none; mask-image: none; }
+.pílulas::-webkit-scrollbar { display: none; }
+.pílulas button {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 14px; white-space: nowrap;
+  border: 1px solid var(--borda); border-radius: 999px;
+  background: var(--superfície); color: var(--tinta-média);
+  font-size: var(--t-sm); font-weight: 500; cursor: pointer;
+}
+.pílulas button:hover { border-color: var(--borda-forte); color: var(--tinta); }
+.pílulas button[aria-pressed="true"] {
+  background: var(--tinta); border-color: var(--tinta); color: var(--fundo);
+}
+.pílulas svg { width: 14px; height: 14px; }
+
+/* ---------- Busca ---------- */
+.busca { position: relative; display: flex; align-items: center; }
+.busca > svg:first-child {
+  position: absolute; left: 16px; width: 18px; height: 18px;
+  color: var(--tinta-suave); pointer-events: none;
+}
+.busca input {
+  width: 100%; height: 50px; padding: 0 78px 0 46px;
+  border: 1px solid var(--borda-forte); border-radius: var(--raio-pílula);
+  background: var(--superfície); font-size: 16px; outline: none;
+  box-shadow: var(--sombra-1);
+}
+.busca input::-webkit-search-cancel-button { display: none; }
+.busca input:focus {
+  border-color: var(--marca);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--acento) 28%, transparent);
+}
+.busca kbd {
+  position: absolute; right: 16px;
+  padding: 2px 8px; border: 1px solid var(--borda); border-radius: 8px;
+  background: var(--superfície-3); color: var(--tinta-suave);
+  font-family: var(--fonte); font-size: var(--t-xs); font-weight: 600;
+}
+
+/* ---------- Linha de ferramenta (padrão do catálogo) ---------- */
+.lista-ferramentas { display: grid; gap: 6px; }
+/* min() evita que a faixa de 320px fique maior que a largura disponível: sem
+   ele, um aparelho de 320px de tela ganha 14px de estouro e o navegador
+   encolhe a página inteira em ~4% para compensar. */
+.lista-ferramentas--colunas { grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
+
+.ferramenta-linha {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: center; gap: 12px;
+  padding: 10px 14px; min-height: 60px;
+  background: var(--superfície); border: 1px solid var(--borda);
+  border-radius: var(--raio); text-decoration: none; color: inherit;
+  transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+}
+/* O link cobre a linha inteira: tocar no ícone, no resumo ou no espaço vazio
+   abre a ferramenta. Antes só o texto do nome respondia, 22% da área. */
+.ferramenta-linha__alvo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.ferramenta-linha__alvo {
+  border: 0; background: none; padding: 0; text-align: left; cursor: pointer;
+  color: inherit; text-decoration: none; font: inherit;
+}
+.ferramenta-linha__alvo:focus-visible { outline: none; }
+.ferramenta-linha:has(.ferramenta-linha__alvo:focus-visible) {
+  outline: 2px solid var(--marca-viva); outline-offset: 2px;
+}
+/* O favorito e a ficha ficam acima do link esticado. */
+.ferramenta-linha__fim, .ferramenta-linha__ficha { position: relative; z-index: 1; }
+.ferramenta-linha:active { background: var(--superfície-3); }
+.ferramenta-linha:hover {
+  border-color: var(--borda-forte); background: var(--superfície-2);
+  box-shadow: var(--sombra-2); color: inherit;
+}
+.ferramenta-linha__ícone {
+  width: 38px; height: 38px; flex: 0 0 38px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: var(--marca-fraca); color: var(--marca);
+}
+.ferramenta-linha__ícone svg { width: 23px; height: 23px; }
+.ferramenta-linha__texto { display: block; min-width: 0; overflow: hidden; }
+.ferramenta-linha__nome {
+  margin: 0; font-size: var(--t-base); font-weight: 600; letter-spacing: -.015em;
+  display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+}
+.ferramenta-linha__resumo {
+  display: block; margin: 1px 0 0; font-size: var(--t-sm); color: var(--tinta-suave);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ferramenta-linha__fim { display: flex; align-items: center; gap: 6px; }
+.ferramenta-linha__seta { color: var(--tinta-suave); }
+.ferramenta-linha__seta svg { width: 16px; height: 16px; }
+.ferramenta-linha:hover .ferramenta-linha__seta { color: var(--marca); }
+/* Planejada não pode ser marcada por opacidade: ela compõe a cor do texto com
+   o fundo e derruba o contraste de 6,2:1 para 3,1:1. A distinção fica no selo,
+   no fundo e no ícone, que não são texto de leitura. */
+.ferramenta-linha[data-status="planejada"] { background: var(--superfície-2); border-style: dashed; }
+.ferramenta-linha[data-status="planejada"] .ferramenta-linha__ícone { background: var(--superfície-3); color: var(--tinta-suave); }
+.ferramenta-linha__ficha {
+  grid-column: 1 / -1; margin-top: 8px; padding-top: 10px;
+  border-top: 1px dashed var(--borda-forte);
+}
+.ferramenta-linha__ficha[hidden] { display: none; }
+.ferramenta-linha__ficha .ficha { margin-bottom: 0; }
+
+.favorito {
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 0; border-radius: var(--raio-pílula); background: none; cursor: pointer;
+  color: var(--tinta-suave);
+}
+.favorito:hover { background: var(--superfície-3); color: var(--marca); }
+.favorito[aria-pressed="true"] { color: var(--marca); }
+.favorito[aria-pressed="true"] svg { fill: currentColor; }
+.favorito svg { width: 17px; height: 17px; fill: none; }
+
+/* ---------- Cartão de categoria (compacto) ---------- */
+.grade-categorias {
+  display: grid; gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(min(236px, 100%), 1fr));
+}
+.categoria-cartão {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; min-height: 56px;
+  background: var(--superfície); border: 1px solid var(--borda);
+  border-radius: var(--raio); text-decoration: none; color: inherit;
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+.categoria-cartão:hover {
+  border-color: var(--marca); transform: translateY(-1px);
+  box-shadow: var(--sombra-2); color: inherit;
+}
+.categoria-cartão__ícone {
+  width: 32px; height: 32px; flex: 0 0 32px; border-radius: 9px;
+  display: grid; place-items: center; background: var(--marca-fraca); color: var(--marca);
+}
+.categoria-cartão__ícone svg { width: 17px; height: 17px; }
+
+/* Animação própria da categoria, pequena, ao lado do nome (maior que um ícone, menor que um cartão). */
+.categoria-cartão { padding-left: 10px; min-height: 68px; }
+.categoria-cartão__arte { flex: 0 0 72px; width: 72px; height: 48px; border-radius: 10px; overflow: hidden; background: var(--superfície-3); }
+.categoria-cartão b { display: block; font-size: var(--t-sm); font-weight: 600; letter-spacing: -.01em; }
+.categoria-cartão small { color: var(--tinta-suave); font-size: var(--t-xs); }
+
+/* ---------- Painel / seção ---------- */
+.painel {
+  background: var(--superfície); border: 1px solid var(--borda);
+  border-radius: var(--raio-g); padding: 20px;
+  box-shadow: var(--sombra-1);
+}
+.seção { margin-block: 26px; }
+.seção__topo {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin-bottom: 10px; flex-wrap: wrap;
+}
+.seção__topo h2 { display: flex; align-items: center; gap: 8px; }
+
+/* ---------- Formulário ---------- */
+.campos { display: grid; gap: 12px; }
+.campos--2 { grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); }
+/* align-content: start impede que a linha da grade, esticada pelo campo vizinho com dica, afaste o campo de entrada do rótulo. */
+.campo { display: grid; gap: 4px; min-width: 0; align-content: start; }
+.campo > label { font-size: var(--t-sm); font-weight: 600; }
+.campo__dica { font-size: var(--t-xs); color: var(--tinta-suave); }
+.campo input, .campo select, .campo textarea {
+  width: 100%; min-height: 44px; padding: 8px 12px;
+  border: 1px solid var(--borda-forte); border-radius: var(--raio-p);
+  background: var(--superfície); font-size: 16px; outline: none;
+}
+@media (min-width: 640px) {
+  .campo input, .campo select, .campo textarea { font-size: var(--t-base); }
+}
+.campo textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+.campo input:focus, .campo select:focus, .campo textarea:focus {
+  border-color: var(--marca);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--acento) 28%, transparent);
+}
+.campo input[aria-invalid="true"], .campo textarea[aria-invalid="true"] { border-color: var(--erro); }
+.campo__erro { font-size: var(--t-xs); color: var(--erro); font-weight: 600; }
+.campo__erro[hidden] { display: none; }
+.campo--linha { display: flex; align-items: center; gap: 8px; }
+.campo--linha input[type="checkbox"], .campo--linha input[type="radio"] {
+  width: 18px; height: 18px; min-height: 0; flex: 0 0 18px; accent-color: var(--marca);
+}
+
+/* ---------- Resultado ---------- */
+.resultado {
+  border: 1px solid var(--borda); border-left: 4px solid var(--acento);
+  border-radius: var(--raio); background: var(--superfície-2); padding: 18px;
+}
+.resultado[hidden] { display: none; }
+.resultado__valor {
+  font-size: 2rem; font-weight: 600; letter-spacing: -.045em; line-height: 1.1;
+  color: var(--tinta); margin: 0 0 4px;
+}
+.resultado__linhas { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 5px; }
+.resultado__linhas li {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-size: var(--t-sm); padding: 5px 0; border-bottom: 1px dashed var(--borda);
+}
+.resultado__linhas li:last-child { border-bottom: 0; }
+.resultado__linhas b { font-variant-numeric: tabular-nums; }
+
+/* ---------- Progresso / carregamento ---------- */
+.progresso[hidden] { display: none; }
+.progresso { display: grid; gap: 6px; }
+.progresso__texto { font-size: var(--t-sm); font-weight: 600; color: var(--tinta-média); }
+.progresso__trilho {
+  height: 6px; border-radius: 999px; background: var(--superfície-3); overflow: hidden;
+}
+.progresso__barra {
+  height: 100%; width: 0%; border-radius: 999px;
+  background: var(--acento);
+  transition: width .25s ease;
+}
+.progresso[data-estado="concluído"] .progresso__texto { color: var(--ok); }
+.progresso[data-estado="concluído"] .progresso__barra { background: var(--ok); }
+.progresso[data-estado="erro"] .progresso__texto { color: var(--erro); }
+.progresso[data-estado="erro"] .progresso__barra { background: var(--erro); }
+
+.girando { animation: girar 1s linear infinite; }
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* ---------- Ícone animado, com o estático como segunda alternativa ---------- */
+.ícone-vivo { position: relative; display: grid; place-items: center; }
+.ícone-vivo > :first-child { transition: opacity var(--mov-médio, .28s) ease; }
+.ícone-vivo__animado {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+  opacity: 0; transition: opacity var(--mov-médio, .28s) ease;
+}
+.ícone-vivo[data-estado="pronto"] .ícone-vivo__animado { opacity: 1; }
+.ícone-vivo[data-estado="pronto"] > :first-child { opacity: 0; }
+.ícone-vivo[data-estado="falhou"] .ícone-vivo__animado { display: none; }
+/* Fora do orçamento de animações: a imagem fica baixada, mas escondida, e o navegador para de animá-la. */
+.ícone-vivo__animado[data-pausada] { visibility: hidden; }
+
+/* ---------- Bloco que falhou (isolarBloco) ---------- */
+.bloco-falhou {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;
+  padding: 20px; border: 1px solid var(--borda); border-radius: var(--raio-g);
+  background: var(--superfície); box-shadow: var(--sombra-1);
+}
+.bloco-falhou__desenho { width: 160px; height: auto; flex: none; }
+.bloco-falhou__título { margin: 0 0 4px; font-weight: 600; }
+.bloco-falhou p { margin: 0 0 8px; }
+.bloco-falhou .ações { margin: 8px 0 0; display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- Estado vazio ---------- */
+.vazio {
+  padding: 26px 18px; text-align: center; color: var(--tinta-suave);
+  border: 1px dashed var(--borda-forte); border-radius: var(--raio-g);
+  background: var(--superfície-2);
+}
+.vazio svg { width: 28px; height: 28px; margin: 0 auto 8px; color: var(--borda-forte); }
+.vazio__desenho { display: block; width: 160px; height: auto; margin: 0 auto 6px; }
+.vazio[hidden] { display: none; }
+
+/* ---------- Tabela ---------- */
+.tabela-rolagem { overflow-x: auto; }
+table.tabela { width: 100%; border-collapse: collapse; font-size: var(--t-sm); }
+table.tabela th, table.tabela td {
+  padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--borda); white-space: nowrap;
+}
+table.tabela th { font-weight: 600; color: var(--tinta-suave); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .05em; }
+table.tabela td.número, table.tabela th.número { text-align: right; font-variant-numeric: tabular-nums; }
+table.tabela tbody tr:hover { background: var(--superfície-2); }
+
+/* ---------- Diálogo ---------- */
+dialog.diálogo {
+  border: 1px solid var(--borda); padding: 0; color: var(--tinta);
+  border-radius: var(--raio-g); background: var(--superfície);
+  box-shadow: var(--sombra-3);
+  width: min(560px, calc(100vw - 24px)); max-height: 86vh;
+}
+dialog.diálogo::backdrop { background: rgba(26, 26, 26, .5); backdrop-filter: blur(4px); }
+.diálogo__topo {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 16px; border-bottom: 1px solid var(--borda);
+  position: sticky; top: 0; background: var(--superfície); border-radius: var(--raio-g) var(--raio-g) 0 0;
+}
+.diálogo__corpo { padding: 16px; overflow-y: auto; }
+.diálogo__rodapé {
+  padding: 12px 16px; border-top: 1px solid var(--borda);
+  display: flex; justify-content: flex-end; gap: 8px;
+}
+
+/* ---------- Aviso flutuante ---------- */
+.notificação {
+  position: fixed; left: 50%; bottom: calc(var(--altura-barra-inferior) + 16px);
+  transform: translateX(-50%) translateY(12px);
+  z-index: 120; max-width: min(420px, calc(100vw - 24px));
+  padding: 12px 18px; border-radius: var(--raio-pílula);
+  background: var(--tinta); color: var(--fundo);
+  box-shadow: var(--sombra-3); font-size: var(--t-sm); font-weight: 600;
+  opacity: 0; pointer-events: none; transition: opacity var(--mov-médio) var(--curva-saída), transform var(--mov-médio) var(--curva-mola);
+}
+.notificação[data-visível="sim"] { opacity: 1; transform: translateX(-50%) translateY(0); }
+@media (min-width: 861px) {
+  .notificação { left: auto; right: 20px; bottom: 20px; transform: translateY(12px); }
+  .notificação[data-visível="sim"] { transform: translateY(0); }
+}
+
+/* ---------- Texto longo ---------- */
+.prosa { max-width: 68ch; }
+.prosa h2 { margin-top: 1.4em; }
+.prosa h3 { margin-top: 1.2em; }
+.prosa ol, .prosa ul { padding-left: 1.25em; margin: 0 0 .8em; display: grid; gap: .3em; }
+.prosa details {
+  border: 1px solid var(--borda); border-radius: var(--raio);
+  background: var(--superfície); padding: 0 12px; margin-bottom: 6px;
+}
+.prosa summary { padding: 11px 0; font-weight: 600; cursor: pointer; font-size: var(--t-sm); }
+.prosa details[open] summary { border-bottom: 1px solid var(--borda); margin-bottom: 10px; }
+.prosa details > *:last-child { padding-bottom: 12px; }
+
+/* ---------- Utilidades de espaçamento ----------
+   Existem porque a política de segurança do site proíbe atributo `style`
+   no HTML: todo espaçamento pontual precisa de uma classe. */
+.t-0 { margin-top: 0; }
+.t-1 { margin-top: 6px; }
+.t-2 { margin-top: 10px; }
+.t-3 { margin-top: 14px; }
+.b-1 { margin-bottom: 6px; }
+.b-2 { margin-bottom: 10px; }
+.b-3 { margin-bottom: 14px; }
+.b-4 { margin-bottom: 18px; }
+.topo-página { padding-top: 16px; }
+.topo-página--folgado { padding-top: 40px; }
+.medida-curta { max-width: 34ch; }
+.qr-prévia svg { width: 200px; height: auto; border-radius: 8px; }
+.campo--inativo { opacity: .5; }
+.ferramenta-linha--destacada { border-color: var(--marca); box-shadow: var(--sombra-2); }
+
+/* ---------- Popup de boas-vindas (animação à esquerda, carrossel à direita) ---------- */
+.boas-vindas {
+  width: min(860px, calc(100vw - 24px)); max-height: calc(100svh - 24px); padding: 0; border: 1px solid var(--borda);
+  border-radius: var(--raio-g); background: var(--superfície); color: var(--tinta); box-shadow: var(--sombra-3);
+  overflow: hidden; animation: bv-entra .38s var(--curva-mola, ease) both;
+}
+.boas-vindas[open] { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+.boas-vindas::backdrop { background: rgba(26, 26, 26, .5); animation: bv-fundo .3s ease both; }
+.boas-vindas--saindo { animation: bv-sai .22s ease both; }
+.boas-vindas__arte { position: relative; min-height: 380px; background: #f5f2ed; isolation: isolate; }
+.boas-vindas--sem-arte .boas-vindas__arte { display: none; }
+.boas-vindas--sem-arte[open] { grid-template-columns: minmax(0, 1fr); }
+.boas-vindas__texto { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 40px 32px 24px; }
+.boas-vindas__fechar { position: absolute; top: 12px; right: 12px; }
+.boas-vindas__slides { flex: 1 1 auto; }
+.boas-vindas__segmentos { display:flex; gap:4px; }
+.boas-vindas__segmentos i { flex:1; height:3px; border-radius:3px; background:var(--borda); }
+.boas-vindas__segmentos i.atual { background:var(--marca); }
+.boas-vindas__segmentos[hidden] { display:none; }
+.boas-vindas__próximo svg[hidden] { display:none; }
+.boas-vindas__imagem { display:block; max-width:100%; max-height:200px; object-fit:contain; margin-block:12px; border-radius:8px; }
+.boas-vindas__slide p { white-space:pre-wrap; overflow-wrap:anywhere; }
+.boas-vindas__slide .botão { margin-top:12px; }
+.boas-vindas__ações { flex-wrap:wrap; }
+.boas-vindas__slide { animation: bv-slide .3s ease both; }
+.boas-vindas__slide h2 { margin: 0 0 10px; font-size: var(--t-xl, 1.5rem); line-height: 1.2; }
+.boas-vindas__slide p { margin: 0; color: var(--tinta-média); line-height: 1.6; }
+.boas-vindas__barra { height: 3px; border-radius: 3px; background: var(--borda); overflow: hidden; }
+.boas-vindas__barra i { display: block; height: 100%; background: var(--marca); transform-origin: left; transition: transform .35s var(--curva-mola, ease); }
+.boas-vindas__ações { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.boas-vindas__próximo svg { transition: transform .2s ease; }
+.boas-vindas__próximo:hover svg { transform: translateX(3px); }
+@keyframes bv-entra { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+@keyframes bv-sai { to { opacity: 0; transform: translateY(8px) scale(.98); } }
+@keyframes bv-fundo { from { opacity: 0; } }
+@keyframes bv-slide { from { opacity: 0; transform: translateX(10px); } }
+@media (max-width: 640px) {
+  .boas-vindas[open] { grid-template-columns: minmax(0, 1fr); grid-template-rows: 200px auto; overflow-y: auto; }
+  .boas-vindas__arte { min-height: 0; }
+  .boas-vindas__texto { padding: 22px 20px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .boas-vindas, .boas-vindas::backdrop, .boas-vindas__slide, .boas-vindas--saindo { animation: none; }
+  .boas-vindas__barra i { transition: none; }
+}
+.apresentação { margin: 14px 0 0; }
+
+/* ---------- Proteção contra cópia e aviso de bloqueador de anúncios ---------- */
+html.anti-cópia body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+html.anti-cópia :is(input, textarea, select, [contenteditable="true"], .resultado, .resultado *, .copiável, .copiável *, pre, code, .tabela-copiável, .tabela-copiável *) {
+  -webkit-user-select: text; user-select: text; -webkit-touch-callout: default;
+}
+html.anti-cópia img, html.anti-cópia svg { -webkit-user-drag: none; user-drag: none; }
+@media print { html.anti-cópia body { -webkit-user-select: text; user-select: text; } }
+
+/* A isca que os bloqueadores escondem: existe na página, mas não aparece nem ocupa espaço visível. */
+.isca-de-anúncio { position: absolute; left: -9999px; top: -9999px; width: 10px; height: 10px; pointer-events: none; }
+
+.aviso-de-bloqueador {
+  width: min(480px, calc(100vw - 32px)); padding: 28px 26px; border: 1px solid var(--borda); border-radius: var(--raio-g);
+  background: var(--superfície); color: var(--tinta); box-shadow: var(--sombra-3);
+}
+.aviso-de-bloqueador::backdrop { background: rgba(26, 26, 26, .6); }
+.aviso-de-bloqueador h2 { margin: 0 0 10px; font-size: var(--t-xl, 1.4rem); line-height: 1.2; }
+.aviso-de-bloqueador p { margin: 0 0 10px; line-height: 1.55; }
+.aviso-de-bloqueador .ações { margin-top: 16px; }

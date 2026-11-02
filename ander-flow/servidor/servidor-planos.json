@@ -1,0 +1,28 @@
+{
+  "moeda": "BRL",
+  "pagamento_integrado": false,
+  "planos": [
+    {
+      "id": "gratis",
+      "preco_mensal": 0,
+      "preco_anual": 0,
+      "limites": {
+        "favoritos": 10,
+        "trabalhos": 3,
+        "lote_arquivos": 3
+      },
+      "recursos": []
+    },
+    {
+      "id": "plus",
+      "preco_mensal": 14.9,
+      "preco_anual": 149,
+      "limites": {
+        "favoritos": 500,
+        "trabalhos": 500,
+        "lote_arquivos": 100
+      },
+      "recursos": ["lote_grande", "exportar_xlsx_cenarios", "historico"]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "meta-de-faturamento",
+  "estado": "planejada",
+  "categoria": "vendas",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "vendas",
+  "ordem": 60,
+  "nome": {
+    "pt-BR": "Meta de faturamento",
+    "en": "Revenue target"
+  },
+  "descricao": {
+    "pt-BR": "Quanto vender por dia, semana e vendedor para bater a meta do mês.",
+    "en": "How much to sell per day, per week, and per salesperson to hit the month's target."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto preciso vender por dia"
+    ],
+    "en": [
+      "how much do I need to sell per day"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "meta",
+      "faturamento"
+    ],
+    "en": [
+      "sales target",
+      "revenue"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

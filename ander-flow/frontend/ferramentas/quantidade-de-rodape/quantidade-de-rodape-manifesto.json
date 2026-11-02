@@ -1,0 +1,39 @@
+{
+  "slug": "quantidade-de-rodape",
+  "estado": "planejada",
+  "categoria": "oficio",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 80,
+  "nome": {
+    "pt-BR": "Quantidade de rodapé",
+    "en": "Baseboard quantity"
+  },
+  "descricao": {
+    "pt-BR": "Calcula quantas barras de rodapé comprar a partir do perímetro do cômodo e da perda.",
+    "en": "Calculates how many baseboard strips to buy from the room's perimeter and waste allowance."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto rodapé comprar"
+    ],
+    "en": [
+      "how much baseboard to buy"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "rodapé",
+      "reforma",
+      "acabamento"
+    ],
+    "en": [
+      "baseboard",
+      "renovation",
+      "trim"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

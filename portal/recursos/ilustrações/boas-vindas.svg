@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" role="img" aria-labelledby="t">
+  <title id="t">O sol nascendo atrás de uma colina, com confetes no ar</title>
+  <style>
+    :root { --tinta: #1a1a1a; --sombra: #1a1a1a; --sombra-alfa: .07; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    ellipse[opacity] { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .raios { animation: girar 24s linear infinite; transform-origin: 160px 128px; }
+    @keyframes girar { to { transform: rotate(360deg); } }
+    .sol { animation: nascer 1.2s cubic-bezier(.22, 1, .36, 1) both; }
+    @keyframes nascer { from { transform: translateY(46px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .confete { animation: cair 3.8s ease-in infinite; opacity: 0; }
+    .c2 { animation-delay: .7s; } .c3 { animation-delay: 1.4s; } .c4 { animation-delay: 2.1s; } .c5 { animation-delay: 2.8s; }
+    @keyframes cair { 0% { transform: translateY(-14px) rotate(0deg); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateY(60px) rotate(200deg); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .raios, .sol { animation: none; } .confete { animation: none; opacity: 1; } }
+  </style>
+  <g class="sol">
+    <g class="raios" stroke="#d97757" stroke-width="6" stroke-linecap="round">
+      <line x1="160" y1="58" x2="160" y2="74"/><line x1="160" y1="182" x2="160" y2="198"/>
+      <line x1="96" y1="128" x2="112" y2="128"/><line x1="208" y1="128" x2="224" y2="128"/>
+      <line x1="115" y1="83" x2="126" y2="94"/><line x1="194" y1="162" x2="205" y2="173"/>
+      <line x1="205" y1="83" x2="194" y2="94"/><line x1="126" y1="162" x2="115" y2="173"/>
+    </g>
+    <circle cx="160" cy="128" r="36" fill="#d97757" stroke="#1a1a1a" stroke-width="3"/>
+  </g>
+  <path d="M30 214c20-52 82-70 130-70s110 18 130 70z" fill="#3d4451" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M96 190c18-12 40-17 64-17" fill="none" stroke="#6b7280" stroke-width="4" stroke-linecap="round"/>
+  <g>
+    <rect class="confete c1" x="70" y="60" width="9" height="14" rx="2" fill="#c9b89b"/>
+    <rect class="confete c2" x="236" y="56" width="9" height="14" rx="2" fill="#e8a58d"/>
+    <rect class="confete c3" x="104" y="34" width="9" height="14" rx="2" fill="#3d4451"/>
+    <rect class="confete c4" x="210" y="30" width="9" height="14" rx="2" fill="#d97757"/>
+    <circle class="confete c5" cx="266" cy="96" r="5" fill="#c9b89b"/>
+  </g>
+</svg>

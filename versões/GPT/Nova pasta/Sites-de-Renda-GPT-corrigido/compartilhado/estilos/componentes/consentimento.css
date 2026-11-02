@@ -1,0 +1,99 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/consentimento.css
+   Banner de consentimento (#consentimento) — mostrado via configurarConsentimento().
+   No celular fica acima da navegação inferior e da ação contextual, nunca as
+   cobrindo. No computador é um cartão no canto inferior esquerdo. O diálogo
+   de preferências (#preferências-de-privacidade) usa a base de diálogo.css. */
+
+.consentimento {
+  position: fixed;
+  left: var(--espaço-3);
+  right: var(--espaço-3);
+  bottom: calc(var(--altura-navegação-inferior) + var(--espaço-3) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--camada-consentimento);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-3);
+  padding: var(--espaço-4);
+  background: var(--cor-superfície-elevada);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra-g);
+}
+
+body:has(.ação-contextual) .consentimento {
+  bottom: calc(var(--altura-navegação-inferior) + var(--altura-ação-contextual) + var(--espaço-3) + env(safe-area-inset-bottom, 0px));
+}
+
+/* Teclado virtual aberto: a barra inferior recolhe (ver navegação-inferior.css)
+   e a ação contextual desce para bottom: 0 (ver ação-contextual.css) — o
+   banner acompanha para continuar visível sem cobrir nada. */
+html.teclado-aberto .consentimento {
+  bottom: calc(var(--altura-ação-contextual) + var(--espaço-3) + env(safe-area-inset-bottom, 0px));
+}
+html.teclado-aberto body:not(:has(.ação-contextual)) .consentimento {
+  bottom: calc(var(--espaço-3) + env(safe-area-inset-bottom, 0px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .consentimento {
+    animation: entrada-com-subida var(--duração-painel) var(--curva-suave) both;
+  }
+}
+
+.consentimento-título {
+  margin: 0 0 var(--espaço-1);
+  font-size: 17px;
+}
+
+.consentimento-texto p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+.consentimento-texto a { color: var(--cor-texto-destaque); }
+
+.consentimento-ações {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaço-2);
+}
+.consentimento-ações .botão { flex: 1 1 auto; }
+
+@media (min-width: 768px) {
+  .consentimento {
+    left: var(--espaço-5);
+    right: auto;
+    bottom: var(--espaço-5);
+    width: min(460px, calc(100vw - var(--espaço-5) * 2));
+  }
+  body:has(.ação-contextual) .consentimento,
+  html.teclado-aberto .consentimento,
+  html.teclado-aberto body:not(:has(.ação-contextual)) .consentimento {
+    bottom: var(--espaço-5);
+  }
+  .consentimento-ações .botão { flex: 0 0 auto; }
+}
+
+/* — linhas de opção dentro do diálogo de preferências — */
+.opção-de-privacidade {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-1);
+  padding: var(--espaço-3) 0;
+  border-bottom: 1px solid var(--cor-divisória);
+}
+.opção-de-privacidade:last-of-type { border-bottom: 0; }
+.opção-de-privacidade .interruptor {
+  order: -1;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  width: 100%;
+}
+.opção-de-privacidade-título {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-2);
+}

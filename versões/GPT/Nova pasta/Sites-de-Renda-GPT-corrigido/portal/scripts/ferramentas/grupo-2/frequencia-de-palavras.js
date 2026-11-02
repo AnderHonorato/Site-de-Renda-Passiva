@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("frequencia-de-palavras",7,"Frequência de palavras","Descubra as palavras mais frequentes do texto.","Agrupa sem distinguir caixa, preserva acentos e ordena por frequência decrescente.",[T('texto','Texto','bolo doce bolo'),N('limite','Quantas palavras mostrar',20,1,200)],async d=>{const a=palavras(texto(d,'texto').toLocaleLowerCase('pt-BR')),v=new Map();for(const x of a)v.set(x,(v.get(x)||0)+1);const r=[...v].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0],'pt-BR')).slice(0,inteiro(d,'limite',1,200));return saidaTexto(r.map(([x,q])=>x+': '+q).join('\n'),[a.length+' palavras, '+v.size+' distintas']);});
+

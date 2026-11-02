@@ -1,0 +1,138 @@
+@charset "UTF-8";
+/* Gerado por npm run preparar (compartilhado/ferramentas-da-raiz/gerar-paleta.mjs) a partir de
+   configurações/identidade-visual.json. Não editar à mão.
+   Contrastes WCAG verificados:
+   principal: ação #69549b sobre-ação 5.74:1; texto-destaque 5.44:1 no fundo e 4.75:1 na superfície
+   texto 14.25:1; texto suave 5.22:1
+   lavanda: ação #69549d sobre-ação 5.72:1; texto-destaque 5.42:1 no fundo e 4.73:1 na superfície
+   ameixa: ação #904476 sobre-ação 5.86:1; texto-destaque 5.56:1 no fundo e 4.85:1 na superfície
+   malva: ação #914864 sobre-ação 5.79:1; texto-destaque 5.49:1 no fundo e 4.79:1 na superfície
+   musgo: ação #5b6a3a sobre-ação 5.38:1; texto-destaque 7.51:1 no fundo e 6.55:1 na superfície
+   anil: ação #46619b sobre-ação 5.57:1; texto-destaque 5.28:1 no fundo e 4.61:1 na superfície */
+
+:root {
+  --cor-fundo: #f4eee4;
+  --cor-superfície: #e7dfd2;
+  --cor-superfície-elevada: #faf7f2;
+  --cor-texto: #241e1b;
+  --cor-texto-suave: #6b615b;
+  --cor-sobre-ação: #f7f4f3;
+  --cor-divisória: color-mix(in srgb, #241e1b 16%, transparent);
+  --cor-neutra-100: #f7f4f3;
+  --cor-neutra-200: #ebe7e5;
+  --cor-neutra-300: #d9d3cf;
+  --cor-neutra-400: #c2b8b3;
+  --cor-neutra-500: #a79c96;
+  --cor-neutra-600: #897e78;
+  --cor-neutra-700: #6b615b;
+  --cor-neutra-800: #514844;
+  --cor-neutra-900: #38312e;
+  --cor-destaque-100: #f6f3ff;
+  --cor-destaque-200: #eae3ff;
+  --cor-destaque-300: #d7ccfa;
+  --cor-destaque-400: #bfaff0;
+  --cor-destaque-500: #a490db;
+  --cor-destaque-600: #8771bd;
+  --cor-destaque-700: #69549b;
+  --cor-destaque-800: #4f3e78;
+  --cor-destaque-900: #372955;
+  --cor-secundária-100: #fff0f9;
+  --cor-secundária-200: #fbdef0;
+  --cor-secundária-300: #f1c5e1;
+  --cor-secundária-400: #e2a4cd;
+  --cor-secundária-500: #cb84b3;
+  --cor-secundária-600: #ac6495;
+  --cor-secundária-700: #8b4976;
+  --cor-secundária-800: #6a345a;
+  --cor-secundária-900: #4b223f;
+  --cor-ação: #69549b;
+  --cor-ação-hover: #4f3e78;
+  --cor-ação-pressionada: #372955;
+  --cor-texto-destaque: #69549b;
+  --cor-foco: #8771bd;
+}
+
+html[data-destaque="lavanda"] {
+  --cor-destaque-100: #f6f3ff;
+  --cor-destaque-200: #e9e3ff;
+  --cor-destaque-300: #d7ccfc;
+  --cor-destaque-400: #bfaef2;
+  --cor-destaque-500: #a490de;
+  --cor-destaque-600: #8670c0;
+  --cor-destaque-700: #69549d;
+  --cor-destaque-800: #4f3e79;
+  --cor-destaque-900: #362956;
+  --cor-ação: #69549d;
+  --cor-ação-hover: #4f3e79;
+  --cor-ação-pressionada: #362956;
+  --cor-texto-destaque: #69549d;
+  --cor-foco: #8670c0;
+}
+
+html[data-destaque="ameixa"] {
+  --cor-destaque-100: #fff0f9;
+  --cor-destaque-200: #fdddf0;
+  --cor-destaque-300: #f6c3e1;
+  --cor-destaque-400: #e8a0cd;
+  --cor-destaque-500: #d17fb4;
+  --cor-destaque-600: #b35f96;
+  --cor-destaque-700: #904476;
+  --cor-destaque-800: #6f305a;
+  --cor-destaque-900: #4e1f3f;
+  --cor-ação: #904476;
+  --cor-ação-hover: #6f305a;
+  --cor-ação-pressionada: #4e1f3f;
+  --cor-texto-destaque: #904476;
+  --cor-foco: #b35f96;
+}
+
+html[data-destaque="malva"] {
+  --cor-destaque-100: #fff1f5;
+  --cor-destaque-200: #fedee8;
+  --cor-destaque-300: #f6c5d5;
+  --cor-destaque-400: #e9a3bb;
+  --cor-destaque-500: #d2839f;
+  --cor-destaque-600: #b36381;
+  --cor-destaque-700: #914864;
+  --cor-destaque-800: #6f334b;
+  --cor-destaque-900: #4f2133;
+  --cor-ação: #914864;
+  --cor-ação-hover: #6f334b;
+  --cor-ação-pressionada: #4f2133;
+  --cor-texto-destaque: #914864;
+  --cor-foco: #b36381;
+}
+
+html[data-destaque="musgo"] {
+  --cor-destaque-100: #f3f7ec;
+  --cor-destaque-200: #e4ebd8;
+  --cor-destaque-300: #cfd9bb;
+  --cor-destaque-400: #b3c296;
+  --cor-destaque-500: #96a673;
+  --cor-destaque-600: #788853;
+  --cor-destaque-700: #5b6a3a;
+  --cor-destaque-800: #445028;
+  --cor-destaque-900: #2e3718;
+  --cor-ação: #5b6a3a;
+  --cor-ação-hover: #445028;
+  --cor-ação-pressionada: #2e3718;
+  --cor-texto-destaque: #445028;
+  --cor-foco: #5b6a3a;
+}
+
+html[data-destaque="anil"] {
+  --cor-destaque-100: #f0f5ff;
+  --cor-destaque-200: #dde8ff;
+  --cor-destaque-300: #c1d5fb;
+  --cor-destaque-400: #a0baf1;
+  --cor-destaque-500: #7f9edc;
+  --cor-destaque-600: #607fbe;
+  --cor-destaque-700: #46619b;
+  --cor-destaque-800: #334978;
+  --cor-destaque-900: #213156;
+  --cor-ação: #46619b;
+  --cor-ação-hover: #334978;
+  --cor-ação-pressionada: #213156;
+  --cor-texto-destaque: #46619b;
+  --cor-foco: #607fbe;
+}

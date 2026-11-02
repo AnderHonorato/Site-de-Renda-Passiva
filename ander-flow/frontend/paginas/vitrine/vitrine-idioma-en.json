@@ -1,0 +1,199 @@
+{
+  "vitrine": {
+    "titulo_pagina": "Visual system showcase — Ander Flow",
+    "descricao_pagina": "Internal development page with every component, state and icon of the shared visual system.",
+    "rotulo": "Visual system · internal use",
+    "titulo": "Component showcase",
+    "introducao": "Every component, state and icon from docs/contratos.md §6.2, in one place, in the Ivory and Charcoal themes.",
+
+    "tipografia": {
+      "titulo": "Typography",
+      "exemplo": "What do you need to solve?",
+      "sobretitulo": "Overline in capitals",
+      "corpo": "Interface text with full accents: ação, coração, prêmio, conteúdo, três, órgão."
+    },
+
+    "botoes": {
+      "titulo": "Buttons",
+      "primario": "Calculate",
+      "secundario": "Clear",
+      "fantasma": "See example",
+      "perigo": "Delete",
+      "pequeno": "Save",
+      "icone": "Edit",
+      "largo": "Continue"
+    },
+
+    "campos": {
+      "titulo": "Fields and controls",
+      "custo": "Product cost",
+      "margem": "Margin you want",
+      "erro_exemplo": "Margin over the limit. Bring it down to 89.8% at most.",
+      "deslizante": "Margin on the sale",
+      "opcoes": "Which row stays",
+      "opcao_a": "The most recent one",
+      "opcao_b": "The most complete one",
+      "opcao_c": "The first one",
+      "marcador": "Standardize e-mail in lowercase",
+      "interruptor": "Notify by e-mail"
+    },
+
+    "navegacao": {
+      "titulo": "Breadcrumbs, tabs, pills and search",
+      "migalhas_rotulo": "You are in",
+      "migalha_1": "Tools",
+      "migalha_2": "Money and pricing",
+      "migalha_3": "Selling price",
+      "aba_1": "System notices",
+      "aba_2": "Messages",
+      "pilula_1": "put together a quote",
+      "pilula_2": "merge PDF",
+      "pilula_3": "calculate holiday pay",
+      "busca_placeholder": "Write what you need to solve"
+    },
+
+    "superficies": {
+      "titulo": "Surfaces and labels",
+      "papel": "Surface — paper",
+      "recuo": "Surface — recess",
+      "tinta": "Surface — ink"
+    },
+
+    "etiquetas": {
+      "gratis": "Free",
+      "plus": "Plus",
+      "pronta": "Ready",
+      "planejada": "Planned",
+      "aviso": "Warning",
+      "erro": "With an error"
+    },
+
+    "lista": {
+      "titulo": "Dense list",
+      "item_1_nome": "Selling price",
+      "item_1_descricao": "break-even price, margin and what is left per sale",
+      "item_2_nome": "Cash flow",
+      "item_2_descricao": "money in, money out and projected balance"
+    },
+
+    "resultado": {
+      "titulo": "Result and the maths",
+      "rotulo": "Suggested price",
+      "linha_1": "Total cost per unit",
+      "linha_2": "Fee and tax",
+      "linha_3": "Left per sale"
+    },
+
+    "passos": {
+      "titulo": "Stages, steps and questions",
+      "etapa_1": "Upload",
+      "etapa_2": "Configure",
+      "etapa_3": "Review",
+      "etapa_4": "Export",
+      "item_1": "Add up everything you pay to get the product ready.",
+      "item_2": "Divide your monthly fixed cost by the quantity you usually sell.",
+      "pergunta_1": "Is a 30% margin the same as a 30% markup?",
+      "resposta_1": "No. Margin on the sale and markup on the cost give different prices."
+    },
+
+    "arquivos": {
+      "titulo": "Files",
+      "titulo_area": "Drop the files here",
+      "texto_area": "Or pick them from your device. Up to 3 files on the free plan.",
+      "item_1": "quote-september.pdf"
+    },
+
+    "tabela": {
+      "titulo": "Table and pagination",
+      "coluna_nome": "Name",
+      "coluna_status": "Status",
+      "coluna_acoes": "Actions",
+      "linha_1_nome": "Selling price",
+      "mostrando": "Showing 1 of 150",
+      "proxima": "Next"
+    },
+
+    "estados": {
+      "titulo": "States",
+      "vazio_texto": "The star next to the name keeps the tool here, on this device.",
+      "bloqueio_titulo": "Process 40 files at once",
+      "bloqueio_texto": "On Free the batch goes up to 3 files. Plus unlocks 100 at a time.",
+      "pagina_x_de_y": "Page 8 of 11"
+    },
+
+    "retorno": {
+      "titulo": "Feedback",
+      "aviso_sucesso": "Work saved to your account"
+    },
+
+    "icones": {
+      "titulo": "Icons",
+      "busca": "busca",
+      "seta_direita": "seta-direita",
+      "seta_esquerda": "seta-esquerda",
+      "seta_cima": "seta-cima",
+      "seta_baixo": "seta-baixo",
+      "chevron_direita": "chevron-direita",
+      "chevron_baixo": "chevron-baixo",
+      "fechar": "fechar",
+      "menu": "menu",
+      "inicio": "inicio",
+      "ferramentas": "ferramentas",
+      "salvos": "salvos",
+      "conta": "conta",
+      "trabalho": "trabalho",
+      "planos": "planos",
+      "estrela": "estrela",
+      "estrela_cheia": "estrela-cheia",
+      "copiar": "copiar",
+      "pdf": "pdf",
+      "planilha": "planilha",
+      "baixar": "baixar",
+      "enviar_arquivo": "enviar-arquivo",
+      "arquivo": "arquivo",
+      "cadeado": "cadeado",
+      "aviso": "aviso",
+      "sucesso": "sucesso",
+      "erro": "erro",
+      "info": "info",
+      "sol": "sol",
+      "lua": "lua",
+      "idioma": "idioma",
+      "sair": "sair",
+      "editar": "editar",
+      "excluir": "excluir",
+      "mais": "mais",
+      "menos": "menos",
+      "arrastar": "arrastar",
+      "filtro": "filtro",
+      "ordenar": "ordenar",
+      "relogio": "relogio",
+      "calendario": "calendario",
+      "dinheiro": "dinheiro",
+      "vendas": "vendas",
+      "calculo": "calculo",
+      "texto": "texto",
+      "documento": "documento",
+      "imagem": "imagem",
+      "codigo": "codigo",
+      "chave": "chave",
+      "pessoas": "pessoas",
+      "caixa": "caixa",
+      "megafone": "megafone",
+      "lista": "lista",
+      "livro": "livro",
+      "ferramenta": "ferramenta",
+      "sino": "sino",
+      "mensagem": "mensagem",
+      "escudo": "escudo",
+      "usuario": "usuario",
+      "grafico": "grafico",
+      "marca_check": "marca-check",
+      "olho": "olho",
+      "olho_fechado": "olho-fechado",
+      "lote": "lote",
+      "desfazer": "desfazer",
+      "externo": "externo"
+    }
+  }
+}

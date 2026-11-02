@@ -1,0 +1,131 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/diálogo.css
+   <dialog class="diálogo">, aberto/fechado por interface/abrir-diálogo.js e
+   fechar-diálogo.js. Centralizado no computador; folha inferior no celular. */
+
+dialog.diálogo {
+  border: 0;
+  margin: auto;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  max-height: min(88vh, 720px);
+  z-index: var(--camada-diálogo);
+}
+
+dialog.diálogo::backdrop {
+  background: color-mix(in srgb, var(--cor-neutra-900) 55%, transparent);
+}
+
+@starting-style {
+  dialog.diálogo[open] { opacity: 0; }
+  dialog.diálogo[open]::backdrop { opacity: 0; }
+}
+dialog.diálogo::backdrop {
+  transition: opacity var(--duração-painel) var(--curva-suave);
+}
+
+/* Importante: o `display` de `dialog.diálogo` só pode ser definido quando
+   ele está [open] — regra de autor sempre vence a UA stylesheet
+   (`dialog:not([open]) { display: none }`) não importa a especificidade,
+   porque a origem "autor" tem prioridade sobre a origem "user-agent" no
+   cascade. Sem o `[open]` aqui, o diálogo ficaria visível mesmo fechado. */
+.diálogo-formulário {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+
+dialog.diálogo[open] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+
+dialog.diálogo {
+  width: min(92vw, 480px);
+  padding: var(--espaço-5);
+  background: var(--cor-superfície-elevada);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra-g);
+  overflow-y: auto;
+  opacity: 1;
+  transition: opacity var(--duração-painel) var(--curva-suave),
+    transform var(--duração-painel) var(--curva-suave);
+}
+
+.diálogo-cabeçalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaço-3);
+}
+
+.diálogo-título {
+  margin: 0;
+  font-size: 21px;
+}
+
+.diálogo-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-3);
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+}
+.diálogo-corpo p:last-child { margin-bottom: 0; }
+
+.diálogo-ações {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--espaço-2);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog.diálogo[open] {
+    animation: escala-de-entrada var(--duração-painel) var(--curva-suave) both;
+  }
+}
+
+/* — celular: folha inferior — */
+@media (max-width: 767.98px) {
+  dialog.diálogo {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    max-height: 86vh;
+    margin: 0;
+    border-radius: var(--raio-g) var(--raio-g) 0 0;
+    padding: var(--espaço-4) var(--espaço-4) calc(var(--espaço-5) + env(safe-area-inset-bottom, 0px));
+  }
+  .diálogo-ações {
+    flex-direction: column-reverse;
+  }
+  .diálogo-ações .botão {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767.98px) and (prefers-reduced-motion: no-preference) {
+  dialog.diálogo[open] {
+    animation: subir-do-rodapé var(--duração-painel) var(--curva-suave) both;
+  }
+}
+
+/* Alça visual de folha inferior, decorativa */
+@media (max-width: 767.98px) {
+  dialog.diálogo::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto calc(var(--espaço-2) * -1);
+    border-radius: var(--raio-pílula);
+    background: var(--cor-divisória);
+  }
+}

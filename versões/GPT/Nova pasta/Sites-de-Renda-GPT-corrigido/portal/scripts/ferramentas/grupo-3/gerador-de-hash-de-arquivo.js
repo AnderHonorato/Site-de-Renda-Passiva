@@ -1,0 +1,5 @@
+import * as h from './helpers.js';
+
+export default h.tool("gerador-de-hash-de-arquivo",13,"Gerador de hash de arquivo","Calcule SHA-256, SHA-384 ou SHA-512 de um arquivo local.","Digest pela Web Crypto API sobre os bytes do arquivo, com limite de 50 MiB para memória. Hash auxilia na comparação de integridade; não comprova origem nem ausência de malware.",[{nome:'arquivo',rotulo:'Arquivo (até 50 MiB)',tipo:'file',multiplo:false,obrigatorio:true},h.escolha('algoritmo','Algoritmo',[['SHA-256','SHA-256'],['SHA-384','SHA-384'],['SHA-512','SHA-512']])],async d=>{h.opcao(d.algoritmo,['SHA-256','SHA-384','SHA-512']);const a=d.arquivo;if(!a||typeof a.arrayBuffer!=='function'||!Number.isFinite(a.size))throw new Error('Selecione um arquivo válido.');if(a.size>50*1024*1024)throw new Error('Arquivo maior que 50 MiB.');const crypto=h.cryptoSeguro(),digest=await crypto.subtle.digest(d.algoritmo,await a.arrayBuffer());const hex=Array.from(new Uint8Array(digest),x=>x.toString(16).padStart(2,'0')).join('');return {...h.resultado(hex,'Algoritmo: '+d.algoritmo,'Arquivo: '+(a.name||'arquivo'),'Bytes: '+a.size),arquivo:h.arquivo('hash.txt',d.algoritmo+' '+hex+'\n')};});
+
+

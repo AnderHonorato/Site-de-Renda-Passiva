@@ -1,0 +1,199 @@
+{
+  "vitrine": {
+    "titulo_pagina": "Vitrine do sistema visual — Ander Flow",
+    "descricao_pagina": "Página interna de desenvolvimento com todos os componentes, estados e ícones do sistema visual comum.",
+    "rotulo": "Sistema visual · uso interno",
+    "titulo": "Vitrine de componentes",
+    "introducao": "Todos os componentes, estados e ícones de docs/contratos.md §6.2, num só lugar, nos temas Marfim e Carvão.",
+
+    "tipografia": {
+      "titulo": "Tipografia",
+      "exemplo": "O que você precisa resolver?",
+      "sobretitulo": "Sobretítulo em maiúsculas",
+      "corpo": "Texto de interface com acentuação completa: ação, coração, prêmio, conteúdo, três, órgão."
+    },
+
+    "botoes": {
+      "titulo": "Botões",
+      "primario": "Calcular",
+      "secundario": "Limpar",
+      "fantasma": "Ver exemplo",
+      "perigo": "Excluir",
+      "pequeno": "Salvar",
+      "icone": "Editar",
+      "largo": "Continuar"
+    },
+
+    "campos": {
+      "titulo": "Campos e controles",
+      "custo": "Custo do produto",
+      "margem": "Margem que você quer",
+      "erro_exemplo": "Margem acima do limite. Reduza para no máximo 89,8%.",
+      "deslizante": "Margem sobre a venda",
+      "opcoes": "Qual linha fica",
+      "opcao_a": "A mais recente",
+      "opcao_b": "A mais completa",
+      "opcao_c": "A primeira",
+      "marcador": "Padronizar e-mail em minúsculas",
+      "interruptor": "Notificar por e-mail"
+    },
+
+    "navegacao": {
+      "titulo": "Migalhas, abas, pílulas e busca",
+      "migalhas_rotulo": "Você está em",
+      "migalha_1": "Ferramentas",
+      "migalha_2": "Dinheiro e preços",
+      "migalha_3": "Preço de venda",
+      "aba_1": "Avisos do sistema",
+      "aba_2": "Mensagens",
+      "pilula_1": "montar um orçamento",
+      "pilula_2": "juntar PDF",
+      "pilula_3": "calcular férias",
+      "busca_placeholder": "Escreva o que você precisa resolver"
+    },
+
+    "superficies": {
+      "titulo": "Superfícies e etiquetas",
+      "papel": "Superfície — papel",
+      "recuo": "Superfície — recuo",
+      "tinta": "Superfície — tinta"
+    },
+
+    "etiquetas": {
+      "gratis": "Grátis",
+      "plus": "Plus",
+      "pronta": "Pronta",
+      "planejada": "Planejada",
+      "aviso": "Atenção",
+      "erro": "Com erro"
+    },
+
+    "lista": {
+      "titulo": "Lista densa",
+      "item_1_nome": "Preço de venda",
+      "item_1_descricao": "preço mínimo, margem e sobra por venda",
+      "item_2_nome": "Fluxo de caixa",
+      "item_2_descricao": "entradas, saídas e saldo projetado"
+    },
+
+    "resultado": {
+      "titulo": "Resultado e a conta",
+      "rotulo": "Preço sugerido",
+      "linha_1": "Custo total por unidade",
+      "linha_2": "Taxa e imposto",
+      "linha_3": "Sobra por venda"
+    },
+
+    "passos": {
+      "titulo": "Etapas, passos e perguntas",
+      "etapa_1": "Enviar",
+      "etapa_2": "Configurar",
+      "etapa_3": "Revisar",
+      "etapa_4": "Exportar",
+      "item_1": "Some o que sai do seu bolso para ter o produto pronto.",
+      "item_2": "Divida a despesa fixa do mês pela quantidade que você costuma vender.",
+      "pergunta_1": "Margem de 30% é o mesmo que markup de 30%?",
+      "resposta_1": "Não. Margem sobre a venda e markup sobre o custo dão preços diferentes."
+    },
+
+    "arquivos": {
+      "titulo": "Arquivos",
+      "titulo_area": "Solte os arquivos aqui",
+      "texto_area": "Ou escolha no seu aparelho. Até 3 arquivos no plano grátis.",
+      "item_1": "orcamento-setembro.pdf"
+    },
+
+    "tabela": {
+      "titulo": "Tabela e paginação",
+      "coluna_nome": "Nome",
+      "coluna_status": "Status",
+      "coluna_acoes": "Ações",
+      "linha_1_nome": "Preço de venda",
+      "mostrando": "Mostrando 1 de 150",
+      "proxima": "Próxima"
+    },
+
+    "estados": {
+      "titulo": "Estados",
+      "vazio_texto": "A estrela ao lado do nome guarda a ferramenta aqui, neste aparelho.",
+      "bloqueio_titulo": "Processar 40 arquivos de uma vez",
+      "bloqueio_texto": "No grátis o lote vai até 3 arquivos. O Plus libera 100 por vez.",
+      "pagina_x_de_y": "Página 8 de 11"
+    },
+
+    "retorno": {
+      "titulo": "Retorno",
+      "aviso_sucesso": "Trabalho salvo na sua conta"
+    },
+
+    "icones": {
+      "titulo": "Ícones",
+      "busca": "busca",
+      "seta_direita": "seta-direita",
+      "seta_esquerda": "seta-esquerda",
+      "seta_cima": "seta-cima",
+      "seta_baixo": "seta-baixo",
+      "chevron_direita": "chevron-direita",
+      "chevron_baixo": "chevron-baixo",
+      "fechar": "fechar",
+      "menu": "menu",
+      "inicio": "inicio",
+      "ferramentas": "ferramentas",
+      "salvos": "salvos",
+      "conta": "conta",
+      "trabalho": "trabalho",
+      "planos": "planos",
+      "estrela": "estrela",
+      "estrela_cheia": "estrela-cheia",
+      "copiar": "copiar",
+      "pdf": "pdf",
+      "planilha": "planilha",
+      "baixar": "baixar",
+      "enviar_arquivo": "enviar-arquivo",
+      "arquivo": "arquivo",
+      "cadeado": "cadeado",
+      "aviso": "aviso",
+      "sucesso": "sucesso",
+      "erro": "erro",
+      "info": "info",
+      "sol": "sol",
+      "lua": "lua",
+      "idioma": "idioma",
+      "sair": "sair",
+      "editar": "editar",
+      "excluir": "excluir",
+      "mais": "mais",
+      "menos": "menos",
+      "arrastar": "arrastar",
+      "filtro": "filtro",
+      "ordenar": "ordenar",
+      "relogio": "relogio",
+      "calendario": "calendario",
+      "dinheiro": "dinheiro",
+      "vendas": "vendas",
+      "calculo": "calculo",
+      "texto": "texto",
+      "documento": "documento",
+      "imagem": "imagem",
+      "codigo": "codigo",
+      "chave": "chave",
+      "pessoas": "pessoas",
+      "caixa": "caixa",
+      "megafone": "megafone",
+      "lista": "lista",
+      "livro": "livro",
+      "ferramenta": "ferramenta",
+      "sino": "sino",
+      "mensagem": "mensagem",
+      "escudo": "escudo",
+      "usuario": "usuario",
+      "grafico": "grafico",
+      "marca_check": "marca-check",
+      "olho": "olho",
+      "olho_fechado": "olho-fechado",
+      "lote": "lote",
+      "desfazer": "desfazer",
+      "externo": "externo"
+    }
+  }
+}

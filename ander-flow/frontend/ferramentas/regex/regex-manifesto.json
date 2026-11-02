@@ -1,0 +1,37 @@
+{
+  "slug": "regex",
+  "estado": "planejada",
+  "categoria": "desenvolvimento",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "codigo",
+  "ordem": 40,
+  "nome": {
+    "pt-BR": "Testador de expressão regular",
+    "en": "Regex tester"
+  },
+  "descricao": {
+    "pt-BR": "Testa padrões com destaque das correspondências, grupos e substituição.",
+    "en": "Tests regex patterns with highlighted matches, groups, and substitution."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "testar regex"
+    ],
+    "en": [
+      "test a regex"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "regex",
+      "expressão regular"
+    ],
+    "en": [
+      "regex",
+      "regular expression"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

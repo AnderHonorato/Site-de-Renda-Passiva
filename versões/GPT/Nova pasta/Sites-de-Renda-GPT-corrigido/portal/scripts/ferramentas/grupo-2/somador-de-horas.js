@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("somador-de-horas",10,"Somador de horas","Some durações no formato horas:minutos.","Minutos entre 00 e 59; horas podem exceder 24. Durações não são horários do dia.",[T('horas','Uma duração HH:MM por linha','01:30\n02:45')],async d=>{const a=lista(d,'horas');if(a.length>10000)throw Error('Limite de 10 mil registros.');let q=0;for(const s of a){const m=/^(\d{1,6}):([0-5]\d)$/.exec(s);if(!m)throw Error('Duração inválida: '+s+'. Use HH:MM.');q+=Number(m[1])*60+Number(m[2]);}return {resumo:String(Math.floor(q/60)).padStart(2,'0')+':'+String(q%60).padStart(2,'0'),linhas:[q+' minutos',fmt(q/60)+' horas decimais']};});
+

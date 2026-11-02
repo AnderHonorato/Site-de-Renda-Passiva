@@ -1,0 +1,44 @@
+/* compartilhado-navegacao-celular.css — navegação inferior fixa (≤767px). Zero cor literal. */
+
+.navegacao-celular {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .navegacao-celular {
+    display: flex;
+    align-items: stretch;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 950;
+    height: 72px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    border-top: 1px solid var(--cor-linha);
+    background: var(--cor-superficie);
+  }
+
+  .navegacao-celular__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: var(--cor-texto-2);
+    font-size: 11.5px;
+    min-height: var(--alvo-toque);
+    padding-top: 10px;
+  }
+
+  .navegacao-celular__item[aria-current="page"] {
+    color: var(--cor-destaque);
+    font-weight: 600;
+  }
+
+  /* Dá espaço para o conteúdo não ficar escondido atrás da navegação fixa */
+  body:has(.navegacao-celular) {
+    padding-bottom: 72px;
+  }
+}

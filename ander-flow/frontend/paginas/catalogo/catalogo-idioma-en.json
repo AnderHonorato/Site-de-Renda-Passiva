@@ -1,0 +1,27 @@
+{
+  "catalogo": {
+    "titulo_pagina": "All tools — Ander Flow",
+    "descricao_pagina": "The {ferramentas_total} Ander Flow tools, by category, showing what is ready and what is planned.",
+    "titulo": "All tools",
+    "resumo": "{ferramentas_prontas} ready to use and {ferramentas_planejadas} planned. A planned tool shows up as planned — no buttons that do nothing.",
+    "filtros": {
+      "titulo": "Categories",
+      "estado": "Status",
+      "todas": "All",
+      "limpar": "Clear filters",
+      "categoria_todas": "All categories"
+    },
+    "contagem": {
+      "parcial": "{visiveis} of {total} tools",
+      "total": "{total} tools"
+    },
+    "favorito": {
+      "guardar": "Keep {nome} in saved",
+      "tirar": "Remove {nome} from saved",
+      "guardado": "{nome} went to saved",
+      "removido": "{nome} left saved",
+      "limite_titulo": "The saved list on this device is full",
+      "limite_texto": "Without an account you can keep up to {limite} tools on this device. With an account, they follow you on any device."
+    }
+  }
+}

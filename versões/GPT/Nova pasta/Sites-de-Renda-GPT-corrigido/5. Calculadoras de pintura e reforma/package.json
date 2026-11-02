@@ -1,0 +1,16 @@
+{
+  "name": "calculadoras-de-pintura-e-reforma",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Calculadoras gratuitas de pintura e reforma: área de paredes, quantidade de tinta, piso por caixa, rodapé e orçamento estimado.",
+  "license": "SEE LICENSE IN LICENÇA.txt",
+  "scripts": {
+    "gerar": "node ferramentas/gerar-páginas.mjs",
+    "servir": "node ferramentas/servir.mjs . --porta 4315",
+    "testar": "node --test \"testes/**/*.test.js\"",
+    "verificar": "node ferramentas/verificar-projeto.mjs",
+    "construir": "node ferramentas/construir.mjs",
+    "visualizar": "node ferramentas/servir.mjs publicação --porta 4325"
+  }
+}

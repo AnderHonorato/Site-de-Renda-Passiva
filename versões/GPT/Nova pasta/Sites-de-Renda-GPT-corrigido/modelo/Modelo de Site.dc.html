@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-091e5c75-1a26-4252-b645-3e4c3aa3e947/styles.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Caveat:wght@600;700&family=Outfit:wght@500;600;700&display=swap">
+<script src="_ds/organic-091e5c75-1a26-4252-b645-3e4c3aa3e947/_ds_bundle.js"></script>
+<style>
+  body { margin: 0; }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent-800); text-decoration: underline; }
+  .marca { font-family: var(--font-heading); letter-spacing: -0.03em; }
+  .logotipo { font-family: var(--fonte-marca, var(--font-heading)); letter-spacing: var(--tracking-marca, -0.03em); }
+  .marca em, .logotipo em { font-style: normal; color: var(--color-accent); }
+  @keyframes subir { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+<div ref="{{ raiz }}" style="min-height: 100vh; background: var(--color-neutral-100); padding: 28px; box-sizing: border-box; font-family: var(--font-body); color: var(--color-text);">
+
+  <svg width="0" height="0" style="position: absolute;" aria-hidden="true">
+    <defs>
+      <symbol id="marca-espiral" viewBox="0 0 100 100">
+        <path d="M 51.60 50.00 L 51.89 50.23 L 52.15 50.53 L 52.36 50.89 L 52.50 51.30 L 52.58 51.77 L 52.58 52.27 L 52.50 52.79 L 52.32 53.32 L 52.05 53.84 L 51.69 54.34 L 51.23 54.81 L 50.69 55.23 L 50.06 55.58 L 49.36 55.85 L 48.59 56.03 L 47.78 56.10 L 46.92 56.07 L 46.05 55.91 L 45.17 55.63 L 44.31 55.21 L 43.48 54.67 L 42.69 54.01 L 41.98 53.22 L 41.36 52.31 L 40.84 51.31 L 40.45 50.21 L 40.19 49.03 L 40.07 47.80 L 40.12 46.52 L 40.33 45.23 L 40.72 43.94 L 41.28 42.67 L 42.01 41.46 L 42.90 40.32 L 43.96 39.27 L 45.18 38.34 L 46.52 37.55 L 47.99 36.93 L 49.56 36.47 L 51.21 36.21 L 52.92 36.16 L 54.65 36.32 L 56.39 36.70 L 58.10 37.30 L 59.76 38.12 L 61.33 39.16 L 62.79 40.41 L 64.11 41.86 L 65.26 43.49 L 66.23 45.28 L 66.98 47.20 L 67.50 49.24 L 67.77 51.37 L 67.77 53.54 L 67.51 55.74 L 66.98 57.93 L 66.17 60.06 L 65.08 62.12 L 63.74 64.06 L 62.14 65.84 L 60.31 67.44 L 58.28 68.83 L 56.05 69.98 L 53.67 70.86 L 51.16 71.46 L 48.56 71.75 L 45.91 71.72 L 43.25 71.37 L 40.61 70.68 L 38.05 69.67 L 35.59 68.34 L 33.28 66.70 L 31.16 64.77 L 29.27 62.56 L 27.63 60.12 L 26.29 57.46 L 25.27 54.62 L 24.59 51.65 L 24.27 48.58 L 24.32 45.45 L 24.76 42.32 L 25.58 39.23 L 26.78 36.23 L 28.35 33.36 L 30.28 30.68 L 32.54 28.22 L 35.11 26.02 L 37.96 24.14 L 41.05 22.59 L 44.34 21.42 L 47.78 20.64 L 51.32 20.28 L 54.92 20.35 L 58.52 20.86 L 62.07 21.80 L 65.51 23.19 L 68.79 24.99 L 71.86 27.20 L 74.67 29.79 L 77.17 32.72 L 79.32 35.97 L 81.08 39.48 L 82.42 43.21 L 83.30 47.12 L 83.71 51.13 L 83.64 55.21 L 83.06 59.28 L 82.00 63.29 L 80.44 67.17 L 78.42 70.88 L 75.94 74.34 L 73.03 77.50 L 69.74 80.32 L 66.10 82.74 L 62.17 84.72 L 57.99 86.22 L 53.63 87.23 L 49.14 87.70 L 44.59 87.63 L 40.04 87.00 L 35.57 85.83 L 31.24 84.11 L 27.11 81.87 L 23.25 79.13 L 19.73 75.91 L 16.59 72.27 L 13.89 68.25 L 11.68 63.90 L 9.99 59.28 L 8.86 54.46 L 8.32 49.50 L 8.37 44.47 L 9.04 39.45 L 10.31 34.51 L 12.18 29.73 L 14.63 25.17" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round"></path>
+      </symbol>
+      
+    </defs>
+  </svg>
+
+  <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 8px;">
+    <svg width="34" height="34" style="color: var(--color-accent);"><use href="#marca-espiral"></use></svg>
+    <h1 class="logotipo" style="font-size: 30px; margin: 0;">Doce <em>Ofício</em></h1>
+    <p style="margin: 0; font-size: 14px; opacity: 0.7;">Página modelo — as outras cinco repetem esta estrutura, mudando só cores e nomes.</p>
+  </div>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px;">
+    <span class="tag tag-accent">Site de PC</span>
+    <span class="tag tag-accent-2">App no celular</span>
+    <span class="tag tag-outline">App Android</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 16px; margin-bottom: 30px;">
+    <div class="card" style="min-width: 0; align-items: flex-start; gap: 14px; padding: 20px 22px;">
+      <span class="card-kicker">Versão A — manuscrita clássica</span>
+      <span style="display: inline-flex; align-items: center; gap: 12px; white-space: nowrap;">
+        <svg width="30" height="30" style="color: var(--color-accent); flex: none;"><use href="#marca-espiral"></use></svg>
+        <span style="font-family: 'Grand Hotel', cursive; font-size: 34px; line-height: 1;">Doce <span style="color: var(--color-accent-700);">Ofício</span></span>
+      </span>
+    </div>
+    <div class="card" style="min-width: 0; align-items: flex-start; gap: 14px; padding: 20px 22px;">
+      <span class="card-kicker">Versão B — manuscrita moderna</span>
+      <span style="display: inline-flex; align-items: center; gap: 12px; white-space: nowrap;">
+        <svg width="30" height="30" style="color: var(--color-accent); flex: none;"><use href="#marca-espiral"></use></svg>
+        <span style="font-family: 'Caveat', cursive; font-weight: 700; font-size: 36px; line-height: 1;">Doce <span style="color: var(--color-accent-700);">Ofício</span></span>
+      </span>
+    </div>
+    <div class="card" style="min-width: 0; align-items: flex-start; gap: 14px; padding: 20px 22px;">
+      <span class="card-kicker">Versão C — moderna limpa</span>
+      <span style="display: inline-flex; align-items: center; gap: 12px; white-space: nowrap;">
+        <svg width="30" height="30" style="color: var(--color-accent); flex: none;"><use href="#marca-espiral"></use></svg>
+        <span style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 26px; letter-spacing: -0.03em; line-height: 1;">doce <span style="color: var(--color-accent-700);">ofício</span></span>
+      </span>
+    </div>
+    <div class="card" style="min-width: 0; align-items: flex-start; gap: 14px; padding: 20px 22px;">
+      <span class="card-kicker">Versão D — display atual</span>
+      <span style="display: inline-flex; align-items: center; gap: 12px; white-space: nowrap;">
+        <svg width="30" height="30" style="color: var(--color-accent); flex: none;"><use href="#marca-espiral"></use></svg>
+        <span style="font-family: var(--font-heading); font-size: 27px; letter-spacing: -0.03em; line-height: 1;">Doce <span style="color: var(--color-accent-700);">Ofício</span></span>
+      </span>
+    </div>
+  </div>
+  <p style="font-size: 13px; opacity: 0.7; margin: -18px 0 26px;">Escolha a versão no painel de ajustes — ela se aplica ao logotipo dos três formatos abaixo.</p>
+
+  <div style="display: flex; gap: 34px; align-items: flex-start; flex-wrap: wrap;">
+
+    <!-- ——— PC ——— -->
+    <section style="flex: 1 1 760px; min-width: 0;">
+      <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; margin: 0 0 10px;">01 — Navegador no computador</p>
+      <div style="border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-lg); background: var(--color-surface);">
+        <div style="display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--color-neutral-200);">
+          <span style="width: 11px; height: 11px; border-radius: 999px; background: var(--color-accent);"></span>
+          <span style="width: 11px; height: 11px; border-radius: 999px; background: var(--color-accent-2);"></span>
+          <span style="width: 11px; height: 11px; border-radius: 999px; background: var(--color-neutral-400);"></span>
+          <span style="margin-left: 10px; font-size: 12px; background: var(--color-bg); border-radius: 999px; padding: 4px 14px; opacity: 0.75;">doceoficio.com.br</span>
+        </div>
+
+        <div style="background: var(--color-bg);">
+          <header class="nav" style="padding: 18px 30px;">
+            <span class="nav-brand logotipo" style="font-size: 22px; display: inline-flex; align-items: center; gap: 10px;"><svg width="26" height="26" style="color: var(--color-accent); flex: none;"><use href="#marca-espiral"></use></svg>Doce <em>Ofício</em></span>
+            <nav style="display: flex; gap: 6px; align-items: center;">
+              <a class="btn btn-ghost" href="#1a">Ferramentas</a>
+              <a class="btn btn-ghost" href="#1a">Receitas</a>
+              <a class="btn btn-ghost" href="#1a">Guias</a>
+              <a class="btn btn-primary" href="#1a">Apoiar por Pix</a>
+            </nav>
+          </header>
+
+          <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 30px; align-items: center; padding: 26px 30px 34px; position: relative; overflow: hidden;">
+            <svg width="420" height="420" style="position: absolute; left: -150px; bottom: -190px; color: var(--color-accent); opacity: 0.12; pointer-events: none;" aria-hidden="true"><use href="#marca-espiral"></use></svg>
+            <div style="position: relative;">
+              <span class="tag tag-accent">Gratuito, sem cadastro</span>
+              <h2 style="font-size: 46px; line-height: 1.05; margin: 14px 0 12px;">Calcule o preço do seu bolo em trinta segundos.</h2>
+              <p style="font-size: 16px; max-width: 46ch; margin: 0 0 20px; text-wrap: pretty; opacity: 0.8;">Ingredientes, gás, embalagem e a sua hora de trabalho. Tudo no navegador, nada sai do seu aparelho.</p>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a class="btn btn-primary" href="#1a">Abrir calculadora</a>
+                <a class="btn btn-secondary" href="#1a">Ver tabela de porções</a>
+              </div>
+            </div>
+            <div class="card elev-md" style="padding: 22px;">
+              <span class="card-kicker">Calculadora de precificação</span>
+              <div class="field" style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
+                <label style="font-size: 12px; opacity: 0.7;">Custo dos ingredientes (R$)</label>
+                <input class="input" value="42,50">
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="field" style="display: flex; flex-direction: column; gap: 6px;">
+                  <label style="font-size: 12px; opacity: 0.7;">Horas de trabalho</label>
+                  <input class="input" value="3">
+                </div>
+                <div class="field" style="display: flex; flex-direction: column; gap: 6px;">
+                  <label style="font-size: 12px; opacity: 0.7;">Margem (%)</label>
+                  <input class="input" value="35">
+                </div>
+              </div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--color-divider);">
+                <span style="font-size: 13px; opacity: 0.7;">Preço sugerido</span>
+                <strong class="marca" style="font-size: 32px; color: var(--color-accent-700);">R$ 128,40</strong>
+              </div>
+              <button class="btn btn-primary btn-block">Recalcular</button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; padding: 0 30px 30px;">
+            <div class="card">
+              <span class="card-kicker">Ferramenta</span>
+              <span class="card-title">Conversor de formas</span>
+              <p class="card-body" style="font-size: 14px; opacity: 0.8; margin: 0;">Redonda, quadrada ou retangular — a receita ajustada na proporção certa.</p>
+            </div>
+            <div class="card">
+              <span class="card-kicker">Tabela</span>
+              <span class="card-title">Porções por tamanho</span>
+              <p class="card-body" style="font-size: 14px; opacity: 0.8; margin: 0;">Quantas fatias saem de cada aro, com e sem recheio alto.</p>
+            </div>
+            <div class="card">
+              <span class="card-kicker">Guia</span>
+              <span class="card-title">Ponto de calda</span>
+              <p class="card-body" style="font-size: 14px; opacity: 0.8; margin: 0;">Temperatura, textura e o que fazer quando açucara.</p>
+            </div>
+          </div>
+
+          <div style="margin: 0 30px 26px; padding: 22px 26px; border-radius: var(--radius-lg); background: var(--color-accent-2-100); display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+            <div style="flex: 1 1 280px;">
+              <h3 style="font-size: 24px; margin: 0 0 6px;">Gostou? Apoie com um Pix.</h3>
+              <p style="margin: 0; font-size: 14px; opacity: 0.8;">Voluntário, sem cadastro. QR e Copia e Cola.</p>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-secondary">R$ 1</button>
+              <button class="btn btn-secondary">R$ 5</button>
+              <button class="btn btn-secondary">R$ 10</button>
+              <button class="btn btn-secondary">R$ 20</button>
+              <button class="btn btn-primary">Outro valor</button>
+            </div>
+          </div>
+
+          <sc-if value="{{ mostrarAnuncio }}" hint-placeholder-val="{{ true }}">
+            <div style="margin: 0 30px 26px; height: 92px; border-radius: var(--radius-lg); border: 1px dashed var(--color-divider); display: grid; place-items: center; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5;">Espaço de anúncio — desativado até a conta ser conectada</div>
+          </sc-if>
+
+          <footer style="padding: 18px 30px 26px; border-top: 1px solid var(--color-divider); display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; opacity: 0.7;">
+            <span>© 2026 Doce Ofício</span>
+            <a href="#1a">Privacidade</a>
+            <a href="#1a">Cookies</a>
+            <a href="#1a">Contato</a>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+    <!-- ——— Celular + Android ——— -->
+    <section style="display: flex; gap: 30px; flex-wrap: wrap;">
+
+      <div>
+        <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; margin: 0 0 10px;">02 — Site no celular</p>
+        <div style="width: 320px; height: 660px; border-radius: 42px; padding: 12px; background: var(--color-neutral-900); box-shadow: var(--shadow-lg); box-sizing: border-box;">
+          <div style="height: 100%; border-radius: 32px; overflow: hidden; background: var(--color-bg); display: flex; flex-direction: column; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px 4px; font-size: 12px; font-weight: 600;">
+              <span>9:41</span>
+              <span style="display: flex; gap: 5px; align-items: center; opacity: 0.8;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round"><path d="M5 13a10 10 0 0 1 14 0"></path><path d="M8.5 16.5a5 5 0 0 1 7 0"></path><path d="M12 20h.01"></path></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round"><rect x="2" y="7" width="17" height="10" rx="3"></rect><path d="M22 11v2"></path></svg>
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 18px 12px;">
+              <svg width="24" height="24" style="color: var(--color-accent); flex: none;"><use href="#marca-espiral"></use></svg>
+              <span class="logotipo" style="font-size: 19px;">Doce <em>Ofício</em></span>
+              <button class="btn btn-icon btn-ghost" style="margin-left: auto;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+              </button>
+            </div>
+            <div style="flex: 1; overflow: hidden; padding: 0 18px 12px; display: flex; flex-direction: column; gap: 14px;">
+              <div>
+                <span class="tag tag-accent">Sem cadastro</span>
+                <h2 style="font-size: 27px; line-height: 1.08; margin: 10px 0 6px;">Preço do bolo, na hora.</h2>
+                <p style="margin: 0; font-size: 13px; opacity: 0.8;">Tudo roda no seu celular, offline.</p>
+              </div>
+              <div class="card elev-sm" style="padding: 16px;">
+                <span class="card-kicker">Calculadora</span>
+                <div class="field" style="display: flex; flex-direction: column; gap: 5px;">
+                  <label style="font-size: 11px; opacity: 0.7;">Ingredientes (R$)</label>
+                  <input class="input" value="42,50">
+                </div>
+                <div style="display: flex; align-items: baseline; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--color-divider);">
+                  <span style="font-size: 12px; opacity: 0.7;">Sugerido</span>
+                  <strong class="marca" style="font-size: 25px; color: var(--color-accent-700);">R$ 128,40</strong>
+                </div>
+                <button class="btn btn-primary btn-block">Calcular</button>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="card" style="padding: 14px;"><span class="card-title" style="font-size: 15px;">Porções</span><p style="margin: 0; font-size: 12px; opacity: 0.75;">Fatias por aro</p></div>
+                <div class="card" style="padding: 14px;"><span class="card-title" style="font-size: 15px;">Formas</span><p style="margin: 0; font-size: 12px; opacity: 0.75;">Converter receita</p></div>
+              </div>
+            </div>
+            <nav style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; padding: 10px 8px 16px; background: var(--color-surface); border-top: 1px solid var(--color-divider);">
+              <button style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 48px; border: 0; background: none; cursor: pointer; font-family: inherit; font-size: 10px; color: var(--color-accent-700);" style-hover="opacity: 0.75">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 10v10h14V10"></path></svg>Início
+              </button>
+              <button style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 48px; border: 0; background: none; cursor: pointer; font-family: inherit; font-size: 10px; opacity: 0.6;" style-hover="opacity: 1">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"></rect><path d="M8 8h8M8 12h8M8 16h4"></path></svg>Receitas
+              </button>
+              <button style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 48px; border: 0; background: none; cursor: pointer; font-family: inherit; font-size: 10px; opacity: 0.6;" style-hover="opacity: 1">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"></rect><path d="M8 8h8M8 13h3M8 17h3M15 13v4"></path></svg>Calcular
+              </button>
+              <button style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 48px; border: 0; background: none; cursor: pointer; font-family: inherit; font-size: 10px; opacity: 0.6;" style-hover="opacity: 1">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7 3.5C19 15.6 12 20 12 20Z"></path></svg>Apoiar
+              </button>
+              <button style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 48px; border: 0; background: none; cursor: pointer; font-family: inherit; font-size: 10px; opacity: 0.6;" style-hover="opacity: 1">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>Mais
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; margin: 0 0 10px;">03 — Aplicativo Android</p>
+        <div style="width: 320px; height: 660px; border-radius: 34px; padding: 10px; background: var(--color-neutral-900); box-shadow: var(--shadow-lg); box-sizing: border-box;">
+          <div style="height: 100%; border-radius: 26px; overflow: hidden; background: var(--color-bg); display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; font-size: 11px; background: var(--color-accent-700); color: var(--color-neutral-100);">
+              <span>9:41</span>
+              <span style="display: flex; gap: 6px; align-items: center;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round"><path d="M5 13a10 10 0 0 1 14 0"></path><path d="M8.5 16.5a5 5 0 0 1 7 0"></path><path d="M12 20h.01"></path></svg>
+                <span>84%</span>
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--color-accent-700); color: var(--color-neutral-100);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+              <svg width="22" height="22" style="flex: none;"><use href="#marca-espiral"></use></svg>
+              <span class="logotipo" style="font-size: 18px;">Doce Ofício</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" style="margin-left: auto;"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            </div>
+            <div style="display: flex; gap: 0; background: var(--color-accent-700); color: var(--color-neutral-100); font-size: 12px; letter-spacing: 0.04em;">
+              <span style="flex: 1; text-align: center; padding: 10px 0; border-bottom: 3px solid var(--color-neutral-100);">Calcular</span>
+              <span style="flex: 1; text-align: center; padding: 10px 0; opacity: 0.7;">Receitas</span>
+              <span style="flex: 1; text-align: center; padding: 10px 0; opacity: 0.7;">Guias</span>
+            </div>
+            <div style="flex: 1; overflow: hidden; padding: 16px; display: flex; flex-direction: column; gap: 14px; position: relative;">
+              <div class="card elev-sm" style="padding: 16px;">
+                <span class="card-kicker">Precificação</span>
+                <div class="field" style="display: flex; flex-direction: column; gap: 5px;">
+                  <label style="font-size: 11px; opacity: 0.7;">Ingredientes (R$)</label>
+                  <input class="input" value="42,50">
+                </div>
+                <div class="field" style="display: flex; flex-direction: column; gap: 5px;">
+                  <label style="font-size: 11px; opacity: 0.7;">Horas de trabalho</label>
+                  <input class="input" value="3">
+                </div>
+                <div style="display: flex; align-items: baseline; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--color-divider);">
+                  <span style="font-size: 12px; opacity: 0.7;">Sugerido</span>
+                  <strong class="marca" style="font-size: 25px; color: var(--color-accent-700);">R$ 128,40</strong>
+                </div>
+              </div>
+              <div class="card" style="padding: 14px;">
+                <span class="card-title" style="font-size: 15px;">Últimos cálculos</span>
+                <p style="margin: 0; font-size: 12px; opacity: 0.75;">Bolo de cenoura, 20 cm — R$ 96,00</p>
+                <p style="margin: 0; font-size: 12px; opacity: 0.75;">Naked cake, 24 cm — R$ 184,00</p>
+              </div>
+              <button class="btn btn-primary" style="position: absolute; right: 16px; bottom: 16px; width: 56px; height: 56px; padding: 0; border-radius: 999px; box-shadow: var(--shadow-md);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+              </button>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 56px; align-items: center; padding: 12px 0 14px; background: var(--color-surface);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6;"><path d="M15 5 8 12l7 7"></path></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="opacity: 0.6;"><circle cx="12" cy="12" r="8"></circle></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="opacity: 0.6;"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;logotipo&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;B — manuscrita moderna&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;A — manuscrita clássica&quot;,&quot;B — manuscrita moderna&quot;,&quot;C — moderna limpa&quot;,&quot;D — display atual&quot;],&quot;section&quot;:&quot;Marca&quot;},&quot;corAcento&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#c67139&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#c67139&quot;,&quot;#7a8a5e&quot;,&quot;#a8536b&quot;,&quot;#3f7a8a&quot;,&quot;#8a6ea8&quot;],&quot;section&quot;:&quot;Tema do site&quot;},&quot;corSecundaria&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#7a8a5e&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#7a8a5e&quot;,&quot;#c67139&quot;,&quot;#5f7d9a&quot;,&quot;#9a7b3f&quot;],&quot;section&quot;:&quot;Tema do site&quot;},&quot;mostrarAnuncio&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blocos&quot;}}">
+class Component extends DCLogic {
+  aplicarTema() {
+    const el = this.raizEl;
+    if (!el) return;
+    const a = this.props.corAcento, b = this.props.corSecundaria;
+    if (a) el.style.setProperty('--color-accent', a);
+    if (b) el.style.setProperty('--color-accent-2', b);
+    const fontes = {
+      'A — manuscrita clássica': ["'Grand Hotel', cursive", '0'],
+      'B — manuscrita moderna': ["'Caveat', cursive", '0'],
+      'C — moderna limpa': ["'Outfit', sans-serif", '-0.03em'],
+      'D — display atual': ['var(--font-heading)', '-0.03em']
+    };
+    const f = fontes[this.props.logotipo] || fontes['B — manuscrita moderna'];
+    el.style.setProperty('--fonte-marca', f[0]);
+    el.style.setProperty('--tracking-marca', f[1]);
+  }
+  componentDidMount() { this.aplicarTema(); }
+  componentDidUpdate() { this.aplicarTema(); }
+  renderVals() {
+    return {
+      raiz: (el) => { this.raizEl = el; this.aplicarTema(); },
+      mostrarAnuncio: this.props.mostrarAnuncio ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

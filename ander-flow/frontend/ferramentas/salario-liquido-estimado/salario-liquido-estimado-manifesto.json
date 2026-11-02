@@ -1,0 +1,41 @@
+{
+  "slug": "salario-liquido-estimado",
+  "estado": "planejada",
+  "categoria": "trabalho",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "pessoas",
+  "ordem": 30,
+  "nome": {
+    "pt-BR": "Salário líquido estimado",
+    "en": "Estimated net salary"
+  },
+  "descricao": {
+    "pt-BR": "Estima o salário líquido a partir do bruto, descontando INSS e IRRF pela tabela vigente.",
+    "en": "Estimates net salary from gross pay, deducting INSS (Brazilian social security) and IRRF (Brazilian income tax withholding) under the current tables."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quanto sobra do salário depois do desconto"
+    ],
+    "en": [
+      "how much is left of my salary after deductions"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "salário líquido",
+      "inss",
+      "irrf",
+      "holerite"
+    ],
+    "en": [
+      "net salary",
+      "INSS (Brazilian social security)",
+      "IRRF (Brazilian income tax)",
+      "pay stub"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

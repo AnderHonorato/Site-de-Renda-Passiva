@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+  <!-- incluir: compartilhado-cabeca -->
+  <meta name="af-rota" content="/conta">
+  <meta name="af-acesso" content="sessao">
+  <title data-texto="conta.titulo_pagina"></title>
+  <meta name="description" data-texto-content="conta.descricao_pagina">
+  <link rel="stylesheet" href="/estatico/paginas/conta/conta.css">
+  <script type="module" src="/estatico/paginas/conta/conta.js"></script>
+</head>
+<body>
+  <!-- incluir: compartilhado-cabecalho -->
+
+  <main id="conteudo" class="conteudo conta">
+    <h1 class="titulo-display titulo-display--3" data-texto="conta.titulo"></h1>
+
+    <div class="conta__grade">
+
+      <section class="superficie conta__secao" aria-labelledby="conta-titulo-perfil">
+        <h2 class="sobretitulo" id="conta-titulo-perfil" data-texto="conta.perfil.titulo"></h2>
+
+        <p class="conta__erro-geral" id="perfil-erro-geral" role="alert" hidden></p>
+
+        <form class="conta__formulario" data-formulario="perfil" novalidate>
+          <label class="campo" for="perfil-campo-nome">
+            <span class="campo__rotulo" data-texto="conta.perfil.nome"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="text" name="nome" id="perfil-campo-nome" autocomplete="name" maxlength="80" value="{{usuario_nome}}" required>
+            </span>
+            <span class="campo__erro" id="perfil-erro-nome"></span>
+          </label>
+
+          <label class="campo" for="perfil-campo-email">
+            <span class="campo__rotulo" data-texto="conta.perfil.email"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="email" id="perfil-campo-email" disabled>
+            </span>
+          </label>
+
+          <div class="conta__acoes">
+            <button type="submit" class="botao botao--secundario" data-texto="conta.perfil.salvar"></button>
+          </div>
+        </form>
+      </section>
+
+      <section class="superficie conta__secao" aria-labelledby="conta-titulo-preferencias">
+        <h2 class="sobretitulo" id="conta-titulo-preferencias" data-texto="conta.preferencias.titulo"></h2>
+
+        <div class="conta__preferencia">
+          <span class="campo__rotulo" data-texto="conta.preferencias.idioma"></span>
+          <div class="opcoes" role="radiogroup" data-texto-aria-label="conta.preferencias.idioma" data-grupo="idioma">
+            <label class="opcao">
+              <input type="radio" name="conta-idioma" value="pt-BR">
+              <span data-texto="compartilhado.idioma.pt-BR"></span>
+            </label>
+            <label class="opcao">
+              <input type="radio" name="conta-idioma" value="en">
+              <span data-texto="compartilhado.idioma.en"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="conta__preferencia">
+          <span class="campo__rotulo" data-texto="conta.preferencias.tema"></span>
+          <div class="opcoes" role="radiogroup" data-texto-aria-label="conta.preferencias.tema" data-grupo="tema">
+            <label class="opcao">
+              <input type="radio" name="conta-tema" value="sistema">
+              <span data-texto="conta.preferencias.tema_sistema"></span>
+            </label>
+            <label class="opcao">
+              <input type="radio" name="conta-tema" value="claro">
+              <span data-texto="conta.preferencias.tema_claro"></span>
+            </label>
+            <label class="opcao">
+              <input type="radio" name="conta-tema" value="escuro">
+              <span data-texto="conta.preferencias.tema_escuro"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="superficie conta__secao" aria-labelledby="conta-titulo-plano">
+        <div class="conta__cabecalho-secao">
+          <h2 class="sobretitulo" id="conta-titulo-plano" data-texto="conta.plano.titulo"></h2>
+          <span class="etiqueta conta__etiqueta-plano"></span>
+        </div>
+
+        <div class="conta__uso">
+          <div class="conta__uso-linha">
+            <span class="texto-2" data-texto="conta.plano.favoritos"></span>
+            <span class="progresso__rotulo conta__uso-numeros" data-uso="favoritos"></span>
+          </div>
+          <progress class="progresso" data-progresso="favoritos" value="0" max="1"></progress>
+
+          <div class="conta__uso-linha">
+            <span class="texto-2" data-texto="conta.plano.trabalhos"></span>
+            <span class="progresso__rotulo conta__uso-numeros" data-uso="trabalhos"></span>
+          </div>
+          <progress class="progresso" data-progresso="trabalhos" value="0" max="1"></progress>
+        </div>
+
+        <a class="conta__ver-planos" href="/planos" data-texto="conta.plano.ver_planos"></a>
+      </section>
+
+      <section class="superficie conta__secao" aria-labelledby="conta-titulo-senha">
+        <h2 class="sobretitulo" id="conta-titulo-senha" data-texto="conta.senha.titulo"></h2>
+
+        <p class="conta__erro-geral" id="senha-erro-geral" role="alert" hidden></p>
+
+        <form class="conta__formulario" data-formulario="senha" novalidate>
+          <label class="campo" for="senha-campo-atual">
+            <span class="campo__rotulo" data-texto="conta.senha.atual"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="password" name="senha_atual" id="senha-campo-atual" autocomplete="current-password" required>
+            </span>
+            <span class="campo__erro" id="senha-erro-senha_atual"></span>
+          </label>
+
+          <label class="campo" for="senha-campo-nova">
+            <span class="campo__rotulo" data-texto="conta.senha.nova"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="password" name="senha_nova" id="senha-campo-nova" autocomplete="new-password" minlength="10" maxlength="200" required>
+            </span>
+            <span class="campo__erro" id="senha-erro-senha_nova"></span>
+          </label>
+
+          <label class="campo" for="senha-campo-confirmar">
+            <span class="campo__rotulo" data-texto="conta.senha.confirmar"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="password" name="senha_confirmar" id="senha-campo-confirmar" autocomplete="new-password" minlength="10" maxlength="200" required>
+            </span>
+            <span class="campo__erro" id="senha-erro-senha_confirmar"></span>
+          </label>
+
+          <div class="conta__acoes">
+            <button type="submit" class="botao botao--secundario" data-texto="conta.senha.enviar"></button>
+          </div>
+        </form>
+      </section>
+
+      <section class="superficie conta__secao" aria-labelledby="conta-titulo-dados">
+        <h2 class="sobretitulo" id="conta-titulo-dados" data-texto="conta.dados.titulo"></h2>
+        <p class="texto-2" data-texto="conta.dados.legenda"></p>
+        <a class="botao botao--secundario" href="/api/conta/exportar" data-texto="conta.dados.exportar"></a>
+      </section>
+
+      <section class="superficie conta__secao conta__secao--perigo" aria-labelledby="conta-titulo-excluir">
+        <h2 class="sobretitulo" id="conta-titulo-excluir" data-texto="conta.excluir.titulo"></h2>
+        <p class="texto-2" data-texto="conta.excluir.legenda"></p>
+
+        <button type="button" class="botao botao--perigo" data-acao="abrir-exclusao" data-texto="conta.excluir.abrir"></button>
+
+        <form class="conta__formulario conta__exclusao" data-formulario="excluir" novalidate hidden>
+          <p class="conta__erro-geral" id="excluir-erro-geral" role="alert" hidden></p>
+
+          <label class="campo" for="excluir-campo-senha">
+            <span class="campo__rotulo" data-texto="conta.excluir.campo_senha"></span>
+            <span class="campo__controle">
+              <input class="campo__entrada" type="password" name="senha" id="excluir-campo-senha" autocomplete="current-password" required>
+            </span>
+            <span class="campo__erro" id="excluir-erro-senha"></span>
+          </label>
+
+          <div class="conta__acoes">
+            <button type="button" class="botao botao--fantasma" data-acao="cancelar-exclusao" data-texto="conta.excluir.cancelar"></button>
+            <button type="submit" class="botao botao--perigo" data-texto="conta.excluir.confirmar"></button>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- incluir: compartilhado-rodape -->
+  <!-- incluir: compartilhado-navegacao-celular -->
+</body>
+</html>

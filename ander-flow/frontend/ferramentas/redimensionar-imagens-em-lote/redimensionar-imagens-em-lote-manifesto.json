@@ -1,0 +1,39 @@
+{
+  "slug": "redimensionar-imagens-em-lote",
+  "estado": "planejada",
+  "categoria": "imagens",
+  "plano": "plus",
+  "processamento": "navegador",
+  "icone": "imagem",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Redimensionar imagens em lote",
+    "en": "Batch resize images"
+  },
+  "descricao": {
+    "pt-BR": "Redimensiona várias imagens de uma vez para o tamanho ou peso desejado.",
+    "en": "Resizes several images at once to a target size or file weight."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "redimensionar várias fotos de uma vez"
+    ],
+    "en": [
+      "resize several photos at once"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "redimensionar imagem",
+      "lote",
+      "tamanho"
+    ],
+    "en": [
+      "resize image",
+      "batch",
+      "size"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

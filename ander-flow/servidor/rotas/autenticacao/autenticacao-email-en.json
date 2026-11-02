@@ -1,0 +1,10 @@
+{
+  "autenticacao": {
+    "email": {
+      "recuperar_senha": {
+        "assunto": "Reset your password — Ander Flow",
+        "corpo": "Hi, {nome}.\n\nWe received a request to reset the password for your Ander Flow account.\n\nTo continue, open the link below. It is valid for 1 hour and can only be used once:\n{link}\n\nIf you didn't request this, ignore this e-mail — your password stays the same."
+      }
+    }
+  }
+}

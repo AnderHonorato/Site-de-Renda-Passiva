@@ -1,0 +1,68 @@
+{
+  "planos": {
+    "titulo_pagina": "Plans — Ander Flow",
+    "descricao_pagina": "Free for everyday work, with no usage limit. Plus unlocks bigger batches, your own branding and history.",
+    "hero": {
+      "titulo": "Almost everything is free. That was always the plan.",
+      "resumo": "{ferramentas_prontas} tools are ready to use, with no account and no usage limit. {ferramentas_plus} of them are Plus only, for people who process in volume and need their own branding on the document."
+    },
+    "gratis": {
+      "nome": "Free",
+      "preco": "R$ 0",
+      "preco_detalhe": "forever",
+      "descricao": "For the everyday work of someone solving one thing at a time.",
+      "recursos": {
+        "ferramentas": "Every ready tool, except the Plus only ones",
+        "uso": "Unlimited use, no account",
+        "exportar": "Exports PDF, CSV and image",
+        "lote": "Batches of up to {limite_lote_gratis} files at a time",
+        "favoritos": "Up to {limite_favoritos_gratis} tools in favorites",
+        "trabalhos": "Up to {limite_trabalhos_gratis} saved work items"
+      },
+      "acao": "Use it now"
+    },
+    "plus": {
+      "etiqueta": "Most chosen",
+      "nome": "Plus",
+      "preco_mensal": "{preco_plus_mensal}",
+      "preco_mensal_detalhe": "per month",
+      "preco_anual": "or {preco_plus_anual} per year — two months free",
+      "descricao": "For people who hand documents to clients and process files in batches.",
+      "recursos": {
+        "tudo": "Every tool, including the {ferramentas_plus} Plus only ones",
+        "lote": "Batches of up to {limite_lote_plus} files at a time",
+        "marca": "Exported documents with your branding",
+        "historico": "History and sync across devices"
+      },
+      "acao": "Subscribe to Plus",
+      "acao_detalhe": "Payment is not automatic yet — see how it works below",
+      "modal": {
+        "titulo": "Payment for Plus is not automatic yet",
+        "texto": "Subscribing to Plus here does not charge anything now. Payment is not integrated yet: arrange it with the administrator outside the site and, once confirmed, they enable your Plus plan manually on your account.",
+        "entendi": "Got it"
+      }
+    },
+    "nota_local": {
+      "texto": "No plan changes how the calculation works: everything keeps running in your browser. What Plus unlocks is volume, branding and history — never the result."
+    },
+    "perguntas": {
+      "titulo": "Questions about the plans",
+      "pagamento": {
+        "pergunta": "Does clicking \"Subscribe to Plus\" charge anything?",
+        "resposta": "No. Payment is not integrated into the site yet. The button only explains how to ask for access — nothing is charged here."
+      },
+      "liberacao": {
+        "pergunta": "So how do I get Plus?",
+        "resposta": "Arrange the payment with the administrator outside the site. Once confirmed, they enable the Plus plan manually on your account, in /admin."
+      },
+      "cancelar": {
+        "pergunta": "How do I cancel Plus?",
+        "resposta": "Talk to the administrator. While payment is not automatic, cancelling is also done manually on your account."
+      },
+      "gratis_para_sempre": {
+        "pergunta": "Will the Free plan keep existing?",
+        "resposta": "Yes. Most of the tools are free with no usage limit — Plus exists only for people who need bigger volume, their own branding and history."
+      }
+    }
+  }
+}

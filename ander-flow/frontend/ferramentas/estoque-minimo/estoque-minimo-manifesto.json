@@ -1,0 +1,37 @@
+{
+  "slug": "estoque-minimo",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Estoque mínimo e de segurança",
+    "en": "Minimum and safety stock"
+  },
+  "descricao": {
+    "pt-BR": "Calcula o estoque mínimo e de segurança a partir do consumo e do prazo de reposição.",
+    "en": "Calculates minimum and safety stock from consumption rate and lead time."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "calcular estoque mínimo"
+    ],
+    "en": [
+      "calculate minimum stock level"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "estoque mínimo",
+      "estoque de segurança"
+    ],
+    "en": [
+      "minimum stock",
+      "safety stock"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

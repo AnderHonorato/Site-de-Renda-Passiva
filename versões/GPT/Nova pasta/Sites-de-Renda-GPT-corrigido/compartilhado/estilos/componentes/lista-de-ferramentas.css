@@ -1,0 +1,71 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/lista-de-ferramentas.css
+   Lista editorial de ferramentas/guias — a alternativa preferida a uma grade
+   de cartões quadrados repetidos como estrutura principal da página. */
+
+.lista-de-ferramentas {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-de-ferramenta {
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-4);
+  padding: var(--espaço-4) var(--espaço-3);
+  border-radius: var(--raio-m);
+  border-bottom: 1px solid var(--cor-divisória);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--duração-controle) var(--curva-suave);
+}
+.lista-de-ferramentas > .item-de-ferramenta:last-child {
+  border-bottom: 0;
+}
+.item-de-ferramenta:hover {
+  background: color-mix(in srgb, var(--cor-texto) 5%, transparent);
+}
+
+.item-de-ferramenta-ícone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--cor-destaque-100);
+  color: var(--cor-destaque-800);
+}
+
+.item-de-ferramenta-texto {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.item-de-ferramenta-título {
+  margin: 0;
+  font-size: 16px;
+  font-family: var(--fonte-corpo);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+.item-de-ferramenta-descrição {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--cor-texto-suave);
+}
+
+.item-de-ferramenta-seta {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--cor-texto-suave);
+  transition: transform var(--duração-controle) var(--curva-suave);
+}
+.item-de-ferramenta:hover .item-de-ferramenta-seta {
+  transform: translateX(3px);
+  color: var(--cor-texto-destaque);
+}

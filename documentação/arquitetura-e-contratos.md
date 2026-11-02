@@ -4,7 +4,7 @@ Versão do contrato: 1.0.0 — 14/09/2026. Responsável pela integração: orque
 
 ## 1. Decisão geral
 
-Os seis produtos são **sites estáticos multipágina**. Toda ferramenta roda no navegador. Não há backend de aplicação, banco, cadastro, chat ou feedback em servidor (ver `decisão-sobre-cadastro-e-servidor.md`). O HTML é **gerado previamente** por um script local a partir de fragmentos; o JavaScript usa **módulos ES nativos**, sem framework e sem dependências em tempo de execução, exceto o gerador de QR Code (MIT) incorporado ao pacote.
+Os seis produtos são **sites estáticos multipágina**. Toda ferramenta roda no navegador. Não há backend de aplicação, banco, cadastro, chat ou feedback em servidor (ver `decisão-sobre-cadastro-e-servidor.md`). O HTML é **gerado previamente** por um script local a partir de fragmentos; o JavaScript usa **módulos ES nativos**, sem framework e sem dependências em tempo de execução, exceto o gerador de QR Code (MIT) incorporado ao pacote e, no portal, a pdf-lib (MIT) usada só pela ferramenta Juntar PDF e carregada por import dinâmico.
 
 Uma etapa de empacotamento (bundler) não foi adotada: ela exigiria dependência adicional e o ganho medido não compensa para páginas pequenas servidas por HTTP/2. Cada página carrega apenas os módulos que importa. A decisão pode ser revista se as medições de desempenho indicarem necessidade.
 
@@ -132,7 +132,7 @@ O marcado exato está em `compartilhado/ferramentas/modelo-de-layout.mjs`. Ícon
 
 ## 6. Sistema visual (baseado em `modelo/Modelo de Site.dc.html`, sistema “Organic”)
 
-Direção: fundo claro quente, títulos em Caprasimo, texto em Figtree, logotipo em Caveat 700 com a segunda palavra na cor de destaque (versão “B — manuscrita moderna” do modelo), símbolo espiral, cantos muito arredondados, botões e campos em pílula, ícones Lucide com traço 2,75. Composição editorial, faixas suaves e listas desenhadas; **não** usar grade de cartões quadrados como estrutura principal.
+Direção (identidade de 04/10/2026, que substituiu o sistema “Organic”): marfim quente (`#F5F2ED`), tinta preta (`#1A1A1A`), terracota (`#D97757`) e areia (`#C9B89B`); uma família só, **Inter** variável servida localmente, com os pesos 400, 500 e 600 e títulos grandes com espaçamento fechado; cantos por hierarquia (pílula nos botões, na busca e nos filtros; 14 px nas linhas; 24 px nos painéis); linha de 1 px antes de sombra, e sombra sempre suave; ícones Lucide com traço 1,75; rodapé escuro. O símbolo do site é o escudo com marca de verificação, em tinta. **Terracota de preenchimento leva texto de tinta (5,6:1); terracota como texto ou ícone sobre fundo claro é o `--marca`, mais escuro (5,2:1).** Texto branco sobre terracota dá 3,1:1 e não passa. Composição editorial, faixas suaves e listas desenhadas; **não** usar grade de cartões quadrados como estrutura principal. As cores e as medidas estão em `portal/estilos/núcleo.css`; a vitrine animada tem a paleta própria em `portal/vitrine/vitrine-motor.js`.
 
 Variáveis CSS (todas em português):
 

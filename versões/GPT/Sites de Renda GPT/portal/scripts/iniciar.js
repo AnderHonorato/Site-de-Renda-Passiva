@@ -9,12 +9,14 @@ import {notificar} from './notificar.js';
 import {baixar} from './baixar.js';
 import {renderizarApoio} from './renderizar-apoio.js';
 import {renderizarLegal} from './renderizar-legal.js';
+import {iniciarExperiencia,registrarRecente,renderizarRecentes} from './experiencia.js';
+import {iniciarEstudio} from './estudio-arquivos.js';
 const $=id=>document.getElementById(id);let limite=24;let soFavoritos=false;let favoritos=ler('favoritos',[]);if(!Array.isArray(favoritos))favoritos=[];
 let configuracao={};try{const resposta=await fetch('configurações/publica.json');if(resposta.ok)configuracao=await resposta.json();}catch{notificar('Configuração de contato indisponível. As ferramentas continuam funcionando.');}
 for(const c of categorias){const op=elemento('option','',c.nome);op.value=c.id;$('categoria').append(op);}
 const opcoes=[{id:0,nome:'Todas'},...categorias.filter(c=>[1,2,5,8,9,14].includes(c.id))];
 for(const c of opcoes){const b=botao(c.nome,()=>{$('categoria').value=c.id;limite=24;renderizarCatalogo();},'filtro');b.dataset.categoria=c.id;b.setAttribute('aria-pressed',String(c.id===0));if(c.icone)b.prepend(icone(c.icone));$('atalhos').append(b);}
-function abrir(f,registro){renderizarFerramenta(f,categorias.find(c=>c.id===f.categoria),registro);}
+function abrir(f,registro){const categoria=categorias.find(c=>c.id===f.categoria);registrarRecente(f,categoria);const similares=ferramentas.filter(item=>item.categoria===f.categoria&&item.id!==f.id).slice(0,3);renderizarFerramenta(f,categoria,registro,similares,item=>abrir(item));}
 function renderizarCatalogo(){
  const lista=filtrar(ferramentas,{busca:$('busca').value,categoria:$('categoria').value,favoritos:soFavoritos?favoritos:null},categorias);$('contagem').textContent=`${lista.length} ${lista.length===1?'ferramenta encontrada':'ferramentas encontradas'}`;
  $('atalhos').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.categoria===$('categoria').value)));
@@ -40,4 +42,4 @@ function navegar(){const hash=decodeURIComponent(location.hash.slice(1)||'inicio
 }
 document.querySelectorAll('[data-fechar]').forEach(b=>b.onclick=()=>b.closest('dialog').close());$('mais').onclick=()=>$('menu-mais').showModal();window.addEventListener('hashchange',navegar);
 document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!document.querySelector('dialog[open]')){e.preventDefault();location.hash='ferramentas';setTimeout(()=>$('busca').focus(),0);}});
-configurarPrivacidade();renderizarCatalogo();navegar();
+configurarPrivacidade();renderizarCatalogo();iniciarEstudio();iniciarExperiencia(categorias,id=>{const ferramenta=ferramentas.find(item=>item.id===id);if(ferramenta)abrir(ferramenta);});renderizarRecentes(id=>{const ferramenta=ferramentas.find(item=>item.id===id);if(ferramenta)abrir(ferramenta);});navegar();

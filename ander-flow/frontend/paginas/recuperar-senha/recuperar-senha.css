@@ -1,0 +1,57 @@
+/* recuperar-senha.css — pedir link e definir nova senha (docs/contratos.md §2, §11 "Autenticação"). */
+
+.recuperar-senha {
+  display: flex;
+  justify-content: center;
+  padding-block: var(--espaco-8) var(--espaco-9);
+}
+
+.recuperar-senha__cartao {
+  width: 100%;
+  max-width: 420px;
+}
+
+.recuperar-senha__etapa {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.recuperar-senha__legenda {
+  margin: 0;
+}
+
+.recuperar-senha__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.recuperar-senha__erro-geral {
+  margin: 0;
+  padding: var(--espaco-3);
+  border-radius: var(--raio-controle);
+  background: var(--cor-erro-suave);
+  color: var(--cor-erro);
+  font-size: 14px;
+}
+
+.recuperar-senha__acoes {
+  margin-top: var(--espaco-1);
+}
+
+.recuperar-senha__voltar {
+  align-self: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .recuperar-senha {
+    padding-block: var(--espaco-6) var(--espaco-7);
+  }
+
+  .recuperar-senha__cartao {
+    padding: var(--espaco-5);
+  }
+}

@@ -1,0 +1,81 @@
+/* vitrine.css — página de demonstração do sistema visual (rota /vitrine, acesso dev). Zero cor literal. */
+
+.vitrine {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-8);
+  padding-top: var(--espaco-6);
+  padding-bottom: var(--espaco-9);
+}
+
+.vitrine__secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  border-top: 1px solid var(--cor-linha);
+  padding-top: var(--espaco-6);
+}
+
+.vitrine__secao:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.vitrine__amostras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.vitrine__linha {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  flex-wrap: wrap;
+}
+
+.vitrine__grade-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-5);
+}
+
+.vitrine__grade-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--espaco-5);
+}
+
+.vitrine__esqueleto-amostra {
+  height: var(--alvo-toque);
+}
+
+.vitrine__confirmacao-amostra {
+  max-width: 420px;
+}
+
+.vitrine__icones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--espaco-4);
+}
+
+.vitrine__icone-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: var(--espaco-3);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-controle);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-2);
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .vitrine__grade-2,
+  .vitrine__grade-3 {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,39 @@
+/* compartilhado-tema-claro.css — tema Marfim (padrão). Toda cor literal do tema claro mora aqui.
+   Aplica na raiz (padrão) e explicitamente quando html[data-tema="claro"]. */
+
+:root,
+html[data-tema="claro"] {
+  --cor-fundo: #F7F4ED;
+  --cor-superficie: #FCFAF4;
+  --cor-recuo: #EFEAE0;
+  --cor-linha: #E0D8CB;
+  --cor-linha-forte: #C6BAA8;
+
+  --cor-texto: #292724;
+  --cor-texto-2: #635D54;
+  --cor-texto-3: #8A8275;
+
+  --cor-destaque: #A05134;
+  --cor-destaque-forte: #8A412A;
+  --cor-destaque-suave: #F2E4DA;
+  --cor-sobre-destaque: #FCFAF4;
+
+  --cor-salvia: #5E6B54;
+  --cor-salvia-suave: #E4E8DE;
+
+  --cor-erro: #8A412A;
+  --cor-erro-suave: #F0DDD3;
+
+  --cor-tinta: #292724;
+  --cor-sobre-tinta: #F5F1E8;
+  --cor-sobre-tinta-2: #A69C8C;
+
+  --cor-foco: #A05134;
+
+  /* Extras internas do sistema visual (só usadas por compartilhado-componentes.css/-estados.css) */
+  --cor-etiqueta-plus-fundo: #E8D9CC;
+  --cor-etiqueta-plus-texto: #7A4E33;
+  --cor-etiqueta-aviso-fundo: #FAF0EA;
+  --cor-etiqueta-aviso-texto: #8A412A;
+  --cor-sombra-selecao: #EDDACF;
+}

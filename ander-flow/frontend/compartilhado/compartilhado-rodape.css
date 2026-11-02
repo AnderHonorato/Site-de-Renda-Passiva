@@ -1,0 +1,76 @@
+/* compartilhado-rodape.css — rodapé. Zero cor literal. */
+
+.rodape {
+  border-top: 1px solid var(--cor-linha);
+  background: var(--cor-fundo);
+  padding: var(--espaco-8) var(--espaco-6) var(--espaco-6);
+}
+
+.rodape__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  gap: var(--espaco-6);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.rodape__marca {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.rodape__resumo {
+  font-size: 14px;
+  color: var(--cor-texto-2);
+  max-width: 32ch;
+  margin: 0;
+}
+
+.rodape__grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.rodape__grupo-titulo {
+  font-size: var(--texto-etiqueta);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cor-texto-2);
+  margin: 0 0 var(--espaco-1);
+}
+
+.rodape__grupo a {
+  color: var(--cor-texto-2);
+  font-size: 14.5px;
+}
+
+.rodape__grupo a:hover {
+  color: var(--cor-destaque);
+}
+
+.rodape__rodape {
+  max-width: 1180px;
+  margin: var(--espaco-7) auto 0;
+  padding-top: var(--espaco-5);
+  border-top: 1px solid var(--cor-linha);
+  font-size: var(--texto-apoio);
+  color: var(--cor-texto-2);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+}
+
+@media (max-width: 767px) {
+  .rodape {
+    padding: var(--espaco-6) var(--espaco-4);
+  }
+
+  .rodape__grade {
+    grid-template-columns: 1fr;
+    gap: var(--espaco-5);
+  }
+}

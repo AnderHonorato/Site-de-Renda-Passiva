@@ -1,0 +1,96 @@
+{
+  "limpar-planilha": {
+    "titulo_pagina": "Limpar planilha — Ander Flow",
+    "descricao_pagina": "Remova linhas duplicadas e vazias, apare espaços e padronize e-mail em uma planilha CSV ou Excel. Tudo roda no seu navegador.",
+    "titulo": "Limpar planilha",
+    "resumo": "Envie um CSV ou Excel, escolha o que conta como duplicada e baixe uma cópia limpa. O arquivo original nunca é alterado.",
+    "etapas": {
+      "enviar": "Enviar",
+      "configurar": "Configurar",
+      "revisar": "Revisar",
+      "exportar": "Exportar"
+    },
+    "enviar": {
+      "titulo": "Envie a planilha",
+      "arraste_titulo": "Arraste o arquivo aqui",
+      "arraste_texto": "ou escolha no seu aparelho — CSV, XLSX ou XLS, até 20 MB",
+      "botao_selecionar": "Escolher arquivo",
+      "formatos_aceitos": "Formatos aceitos: .csv, .xlsx, .xls",
+      "lendo": "Lendo o arquivo…",
+      "trocar_arquivo": "Trocar arquivo",
+      "resumo_arquivo": "{nome} · {linhas} linhas · {colunas} colunas · lido no seu navegador"
+    },
+    "erros": {
+      "arquivo_ausente": "Escolha um arquivo para continuar.",
+      "arquivo_grande_demais": "O arquivo passa de 20 MB. Reduza a planilha e tente de novo.",
+      "formato_nao_suportado": "Formato não aceito. Envie um arquivo .csv, .xlsx ou .xls.",
+      "planilha_vazia": "Não encontramos colunas nessa planilha. Confira o arquivo e tente de novo.",
+      "biblioteca_indisponivel": "Não foi possível carregar o leitor de Excel agora. Tente de novo em instantes."
+    },
+    "configurar": {
+      "titulo": "O que fazer com as {duplicadas} duplicadas?",
+      "duplicidade_titulo": "Considerar duplicada quando repetir",
+      "nenhuma_coluna_selecionada": "Marque ao menos uma coluna para detectar duplicadas.",
+      "qual_linha_titulo": "Qual linha fica",
+      "opcao_primeira": "A primeira da planilha",
+      "opcao_mais_recente": "A mais recente",
+      "opcao_mais_completa": "A mais completa",
+      "coluna_data_rotulo": "Coluna de data (opcional)",
+      "coluna_data_nenhuma": "Sem coluna de data — usa a última ocorrência",
+      "padronizar_email": "Padronizar e-mail em minúsculas",
+      "aparar_espacos": "Aparar espaços sobrando no começo, no fim e entre palavras",
+      "remover_vazias": "Remover linhas totalmente vazias",
+      "titulo_uma": "O que fazer com a duplicada?",
+      "titulo_nenhuma": "Nenhuma duplicada com essas colunas"
+    },
+    "revisar": {
+      "titulo": "Revisar antes de exportar",
+      "previa_titulo": "Prévia · {mostradas} de {total}",
+      "coluna_acao": "Ação",
+      "mantem": "mantém",
+      "remove": "remove",
+      "nota_local": "Nada é gravado agora. A planilha original continua intacta — o download é um arquivo novo.",
+      "linhas_continuam": "{quantidade} linhas continuam na planilha",
+      "resumo_contagens": "{total} linhas · {duplicadas} duplicadas · {vazias} vazias removidas",
+      "linhas_continuam_uma": "1 linha continua na planilha"
+    },
+    "exportar": {
+      "titulo": "Baixar a planilha limpa",
+      "texto": "Escolha o formato do arquivo novo. O original continua onde estava, sem nenhuma alteração.",
+      "botao_csv": "Baixar CSV",
+      "botao_xlsx": "Baixar XLSX",
+      "pronto_csv": "CSV baixado",
+      "pronto_xlsx": "XLSX baixado",
+      "nova_limpeza": "Limpar outra planilha"
+    },
+    "acoes": {
+      "continuar": "Continuar",
+      "continuar_configurar": "Continuar para configurar",
+      "revisar_tudo": "Revisar tudo",
+      "continuar_exportar": "Continuar para exportar"
+    },
+    "trabalho": {
+      "titulo_padrao": "Limpar planilha — {nome}"
+    },
+    "como_usar": {
+      "um": "Envie o arquivo CSV, XLSX ou XLS. Ele é lido no seu navegador e nunca sai do aparelho.",
+      "dois": "Marque as colunas que definem uma linha duplicada (por exemplo, e-mail) e escolha qual linha fica quando houver repetição.",
+      "tres": "Revise a prévia com o que fica e o que sai antes de exportar — nada é gravado até você baixar.",
+      "quatro": "Baixe o arquivo novo em CSV ou XLSX. O arquivo original continua exatamente como estava."
+    },
+    "perguntas": {
+      "original": {
+        "pergunta": "A planilha original é alterada?",
+        "resposta": "Não. A limpeza gera um arquivo novo para baixar; o arquivo que você enviou nunca é modificado nem sai do seu navegador."
+      },
+      "criterio": {
+        "pergunta": "Como a ferramenta decide qual linha é a duplicada?",
+        "resposta": "Duas linhas são consideradas a mesma quando os valores das colunas marcadas coincidem, ignorando maiúsculas/minúsculas e espaços nas pontas. Você escolhe qual das duas fica: a primeira, a mais recente ou a mais completa."
+      },
+      "limite": {
+        "pergunta": "Existe limite de tamanho?",
+        "resposta": "O arquivo enviado pode ter até 20 MB. Planilhas maiores precisam ser divididas antes."
+      }
+    }
+  }
+}

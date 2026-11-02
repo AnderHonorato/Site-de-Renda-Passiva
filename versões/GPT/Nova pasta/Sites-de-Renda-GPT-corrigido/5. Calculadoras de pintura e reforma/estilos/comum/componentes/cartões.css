@@ -1,0 +1,50 @@
+@charset "UTF-8";
+/* Sincronizado de compartilhado/estilos/componentes/cartões.css — edite a origem e rode "npm run sincronizar" na raiz. */
+/* compartilhado/estilos/componentes/cartões.css
+   Cartões pontuais (ex.: dentro de um resultado ou lista curta) — o sistema
+   evita usar grade de cartões como estrutura principal das páginas. */
+
+.cartão {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  padding: var(--espaço-5);
+  background: var(--cor-superfície);
+  border-radius: var(--raio-g);
+}
+.cartão-elevado {
+  background: var(--cor-superfície-elevada);
+  box-shadow: var(--sombra-m);
+}
+
+.cartão-título {
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  font-size: 19px;
+  margin: 0;
+}
+
+.cartão-legenda {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--cor-texto-destaque);
+}
+
+.cartão-corpo {
+  margin: 0;
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+  flex: 1;
+}
+
+.cartão-rodapé {
+  display: flex;
+  align-items: center;
+  gap: var(--espaço-2);
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+  padding-top: var(--espaço-2);
+  border-top: 1px solid var(--cor-divisória);
+}

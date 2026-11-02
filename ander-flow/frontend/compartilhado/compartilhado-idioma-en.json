@@ -1,0 +1,251 @@
+{
+  "compartilhado": {
+    "marca": {
+      "nome": "Ander Flow",
+      "monograma": "AF",
+      "ir_para_inicio": "Ander Flow — go to the home page"
+    },
+    "pular_para_conteudo": "Skip to content",
+    "cabecalho": {
+      "navegacao_rotulo": "Main navigation",
+      "ferramentas": "Tools",
+      "trabalho": "Work",
+      "salvos": "Saved",
+      "planos": "Plans",
+      "entrar": "Sign in",
+      "criar_conta": "Create account",
+      "conta": "Account",
+      "avisos": "Notices",
+      "admin": "Admin",
+      "sair": "Sign out",
+      "menu_conta_rotulo": "Account menu for {usuario_nome}",
+      "avisos_nao_lidos": "{quantidade} unread notices"
+    },
+    "tema": {
+      "alternar": "Switch theme",
+      "claro": "Light theme",
+      "escuro": "Dark theme",
+      "usar_claro": "Use light theme",
+      "usar_escuro": "Use dark theme"
+    },
+    "idioma": {
+      "seletor_rotulo": "Language",
+      "pt-BR": "Português (Brasil)",
+      "en": "English",
+      "sigla_pt-BR": "PT",
+      "sigla_en": "EN"
+    },
+    "navegacao_celular": {
+      "rotulo": "Bottom navigation",
+      "inicio": "Home",
+      "ferramentas": "Tools",
+      "salvos": "Saved",
+      "conta": "Account"
+    },
+    "rodape": {
+      "resumo": "Tools that solve one task at a time. The calculation runs in your browser.",
+      "grupo_produto": "Product",
+      "grupo_conta": "Account",
+      "grupo_legal": "Transparency",
+      "ferramentas": "All tools",
+      "planos": "Plans",
+      "entrar": "Sign in",
+      "criar_conta": "Create account",
+      "privacidade": "Privacy",
+      "termos": "Terms of use",
+      "cookies": "Cookies and local storage",
+      "direitos": "© {ano} Ander Flow. Made by Anderson."
+    },
+    "acoes": {
+      "salvar": "Save",
+      "cancelar": "Cancel",
+      "confirmar": "Confirm",
+      "voltar": "Back",
+      "continuar": "Continue",
+      "fechar": "Close",
+      "copiar": "Copy",
+      "copiado": "Copied",
+      "baixar": "Download",
+      "pdf": "PDF",
+      "xlsx": "XLSX",
+      "csv": "CSV",
+      "editar": "Edit",
+      "excluir": "Delete",
+      "remover": "Remove",
+      "tentar_de_novo": "Try again",
+      "ver_mais": "See more",
+      "ir_para_catalogo": "Go to the catalog",
+      "limpar": "Clear",
+      "enviar": "Send",
+      "agora_nao": "Not now",
+      "entendi": "Got it",
+      "subir": "Move up",
+      "descer": "Move down"
+    },
+    "estados": {
+      "carregando": "Loading…",
+      "processando": "Processing",
+      "vazio_titulo": "Nothing here yet",
+      "erro_titulo": "Something did not go as expected",
+      "erro_texto": "We could not load this right now. Check your connection and try again.",
+      "sem_resultados": "No tool found for \"{consulta}\".",
+      "sem_resultados_dica": "Try describing the task in other words."
+    },
+    "busca": {
+      "rotulo": "Search for a tool",
+      "placeholder": "Write what you need to solve",
+      "atalho": "/",
+      "atalho_rotulo": "Shortcut: slash key",
+      "resultados": "{quantidade} results"
+    },
+    "categorias": {
+      "dinheiro": {
+        "nome": "Money and pricing",
+        "resumo": "Price, margin, interest, installments and splitting bills."
+      },
+      "vendas": {
+        "nome": "Sales and proposals",
+        "resumo": "Quotes, proposals, commission and follow-up."
+      },
+      "calculo": {
+        "nome": "Math and conversion",
+        "resumo": "Percentages, cross-multiplication and units of measure."
+      },
+      "datas": {
+        "nome": "Dates and times",
+        "resumo": "Differences, deadlines, business days and working hours."
+      },
+      "texto": {
+        "nome": "Text",
+        "resumo": "Count, clean, standardize, compare and transform."
+      },
+      "documentos": {
+        "nome": "Documents and PDF",
+        "resumo": "Create, convert, organize and sign documents."
+      },
+      "planilhas": {
+        "nome": "Spreadsheets and data",
+        "resumo": "Clean, compare, convert and analyze tables."
+      },
+      "imagens": {
+        "nome": "Images",
+        "resumo": "Resize, convert, compress and inspect."
+      },
+      "desenvolvimento": {
+        "nome": "Development",
+        "resumo": "JSON, codes, converters and technical utilities."
+      },
+      "seguranca": {
+        "nome": "Passwords and security",
+        "resumo": "Generate secrets, validate documents and check data."
+      },
+      "trabalho": {
+        "nome": "HR and work",
+        "resumo": "Working hours, vacation, résumé, shifts and reviews."
+      },
+      "operacoes": {
+        "nome": "Inventory and logistics",
+        "resumo": "Stock, restocking, shipping, cubage and checking."
+      },
+      "marketing": {
+        "nome": "Marketing",
+        "resumo": "Campaigns, metrics, UTM and content material."
+      },
+      "produtividade": {
+        "nome": "Productivity",
+        "resumo": "Tasks, meetings, planning and follow-up."
+      },
+      "estudos": {
+        "nome": "Study",
+        "resumo": "Exercises, practice, review and printable material."
+      },
+      "oficio": {
+        "nome": "Craft, home and building",
+        "resumo": "Handmade production, renovation, parties and packaging."
+      }
+    },
+    "ferramenta": {
+      "estado_pronta": "Ready",
+      "estado_planejada": "Planned",
+      "plano_gratis": "Free",
+      "plano_plus": "Plus",
+      "processamento_local": "The calculation runs in your browser. Nothing is sent to a server.",
+      "arquivo_local": "The file is read in your browser and never leaves your device.",
+      "como_usar": "How to use it",
+      "perguntas": "Questions that come up",
+      "relacionadas": "People who use this also use",
+      "a_conta": "The math",
+      "favoritar": "Save tool",
+      "desfavoritar": "Remove from saved",
+      "favoritada": "Tool saved",
+      "salvar_trabalho": "Save work",
+      "trabalho_salvo": "Work saved to your account",
+      "entrar_para_salvar": "Sign in to keep this work",
+      "preencher_exemplo": "Fill in with an example",
+      "planejada_aviso": "This tool is planned and cannot be used yet.",
+      "migalhas_rotulo": "You are in"
+    },
+    "plano": {
+      "recurso_plus": "Plus feature",
+      "ver_plus": "See Plus",
+      "preco_mensal": "{valor}/month",
+      "sessao_necessaria": "Sign in to use this feature.",
+      "limite_atingido": "You have reached the limit of {limite} on the free plan."
+    },
+    "primeira_visita": {
+      "titulo": "Privacy",
+      "texto": "We only use the essential local storage to remember theme, language and what you save. There are no trackers and no third-party ads.",
+      "saiba_mais": "Cookies and local storage",
+      "ok": "Got it"
+    },
+    "popup": {
+      "rotulo": "What's new",
+      "fechar": "Close notice"
+    },
+    "confirmacao": {
+      "titulo": "Are you sure?",
+      "texto_excluir": "This action cannot be undone."
+    },
+    "tempo": {
+      "agora": "just now",
+      "minutos": "{quantidade} min ago",
+      "horas": "{quantidade} h ago",
+      "dias": "{quantidade} days ago"
+    },
+    "erros": {
+      "dados_invalidos": "Check the highlighted fields.",
+      "campo_obrigatorio": "Fill in this field.",
+      "formato_invalido": "The format is not right.",
+      "numero_invalido": "Enter a valid number.",
+      "valor_fora_do_limite": "The value is outside the allowed range.",
+      "texto_longo_demais": "The text went over the allowed length.",
+      "email_invalido": "Enter a valid e-mail address.",
+      "email_em_uso": "An account with this e-mail already exists.",
+      "senha_fraca": "The password needs at least 10 characters.",
+      "credenciais_invalidas": "E-mail or password do not match.",
+      "senha_atual_incorreta": "The current password does not match.",
+      "termos_nao_aceitos": "To create the account you need to accept the terms.",
+      "token_invalido": "This link has expired or was already used. Ask for a new one.",
+      "conta_suspensa": "This account is suspended. Talk to the administrator.",
+      "sessao_necessaria": "Sign in to continue.",
+      "acesso_negado": "You do not have permission for this.",
+      "plano_insuficiente": "This feature belongs to Plus.",
+      "limite_do_plano": "You have reached your plan limit ({limite}).",
+      "csrf_invalido": "The page stayed open for too long. Reload and try again.",
+      "muitas_tentativas": "Too many attempts. Try again in {minutos} minutes.",
+      "nao_encontrado": "We could not find what you were looking for.",
+      "ferramenta_inexistente": "That tool does not exist.",
+      "corpo_grande_demais": "The upload went over the allowed size.",
+      "acao_nao_permitida": "This action is not allowed.",
+      "erro_interno": "Something went wrong on our side. Try again in a moment.",
+      "sem_conexao": "No connection to the server. Check your internet and try again.",
+      "usuario_inexistente": "That user no longer exists.",
+      "aviso_inexistente": "That notice no longer exists."
+    },
+    "simbolos": {
+      "moeda": "R$",
+      "percentual": "%",
+      "sem_valor": "—"
+    }
+  }
+}

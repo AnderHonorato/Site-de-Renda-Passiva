@@ -1,0 +1,97 @@
+<!--página
+{
+  "título": "Planejador de encomendas",
+  "descrição": "Calcule quantos dias produtivos uma encomenda exige e uma data estimada de entrega, a partir da quantidade de peças, das horas por peça e dos dias que você trabalha.",
+  "destaque": "anil",
+  "navegação": "ferramentas",
+  "script": "páginas/planejador-de-encomendas.js",
+  "tipo": "ferramenta"
+}
+-->
+<section class="ferramenta" aria-labelledby="título-ferramenta">
+  <header class="ferramenta-cabeçalho">
+    <p class="sobretítulo">Ferramenta</p>
+    <h1 id="título-ferramenta">Planejador de encomendas</h1>
+    <p class="ferramenta-resumo">Informe a encomenda, sua capacidade diária e os dias em que você produz. O resultado é uma estimativa de planejamento pessoal, não um compromisso de prazo.</p>
+  </header>
+
+  <div class="ferramenta-corpo">
+    <form id="formulário-encomenda" class="ferramenta-formulário" novalidate>
+      <fieldset class="grupo-de-campos grupo-de-campos-duas-colunas">
+        <legend>A encomenda</legend>
+        <div class="campo">
+          <label for="quantidade-de-peças">Quantidade de peças</label>
+          <input id="quantidade-de-peças" name="quantidade-de-peças" class="entrada" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex.: 5" aria-describedby="quantidade-de-peças-erro">
+          <p id="quantidade-de-peças-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="horas-por-peça">Horas por peça</label>
+          <input id="horas-por-peça" name="horas-por-peça" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 2" aria-describedby="horas-por-peça-erro">
+          <p id="horas-por-peça-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <fieldset class="grupo-de-campos">
+        <legend>Sua capacidade</legend>
+        <div class="campo">
+          <label for="capacidade-horas-dia">Capacidade de horas por dia</label>
+          <input id="capacidade-horas-dia" name="capacidade-horas-dia" class="entrada" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 2" aria-describedby="capacidade-horas-dia-ajuda capacidade-horas-dia-erro">
+          <p id="capacidade-horas-dia-ajuda" class="campo-ajuda">Quantas horas por dia você consegue dedicar só a produzir, com folga para o resto da rotina.</p>
+          <p id="capacidade-horas-dia-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <span id="dias-da-semana-rótulo">Dias da semana em que você produz</span>
+          <div class="opções" role="group" aria-labelledby="dias-da-semana-rótulo">
+            <label class="opção"><input type="checkbox" name="dia-da-semana" value="1" checked><span>Segunda</span></label>
+            <label class="opção"><input type="checkbox" name="dia-da-semana" value="2" checked><span>Terça</span></label>
+            <label class="opção"><input type="checkbox" name="dia-da-semana" value="3" checked><span>Quarta</span></label>
+            <label class="opção"><input type="checkbox" name="dia-da-semana" value="4" checked><span>Quinta</span></label>
+            <label class="opção"><input type="checkbox" name="dia-da-semana" value="5" checked><span>Sexta</span></label>
+            <label class="opção"><input type="checkbox" name="dia-da-semana" value="6"><span>Sábado</span></label>
+            <label class="opção"><input type="checkbox" name="dia-da-semana" value="0"><span>Domingo</span></label>
+          </div>
+          <p id="dias-da-semana-erro" class="campo-erro" hidden></p>
+        </div>
+        <div class="campo">
+          <label for="data-de-início">Data de início da produção</label>
+          <input id="data-de-início" name="data-de-início" class="entrada" type="date" aria-describedby="data-de-início-erro">
+          <p id="data-de-início-erro" class="campo-erro" hidden></p>
+        </div>
+      </fieldset>
+      <div class="ações-do-formulário somente-computador">
+        <button type="submit" class="botão botão-primário"><svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calcular"></use></svg>Calcular prazo</button>
+      </div>
+    </form>
+
+    <section class="ferramenta-resultado" aria-labelledby="resultado-título" aria-live="polite">
+      <h2 id="resultado-título" class="visualmente-oculto">Resultado</h2>
+      <div class="estado-vazio" data-estado-vazio>
+        <svg class="ícone" aria-hidden="true" focusable="false"><use href="{{raiz}}recursos/ícones/ícones.svg#calendar-days"></use></svg>
+        <p class="estado-vazio-título">A data estimada aparece aqui</p>
+        <p>Preencha a encomenda, a capacidade diária e os dias de produção e toque em Calcular prazo.</p>
+      </div>
+      <div data-resultado hidden>
+        <div class="resultado-destaque">
+          <p class="resultado-rótulo">Data estimada de entrega</p>
+          <p class="resultado-valor" data-data-de-entrega></p>
+        </div>
+        <dl class="lista-de-resultado" data-lista></dl>
+        <details class="memória-de-cálculo">
+          <summary>Como chegamos a essa data</summary>
+          <ol class="memória-de-cálculo-corpo" data-memória></ol>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <div class="espaço-publicitário" data-bloco="após-resultado"></div>
+
+  <ul class="premissas" aria-label="Premissas do cálculo">
+    <li>Dias produtivos = horas totais da encomenda ÷ capacidade de horas por dia, arredondado para cima.</li>
+    <li>A data conta só os dias da semana marcados, a partir da data de início.</li>
+    <li>É uma estimativa de planejamento pessoal: imprevistos podem mudar o prazo.</li>
+  </ul>
+</section>
+
+<div class="ação-contextual">
+  <button type="submit" form="formulário-encomenda" class="botão botão-primário">Calcular prazo</button>
+</div>

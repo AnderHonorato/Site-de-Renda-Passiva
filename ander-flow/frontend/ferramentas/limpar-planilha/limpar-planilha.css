@@ -1,0 +1,64 @@
+/* limpar-planilha.css — fluxo em etapas, seleção de colunas e prévia. */
+
+.limpar-planilha .etapa-painel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  padding: var(--espaco-5);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-superficie);
+  background: var(--cor-superficie);
+}
+
+.limpar-planilha .etapa-painel:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+.limpar-planilha__colunas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--espaco-2);
+}
+
+.limpar-planilha__coluna-data {
+  margin-top: var(--espaco-3);
+  max-width: 420px;
+}
+
+.limpar-planilha__tabela-rolagem {
+  overflow-x: auto;
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-controle);
+}
+
+.limpar-planilha__previa {
+  min-width: 100%;
+}
+
+.limpar-planilha__previa td,
+.limpar-planilha__previa th {
+  white-space: nowrap;
+  max-width: 22ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.limpar-planilha__linha-removida td {
+  color: var(--cor-texto-2);
+  text-decoration: line-through;
+}
+
+.limpar-planilha__linha-removida td:last-child {
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .limpar-planilha .etapa-painel {
+    padding: var(--espaco-4);
+  }
+
+  .limpar-planilha__colunas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

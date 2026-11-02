@@ -17,7 +17,7 @@ Uma função autoral nomeada por arquivo, com nome de arquivo em kebab-case igua
 | `br.gov.bcb.pix`, identificadores EMV (`00`, `26`, `52`, `53`, `54`, `58`, `59`, `60`, `62`, `63`) | Manual de Padrões para Iniciação do Pix. |
 | `adsbygoogle`, `data-ad-client`, `data-ad-slot`, `data-ad-format`, `data-full-width-responsive`, `ca-pub-` | API do Google AdSense. |
 | Diretivas HTTP (`Content-Security-Policy`, `X-Content-Type-Options` etc.) | Padrões HTTP. |
-| Arquivos de fontes (`figtree-latin-400-normal.woff2`), `qrcode.mjs`, `LICENSE-qrcode-generator.txt`, `OFL-*.txt`, `LICENÇA-lucide.txt` (conteúdo) | Dependências de terceiros preservam nomes e licenças originais. |
+| Arquivos de fontes (`figtree-latin-400-normal.woff2`), `qrcode.mjs`, `LICENSE-qrcode-generator.txt`, `pdf-lib.esm.min.js`, `LICENSE-pdf-lib.txt`, `OFL-*.txt`, `LICENÇA-lucide.txt` (conteúdo) | Dependências de terceiros preservam nomes e licenças originais. |
 | Identificadores dos ícones de produto (`cake`, `paint-roller`) no sprite | São os nomes originais do Lucide, para facilitar a rastreabilidade; os ícones comuns têm identificadores em português (`início`, `apoiar`). |
 | Nomes de pacotes npm (`jsqr`, `lucide-static`, `@fontsource/figtree`) | Nomes oficiais. |
 

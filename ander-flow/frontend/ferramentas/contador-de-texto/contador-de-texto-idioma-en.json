@@ -1,0 +1,55 @@
+{
+  "contador-de-texto": {
+    "titulo_pagina": "Text counter — Ander Flow",
+    "descricao_pagina": "Counts characters, words, sentences and paragraphs, and estimates reading and speaking time. The text never leaves your browser.",
+    "titulo": "Text counter",
+    "resumo": "Paste or type the text. The count follows every keystroke and shows whether it fits the most common limits.",
+    "nota_privacidade": "The text stays only in this browser memory: it is not sent to a server and not stored on the device.",
+    "campos": {
+      "texto": "Your text",
+      "texto_placeholder": "Paste or type here"
+    },
+    "acoes": {
+      "copiar_contagem": "Copy the count"
+    },
+    "resultado": {
+      "titulo": "Words",
+      "palavras_valor": "{quantidade} words",
+      "caracteres": "Characters",
+      "caracteres_sem_espaco": "Characters without spaces",
+      "frases": "Sentences",
+      "paragrafos": "Paragraphs",
+      "leitura": "Reading time",
+      "fala": "Speaking time"
+    },
+    "limites": {
+      "titulo": "Does it fit the limit?",
+      "x": "Post on X",
+      "sms": "SMS",
+      "meta_descricao": "Google description",
+      "titulo_pagina": "Page title",
+      "restam": "{quantidade} of {total} left",
+      "passou": "{quantidade} over"
+    },
+    "exemplo": "Good morning! Here is the quote for the service we talked about.\n\nThe price includes materials and labour, and we can start within seven business days. If you have any questions, just reply to this message.",
+    "como_usar": {
+      "um": "Paste the text into the box. The count changes **as you type**, with nothing to press.",
+      "dois": "Use characters without spaces when the limit comes from a system, and words when it is about reading.",
+      "tres": "Reading time estimates how long a text takes read silently; speaking time, how long it takes read out loud."
+    },
+    "perguntas": {
+      "emoji": {
+        "pergunta": "How many characters does an emoji count as?",
+        "resposta": "As one. The count follows what a person sees on screen, not the number of internal codes — that is why a family emoji, made of several, shows up as a single character. Some systems count differently, so check against the limit of the destination when it is tight."
+      },
+      "tempo": {
+        "pergunta": "Where does the reading time come from?",
+        "resposta": "From an average: 200 words per minute for silent reading and 130 per minute for speaking out loud. It is an estimate, not a measurement."
+      },
+      "guarda": {
+        "pergunta": "Is the text stored anywhere?",
+        "resposta": "No. Unlike the other tools, this one keeps no draft: when you close or reload the page, the text is gone."
+      }
+    }
+  }
+}

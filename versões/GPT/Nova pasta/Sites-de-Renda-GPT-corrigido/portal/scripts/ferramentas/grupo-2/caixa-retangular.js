@@ -1,0 +1,4 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape} from './comum.js';
+import {molde,bandeja,linha,rect,pol,label} from './moldes.js';
+export default definir("caixa-retangular",6,"Caixa retangular","Crie bandeja retangular aberta com abas de colagem.","Dimensões internas nominais em mm para papel fino. Molde SVG em escala real; abas coladas formam quatro paredes.",[N('largura','Largura interna (mm)',100,10,800),N('comprimento','Comprimento interno (mm)',60,10,800),N('altura','Altura (mm)',40,5,300),N('aba','Aba de cola (mm)',8,2,30)],async d=>{const w=n(d,'largura',10,800),l=n(d,'comprimento',10,800),h=n(d,'altura',5,300),a=n(d,'aba',2,30);if(a>h)throw Error('A aba não pode superar a altura.');const b=bandeja(w,l,h,a);return molde('Caixa retangular',b.w,b.h,b.s,['Modelo de bandeja aberta. Dobre as quatro paredes e cole as abas por dentro.']);});
+

@@ -1,0 +1,4 @@
+import * as h from './helpers.js';
+
+export default h.tool("divisor-de-viagem",15,"Divisor de viagem","Rateie combustível, pedágios, hospedagem e outros gastos.","Cada categoria é um total do grupo. A soma é dividida igualmente; centavos restantes vão aos primeiros participantes, para preservar o valor exato.",[h.numero('combustivel','Combustível do grupo (R$)',150),h.numero('pedagios','Pedágios do grupo (R$)',50),h.numero('hospedagem','Hospedagem do grupo (R$)',400),h.numero('outros','Outros gastos do grupo (R$)',0),h.numero('pagantes','Pessoas pagantes',3,1,1000)],async d=>{const t=h.n(d.combustivel)+h.n(d.pedagios)+h.n(d.hospedagem)+h.n(d.outros),p=h.inteiro(d.pagantes,'Pagantes',1,1000),a=h.ratear(t,Array(p).fill(1));return h.resultado('Total: '+h.reais(t),...a.map((v,i)=>'Pessoa '+(i+1)+': '+h.reais(v)));});
+

@@ -1,0 +1,41 @@
+{
+  "slug": "cronometro",
+  "estado": "planejada",
+  "categoria": "produtividade",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "lista",
+  "ordem": 10,
+  "nome": {
+    "pt-BR": "Cronômetro e temporizador",
+    "en": "Stopwatch and timer"
+  },
+  "descricao": {
+    "pt-BR": "Cronômetro com voltas, temporizador regressivo e ciclos de foco.",
+    "en": "Stopwatch with lap times, countdown timer, and focus cycles."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "marcar o tempo"
+    ],
+    "en": [
+      "time something"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "cronômetro",
+      "timer",
+      "pomodoro",
+      "foco"
+    ],
+    "en": [
+      "stopwatch",
+      "timer",
+      "pomodoro",
+      "focus"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

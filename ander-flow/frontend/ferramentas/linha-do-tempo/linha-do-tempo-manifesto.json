@@ -1,0 +1,39 @@
+{
+  "slug": "linha-do-tempo",
+  "estado": "planejada",
+  "categoria": "estudos",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "livro",
+  "ordem": 140,
+  "nome": {
+    "pt-BR": "Linha do tempo",
+    "en": "Timeline"
+  },
+  "descricao": {
+    "pt-BR": "Organiza eventos em ordem cronológica numa linha do tempo visual.",
+    "en": "Organizes events in chronological order on a visual timeline."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "montar linha do tempo para o trabalho"
+    ],
+    "en": [
+      "build a timeline for a project"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "linha do tempo",
+      "cronologia",
+      "história"
+    ],
+    "en": [
+      "timeline",
+      "chronology",
+      "history"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

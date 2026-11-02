@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+  <style>
+    #i { fill: none; stroke: #cc6040; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    #i > * { transform-box: fill-box; transform-origin: center; }
+    #i { animation: rola 2s ease-in-out infinite; }
+    @keyframes rola { 0%, 100% { transform: translateX(-1.4px); } 50% { transform: translateX(1.4px); } }
+    #i > :nth-child(2), #i > :nth-child(3) { animation: roda 2s ease-in-out infinite; }
+    @keyframes roda { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-.8px); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <g id="i"><path d="M3.5 6.5h2.3l2 10.2a1.5 1.5 0 0 0 1.5 1.2h7.4a1.5 1.5 0 0 0 1.5-1.2l1.3-6.4H6.3"/><circle cx="10" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></g>
+</svg>

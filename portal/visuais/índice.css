@@ -1,0 +1,13 @@
+/* Folha só do índice das propostas. */
+.título { font-size: 30px; letter-spacing: -.03em; margin: 34px 0 8px; }
+.linha { color: var(--tinta-suave); max-width: 66ch; margin: 0 0 20px; font-size: 15px; }
+.opções { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); }
+.opção {
+  display: block; padding: 18px; border-radius: 10px;
+  border: 1px solid #dde3ea; background: #fff; text-decoration: none; color: inherit;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.opção:hover { border-color: #0f766e; transform: translateY(-2px); }
+.opção b { display: block; font-size: 17px; margin-bottom: 6px; }
+.opção span { font-size: 13.5px; color: var(--tinta-suave); line-height: 1.5; }
+.linha--espaçada { margin-top: 22px; }

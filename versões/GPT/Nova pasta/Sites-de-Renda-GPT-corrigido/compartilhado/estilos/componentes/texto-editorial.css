@@ -1,0 +1,69 @@
+@charset "UTF-8";
+/* compartilhado/estilos/componentes/texto-editorial.css
+   Tipografia de páginas institucionais longas (metodologia, sobre, política
+   de privacidade, termos de uso). */
+
+.texto-editorial {
+  max-width: 68ch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-4);
+}
+
+.texto-editorial h2 {
+  margin-top: var(--espaço-4);
+  font-size: 26px;
+}
+.texto-editorial h3 {
+  font-size: 20px;
+}
+
+.texto-editorial p {
+  margin: 0;
+  font-size: 15.5px;
+}
+
+.texto-editorial ul,
+.texto-editorial ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaço-2);
+  padding-left: 1.3em;
+}
+.texto-editorial ul { list-style: disc; }
+.texto-editorial ol { list-style: decimal; }
+.texto-editorial li { font-size: 15.5px; }
+.texto-editorial li::marker { color: var(--cor-texto-destaque); }
+
+.texto-editorial blockquote {
+  margin: 0;
+  padding: var(--espaço-4) var(--espaço-5);
+  background: var(--cor-superfície);
+  border-left: 4px solid var(--cor-texto-destaque);
+  border-radius: 0 var(--raio-m) var(--raio-m) 0;
+  font-style: italic;
+  color: var(--cor-texto-suave);
+}
+
+.texto-editorial figure {
+  margin: 0;
+}
+.texto-editorial figcaption {
+  margin-top: var(--espaço-1);
+  font-size: 12.5px;
+  color: var(--cor-texto-suave);
+}
+
+.texto-editorial-destaque {
+  font-family: var(--fonte-título);
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--cor-texto-destaque);
+  line-height: 1.35;
+}
+
+.texto-editorial hr {
+  border: 0;
+  border-top: 1px solid var(--cor-divisória);
+  margin: var(--espaço-2) 0;
+}

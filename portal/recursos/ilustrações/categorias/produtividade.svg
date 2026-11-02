@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" role="img" aria-labelledby="t">
+  <title id="t">Uma lista de tarefas sendo marcada item por item</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #e3e6ec; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .visto { stroke-dasharray: 34; animation: marca 6.4s ease-in-out infinite; }
+    .v2 { animation-delay: .8s; } .v3 { animation-delay: 1.6s; } .v4 { animation-delay: 2.4s; }
+    @keyframes marca { 0%, 8% { stroke-dashoffset: 34; } 20%, 88% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 34; } }
+    .risco { animation: riscar 6.4s ease-in-out infinite; }
+    .r2 { animation-delay: .8s; } .r3 { animation-delay: 1.6s; } .r4 { animation-delay: 2.4s; }
+    @keyframes riscar { 0%, 8% { transform: scaleX(0); } 22%, 88% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+    .estrela { animation: gira 4s ease-in-out infinite; }
+    @keyframes gira { 0%, 100% { transform: rotate(-14deg) scale(1); } 50% { transform: rotate(14deg) scale(1.15); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="182" rx="130" ry="9"/>
+  <rect x="124" y="26" width="232" height="148" rx="16" fill="#fffdf9" stroke="#1a1a1a" stroke-width="3"/>
+  <g fill="none" stroke="#1a1a1a" stroke-width="3"><rect x="146" y="46" width="22" height="22" rx="6"/><rect x="146" y="76" width="22" height="22" rx="6"/><rect x="146" y="106" width="22" height="22" rx="6"/><rect x="146" y="136" width="22" height="22" rx="6"/></g>
+  <g fill="none" stroke="#d97757" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path class="visto" d="M150 57l6 6 10-12"/><path class="visto v2" d="M150 87l6 6 10-12"/><path class="visto v3" d="M150 117l6 6 10-12"/><path class="visto v4" d="M150 147l6 6 10-12"/></g>
+  <g fill="#ddd6cc"><rect x="184" y="52" width="130" height="10" rx="5"/><rect x="184" y="82" width="104" height="10" rx="5"/><rect x="184" y="112" width="140" height="10" rx="5"/><rect x="184" y="142" width="88" height="10" rx="5"/></g>
+  <g fill="#3d4451" opacity=".85"><rect class="risco e" x="184" y="55" width="130" height="4" rx="2"/><rect class="risco e r2" x="184" y="85" width="104" height="4" rx="2"/><rect class="risco e r3" x="184" y="115" width="140" height="4" rx="2"/><rect class="risco e r4" x="184" y="145" width="88" height="4" rx="2"/></g>
+  <g class="estrela o"><path d="M398 70l7 15 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z" fill="#d97757" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/></g>
+</svg>

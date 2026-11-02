@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="90 0 300 200" role="img" aria-labelledby="t">
+  <title id="t">Um escudo com um visto sendo desenhado e um anel de proteção pulsando</title>
+  <style>
+    :root { --tinta: #1a1a1a; --fundo: #f6e3da; --sombra: #1a1a1a; --sombra-alfa: .08; }
+    :root { --tinta: #e9e4dc; --fundo: #2e2521; --sombra: #000; --sombra-alfa: .4; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    .fundo { fill: var(--fundo); }
+    ellipse.chão { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .o { transform-box: fill-box; transform-origin: center; }
+    .b { transform-box: fill-box; transform-origin: bottom; }
+    .e { transform-box: fill-box; transform-origin: left; }
+    .anel { animation: pulso 3s ease-out infinite; }
+    .a2 { animation-delay: 1.5s; }
+    @keyframes pulso { 0% { transform: scale(.85); opacity: .7; } 100% { transform: scale(1.5); opacity: 0; } }
+    .visto { stroke-dasharray: 80; animation: desenha 3.6s ease-in-out infinite; }
+    @keyframes desenha { 0%, 15% { stroke-dashoffset: 80; } 45%, 90% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 80; } }
+    .chave { animation: flutua 3.2s ease-in-out infinite; }
+    @keyframes flutua { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-9px) rotate(6deg); } }
+    .ponto { animation: pisca 2.4s ease-in-out infinite; }
+    .p2 { animation-delay: .4s; } .p3 { animation-delay: .8s; } .p4 { animation-delay: 1.2s; }
+    @keyframes pisca { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <rect class="fundo" width="480" height="200"/>
+  <ellipse class="chão" cx="240" cy="182" rx="110" ry="9"/>
+  <circle class="anel o" cx="240" cy="96" r="52" fill="none" stroke="#d97757" stroke-width="3"/>
+  <circle class="anel a2 o" cx="240" cy="96" r="52" fill="none" stroke="#d97757" stroke-width="3"/>
+  <path d="M240 30l60 22v44c0 36-25 60-60 72-35-12-60-36-60-72V52z" fill="#3d4451" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <path class="visto" d="M214 100l18 18 34-40" fill="none" stroke="#fffdf9" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <g class="chave o" fill="none" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"><circle cx="372" cy="78" r="14" fill="#c9b89b"/><path d="M382 88l22 24M396 102l8-8M404 112l8-8"/></g>
+  <g fill="#1a1a1a"><circle class="ponto" cx="96" cy="86" r="5"/><circle class="ponto p2" cx="114" cy="86" r="5"/><circle class="ponto p3" cx="132" cy="86" r="5"/><circle class="ponto p4" cx="150" cy="86" r="5"/></g>
+</svg>

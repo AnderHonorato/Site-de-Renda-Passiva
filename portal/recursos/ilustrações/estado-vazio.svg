@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" role="img" aria-labelledby="t">
+  <title id="t">Uma caixa aberta e vazia com uma estrelinha flutuando</title>
+  <style>
+    :root { --tinta: #1a1a1a; --sombra: #1a1a1a; --sombra-alfa: .07; }
+    [stroke="#1a1a1a"] { stroke: var(--tinta); }
+    [fill="#1a1a1a"] { fill: var(--tinta); }
+    ellipse[opacity] { fill: var(--sombra); opacity: var(--sombra-alfa); }
+    .estrela { animation: flutuar 3.4s ease-in-out infinite; transform-origin: 188px 76px; }
+    @keyframes flutuar { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(18deg); } }
+    .poeira { animation: piscar 2.6s ease-in-out infinite; }
+    .poeira:nth-of-type(2) { animation-delay: .8s; }
+    .poeira:nth-of-type(3) { animation-delay: 1.6s; }
+    @keyframes piscar { 0%, 100% { opacity: .15; } 50% { opacity: .9; } }
+    @media (prefers-reduced-motion: reduce) { .estrela, .poeira { animation: none; } }
+  </style>
+  <ellipse cx="160" cy="214" rx="100" ry="11" fill="#1a1a1a" opacity=".07"/>
+  <path d="M96 118l-22-30h58l-10 30z" fill="#e0d2b8" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M224 118l22-30h-58l10 30z" fill="#e0d2b8" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M96 118h128l-6 18H102z" fill="#b8a88a" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="96" y="132" width="128" height="68" rx="12" fill="#c9b89b" stroke="#1a1a1a" stroke-width="3"/>
+  <rect x="136" y="150" width="48" height="12" rx="6" fill="#fffdf9" opacity=".7"/>
+  <g class="estrela"><path d="M188 58l5 12 13 1-10 8 3 13-11-7-11 7 3-13-10-8 13-1z" fill="#d97757" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/></g>
+  <g fill="#d97757"><circle class="poeira" cx="124" cy="86" r="3.5"/><circle class="poeira" cx="226" cy="108" r="3"/><circle class="poeira" cx="104" cy="104" r="2.6"/></g>
+</svg>

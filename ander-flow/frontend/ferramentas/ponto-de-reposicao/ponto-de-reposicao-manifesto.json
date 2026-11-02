@@ -1,0 +1,37 @@
+{
+  "slug": "ponto-de-reposicao",
+  "estado": "planejada",
+  "categoria": "operacoes",
+  "plano": "gratis",
+  "processamento": "navegador",
+  "icone": "ferramenta",
+  "ordem": 20,
+  "nome": {
+    "pt-BR": "Ponto de reposição",
+    "en": "Reorder point"
+  },
+  "descricao": {
+    "pt-BR": "Calcula em qual quantidade fazer o novo pedido para não zerar o estoque.",
+    "en": "Calculates the quantity at which to reorder so stock never runs out."
+  },
+  "intencoes": {
+    "pt-BR": [
+      "quando fazer o próximo pedido de estoque"
+    ],
+    "en": [
+      "when to place the next stock order"
+    ]
+  },
+  "etiquetas": {
+    "pt-BR": [
+      "ponto de reposição",
+      "pedido de compra"
+    ],
+    "en": [
+      "reorder point",
+      "purchase order"
+    ]
+  },
+  "relacionadas": [],
+  "recursos_plus": []
+}

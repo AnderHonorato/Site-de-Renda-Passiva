@@ -1,0 +1,3 @@
+import {definir,N,T,S,F,D,C,n,inteiro,texto,opcao,lista,fmt,escape,arquivoTexto,saidaTexto,data,iso,palavras} from './comum.js';
+export default definir("diferenca-entre-datas",10,"Diferença entre datas","Conte dias civis entre duas datas.","Datas tratadas ao meio-dia UTC para evitar horário de verão. Exclui a data inicial; resultado negativo quando fim precede início.",[D('inicio','Data inicial'),D('fim','Data final','2026-03-03')],async d=>{const a=data(d.inicio),b=data(d.fim),q=(b-a)/86400000;return {resumo:q+' dias',linhas:['Data inicial excluída. '+Math.abs(q*24)+' horas nominais; dias civis não são duração local exata.']};});
+
