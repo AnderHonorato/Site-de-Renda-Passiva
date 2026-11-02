@@ -339,3 +339,17 @@ body:has(dialog.ajuda-modal[open]) { overflow: hidden; }
 .compressao-previa[hidden] { display: none !important; }
 .compressao-previa p { margin: 0 0 8px; font-size: .8rem; font-weight: 600; }
 .compressao-previa img { display: block; max-width: 100%; max-height: min(38dvh, 340px); width: auto; height: auto; margin-inline: auto; object-fit: contain; border-radius: 8px; }
+
+/* Laboratório Regex: separação entre busca, destaques e substituição sem alongar cards. */
+.regex-previa {margin-top:12px;min-width:0;padding:12px;border:1px solid var(--borda);border-radius:12px;}
+.regex-previa[hidden],.regex-substituicao[hidden] {display:none!important;}
+.regex-previa h3 {margin:0 0 7px;font-size:.86rem;line-height:1.3;}
+.regex-previa pre {margin:0;max-height:240px;overflow:auto;overflow-wrap:anywhere;white-space:pre-wrap;
+  padding:10px;border:1px solid var(--borda);border-radius:9px;background:var(--superfície-2);
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.79rem;line-height:1.5;}
+.regex-previa mark {background:#ffe68c;color:#252015;border-radius:2px;padding:0 1px;}
+.regex-substituicao {margin-top:12px;}
+
+/* Lotes de IDs podem ter até 200 linhas sem alongar a página no celular. */
+#ferramenta[data-slug="uuid"] .tabela-rolagem {max-height:320px;overflow:auto;overscroll-behavior:contain;}
+#ferramenta[data-slug="regex"] .tabela-rolagem {max-height:380px;overflow:auto;overscroll-behavior:contain;}

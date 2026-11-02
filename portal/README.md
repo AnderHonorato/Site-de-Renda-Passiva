@@ -184,3 +184,9 @@ Da lista enviada (Squoosh, regex101, CodeBeautify, VirusTotal, Have I Been Pwned
 - **Verificador de contraste WCAG 2.2** (F080): comparação AA/AAA para texto normal e grande, prévia de cores e sugestão calculada de texto que passe em AA. Avalia somente duas cores sólidas, sem prometer conformidade total do site.
 
 O portal agora tem 89 ferramentas prontas entre as 208 entradas. Ambas usam o montador de ferramentas e o design compacto comum, modal Como funciona e recomendações distintas no final.
+
+
+## Laboratório Regex e gerador seguro de identificadores
+- **Regex (F038):** executa padrões somente em Worker descartável, interrompe a execução ao passar de 1,6 s para mitigar travamentos, destaca matches com texto HTML escapado, expõe capturas nomeadas e numeradas, substituição JS e resultados exportáveis. Limite de 30 mil caracteres de entrada e 150 correspondências exibidas. A proteção reduz risco de ReDoS, não é uma garantia universal para uso em backend.
+- **UUID (F037):** gera em lote até 200 UUID v4, códigos hexadecimais ou códigos legíveis sem caracteres ambíguos. Usa Web Crypto e amostragem sem viés, aceita prefixo seguro, baixa TXT e permite exportação CSV/Excel. Sem sincronização dos identificadores com contas e sem promessas de unicidade global.
+Ambas mantêm o layout compacto, ajuda em modal, faixa de relacionadas abaixo do conteúdo e selo Visto.
