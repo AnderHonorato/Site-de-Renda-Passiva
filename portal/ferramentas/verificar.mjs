@@ -123,7 +123,7 @@ for (const página of páginas) {
       if (url.origin !== origemPublica.origin || !url.pathname.startsWith(origemPublica.pathname)
           || url.search || url.hash) return null;
       const relativo = decodeURI(url.pathname.slice(origemPublica.pathname.length));
-      const arquivo = relativo.endsWith('/') ? join(relativo, 'index.html') : relativo;
+      const arquivo = (!relativo || relativo.endsWith('/')) ? join(relativo, 'index.html') : relativo;
       const local = resolve(RAIZ, arquivo);
       return local.startsWith(RAIZ + sep) ? local : null;
     }
