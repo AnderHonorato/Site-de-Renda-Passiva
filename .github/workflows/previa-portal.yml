@@ -30,6 +30,10 @@ jobs:
         run: npm run gerar --prefix portal
         env:
           PORTAL_URL_SITE: 'https://anderhonorato.github.io/Site-de-Renda-Passiva/portal/'
+      - name: Validar toda a suíte de código
+        run: npm run testar --prefix portal
+      - name: Conferir integridade do catálogo e das páginas
+        run: npm run verificar --prefix portal
       - run: node --test portal/testes/previa-pages.test.mjs portal/testes/publicação-e-servidor.test.mjs portal/testes/indexacao-pages.test.mjs
       - run: node portal/ferramentas/preparar-pages.mjs
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
