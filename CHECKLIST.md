@@ -93,3 +93,20 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [ ] Validar cadastro/recuperação, moderação e restauração antes de habilitar comunidade pública.
 
 - [ ] Tradução integral somente após terminar as funcionalidades (decisão do proprietário).
+
+
+## Rodada paralela de funcionalidades — 02/11/2026
+
+- [x] Fluxo de caixa: saldo inicial, movimentos cronológicos, data de corte, previsão, primeiro saldo negativo e PDF/CSV/Excel.
+
+- [x] Conversor de moedas: cotação informada pelo usuário, tarifa fixa, valores brutos/líquidos e aviso sem cotação ao vivo.
+
+- [x] ROI, ROAS, CAC e LTV: fórmulas transparentes, distinção entre retorno simplificado e lucro e valores não calculáveis sem divisor.
+
+- [x] Rateio de custos: pesos personalizados, empates determinísticos e centavos fechando exatamente com PDF/CSV/Excel.
+
+- [x] Quatro módulos no montador visual existente e testes unitários específicos para cada novo cálculo.
+
+- [ ] Ativar API na nuvem: Railway exige assinatura após encerramento do teste; sem contratação automática.
+
+- [ ] Traduzir somente após concluir as funcionalidades, conforme decisão do proprietário.
