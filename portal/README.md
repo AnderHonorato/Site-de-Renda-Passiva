@@ -132,3 +132,8 @@ A prévia estática do GitHub Pages continua independente. Para testar a API em 
 - `PORTAL_CHAT_PUBLICO=0`, `PORTAL_CHAT_LOCAL=0` e `PORTAL_ADS_ATIVO=0`.
 
 O comando de nuvem valida ambiente/HTTPS/volume e executa API no loopback, com site e proxy no mesmo domínio. Não reutiliza `dev`/ `no-ar`, pois esses usam o modo de desenvolvimento. A recuperação de senha pública, moderação do chat e anúncios reais seguem indisponíveis; dados criados no ambiente de testes não são migrados para produção. Não faça cadastro com dados pessoais reais até concluir a revisão de segurança e operação. Custos do servidor/volume dependem do plano de hospedagem.
+
+
+## Nova rodada: quatro ferramentas completas (antes da tradução)
+
+O catálogo agora oferece Fluxo de caixa (saldo por data de corte, projeção e exportação PDF/CSV/XLSX), Conversor de moedas com cotação **manual**, ROI/ROAS/CAC/LTV com hipóteses explícitas, e Rateio de custos proporcional com conciliação dos centavos e exportação PDF/CSV/XLSX. Cada ferramenta mantém o montador comum, visual, cálculo local, validação por campo, seção Como usar e testes Node. As quatro passaram da categoria planejada para pronta; nenhum dado bancário nem cotação ao vivo é consultado automaticamente. A implementação evita adicionar dependências externas, telas duplicadas ou processamento remoto.
