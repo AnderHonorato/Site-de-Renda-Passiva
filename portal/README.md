@@ -161,3 +161,11 @@ A ferramenta de vendas **Ficha de cliente** é funcional e trabalha somente com 
 
 ## Rodada de estoque e logística — cinco ferramentas completas
 Ponto de reposição, Giro de estoque, Curva ABC, Cubagem e Peso volumétrico agora usam o montador compacto e o botão de ajuda modal, com cálculos e testes locais. Curva ABC e Cubagem produzem tabela automaticamente exportável em CSV e XLSX. Nenhuma das cinco consulta fornecedores ou dados externos: a pessoa informa consumo, estoque, mercadorias, medidas ou fator contratual. O ponto de reposição indica o gatilho para revisar compras, **não o lote econômico**; o giro usa **CMV ao custo**, não faturamento; a curva ABC não equivale a margem; e o peso de referência **não é o preço de frete**.
+
+
+## Continuação de expedição — Conferência de pedido e Romaneio
+A ferramenta **Conferência de pedido** compara SKU e quantidades do pedido e da separação, consolida SKUs repetidos, detecta faltas e excessos e exporta tabela em CSV/Excel. A ferramenta **Romaneio de carga** prepara documento PDF A4 com relação de até 80 volumes, conteúdo, peso e destinatário, além de tabela CSV/Excel. Ambas processam dados no navegador, possuem limites e validação de entrada e não substituem conferência física ou documentação fiscal. Os módulos usam o layout compacto e o modal "Como funciona" já existentes.
+
+
+## Terceira rodada logística: etiquetas e comparação de fretes
+A ferramenta **Etiqueta de expedição** gera até 80 etiquetas genéricas, quatro por A4, com numeração e exportação PDF/CSV/XLSX. A identificação não é etiqueta oficial de postagem e não emite código de rastreio. Dados pessoais de etiquetas e romaneios são processados no navegador; nestas duas ferramentas o salvamento de trabalhos na conta está bloqueado. A ferramenta **Calculadora de frete** compara de 2 a 20 transportadoras a partir de preços e fatores **informados manualmente** por transportadora; não consulta cotações reais nem afirma calcular seguro, pedágio ou taxas externas.
