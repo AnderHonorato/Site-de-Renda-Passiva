@@ -78,3 +78,18 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Teste de recuperação do servidor corrigido para aceitar o separador nativo de caminhos no Windows e no Linux.
 
 - [x] Verificador de links de idioma aceita hreflang HTTPS do próprio sitemap, convertendo para caminhos locais e mantendo a conferência recíproca.
+
+
+## Servidor de testes na nuvem — etapa inicial
+
+- [x] Inicialização Node para nuvem separada de desenvolvimento, exigindo produção, domínio HTTPS e arquivo de banco absoluto.
+
+- [x] Mantidos os 65 módulos locais, modelo visual e a prévia estática existente.
+
+- [x] Teste automatizado de configuração de nuvem sem chat público e sem anúncios.
+
+- [ ] Verificar domínio real, volume persistente e rotas da API após o primeiro deploy.
+
+- [ ] Validar cadastro/recuperação, moderação e restauração antes de habilitar comunidade pública.
+
+- [ ] Tradução integral somente após terminar as funcionalidades (decisão do proprietário).

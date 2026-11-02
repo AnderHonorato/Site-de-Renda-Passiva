@@ -5,7 +5,9 @@
   "description": "Portal de ferramentas com conta opcional, chat moderado e publicidade condicional.",
   "type": "module",
   "license": "UNLICENSED",
-  "engines": { "node": ">=22.14" },
+  "engines": {
+    "node": ">=22.14"
+  },
   "scripts": {
     "gerar": "node --env-file-if-exists=.env ferramentas/gerar.mjs",
     "verificar": "node ferramentas/verificar.mjs",
@@ -23,6 +25,7 @@
     "conferir": "npm run gerar && npm run testar && npm run verificar",
     "medir": "node ferramentas/medir-desempenho.mjs",
     "vitrine:capas": "node vitrine/ferramentas/vitrine-gerar-capas.mjs",
-    "vitrine:video": "node vitrine/ferramentas/vitrine-renderizar-video.mjs"
+    "vitrine:video": "node vitrine/ferramentas/vitrine-renderizar-video.mjs",
+    "nuvem": "node ferramentas/iniciar-nuvem.mjs"
   }
 }

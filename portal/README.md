@@ -117,3 +117,18 @@ O roteiro para Search Console, conteúdo e campanhas está em [busca e publicida
 A prévia estática publica as ferramentas locais sem PC ligado. O workflow agora gera sitemap e URLs canônicas HTTPS com o caminho completo da subpasta de publicação. A preparação verifica as páginas do sitemap e marca login, conta, administração, erros e outras páginas que dependem da API como noindex, mantendo visual e scripts.
 
 A indexação não é garantida. Ainda é preciso validar cobertura no Search Console, implementar a hospedagem da API para login/chat, e configurar AdSense com consentimento. Arquivos robots.txt em subpastas do GitHub Pages não controlam o domínio raiz; as páginas privadas são protegidas de indexação por metatags HTML.
+
+
+## Servidor completo na nuvem — testes isolados
+
+A prévia estática do GitHub Pages continua independente. Para testar a API em uma hospedagem Node 22+, configure a pasta raiz `portal` e execute `npm run gerar` durante a construção. Na inicialização use `npm run nuvem`, com as variáveis:
+
+- `NODE_ENV=production` e `PORT` fornecida pela plataforma.
+
+- `URL_PUBLICA=https://<domínio-do-servidor>` (origem sem caminho, HTTPS).
+
+- `PORTAL_BANCO=/data/portal.sqlite` com volume persistente montado em `/data`.
+
+- `PORTAL_CHAT_PUBLICO=0`, `PORTAL_CHAT_LOCAL=0` e `PORTAL_ADS_ATIVO=0`.
+
+O comando de nuvem valida ambiente/HTTPS/volume e executa API no loopback, com site e proxy no mesmo domínio. Não reutiliza `dev`/ `no-ar`, pois esses usam o modo de desenvolvimento. A recuperação de senha pública, moderação do chat e anúncios reais seguem indisponíveis; dados criados no ambiente de testes não são migrados para produção. Não faça cadastro com dados pessoais reais até concluir a revisão de segurança e operação. Custos do servidor/volume dependem do plano de hospedagem.
