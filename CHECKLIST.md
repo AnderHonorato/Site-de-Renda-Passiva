@@ -184,3 +184,11 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [ ] F207 Código: formatação SQL/JS/CSS/HTML com parsers reais e sem executar trechos.
 - [ ] F208 Fluxos Mermaid: renderização SVG/PNG local e validação contra HTML inseguro.
 - [ ] APIs de vazamento e malware só com termos, limites e privacidade verificados.
+
+## Lote de ferramentas profissionais — imagens e textos
+- [x] F076 compressão local JPG/WebP com prévia e comparação real de bytes.
+- [x] F053 comparador de textos por linhas, diff em TXT e limite de complexidade.
+- [x] F057 ordenação de linhas por português, ordem numérica e inversão.
+- [ ] F038 laboratório Regex com Worker e tempo máximo.
+- [ ] F207 formatador seguro com parsers reais.
+- [ ] F208 editor Mermaid local.

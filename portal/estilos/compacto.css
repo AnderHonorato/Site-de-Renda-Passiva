@@ -333,3 +333,9 @@ body:has(dialog.ajuda-modal[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .contraste-amostra { transition: none !important; }
 }
+
+/* Prévia compacta do compressor de imagens. */
+.compressao-previa { margin-top: 12px; padding: 12px; border: 1px solid var(--borda); border-radius: 12px; }
+.compressao-previa[hidden] { display: none !important; }
+.compressao-previa p { margin: 0 0 8px; font-size: .8rem; font-weight: 600; }
+.compressao-previa img { display: block; max-width: 100%; max-height: min(38dvh, 340px); width: auto; height: auto; margin-inline: auto; object-fit: contain; border-radius: 8px; }
