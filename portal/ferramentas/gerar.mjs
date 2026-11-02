@@ -120,7 +120,8 @@ function páginaDeFerramenta(f, instruções) {
     atual: 'ferramentas',
     conteúdo,
     scripts: ['núcleo/página-de-ferramenta.js'],
-    estilos: f.slug === 'limpar-planilha' ? ['limpeza-planilha.css'] : [],
+    estilos: f.slug === 'limpar-planilha' ? ['limpeza-planilha.css']
+      : f.slug === 'ficha-de-cliente' ? ['ficha-de-cliente.css'] : [],
     anunciosPermitidos: f.cat !== 'estudos',
   });
 }
