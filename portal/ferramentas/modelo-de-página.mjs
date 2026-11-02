@@ -196,7 +196,7 @@ export function montarPágina({
 }) {
   // Caminho começando com "./" é relativo à raiz do site (ex.: a vitrine), não a estilos/ ou scripts/.
   const caminho = (pasta, arquivo) => (arquivo.startsWith('./') ? `${raiz || './'}${arquivo.slice(2)}` : `${raiz}${pasta}/${arquivo}`);
-  const folhas = [...new Set(['núcleo.css', 'fontes.css', 'layout.css', 'componentes.css', 'movimento.css', 'páginas.css', 'conta.css', 'chat.css', 'nível.css', 'publicidade.css', 'consentimento.css', 'estabilidade.css', 'banner-prioritario.css', 'perfil-compacto.css', 'editor-perfil.css', ...estilos])]
+  const folhas = [...new Set(['núcleo.css', 'fontes.css', 'layout.css', 'componentes.css', 'movimento.css', 'páginas.css', 'conta.css', 'chat.css', 'nível.css', 'publicidade.css', 'consentimento.css', 'estabilidade.css', 'banner-prioritario.css', 'perfil-compacto.css', 'editor-perfil.css', ...estilos, 'compacto.css'])]
     .map((f) => `  <link rel="stylesheet" href="${caminho('estilos', f)}">`).join('\n');
   const módulos = scripts
     .map((s) => `  <script type="module" src="${caminho('scripts', s)}"></script>`).join('\n');
