@@ -26,8 +26,11 @@ jobs:
         with:
           node-version: '22'
       - run: npm ci --prefix portal --ignore-scripts
-      - run: npm run gerar --prefix portal
-      - run: node --test portal/testes/previa-pages.test.mjs portal/testes/publicação-e-servidor.test.mjs
+      - name: Gerar URLs públicas da prévia
+        run: npm run gerar --prefix portal
+        env:
+          PORTAL_URL_SITE: 'https://anderhonorato.github.io/Site-de-Renda-Passiva/portal/'
+      - run: node --test portal/testes/previa-pages.test.mjs portal/testes/publicação-e-servidor.test.mjs portal/testes/indexacao-pages.test.mjs
       - run: node portal/ferramentas/preparar-pages.mjs
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:

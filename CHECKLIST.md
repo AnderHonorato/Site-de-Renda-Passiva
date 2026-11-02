@@ -65,3 +65,11 @@ Não houve implantação em domínio público nem ativação de anúncios reais/
 - [ ] Tradução integral das ferramentas, desempenho e acessibilidade em aparelho físico, AdSense real e preparação de produção continuam pendentes.
 
 Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
+
+
+## Continuação — indexação segura da prévia pública
+
+- [x] URLs canônicas HTTPS e sitemap da prévia com caminho completo de subpasta.
+- [x] Páginas de conta, administração e erros marcadas como noindex no pacote GitHub Pages; publicadas sem mudar interface.
+- [x] Testes adicionados para URLs públicas e exclusão das telas privadas.
+- [ ] Validar indexação real no Google Search Console; tradução integral e teste físico continuam pendentes.
