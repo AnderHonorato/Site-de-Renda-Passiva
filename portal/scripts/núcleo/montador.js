@@ -13,6 +13,7 @@ import { criarProgresso, mostrarErro, limparErros, lerFormulário, avisar } from
 import { copiar, baixar, baixarCsv, baixarPlanilha, nomeDeArquivo } from './exportar.js';
 import { marcarResultado, pulsar } from './movimento.js';
 import { registrarUso } from './uso-ferramentas.js';
+import { registrarUso as registrarUsoRecente } from './preferências.js';
 import { api } from './api.js';
 import { caminhoDoIdioma, obterSessao } from './sessão.js';
 
@@ -312,6 +313,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       const saída = await calcular(dados);
       dadosAtuais = { ...dados };
       desenharResultado(saída);
+      registrarUsoRecente(ferramenta.slug);
       // O uso recebe só o identificador; os valores só saem do aparelho quando a pessoa toca em "Salvar trabalho".
       if (registrarUsoAtivo) void registrarUso(ferramenta.slug);
       if (demorada) progresso.concluir('Pronto');
