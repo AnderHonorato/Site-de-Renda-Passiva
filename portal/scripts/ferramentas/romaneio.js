@@ -94,6 +94,7 @@ export default{
  },
  montar(raiz,ferramenta){
   montarFerramenta(raiz,ferramenta,{rótuloDaAção:'Gerar romaneio',
+   permitirSalvarTrabalho:false, registrarUsoAtivo:false,
    campos:[
     {nome:'numero',rótulo:'Número do romaneio',padrão:'ROM-001'},
     {nome:'remetente',rótulo:'Remetente',padrão:'Minha loja'},

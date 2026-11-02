@@ -157,3 +157,10 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Romaneio: volume, conteúdo, peso, destinatário, totais e PDF A4 mais CSV/Excel.
 - [x] Validações, exemplo, limitações e testes sem rede incluídos.
 - [ ] Teste visual direto no celular permanece uma etapa de qualidade; rodar CI antes de publicar.
+
+
+## Terceira continuação logística
+- [x] Etiquetas em PDF A4: quatro por folha, volumes numerados, exportação de tabela e sem rastreio inventado.
+- [x] Comparação de frete: fator de cubagem por transportadora, preços digitados e ranking de estimativas.
+- [x] Bloqueio de salvamento remoto de nomes/endereços para etiquetas e romaneio.
+- [ ] Validação visual de impressão em escala de 100% em diferentes impressoras.
