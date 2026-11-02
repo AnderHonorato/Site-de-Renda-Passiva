@@ -165,11 +165,14 @@ function markupDeCampo(campo) {
  *     arquivos?: { rótulo: string, ícone?: string, gerar: () => void }[]
  *   },
  *   demorada?: boolean,
+ *   permitirSalvarTrabalho?: boolean,
+ *   registrarUsoAtivo?: boolean,
  *   aoMontar?: (raiz: HTMLElement, recalcular: (opções?: {focar?: boolean}) => Promise<void>) => void
  * }} definição
  */
 export function montarFerramenta(raiz, ferramenta, definição) {
-  const { campos, calcular, rótuloDaAção = 'Calcular', demorada = false, aoMontar } = definição;
+  const { campos, calcular, rótuloDaAção = 'Calcular', demorada = false, aoMontar,
+    permitirSalvarTrabalho = true, registrarUsoAtivo = true } = definição;
 
   raiz.innerHTML = `<form id="formulário" novalidate>
   <div class="campos campos--2">${campos.map(markupDeCampo).join('')}</div>
@@ -215,7 +218,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       botões.push(`<button class="botão botão--linha" type="button" data-tabela="csv">${ícone('baixar')}CSV</button>`);
       botões.push(`<button class="botão botão--linha" type="button" data-tabela="xlsx">${ícone('planilha')}Planilha</button>`);
     }
-    botões.push(`<button class="botão botão--linha" type="button" data-salvar-trabalho>${ícone('confere')}${emInglês ? 'Save work' : 'Salvar trabalho'}</button>`);
+    if (permitirSalvarTrabalho) botões.push(`<button class="botão botão--linha" type="button" data-salvar-trabalho>${ícone('confere')}${emInglês ? 'Save work' : 'Salvar trabalho'}</button>`);
 
     caixaDeResultado.innerHTML = `<p class="rótulo">Resultado</p>
       <p class="resultado__valor">${escapar(saída.valor)}</p>
@@ -310,7 +313,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       dadosAtuais = { ...dados };
       desenharResultado(saída);
       // O uso recebe só o identificador; os valores só saem do aparelho quando a pessoa toca em "Salvar trabalho".
-      void registrarUso(ferramenta.slug);
+      if (registrarUsoAtivo) void registrarUso(ferramenta.slug);
       if (demorada) progresso.concluir('Pronto');
       else progresso.esconder();
       if (focar) caixaDeResultado.focus({ preventScroll: true });
@@ -377,7 +380,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
   });
 
   aoMontar?.(raiz, executar);
-  void reabrirSeSolicitado();
+  if (permitirSalvarTrabalho) void reabrirSeSolicitado();
 }
 
 export { baixar, baixarCsv, baixarPlanilha, nomeDeArquivo, copiar, avisar };

@@ -129,3 +129,14 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [ ] Backend persistente em nuvem e recuperação de senha por e-mail seguem pendentes; Railway pede plano.
 
 - [ ] Tradução completa somente depois das funcionalidades, conforme decisão do proprietário.
+
+
+## Ficha de cliente local — continuação 02/11/2026
+
+- [x] Formulário de cadastro e edição com validação; listagem pesquisável por nome, contato, observação e histórico.
+- [x] Exclusão individual com confirmação, máximo de 250 clientes e backup JSON com restauração substitutiva validada.
+- [x] Exportação Excel com dados em células de texto, mantendo o estilo responsivo do portal.
+- [x] Bloqueado o botão "Salvar trabalho" e o registro remoto de uso apenas para esta ferramenta, evitando envio de contatos à API.
+- [x] Casos de teste sobre integridade de backup, dados duplicados, edição, limite, busca e exclusão.
+- [ ] Traduzir ferramentas somente depois do restante do portal, conforme prioridade do proprietário.
+- [ ] Hospedagem do backend em nuvem requer conta ativa, domínio e backup persistente (Railway expirado).
