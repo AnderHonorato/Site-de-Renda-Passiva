@@ -8,11 +8,21 @@ export const token = () => randomBytes(32).toString('base64url');
 export const erro = (status, codigo) => Object.assign(new Error(codigo), { status, codigo });
 
 export function cookies(req) {
-  try {
-    return Object.fromEntries((req.headers.cookie || '')
-      .split(';').map(x => x.trim().split('=').map(decodeURIComponent))
-      .filter(x => x.length === 2));
-  } catch { return {}; }
+  const resultado = Object.create(null);
+  for (const parte of (req.headers.cookie || '').split(';')) {
+    const posicao = parte.indexOf('=');
+    if (posicao <= 0) continue;
+    try {
+      const nome = decodeURIComponent(parte.slice(0, posicao).trim());
+      const valor = decodeURIComponent(parte.slice(posicao + 1).trim());
+      if (nome && !['__proto__', 'constructor', 'prototype'].includes(nome)) {
+        resultado[nome] = valor;
+      }
+    } catch {
+      // Um cookie malformado não deve invalidar os demais cookies válidos.
+    }
+  }
+  return resultado;
 }
 
 export async function senhaHash(senha) {
