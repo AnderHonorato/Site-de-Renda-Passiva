@@ -101,11 +101,29 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
       'A1;2026-10;20;100;40;12;3;10;5;5;2;10;7'].join('\n');
     const feedSku=['id;title;description;link;image_link;availability;price',
       'A1;Camiseta básica algodão premium;Camiseta casual de algodão;https://loja.exemplo/p;https://loja.exemplo/p.png;in_stock;99.90 BRL'].join('\n');
+    // Teste E2E real das DEZ rotas Premium: dois motores independentes,
+    // dados fictícios e nenhuma integração financeira externa.
+    const ferramentasLote=[
+      ['lote','simulador-margem-marketplaces',{csv:'sku;canal;unidades;preco;cmv;comissao_pct;tarifa_fixa;frete;ads_unitario;imposto_pct;devolucao_pct;meta_margem_pct\nSKU1;A;10;100;40;10;2;5;3;5;2;15'}],
+      ['lote','conciliacao-de-repasses',{pedidos:'pedido;canal;previsto;status\nP1;A;100;pago',repasses:'pedido;recebido;taxas\nP1;90;10'}],
+      ['lote','auditoria-de-devolucoes',{vendas:'sku;vendidas;preco;cmv;frete;taxas\nS1;10;100;40;20;30',devolucoes:'sku;devolvidas;reembolsos;frete_reverso;perdas\nS1;2;200;20;30'}],
+      ['lote','divergencias-de-inventario',{csv:'sku;erp;contagem;reservado;custo\nS1;30;28;5;40'}],
+      ['lote','analise-de-campanhas-ads',{csv:'campanha;impressoes;cliques;pedidos;receita;gasto;cmv;taxas;meta_roas\nA;1000;100;10;1200;200;500;100;3'}],
+      ['estrategia','precificacao-de-promocoes',{csv:'sku;preco_normal;preco_promocional;cmv;comissao_pct;imposto_pct;frete;ads;unidades_previstas;meta_margem_pct\nS1;120;100;50;10;5;4;3;10;15'}],
+      ['estrategia','projecao-caixa-operacional',{saldo_inicial:'100',saldo_minimo:'50',recebiveis:'data;origem;valor;probabilidade_pct\n2026-11-08;Cliente;100;80',pagamentos:'data;categoria;valor\n2026-11-09;Fornecedor;90'}],
+      ['estrategia','comparador-de-fornecedores',{csv:'sku;fornecedor;quantidade;preco_unitario;frete_total;imposto_pct;prazo_dias;minimo_lote;orcamento\nS1;A;10;20;10;5;3;10;300'}],
+      ['estrategia','auditoria-de-cupons',{csv:'campanha;sku;preco;cmv;comissao_pct;imposto_pct;frete;ads;desconto_pct;subsidio_fixo;unidades\nCupom;S1;100;50;10;5;5;5;10;2;10'}],
+      ['estrategia','priorizacao-de-catalogo',{csv:'sku;visitas;pedidos;receita;cmv;ads;devolucoes;estoque;prazo_dias;dias_periodo\nS1;1000;40;4000;1700;500;2;5;7;30'}]
+    ];
     cookie=bob.cookie;csrf=bob.csrf;
     let acesso=await pedir('/api/premium/previsao-de-vendas','POST',{historico:historicoSku});
     assert.equal(acesso.status,403,'Plus não pode executar previsão Premium');
     acesso=await pedir('/api/premium/auditar-feed','POST',{feed:feedSku});
     assert.equal(acesso.status,403,'Plus não pode auditar catálogo Premium');
+    for(const [grupo,slug,entrada] of ferramentasLote){
+      const bloqueado=await pedir('/api/premium/'+grupo+'/'+slug,'POST',entrada);
+      assert.equal(bloqueado.status,403,'Conta Plus não deve executar '+slug);
+    }
     cookie=alice.cookie;csrf=alice.csrf;
     acesso=await pedir(`/api/admin/usuarios/${bob.id}`,'PATCH',{plano:'premium'});
     assert.equal(acesso.status,200,'Administrador pode habilitar o Premium manualmente');
@@ -119,6 +137,17 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     assert.equal(acesso.data.relatorio.produtos,1);
     acesso=await pedir('/api/premium/auditar-feed','POST',{feed:'id;title\n1;A'});
     assert.equal(acesso.status,400,'Dados inválidos nunca produzem relatório');
+
+    for(const [grupo,slug,entrada] of ferramentasLote){
+      const permitido=await pedir('/api/premium/'+grupo+'/'+slug,'POST',entrada);
+      assert.equal(permitido.status,200,'Conta Premium deve executar '+slug+': '+JSON.stringify(permitido.data));
+      assert.ok(Array.isArray(permitido.data.relatorio.planilha)&&permitido.data.relatorio.planilha.length>=2,slug);
+    }
+    const invalidoLote=await pedir('/api/premium/lote/divergencias-de-inventario','POST',{csv:'sku;erp\nS1;5'});
+    assert.equal(invalidoLote.status,400);
+    const invalidaEstrategia=await pedir('/api/premium/estrategia/auditoria-de-cupons','POST',{csv:''});
+    assert.equal(invalidaEstrategia.status,400);
+
     cookie=alice.cookie;csrf=alice.csrf;
 
     r=await pedir('/api/admin/suporte');assert.equal(r.status,200);assert.ok(r.data.mensagens.some(x=>x.id===suporteId));
