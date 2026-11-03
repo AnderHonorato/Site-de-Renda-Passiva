@@ -433,6 +433,21 @@ async function rota(req,res){
       throw e;
     }
   }
+  // Operações Premium: autorização antes de receber dados de clientes, estoque ou pedidos.
+  const rotaOperacoes=p.match(/^\/api\/premium\/operacoes\/([a-z0-9-]+)$/);
+  if(rotaOperacoes&&m==='POST'){
+    const u=exigir(req);
+    if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
+    conferirLimite('operacoes-profissionais:'+u.id,10,60000);
+    const dados=await corpo(req,600000);
+    try{
+      const {executarOperacoes}=await import('./operacoes-profissionais.mjs');
+      return json(res,200,{relatorio:executarOperacoes(rotaOperacoes[1],dados)});
+    }catch(e){
+      if(e?.name==='ErroOperacoes')return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
+      throw e;
+    }
+  }
   if(p==='/api/planos'&&m==='GET'){return json(res,200,{planos:planosPublicos()});}
   if(p==='/api/trabalhos'&&m==='GET'){
     const u=exigir(req),situacao=url.searchParams.get('situacao');

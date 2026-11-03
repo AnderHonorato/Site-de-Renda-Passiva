@@ -244,3 +244,7 @@ Cinco ferramentas com uma API privada por tipo, validação por coluna, máximo 
 
 ## Lote F217-F221 — Estratégia comercial Premium
 Cinco novos módulos: análise de promoções e margens, projeção de caixa por recebíveis probabilísticos, comparação de fornecedores e custo posto, auditoria de cupons e priorização de produtos por desempenho ABC/estoque. Cada motor processa CSV de até 500 registros/tabela e 270 KB, gera relatório completo e exportação CSV/Excel. API /api/premium/estrategia/:tipo protegida por sessão Premium, CSRF, 12 usos/minuto por conta e sem gravação de dados; sem consultas bancárias ou marketplaces. A cobrança real só poderá existir após contratação autorizada e integração de gateway, não incluída neste lote.
+
+
+## F222–F226 — Operações Premium
+Cinco novas ferramentas profissionais com motores privados, importação CSV/TSV de até 500 linhas por tabela, apoio gerencial e exportações CSV/XLSX: planejamento de kits por lista de materiais e estoque compartilhado; auditoria de SLA logístico por pedido; coortes de recompra/CAC/LTV com identificadores pseudônimos; redistribuição de estoque entre CDs sob restrições de rota; risco de concentração de receita por SKU, fornecedor e canal (HHI e cenários separados). Rota POST /api/premium/operacoes/:tipo: sessão Premium/admin, proteção CSRF global, até 10 chamadas por minuto/usuário, corpo máximo 600 KB, sem persistência. Não consulta serviços externos nem movimenta dinheiro, mercadorias ou anúncios. GitHub Pages exibe apenas o formulário e a ajuda.
