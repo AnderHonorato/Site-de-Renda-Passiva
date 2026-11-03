@@ -90,6 +90,7 @@ function conciliar(d){
   const alvo=mapa.get(id);alvo.recebido+=v;alvo.taxas+=taxa;alvo.contagem++;
  }
  for(const [id,p] of mapa){
+  if(p.taxas>p.previsto && p.status!=='cancelado')throw new ErroLotePremium(id+': taxas superam o valor bruto previsto.');
   const previstoLiquido=p.status==='cancelado'?0:p.previsto-p.taxas;
   const delta=p.recebido-previstoLiquido;
   const situacao=p.status==='cancelado'&&p.recebido>0?'Repasse de cancelado':
