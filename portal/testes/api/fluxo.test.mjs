@@ -185,6 +185,8 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
       const cabecalhos={Cookie:cookie,Origin:origem,'Content-Type':'application/json'};
       const semToken=await fetch(base+rota,{method:'POST',headers:cabecalhos,body:JSON.stringify(entrada)});
       assert.equal(semToken.status,403,'CSRF obrigatório em '+rota);
+      const tokenInvalido=await fetch(base+rota,{method:'POST',headers:{...cabecalhos,'X-CSRF-Token':'token-falsificado'},body:JSON.stringify(entrada)});
+      assert.equal(tokenInvalido.status,403,'CSRF falsificado rejeitado em '+rota);
       const origemExterna=await fetch(base+rota,{method:'POST',headers:{...cabecalhos,Origin:'https://evil.example','X-CSRF-Token':csrf},body:JSON.stringify(entrada)});
       assert.equal(origemExterna.status,403,'Origem externa rejeitada em '+rota);
     }
