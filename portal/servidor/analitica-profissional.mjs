@@ -148,10 +148,12 @@ function recebiveis(d){
    throw new ErroAnalitica('Cliente deve ter código pseudônimo, sem dado pessoal.');
   const emissao=dataISO(x.emissao),venc=dataISO(x.vencimento);
   if(venc<emissao)throw new ErroAnalitica('Vencimento anterior à emissão: '+id);
+  if(emissao>ref)throw new ErroAnalitica('Emissão posterior à data de referência: '+id);
   const valor=num(x.valor,'valor da fatura',1e9,true),quitado=num(x.valor_pago,'valor pago');
   if(quitado>valor+.00001)throw new ErroAnalitica('Pagamento superior ao valor da fatura '+id);
   const dtPg=x.data_pagamento?dataISO(x.data_pagamento):null;
   if(quitado>0&&(dtPg===null||dtPg<emissao))throw new ErroAnalitica('Data de pagamento inválida: '+id);
+  if(quitado===0&&dtPg!==null)throw new ErroAnalitica('Data de pagamento informada sem valor pago: '+id);
   if(dtPg!==null&&dtPg>ref)throw new ErroAnalitica('Data de pagamento posterior à referência: '+id);
   const restante=arred(valor-quitado);
   const atraso=restante>0?Math.max(0,dias(venc,ref)):0;
