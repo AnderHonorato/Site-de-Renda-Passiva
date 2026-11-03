@@ -109,3 +109,11 @@ test('QA de datas impossíveis e variações A/B inconsistentes',()=>{
  assert.throws(()=>executarAnalitica('experimentos-ab-lote',{csv:ab.csv.replace('E1;B;0;','E1;A;0;')}),ErroAnalitica);
  assert.throws(()=>executarAnalitica('experimentos-ab-lote',{csv:ab.csv.replace('1000;200;','1000;1001;')}),ErroAnalitica);
 });
+
+test('aging recusa emissões futuras e pagamento datado sem valor pago',()=>{
+ const receb=base['inadimplencia-recebiveis'];
+ assert.throws(()=>executarAnalitica('inadimplencia-recebiveis',{...receb,
+  csv:receb.csv.replace('2026-09-01','2026-12-01').replace('2026-09-30','2026-12-30').replace('2026-09-15','2026-12-15')}),/Emissão posterior/);
+ assert.throws(()=>executarAnalitica('inadimplencia-recebiveis',{...receb,
+  csv:receb.csv.replace('F2;C2;2026-10-01;2026-11-30;500;0;','F2;C2;2026-10-01;2026-11-30;500;0;2026-10-20')}),/sem valor pago/);
+});
