@@ -37,48 +37,23 @@ export async function comparar(senha, armazenado) {
   try {
     if (typeof senha !== 'string' || senha.length > 128) return false;
     if (typeof armazenado !== 'string') return false;
-    const partes = armazenado.split('
-    // Rejeitar parâmetros adulterados antes de executar derivação de chave custosa.
+    const partes = armazenado.split('$');
+    if (partes.length !== 6) return false;
+    const [tipo, n, r, p, sal, h] = partes;
+    if (tipo !== 'scrypt') return false;
+    // Aceitar apenas parâmetros previamente utilizados pela aplicação.
     if (!['16384', '32768'].includes(n) || r !== '8' || !['1', '2', '3'].includes(p)) return false;
     if (!/^[A-Za-z0-9+/]{22}==$/.test(sal) || !/^[A-Za-z0-9+/]{86}==$/.test(h)) return false;
     const salBytes = Buffer.from(sal, 'base64');
     const esperado = Buffer.from(h, 'base64');
     if (salBytes.length !== 16 || esperado.length !== 64) return false;
-    // Buffer.from tolera bits de preenchimento não canônicos; exigir representação exata.
     if (salBytes.toString('base64') !== sal || esperado.toString('base64') !== h) return false;
     const atual = await scrypt(senha, salBytes, esperado.length,
-      { N:+n, r:+r, p:+p, maxmem:64*1024*1024 });
-    return esperado.length === atual.length && timingSafeEqual(esperado, atual);
-  } catch { return false; }
-}
-
-export async function corpo(req, maxBytes = 16384) {
-  const partes = []; let bytes = 0;
-  for await (const parte of req) {
-    bytes += parte.length;
-    if (bytes > maxBytes) throw erro(413, 'corpo_grande');
-    partes.push(parte);
+      { N: +n, r: +r, p: +p, maxmem: 64 * 1024 * 1024 });
+    return timingSafeEqual(esperado, atual);
+  } catch {
+    return false;
   }
-  try {
-    const dados = Buffer.concat(partes).toString('utf8');
-    const objeto = dados ? JSON.parse(dados) : {};
-    if (!objeto || typeof objeto !== 'object' || Array.isArray(objeto)) throw Error();
-    return objeto;
-  } catch { throw erro(400, 'json_invalido'); }
-}
-);
-    if (partes.length !== 6) return false;
-    const [tipo, n, r, p, sal, h] = partes;
-    if (tipo !== 'scrypt') return false;
-    // Rejeitar parâmetros adulterados antes de executar derivação de chave custosa.
-    if (!['16384', '32768'].includes(n) || r !== '8' || !['1', '2', '3'].includes(p)) return false;
-    if (!/^[A-Za-z0-9+/]{22}==$/.test(sal) || !/^[A-Za-z0-9+/]{86}==$/.test(h)) return false;
-    const esperado = Buffer.from(h, 'base64');
-    if (Buffer.from(sal, 'base64').length !== 16 || esperado.length !== 64) return false;
-    const atual = await scrypt(senha, Buffer.from(sal, 'base64'), esperado.length,
-      { N:+n, r:+r, p:+p, maxmem:64*1024*1024 });
-    return esperado.length === atual.length && timingSafeEqual(esperado, atual);
-  } catch { return false; }
 }
 
 export async function corpo(req, maxBytes = 16384) {
