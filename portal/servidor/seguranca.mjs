@@ -15,7 +15,7 @@ export function cookies(req) {
     try {
       const nome = decodeURIComponent(parte.slice(0, posicao).trim());
       const valor = decodeURIComponent(parte.slice(posicao + 1).trim());
-      if (nome && !['__proto__', 'constructor', 'prototype'].includes(nome)) {
+      if (nome && !/[\x00-\x20\x7f;=]/.test(nome) && !['__proto__', 'constructor', 'prototype'].includes(nome) && !Object.hasOwn(resultado, nome)) {
         resultado[nome] = valor;
       }
     } catch {
