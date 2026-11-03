@@ -99,3 +99,13 @@ test('QA de limites e consistência financeira em lotes Premium',()=>{
   Array.from({length:501},(_,i)=>'E'+i+';A;1;100;10;1000;500').join('\n');
  assert.throws(()=>executarAnalitica('experimentos-ab-lote',{csv}),ErroAnalitica);
 });
+
+test('QA de datas impossíveis e variações A/B inconsistentes',()=>{
+ const receb=base['inadimplencia-recebiveis'];
+ assert.throws(()=>executarAnalitica('inadimplencia-recebiveis',{...receb,
+  csv:receb.csv.replace('2026-09-30','2026-02-30')}),ErroAnalitica);
+ const ab=base['experimentos-ab-lote'];
+ assert.throws(()=>executarAnalitica('experimentos-ab-lote',{csv:ab.csv.replace('E1;B;0;','E1;B;1;')}),ErroAnalitica);
+ assert.throws(()=>executarAnalitica('experimentos-ab-lote',{csv:ab.csv.replace('E1;B;0;','E1;A;0;')}),ErroAnalitica);
+ assert.throws(()=>executarAnalitica('experimentos-ab-lote',{csv:ab.csv.replace('1000;200;','1000;1001;')}),ErroAnalitica);
+});
