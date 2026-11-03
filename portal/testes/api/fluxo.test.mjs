@@ -115,6 +115,26 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
       ['estrategia','auditoria-de-cupons',{csv:'campanha;sku;preco;cmv;comissao_pct;imposto_pct;frete;ads;desconto_pct;subsidio_fixo;unidades\nCupom;S1;100;50;10;5;5;5;10;2;10'}],
       ['estrategia','priorizacao-de-catalogo',{csv:'sku;visitas;pedidos;receita;cmv;ads;devolucoes;estoque;prazo_dias;dias_periodo\nS1;1000;40;4000;1700;500;2;5;7;30'}]
     ];
+    const operacoesPremium=[
+      ['planejamento-kits-combos',{
+        kits:'kit;preco;unidades_previstas;comissao_pct;tarifa_fixa;embalagem;ads_unitario\nKIT;150;4;10;0;3;2',
+        componentes:'kit;componente;quantidade;estoque;cmv\nKIT;S1;2;30;25'
+      }],
+      ['auditoria-sla-logistico',{data_referencia:'2026-11-03',
+        pedidos:'pedido;canal;data_pagamento;prazo_postagem;data_postagem;prazo_entrega;data_entrega;valor\nP01;Loja;2026-10-22;2026-10-24;2026-10-24;2026-11-01;2026-10-31;120'
+      }],
+      ['coortes-retencao-ltv',{
+        pedidos:'pedido;cliente;data;receita;cmv;outros_custos\nP01;C01;2026-07-02;200;70;30\nP02;C01;2026-08-05;150;60;20',
+        aquisicao:'mes;gasto_aquisicao\n2026-07;60'
+      }],
+      ['transferencias-entre-cds',{
+        estoques:'sku;cd;estoque;reservado;demanda_diaria;prazo_fornecedor;dias_seguranca\nS1;CD-A;100;0;1;7;3\nS1;CD-B;2;0;3;10;2',
+        rotas:'origem;destino;prazo_dias;custo_unitario;capacidade\nCD-A;CD-B;2;2;20'
+      }],
+      ['risco-concentracao-comercial',{queda_top_canal_pct:'30',queda_top_fornecedor_pct:'40',
+        csv:'sku;canal;fornecedor;receita;custos_variaveis\nS1;Loja;F1;1000;450\nS2;Marketplace;F2;500;320'
+      }]
+    ];
     cookie=bob.cookie;csrf=bob.csrf;
     let acesso=await pedir('/api/premium/previsao-de-vendas','POST',{historico:historicoSku});
     assert.equal(acesso.status,403,'Plus não pode executar previsão Premium');
@@ -123,6 +143,10 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     for(const [grupo,slug,entrada] of ferramentasLote){
       const bloqueado=await pedir('/api/premium/'+grupo+'/'+slug,'POST',entrada);
       assert.equal(bloqueado.status,403,'Conta Plus não deve executar '+slug);
+    }
+    for(const [slug,entrada] of operacoesPremium){
+      const bloqueio=await pedir('/api/premium/operacoes/'+slug,'POST',entrada);
+      assert.equal(bloqueio.status,403,'Conta Plus bloqueada em '+slug);
     }
     cookie=alice.cookie;csrf=alice.csrf;
     acesso=await pedir(`/api/admin/usuarios/${bob.id}`,'PATCH',{plano:'premium'});
@@ -147,6 +171,15 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     assert.equal(invalidoLote.status,400);
     const invalidaEstrategia=await pedir('/api/premium/estrategia/auditoria-de-cupons','POST',{csv:''});
     assert.equal(invalidaEstrategia.status,400);
+
+    for(const [slug,entrada] of operacoesPremium){
+      const retorno=await pedir('/api/premium/operacoes/'+slug,'POST',entrada);
+      assert.equal(retorno.status,200,'Conta Premium deve executar '+slug+': '+JSON.stringify(retorno.data));
+      assert.ok(Array.isArray(retorno.data.relatorio.planilha)&&retorno.data.relatorio.planilha.length>=2,slug);
+    }
+    const invalidoOperacao=await pedir('/api/premium/operacoes/planejamento-kits-combos','POST',{kits:'',componentes:''});
+    assert.equal(invalidoOperacao.status,400,'Dados inválidos não geram resultados');
+
 
     cookie=alice.cookie;csrf=alice.csrf;
 
