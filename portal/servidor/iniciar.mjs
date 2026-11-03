@@ -403,6 +403,21 @@ async function rota(req,res){
       throw e;
     }
   }
+  // Cinco módulos Premium em lote. Verifica permissão e throttling antes do CSV.
+  const rotaLote=p.match(/^\/api\/premium\/lote\/([a-z0-9-]+)$/);
+  if(rotaLote&&m==='POST'){
+    const {TIPOS_LOTE_PREMIUM,analisarLotePremium}=await import('./analises-premium-lote.mjs');
+    if(!TIPOS_LOTE_PREMIUM.includes(rotaLote[1]))throw erro(404,'nao_encontrado');
+    const u=exigir(req);
+    if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
+    conferirLimite('lote-premium:'+u.id,12,60000);
+    const dados=await corpo(req,300000);
+    try{return json(res,200,{relatorio:analisarLotePremium(rotaLote[1],dados)});}
+    catch(e){
+      if(e?.name==='ErroLotePremium')return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
+      throw e;
+    }
+  }
   if(p==='/api/planos'&&m==='GET'){return json(res,200,{planos:planosPublicos()});}
   if(p==='/api/trabalhos'&&m==='GET'){
     const u=exigir(req),situacao=url.searchParams.get('situacao');

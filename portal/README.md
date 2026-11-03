@@ -236,3 +236,7 @@ A rota POST /api/premium/auditar-feed exige sessão e plano Premium, limite de c
 
 ## F210 — Planejamento de estoque ABC/XYZ Premium
 A ferramenta importa até 500 SKUs de CSV/TSV, com 3–24 meses de demanda por SKU, preço, custo, estoque, prazo e sazonalidade opcional. Gera classes ABC/XYZ, demanda estimada, ponto de pedido, compra sugerida e custo total; exporta CSV e Excel com todos os registros. O motor fica exclusivamente no servidor e exige a rota POST /api/premium/planejamento-estoque, conta Premium (ou admin), CSRF e limite de uso. Os dados não ficam gravados em trabalhos nem na conta. O GitHub Pages oferece somente a interface.
+
+
+## Lote F212–F216 — análises Premium
+Cinco ferramentas com uma API privada por tipo, validação por coluna, máximo 500 registros/tabela e 270 KB por arquivo: rentabilidade multicanal por SKU, conciliação de pedidos e repasses, auditoria de devoluções, diferenças de inventário e rentabilidade de campanhas Ads. Relatórios e exportações CSV/Excel. Rota POST /api/premium/lote/:tipo, limite compartilhado de 12 análises/minuto por conta, autenticação Premium, CSRF global e dados transitórios não persistidos. Contas não Premium recebem 403. GH Pages fornece apenas interface estática; pagamento ainda não está automatizado.
