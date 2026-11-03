@@ -359,6 +359,21 @@ async function rota(req,res){
       throw e;
     }
   }
+  // Motor de estoque privado: sessão, plano e limite conferidos antes de receber dados.
+  if(p==='/api/premium/planejamento-estoque'&&m==='POST'){
+    const u=exigir(req);
+    if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
+    conferirLimite('planejamento-estoque:'+u.id,8,60000);
+    const entrada=await corpo(req,300000);
+    try{
+      const {planejarEstoque}=await import('./estoque-abc-xyz.mjs');
+      return json(res,200,{relatorio:planejarEstoque(entrada)});
+    }catch(e){
+      if(e?.name==='ErroEstoque')
+        return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
+      throw e;
+    }
+  }
   if(p==='/api/premium/auditar-feed'&&m==='POST'){
     const u=exigir(req);
     if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
