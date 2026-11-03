@@ -118,7 +118,7 @@ test('ferramenta pronta aparece antes da planejada quando empatam', () => {
 
 test('busca vazia devolve as prontas primeiro', () => {
   const todas = buscar(ferramentas, '');
-  assert.equal(todas.length, 208);
+  assert.equal(todas.length, ferramentas.length);
   assert.equal(todas.slice(0, ferramentasProntas.length).every((f) => f.status === 'pronta'), true);
 });
 
