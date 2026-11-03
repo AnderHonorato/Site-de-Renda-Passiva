@@ -405,4 +405,17 @@ export const ferramentas = [
     intenções: ['auditar feed merchant center', 'corrigir produtos reprovados google shopping', 'conferir catalogo google shopping'],
     relacionadas: ['previsao-de-vendas', 'utm', 'gerador-de-descricao-de-produto'],
   },
+  {
+    id: 'F210', slug: 'planejamento-estoque-premium', nome: 'Planejamento de estoque ABC/XYZ', cat: 'operações',
+    ícone: 'gráfico', tarefas: ['analisar', 'calcular'], status: 'pronta',
+    resumo: 'Planeja compras de até 500 SKUs por matriz ABC/XYZ, volatilidade, sazonalidade e custo de reposição.',
+    problema: 'Planejar compras e prioridades de estoque sem ignorar sazonalidade ou riscos de ruptura.',
+    entra: 'CSV/TSV com SKU, histórico mensal, preço, custo, estoque, prazo, segurança e sazonalidade opcional.',
+    processa: 'Motor privado classifica ABC por valor de consumo e XYZ por variação, projetando demanda e reposição.',
+    sai: 'Matriz ABC/XYZ, alertas por SKU, ponto de pedido, quantidade sugerida e investimento total.',
+    exporta: ['copiar', 'csv', 'xlsx'], plano: 'premium', local: false,
+    tags: ['estoque abc xyz', 'planejamento estoque', 'sazonalidade', 'curva abc', 'compras', 'premium'],
+    intenções: ['planejar estoque abc xyz com sazonalidade', 'classificar produtos xyz por sku', 'simular investimento em reposição'],
+    relacionadas: ['curva-abc', 'ponto-de-reposicao', 'previsao-de-vendas'],
+  },
 ];

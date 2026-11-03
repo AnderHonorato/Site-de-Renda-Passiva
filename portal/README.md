@@ -232,3 +232,7 @@ O motor escolhe entre média móvel e tendência por erro histórico quando há 
 ## F209 — Auditoria Premium de catálogo para Google Merchant Center
 Nova ferramenta profissional, ampliando o catálogo de 208 para 209 entradas. Audita CSV/TSV com até 500 produtos, detecta campos essenciais vazios, valores de availability, preço, URLs, duplicatas, títulos/descritivos fora do limite, GTIN com dígito incorreto e advertências de identificadores/categoria. Relatório por SKU com gravidade e ação recomendada, nota técnica, exportação CSV/XLSX completa. As regras são uma triagem fundamentada na especificação oficial: https://support.google.com/merchants/answer/7052112. Não assegura aprovação nem verifica URL, imagem, política ou disponibilidade em tempo real.
 A rota POST /api/premium/auditar-feed exige sessão e plano Premium, limite de chamadas e dados de até 300 KB; motor exclusivamente no servidor, sem persistência de CSV. No GitHub Pages é somente interface explicativa, sem servidor API.
+
+
+## F210 — Planejamento de estoque ABC/XYZ Premium
+A ferramenta importa até 500 SKUs de CSV/TSV, com 3–24 meses de demanda por SKU, preço, custo, estoque, prazo e sazonalidade opcional. Gera classes ABC/XYZ, demanda estimada, ponto de pedido, compra sugerida e custo total; exporta CSV e Excel com todos os registros. O motor fica exclusivamente no servidor e exige a rota POST /api/premium/planejamento-estoque, conta Premium (ou admin), CSRF e limite de uso. Os dados não ficam gravados em trabalhos nem na conta. O GitHub Pages oferece somente a interface.

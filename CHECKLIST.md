@@ -255,3 +255,12 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Score de triagem por produto e prioridades com CSV/Excel completos; 500 produtos por análise.
 - [x] Algoritmo privado no backend, autenticação Premium e controle de tamanho e frequência.
 - [ ] Testar integração completa com conta premium no servidor Node após hospedagem autorizada.
+
+
+## Continuação do Premium — F210 planejamento ABC/XYZ
+- [x] Interface PT-BR para o motor e rota privada já existentes, preservando as ferramentas anteriores.
+- [x] Importação validada de até 500 SKUs e 3–24 meses de demanda, horizonte de 1–12 meses e sazonalidade opcional.
+- [x] Relatório com matriz ABC/XYZ, alertas e custos, prévia limitada e exportação completa CSV/Excel.
+- [x] Proteção: análise somente na API autenticada, sem salvar dados comerciais na conta.
+- [x] Testes de dados de exemplo, limites, tratamento de erros e exportação.
+- [ ] Confirmação da CI e testes reais em navegador com conta Premium.

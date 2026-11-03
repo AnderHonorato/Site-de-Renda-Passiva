@@ -34,4 +34,5 @@ export default Object.freeze({
   F208: { nome: 'Diagrams from text (Mermaid)', resumo: 'Write flowcharts, sequences, org charts and timelines as text and see the diagram beside it, ready to download.', tags: ['mermaid', 'flowchart', 'diagram', 'org chart', 'sequence diagram'], intenções: ['make a flowchart', 'create a diagram from text', 'draw a process'] },
   // Metadados de descoberta; a interface e o processamento continuam em PT-BR até a fase de tradução.
   F209: { nome: 'Google Shopping feed audit', resumo: 'Audit up to 500 Merchant Center items, prioritize missing attributes and export an action plan.', tags: ['google merchant center', 'feed audit', 'product data quality', 'google shopping'], intenções: ['audit a google merchant center feed', 'fix shopping product data issues'] },
+  F210: { nome: 'ABC/XYZ inventory planning', resumo: 'Plan inventory purchases for up to 500 SKUs using ABC/XYZ and seasonal demand.', tags: ['abc xyz inventory', 'stock planning', 'seasonality', 'replenishment'], intenções: ['plan inventory with abc xyz and seasonality', 'estimate stock replenishment'] },
 });
