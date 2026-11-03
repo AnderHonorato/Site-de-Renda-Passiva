@@ -17,7 +17,7 @@ export async function gerarDiagramaLocal(dados){
  const renderizar=await obterRenderizador();
  try{
   const id='diagrama-portal-'+Math.random().toString(36).slice(2,12);
-  const svg=await renderizar(entrada.codigo,id);
+  const svg=await renderizar(entrada.codigo,id,entrada.tema);
   return {...limparSvgGerado(svg),codigo:entrada.codigo,tipo:entrada.tipo};
  }catch(e){
   throw new ErroDeEntrada('Não foi possível gerar o diagrama: '+String(e?.message??e).slice(0,260),'codigo');
