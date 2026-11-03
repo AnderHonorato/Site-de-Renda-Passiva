@@ -239,3 +239,19 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] F079: extração de paleta e exportação PNG/CSS/CSV/Excel.
 - [x] Motor compartilhado, limites de memória, testes de borda e documentação PT-BR.
 - [ ] Testar visualmente com fotos reais em celular, incluindo rotação EXIF e transparência.
+
+
+## Premium: primeira ferramenta com valor comercial
+- [x] F117: previsão por SKU, margem após custos, curva ABC, risco de ruptura, preço para meta, CSV/Excel.
+- [x] Motor privado no servidor, sessão Premium, CSRF, limite por conta e validação de entrada.
+- [x] Página pública com aviso de API indisponível em hospedagem estática; sem fingir assinatura ativa.
+- [ ] Publicar backend Node em hospedagem autorizada e testar E2E com conta Premium.
+- [ ] Segunda frente: auditoria de feed Google Merchant Center com regras oficiais e prioridades.
+- [ ] Não ativar cobrança antes de infraestrutura, termos e gateway de pagamento.
+
+
+## Premium: auditoria de catálogo Merchant Center
+- [x] F209: regras formais de preço, disponibilidade, identificador, GTIN, URL, título, descrição, duplicatas e categoria.
+- [x] Score de triagem por produto e prioridades com CSV/Excel completos; 500 produtos por análise.
+- [x] Algoritmo privado no backend, autenticação Premium e controle de tamanho e frequência.
+- [ ] Testar integração completa com conta premium no servidor Node após hospedagem autorizada.

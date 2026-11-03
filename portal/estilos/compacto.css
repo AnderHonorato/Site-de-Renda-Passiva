@@ -449,3 +449,13 @@ body:has(dialog.ajuda-modal[open]) { overflow: hidden; }
   .estudio-imagens__grade img{height:80px;}
   .estudio-imagens__individual img{max-height:34dvh;}
 }
+
+/* Ferramentas premium: destaque contido, adaptável ao celular. */
+.premium-recurso {
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 13px;margin-bottom:13px;border-radius:12px;
+  border:1px solid var(--borda);background:var(--superfície-2);
+}
+.premium-recurso p{margin:0;font-size:.81rem;line-height:1.45;max-width:720px;}
+.premium-recurso .botão{flex-shrink:0;font-size:.8rem;}
+@media(max-width:720px){.premium-recurso{align-items:flex-start;flex-direction:column;gap:8px;}}

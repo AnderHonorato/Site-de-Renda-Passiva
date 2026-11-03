@@ -16,11 +16,11 @@ test('o catálogo respeita as próprias regras', () => {
   assert.deepEqual(conferirCatálogo(), []);
 });
 
-test('o catálogo tem 208 ferramentas únicas', () => {
-  assert.equal(ferramentas.length, 208);
-  assert.equal(new Set(ferramentas.map((f) => f.slug)).size, 208);
-  assert.equal(new Set(ferramentas.map((f) => f.id)).size, 208);
-  assert.equal(new Set(ferramentas.map((f) => f.nome.toLowerCase())).size, 208);
+test('o catálogo tem 209 ferramentas únicas', () => {
+  assert.equal(ferramentas.length, 209);
+  assert.equal(new Set(ferramentas.map((f) => f.slug)).size, 209);
+  assert.equal(new Set(ferramentas.map((f) => f.id)).size, 209);
+  assert.equal(new Set(ferramentas.map((f) => f.nome.toLowerCase())).size, 209);
 });
 
 test('nenhuma ferramenta usa nome de variação artificial', () => {
@@ -38,7 +38,7 @@ test('todo campo declarado usa valores conhecidos', () => {
   for (const f of ferramentas) {
     assert.ok(idsDeCategoria.has(f.cat), `${f.id}: categoria ${f.cat}`);
     assert.ok(nomesDeÍcone.includes(f.ícone), `${f.id}: ícone ${f.ícone}`);
-    assert.ok(['gratuito', 'plus'].includes(f.plano), `${f.id}: plano ${f.plano}`);
+    assert.ok(['gratuito', 'plus', 'premium'].includes(f.plano), `${f.id}: plano ${f.plano}`);
     for (const t of f.tarefas) assert.ok(idsDeTarefa.has(t), `${f.id}: tarefa ${t}`);
     for (const e of f.exporta) assert.ok(exportaçõesVálidas.has(e), `${f.id}: exportação ${e}`);
   }
@@ -118,7 +118,7 @@ test('ferramenta pronta aparece antes da planejada quando empatam', () => {
 
 test('busca vazia devolve as prontas primeiro', () => {
   const todas = buscar(ferramentas, '');
-  assert.equal(todas.length, 208);
+  assert.equal(todas.length, ferramentas.length);
   assert.equal(todas.slice(0, ferramentasProntas.length).every((f) => f.status === 'pronta'), true);
 });
 

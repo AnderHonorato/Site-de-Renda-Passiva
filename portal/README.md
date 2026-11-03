@@ -219,3 +219,16 @@ Em uma única rodada, o portal recebeu **cinco ferramentas locais** com módulo 
 - F079: amostrar cores da foto, agrupar em até oito cores, exportar PNG visual da paleta, variáveis CSS e tabela em CSV/Excel.
 
 Cada arquivo tem limite de 18 MB, até 24 megapixels e 8192 px por lado. Lote máximo 12 fotos, 56 MB. Os arquivos são processados localmente pelo navegador e não são salvos na conta. Redimensionamento não garante peso final exato, e remoção de metadados não remove informações visíveis ou marcas d'água.
+
+
+## F117 — Inteligência de vendas Premium
+O portal oferece análise de até 70 SKUs e até 1.800 registros mensais, com histórico de 3 a 24 meses consecutivos por SKU. CSV com 13 colunas: SKU, mês, vendas, preço, CMV, comissão, tarifa fixa, frete, Ads por unidade, imposto, perdas esperadas, estoque e prazo.
+O motor escolhe entre média móvel e tendência por erro histórico quando há dados suficientes, projeta três meses em cenários entre -40% e +100%, calcula margem de contribuição, preço para meta, curva ABC, possível ruptura e quantidade de reposição; exporta CSV e XLSX completos.
+**Segurança:** o algoritmo fica em portal/servidor/analise-premium.mjs, fora do bundle GitHub Pages. A rota POST /api/premium/previsao-de-vendas exige sessão e plano premium (ou admin), CSRF, rate limit e validação de 300 KB; CSV analisado em memória e não persistido no banco.
+**Limite atual:** GitHub Pages é estático. A ferramenta exibe interface demonstrativa, mas a análise real depende da API Node pública. Os planos Plus/Premium são liberados manualmente, sem assinatura cobrada ou gateway de pagamento nesta etapa.
+**Cuidado:** as taxas de marketplace são informadas pelo vendedor, pois variam por categoria e logística; não há consulta automática. Projeções não consideram sazonalidade externa, despesas fixas ou conciliação contábil.
+
+
+## F209 — Auditoria Premium de catálogo para Google Merchant Center
+Nova ferramenta profissional, ampliando o catálogo de 208 para 209 entradas. Audita CSV/TSV com até 500 produtos, detecta campos essenciais vazios, valores de availability, preço, URLs, duplicatas, títulos/descritivos fora do limite, GTIN com dígito incorreto e advertências de identificadores/categoria. Relatório por SKU com gravidade e ação recomendada, nota técnica, exportação CSV/XLSX completa. As regras são uma triagem fundamentada na especificação oficial: https://support.google.com/merchants/answer/7052112. Não assegura aprovação nem verifica URL, imagem, política ou disponibilidade em tempo real.
+A rota POST /api/premium/auditar-feed exige sessão e plano Premium, limite de chamadas e dados de até 300 KB; motor exclusivamente no servidor, sem persistência de CSV. No GitHub Pages é somente interface explicativa, sem servidor API.
