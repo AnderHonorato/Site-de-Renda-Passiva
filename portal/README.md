@@ -240,3 +240,7 @@ A ferramenta importa até 500 SKUs de CSV/TSV, com 3–24 meses de demanda por S
 
 ## Lote F212–F216 — análises Premium
 Cinco ferramentas com uma API privada por tipo, validação por coluna, máximo 500 registros/tabela e 270 KB por arquivo: rentabilidade multicanal por SKU, conciliação de pedidos e repasses, auditoria de devoluções, diferenças de inventário e rentabilidade de campanhas Ads. Relatórios e exportações CSV/Excel. Rota POST /api/premium/lote/:tipo, limite compartilhado de 12 análises/minuto por conta, autenticação Premium, CSRF global e dados transitórios não persistidos. Contas não Premium recebem 403. GH Pages fornece apenas interface estática; pagamento ainda não está automatizado.
+
+
+## Lote F217-F221 — Estratégia comercial Premium
+Cinco novos módulos: análise de promoções e margens, projeção de caixa por recebíveis probabilísticos, comparação de fornecedores e custo posto, auditoria de cupons e priorização de produtos por desempenho ABC/estoque. Cada motor processa CSV de até 500 registros/tabela e 270 KB, gera relatório completo e exportação CSV/Excel. API /api/premium/estrategia/:tipo protegida por sessão Premium, CSRF, 12 usos/minuto por conta e sem gravação de dados; sem consultas bancárias ou marketplaces. A cobrança real só poderá existir após contratação autorizada e integração de gateway, não incluída neste lote.

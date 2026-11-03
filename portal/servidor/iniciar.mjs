@@ -418,6 +418,21 @@ async function rota(req,res){
       throw e;
     }
   }
+  // Estratégia Premium: login, plano e taxa antes de ler dados financeiros.
+  const rotaEstrategia=p.match(/^\/api\/premium\/estrategia\/([a-z0-9-]+)$/);
+  if(rotaEstrategia&&m==='POST'){
+    const {TIPOS_ESTRATEGIA,executarEstrategiaPremium}=await import('./estrategia-premium.mjs');
+    if(!TIPOS_ESTRATEGIA.includes(rotaEstrategia[1]))throw erro(404,'nao_encontrado');
+    const u=exigir(req);
+    if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
+    conferirLimite('estrategia-premium:'+u.id,12,60000);
+    const dados=await corpo(req,300000);
+    try{return json(res,200,{relatorio:executarEstrategiaPremium(rotaEstrategia[1],dados)});}
+    catch(e){
+      if(e?.name==='ErroEstrategia')return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
+      throw e;
+    }
+  }
   if(p==='/api/planos'&&m==='GET'){return json(res,200,{planos:planosPublicos()});}
   if(p==='/api/trabalhos'&&m==='GET'){
     const u=exigir(req),situacao=url.searchParams.get('situacao');
