@@ -256,7 +256,7 @@ function checkout(d){
   const aov=ped?receita/ped:0;
   const conversao=100*ped/s,perdaMaior=fraqueza===null?'Sem base':e[fraqueza][0];
   const taxaEtapa=fraqueza===null?0:rates[fraqueza];
-  const posteriores=fraqueza===null?0:e.slice(fraqueza+1).reduce((prob,[entrada,saida])=>prob*(entrada?saida/entrada:0),1);
+  const posteriores=fraqueza===null?0:e.slice(fraqueza+1).reduce((prob,[,entrada,saida])=>prob*(entrada?saida/entrada:0),1);
   const oportunidade=fraqueza===null?0:(e[fraqueza][1]-e[fraqueza][2])*.1*posteriores*aov;
   if(fraqueza!==null&&taxaEtapa<20)alertas.push(key+': etapa '+perdaMaior+' com passagem inferior a 20%.');
   sessoes+=s;compras+=ped;receitaTotal+=receita;
