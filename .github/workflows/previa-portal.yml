@@ -27,9 +27,11 @@ jobs:
           node-version: '22'
       - run: npm ci --prefix portal --ignore-scripts
       - name: Instalar formatadores fixados apenas para compilação
-        run: npm install --prefix portal --no-save --no-package-lock --ignore-scripts prettier@3.9.10 sql-formatter@15.9.0 esbuild@0.25.12
+        run: npm install --prefix portal --no-save --no-package-lock --ignore-scripts prettier@3.9.10 sql-formatter@15.9.0 esbuild@0.25.12 mermaid@11.17.2
       - name: Empacotar motores locais de formatação
         run: npm run montar:formatadores --prefix portal
+      - name: Empacotar Mermaid local para os diagramas
+        run: npm run montar:diagramas --prefix portal
       - name: Gerar URLs públicas da prévia
         run: npm run gerar --prefix portal
         env:

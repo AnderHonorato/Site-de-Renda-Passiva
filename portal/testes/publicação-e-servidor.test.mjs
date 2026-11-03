@@ -73,7 +73,7 @@ test('tudo o que as páginas e os scripts publicados importam também é publica
     // Seu texto minificado contém strings que PARECEM instruções "import './x'",
     // mas não são imports JS reais; este scanner regex daria falsos positivos.
     // O empacotador recusa qualquer import externo ou de outro chunk.
-    if (relativo === 'scripts/terceiros/formatadores.js') continue;
+    if (['scripts/terceiros/formatadores.js', 'scripts/terceiros/diagramas.js'].includes(relativo)) continue;
     if (!/\.(html|js|css)$/.test(relativo)) continue;
     const texto = await readFile(join(RAIZ, relativo), 'utf8');
     const referências = relativo.endsWith('.html')

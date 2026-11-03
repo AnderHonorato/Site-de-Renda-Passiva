@@ -199,3 +199,7 @@ O montador e leitor de UTM (F042) foi ativado. Monta links com origem, mídia, c
 ## F207 — Formatação profissional de código
 O portal integra Prettier 3.9.10 e SQL Formatter 15.9.0, bibliotecas MIT empacotadas no próprio portal com esbuild 0.25.12, sem CDN em execução. A CI monta scripts/terceiros/formatadores.js durante a publicação; o arquivo é gerado, não commitado.
 Para desenvolvimento local: npm ci --prefix portal; npm install --prefix portal --no-save --no-package-lock --ignore-scripts prettier@3.9.10 sql-formatter@15.9.0 esbuild@0.25.12; npm run montar:formatadores --prefix portal. O editor oferece formatação JS, TS, HTML, CSS, JSON e SQL (vários dialetos). Minificação somente para JSON. Código não é executado nem enviado, Worker limitado a 18 segundos e 65 mil caracteres.
+
+
+## F208 — Diagramas Mermaid no navegador
+A ferramenta usa Mermaid 11.17.2 empacotado localmente via esbuild (MIT) e geração em modo estrito. O SVG é sanitizado, removendo scripts, referências externas e objetos incorporados, e a prévia é exibida como imagem isolada, não como HTML injetado. Permite fonte .mmd, SVG e PNG, com limites de 8 mil caracteres, 140 linhas, 2.400 px por lado e no máximo 4 milhões de pixels na exportação. Não existe link executável nem API externa. Para montar localmente, instale mermaid@11.17.2 com a mesma versão de esbuild e rode npm run montar:diagramas --prefix portal.
