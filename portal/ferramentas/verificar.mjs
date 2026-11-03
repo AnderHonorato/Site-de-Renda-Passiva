@@ -16,6 +16,10 @@ import { site } from '../dados/site.js';
 import { ARQUIVO_DO_RESUMO, calcularResumoDaCapa } from './resumo-da-capa.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
+// Este bundle de terceiros é validado pelo metafile do esbuild na etapa de geração.
+// Uma busca por strings dentro do JS minificado acusa imports/debugger falsos.
+const BUNDLE_VERIFICADO = 'scripts/terceiros/formatadores.js';
+const éBundleVerificado = (arquivo) => relative(RAIZ, arquivo).replaceAll('\\', '/') === BUNDLE_VERIFICADO;
 const problemas = [];
 const avisos = [];
 
@@ -75,6 +79,7 @@ if (await existe(pastaDeFerramentas)) {
 const scripts = await listar(join(RAIZ, 'scripts'), (c) => c.endsWith('.js'));
 const dados = await listar(join(RAIZ, 'dados'), (c) => c.endsWith('.js'));
 for (const arquivo of [...scripts, ...dados, join(RAIZ, 'ferramentas', 'gerar.mjs'), join(RAIZ, 'ferramentas', 'modelo-de-página.mjs')]) {
+  if (éBundleVerificado(arquivo)) continue;
   const conteúdo = await readFile(arquivo, 'utf8');
   for (const [, caminho] of conteúdo.matchAll(/from\s+['"](\.[^'"]+)['"]/g)) {
     // Imports dinâmicos com variável não podem ser conferidos aqui.
@@ -162,6 +167,7 @@ const PROIBIDOS = [
   { padrão: /\bdebugger\b/, motivo: 'ponto de parada esquecido' },
 ];
 for (const arquivo of [...scripts, ...dados, ...páginas]) {
+  if (éBundleVerificado(arquivo)) continue;
   const conteúdo = await readFile(arquivo, 'utf8');
   for (const { padrão, motivo } of PROIBIDOS) {
     if (padrão.test(conteúdo)) {
