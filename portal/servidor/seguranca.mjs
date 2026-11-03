@@ -37,8 +37,11 @@ export async function comparar(senha, armazenado) {
   try {
     if (typeof senha !== 'string' || senha.length > 128) return false;
     const [tipo, n, r, p, sal, h] = armazenado.split('$');
-    if (tipo !== 'scrypt' || +n > 32768 || +r > 8 || +p > 3) return false;
+    // Rejeitar parâmetros adulterados antes de executar derivação de chave custosa.
+    if (!['16384', '32768'].includes(n) || r !== '8' || !['1', '2', '3'].includes(p)) return false;
+    if (!/^[A-Za-z0-9+/]{24}==?$/.test(sal) || !/^[A-Za-z0-9+/]{86}==$/.test(h)) return false;
     const esperado = Buffer.from(h, 'base64');
+    if (Buffer.from(sal, 'base64').length !== 16 || esperado.length !== 64) return false;
     const atual = await scrypt(senha, Buffer.from(sal, 'base64'), esperado.length,
       { N:+n, r:+r, p:+p, maxmem:64*1024*1024 });
     return esperado.length === atual.length && timingSafeEqual(esperado, atual);
