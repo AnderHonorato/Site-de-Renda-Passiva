@@ -448,6 +448,21 @@ async function rota(req,res){
       throw e;
     }
   }
+  // Auditorias profissionais Premium: sessão, assinatura e rate limit antes do CSV.
+  const rotaAnalitica=p.match(/^\/api\/premium\/analitica\/([a-z0-9-]+)$/);
+  if(rotaAnalitica&&m==='POST'){
+    const u=exigir(req);
+    if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
+    conferirLimite('analitica-profissional:'+u.id,10,60000);
+    const dados=await corpo(req,600000);
+    try{
+      const {executarAnalitica}=await import('./analitica-profissional.mjs');
+      return json(res,200,{relatorio:executarAnalitica(rotaAnalitica[1],dados)});
+    }catch(e){
+      if(e?.name==='ErroAnalitica')return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
+      throw e;
+    }
+  }
   if(p==='/api/planos'&&m==='GET'){return json(res,200,{planos:planosPublicos()});}
   if(p==='/api/trabalhos'&&m==='GET'){
     const u=exigir(req),situacao=url.searchParams.get('situacao');
