@@ -357,3 +357,21 @@ body:has(dialog.ajuda-modal[open]) { overflow: hidden; }
 /* URLs longas no resultado UTM não podem provocar rolagem horizontal. */
 #ferramenta[data-slug="utm"] .resultado,
 #ferramenta[data-slug="utm"] .resultado__linhas li {min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+
+/* F207: saída de código compacta, com rolagem própria. */
+.codigo-formatado {
+  margin-top: 12px;
+  padding: 13px 15px;
+  max-height: min(54dvh, 460px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--borda);
+  border-radius: 13px;
+  background: var(--superfície-2);
+  color: var(--tinta);
+  tab-size: 2;
+  font: .8rem/1.55 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre;
+}
+.codigo-formatado[hidden] {display:none!important;}
+@media(max-width:767px){ .codigo-formatado {font-size:.75rem;max-height:39dvh;padding:10px;} }

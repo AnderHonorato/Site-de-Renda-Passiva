@@ -368,12 +368,12 @@ export const ferramentas = [
   // ----------------------------------------------------------- desenvolvimento
   {
     id: 'F207', slug: 'formatador-de-codigo', nome: 'Formatar SQL e código', cat: 'desenvolvimento',
-    ícone: 'código', tarefas: ['converter'], status: 'planejada',
-    resumo: 'Organiza SQL, JavaScript, CSS, HTML e JSON com indentação padrão e destaca erros de sintaxe quando acha.',
+    ícone: 'código', tarefas: ['converter'], status: 'pronta',
+    resumo: 'Organiza SQL, JavaScript, TypeScript, HTML, CSS e JSON com parsers reais, cópia e download.',
     problema: 'Ler uma consulta ou um trecho de código colado em uma linha só, sem quebra nem recuo.',
     entra: 'O código e a linguagem (SQL com o dialeto, JavaScript, CSS, HTML).',
-    processa: 'Formata com sql-formatter e Prettier, no navegador, sem enviar o código. Não executa nem valida o significado, só a forma.',
-    sai: 'Código formatado, com opção de minificar, para copiar ou baixar.',
+    processa: 'Usa Prettier e SQL Formatter empacotados no próprio site, em Worker interrompido após 18 segundos.',
+    sai: 'Código formatado para copiar ou baixar; minificação disponível somente para JSON.',
     exporta: ['copiar', 'baixar'], plano: 'gratuito', local: true,
     tags: ['formatar sql', 'formatar código', 'prettier', 'indentar', 'beautify', 'minificar'],
     intenções: ['formatar consulta sql', 'organizar código colado', 'indentar sql'],

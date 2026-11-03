@@ -206,3 +206,11 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Auditar UTMs duplicados, ausentes e desconhecidos; exportar tabela.
 - [x] Bloquear URL com esquema de execução e credenciais embutidas.
 - [ ] Conferir manualmente campanhas reais antes de anunciar; não há integração com Analytics.
+
+
+## Formatador de código profissional
+- [x] F207: Prettier para JS, TS, HTML, CSS, JSON e SQL Formatter com dialetos.
+- [x] Versões fixas e empacotadas pela CI, sem CDN de terceiros em tempo de uso.
+- [x] Worker isolado, limite de texto e tempo, cópia/download.
+- [x] Minificação somente para JSON, sem transformação perigosa de JS/SQL.
+- [ ] Conferir o editor no navegador com um teste funcional.

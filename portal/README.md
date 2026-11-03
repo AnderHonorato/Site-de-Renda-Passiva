@@ -194,3 +194,8 @@ Ambas mantêm o layout compacto, ajuda em modal, faixa de relacionadas abaixo do
 
 ## Rastreamento de campanhas — UTM profissional
 O montador e leitor de UTM (F042) foi ativado. Monta links com origem, mídia, campanha, termo e conteúdo; preserva parâmetros externos e fragmentos e normaliza maiúsculas/espaços. O modo Auditor identifica parâmetros essenciais ausentes e duplicatas, e avisa quando há UTMs não padronizadas. Exporta tabela em CSV/Excel, sem integrar Analytics ou enviar URLs à conta do portal. URLs devem usar HTTP/HTTPS sem credenciais embutidas.
+
+
+## F207 — Formatação profissional de código
+O portal integra Prettier 3.9.10 e SQL Formatter 15.9.0, bibliotecas MIT empacotadas no próprio portal com esbuild 0.25.12, sem CDN em execução. A CI monta scripts/terceiros/formatadores.js durante a publicação; o arquivo é gerado, não commitado.
+Para desenvolvimento local: npm ci --prefix portal; npm install --prefix portal --no-save --no-package-lock --ignore-scripts prettier@3.9.10 sql-formatter@15.9.0 esbuild@0.25.12; npm run montar:formatadores --prefix portal. O editor oferece formatação JS, TS, HTML, CSS, JSON e SQL (vários dialetos). Minificação somente para JSON. Código não é executado nem enviado, Worker limitado a 18 segundos e 65 mil caracteres.
