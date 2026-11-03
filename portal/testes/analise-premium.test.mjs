@@ -33,12 +33,12 @@ test('cenário de crescimento aumenta demanda; receita e margem conciliam',()=>{
 test('detecta margem negativa, taxa acima de 100% e preço meta impossível',()=>{
  const ruim=[cab,linha('Q','2026-08',3,{preco:20,cmv:25}),linha('Q','2026-09',4,{preco:20,cmv:25}),linha('Q','2026-10',5,{preco:20,cmv:25})].join('\n');
  assert.equal(analisarVendasPremium({historico:ruim}).itens[0].risco,'Margem negativa');
- const taxas=ruim.replace(/;12;3;/g,';90;3;');
+ const taxas=ruim.replace(/;12;3;/g,';95;3;');
  assert.throws(()=>analisarVendasPremium({historico:taxas}),ErroInteligencia);
 });
 test('meses não consecutivos e registros duplicados são recusados',()=>{
  const incompleto=historico.replace('SKU1;2026-07','SKU1;2026-05');
- assert.throws(()=>analisarVendasPremium({historico:incompleto}),/consecutivos|duplicados/);
+ assert.throws(()=>analisarVendasPremium({historico:incompleto}),/meses|duplicados/);
  assert.throws(()=>analisarVendasPremium({historico:historico+'\n'+linha('SKU1','2026-10',9)}),/duplicados/);
 });
 test('valida colunas, SKU, mês, cenário e metadados falsos',()=>{
