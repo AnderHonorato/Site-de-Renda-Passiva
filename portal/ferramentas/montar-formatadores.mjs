@@ -23,5 +23,10 @@ const resultado = await build({
   logLevel: 'warning',
   metafile: true,
 });
-const bytes = resultado.metafile.outputs[destino]?.bytes;
-console.log('Formatadores locais montados: '+destino+(bytes?' ('+bytes+' bytes)':''));
+const saida = Object.values(resultado.metafile.outputs)
+  .find((arquivo) => arquivo.entryPoint?.endsWith('formatadores.mjs'));
+if(!saida) throw new Error('A entrada dos formatadores não apareceu no artefato do esbuild.');
+if(saida.imports.length !== 0)
+  throw new Error('O pacote final não é autossuficiente: ' + saida.imports.map(i=>i.path).join(', '));
+if(saida.bytes < 100000) throw new Error('Pacote de formatação vazio ou incompleto.');
+console.log('Formatadores locais autossuficientes: ' + destino + ' (' + saida.bytes + ' bytes).');
