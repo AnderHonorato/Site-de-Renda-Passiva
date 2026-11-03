@@ -22,3 +22,21 @@ test('cookies não podem alterar o protótipo do mapa de valores', () => {
   assert.equal(Object.hasOwn(resultado, '__proto__'), false);
   assert.equal(Object.hasOwn(resultado, 'constructor'), false);
 });
+
+test('cookie duplicado não substitui o primeiro valor aceito', () => {
+  const resultado = cookies({ headers: { cookie: 'sessao=original; sessao=forjado; csrf=legitimo' } });
+  assert.equal(resultado.sessao, 'original');
+  assert.equal(resultado.csrf, 'legitimo');
+});
+
+test('nomes codificados com caracteres de controle ou separadores são rejeitados', () => {
+  const resultado = cookies({ headers: { cookie: 'sessao%0Ainjetada=ruim; csrf%3Dextra=ruim; nome%3Boutro=ruim; sessao=valida' } });
+  assert.deepEqual(Object.keys(resultado), ['sessao']);
+  assert.equal(resultado.sessao, 'valida');
+});
+
+test('nomes de protótipo codificados também são rejeitados', () => {
+  const resultado = cookies({ headers: { cookie: '%5F%5Fproto%5F%5F=ruim; sessao=valida' } });
+  assert.equal(Object.hasOwn(resultado, '__proto__'), false);
+  assert.equal(resultado.sessao, 'valida');
+});
