@@ -91,11 +91,11 @@ test('QA de limites e consistência financeira em lotes Premium',()=>{
  assert.throws(()=>executarAnalitica('inadimplencia-recebiveis',{...receb,
   csv:receb.csv.replace(';1000;200;',';1000;1200;')}),ErroAnalitica);
  const frete=base['auditoria-faturas-frete'];
- assert.throws(()=>executarAnalitica('auditoria-faturas-frete',{csv:frete.csv+'\\n'+frete.csv.split('\\n')[1]}),ErroAnalitica);
+ assert.throws(()=>executarAnalitica('auditoria-faturas-frete',{csv:frete.csv+'\n'+frete.csv.split('\n')[1]}),ErroAnalitica);
  const afinidade=base['afinidade-cestas-pedidos'];
  assert.throws(()=>executarAnalitica('afinidade-cestas-pedidos',{...afinidade,
-  csv:afinidade.csv+'\\nP1;A;1;30'}),ErroAnalitica);
- const csv='experimento;variacao;controle;visitantes;conversoes;receita;custos\\n'+
-  Array.from({length:501},(_,i)=>'E'+i+';A;1;100;10;1000;500').join('\\n');
+  csv:afinidade.csv+'\nP1;A;1;30'}),ErroAnalitica);
+ const csv='experimento;variacao;controle;visitantes;conversoes;receita;custos\n'+
+  Array.from({length:501},(_,i)=>'E'+i+';A;1;100;10;1000;500').join('\n');
  assert.throws(()=>executarAnalitica('experimentos-ab-lote',{csv}),ErroAnalitica);
 });
