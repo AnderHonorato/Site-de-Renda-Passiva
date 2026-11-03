@@ -208,3 +208,14 @@ A ferramenta usa Mermaid 11.17.2 empacotado localmente via esbuild (MIT) e gera�
 ## F077 — Gerador de favicon em pacote de instalação
 
 O módulo gera favicons de imagem local PNG, JPG ou WebP, em tamanhos 16/32/48/180/192/512 px. Exporta um ZIP com seis PNGs, favicon.ico (16, 32 e 48 px), site.webmanifest, HTML de instalação e LEIA-ME. Usa canvas e a infraestrutura ZIP própria do projeto. Processamento 100% no navegador, até 15 MB, 16 megapixels e 8192 px por lado. Inclui modos conter/preencher, fundos transparente/branco/escuro, prévia de cada tamanho e alerta para imagens pequenas e não quadradas. O pacote fornece ícones mas não configura sozinho um PWA instalável. Não envia arquivos à conta ou a um servidor.
+
+
+## Lote de 5 ferramentas para fotografia e e-commerce (F073, F074, F075, F078, F079)
+Em uma única rodada, o portal recebeu **cinco ferramentas locais** com módulo compartilhado, campos compactos, instruções completas no modal e sugestões em faixa separada no fim do conteúdo:
+- F073: redimensionar **até 12 fotos** de uma vez sem distorcer nem ampliar, limites de largura/altura, qualidade, JPG/PNG/WebP, ZIP real e CSV/Excel de tamanhos;
+- F074: recortar para post 1:1, 4:5, story 9:16, capa 16:9 ou foto 3:2, com âncora topo/base/lateral, sem reamostragem;
+- F075: converter arquivos JPG/PNG/WebP com qualidade e escolha de fundo sólido ou transparência;
+- F078: inspecionar blocos comuns EXIF/XMP/IPTC e recodificar os pixels, sem copiar blocos do arquivo original, conferir o arquivo de saída e mostrar lista de marcadores observados;
+- F079: amostrar cores da foto, agrupar em até oito cores, exportar PNG visual da paleta, variáveis CSS e tabela em CSV/Excel.
+
+Cada arquivo tem limite de 18 MB, até 24 megapixels e 8192 px por lado. Lote máximo 12 fotos, 56 MB. Os arquivos são processados localmente pelo navegador e não são salvos na conta. Redimensionamento não garante peso final exato, e remoção de metadados não remove informações visíveis ou marcas d'água.

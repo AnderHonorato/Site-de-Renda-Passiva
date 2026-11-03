@@ -229,3 +229,13 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Validar formatos, tamanho, dimensões, opções de encaixe/fundo e nomes de arquivo.
 - [x] Usar canvas local e ZIP seguro existente; sem upload de logotipo.
 - [ ] Conferir impressão/ícones em navegadores desktop e Android/iOS usando arquivo local real.
+
+
+## Lote de cinco ferramentas — imagens profissionais
+- [x] F073: redimensionamento de até 12 imagens com proporção preservada e ZIP/planilha.
+- [x] F074: recortes para post, story e capas com posição controlada.
+- [x] F075: conversão de JPG/PNG/WebP com transparência ou fundo.
+- [x] F078: regravação para remover blocos comuns de EXIF/XMP/IPTC e auditoria da saída.
+- [x] F079: extração de paleta e exportação PNG/CSS/CSV/Excel.
+- [x] Motor compartilhado, limites de memória, testes de borda e documentação PT-BR.
+- [ ] Testar visualmente com fotos reais em celular, incluindo rotação EXIF e transparência.
