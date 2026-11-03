@@ -26,6 +26,7 @@
     "medir": "node ferramentas/medir-desempenho.mjs",
     "vitrine:capas": "node vitrine/ferramentas/vitrine-gerar-capas.mjs",
     "vitrine:video": "node vitrine/ferramentas/vitrine-renderizar-video.mjs",
-    "nuvem": "node ferramentas/iniciar-nuvem.mjs"
+    "nuvem": "node ferramentas/iniciar-nuvem.mjs",
+    "montar:formatadores": "node ferramentas/montar-formatadores.mjs"
   }
 }
