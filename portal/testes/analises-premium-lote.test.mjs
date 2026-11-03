@@ -61,3 +61,9 @@ test('rota exige sessão Premium e limite antes de ler entrada',async()=>{
  assert.ok(bloco.indexOf("u.plano!=='premium'")<bloco.indexOf('await corpo(req,300000)'));
  assert.match(bloco,/conferirLimite/);assert.match(src,/proteger\(req\);/);
 });
+
+test('conciliação rejeita taxas superiores ao bruto para evitar líquido esperado negativo',()=>{
+ const pedidos='pedido;canal;previsto;status\nP1;Canal A;100;pago';
+ const repasses='pedido;recebido;taxas\nP1;0;150';
+ assert.throws(()=>analisarLotePremium('conciliacao-de-repasses',{pedidos,repasses}),/taxas superam/);
+});
