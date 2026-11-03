@@ -8,7 +8,7 @@ export const TIPOS_OPERACOES=Object.freeze([
  'transferencias-entre-cds','risco-concentracao-comercial'
 ]);
 const arred=v=>Math.round((v+Number.EPSILON)*100)/100;
-function texto(v,campo){const t=String(v??'').trim();if(!t||t.length>80||/[\\u0000-\\u001f]/.test(t))throw new ErroOperacoes(campo+': identificador ausente ou inválido.');return t;}
+function texto(v,campo){const t=String(v??'').trim();if(!t||t.length>80||[...t].some(ch=>ch.charCodeAt(0)<32))throw new ErroOperacoes(campo+': identificador ausente ou inválido.');return t;}
 function valor(v,campo,max=1e10,positivo=false){
  let t=String(v??'').trim();
  if(/^\d{1,3}(?:\.\d{3})+(?:,\d{1,4})?$/.test(t))t=t.replaceAll('.','').replace(',','.');
