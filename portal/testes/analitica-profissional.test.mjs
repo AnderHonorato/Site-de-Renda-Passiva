@@ -73,3 +73,12 @@ test('roteamento Premium exige login e plano antes de ler o corpo',async()=>{
  assert.ok(auth>=0&&plan>auth&&limit>plan&&body>limit);
  assert.match(src,/proteger\(req\);/);
 });
+
+test('A/B preserva seis casas de precisão nos p-valores exportados',()=>{
+ const csv='experimento;variacao;controle;visitantes;conversoes;receita;custos\\nE2;A;1;1000;100;10000;5000\\nE2;B;0;1000;112;11000;5000';
+ const r=executarAnalitica('experimentos-ab-lote',{csv});
+ const variacao=r.planilha.find(x=>x[1]==='B');
+ assert.ok(variacao[9]>0&&variacao[9]<1);
+ assert.equal(variacao[9],variacao[10]);
+ assert.notEqual(variacao[9],Math.round(variacao[9]*100)/100);
+});
