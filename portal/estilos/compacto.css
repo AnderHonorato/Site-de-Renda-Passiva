@@ -393,3 +393,28 @@ body:has(dialog.ajuda-modal[open]) { overflow: hidden; }
   .diagrama-previa {padding:8px;}
   .diagrama-previa img {max-height:36dvh;}
 }
+
+/* F077: prévia dos favicons em cards próprios e compactos. */
+.favicon-previas {margin-top:12px;padding:13px;border:1px solid var(--borda);border-radius:13px;min-width:0;}
+.favicon-previas[hidden] {display:none!important;}
+.favicon-previas h3 {margin:0 0 11px;font-size:.86rem;line-height:1.3;}
+.favicon-previas__grade {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:8px;
+}
+.favicon-previas__item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-width:0;min-height:116px;padding:9px;gap:7px;
+  border:1px solid var(--borda);border-radius:10px;background:var(--superfície-2);
+}
+.favicon-previas__item img{width:64px;height:64px;max-width:100%;object-fit:contain;image-rendering:auto;
+  background-image:linear-gradient(45deg,#ddd 25%,transparent 25%),linear-gradient(-45deg,#ddd 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#ddd 75%),linear-gradient(-45deg,transparent 75%,#ddd 75%);
+  background-size:14px 14px;background-position:0 0,0 7px,7px -7px,-7px 0;
+}
+.favicon-previas__item small{font-size:.72rem;color:var(--tinta-suave,#5b6470);}
+@media(max-width:767px){
+ .favicon-previas{padding:10px;}
+ .favicon-previas__grade{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;}
+ .favicon-previas__item{min-height:98px;padding:7px;}
+ .favicon-previas__item img{width:50px;height:50px;}
+}
