@@ -4,7 +4,7 @@ import {planejarEstoque,ErroEstoque} from '../servidor/estoque-abc-xyz.mjs';
 const item=(sku,demandaMensal,extra={})=>({sku,demandaMensal,preco:100,custo:40,estoque:0,prazoDias:10,...extra});
 test('ABC distribui valor de consumo e XYZ separa demanda regular',()=>{
  const r=planejarEstoque({itens:[item('A',[100,100,100]),item('B',[10,10,10]),item('C',[1,1,1])]});
- assert.equal(r.totalSkus,3);assert.deepEqual(r.itens.map(i=>i.classeABC),['A','A','B']);
+ assert.equal(r.totalSkus,3);assert.deepEqual(r.itens.map(i=>i.classeABC),['A','B','C']);
  assert.equal(r.itens[0].classeXYZ,'X');assert.equal(r.itens[0].classeCombinada,'AX');
  assert.equal(r.itens[0].valorConsumoAnual,120000);
  assert.equal(r.itens[0].pontoPedido,57);
