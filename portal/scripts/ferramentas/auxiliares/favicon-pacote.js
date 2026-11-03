@@ -1,5 +1,5 @@
 /** Regras e empacotamento do gerador de favicons, sem bibliotecas remotas. */
-import { criarZip } from '../cálculos/zip.js';
+import { criarZip } from '../../cálculos/zip.js';
 
 export const LIMITES_FAVICON = Object.freeze({
   arquivo: 15*1024*1024, pixels: 16_000_000, lado: 8192,
