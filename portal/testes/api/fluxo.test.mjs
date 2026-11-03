@@ -173,6 +173,22 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     acesso=await pedir('/api/premium/auditar-feed','POST',{feed:'id;title\n1;A'});
     assert.equal(acesso.status,400,'Dados inválidos nunca produzem relatório');
 
+    // Regressão de segurança: sessão Premium não dispensa CSRF nem origem confiável.
+    // Verificar os quatro grupos de rotas sem executar o motor com requisição forjada.
+    const rotasProtegidas=[
+      ['/api/premium/lote/simulador-margem-marketplaces',ferramentasLote[0][2]],
+      ['/api/premium/estrategia/precificacao-de-promocoes',ferramentasLote[5][2]],
+      ['/api/premium/operacoes/planejamento-kits-combos',operacoesPremium[0][1]],
+      ['/api/premium/analitica/experimentos-ab-lote',analiticasPremium[3][1]]
+    ];
+    for(const [rota,entrada] of rotasProtegidas){
+      const cabecalhos={Cookie:cookie,Origin:origem,'Content-Type':'application/json'};
+      const semToken=await fetch(base+rota,{method:'POST',headers:cabecalhos,body:JSON.stringify(entrada)});
+      assert.equal(semToken.status,403,'CSRF obrigatório em '+rota);
+      const origemExterna=await fetch(base+rota,{method:'POST',headers:{...cabecalhos,Origin:'https://evil.example','X-CSRF-Token':csrf},body:JSON.stringify(entrada)});
+      assert.equal(origemExterna.status,403,'Origem externa rejeitada em '+rota);
+    }
+
     for(const [grupo,slug,entrada] of ferramentasLote){
       const permitido=await pedir('/api/premium/'+grupo+'/'+slug,'POST',entrada);
       assert.equal(permitido.status,200,'Conta Premium deve executar '+slug+': '+JSON.stringify(permitido.data));
