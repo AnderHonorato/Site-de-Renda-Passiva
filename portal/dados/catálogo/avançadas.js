@@ -418,4 +418,17 @@ export const ferramentas = [
     intenções: ['planejar estoque abc xyz com sazonalidade', 'classificar produtos xyz por sku', 'simular investimento em reposição'],
     relacionadas: ['curva-abc', 'ponto-de-reposicao', 'previsao-de-vendas'],
   },
+  {
+    id: 'F211', slug: 'auditoria-seo-produtos', nome: 'Auditoria SEO de páginas de produtos', cat: 'marketing',
+    ícone: 'alvo', tarefas: ['analisar', 'validar'], status: 'pronta',
+    resumo: 'Audita até 250 páginas de produto por metadados, canonical, noindex e dados Product/Offer JSON-LD.',
+    problema: 'Encontrar problemas técnicos de SEO e dados estruturados em páginas de produtos de lojas virtuais.',
+    entra: 'CSV/TSV com SKU, URL, title, description, H1, canonical, robots, imagem, alt e JSON-LD.',
+    processa: 'Motor Premium no servidor classifica inconsistências de metadados e Product/Offer com notas e prioridades.',
+    sai: 'Diagnósticos por URL, pendências ordenadas e exportação CSV e Excel.',
+    exporta: ['copiar', 'csv', 'xlsx'], plano: 'premium', local: false,
+    tags: ['auditoria seo', 'seo ecommerce', 'jsonld product', 'dados estruturados', 'canonical', 'noindex', 'premium'],
+    intenções: ['auditar seo de paginas de produtos em lote', 'verificar product jsonld de ecommerce', 'revisar canonical e noindex de loja'],
+    relacionadas: ['auditor-de-feed-merchant', 'utm', 'previsao-de-vendas'],
+  },
 ];

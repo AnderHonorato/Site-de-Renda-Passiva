@@ -35,4 +35,5 @@ export default Object.freeze({
   // Metadados de descoberta; a interface e o processamento continuam em PT-BR até a fase de tradução.
   F209: { nome: 'Google Shopping feed audit', resumo: 'Audit up to 500 Merchant Center items, prioritize missing attributes and export an action plan.', tags: ['google merchant center', 'feed audit', 'product data quality', 'google shopping'], intenções: ['audit a google merchant center feed', 'fix shopping product data issues'] },
   F210: { nome: 'ABC/XYZ inventory planning', resumo: 'Plan inventory purchases for up to 500 SKUs using ABC/XYZ and seasonal demand.', tags: ['abc xyz inventory', 'stock planning', 'seasonality', 'replenishment'], intenções: ['plan inventory with abc xyz and seasonality', 'estimate stock replenishment'] },
+  F211: { nome: 'Product page SEO audit', resumo: 'Audit 250 product pages for metadata, canonical, noindex and Product/Offer JSON-LD.', tags: ['ecommerce seo audit','product json ld','canonical','noindex'], intenções: ['audit ecommerce product pages in bulk','check product structured data'] },
 });
