@@ -94,6 +94,33 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     cookie=alice.cookie;csrf=alice.csrf;
     r=await pedir('/api/admin/usuarios');assert.equal(r.status,200);assert.ok(r.data.usuarios.length>=3);
     r=await pedir(`/api/admin/usuarios/${bob.id}`,'PATCH',{plano:'plus'});assert.equal(r.status,200);
+    // Regressão Premium: Plus não executa, Premium autorizado recebe relatório verdadeiro.
+    const cabSku='sku;mes;unidades;preco;cmv;comissao_pct;tarifa_fixa;frete;ads_un;imposto_pct;perdas_pct;estoque;prazo_dias';
+    const historicoSku=[cabSku,'A1;2026-08;10;100;40;12;3;10;5;5;2;10;7',
+      'A1;2026-09;15;100;40;12;3;10;5;5;2;10;7',
+      'A1;2026-10;20;100;40;12;3;10;5;5;2;10;7'].join('\n');
+    const feedSku=['id;title;description;link;image_link;availability;price',
+      'A1;Camiseta básica algodão premium;Camiseta casual de algodão;https://loja.exemplo/p;https://loja.exemplo/p.png;in_stock;99.90 BRL'].join('\n');
+    cookie=bob.cookie;csrf=bob.csrf;
+    let acesso=await pedir('/api/premium/previsao-de-vendas','POST',{historico:historicoSku});
+    assert.equal(acesso.status,403,'Plus não pode executar previsão Premium');
+    acesso=await pedir('/api/premium/auditar-feed','POST',{feed:feedSku});
+    assert.equal(acesso.status,403,'Plus não pode auditar catálogo Premium');
+    cookie=alice.cookie;csrf=alice.csrf;
+    acesso=await pedir(`/api/admin/usuarios/${bob.id}`,'PATCH',{plano:'premium'});
+    assert.equal(acesso.status,200,'Administrador pode habilitar o Premium manualmente');
+    cookie=bob.cookie;csrf=bob.csrf;
+    acesso=await pedir('/api/premium/previsao-de-vendas','POST',{historico:historicoSku,cenario:5,margemMeta:15});
+    assert.equal(acesso.status,200,'Premium autorizado recebe cálculo do motor real');
+    assert.equal(acesso.data.relatorio.skuTotal,1);
+    assert.equal(acesso.data.relatorio.itens[0].margemUnitaria,23);
+    acesso=await pedir('/api/premium/auditar-feed','POST',{feed:feedSku});
+    assert.equal(acesso.status,200,'Premium autorizado recebe auditoria real');
+    assert.equal(acesso.data.relatorio.produtos,1);
+    acesso=await pedir('/api/premium/auditar-feed','POST',{feed:'id;title\n1;A'});
+    assert.equal(acesso.status,400,'Dados inválidos nunca produzem relatório');
+    cookie=alice.cookie;csrf=alice.csrf;
+
     r=await pedir('/api/admin/suporte');assert.equal(r.status,200);assert.ok(r.data.mensagens.some(x=>x.id===suporteId));
     r=await pedir(`/api/admin/suporte/${suporteId}`,'PATCH',{resposta:'Resposta de teste para suporte.'});assert.equal(r.status,200);
     r=await pedir('/api/suporte');assert.equal(r.data.mensagens.find(x=>x.id===suporteId).status,'respondida');
