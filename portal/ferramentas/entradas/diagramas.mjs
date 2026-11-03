@@ -7,7 +7,7 @@ export async function renderizarDiagrama(codigo,id,temaEscolhido='neutro'){
   const tema=temaEscolhido==='escuro'?'dark':temaEscolhido==='claro'?'default':'neutral';
   {
     mermaid.initialize({
-      startOnLoad:false,securityLevel:'strict',theme,logLevel:'error',
+      startOnLoad:false,securityLevel:'strict',theme:tema,logLevel:'error',
       flowchart:{htmlLabels:false,diagramPadding:12},
       maxTextSize:10000,maxEdges:180,suppressErrorRendering:true,
     });
