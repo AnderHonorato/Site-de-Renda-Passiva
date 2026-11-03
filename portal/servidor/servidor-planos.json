@@ -39,7 +39,8 @@
       "recursos": [
         "historico",
         "trabalhos_maiores",
-        "analise_sku_premium"
+        "analise_sku_premium",
+        "auditoria_feed_premium"
       ]
     }
   ]

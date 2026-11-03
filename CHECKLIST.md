@@ -248,3 +248,10 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [ ] Publicar backend Node em hospedagem autorizada e testar E2E com conta Premium.
 - [ ] Segunda frente: auditoria de feed Google Merchant Center com regras oficiais e prioridades.
 - [ ] Não ativar cobrança antes de infraestrutura, termos e gateway de pagamento.
+
+
+## Premium: auditoria de catálogo Merchant Center
+- [x] F209: regras formais de preço, disponibilidade, identificador, GTIN, URL, título, descrição, duplicatas e categoria.
+- [x] Score de triagem por produto e prioridades com CSV/Excel completos; 500 produtos por análise.
+- [x] Algoritmo privado no backend, autenticação Premium e controle de tamanho e frequência.
+- [ ] Testar integração completa com conta premium no servidor Node após hospedagem autorizada.

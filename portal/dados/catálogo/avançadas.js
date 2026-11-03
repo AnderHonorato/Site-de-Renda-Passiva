@@ -392,4 +392,17 @@ export const ferramentas = [
     intenções: ['fazer um fluxograma', 'criar diagrama a partir de texto', 'desenhar um processo'],
     relacionadas: ['organograma', 'mapa-mental', 'matriz-raci'],
   },
+  {
+    id: 'F209', slug: 'auditor-de-feed-merchant', nome: 'Auditoria de catálogo Google Shopping', cat: 'marketing',
+    ícone: 'alvo', tarefas: ['analisar', 'validar'], status: 'pronta',
+    resumo: 'Audita até 500 produtos do feed Merchant Center, prioriza falhas e exporta um plano de correções.',
+    problema: 'Diagnosticar cadastros que podem ter erros de preço, imagens, disponibilidade ou identificadores no Google Shopping.',
+    entra: 'CSV ou TSV com atributos oficiais: id, title, description, link, image_link, availability, price e complementos.',
+    processa: 'Motor protegido no servidor revisa campos obrigatórios, URLs, preços, valores, duplicatas e GTIN com dígito verificador.',
+    sai: 'Nota indicativa, prioridades de correção por SKU, lista completa para baixar em CSV e Excel.',
+    exporta: ['copiar', 'csv', 'xlsx'], plano: 'premium', local: false,
+    tags: ['google shopping', 'merchant center', 'feed', 'ecommerce', 'auditoria de catálogo', 'premium'],
+    intenções: ['auditar feed merchant center', 'corrigir produtos reprovados google shopping', 'conferir catalogo google shopping'],
+    relacionadas: ['previsao-de-vendas', 'utm', 'gerador-de-descricao-de-produto'],
+  },
 ];
