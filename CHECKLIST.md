@@ -214,3 +214,10 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Worker isolado, limite de texto e tempo, cópia/download.
 - [x] Minificação somente para JSON, sem transformação perigosa de JS/SQL.
 - [ ] Conferir o editor no navegador com um teste funcional.
+
+
+## Diagramas Mermaid
+- [x] F208: suporte a diagramas por sintaxe Mermaid, prévia local e download SVG/PNG/.mmd.
+- [x] Segurança estrita, sanitização do SVG, limites de complexidade e nomes seguros.
+- [x] Empacotamento Mermaid autossuficiente no CI sem CDN externo.
+- [ ] Verificar visualmente SVG/PNG e diagrama de sequência em navegador real.

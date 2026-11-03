@@ -18,8 +18,8 @@ import { ARQUIVO_DO_RESUMO, calcularResumoDaCapa } from './resumo-da-capa.mjs';
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 // Este bundle de terceiros é validado pelo metafile do esbuild na etapa de geração.
 // Uma busca por strings dentro do JS minificado acusa imports/debugger falsos.
-const BUNDLE_VERIFICADO = 'scripts/terceiros/formatadores.js';
-const éBundleVerificado = (arquivo) => relative(RAIZ, arquivo).replaceAll('\\', '/') === BUNDLE_VERIFICADO;
+const BUNDLES_VERIFICADOS = new Set(['scripts/terceiros/formatadores.js', 'scripts/terceiros/diagramas.js']);
+const éBundleVerificado = (arquivo) => BUNDLES_VERIFICADOS.has(relative(RAIZ, arquivo).replaceAll('\\', '/'));
 const problemas = [];
 const avisos = [];
 
