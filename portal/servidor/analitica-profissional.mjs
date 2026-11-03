@@ -224,7 +224,7 @@ function experimentos(d){
     t.holm<.05?'Diferença estatística':'Sem evidência suficiente';
    linhas.push([nomeExp,b.nome,b.controle?'Sim':'Não',b.n,b.k,arred(100*b.k/b.n),
     arred(100*intervalo[0]),arred(100*intervalo[1]),t?arred(t.up??0):'n/d',
-    t?arred(t.p):'n/d',t?arred(t.holm):'n/d',arred(b.receita/b.n),
+    t?Math.round(t.p*1000000)/1000000:'n/d',t?Math.round(t.holm*1000000)/1000000:'n/d',arred(b.receita/b.n),
     arred(b.receita-b.custos),status]);
   }
  }
