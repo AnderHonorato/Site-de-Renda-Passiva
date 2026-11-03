@@ -50,4 +50,22 @@ describe('seguranca-senha', () => {
     await assert.rejects(() => gerarHashSenha(''));
     await assert.rejects(() => gerarHashSenha(undefined));
   });
+  test('recusa parâmetros scrypt não padronizados e base64 não canônico', async () => {
+    const hash = await gerarHashSenha('senha-de-regressao');
+    const partes = hash.split('$');
+    const adulterados = [
+      [partes[0], '16385', partes[2], partes[3], partes[4], partes[5]],
+      [partes[0], partes[1], '1', partes[3], partes[4], partes[5]],
+      [partes[0], partes[1], partes[2], '2', partes[4], partes[5]],
+      [partes[0], partes[1], partes[2], partes[3], partes[4] + '!', partes[5]],
+      [partes[0], partes[1], partes[2], partes[3], partes[4], partes[5] + 'A'],
+      [partes[0], partes[1], partes[2], partes[3], 'c2Fs', partes[5]],
+      [partes[0], partes[1], partes[2], partes[3], partes[4], 'aGFzaA=='],
+    ];
+    for (const item of adulterados) {
+      assert.equal(await verificarSenha('senha-de-regressao', item.join('$')), false);
+    }
+    assert.equal(await verificarSenha('senha-de-regressao', hash), true);
+  });
+
 });
