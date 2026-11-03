@@ -47,7 +47,9 @@ export async function verificarSenha(senha, hashArmazenado) {
   const [prefixo, nTexto, rTexto, pTexto, salBase64, hashBase64] = partes;
   if (prefixo !== PREFIXO) return false;
 
-  // Aceita somente o perfil de hash emitido pelo servidor; evita parâmetros arbitrários.\n  if (nTexto !== String(CUSTO_N) || rTexto !== String(PARALELISMO_R) || pTexto !== String(PARALELISMO_P)) return false;\n  const n = Number(nTexto);
+  // Aceita somente o perfil de hash emitido pelo servidor; evita parâmetros arbitrários.
+  if (nTexto !== String(CUSTO_N) || rTexto !== String(PARALELISMO_R) || pTexto !== String(PARALELISMO_P)) return false;
+  const n = Number(nTexto);
   const r = Number(rTexto);
   const p = Number(pTexto);
   if (![n, r, p].every((valor) => Number.isInteger(valor) && valor > 0)) return false;
@@ -62,7 +64,8 @@ export async function verificarSenha(senha, hashArmazenado) {
   } catch {
     return false;
   }
-  if (sal.length === 0 || hashEsperado.length === 0) return false;
+  if (sal.length !== TAMANHO_SAL || hashEsperado.length !== TAMANHO_HASH) return false;
+  if (sal.toString('base64') !== salBase64 || hashEsperado.toString('base64') !== hashBase64) return false;
 
   let hashCalculado;
   try {
