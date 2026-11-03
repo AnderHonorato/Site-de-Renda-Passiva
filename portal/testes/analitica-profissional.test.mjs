@@ -51,6 +51,10 @@ test('checkout aponta a etapa com menor passagem',()=>{
  assert.equal(r.planilha[1][12],'Produto→carrinho');
  assert.equal(r.planilha[1][7],5);
 });
+test('recuperação hipotética no checkout respeita conversões posteriores',()=>{
+ const r=executarAnalitica('diagnostico-checkout-segmentos',base['diagnostico-checkout-segmentos']);
+ assert.equal(r.planilha[1][15],3500);
+});
 test('rejeita falsificação de dados, conversões maiores que visitas e e-mail pessoal',()=>{
  assert.throws(()=>executarAnalitica('qualquer',{}),ErroAnalitica);
  const a=base['experimentos-ab-lote'];

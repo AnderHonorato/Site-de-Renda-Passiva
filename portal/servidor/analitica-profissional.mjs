@@ -110,13 +110,13 @@ function afinidades(d){
   for(const s of sku)frequencia.set(s,(frequencia.get(s)||0)+1);
   const receita=[...itens.values()].reduce((s,x)=>s+x,0);
   for(let i=0;i<sku.length;i++)for(let j=i+1;j<sku.length;j++){
-   const chave=sku[i]+'\\u001f'+sku[j],v=pares.get(chave)||{itens:0,receita:0};
+   const chave=JSON.stringify([sku[i],sku[j]]),v=pares.get(chave)||{itens:0,receita:0};
    v.itens++;v.receita+=receita;pares.set(chave,v);
   }
  }
  const n=cestas.size,linhas=[],alertas=[];
  for(const [chave,p] of pares){
-  const [a,b]=chave.split('\\u001f');
+  const [a,b]=JSON.parse(chave);
   const suporte=p.itens/n*100;
   if(suporte<minimoSuporte)continue;
   const cfA=p.itens/frequencia.get(a)*100,cfB=p.itens/frequencia.get(b)*100;
@@ -256,7 +256,8 @@ function checkout(d){
   const aov=ped?receita/ped:0;
   const conversao=100*ped/s,perdaMaior=fraqueza===null?'Sem base':e[fraqueza][0];
   const taxaEtapa=fraqueza===null?0:rates[fraqueza];
-  const oportunidade=fraqueza===null?0:(e[fraqueza][1]-e[fraqueza][2])*.1*aov;
+  const posteriores=fraqueza===null?0:e.slice(fraqueza+1).reduce((prob,[entrada,saida])=>prob*(entrada?saida/entrada:0),1);
+  const oportunidade=fraqueza===null?0:(e[fraqueza][1]-e[fraqueza][2])*.1*posteriores*aov;
   if(fraqueza!==null&&taxaEtapa<20)alertas.push(key+': etapa '+perdaMaior+' com passagem inferior a 20%.');
   sessoes+=s;compras+=ped;receitaTotal+=receita;
   linhas.push([periodo,segmento,s,pv,cart,co,ped,arred(conversao),
@@ -270,7 +271,7 @@ function checkout(d){
   ['Receita',arred(receitaTotal)],['Segmentos/períodos',linhas.length]],
  ['Os números precisam pertencer à mesma coorte e período, sem múltiplas contagens inconsistentes.',
   'A etapa de menor passagem não prova que seja a de maior impacto financeiro ou a causa real.',
-  'Cenário de 10% de recuperação é hipotético: não considera mudanças das demais taxas de passagem e não prevê receita.'],alertas);
+  'Cenário de recuperar 10% das perdas na etapa mais fraca mantém as taxas posteriores constantes; não prevê receita ou causalidade.'],alertas);
 }
 const MODULOS=Object.freeze({
  'auditoria-faturas-frete':fretes,'afinidade-cestas-pedidos':afinidades,

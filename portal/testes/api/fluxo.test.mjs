@@ -135,6 +135,13 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
         csv:'sku;canal;fornecedor;receita;custos_variaveis\nS1;Loja;F1;1000;450\nS2;Marketplace;F2;500;320'
       }]
     ];
+    const analiticasPremium=[
+      ['auditoria-faturas-frete',{csv:'etiqueta;pedido;transportadora;comprimento_cm;largura_cm;altura_cm;peso_real_kg;divisor_cubagem;peso_faturado_kg;frete_base;adicionais_autorizados;frete_faturado;frete_repassado\nE1;P1;T1;30;20;20;1.2;6000;2;18;3;28;12'}],
+      ['afinidade-cestas-pedidos',{suporte_min_pct:10,confianca_min_pct:20,csv:'pedido;sku;unidades;receita\nP1;A;1;30\nP1;B;1;20\nP2;A;1;30\nP2;B;1;20'}],
+      ['inadimplencia-recebiveis',{data_referencia:'2026-11-03',csv:'fatura;cliente;emissao;vencimento;valor;valor_pago;data_pagamento\nF1;C1;2026-09-01;2026-09-30;1000;200;2026-09-15'}],
+      ['experimentos-ab-lote',{csv:'experimento;variacao;controle;visitantes;conversoes;receita;custos\nE1;A;1;1000;100;10000;5000\nE1;B;0;1000;200;16000;7000'}],
+      ['diagnostico-checkout-segmentos',{csv:'periodo;segmento;sessoes;visitas_produto;carrinhos;checkout;compras;receita\n2026-10;Mobile;1000;800;100;60;50;5000'}]
+    ];
     cookie=bob.cookie;csrf=bob.csrf;
     let acesso=await pedir('/api/premium/previsao-de-vendas','POST',{historico:historicoSku});
     assert.equal(acesso.status,403,'Plus não pode executar previsão Premium');
@@ -147,6 +154,10 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     for(const [slug,entrada] of operacoesPremium){
       const bloqueio=await pedir('/api/premium/operacoes/'+slug,'POST',entrada);
       assert.equal(bloqueio.status,403,'Conta Plus bloqueada em '+slug);
+    }
+    for(const [slug,entrada] of analiticasPremium){
+      const negado=await pedir('/api/premium/analitica/'+slug,'POST',entrada);
+      assert.equal(negado.status,403,'Plus não pode executar '+slug);
     }
     cookie=alice.cookie;csrf=alice.csrf;
     acesso=await pedir(`/api/admin/usuarios/${bob.id}`,'PATCH',{plano:'premium'});
@@ -179,6 +190,14 @@ test('autenticação, CSRF, chat, bloqueio e administração',async()=>{
     }
     const invalidoOperacao=await pedir('/api/premium/operacoes/planejamento-kits-combos','POST',{kits:'',componentes:''});
     assert.equal(invalidoOperacao.status,400,'Dados inválidos não geram resultados');
+    for(const [slug,entrada] of analiticasPremium){
+      const resposta=await pedir('/api/premium/analitica/'+slug,'POST',entrada);
+      assert.equal(resposta.status,200,'Premium deve executar '+slug+': '+JSON.stringify(resposta.data));
+      assert.ok(Array.isArray(resposta.data.relatorio.planilha)&&resposta.data.relatorio.planilha.length>=2,slug);
+    }
+    const invalidoAnalitica=await pedir('/api/premium/analitica/experimentos-ab-lote','POST',{csv:'incompleto'});
+    assert.equal(invalidoAnalitica.status,400);
+
 
 
     cookie=alice.cookie;csrf=alice.csrf;

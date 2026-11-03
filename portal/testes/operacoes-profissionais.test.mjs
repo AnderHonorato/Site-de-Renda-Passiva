@@ -61,6 +61,12 @@ test('concentração calcula HHI por canal e mantém cenários independentes',()
  assert.equal(r.indicadores.find(x=>x[0]==='HHI por canal')[1],6250);
  assert.ok(r.avisos.join(' ').includes('SEPARADOS'));
 });
+test('coortes ainda não observadas não são classificadas como abandono',()=>{
+ const r=executarOperacoes('coortes-retencao-ltv',amostras['coortes-retencao-ltv']);
+ assert.equal(r.planilha[1][6],50);
+ assert.equal(r.planilha[1][7],'n/d');
+ assert.equal(r.planilha[1][9],'n/d');
+});
 test('entrada insegura, repetição e sequência de datas inválida são recusadas',()=>{
  const d=amostras['planejamento-kits-combos'];
  assert.throws(()=>executarOperacoes('planejamento-kits-combos',{...d,

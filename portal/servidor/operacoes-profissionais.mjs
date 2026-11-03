@@ -158,6 +158,7 @@ function coortes(d){
   if(!clientes.has(cliente))clientes.set(cliente,[]);
   clientes.get(cliente).push({dia,mes:mes(x.data),receita,contrib:receita-cmv-outros});
  }
+ const ultimoMes=[...clientes.values()].flat().reduce((max,c)=>c.mes>max?c.mes:max,'');
  const grupos=new Map();
  for(const compras of clientes.values()){
   compras.sort((a,b)=>a.dia-b.dia);
@@ -180,7 +181,8 @@ function coortes(d){
   let acumulado=0,payback='Não atingido';
   for(let m=0;m<=6;m++){acumulado+=c.contribMensal[m];if(payback==='Não atingido'&&gasto>0&&acumulado>=gasto)payback='M'+m;}
   if(!gastos.has(periodo))payback='Sem CAC informado';
-  const ret=(m)=>arred(c.retencao[m].size/c.clientes*100);
+  else if(payback==='Não atingido'&&diffMes(periodo,ultimoMes)<6)payback='Em observação';
+  const ret=(m)=>diffMes(periodo,ultimoMes)<m?'n/d':arred(c.retencao[m].size/c.clientes*100);
   const contribuicaoMedia=c.contrib/c.clientes;
   receitaTotal+=c.receita;contribTotal+=c.contrib;
   retidos+=c.retencao.slice(1).reduce((s,x)=>s+x.size,0);
@@ -193,7 +195,7 @@ function coortes(d){
  'CAC manual/cliente','Retenção M1 (%)','M2 (%)','M3 (%)','M6 (%)','Payback estimado'],
  linhas,[['Clientes pseudônimos',clientes.size],['Receita total',arred(receitaTotal)],
   ['Contribuição antes do CAC',arred(contribTotal)],['Coortes',grupos.size]],
- ['Retenção M1–M6 representa compra no mês exato, não retenção cumulativa. Meses futuros ou ausentes do CSV são incompletos.',
+ ['Retenção M1–M6 representa compra no mês exato, não retenção cumulativa. Meses futuros ao último registro são marcados n/d, pois ainda não há base para afirmar abandono.',
   'Contribuição LTV não inclui publicidade, que aparece como CAC manual. Acompanhamento limitado aos pedidos fornecidos.',
   'Use IDs pseudônimos; não inclua nomes, e-mails, telefones nem CPFs.'],avisos);
 }
