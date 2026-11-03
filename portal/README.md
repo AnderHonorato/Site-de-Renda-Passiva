@@ -203,3 +203,8 @@ Para desenvolvimento local: npm ci --prefix portal; npm install --prefix portal 
 
 ## F208 — Diagramas Mermaid no navegador
 A ferramenta usa Mermaid 11.17.2 empacotado localmente via esbuild (MIT) e geração em modo estrito. O SVG é sanitizado, removendo scripts, referências externas e objetos incorporados, e a prévia é exibida como imagem isolada, não como HTML injetado. Permite fonte .mmd, SVG e PNG, com limites de 8 mil caracteres, 140 linhas, 2.400 px por lado e no máximo 4 milhões de pixels na exportação. Não existe link executável nem API externa. Para montar localmente, instale mermaid@11.17.2 com a mesma versão de esbuild e rode npm run montar:diagramas --prefix portal.
+
+
+## F077 — Gerador de favicon em pacote de instalação
+
+O módulo gera favicons de imagem local PNG, JPG ou WebP, em tamanhos 16/32/48/180/192/512 px. Exporta um ZIP com seis PNGs, favicon.ico (16, 32 e 48 px), site.webmanifest, HTML de instalação e LEIA-ME. Usa canvas e a infraestrutura ZIP própria do projeto. Processamento 100% no navegador, até 15 MB, 16 megapixels e 8192 px por lado. Inclui modos conter/preencher, fundos transparente/branco/escuro, prévia de cada tamanho e alerta para imagens pequenas e não quadradas. O pacote fornece ícones mas não configura sozinho um PWA instalável. Não envia arquivos à conta ou a um servidor.

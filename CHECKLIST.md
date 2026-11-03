@@ -221,3 +221,11 @@ Relatório: `portal/documentacao/ajuste-conquistas-telas-baixas-2026-10-09.md`.
 - [x] Segurança estrita, sanitização do SVG, limites de complexidade e nomes seguros.
 - [x] Empacotamento Mermaid autossuficiente no CI sem CDN externo.
 - [ ] Verificar visualmente SVG/PNG e diagrama de sequência em navegador real.
+
+
+## Favicon profissional
+- [x] Gerador F077: seis resoluções PNG, ICO multirresolução, manifesto e HTML de instalação.
+- [x] Pacote ZIP com dez arquivos, prévia dos seis tamanhos e download de favicon.ico.
+- [x] Validar formatos, tamanho, dimensões, opções de encaixe/fundo e nomes de arquivo.
+- [x] Usar canvas local e ZIP seguro existente; sem upload de logotipo.
+- [ ] Conferir impressão/ícones em navegadores desktop e Android/iOS usando arquivo local real.
