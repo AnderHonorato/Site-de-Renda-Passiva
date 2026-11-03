@@ -38,7 +38,7 @@ test('todo campo declarado usa valores conhecidos', () => {
   for (const f of ferramentas) {
     assert.ok(idsDeCategoria.has(f.cat), `${f.id}: categoria ${f.cat}`);
     assert.ok(nomesDeÍcone.includes(f.ícone), `${f.id}: ícone ${f.ícone}`);
-    assert.ok(['gratuito', 'plus'].includes(f.plano), `${f.id}: plano ${f.plano}`);
+    assert.ok(['gratuito', 'plus', 'premium'].includes(f.plano), `${f.id}: plano ${f.plano}`);
     for (const t of f.tarefas) assert.ok(idsDeTarefa.has(t), `${f.id}: tarefa ${t}`);
     for (const e of f.exporta) assert.ok(exportaçõesVálidas.has(e), `${f.id}: exportação ${e}`);
   }
