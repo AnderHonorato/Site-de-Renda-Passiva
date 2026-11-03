@@ -21,3 +21,24 @@ test('hashes scrypt adulterados ou com tamanhos excessivos falham fechados', asy
     assert.equal(await comparar('senha-forte-123', hash), false);
   }
 });
+
+test('comparador rejeita prefixos, campos extras e base64 com bits de preenchimento adulterados', async () => {
+  const valido = await senhaHash('senha-forte-123');
+  const partes = valido.split('$');
+  const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  const base64NaoCanonico = valor => {
+    const posicao = valor.length - 3; // último caractere útil antes de ==
+    const indice = alfabeto.indexOf(valor[posicao]);
+    return valor.slice(0, posicao) + alfabeto[indice ^ 1] + valor.slice(posicao + 1);
+  };
+  const alterar = (indice, valor) => partes.map((item, i) => i === indice ? valor : item).join('$');
+  for (const adulterado of [
+    alterar(0, 'outro'),
+    valido + '$campo-extra',
+    alterar(4, base64NaoCanonico(partes[4])),
+    alterar(5, base64NaoCanonico(partes[5])),
+  ]) {
+    assert.equal(await comparar('senha-forte-123', adulterado), false);
+  }
+  assert.equal(await comparar('senha-forte-123', valido), true);
+});
