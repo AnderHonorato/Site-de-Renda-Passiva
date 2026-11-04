@@ -161,4 +161,38 @@ describe('seguranca-csrf', () => {
     assert.notEqual(res.cookiesDefinidos.af_csrf, 'valor-escolhido-pelo-cliente');
   });
 
+  test('cookie CSRF excessivo é substituído e não autoriza POST', async () => {
+    const middleware = middlewareCsrf({ emProducao: true });
+    const tokenInvalido = 'a'.repeat(100_000);
+    const req = criarReq({
+      method: 'POST',
+      path: '/api/conta',
+      cookies: { af_csrf: tokenInvalido },
+      cabecalhos: { 'x-csrf-token': tokenInvalido },
+    });
+    const res = criarRes();
+    const erro = await chamar(middleware, req, res);
+    assert.equal(erro?.status, 403);
+    assert.match(res.cookiesDefinidos.af_csrf, /^[A-Za-z0-9_-]{43}$/);
+  });
+
+  test('cabeçalho CSRF excessivo é recusado sem processamento criptográfico desnecessário', async () => {
+    const middleware = middlewareCsrf({ emProducao: false });
+    const req = criarReq({
+      method: 'PATCH',
+      path: '/api/conta',
+      cookies: { af_csrf: 'token-valido' },
+      cabecalhos: { 'x-csrf-token': 'b'.repeat(100_000) },
+    });
+    assert.equal((await chamar(middleware, req, criarRes()))?.codigo, 'csrf_invalido');
+  });
+
+  test('cookie CSRF de tipo inesperado é substituído', async () => {
+    const middleware = middlewareCsrf({ emProducao: false });
+    const req = criarReq({ method: 'GET', cookies: { af_csrf: ['a', 'b'] } });
+    const res = criarRes();
+    assert.equal(await chamar(middleware, req, res), undefined);
+    assert.match(res.cookiesDefinidos.af_csrf, /^[A-Za-z0-9_-]{43}$/);
+  });
+
 });
