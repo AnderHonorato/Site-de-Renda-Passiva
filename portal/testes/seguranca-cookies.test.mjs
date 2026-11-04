@@ -53,3 +53,10 @@ test('um cookie inválido não bloqueia cookies válidos posteriores', () => {
   assert.equal(resultado.sessao, 'valida');
   assert.equal(resultado.csrf, 'ok');
 });
+
+test('valores de cookie com controles codificados são rejeitados sem afetar os demais', () => {
+  const resultado = cookies({ headers: { cookie: 'sessao=ruim%0D%0ASet-Cookie%3Aforjado; sessao=valida; csrf=ok%00; csrf=seguro' } });
+  assert.equal(resultado.sessao, 'valida');
+  assert.equal(resultado.csrf, 'seguro');
+  assert.equal(Object.keys(resultado).length, 2);
+});
