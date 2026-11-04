@@ -164,9 +164,13 @@ export async function criarAplicativo({ configuracao, banco, modulos = {}, contr
       return criarGerenciadorSessao({ banco, configuracao });
     })());
 
+  // Reutilizar os middlewares evita recriá-los a cada requisição e mantém
+  // a mesma política para /api e todas as suas subrotas.
+  const limitarApi = limitador.middleware('api', { chave: chaveIp });
+  const limitarPaginas = limitador.middleware('paginas', { chave: chaveIp });
   app.use((req, res, next) => {
-    const grupo = req.path === '/api' || req.path.startsWith('/api/') ? 'api' : 'paginas';
-    limitador.middleware(grupo, { chave: chaveIp })(req, res, next);
+    const rotaApi = req.path === '/api' || req.path.startsWith('/api/');
+    (rotaApi ? limitarApi : limitarPaginas)(req, res, next);
   });
 
   const middlewareCsrf =
