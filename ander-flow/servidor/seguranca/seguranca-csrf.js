@@ -30,7 +30,7 @@ function compararTempoConstante(a, b) {
 }
 
 function precisaDeToken(req) {
-  return METODOS_PROTEGIDOS.has(req.method) && req.path.startsWith('/api/') && req.path !== CAMINHO_FORA_DA_REGRA;
+  return METODOS_PROTEGIDOS.has(req.method) && (req.path === '/api' || req.path.startsWith('/api/'));
 }
 
 export function middlewareCsrf(configuracao = {}) {
