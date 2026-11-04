@@ -9,6 +9,11 @@ const NOME_CABECALHO = 'x-csrf-token';
 const METODOS_PROTEGIDOS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 const CAMINHO_FORA_DA_REGRA = '/__controle/desligar';
 
+function tokenValido(valor) {
+  return typeof valor === 'string' && /^[A-Za-z0-9_-]{43}$/.test(valor)
+    && Buffer.from(valor, 'base64url').toString('base64url') === valor;
+}
+
 function tokenAleatorio() {
   return randomBytes(32).toString('base64url');
 }
@@ -32,7 +37,7 @@ export function middlewareCsrf(configuracao = {}) {
   return function csrf(req, res, next) {
     let token = req.cookies?.[NOME_COOKIE];
     // Cookies inválidos ou excessivos não devem ser aceitos nem processados no hash.
-    if (typeof token !== 'string' || token.length === 0 || token.length > 128) {
+    if (!tokenValido(token)) {
       token = tokenAleatorio();
       res.cookie(NOME_COOKIE, token, {
         httpOnly: false,
@@ -46,7 +51,7 @@ export function middlewareCsrf(configuracao = {}) {
     if (!precisaDeToken(req)) return next();
 
     const recebido = req.get(NOME_CABECALHO);
-    if (typeof recebido !== 'string' || recebido.length > 128) {
+    if (!tokenValido(recebido)) {
       return next(criarErro(403, 'csrf_invalido'));
     }
     if (!compararTempoConstante(token, recebido ?? '')) {
