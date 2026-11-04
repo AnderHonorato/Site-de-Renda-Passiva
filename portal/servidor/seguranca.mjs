@@ -9,7 +9,10 @@ export const erro = (status, codigo) => Object.assign(new Error(codigo), { statu
 
 export function cookies(req) {
   const resultado = Object.create(null);
-  for (const parte of (req.headers.cookie || '').split(';')) {
+  const cabecalho = req?.headers?.cookie;
+  // Recusar cabeçalhos inesperados ou excessivos antes de dividir/alocar entradas.
+  if (typeof cabecalho !== 'string' || cabecalho.length > 16384) return resultado;
+  for (const parte of cabecalho.split(';')) {
     const posicao = parte.indexOf('=');
     if (posicao <= 0) continue;
     try {
