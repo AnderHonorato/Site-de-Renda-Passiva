@@ -74,3 +74,16 @@ test('nomes reservados codificados não podem substituir cookies legítimos', ()
   assert.equal(Object.hasOwn(resultado, 'prototype'), false);
   assert.equal(resultado.sessao, 'valida');
 });
+
+test('cabeçalhos de cookie ausentes ou com tipo inesperado são ignorados', () => {
+  for (const headers of [{}, { cookie: ['sessao=forjada'] }, { cookie: 123 }, { cookie: { valor: 'sessao=forjada' } }]) {
+    const resultado = cookies({ headers });
+    assert.equal(Object.getPrototypeOf(resultado), null);
+    assert.deepEqual(Object.keys(resultado), []);
+  }
+});
+
+test('cabeçalho de cookie excessivo não é processado', () => {
+  const resultado = cookies({ headers: { cookie: 'sessao=valida;' + 'x'.repeat(16384) } });
+  assert.deepEqual(Object.keys(resultado), []);
+});
