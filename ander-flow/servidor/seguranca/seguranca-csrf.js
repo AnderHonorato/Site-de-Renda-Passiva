@@ -29,7 +29,8 @@ function compararTempoConstante(a, b) {
 }
 
 function precisaDeToken(req) {
-  return METODOS_PROTEGIDOS.has(req.method) && (req.path === '/api' || req.path.startsWith('/api/'));
+  const caminho = req.path.toLowerCase();
+  return METODOS_PROTEGIDOS.has(req.method) && (caminho === '/api' || caminho.startsWith('/api/'));
 }
 
 export function middlewareCsrf(configuracao = {}) {
