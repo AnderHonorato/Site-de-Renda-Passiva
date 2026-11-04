@@ -60,3 +60,17 @@ test('valores de cookie com controles codificados são rejeitados sem afetar os 
   assert.equal(resultado.csrf, 'seguro');
   assert.equal(Object.keys(resultado).length, 2);
 });
+
+test('nomes de cookies com espaços e tabulações codificados não são aceitos', () => {
+  const resultado = cookies({ headers: { cookie: 'sessao%20=forjada; %09csrf=forjado; sessao=valida; csrf=seguro' } });
+  assert.deepEqual(Object.keys(resultado), ['sessao', 'csrf']);
+  assert.equal(resultado.sessao, 'valida');
+  assert.equal(resultado.csrf, 'seguro');
+});
+
+test('nomes reservados codificados não podem substituir cookies legítimos', () => {
+  const resultado = cookies({ headers: { cookie: '%63onstructor=injetado; %70rototype=injetado; sessao=valida' } });
+  assert.equal(Object.hasOwn(resultado, 'constructor'), false);
+  assert.equal(Object.hasOwn(resultado, 'prototype'), false);
+  assert.equal(resultado.sessao, 'valida');
+});
