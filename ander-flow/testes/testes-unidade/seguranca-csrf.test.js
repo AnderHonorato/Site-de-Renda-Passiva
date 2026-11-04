@@ -3,6 +3,9 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { middlewareCsrf } from '../../servidor/seguranca/seguranca-csrf.js';
 
+const TOKEN_VALIDO = Buffer.alloc(32, 7).toString('base64url');
+const TOKEN_DIFERENTE = Buffer.alloc(32, 8).toString('base64url');
+
 function criarRes() {
   const cookiesDefinidos = {};
   return {
@@ -44,7 +47,7 @@ describe('seguranca-csrf', () => {
 
   test('GET não exige X-CSRF-Token mesmo em /api/*', async () => {
     const middleware = middlewareCsrf({ emProducao: false });
-    const req = criarReq({ method: 'GET', path: '/api/qualquer', cookies: { af_csrf: 'token-existente' } });
+    const req = criarReq({ method: 'GET', path: '/api/qualquer', cookies: { af_csrf: TOKEN_VALIDO } });
     const res = criarRes();
     const erro = await chamar(middleware, req, res);
     assert.equal(erro, undefined);
@@ -52,7 +55,7 @@ describe('seguranca-csrf', () => {
 
   test('POST em /api/* sem X-CSRF-Token → 403 csrf_invalido', async () => {
     const middleware = middlewareCsrf({ emProducao: false });
-    const req = criarReq({ method: 'POST', path: '/api/conta', cookies: { af_csrf: 'token-do-cookie' } });
+    const req = criarReq({ method: 'POST', path: '/api/conta', cookies: { af_csrf: TOKEN_VALIDO } });
     const res = criarRes();
     const erro = await chamar(middleware, req, res);
     assert.ok(erro);
@@ -65,8 +68,8 @@ describe('seguranca-csrf', () => {
     const req = criarReq({
       method: 'POST',
       path: '/api/conta',
-      cookies: { af_csrf: 'token-do-cookie' },
-      cabecalhos: { 'x-csrf-token': 'token-errado' },
+      cookies: { af_csrf: TOKEN_VALIDO },
+      cabecalhos: { 'x-csrf-token': TOKEN_DIFERENTE },
     });
     const res = criarRes();
     const erro = await chamar(middleware, req, res);
@@ -80,8 +83,8 @@ describe('seguranca-csrf', () => {
     const req = criarReq({
       method: 'POST',
       path: '/api/conta',
-      cookies: { af_csrf: 'token-do-cookie' },
-      cabecalhos: { 'x-csrf-token': 'token-do-cookie' },
+      cookies: { af_csrf: TOKEN_VALIDO },
+      cabecalhos: { 'x-csrf-token': TOKEN_VALIDO },
     });
     const res = criarRes();
     const erro = await chamar(middleware, req, res);
@@ -91,7 +94,7 @@ describe('seguranca-csrf', () => {
   test('PUT, PATCH e DELETE em /api/* também exigem o token', async () => {
     const middleware = middlewareCsrf({ emProducao: false });
     for (const method of ['PUT', 'PATCH', 'DELETE']) {
-      const req = criarReq({ method, path: '/api/trabalhos/1', cookies: { af_csrf: 'token-do-cookie' } });
+      const req = criarReq({ method, path: '/api/trabalhos/1', cookies: { af_csrf: TOKEN_VALIDO } });
       const res = criarRes();
       const erro = await chamar(middleware, req, res);
       assert.equal(erro?.codigo, 'csrf_invalido', `método ${method} deveria exigir token`);
@@ -100,7 +103,7 @@ describe('seguranca-csrf', () => {
 
   test('/__controle/desligar fica fora da regra mesmo em POST', async () => {
     const middleware = middlewareCsrf({ emProducao: false });
-    const req = criarReq({ method: 'POST', path: '/__controle/desligar', cookies: { af_csrf: 'token-do-cookie' } });
+    const req = criarReq({ method: 'POST', path: '/__controle/desligar', cookies: { af_csrf: TOKEN_VALIDO } });
     const res = criarRes();
     const erro = await chamar(middleware, req, res);
     assert.equal(erro, undefined);
@@ -108,7 +111,7 @@ describe('seguranca-csrf', () => {
 
   test('POST fora de /api/* não exige o token', async () => {
     const middleware = middlewareCsrf({ emProducao: false });
-    const req = criarReq({ method: 'POST', path: '/entrar', cookies: { af_csrf: 'token-do-cookie' } });
+    const req = criarReq({ method: 'POST', path: '/entrar', cookies: { af_csrf: TOKEN_VALIDO } });
     const res = criarRes();
     const erro = await chamar(middleware, req, res);
     assert.equal(erro, undefined);
@@ -161,6 +164,14 @@ describe('seguranca-csrf', () => {
     assert.notEqual(res.cookiesDefinidos.af_csrf, 'valor-escolhido-pelo-cliente');
   });
 
+  test('token arbitrário igual no cookie e cabeçalho não autoriza POST', async () => {
+    const middleware = middlewareCsrf({ emProducao: true });
+    const req = criarReq({ method: 'POST', path: '/api/conta', cookies: { af_csrf: 'token-previsivel' }, cabecalhos: { 'x-csrf-token': 'token-previsivel' } });
+    const res = criarRes();
+    assert.equal((await chamar(middleware, req, res))?.status, 403);
+    assert.match(res.cookiesDefinidos.af_csrf, /^[A-Za-z0-9_-]{43}$/);
+  });
+
   test('cookie CSRF excessivo é substituído e não autoriza POST', async () => {
     const middleware = middlewareCsrf({ emProducao: true });
     const tokenInvalido = 'a'.repeat(100_000);
@@ -181,7 +192,7 @@ describe('seguranca-csrf', () => {
     const req = criarReq({
       method: 'PATCH',
       path: '/api/conta',
-      cookies: { af_csrf: 'token-valido' },
+      cookies: { af_csrf: TOKEN_VALIDO },
       cabecalhos: { 'x-csrf-token': 'b'.repeat(100_000) },
     });
     assert.equal((await chamar(middleware, req, criarRes()))?.codigo, 'csrf_invalido');
