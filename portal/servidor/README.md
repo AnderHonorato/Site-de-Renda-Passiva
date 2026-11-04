@@ -13,3 +13,15 @@ Variáveis:
 Não há administrador automático. Após a pessoa criar a própria conta, execute `node portal/scripts-admin/conceder-admin.mjs email@exemplo.com` no host do banco. O script audita a alteração e encerra as sessões anteriores. Para gerar um link de redefinição em produção, use `URL_PUBLICA=https://dominio node portal/scripts-admin/gerar-link-recuperacao.mjs email@exemplo.com` no host do banco e entregue o link por canal privado.
 
 Teste de integração: `node portal/testes/api/fluxo.test.mjs`. Ele cria um banco temporário e cobre cadastro, login, CSRF, chat, amizade, bloqueio, denúncia privada, moderação, SSE, redefinição concorrente, exportação e exclusão.
+
+## Cópia privada do banco
+
+Com Node 22.14 ou superior, um operador com acesso ao banco pode criar uma cópia consistente, incluindo transações já gravadas no WAL, sem interromper a API:
+
+```sh
+node portal/scripts-admin/backup-banco.mjs /caminho/absoluto/portal.sqlite /pasta/privada/backup-novo.sqlite
+```
+
+O destino deve ser um arquivo novo, em uma pasta privada existente fora do repositório. O comando reserva o arquivo sem sobrescrever outro, solicita permissões `0600` em sistemas POSIX e verifica a cópia com `quick_check`. Em Windows, configure e confira as permissões da pasta e do arquivo (ACL) antes do uso. Um erro pode deixar uma cópia incompleta, que não deve ser usada. O backup contém dados privados e credenciais derivadas: guarde-o em local protegido e criptografado, separado do volume ativo, com acesso limitado e política de retenção definida pelo operador. Não envie a cópia ao Git ou a uma pasta pública. O comando não faz upload nem agenda cópias.
+
+Antes de depender de uma cópia, ensaie a recuperação em ambiente isolado: abra uma cópia do backup em um banco separado, confira `PRAGMA integrity_check`, as tabelas e os fluxos essenciais com dados de teste. Para recuperação real, planeje a parada da aplicação, preserve o banco e seus arquivos WAL/SHM originais e siga um procedimento específico do ambiente; nunca copie um banco por cima de uma instância ativa. Ainda não há backup remoto, criptografia, frequência, retenção ou restauração em produção configurados.
