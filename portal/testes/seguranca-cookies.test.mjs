@@ -40,3 +40,16 @@ test('nomes de protótipo codificados também são rejeitados', () => {
   assert.equal(Object.hasOwn(resultado, '__proto__'), false);
   assert.equal(resultado.sessao, 'valida');
 });
+
+test('nomes equivalentes codificados não permitem sobrescrever cookies de sessão e CSRF', () => {
+  const resultado = cookies({ headers: { cookie: 'sessao=original; %73essao=forjada; csrf=primeiro; %63srf=segundo' } });
+  assert.equal(resultado.sessao, 'original');
+  assert.equal(resultado.csrf, 'primeiro');
+  assert.equal(Object.keys(resultado).length, 2);
+});
+
+test('um cookie inválido não bloqueia cookies válidos posteriores', () => {
+  const resultado = cookies({ headers: { cookie: 'sessao=%E0%A4%A; sessao=valida; csrf=ok' } });
+  assert.equal(resultado.sessao, 'valida');
+  assert.equal(resultado.csrf, 'ok');
+});
