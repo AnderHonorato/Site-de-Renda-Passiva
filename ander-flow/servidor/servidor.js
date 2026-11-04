@@ -165,7 +165,7 @@ export async function criarAplicativo({ configuracao, banco, modulos = {}, contr
     })());
 
   app.use((req, res, next) => {
-    const grupo = req.path.startsWith('/api/') ? 'api' : 'paginas';
+    const grupo = req.path === '/api' || req.path.startsWith('/api/') ? 'api' : 'paginas';
     limitador.middleware(grupo, { chave: chaveIp })(req, res, next);
   });
 
