@@ -7,7 +7,6 @@ import { criarErro } from '../servidor-erros.js';
 const NOME_COOKIE = 'af_csrf';
 const NOME_CABECALHO = 'x-csrf-token';
 const METODOS_PROTEGIDOS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
-const CAMINHO_FORA_DA_REGRA = '/__controle/desligar';
 
 function tokenValido(valor) {
   return typeof valor === 'string' && /^[A-Za-z0-9_-]{43}$/.test(valor)
