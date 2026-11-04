@@ -64,7 +64,8 @@ export async function corpo(req, maxBytes = 16384) {
     partes.push(parte);
   }
   try {
-    const dados = Buffer.concat(partes).toString('utf8');
+    // Recusar sequências UTF-8 inválidas em vez de substituir bytes por U+FFFD.
+    const dados = new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(partes));
     const objeto = dados ? JSON.parse(dados) : {};
     if (!objeto || typeof objeto !== 'object' || Array.isArray(objeto)) throw Error();
     return objeto;
