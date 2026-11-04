@@ -129,4 +129,36 @@ describe('seguranca-csrf', () => {
     assert.equal(opcoesRecebidas.httpOnly, false);
     assert.equal(opcoesRecebidas.sameSite, 'lax');
   });
+  test('tokens gerados em requisições distintas são independentes e têm 256 bits', async () => {
+    const middleware = middlewareCsrf({ emProducao: true });
+    const tokens = new Set();
+    for (let i = 0; i < 24; i += 1) {
+      const req = criarReq({ method: 'GET', cookies: {} });
+      const res = criarRes();
+      assert.equal(await chamar(middleware, req, res), undefined);
+      const token = res.cookiesDefinidos.af_csrf;
+      assert.match(token, /^[A-Za-z0-9_-]{43}$/);
+      assert.equal(Buffer.from(token, 'base64url').length, 32);
+      assert.equal(req.cookies.af_csrf, token);
+      tokens.add(token);
+    }
+    assert.equal(tokens.size, 24, 'não pode reutilizar tokens de outras sessões');
+  });
+
+  test('POST sem cookie é recusado mesmo quando o cliente envia um token arbitrário', async () => {
+    const middleware = middlewareCsrf({ emProducao: true });
+    const req = criarReq({
+      method: 'POST',
+      path: '/api/conta',
+      cookies: {},
+      cabecalhos: { 'x-csrf-token': 'valor-escolhido-pelo-cliente' },
+    });
+    const res = criarRes();
+    const erro = await chamar(middleware, req, res);
+    assert.equal(erro?.status, 403);
+    assert.equal(erro?.codigo, 'csrf_invalido');
+    assert.ok(res.cookiesDefinidos.af_csrf);
+    assert.notEqual(res.cookiesDefinidos.af_csrf, 'valor-escolhido-pelo-cliente');
+  });
+
 });
