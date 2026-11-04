@@ -31,3 +31,12 @@ test('cookies preserva primeiro valor valido, sinal de igual e isolamento de pro
   assert.equal(Object.getPrototypeOf(resultado), null);
   assert.equal(Object.hasOwn(resultado, '__proto__'), false);
 });
+
+test('leitor JSON rejeita UTF-8 corrompido e aceita caractere multibyte fragmentado', async () => {
+  const valido = Buffer.from('{"nome":"ação"}', 'utf8');
+  const indice = valido.indexOf(Buffer.from('ç', 'utf8'));
+  assert.deepEqual(await corpo(requisicao([valido.subarray(0, indice + 1), valido.subarray(indice + 1)])), { nome: 'ação' });
+  const invalido = Buffer.from('{"nome":"ação"}', 'utf8');
+  invalido[indice + 1] = 0x20;
+  await assert.rejects(corpo(requisicao([invalido])), { status: 400, codigo: 'json_invalido' });
+});
