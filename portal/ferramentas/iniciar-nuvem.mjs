@@ -5,6 +5,7 @@
  */
 import { spawn } from 'node:child_process';
 import { isAbsolute, resolve } from 'node:path';
+import { isIP } from 'node:net';
 import { fileURLToPath } from 'node:url';
 
 const raiz = resolve(fileURLToPath(new URL('..', import.meta.url)));
@@ -21,9 +22,12 @@ export function configurarNuvem(ambiente = process.env) {
   try { url = new URL(ambiente.URL_PUBLICA); } catch {
     throw new Error('URL_PUBLICA HTTPS é obrigatória no servidor público.');
   }
-  if (url.protocol !== 'https:' || url.username || url.password ||
+  const hostname = url.hostname.toLowerCase().replace(/\.$/, '');
+  const loopback = hostname === 'localhost' || hostname.endsWith('.localhost') ||
+    (isIP(hostname) === 4 && hostname.startsWith('127.')) || hostname === '[::1]' || /^\[::ffff:7f[0-9a-f]{2}:/u.test(hostname);
+  if (loopback || url.protocol !== 'https:' || url.username || url.password ||
       url.search || url.hash || url.pathname !== '/' ||
-      !url.hostname || /\.test$|\.invalid$|\.local$/iu.test(url.hostname)) {
+      !url.hostname || /\.test$|\.invalid$|\.local$/iu.test(hostname)) {
     throw new Error('URL_PUBLICA deve ser a origem HTTPS pública, sem caminho nem credenciais.');
   }
   if (!ambiente.PORTAL_BANCO || !isAbsolute(ambiente.PORTAL_BANCO)) {

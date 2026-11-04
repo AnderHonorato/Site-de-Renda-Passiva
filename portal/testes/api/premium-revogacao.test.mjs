@@ -7,7 +7,7 @@ import { request } from 'node:http';
 import { DatabaseSync } from 'node:sqlite';
 import { setTimeout as esperar } from 'node:timers/promises';
 
-test('revogação de plano durante upload impede processamento Premium', async () => {
+test('API Premium respeita revogação durante upload e limite HTTP de corpo', async () => {
   const pasta = mkdtempSync(join(tmpdir(), 'portal-premium-revogacao-'));
   process.env.PORTAL_BANCO = join(pasta, 'banco.sqlite');
   const { iniciar, fecharBanco } = await import('../../servidor/iniciar.mjs');
@@ -35,6 +35,30 @@ test('revogação de plano durante upload impede processamento Premium', async (
       });
       assert.equal(await resultado, 403, rota);
     }
+    db.prepare("UPDATE usuarios SET plano='premium' WHERE usuario='teste'").run();
+    const grande = await fetch(base + '/api/premium/previsao-de-vendas', {
+      method: 'POST', headers: { Cookie: cookie, Origin: 'http://127.0.0.1:4400', 'X-CSRF-Token': csrf, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ historico: 'x'.repeat(300000) }),
+    });
+    assert.equal(grande.status, 413);
+    assert.equal((await grande.json()).erro, 'corpo_grande');
+    const statusFragmentado = await new Promise((resolve, reject) => {
+      const req = request(base + '/api/premium/previsao-de-vendas', {
+        method: 'POST', headers: { Cookie: cookie, Origin: 'http://127.0.0.1:4400', 'X-CSRF-Token': csrf, 'Content-Type': 'application/json' },
+      }, res => { req.end(); res.resume(); res.on('end', () => resolve(res.statusCode)); });
+      req.setTimeout(3000, () => req.destroy(new Error('tempo excedido')));
+      req.on('error', reject);
+      req.write('x'.repeat(300001));
+    });
+    assert.equal(statusFragmentado, 413);
+    const statusSessao = await new Promise((resolve, reject) => {
+      const req = request(base + '/api/premium/previsao-de-vendas', {
+        method: 'POST', headers: { Cookie: cookie, Origin: 'http://127.0.0.1:4400', 'X-CSRF-Token': csrf, 'Content-Type': 'application/json', 'Content-Length': '2' },
+      }, res => { res.resume(); res.on('end', () => resolve(res.statusCode)); });
+      req.on('error', reject); req.write('{');
+      (async () => { await esperar(80); db.prepare('DELETE FROM sessoes').run(); req.end('}'); })().catch(reject);
+    });
+    assert.equal(statusSessao, 401);
   } finally {
     db.close(); await new Promise(ok => servidor.close(ok)); fecharBanco(); rmSync(pasta, { recursive: true, force: true });
   }

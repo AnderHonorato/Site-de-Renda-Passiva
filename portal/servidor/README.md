@@ -4,7 +4,7 @@ Requer Node 22.14 ou superior. Inicie com `node portal/servidor/iniciar.mjs`; a 
 
 Variáveis:
 
-- `URL_PUBLICA`: origem exata pública (padrão local `http://127.0.0.1:4400`), usada para conferir `Origin` e marcar cookies `__Host-` com HTTPS.
+- `URL_PUBLICA`: origem exata pública (padrão local `http://127.0.0.1:4400`), usada para conferir `Origin` e marcar cookies `__Host-` com HTTPS. O modo de nuvem exige HTTPS e rejeita nomes e endereços de loopback; ainda é necessário conferir DNS, certificado e acesso externo antes de publicar.
 - `PORTAL_API_PORTA`: porta local da API (padrão `4870`).
 - `PORTAL_CHAT_LOCAL=1`: libera chat em desenvolvimento. O padrão é desligado. Em produção, somente `PORTAL_CHAT_PUBLICO=1` libera o chat.
 - `PORTAL_ADS_ATIVO=1`, `PORTAL_ADS_EDITOR=ca-pub-...`, `PORTAL_ADS_RODAPE`, `PORTAL_ADS_RESULTADO`, `PORTAL_ADS_LISTA`: configuram slots manuais de anúncios; sem IDs válidos o retorno da API não autoriza anúncios.
