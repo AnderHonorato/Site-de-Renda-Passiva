@@ -31,7 +31,8 @@ function precisaDeToken(req) {
 export function middlewareCsrf(configuracao = {}) {
   return function csrf(req, res, next) {
     let token = req.cookies?.[NOME_COOKIE];
-    if (!token) {
+    // Cookies inválidos ou excessivos não devem ser aceitos nem processados no hash.
+    if (typeof token !== 'string' || token.length === 0 || token.length > 128) {
       token = tokenAleatorio();
       res.cookie(NOME_COOKIE, token, {
         httpOnly: false,
@@ -45,6 +46,9 @@ export function middlewareCsrf(configuracao = {}) {
     if (!precisaDeToken(req)) return next();
 
     const recebido = req.get(NOME_CABECALHO);
+    if (typeof recebido !== 'string' || recebido.length > 128) {
+      return next(criarErro(403, 'csrf_invalido'));
+    }
     if (!compararTempoConstante(token, recebido ?? '')) {
       return next(criarErro(403, 'csrf_invalido'));
     }
