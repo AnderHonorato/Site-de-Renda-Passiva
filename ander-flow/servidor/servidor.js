@@ -169,7 +169,8 @@ export async function criarAplicativo({ configuracao, banco, modulos = {}, contr
   const limitarApi = limitador.middleware('api', { chave: chaveIp });
   const limitarPaginas = limitador.middleware('paginas', { chave: chaveIp });
   app.use((req, res, next) => {
-    const rotaApi = req.path === '/api' || req.path.startsWith('/api/');
+    const caminho = req.path.toLowerCase();
+    const rotaApi = caminho === '/api' || caminho.startsWith('/api/');
     (rotaApi ? limitarApi : limitarPaginas)(req, res, next);
   });
 
