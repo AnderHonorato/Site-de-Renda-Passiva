@@ -6,6 +6,11 @@ on:
     paths:
       - 'ander-flow/**'
       - '.github/workflows/validar-ander-flow.yml'
+  pull_request:
+    branches: [main, ander-flow/v1]
+    paths:
+      - 'ander-flow/**'
+      - '.github/workflows/validar-ander-flow.yml'
   workflow_dispatch:
 
 permissions:
