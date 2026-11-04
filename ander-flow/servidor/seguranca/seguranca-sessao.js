@@ -6,6 +6,12 @@ const NOME_COOKIE = 'af_sessao';
 const RENOVACAO_MINIMA_MS = 10 * 60 * 1000;
 const UM_DIA_MS = 24 * 60 * 60 * 1000;
 
+/** Tokens de sessão são sempre 32 bytes codificados em base64url canônico. */
+export function tokenSessaoValido(token) {
+  return typeof token === 'string' && /^[A-Za-z0-9_-]{43}$/.test(token)
+    && Buffer.from(token, 'base64url').toString('base64url') === token;
+}
+
 function hashToken(token) {
   return createHash('sha256').update(token).digest('base64');
 }
@@ -51,7 +57,7 @@ export function criarGerenciadorSessao({ banco, configuracao = {} }) {
     req.sessaoId = null;
 
     const token = req.cookies?.[NOME_COOKIE];
-    if (!token) return next();
+    if (!tokenSessaoValido(token)) return next();
 
     const linha = buscarSessaoValida.get(hashToken(token), new Date().toISOString());
     if (!linha || linha.situacao === 'suspenso') return next();
@@ -82,7 +88,7 @@ export function criarGerenciadorSessao({ banco, configuracao = {} }) {
 
   function encerrarSessao(req, res) {
     const token = req.cookies?.[NOME_COOKIE];
-    if (token) apagarPorHash.run(hashToken(token));
+    if (tokenSessaoValido(token)) apagarPorHash.run(hashToken(token));
     res.clearCookie(NOME_COOKIE, { path: '/' });
     req.usuario = null;
     req.sessaoId = null;
