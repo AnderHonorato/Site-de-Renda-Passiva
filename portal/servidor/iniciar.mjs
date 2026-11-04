@@ -69,6 +69,7 @@ function sessao(req) {
 }
 function exigir(req){ const u=sessao(req); if(!u)throw erro(401,'sessao_necessaria'); return u; }
 function admin(req){const u=exigir(req);if(u.papel!=='admin')throw erro(403,'acesso_negado');return u;}
+function revalidarPremium(req, id){const u=exigir(req);if(u.id!==id)throw erro(401,'sessao_necessaria');if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');}
 function chatAtivo(){return process.env.PORTAL_CHAT_LOCAL==='1' && process.env.NODE_ENV!=='production' || process.env.PORTAL_CHAT_PUBLICO==='1';}
 function exigirChat(req){if(!chatAtivo())throw erro(503,'chat_indisponivel');const u=exigir(req);if(!u.chat_aceito_em)throw erro(403,'aceite_chat_necessario');if(u.banido_em)throw erro(403,'chat_banido');return u;}
 function validoUsuario(x){return typeof x==='string' && /^[a-z][a-z0-9_]{2,19}$/.test(x.toLowerCase()) && !reservados.has(x.toLowerCase());}
@@ -351,6 +352,7 @@ async function rota(req,res){
     const entrada=await corpo(req,300000);
     try{
       const {analisarVendasPremium}=await import('./analise-premium.mjs');
+      revalidarPremium(req,u.id);
       const relatorio=analisarVendasPremium(entrada);
       return json(res,200,{relatorio});
     }catch(e){
@@ -367,6 +369,7 @@ async function rota(req,res){
     const entrada=await corpo(req,300000);
     try{
       const {planejarEstoque}=await import('./estoque-abc-xyz.mjs');
+      revalidarPremium(req,u.id);
       return json(res,200,{relatorio:planejarEstoque(entrada)});
     }catch(e){
       if(e?.name==='ErroEstoque')
@@ -381,6 +384,7 @@ async function rota(req,res){
     const entrada=await corpo(req,300000);
     try{
       const {auditarFeedMerchant}=await import('./auditoria-merchant.mjs');
+      revalidarPremium(req,u.id);
       const relatorio=auditarFeedMerchant(entrada);
       return json(res,200,{relatorio});
     }catch(e){
@@ -397,6 +401,7 @@ async function rota(req,res){
     const dados=await corpo(req,300000);
     try{
       const {auditarSeoProdutos}=await import('./auditoria-seo-produtos.mjs');
+      revalidarPremium(req,u.id);
       return json(res,200,{relatorio:auditarSeoProdutos(dados)});
     }catch(e){
       if(e?.name==='ErroSeo')return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
@@ -412,6 +417,7 @@ async function rota(req,res){
     if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
     conferirLimite('lote-premium:'+u.id,12,60000);
     const dados=await corpo(req,300000);
+    revalidarPremium(req,u.id);
     try{return json(res,200,{relatorio:analisarLotePremium(rotaLote[1],dados)});}
     catch(e){
       if(e?.name==='ErroLotePremium')return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
@@ -427,6 +433,7 @@ async function rota(req,res){
     if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
     conferirLimite('estrategia-premium:'+u.id,12,60000);
     const dados=await corpo(req,300000);
+    revalidarPremium(req,u.id);
     try{return json(res,200,{relatorio:executarEstrategiaPremium(rotaEstrategia[1],dados)});}
     catch(e){
       if(e?.name==='ErroEstrategia')return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
@@ -442,6 +449,7 @@ async function rota(req,res){
     const dados=await corpo(req,600000);
     try{
       const {executarOperacoes}=await import('./operacoes-profissionais.mjs');
+      revalidarPremium(req,u.id);
       return json(res,200,{relatorio:executarOperacoes(rotaOperacoes[1],dados)});
     }catch(e){
       if(e?.name==='ErroOperacoes')return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
@@ -457,6 +465,7 @@ async function rota(req,res){
     const dados=await corpo(req,600000);
     try{
       const {executarAnalitica}=await import('./analitica-profissional.mjs');
+      revalidarPremium(req,u.id);
       return json(res,200,{relatorio:executarAnalitica(rotaAnalitica[1],dados)});
     }catch(e){
       if(e?.name==='ErroAnalitica')return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
