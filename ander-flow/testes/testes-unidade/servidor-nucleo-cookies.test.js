@@ -4,12 +4,12 @@ import { analisarCookies, middlewareCookies } from '../../servidor/servidor-cook
 
 test('analisarCookies: várias entradas', () => {
   const cookies = analisarCookies('af_sessao=abc123; af_csrf=xyz; idioma=pt-BR');
-  assert.deepEqual(cookies, { af_sessao: 'abc123', af_csrf: 'xyz', idioma: 'pt-BR' });
+  assert.deepEqual({ ...cookies }, { af_sessao: 'abc123', af_csrf: 'xyz', idioma: 'pt-BR' });
 });
 
 test('analisarCookies: undefined/vazio não lança', () => {
-  assert.deepEqual(analisarCookies(undefined), {});
-  assert.deepEqual(analisarCookies(''), {});
+  assert.deepEqual({ ...analisarCookies(undefined) }, {});
+  assert.deepEqual({ ...analisarCookies('') }, {});
 });
 
 test('analisarCookies: decodifica valores com %', () => {
@@ -19,7 +19,7 @@ test('analisarCookies: decodifica valores com %', () => {
 
 test('analisarCookies: entrada malformada é ignorada, resto funciona', () => {
   const cookies = analisarCookies('semigual; af_csrf=xyz;  ; nome=valor  ');
-  assert.deepEqual(cookies, { af_csrf: 'xyz', nome: 'valor' });
+  assert.deepEqual({ ...cookies }, { af_csrf: 'xyz', nome: 'valor' });
 });
 
 test('middlewareCookies: preenche req.cookies e chama next()', () => {
@@ -30,12 +30,20 @@ test('middlewareCookies: preenche req.cookies e chama next()', () => {
     chamado = true;
   });
   assert.equal(chamado, true);
-  assert.deepEqual(req.cookies, { af_tema: 'escuro' });
+  assert.deepEqual({ ...req.cookies }, { af_tema: 'escuro' });
 });
 
 test('middlewareCookies: sem cabeçalho cookie devolve objeto vazio', () => {
   const req = { headers: {} };
   const res = {};
   middlewareCookies(req, res, () => {});
-  assert.deepEqual(req.cookies, {});
+  assert.deepEqual({ ...req.cookies }, {});
+});
+
+// O objeto sem protótipo evita chaves herdadas como __proto__/constructor.
+test('analisarCookies: resultado não herda propriedades do protótipo', () => {
+  const cookies = analisarCookies('af_csrf=xyz; __proto__=injetado; constructor=teste');
+  assert.equal(Object.getPrototypeOf(cookies), null);
+  assert.equal(cookies.af_csrf, 'xyz');
+  assert.equal(({}).injetado, undefined);
 });
