@@ -109,6 +109,18 @@ describe('seguranca-csrf', () => {
     assert.equal(erro, undefined);
   });
 
+  test('POST na raiz /api exige CSRF e rejeita cabeçalho ausente', async () => {
+    const middleware = middlewareCsrf({ emProducao: false });
+    const req = criarReq({ method: 'POST', path: '/api', cookies: { af_csrf: TOKEN_VALIDO } });
+    assert.equal((await chamar(middleware, req, criarRes()))?.codigo, 'csrf_invalido');
+  });
+
+  test('POST na raiz /api com token correspondente é permitido', async () => {
+    const middleware = middlewareCsrf({ emProducao: false });
+    const req = criarReq({ method: 'POST', path: '/api', cookies: { af_csrf: TOKEN_VALIDO }, cabecalhos: { 'x-csrf-token': TOKEN_VALIDO } });
+    assert.equal(await chamar(middleware, req, criarRes()), undefined);
+  });
+
   test('POST fora de /api/* não exige o token', async () => {
     const middleware = middlewareCsrf({ emProducao: false });
     const req = criarReq({ method: 'POST', path: '/entrar', cookies: { af_csrf: TOKEN_VALIDO } });
