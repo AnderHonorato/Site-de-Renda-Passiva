@@ -33,7 +33,9 @@ jobs:
         run: npm ci
       - name: Validar estrutura, idiomas e textos
         run: npm run verificar
-      - name: Validar propriedade dos módulos
-        run: npm run verificar:propriedade
+      - name: Validar sintaxe do verificador de propriedade
+        # O comando verificar:propriedade exige o nome de um agente e um diff de trabalho.
+        # Não pode ser chamado sem agente numa CI de integração de múltiplos autores.
+        run: node --check scripts/scripts-verificar-propriedade.js
       - name: Executar testes de unidade e integração
         run: npm run testar
