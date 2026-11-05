@@ -1,0 +1,61 @@
+name: Validar contêiner do Portal Premium
+on:
+  push:
+    branches: [ander-flow/v1]
+    paths:
+      - 'portal/Dockerfile'
+      - 'portal/.dockerignore'
+      - 'portal/railway.json'
+      - 'portal/ferramentas/iniciar-nuvem.mjs'
+      - 'portal/servidor/iniciar.mjs'
+      - 'portal/testes/volume-nuvem.test.mjs'
+      - 'portal/testes/saude-api.test.mjs'
+      - '.github/workflows/validar-conteiner-premium.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: validar-conteiner-premium
+  cancel-in-progress: true
+jobs:
+  conferir-imagem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Construir contêiner com Node e ferramentas do portal
+        run: docker build -t sites-ads-ci -f portal/Dockerfile portal
+      - name: Rejeitar inicialização sem banco persistente
+        run: |
+          set -euo pipefail
+          if docker run --rm -e PORT=8080 -e NODE_ENV=production \
+            -e URL_PUBLICA=https://portal-teste.up.railway.app \
+            -e PORTAL_BANCO=/data/portal.sqlite sites-ads-ci; then
+            echo 'ERRO: servidor sem volume foi aceito' >&2
+            exit 1
+          fi
+      - name: Testar site e API com volume efêmero apenas para CI
+        run: |
+          set -euo pipefail
+          docker volume create sites-ads-ci-data >/dev/null
+          docker run -d --name sites-ads-ci \
+            -p 127.0.0.1:18080:8080 -v sites-ads-ci-data:/data \
+            -e PORT=8080 -e NODE_ENV=production \
+            -e URL_PUBLICA=https://portal-teste.up.railway.app \
+            -e PORTAL_BANCO=/data/portal.sqlite sites-ads-ci >/dev/null
+          for i in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:18080/api/saude | grep -q '"estado":"ok"'; then
+              break
+            fi
+            sleep 2
+          done
+          curl --fail --silent http://127.0.0.1:18080/api/saude | grep -q '"estado":"ok"'
+          curl --fail --silent http://127.0.0.1:18080/ | grep -qi '<html'
+      - name: Logs sem dados do banco, apenas quando necessário
+        if: failure()
+        run: docker logs --tail 60 sites-ads-ci || true
+      - name: Remover serviços e dados da CI
+        if: always()
+        run: |
+          docker rm -f sites-ads-ci >/dev/null 2>&1 || true
+          docker volume rm sites-ads-ci-data >/dev/null 2>&1 || true
