@@ -25,3 +25,9 @@ node portal/scripts-admin/backup-banco.mjs /caminho/absoluto/portal.sqlite /past
 O destino deve ser um arquivo novo, em uma pasta privada existente fora do repositório. O comando reserva o arquivo sem sobrescrever outro, solicita permissões `0600` em sistemas POSIX e verifica a cópia com `quick_check`. Em Windows, configure e confira as permissões da pasta e do arquivo (ACL) antes do uso. Um erro pode deixar uma cópia incompleta, que não deve ser usada. O backup contém dados privados e credenciais derivadas: guarde-o em local protegido e criptografado, separado do volume ativo, com acesso limitado e política de retenção definida pelo operador. Não envie a cópia ao Git ou a uma pasta pública. O comando não faz upload nem agenda cópias.
 
 Antes de depender de uma cópia, ensaie a recuperação em ambiente isolado: abra uma cópia do backup em um banco separado, confira `PRAGMA integrity_check`, as tabelas e os fluxos essenciais com dados de teste. Para recuperação real, planeje a parada da aplicação, preserve o banco e seus arquivos WAL/SHM originais e siga um procedimento específico do ambiente; nunca copie um banco por cima de uma instância ativa. Ainda não há backup remoto, criptografia, frequência, retenção ou restauração em produção configurados.
+
+## Preparação Docker / Railway
+Os arquivos portal/Dockerfile, portal/railway.json e
+portal/documentacao/implantacao-railway.md descrevem a implantação.
+GET /api/saude retorna apenas estado do SQLite. A partida em nuvem recusa
+banco temporário e requer montagem persistente em /data.
