@@ -4,7 +4,9 @@
  * As contas persistem exclusivamente no volume montado em PORTAL_BANCO.
  */
 import { spawn } from 'node:child_process';
-import { isAbsolute, resolve } from 'node:path';
+import { isAbsolute, dirname, resolve } from 'node:path';
+import { readFileSync, accessSync, openSync, closeSync, unlinkSync, constants } from 'node:fs';
+import { randomBytes } from 'node:crypto';
 import { isIP } from 'node:net';
 import { fileURLToPath } from 'node:url';
 
@@ -39,8 +41,46 @@ export function configurarNuvem(ambiente = process.env) {
   return { porta, origem: url.origin, banco: ambiente.PORTAL_BANCO };
 }
 
+
+/** Linux: identifica montagem independente da camada efêmera do contêiner. */
+export function identificarVolumeMontado(arquivoBanco, mountinfo) {
+  if (!isAbsolute(arquivoBanco) || typeof mountinfo !== 'string') return null;
+  const pasta=resolve(dirname(arquivoBanco));
+  const candidatas=mountinfo.split('\n').flatMap(linha=>{
+    const parte=linha.split(' - ')[0]?.trim().split(/\s+/);
+    if(!parte||parte.length<5)return [];
+    const ponto=parte[4].replace(/\\([0-7]{3})/g,(_,octal)=>
+      String.fromCharCode(Number.parseInt(octal,8)));
+    return ponto!=='/' && isAbsolute(ponto) &&
+      (pasta===ponto||pasta.startsWith(ponto.endsWith('/')?ponto:ponto+'/'))?[ponto]:[];
+  });
+  return candidatas.sort((a,b)=>b.length-a.length)[0]||null;
+}
+/** Falha fechada: não inicia contas e sessões se o DB estiver no disco temporário. */
+export function verificarVolumeNuvem(ambiente=process.env,{
+  mountinfo=readFileSync('/proc/self/mountinfo','utf8'),testarEscrita=true,
+}={}){
+  const arquivoBanco=ambiente.PORTAL_BANCO;
+  if(!arquivoBanco||!isAbsolute(arquivoBanco))
+    throw new Error('PORTAL_BANCO deve apontar para arquivo em volume absoluto.');
+  const montado=identificarVolumeMontado(arquivoBanco,mountinfo);
+  if(!montado)throw new Error('Recusado banco SQLite em armazenamento efêmero: monte um volume persistente.');
+  if(ambiente.RAILWAY_VOLUME_MOUNT_PATH &&
+      resolve(ambiente.RAILWAY_VOLUME_MOUNT_PATH)!==montado)
+    throw new Error('O volume Railway não coincide com PORTAL_BANCO.');
+  if(testarEscrita){
+    const pasta=dirname(arquivoBanco);
+    accessSync(pasta,constants.R_OK|constants.W_OK);
+    const arquivo=resolve(pasta,'.portal-io-'+randomBytes(8).toString('hex'));
+    const fd=openSync(arquivo,'wx',0o600);
+    try{closeSync(fd);}finally{unlinkSync(arquivo);}
+  }
+  return montado;
+}
+
 export function iniciarNuvem(ambiente = process.env) {
   const { porta } = configurarNuvem(ambiente);
+  verificarVolumeNuvem(ambiente);
   const configuracao = { ...ambiente, NODE_ENV: 'production', PORTAL_CHAT_LOCAL: '0', PORTAL_CHAT_PUBLICO: '0',
     PORTAL_ADS_ATIVO: '0', PORTAL_ADS_TESTE: '0' };
   const processos = [];
