@@ -206,6 +206,11 @@ async function rota(req,res){
   // Um administrador autenticado ainda pode consultar e desfazer bloqueios da própria rede.
   if(!p.startsWith('/api/admin/operacao')||sessao(req)?.papel!=='admin')conferirLimite(`global:${ip(req)}`,180,60000);
   if(m==='OPTIONS'){res.writeHead(204,{'Allow':'GET,POST,PUT,PATCH,DELETE,OPTIONS'});res.end();return;}
+  // Sem conta ou dados privados: permite que o orquestrador de hospedagem verifique API e SQLite.
+  if(m==='GET'&&p==='/api/saude'){
+    try{banco.prepare('SELECT 1').get();return json(res,200,{estado:'ok'});}
+    catch{return json(res,503,{estado:'indisponivel'});}
+  }
   if(await tratarBanners(req,res,{banco,json,admin,proteger,corpo,corpoBinario,registrarAdmin}))return;
   if(m==='GET'&&p==='/api/autenticacao/sessao'){
     if(!(/^[A-Za-z0-9_-]{43}$/.test(cookies(req)[nomeCsrf]||'')))setCookie(res,nomeCsrf,token());
