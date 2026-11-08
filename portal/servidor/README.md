@@ -31,3 +31,9 @@ Os arquivos portal/Dockerfile, portal/railway.json e
 portal/documentacao/implantacao-railway.md descrevem a implantação.
 GET /api/saude retorna apenas estado do SQLite. A partida em nuvem recusa
 banco temporário e requer montagem persistente em /data.
+
+## Northflank Sandbox
+A importação da branch `ander-flow/v1`, com Dockerfile e contexto `/portal`,
+é descrita em `portal/documentacao/implantacao-northflank.md`.
+Exige volume persistente em `/data` e banco configurado em
+`PORTAL_BANCO=/data/portal.sqlite`.
