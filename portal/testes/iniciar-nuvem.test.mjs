@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { configurarNuvem } from '../ferramentas/iniciar-nuvem.mjs';
+import { configurarNuvem, origemAutomaticaNorthflank } from '../ferramentas/iniciar-nuvem.mjs';
 
 const valido = {
   PORT: '8080', NODE_ENV: 'production',
@@ -27,4 +27,18 @@ test('nuvem exige produção HTTPS, banco absoluto persistente e desliga chat p�
     ['PORTAL_BANCO', 'servidor/.execucao/portal.sqlite'],
     ['PORTAL_CHAT_LOCAL', '1'], ['PORTAL_CHAT_PUBLICO', '1'],
   ]) assert.throws(() => configurarNuvem({ ...valido, [chave]: valor }), undefined, chave);
+});
+
+test('Northflank aceita um único domínio HTTPS code.run injetado, sem cabeçalhos do navegador', () => {
+  const h='web--sites-ads--sandbox--example.code.run';
+  const {URL_PUBLICA: descartada, ...semUrl}=valido;
+  const nf={...semUrl,NF_PROJECT_ID:'sites-ads',NF_HOSTS:h};
+  assert.equal(origemAutomaticaNorthflank(nf),'https://'+h);
+  assert.equal(configurarNuvem(nf).origem,'https://'+h);
+  assert.equal(configurarNuvem({...nf,URL_PUBLICA:'https://portal.exemplo.com'}).origem,'https://portal.exemplo.com');
+  for (const hosts of ['',h+','+h,'evil.example.com','portal.test']){
+    assert.equal(origemAutomaticaNorthflank({...nf,NF_HOSTS:hosts}),null);
+    assert.throws(()=>configurarNuvem({...nf,NF_HOSTS:hosts}),/URL_PUBLICA/);
+  }
+  assert.equal(origemAutomaticaNorthflank({...nf,NF_PROJECT_ID:''}),null);
 });

@@ -12,6 +12,14 @@ import { fileURLToPath } from 'node:url';
 
 const raiz = resolve(fileURLToPath(new URL('..', import.meta.url)));
 
+/** Northflank injeta uma origem própria em NF_HOSTS; não confie no Host da requisição. */
+export function origemAutomaticaNorthflank(ambiente = process.env) {
+  if (!ambiente.NF_PROJECT_ID || !ambiente.NF_HOSTS) return null;
+  const encontrados = String(ambiente.NF_HOSTS).split(',').map(s=>s.trim().toLowerCase())
+    .filter(s=>/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.code\.run$/u.test(s));
+  return encontrados.length===1 ? 'https://'+encontrados[0] : null;
+}
+
 export function configurarNuvem(ambiente = process.env) {
   const porta = Number(ambiente.PORT);
   if (!Number.isInteger(porta) || porta < 1024 || porta > 65535) {
@@ -21,7 +29,7 @@ export function configurarNuvem(ambiente = process.env) {
     throw new Error('O servidor público exige NODE_ENV=production.');
   }
   let url;
-  try { url = new URL(ambiente.URL_PUBLICA); } catch {
+  try { url = new URL(ambiente.URL_PUBLICA || origemAutomaticaNorthflank(ambiente)); } catch {
     throw new Error('URL_PUBLICA HTTPS é obrigatória no servidor público.');
   }
   const hostname = url.hostname.toLowerCase().replace(/\.$/, '');
@@ -79,9 +87,9 @@ export function verificarVolumeNuvem(ambiente=process.env,{
 }
 
 export function iniciarNuvem(ambiente = process.env) {
-  const { porta } = configurarNuvem(ambiente);
+  const { porta, origem } = configurarNuvem(ambiente);
   verificarVolumeNuvem(ambiente);
-  const configuracao = { ...ambiente, NODE_ENV: 'production', PORTAL_CHAT_LOCAL: '0', PORTAL_CHAT_PUBLICO: '0',
+  const configuracao = { ...ambiente, URL_PUBLICA: origem, NODE_ENV: 'production', PORTAL_CHAT_LOCAL: '0', PORTAL_CHAT_PUBLICO: '0',
     PORTAL_ADS_ATIVO: '0', PORTAL_ADS_TESTE: '0' };
   const processos = [];
   let encerrando = false;

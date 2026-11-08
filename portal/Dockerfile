@@ -11,12 +11,12 @@ RUN npm ci --ignore-scripts \
  && npm run verificar
 
 FROM node:22.16.0-bookworm-slim
-ENV NODE_ENV=production PORTAL_API_PORTA=4870 PORTAL_CHAT_LOCAL=0 PORTAL_CHAT_PUBLICO=0 PORTAL_ADS_ATIVO=0 PORTAL_ADS_TESTE=0
+ENV NODE_ENV=production PORT=8080 PORTAL_API_PORTA=4870 PORTAL_CHAT_LOCAL=0 PORTAL_CHAT_PUBLICO=0 PORTAL_ADS_ATIVO=0 PORTAL_ADS_TESTE=0
 WORKDIR /app/portal
 COPY --from=build --chown=node:node /app/portal /app/portal
 RUN rm -rf node_modules .execucao servidor/.execucao \
  && mkdir -p /data \
  && chown node:node /data
-USER node
+USER node:node
 EXPOSE 8080
 CMD ["node","ferramentas/iniciar-nuvem.mjs"]
