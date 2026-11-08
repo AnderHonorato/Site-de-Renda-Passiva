@@ -37,3 +37,6 @@ A importação da branch `ander-flow/v1`, com Dockerfile e contexto `/portal`,
 é descrita em `portal/documentacao/implantacao-northflank.md`.
 Exige volume persistente em `/data` e banco configurado em
 `PORTAL_BANCO=/data/portal.sqlite`.
+
+## blitz.cloud gratuito
+Consulte portal/documentacao/implantacao-blitz.md. Importar a branch ander-flow/v1, pasta portal, Dockerfile, manter /data em "kept folders" e configurar URL_PUBLICA com o HTTPS exato da aplicação. A imagem já usa /data/portal.sqlite. O plano grátis hiberna e não faz backups desse SQLite.
