@@ -24,6 +24,10 @@ await writeFile(join(destino, 'robots.txt'),
 console.log('Indexação: ' + indice.publicas + ' páginas públicas; ' +
   indice.privadas + ' páginas privadas/sem função pública com noindex.');
 await cp(join(raiz, 'ferramentas', 'api-previa-pages.mjs'), join(portal, 'scripts', 'núcleo', 'api.js'));
+// O Pages não possui sessão: evitar botões "Entrar" e "Criar conta" que
+// reaparecem mesmo quando o visitante já está logado no servidor.
+await cp(join(raiz, 'ferramentas', 'conta-topo-previa-pages.mjs'),
+  join(portal, 'scripts', 'núcleo', 'conta-topo.js'));
 // No GitHub Pages não há cookies nem API Node. As páginas de autenticação
 // encaminham ao endereço fixo que encontra a instância HTTPS real em execução.
 for (const idioma of ['', 'en/']) {
@@ -49,6 +53,11 @@ export function iniciarBannerPrioritario() {
     ? 'Preview: local tools are available. Sign-in, accounts and chat require the full server.'
     : 'Prévia: as ferramentas locais estão disponíveis. Login, conta e chat precisam do servidor completo.';
   aviso.append(texto);
+  const acessar = document.createElement('a');
+  acessar.href = (document.documentElement.dataset.raiz || './') + 'servidor-teste.html';
+  acessar.textContent = document.documentElement.lang === 'en'
+    ? 'Open the complete site with your account' : 'Abrir site completo com minha conta';
+  aviso.append(document.createTextNode(' · '), acessar);
   cabecalho.insertAdjacentElement('afterend', aviso);
 }
 `, 'utf8');
