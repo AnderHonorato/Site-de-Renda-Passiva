@@ -65,6 +65,7 @@ export function mensagemErro(erro) {
   const codigos = {
     acesso_negado: en ? 'Access restricted to administrators.' : 'Acesso restrito a administradores.',
     credenciais_invalidas: en ? 'Check your email and password.' : 'Confira seu e-mail e sua senha.',
+    sessao_nao_persistida: en ? 'Account created, but the browser did not keep the session. Allow cookies for this website and sign in again.' : 'Sua conta foi criada, mas o navegador não manteve a sessão. Permita cookies deste site e entre novamente.',
     email_em_uso: en ? 'This email is already in use.' : 'Este e-mail já está em uso.',
     usuario_em_uso: en ? 'This username is already in use.' : 'Este @usuário já está em uso.',
     senha_invalida: en ? 'Check your password.' : 'Confira sua senha.',
