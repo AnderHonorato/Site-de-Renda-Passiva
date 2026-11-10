@@ -1,8 +1,9 @@
 import { spawnSync } from 'node:child_process';
-import { cp, mkdir, writeFile } from 'node:fs/promises';
+import { cp, mkdir, writeFile, readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { protegerPaginasPrivadas } from './indexacao-pages.mjs';
+import { redirecionarAutenticacaoPages } from './redirecionar-autenticacao-pages.mjs';
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..');
 const destino = join(raiz, '.execucao', 'pages');
@@ -23,6 +24,15 @@ await writeFile(join(destino, 'robots.txt'),
 console.log('Indexação: ' + indice.publicas + ' páginas públicas; ' +
   indice.privadas + ' páginas privadas/sem função pública com noindex.');
 await cp(join(raiz, 'ferramentas', 'api-previa-pages.mjs'), join(portal, 'scripts', 'núcleo', 'api.js'));
+// No GitHub Pages não há cookies nem API Node. As páginas de autenticação
+// encaminham ao endereço fixo que encontra a instância HTTPS real em execução.
+for (const idioma of ['', 'en/']) {
+  for (const [arquivo, destino] of [['entrar.html', 'entrar'], ['criar-conta.html', 'cadastro']]) {
+    const caminho = join(portal, idioma, arquivo);
+    const html = await readFile(caminho, 'utf8');
+    await writeFile(caminho, redirecionarAutenticacaoPages(html, destino, Boolean(idioma)), 'utf8');
+  }
+}
 // Aviso no lugar dos anúncios administrados pela API, que não existe no Pages.
 await writeFile(join(portal, 'scripts', 'núcleo', 'banner-prioritario.js'), `
 export function iniciarBannerPrioritario() {
