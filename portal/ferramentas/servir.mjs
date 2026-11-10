@@ -14,6 +14,8 @@ const argumentos = process.argv.slice(2);
 const índiceDaPorta = argumentos.indexOf('--porta');
 const porta = índiceDaPorta >= 0 ? Number(argumentos[índiceDaPorta + 1]) : 4311;
 const sóLocal = argumentos.includes('--local');
+// --loopback permite API real atrás de túnel sem expor porta na rede local.
+const sóLoopback = sóLocal || argumentos.includes('--loopback');
 const pastaInformada = argumentos.find((argumento, índice) => !argumento.startsWith('--') && argumentos[índice - 1] !== '--porta') ?? '.';
 const raiz = path.resolve(pastaInformada);
 const portaApi = Number(process.env.PORTAL_API_PORTA || 4870);
@@ -177,9 +179,9 @@ function endereçosDaRede() {
     .map((interface_) => interface_.address);
 }
 
-servidor.listen(porta, sóLocal ? '127.0.0.1' : '0.0.0.0', () => {
+servidor.listen(porta, sóLoopback ? '127.0.0.1' : '0.0.0.0', () => {
   const linhas = [`Servindo ${raiz}`, `No PC:      http://127.0.0.1:${porta}/`];
-  if (!sóLocal) {
+  if (!sóLoopback) {
     for (const endereço of endereçosDaRede()) linhas.push(`Na rede:    http://${endereço}:${porta}/`);
     linhas.push('Atenção: a porta fica aberta para a rede em que o PC estiver. Em Wi-Fi público, use --local.');
   }
