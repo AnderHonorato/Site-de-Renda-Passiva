@@ -169,13 +169,44 @@ function carregarContaEChat() {
   conta.append(esqueleto);
   fim.append(conta);
 
-  isolarBloco('sessão', async tentativa => {
-    const [{ obterSessao }, { renderizarContaTopo }] = await Promise.all([
-      modulo('./sessão.js'), modulo('./conta-topo.js', tentativa),
-    ]);
-    const sessao = await obterSessao({ renovar: tentativa > 1 });
+  // Revalida a conta quando a aba volta do histórico ou retorna do segundo plano.
+  // Atualizar apenas o cabeçalho evita reiniciar ferramentas e chat existentes.
+  let revisaoVisual = 0;
+  let ultimaVerificacao = Date.now();
+  let revalidacaoEmCurso = null;
+  const apresentar = async sessao => {
+    const revisao = ++revisaoVisual;
+    const { renderizarContaTopo } = await modulo('./conta-topo.js');
+    if (revisao !== revisaoVisual) return;
     renderizarContaTopo(fim, sessao, { base, idioma });
     esqueleto.remove();
+  };
+  function revalidar() {
+    if (revalidacaoEmCurso) return revalidacaoEmCurso;
+    ultimaVerificacao = Date.now();
+    revalidacaoEmCurso = (async () => {
+      try {
+        const { obterSessao } = await modulo('./sessão.js');
+        await apresentar(await obterSessao({ renovar: true }));
+      } catch (erro) {
+        console.warn('Não foi possível verificar novamente a sessão.', erro);
+      }
+    })().finally(() => { revalidacaoEmCurso = null; });
+    return revalidacaoEmCurso;
+  }
+  document.addEventListener('portal:sessao-alterada', evento => {
+    if (evento.detail?.usuario) void apresentar(evento.detail);
+  });
+  window.addEventListener('pageshow', evento => { if (evento.persisted) void revalidar(); });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && Date.now() - ultimaVerificacao > 30000) void revalidar();
+  });
+
+  isolarBloco('sessão', async tentativa => {
+    const { obterSessao } = await modulo('./sessão.js');
+    const revisaoInicial = revisaoVisual;
+    const sessao = await obterSessao({ renovar: tentativa > 1 });
+    if (revisaoInicial === revisaoVisual) await apresentar(sessao);
     if (!sessao.usuario) return;
     // Cada serviço tem sua própria falha. Um erro do chat jamais transforma uma conta
     // autenticada em visitante nem remove o nome que já foi mostrado no cabeçalho.
