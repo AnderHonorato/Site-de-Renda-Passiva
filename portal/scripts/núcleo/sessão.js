@@ -15,6 +15,20 @@ export function obterSessao({ renovar = false } = {}) {
 
 export function limparSessao() { pedido = undefined; }
 
+/** Verifica cookies e emite atualização somente quando a sessão está realmente ativa. */
+export async function confirmarSessaoAposAutenticacao() {
+  limparSessao();
+  const sessao = await obterSessao({ renovar: true });
+  if (!sessao?.usuario) {
+    limparSessao();
+    throw new Error('sessao_nao_persistida');
+  }
+  if (typeof document !== 'undefined') {
+    document.dispatchEvent(new CustomEvent('portal:sessao-alterada', { detail: sessao }));
+  }
+  return sessao;
+}
+
 export function caminhoDoIdioma(arquivo = '') {
   const raiz = document.documentElement.dataset.raizIdioma || './';
   return `${raiz}${arquivo}`;
