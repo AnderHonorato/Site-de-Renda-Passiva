@@ -531,6 +531,11 @@ async function salvarAlteracoes() {
     estadoInicial = serializarEstado();
     atualizarBarra();
     estado(en ? 'Changes saved.' : 'Alterações salvas.');
+    // Nome, avatar e preferências são refletidos no cabeçalho sem recarregar a página.
+    // A atualização visual é independente do salvamento já confirmado no servidor.
+    void obterSessao({ renovar: true }).then(sessao => {
+      if (sessao?.usuario) document.dispatchEvent(new CustomEvent('portal:sessao-alterada', { detail: sessao }));
+    }).catch(() => { /* O salvamento segue válido mesmo se o cabeçalho estiver offline. */ });
   } catch (erro) {
     estado(mensagemErro(erro) + (en ? ' Your changes are still here; correct the field or retry.' : ' Suas alterações continuam aqui; corrija o campo ou tente salvar novamente.'), true);
   } finally {
