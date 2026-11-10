@@ -1,4 +1,5 @@
 import { api, dados, en, estado, ligar, obterSessao } from './comum.js';
+import { confirmarSessaoAposAutenticacao } from '../../núcleo/sessão.js';
 
 const campo = document.querySelector('#form-criar [name="usuario"]');
 let temporizador;
@@ -22,6 +23,15 @@ ligar('form-criar', async (form) => {
   valores.idade = Number(valores.idade);
   valores.aceitaTermos = Boolean(valores.aceitaTermos);
   await api('/api/autenticacao/criar-conta', { metodo: 'POST', dados: valores });
+  await confirmarSessaoAposAutenticacao();
   estado(en ? 'Account created.' : 'Conta criada.');
   location.assign(document.documentElement.dataset.raizIdioma + 'conta/');
 });
+
+function seAutenticado() {
+  void obterSessao({ renovar: true }).then(s => {
+    if (s?.usuario) location.replace(document.documentElement.dataset.raizIdioma + 'conta/');
+  }).catch(() => { /* O cadastro ainda fica acessível sem sessão. */ });
+}
+seAutenticado();
+window.addEventListener('pageshow', evento => { if (evento.persisted) seAutenticado(); });
