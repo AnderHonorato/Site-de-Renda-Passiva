@@ -34,6 +34,7 @@ export const ARQUIVOS_DA_RAIZ = Object.freeze([
   'index.html', 'ferramentas.html', 'salvos.html', 'ajuda.html', 'privacidade.html', 'termos.html',
   '404.html', 'manifesto.webmanifest', 'robots.txt', 'sitemap.xml',
   'entrar.html', 'criar-conta.html', 'recuperar-senha.html', 'redefinir-senha.html', 'cookies.html',
+  'servidor-teste.html',
   'perfil.html', 'planos.html', 'niveis.html',
 ]);
 

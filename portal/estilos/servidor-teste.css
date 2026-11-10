@@ -1,0 +1,15 @@
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color-scheme:light dark}
+*{box-sizing:border-box}
+body{min-height:100vh;display:grid;place-items:center;margin:0;padding:24px;background:light-dark(#f5f2ed,#171719);color:light-dark(#252725,#f7f6f3)}
+.painel{width:min(100%,520px);background:light-dark(#fffaf6,#202125);border:1px solid light-dark(#e4dad2,#38383c);border-radius:24px;padding:clamp(24px,5vw,42px);box-shadow:0 22px 60px rgba(0,0,0,.07)}
+.selo{font-weight:750;letter-spacing:.15em;font-size:12px;color:light-dark(#9a604f,#f1a98e)}
+h1{font-size:clamp(28px,5vw,38px);line-height:1.18;margin:14px 0 18px}
+#situacao{font-weight:650;line-height:1.5}
+.aviso{color:light-dark(#555,#c1c1c5);line-height:1.65;font-size:14px}
+.acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.botao,button{font:inherit;border-radius:12px;padding:12px 16px;min-height:44px;cursor:pointer}
+.botao{display:inline-flex;align-items:center;text-decoration:none;background:#a95640;color:white}
+button{border:1px solid currentColor;color:inherit;background:transparent}
+[hidden]{display:none!important}
+.rodape{border-top:1px solid light-dark(#ddd,#444);padding-top:20px;margin-top:24px;font-size:13px}
+.rodape a{color:inherit}

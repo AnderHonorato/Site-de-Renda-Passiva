@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f5f2ed">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+  <title>Sites ADS — Abrir servidor de testes</title>
+  <link rel="stylesheet" href="estilos/servidor-teste.css">
+  <script type="module" src="scripts/núcleo/servidor-teste.js"></script>
+</head>
+<body>
+ <main class="painel">
+  <p class="selo">FERRAMENTAS DO ANDER</p>
+  <h1>Servidor de testes</h1>
+  <p id="situacao" role="status" aria-live="polite">Localizando o endereço atual do site…</p>
+  <p class="aviso">O site completo funciona no computador AS, com login e cadastro. Quando o PC desligar, o servidor ficará offline. Esta página encontra automaticamente o túnel que estiver ativo.</p>
+  <p class="acoes"><a id="acessar" class="botao" hidden>Entrar no site de testes</a><button id="repetir" type="button" hidden>Verificar novamente</button></p>
+  <p class="rodape"><a href="./">Usar a prévia estática sem login</a></p>
+ </main>
+</body>
+</html>
