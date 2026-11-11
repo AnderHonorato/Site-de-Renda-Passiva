@@ -477,6 +477,23 @@ async function rota(req,res){
       throw e;
     }
   }
+  // F232–F236: autorização e limitação de uso ANTES de ler CSV comercial.
+  const rotaPlanejamento=p.match(/^\/api\/premium\/planejamento\/([a-z0-9-]+)$/);
+  if(rotaPlanejamento&&m==='POST'){
+    const u=exigir(req);
+    if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
+    conferirLimite('planejamento-profissional:'+u.id,10,60000);
+    const dados=await corpo(req,300000);
+    try{
+      const {executarPlanejamento}=await import('./planejamento-premium-2.mjs');
+      revalidarPremium(req,u.id);
+      return json(res,200,{relatorio:executarPlanejamento(rotaPlanejamento[1],dados)});
+    }catch(e){
+      if(e?.name==='ErroPlanejamento')
+        return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
+      throw e;
+    }
+  }
   if(p==='/api/planos'&&m==='GET'){return json(res,200,{planos:planosPublicos()});}
   if(p==='/api/trabalhos'&&m==='GET'){
     const u=exigir(req),situacao=url.searchParams.get('situacao');
