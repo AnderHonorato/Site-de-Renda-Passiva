@@ -1,6 +1,23 @@
 # Contrato de automação — Evolução Sites ADS | Ander Flow
 
-> **Estado:** instruções preparadas em 11/11/2026. A rotina destinada à conversa atual **ainda não está ativada**, pois a conta chegou ao limite de cinco automações ativas. Não declarar uma rotina agendada sem confirmação de criação. As duas automações Sites ADS anteriores continuam pausadas e associadas a outras conversas.
+> **Estado:** automação horária **ATIVA** nesta conversa, ID `Automation_20c65ce99e048191ba74d5eb28a87fec`. A automação WinRAR foi pausada para liberar a vaga; automações antigas do Sites ADS continuam pausadas. Execução **100% independente do PC**: GitHub, Actions, serviços cloud e Google Drive na pasta correta.
+
+## PRIORIDADE ABSOLUTA — ferramentas completas, sequência e expansão constante
+
+1. **FINALIZAR** ferramentas que já estão no catálogo com status planejada/incompleta, interface sem cálculo, importações simuladas, falhas no fluxo ou cobertura insuficiente. Ler todos os módulos, classificar lacunas reais e fechar as de maior valor; atualizar status **somente depois** de validação de ponta a ponta. Não deixar pendências de ferramentas pela metade.
+2. **CRIAR** na sequência do **próximo ID Fxxx livre**, sem reiniciar numeração e sem duplicar slugs/funcionalidades. Quando o catálogo atual tiver 246 itens, o seguinte é F247 apenas se esse ID continuar livre no HEAD. Conferir em toda execução.
+3. **EXPANDIR SEM FIM A LISTA**: quando os planejados e a fila conhecida acabarem, buscar na web ideias avançadas de alta demanda, analisar concorrência e documentação técnica, registrar novos itens sequencialmente e IMPLEMENTÁ-LOS, não apenas listar. Continuar ciclos de pesquisa → implementação → teste → publicação.
+4. Cada ciclo deve ter **entrega principal de desenvolvimento full stack**: frontend HTML/CSS/JS, UI/UX visual, motor funcional, API/SQLite ou serviço adequado, autorização Premium, exportação, SEO, testes e documentação. Preferir lotes de 5–10 ferramentas completas quando viável. **Correções de bugs e segurança são obrigatórias, mas não podem substituir toda a entrega** quando houver recursos para implementar funcionalidades.
+5. Proibido redesenhar o portal. Toda ferramenta nova segue **EXATAMENTE** a identidade estabelecida, com exemplos interativos visualmente bem apresentados, resultados em gráficos e métricas, toques, animações e transições úteis, menos texto exposto e modal de ajuda já existente.
+
+## Execução na nuvem — NÃO depender do computador
+
+- **NÃO usar PC/Windows/Remote Desktop Commander como pré-requisito ou destino obrigatório**. Continuar trabalho pelo GitHub e GitHub Actions, CI e conectores cloud mesmo com PC desligado. Nada de bloquear tarefa por falta de túnel/SSH. O túnel no PC é apenas ambiente legado de testes, não a arquitetura de produção.
+- Verificar disponibilidade de serviços grátis/compatíveis para backend persistente e auth. Não inventar deploy nem armazenar contas em disco efêmero. Enquanto não houver servidor cloud real, entregar frontend na prévia pública GitHub Pages e provar testes de API no CI, sem alegar login em produção.
+- Google Drive **CORRETO VERIFICADO POR METADADOS**: `0. Meus Projetos Dev / Projetos / Sites ADS — Ander Flow`, pasta ID `1lZDbAR9TAc9y-kU8Efpa_2dQc_0bhPT5`, link https://drive.google.com/drive/folders/1lZDbAR9TAc9y-kU8Efpa_2dQc_0bhPT5 . Não usar raiz nem criar pasta duplicada. Manter `Versoes/vX.Y.Z-AAAA-MM-DD` e `Relatorios`; `APK/vX.Y.Z` somente com build Android legítima. **Preservar histórico de todas as versões** e conferir uploads pelo Drive. Se não for possível transferir arquivos reais, declarar isso, não simular.
+- A automação pode consultar docs e escolher ferramentas/skills pertinentes, priorizando GitHub, Google Drive e CI. Não utilizar Work. Orquestrar agentes reais apenas se houver delegação efetiva disponível; não afirmar múltiplos agentes fictícios.
+- Acompanhar o backlog de 100 melhorias no documento `portal/documentacao/backlog-100-melhorias-sites-ads.md` quando existir, registrando evolução e novas ideias após concluir o backlog. Não tratar bugs ou testes isolados como entrega completa de produto.
+- Criador exibido na interface, metadados e aplicativo: **Ander Flow**; nome do site **Sites ADS / Ferramentas do Ander**.
 
 ## Missão da automação
 
@@ -39,11 +56,11 @@ Atribuir arquivos sem sobreposição e revisar os resultados antes de integrar m
 
 ## Ordem obrigatória de cada ciclo
 
-1. Consultar ferramentas e skills disponíveis e usar somente as úteis; principais: **GitHub**, **Remote Desktop Commander** (PC), **Google Drive** (artefatos/versionamento), pesquisa **web** atualizada, testes com navegador. Ler a skill de Drive antes de organizar versões. **Nunca usar ChatGPT Work** neste projeto.
+1. Consultar ferramentas e skills disponíveis e usar somente as úteis; principais: **GitHub**, **Google Drive** (artefatos/versionamento), **GitHub Actions** e serviços cloud; Remote Desktop Commander somente opcional, pesquisa **web** atualizada, testes com navegador. Ler a skill de Drive antes de organizar versões. **Nunca usar ChatGPT Work** neste projeto.
 2. Ler o README, catálogo, documentação, HEAD real, últimos commits, diferenças entre máquinas/branches, issues e resultado de GitHub Actions. Identificar mudanças de outros agentes. Confirmar o total real de ferramentas prontas, sem repetir F001–F246 ou novas existentes.
 3. Pesquisar problemas, documentação e soluções atuais em fontes confiáveis quando material. Definir backlog e critérios de aceitação. Preferir melhorias de grande valor, e-commerce, documentos, estoque, margem, SEO, comércio, logística, campanhas e relatórios.
 4. **Executar** um lote de 5–10 ferramentas completas quando viável, ou uma melhoria substancial de UX/backend/segurança se isso for mais útil. Nunca criar dezenas de calculadoras básicas para inflar a contagem.
-5. Revisar implementação e executar testes reais no contexto permitido. Corrigir regressões antes de publicar. Se PC offline, prosseguir por GitHub e CI sem presumir que o servidor local está online.
+5. Revisar implementação e executar testes reais no contexto permitido. Corrigir regressões antes de publicar. O estado do PC não pode impedir a execução; toda a entrega deve ocorrer via GitHub/CI/cloud, sem dependências locais.
 6. Fazer commits com histórico claro na branch correta, verificar CI e publicação. Fornecer links reais de commit/PR, site, workflow e Drive quando houver entrega. Na próxima execução retomar exatamente do HEAD vigente.
 
 ## REGRA INEGOCIÁVEL — Não alterar o visual do site
