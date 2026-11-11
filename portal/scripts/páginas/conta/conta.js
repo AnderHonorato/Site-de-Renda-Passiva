@@ -605,7 +605,8 @@ try {
     location.replace('../entrar.html?volta=' + encodeURIComponent(location.pathname));
   } else {
     usuario = sessao.usuario;
-    document.getElementById('conta-conteudo').hidden = false;
+    // Não mostrar campos antes de buscar perfil e vincular eventos de edição.
+    estado(en ? 'Loading your account…' : 'Carregando sua conta…');
 
     if (usuario.papel === 'admin') {
       const admin = document.getElementById('conta-admin');
@@ -634,6 +635,9 @@ try {
       form.addEventListener('change', marcarAlterado);
       form.addEventListener('submit', evento => evento.preventDefault());
     }
+    // A partir daqui o formulário está completamente preparado.
+    document.getElementById('conta-conteudo').hidden = false;
+    estado('');
   }
 } catch (erro) {
   estado(mensagemErro(erro), true);
