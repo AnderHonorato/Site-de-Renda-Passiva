@@ -2,7 +2,7 @@
 // Não é backend nem faz login: só encontra o endereço atual do servidor de testes.
 const ID_GIST = 'a888f4b63bc461e46552e3b651f1102e';
 export function destinoSeguro(endereco, rota='') {
-  if(typeof endereco!=='string')return null;
+  if(typeof endereco!=='string'||/^https:\/\/[^\/?#]+:\d+(?:[\/?#]|$)/i.test(endereco))return null;
   let url;
   try{url=new URL(endereco);}catch{return null;}
   if(url.protocol!=='https:'||url.username||url.password||url.port||
