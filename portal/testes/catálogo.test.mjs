@@ -16,11 +16,11 @@ test('o catálogo respeita as próprias regras', () => {
   assert.deepEqual(conferirCatálogo(), []);
 });
 
-test('o catálogo tem 236 ferramentas únicas', () => {
-  assert.equal(ferramentas.length, 236);
-  assert.equal(new Set(ferramentas.map((f) => f.slug)).size, 236);
-  assert.equal(new Set(ferramentas.map((f) => f.id)).size, 236);
-  assert.equal(new Set(ferramentas.map((f) => f.nome.toLowerCase())).size, 236);
+test('o catálogo tem 246 ferramentas únicas', () => {
+  assert.equal(ferramentas.length, 246);
+  assert.equal(new Set(ferramentas.map((f) => f.slug)).size, 246);
+  assert.equal(new Set(ferramentas.map((f) => f.id)).size, 246);
+  assert.equal(new Set(ferramentas.map((f) => f.nome.toLowerCase())).size, 246);
 });
 
 test('nenhuma ferramenta usa nome de variação artificial', () => {
