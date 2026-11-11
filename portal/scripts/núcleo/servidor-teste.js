@@ -15,7 +15,17 @@ export function destinoSeguro(endereco, rota='') {
     frete:'/f/simulador-frete-gratis/',
     fornecedores:'/f/impacto-reajuste-fornecedores/',
     expedicao:'/f/capacidade-expedicao-turnos/',
-    estornos:'/f/margem-pedidos-estornos/'
+    estornos:'/f/margem-pedidos-estornos/',
+    descontos:'/f/descontos-progressivos-lote/',
+    parado:'/f/estoque-parado-capital/',
+    capital:'/f/ciclo-financeiro-capital-giro/',
+    pagamentos:'/f/auditoria-taxas-pagamentos/',
+    faixas:'/f/politica-frete-faixas/',
+    seguranca:'/f/estoque-seguranca-estatistico/',
+    cancelamentos:'/f/custo-cancelamentos-pedidos/',
+    armazenagem:'/f/ocupacao-armazenagem/',
+    orcamento:'/f/compras-priorizadas-orcamento/',
+    assinaturas:'/f/projecao-assinaturas-recorrentes/'
   };
   return url.origin+(rotas[rota]||'/');
 }

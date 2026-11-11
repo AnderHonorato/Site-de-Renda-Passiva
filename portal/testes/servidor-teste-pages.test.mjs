@@ -17,7 +17,17 @@ test('redirecionamento aceita apenas túnel público HTTPS e rotas predefinidas'
   const ferramentas={
     ruptura:'risco-ruptura-produtos',frete:'simulador-frete-gratis',
     fornecedores:'impacto-reajuste-fornecedores',expedicao:'capacidade-expedicao-turnos',
-    estornos:'margem-pedidos-estornos'
+    estornos:'margem-pedidos-estornos',
+    descontos:'descontos-progressivos-lote',
+    parado:'estoque-parado-capital',
+    capital:'ciclo-financeiro-capital-giro',
+    pagamentos:'auditoria-taxas-pagamentos',
+    faixas:'politica-frete-faixas',
+    seguranca:'estoque-seguranca-estatistico',
+    cancelamentos:'custo-cancelamentos-pedidos',
+    armazenagem:'ocupacao-armazenagem',
+    orcamento:'compras-priorizadas-orcamento',
+    assinaturas:'projecao-assinaturas-recorrentes'
   };
   for(const [acao,slug] of Object.entries(ferramentas)){
     assert.equal(destinoSeguro(ok,acao),ok+'/f/'+slug+'/');
