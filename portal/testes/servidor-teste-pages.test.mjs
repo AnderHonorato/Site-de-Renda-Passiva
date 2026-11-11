@@ -14,6 +14,14 @@ test('redirecionamento aceita apenas túnel público HTTPS e rotas predefinidas'
   assert.equal(destinoSeguro(ok,'cadastro'),ok+'/criar-conta.html');
   assert.equal(destinoSeguro(ok,'entrar'),ok+'/entrar.html');
   assert.equal(destinoSeguro(ok,'admin'),ok+'/admin/');
+  const ferramentas={
+    ruptura:'risco-ruptura-produtos',frete:'simulador-frete-gratis',
+    fornecedores:'impacto-reajuste-fornecedores',expedicao:'capacidade-expedicao-turnos',
+    estornos:'margem-pedidos-estornos'
+  };
+  for(const [acao,slug] of Object.entries(ferramentas)){
+    assert.equal(destinoSeguro(ok,acao),ok+'/f/'+slug+'/');
+  }
   assert.equal(destinoSeguro(ok,'../../api/admin'),ok+'/');
   for(const x of [
     'https://evil.example.com','http://abc.trycloudflare.com',

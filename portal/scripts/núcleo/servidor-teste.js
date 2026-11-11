@@ -9,7 +9,14 @@ export function destinoSeguro(endereco, rota='') {
      url.pathname!=='/'||url.search||url.hash||
      !/^[a-z0-9]+(?:-[a-z0-9]+)*\.trycloudflare\.com$/i.test(url.hostname))
     return null;
-  const rotas={entrar:'/entrar.html',cadastro:'/criar-conta.html',admin:'/admin/'};
+  const rotas={
+    entrar:'/entrar.html',cadastro:'/criar-conta.html',admin:'/admin/',
+    ruptura:'/f/risco-ruptura-produtos/',
+    frete:'/f/simulador-frete-gratis/',
+    fornecedores:'/f/impacto-reajuste-fornecedores/',
+    expedicao:'/f/capacidade-expedicao-turnos/',
+    estornos:'/f/margem-pedidos-estornos/'
+  };
   return url.origin+(rotas[rota]||'/');
 }
 async function abrir() {
