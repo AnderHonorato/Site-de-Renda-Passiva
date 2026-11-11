@@ -1,0 +1,33 @@
+name: Verificar túnel público Sites ADS
+on:
+  push:
+    branches:
+      - ander-flow/v1
+    paths:
+      - .github/workflows/verificar-tunel-estavel.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Testar HTTPS de fora do computador do usuário
+        env:
+          URL_TUNEL: https://wise-oak-d24294b5.tunnl.gg
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          const base=process.env.URL_TUNEL;
+          const options={signal:AbortSignal.timeout(18000),
+            headers:{'tunnl-skip-browser-warning':'1','cache-control':'no-cache'}};
+          const health=await fetch(base+'/api/saude',options);
+          assert.equal(health.status,200,'Saúde pública HTTP '+health.status);
+          assert.deepEqual(await health.json(),{estado:'ok'});
+          const home=await fetch(base+'/',options);
+          assert.equal(home.status,200,'Home pública HTTP '+home.status);
+          const html=await home.text();
+          assert.match(html,/Ferramentas do Ander/, 'Não carregou o portal Sites ADS');
+          console.log('TUNEL_PUBLICO_EXTERNO_OK '+base);
+          NODE
