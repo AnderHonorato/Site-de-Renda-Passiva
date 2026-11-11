@@ -52,9 +52,9 @@ export default Object.freeze({
 
   início: {
     título: '{nome} — resolva a tarefa, não procure o botão',
-    descrição: 'Portal com {prontas} ferramentas prontas para calcular, criar e organizar. Ferramentas locais no navegador, com conta opcional para a comunidade.',
+    descrição: 'Portal com {prontas} ferramentas prontas: opções gratuitas locais e análises Premium no servidor, com conta.',
     pergunta: 'O que você precisa *resolver* agora?',
-    linha: 'Escreva a tarefa, não o nome da ferramenta. {prontas} ferramentas prontas, sem cadastro, rodando no seu navegador.',
+    linha: 'Descreva sua tarefa. Explore {prontas} ferramentas: opções gratuitas no navegador e análises Premium com conta.',
     buscaMarcador: 'Ex.: preciso saber quanto cobrar',
     buscaRótulo: 'Buscar ferramenta',
     sugestões: 'Sugestões',
@@ -64,7 +64,7 @@ export default Object.freeze({
     comeceAqui: 'Comece por aqui',
     vitrineRótulo: 'Apresentação animada do portal',
     vitrinePausar: 'Pausar animação',
-    vitrineCapa: '{nome}: {prontas} ferramentas grátis.',
+    vitrineCapa: '{nome}: {prontas} ferramentas prontas.',
     recentes: 'Continue de onde parou',
     limpar: 'Limpar',
     categoriasTítulo: 'Categorias',

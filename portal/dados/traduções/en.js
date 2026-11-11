@@ -46,9 +46,9 @@ export default Object.freeze({
 
   início: {
     título: '{nome} — solve the task, don\'t hunt for the button',
-    descrição: 'Portal with {prontas} ready-to-use tools to calculate, create and organize. Local browser tools, with an optional community account.',
+    descrição: 'Portal with {prontas} ready tools: free local options and Premium analysis on the server with an account.',
     pergunta: 'What do you need to *solve* right now?',
-    linha: 'Write the task, not the name of the tool. {prontas} ready tools, no sign-up, running in your browser.',
+    linha: 'Describe your task. Explore {prontas} tools: free browser options and Premium analysis with an account.',
     buscaMarcador: 'E.g.: I need to know how much to charge',
     buscaRótulo: 'Search tools',
     sugestões: 'Suggestions',
@@ -58,7 +58,7 @@ export default Object.freeze({
     comeceAqui: 'Start here',
     vitrineRótulo: 'Animated presentation of the portal',
     vitrinePausar: 'Pause animation',
-    vitrineCapa: '{nome}: {prontas} free tools.',
+    vitrineCapa: '{nome}: {prontas} ready tools.',
     recentes: 'Pick up where you left off',
     limpar: 'Clear',
     categoriasTítulo: 'Categories',
