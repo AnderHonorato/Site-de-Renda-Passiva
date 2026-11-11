@@ -8,5 +8,5 @@ node = shell.ExpandEnvironmentStrings("%ProgramFiles%") & "\nodejs\node.exe"
 If Not fs.FileExists(node) Then WScript.Quit 2
 shell.Run """" & node & """ """ & caminho & """", 0, False
 ' Atualiza o endereço do túnel no Gist já utilizado pela página fixa.
-watcher = shell.ExpandEnvironmentStrings("%LOCALAPPDATA%") & "\SitesAdsTeste\atualizar-link.mjs"
+watcher = fs.BuildPath(pasta, "sincronizar-url-publica.mjs")
 If fs.FileExists(watcher) Then shell.Run """" & node & """ """ & watcher & """", 0, False

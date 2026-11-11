@@ -30,7 +30,7 @@ const ssh=process.platform==='win32'
 export function extrairEnderecoEstavel(saida) {
   if(typeof saida!=='string')return null;
   // json ou banner do serviço; nenhum outro domínio é permitido.
-  const urls=saida.match(/https:\/\/[a-z0-9]+(?:-[a-z0-9]+)*\.tunnl\.gg\b/ig)||[];
+  const urls=saida.match(/https:\/\/[a-z0-9]+(?:-[a-z0-9]+)*\.tunnl\.gg(?![a-z0-9._-])/ig)||[];
   return urls.length?urls[0].toLowerCase():null;
 }
 export function variaveisDeServidor(endereco,base=process.env) {

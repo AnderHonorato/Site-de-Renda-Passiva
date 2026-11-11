@@ -12,6 +12,7 @@ test('SSH só aceita domínio HTTPS específico do túnel gratuito',()=>{
  assert.equal(extrairEnderecoEstavel('https://attacker.example.com'),null);
  assert.equal(extrairEnderecoEstavel('https://tunnl.gg'),null);
  assert.equal(extrairEnderecoEstavel('https://abc.tunnl.gg.attacker.example'),null);
+ assert.equal(extrairEnderecoEstavel('https://abc.tunnl.gg_evil'),null);
  assert.equal(extrairEnderecoEstavel(12),null);
 });
 test('API e site usam mesma origem HTTPS com dados separados no PC',()=>{
