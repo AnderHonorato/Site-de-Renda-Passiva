@@ -7,7 +7,7 @@ export function destinoSeguro(endereco, rota='') {
   try{url=new URL(endereco);}catch{return null;}
   if(url.protocol!=='https:'||url.username||url.password||url.port||
      url.pathname!=='/'||url.search||url.hash||
-     !/^[a-z0-9]+(?:-[a-z0-9]+)*\.trycloudflare\.com$/i.test(url.hostname))
+     !/^[a-z0-9]+(?:-[a-z0-9]+)*\.(?:tunnl\.gg|trycloudflare\.com)$/i.test(url.hostname))
     return null;
   const rotas={
     entrar:'/entrar.html',cadastro:'/criar-conta.html',admin:'/admin/',
@@ -44,10 +44,20 @@ async function abrir() {
     const gist=await resposta.json();
     const valor=gist?.files?.['endereco-teste.json']?.content;
     if(typeof valor!=='string')throw new Error('arquivo_nao_disponivel');
-    const destino=destinoSeguro(JSON.parse(valor).url,new URLSearchParams(location.search).get('abrir')||'');
+    const endereco=JSON.parse(valor);
+    const destino=destinoSeguro(endereco.url,new URLSearchParams(location.search).get('abrir')||'');
     if(!destino)throw new Error('endereco_invalido');
-    link.href=destino;link.hidden=false;
-    situacao.textContent='Endereço localizado. Abrindo o site de testes…';
+
+    // O Cloudflare Quick Tunnel antigo foi abandonado. Não envie visitantes
+    // para uma conexão volátil que pode ter sido encerrada.
+    if(new URL(destino).hostname.endsWith('.trycloudflare.com')) {
+      situacao.textContent='O túnel antigo foi desativado. Estamos migrando o servidor de testes para um endereço HTTPS estável. As ferramentas gratuitas seguem disponíveis na prévia.';
+      repetir.hidden=false;
+      return;
+    }
+    link.href=destino;
+    link.hidden=false;
+    situacao.textContent='Endereço estável encontrado. Abrindo o servidor de testes…';
     location.replace(destino);
   }catch{
     situacao.textContent='O endereço de testes não está disponível no momento. Confira se o PC AS está ligado e entre novamente.';

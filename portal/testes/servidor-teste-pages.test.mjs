@@ -14,6 +14,10 @@ test('redirecionamento aceita apenas túnel público HTTPS e rotas predefinidas'
   assert.equal(destinoSeguro(ok,'cadastro'),ok+'/criar-conta.html');
   assert.equal(destinoSeguro(ok,'entrar'),ok+'/entrar.html');
   assert.equal(destinoSeguro(ok,'admin'),ok+'/admin/');
+  const fixo='https://brave-fox-7c41e09b.tunnl.gg';
+  assert.equal(destinoSeguro(fixo),fixo+'/');
+  assert.equal(destinoSeguro(fixo,'entrar'),fixo+'/entrar.html');
+  assert.equal(destinoSeguro(fixo,'orcamento'),fixo+'/f/compras-priorizadas-orcamento/');
   const ferramentas={
     ruptura:'risco-ruptura-produtos',frete:'simulador-frete-gratis',
     fornecedores:'impacto-reajuste-fornecedores',expedicao:'capacidade-expedicao-turnos',
@@ -40,6 +44,17 @@ test('redirecionamento aceita apenas túnel público HTTPS e rotas predefinidas'
     'https://abc.trycloudflare.com:8443',
     'https://abc.trycloudflare.com/?a=1','javascript:alert(1)',
     'https://abc..trycloudflare.com',
-    'https://abc_.trycloudflare.com',''
+    'https://abc_.trycloudflare.com',
+    'https://tunnl.gg','https://attacker.tunnl.gg.evil.com',
+    'http://abc.tunnl.gg','https://user@abc.tunnl.gg',
+    'https://abc.tunnl.gg/roubar','https://abc.tunnl.gg:443',
+    'https://abc_.tunnl.gg',''
   ])assert.equal(destinoSeguro(x),null,x);
+});
+
+test('Pages não redireciona automaticamente para um Cloudflare antigo', async()=>{
+  const {readFile}=await import('node:fs/promises');
+  const source=await readFile(new URL('../scripts/núcleo/servidor-teste.js',import.meta.url),'utf8');
+  assert.match(source,/hostname\.endsWith\('\.trycloudflare\.com'\)/);
+  assert.match(source,/O túnel antigo foi desativado/);
 });
