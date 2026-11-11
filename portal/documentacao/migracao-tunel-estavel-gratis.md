@@ -1,6 +1,10 @@
 # Sites ADS — Migração para HTTPS gratuito com URL estável (Windows AS)
 
-**Situação:** preparação de migração. Não considerar implantado enquanto o Ander-PC estiver offline.
+**Situação em 11/11/2026:** implantado no perfil Windows AS, com verificação
+HTTPS externa no GitHub Actions, formulário de cadastro/login e perfil
+testados no Chrome. Domínio atribuído: **https://wise-oak-d24294b5.tunnl.gg/**
+O endereço estável pode ficar temporariamente offline quando o PC estiver
+desligado, sem internet ou durante reconexão do túnel.
 A API Node e o SQLite ficam no PC; GitHub Pages continua hospedando a vitrine gratuita.
 
 ## Provedor escolhido
@@ -62,3 +66,31 @@ Se o tunnl.gg indisponibilizar contas/limites, reavaliar **ngrok gratuito**
 (com conta e domínio dev fixo), **Tailscale Funnel** (com tailnet configurada),
 ou backend gerenciado com banco persistente. Não hospedar SQLite de contas num
 filesystem efêmero do Render Free.
+
+## Auditoria da mudança
+
+- Backup SQLite verificado: `%LOCALAPPDATA%\\SitesAdsTeste\\portal-antes-tunel-estavel.sqlite`
+  (2 contas existentes no momento do backup).
+- Chave do túnel: gerada no perfil **AS**, sem envio ao repositório.
+- Inicialização automática: valor HKCU `SitesADS-Teste-AS` aponta para
+  `iniciar-tunel-estavel-oculto.vbs`; não afeta o perfil Lil.
+- Supervisor anterior e serviço Cloudflare de testes: encerrados, sem
+  remover dados de contas. Novo supervisor oferece reconexão com a mesma chave.
+- Gist público antigo reutilizado para publicar somente o URL atualizado:
+  `a888f4b63bc461e46552e3b651f1102e`.
+- A página fixa `/portal/servidor-teste.html` redireciona ao tunnl.gg
+  e informa a indisponibilidade caso o Gist ainda aponte ao Cloudflare antigo.
+- [Execução de teste HTTPS no GitHub Actions](https://github.com/AnderHonorato/Site-de-Renda-Passiva/actions/workflows/verificar-tunel-estavel.yml).
+- O aviso inicial do túnel gratuito diz explicitamente que o site
+  roda num computador particular. **Não usar senhas reutilizadas, dados
+  financeiros, nem informações pessoais reais nesse ambiente de testes.**
+- Validação pós-migração: cadastrado usuário fictício, verificados cookie de
+  sessão, navegação autenticada, salvamento de perfil e exclusão do usuário QA.
+
+## Atenção antes de lançar o site para clientes
+
+Túnel com aviso de phishing, limite de dados, PC doméstico, banco local e
+inatividade não equivalem a hospedagem de produção. Para monetizar
+e aceitar cadastros reais publicamente, migrar API e banco para
+infraestrutura com HTTPS, políticas de acesso, backups e monitoramento
+permanentes. O Github Pages permanece disponível para funções locais grátis.
