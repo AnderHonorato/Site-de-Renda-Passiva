@@ -29,5 +29,25 @@ jobs:
           assert.equal(home.status,200,'Home pública HTTP '+home.status);
           const html=await home.text();
           assert.match(html,/Ferramentas do Ander/, 'Não carregou o portal Sites ADS');
+          // O navegador de visitantes pode ver o aviso anti-phishing,
+          // mas a API responde diretamente para verificadores automatizados.
+          const signup=await fetch(base+'/criar-conta.html',options);
+          assert.equal(signup.status,200);
+          assert.match(await signup.text(),/form-criar/);
+          const sessao=await fetch(base+'/api/autenticacao/sessao',options);
+          assert.equal(sessao.status,200);
+          assert.equal((await sessao.json()).usuario,null);
+          const protegido=await fetch(base+'/api/premium/operacoes-avancadas/descontos-progressivos-lote',{
+            method:'POST',headers:{
+              'tunnl-skip-browser-warning':'1','content-type':'application/json'
+            },
+            body:JSON.stringify({csv:'dados_falsos'}),signal:AbortSignal.timeout(15000)
+          });
+          assert.equal(protegido.status,403,'Premium sem sessão não deve estar aberto');
+          const gist=await fetch('https://api.github.com/gists/a888f4b63bc461e46552e3b651f1102e',
+            {signal:AbortSignal.timeout(15000)});
+          assert.equal(gist.status,200);
+          const registrado=JSON.parse((await gist.json()).files['endereco-teste.json'].content);
+          assert.equal(registrado.url,base,'O link fixo deve apontar para o túnel novo');
           console.log('TUNEL_PUBLICO_EXTERNO_OK '+base);
           NODE
