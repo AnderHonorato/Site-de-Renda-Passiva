@@ -732,4 +732,380 @@ export const ferramentas = [
     tags: ["estornos","margem por pedido","auditoria financeira","pedido deficitário"], intenções: ["auditar contribuicao por pedido depois de estornos"],
     relacionadas: ["planejamento-estoque-premium","simulador-margem-marketplaces"],
   },
+
+  {
+    "id": "F237",
+    "slug": "descontos-progressivos-lote",
+    "nome": "Simulador de descontos progressivos por quantidade",
+    "cat": "dinheiro",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Compara preço normal e promoções por quantidade, contribuição total e limite de desconto por SKU.",
+    "problema": "Proteger margem ao oferecer descontos por volume.",
+    "entra": "CSV com preços, descontos, unidades, CMV, taxas, frete e margem-alvo.",
+    "processa": "Calcula contribuição por lote e preço mínimo para margem definida.",
+    "sai": "Relatório por SKU com margem e impacto de promoção.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "desconto por quantidade",
+      "desconto progressivo",
+      "margem lote",
+      "atacado"
+    ],
+    "intenções": [
+      "simular desconto por quantidade com margem positiva"
+    ],
+    "relacionadas": [
+      "precificacao-de-promocoes",
+      "simulador-margem-marketplaces"
+    ]
+  },
+  {
+    "id": "F238",
+    "slug": "estoque-parado-capital",
+    "nome": "Estoque parado e capital imobilizado",
+    "cat": "operações",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Analisa itens sem giro, capital retido, cobertura projetada e custo mensal de carregamento.",
+    "problema": "Descobrir produtos parados e o custo de mantê-los no estoque.",
+    "entra": "SKU, estoque, dias sem venda, giro de 90 dias, custo e carrego.",
+    "processa": "Calcula capital imobilizado, cobertura e alerta por tempo sem vendas.",
+    "sai": "Priorização por capital e alertas de estoque parado.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "estoque parado",
+      "capital imobilizado",
+      "sem giro",
+      "custo de estoque"
+    ],
+    "intenções": [
+      "descobrir quanto capital esta imobilizado em estoque sem giro"
+    ],
+    "relacionadas": [
+      "giro-de-estoque",
+      "planejamento-estoque-premium"
+    ]
+  },
+  {
+    "id": "F239",
+    "slug": "ciclo-financeiro-capital-giro",
+    "nome": "Ciclo de caixa e necessidade de capital de giro",
+    "cat": "dinheiro",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Estima DIO, DSO, DPO, ciclo financeiro e giro exigido pelo negócio, com simulação de cobrança.",
+    "problema": "Compreender o dinheiro retido em estoque e recebíveis antes de pagar fornecedores.",
+    "entra": "CMV, estoque médio, vendas, recebíveis, contas a pagar e compras.",
+    "processa": "Calcula indicadores de ciclo de caixa e cenários de redução de DSO.",
+    "sai": "Necessidade de capital de giro estimada e prazo de caixa.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "capital de giro",
+      "ciclo financeiro",
+      "dio",
+      "dso",
+      "dpo",
+      "ccc"
+    ],
+    "intenções": [
+      "calcular ciclo de conversão de caixa e capital de giro"
+    ],
+    "relacionadas": [
+      "fluxo-de-caixa",
+      "projecao-caixa-operacional"
+    ]
+  },
+  {
+    "id": "F240",
+    "slug": "auditoria-taxas-pagamentos",
+    "nome": "Auditoria de taxas de cartão, Pix e antecipação",
+    "cat": "dinheiro",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Confere tarifas contratadas e cobradas por operação, incluindo MDR, tarifa fixa e antecipação.",
+    "problema": "Detectar divergências nas tarifas de adquirência e antecipação de recebíveis.",
+    "entra": "CSV por transação com valor bruto, taxas e tarifas contratadas e cobradas.",
+    "processa": "Recalcula taxas, líquido estimado e diferenças entre contrato e cobrança.",
+    "sai": "Ranking de divergências com exportação completa.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "taxas cartao",
+      "taxa pix",
+      "antecipação",
+      "mdr",
+      "adquirente",
+      "conciliação"
+    ],
+    "intenções": [
+      "conferir taxas de cartao pix e antecipacao cobradas"
+    ],
+    "relacionadas": [
+      "conciliacao-de-repasses",
+      "inadimplencia-recebiveis"
+    ]
+  },
+  {
+    "id": "F241",
+    "slug": "politica-frete-faixas",
+    "nome": "Análise de frete grátis por faixa de ticket",
+    "cat": "operações",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Compara políticas de frete grátis por valor de pedido e indica faixas abaixo da margem-alvo.",
+    "problema": "Definir em quais faixas de ticket o frete grátis consome a contribuição.",
+    "entra": "Pedidos e ticket médio por faixa, CMV, taxas, custo/cobrança de frete, Ads e meta.",
+    "processa": "Simula contribuição, receita de frete renunciada e limite de subsídio.",
+    "sai": "Tabela de faixas e alertas de rentabilidade.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "frete gratis por valor",
+      "frete por faixa",
+      "ticket minimo",
+      "subsidio frete"
+    ],
+    "intenções": [
+      "planejar frete gratis por faixas de ticket medio"
+    ],
+    "relacionadas": [
+      "simulador-frete-gratis",
+      "ticket-medio"
+    ]
+  },
+  {
+    "id": "F242",
+    "slug": "estoque-seguranca-estatistico",
+    "nome": "Estoque de segurança por variabilidade de demanda",
+    "cat": "operações",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Estima estoque de segurança e reposição usando demanda diária, desvio padrão, prazo e fator Z.",
+    "problema": "Dimensionar proteção contra variação de demanda e possível ruptura de itens.",
+    "entra": "Média de vendas, desvio diário, prazo, saldo, recebimentos e fator de serviço.",
+    "processa": "Usa z vezes desvio vezes raiz do prazo e calcula ponto de reposição.",
+    "sai": "Tabela de segurança, quantidade de compra e custo estimado.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "estoque seguranca",
+      "nivel de serviço",
+      "fator z",
+      "demanda variavel"
+    ],
+    "intenções": [
+      "dimensionar estoque de seguranca a partir do desvio de demanda"
+    ],
+    "relacionadas": [
+      "risco-ruptura-produtos",
+      "ponto-de-reposicao"
+    ]
+  },
+  {
+    "id": "F243",
+    "slug": "custo-cancelamentos-pedidos",
+    "nome": "Custos de cancelamentos e recuperação de vendas",
+    "cat": "vendas",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Avalia cancelamentos por motivo, pedidos recuperados, vendas expostas e custos irrecuperáveis.",
+    "problema": "Quantificar custo de cancelamentos sem confundir vendas não realizadas com perdas financeiras.",
+    "entra": "Motivos, pedidos cancelados e recuperados, ticket e custos perdidos.",
+    "processa": "Calcula recuperação, receita bruta exposta e custos de taxas, Ads e frete.",
+    "sai": "Ranking de motivos e ações prioritárias para análise.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "cancelamento pedido",
+      "recuperacao de vendas",
+      "pedido cancelado",
+      "perda ecommerce"
+    ],
+    "intenções": [
+      "analisar custo e recuperacao de pedidos cancelados"
+    ],
+    "relacionadas": [
+      "auditoria-de-devolucoes",
+      "funil-de-vendas"
+    ]
+  },
+  {
+    "id": "F244",
+    "slug": "ocupacao-armazenagem",
+    "nome": "Calculadora de ocupação e capacidade de armazenagem",
+    "cat": "operações",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Avalia volume útil de zonas de estoque, ocupação prevista, reserva de espaço e excesso de carga volumétrica.",
+    "problema": "Antecipar falta de espaço físico antes de receber novos produtos.",
+    "entra": "Zonas, posições, dimensões úteis, volumes ocupados, entradas e reserva.",
+    "processa": "Calcula capacidade volumétrica, taxa de uso e possível excesso por zona.",
+    "sai": "Relatório de capacidade e alertas de superlotação.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "ocupacao armazem",
+      "capacidade cubica",
+      "metragem deposito",
+      "warehouse"
+    ],
+    "intenções": [
+      "calcular taxa de ocupacao e espaco de armazenagem"
+    ],
+    "relacionadas": [
+      "cubagem",
+      "transferencias-entre-cds"
+    ]
+  },
+  {
+    "id": "F245",
+    "slug": "compras-priorizadas-orcamento",
+    "nome": "Planejamento de compras com orçamento limitado",
+    "cat": "operações",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Distribui orçamento por urgência dos SKUs, demanda, saldo disponível e lotes mínimos, sem exceder a verba.",
+    "problema": "Priorizar reposições quando não há capital para atender todas as necessidades.",
+    "entra": "SKUs, demanda, saldo, compras recebidas, custos, prioridade e lote mínimo.",
+    "processa": "Aloca orçamento por prioridade, respeitando múltiplos de lotes.",
+    "sai": "Quantidade aprovada, custo e compras pendentes por produto.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "compra por orcamento",
+      "reposição",
+      "lote minimo",
+      "prioridade compras"
+    ],
+    "intenções": [
+      "organizar compras de estoque por prioridade e orcamento"
+    ],
+    "relacionadas": [
+      "planejamento-estoque-premium",
+      "comparador-de-fornecedores"
+    ]
+  },
+  {
+    "id": "F246",
+    "slug": "projecao-assinaturas-recorrentes",
+    "nome": "Previsão de assinaturas, churn e margem recorrente",
+    "cat": "dinheiro",
+    "ícone": "gráfico",
+    "tarefas": [
+      "analisar",
+      "calcular"
+    ],
+    "status": "pronta",
+    "resumo": "Projeta assinantes e contribuição mensal com aquisição, churn, custo por cliente e CAC.",
+    "problema": "Estimar resultado de produtos recorrentes sem confundir assinantes e receita com lucro.",
+    "entra": "Planos, base inicial, novas assinaturas, churn, preço, custos e CAC.",
+    "processa": "Simula entradas e cancelamentos por período e contribuição acumulada.",
+    "sai": "Receita, assinantes esperados, margem e payback aproximado.",
+    "exporta": [
+      "copiar",
+      "csv",
+      "xlsx"
+    ],
+    "plano": "premium",
+    "local": false,
+    "tags": [
+      "assinatura",
+      "churn",
+      "mrr",
+      "receita recorrente",
+      "cac payback"
+    ],
+    "intenções": [
+      "simular crescimento de assinaturas churn e receita recorrente"
+    ],
+    "relacionadas": [
+      "coortes-retencao-ltv",
+      "fluxo-de-caixa"
+    ]
+  },
 ];
