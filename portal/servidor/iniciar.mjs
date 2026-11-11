@@ -494,6 +494,23 @@ async function rota(req,res){
       throw e;
     }
   }
+  // F237–F246: autenticação e cota Premium ANTES de receber CSV comercial.
+  const rotaOperacoesAvancadas=p.match(/^\/api\/premium\/operacoes-avancadas\/([a-z0-9-]+)$/);
+  if(rotaOperacoesAvancadas&&m==='POST'){
+    const u=exigir(req);
+    if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
+    conferirLimite('operacoes-avancadas:'+u.id,10,60000);
+    const dados=await corpo(req,300000);
+    try{
+      const {executarOperacaoAvancada}=await import('./operacoes-avancadas-2.mjs');
+      revalidarPremium(req,u.id);
+      return json(res,200,{relatorio:executarOperacaoAvancada(rotaOperacoesAvancadas[1],dados)});
+    }catch(e){
+      if(e?.name==='ErroOperacaoAvancada')
+        return json(res,400,{erro:'dados_invalidos',mensagem:e.message.slice(0,280)});
+      throw e;
+    }
+  }
   if(p==='/api/planos'&&m==='GET'){return json(res,200,{planos:planosPublicos()});}
   if(p==='/api/trabalhos'&&m==='GET'){
     const u=exigir(req),situacao=url.searchParams.get('situacao');
