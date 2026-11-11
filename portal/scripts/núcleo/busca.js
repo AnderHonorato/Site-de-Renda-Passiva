@@ -149,7 +149,9 @@ export function pontuar(ferramenta, consulta) {
       if (palavras[campo].has(palavra)) { dessa += peso; continue; }
       // Tolerância a um erro de digitação, só em palavra com corpo suficiente
       // para que a semelhança não seja acidental, e valendo menos que o acerto.
-      if (palavra.length >= 5) {
+      // "quanto" e "quando" são palavras legítimas diferentes: tratá-las
+      // como erros de digitação causa resultados falsos em buscas financeiras.
+      if (palavra.length >= 5 && palavra !== 'quanto' && palavra !== 'quando') {
         for (const candidata of palavras[campo]) {
           if (candidata.length >= 5 && difereEmUmaLetra(palavra, candidata)) {
             dessa += Math.round(peso * 0.6);
