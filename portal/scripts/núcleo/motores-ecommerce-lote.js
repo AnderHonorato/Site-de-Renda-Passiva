@@ -48,18 +48,44 @@ function numero(v){
  const n=Number(s);if(!Number.isFinite(n)||n<0||n>1e9)throw Error('Número fora do limite.');
  return n;
 }
+/** Lê CSV com aspas duplas RFC 4180 ou TSV, inclusive campos com quebras de linha. */
+export function lerTabelaOperacional(texto){
+ if(typeof texto!=='string'||!texto.trim()||new TextEncoder().encode(texto).length>100000)
+  throw Error('Informe CSV/TSV de até 100 KB.');
+ const primeira=texto.split(/\r?\n/,1)[0];
+ const separador=primeira.includes('\t')?'\t':';';
+ const linhas=[];let linha=[],campo='',aspas=false,fechado=false;
+ for(let i=0;i<texto.length;i++){
+  const c=texto[i];
+  if(aspas){
+   if(c==='"'&&texto[i+1]==='"'){campo+='"';i++;}
+   else if(c==='"') {aspas=false;fechado=true;}
+   else campo+=c;
+  }else if(c==='"'&&!campo&&!fechado){aspas=true;}
+  else if(c===separador){linha.push(campo);campo='';fechado=false;}
+  else if(c==='\n'||c==='\r'){
+   if(c==='\r'&&texto[i+1]==='\n')i++;
+   linha.push(campo);linhas.push(linha);linha=[];campo='';fechado=false;
+   if(linhas.length>501)throw Error('Limite de 500 registros excedido.');
+  }else{
+   if(c==='"'||fechado)throw Error('Aspas fora do padrão CSV.');
+   campo+=c;
+  }
+ }
+ if(aspas)throw Error('Campo CSV com aspas não fechadas.');
+ if(campo!==''||linha.length) {linha.push(campo);linhas.push(linha);}
+ return linhas;
+}
 export function calcularLote(slug,entrada){
  const colunas=COLUNAS[slug];if(!colunas)throw Error('Ferramenta desconhecida.');
- if(typeof entrada!=='string'||entrada.length>100000)throw Error('Arquivo vazio ou maior que 100 KB.');
- const linhas=entrada.trim().split(/\r?\n/);
+ const linhas=lerTabelaOperacional(entrada);
  if(linhas.length<2||linhas.length>501)throw Error('Informe entre 1 e 500 registros.');
- const cabecalho=linhas.shift();const separador=cabecalho.includes('\t')?'\t':';';
- const cab=cabecalho.split(separador).map(s=>s.trim().toLowerCase());
+ const cab=linhas.shift().map(s=>s.trim().toLowerCase());
  if(cab.join('|')!==colunas.join('|'))throw Error('Cabeçalho inválido. Use o exemplo como modelo.');
  const vistos=new Set(),saida=[];let total=0;let investimentoTotal=0,receitaTotal=0;let pedidosTotal=0;let abaixoMeta=0;const alertas=[];
  for(const [i,linha] of linhas.entries()){
-  const partes=linha.split(separador);if(partes.length!==colunas.length)throw Error('Linha '+(i+2)+': quantidade incorreta de colunas.');
-  const nome=partes[0].trim();if(!nome||nome.length>80||vistos.has(nome))throw Error('Identificador vazio, longo ou repetido na linha '+(i+2)+'.');
+  const partes=linha;if(partes.length!==colunas.length)throw Error('Linha '+(i+2)+': quantidade incorreta de colunas.');
+  const nome=partes[0].trim();if(!nome||nome.length>80||/^[=+@\-\t\r\n]/.test(nome)||/[\x00-\x1f]/.test(nome)||vistos.has(nome))throw Error('Identificador vazio, longo ou repetido na linha '+(i+2)+'.');
   vistos.add(nome);
   const v=partes.slice(1).map(numero);let resultado,detalhe;
   switch(slug){
