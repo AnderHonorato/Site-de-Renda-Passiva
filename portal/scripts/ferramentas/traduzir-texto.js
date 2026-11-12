@@ -70,11 +70,11 @@ export default {
   const baixarHtml=criar('button','botão','Comparação para imprimir');baixarHtml.type='button';baixarHtml.disabled=true;
   const botoes=criar('div');botoes.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';botoes.append(executar,cancelar,copiar,baixar,baixarCsv,baixarJson,baixarHtml);
   const status=criar('p','suave','Pronto para traduzir');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  const resultado=criar('textarea');resultado.readOnly=false;resultado.rows=7;resultado.placeholder='A tradução aparecerá aqui. Você pode revisar e editar o resultado antes de exportar.';resultado.setAttribute('aria-label','Texto traduzido, editável para revisão');
+  const resultado=criar('textarea');resultado.readOnly=true;resultado.rows=7;resultado.placeholder='A tradução aparecerá aqui. Você pode revisar e editar o resultado antes de exportar.';resultado.setAttribute('aria-label','Texto traduzido, editável para revisão');
   painel.append(titulo,aviso,entrada,importar,limpar,contador,linha,botoes,status,resultado);raiz.append(painel);
   let controlador=null,tradutor=null,geracao=0;
   const encerrar=(id)=>{if(id!==geracao)return;executar.disabled=false;cancelar.disabled=true;controlador=null;};
-  const invalidar=()=>{geracao++;controlador?.abort();tradutor?.destroy?.();tradutor=null;controlador=null;executar.disabled=false;cancelar.disabled=true;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=true;resultado.value='';};
+  const invalidar=()=>{geracao++;controlador?.abort();tradutor?.destroy?.();tradutor=null;controlador=null;executar.disabled=false;cancelar.disabled=true;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=true;resultado.value='';resultado.readOnly=true;};
   limpar.addEventListener('click',()=>{invalidar();entrada.value='';importar.value='';atualizarContador();status.textContent='Texto limpo.';});
   importar.addEventListener('change',async()=>{
     const arquivo=importar.files?.[0];if(!arquivo)return;
@@ -110,7 +110,7 @@ export default {
     if(sinal.aborted)return;
     const traducao=await tradutor.translate(texto,{signal});
     if(sinal.aborted)return;
-    resultado.value=traducao;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=false;
+    resultado.value=traducao;resultado.readOnly=false;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=false;
     status.textContent='Tradução concluída. Revise expressões e termos técnicos.';
    }catch(e){if((id===geracao||(id===geracao+1&&!controlador))&&e?.name!=='AbortError')status.textContent=e?.message||'Não foi possível traduzir.';}
    finally{if(id===geracao){tradutor?.destroy?.();tradutor=null;encerrar(id);}}
