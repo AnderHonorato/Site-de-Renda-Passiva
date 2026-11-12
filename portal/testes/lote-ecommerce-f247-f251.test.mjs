@@ -151,8 +151,8 @@ test('F249 cenários personalizáveis alteram pedidos sem mudar equilíbrio prin
  const csv='canal;preco_medio;custo_variavel;despesa_fixa\nSite;100;60;1000';
  const r=calcularLote('analise-ponto-equilibrio-canais',csv,{variacaoCenario:'25,5'});
  assert.equal(r.total,25);
- assert.match(r.linhas[0][2],/25,5%: 19 pedidos/);
- assert.match(r.linhas[0][2],/25,5%: 32 pedidos/);
+ assert.match(r.linhas[0][2],/25.5%: 19 pedidos/);
+ assert.match(r.linhas[0][2],/25.5%: 32 pedidos/);
 });
 test('F249 rejeita cenários fora de faixa',()=>{
  const csv='canal;preco_medio;custo_variavel;despesa_fixa\nSite;100;60;1000';
