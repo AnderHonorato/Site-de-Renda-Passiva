@@ -48,6 +48,18 @@ export function substituirTermoTraduzido(texto,termo,substituto){
  if(contarCaracteres(revisado)>20000)throw new Error('Revisão ultrapassa o limite de 20.000 caracteres.');
  return {texto:revisado,ocorrencias};
 }
+/** Reabre uma comparação exportada anteriormente sem chamar serviço externo. */
+export function importarComparacaoJson(conteudo){
+ if(typeof conteudo!=='string'||new TextEncoder().encode(conteudo).length>60000)throw new Error('Comparação inválida ou maior que 60 KB.');
+ let dados;
+ try{dados=JSON.parse(conteudo.replace(/^\uFEFF/,''));}catch{throw new Error('O arquivo não contém JSON válido.');}
+ if(!dados||Array.isArray(dados)||typeof dados!=='object')throw new Error('Comparação JSON inválida.');
+ const {idioma_origem:origem,idioma_destino:destino,texto_original:original,texto_traduzido:traducao}=dados;
+ if(typeof original!=='string'||typeof traducao!=='string'||!original.trim()||!traducao.trim())throw new Error('A comparação precisa conter os dois textos.');
+ if(!IDIOMAS[origem]||!IDIOMAS[destino]||origem===destino)throw new Error('Idiomas da comparação inválidos.');
+ if(contarCaracteres(original)>10000||contarCaracteres(traducao)>20000)throw new Error('A comparação ultrapassa o limite de caracteres.');
+ return {origem,destino,original,traducao};
+}
 export default {
  instruções:{
   passos:['Digite ou cole o texto.','Escolha o idioma de origem e o de destino.','Clique em Traduzir.','Revise o resultado antes de usar.'],
@@ -63,6 +75,7 @@ export default {
   const entrada=criar('textarea');entrada.rows=7;entrada.maxLength=10000;entrada.placeholder='Cole aqui um texto para traduzir…';entrada.setAttribute('aria-label','Texto original');
   entrada.value='Olá! Gostaria de saber o prazo de entrega do meu pedido.';
   const importar=criar('input');importar.type='file';importar.accept='.txt,.md,text/plain,text/markdown';importar.setAttribute('aria-label','Importar arquivo TXT ou Markdown');
+  const restaurar=criar('input');restaurar.type='file';restaurar.accept='.json,application/json';restaurar.setAttribute('aria-label','Reabrir comparação JSON salva');
   const limpar=criar('button','botão','Limpar texto');limpar.type='button';
   const linha=criar('div');linha.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';
   const selecionar=(nome,valor)=>{const s=criar('select');s.setAttribute('aria-label',nome);for(const [id,rotulo] of Object.entries(IDIOMAS)){const o=criar('option','',rotulo);o.value=id;s.append(o);}s.value=valor;return s;};
@@ -87,7 +100,7 @@ export default {
   const substituto=criar('input');substituto.type='text';substituto.maxLength=200;substituto.placeholder='Substituir por';substituto.setAttribute('aria-label','Novo termo na tradução');
   const aplicarTermo=criar('button','botão','Substituir termo');aplicarTermo.type='button';aplicarTermo.disabled=true;
   revisao.append(termo,substituto,aplicarTermo);
-  painel.append(titulo,aviso,entrada,importar,limpar,contador,linha,botoes,status,resultado,revisao);raiz.append(painel);
+  painel.append(titulo,aviso,entrada,importar,restaurar,limpar,contador,linha,botoes,status,resultado,revisao);raiz.append(painel);
   let controlador=null,tradutor=null,geracao=0;
   const encerrar=(id)=>{if(id!==geracao)return;executar.disabled=false;cancelar.disabled=true;controlador=null;};
   const invalidar=()=>{geracao++;controlador?.abort();tradutor?.destroy?.();tradutor=null;controlador=null;executar.disabled=false;cancelar.disabled=true;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=true;resultado.value='';resultado.readOnly=true;aplicarTermo.disabled=true;};
@@ -102,6 +115,20 @@ export default {
       entrada.value=texto;atualizarContador();status.textContent='Arquivo importado. Escolha os idiomas e traduza.';
     }catch(erro){if(idImportacao===geracao)status.textContent=erro.message||'Falha ao importar arquivo.';}
     finally{importar.value='';}
+  });
+  restaurar.addEventListener('change',async()=>{
+    const arquivo=restaurar.files?.[0];if(!arquivo)return;
+    invalidar();const idImportacao=geracao;
+    try{
+      if(!/\.json$/i.test(arquivo.name||'')||arquivo.size>60000)throw new Error('Selecione um JSON de comparação de até 60 KB.');
+      const dados=importarComparacaoJson(await arquivo.text());
+      if(idImportacao!==geracao)return;
+      origem.value=dados.origem;destino.value=dados.destino;entrada.value=dados.original;resultado.value=dados.traducao;
+      resultado.readOnly=false;aplicarTermo.disabled=false;
+      copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=false;
+      atualizarContador();status.textContent='Comparação restaurada. Revise e exporte sem traduzir novamente.';
+    }catch(erro){if(idImportacao===geracao)status.textContent=erro.message||'Não foi possível restaurar a comparação.';}
+    finally{restaurar.value='';}
   });
   cancelar.addEventListener('click',()=>{invalidar();status.textContent='Tradução cancelada.';});
   inverter.addEventListener('click',()=>{const anterior=resultado.value;invalidar();[origem.value,destino.value]=[destino.value,origem.value];if(anterior)entrada.value=anterior;status.textContent='Idiomas invertidos. Traduza novamente.';atualizarContador();});
