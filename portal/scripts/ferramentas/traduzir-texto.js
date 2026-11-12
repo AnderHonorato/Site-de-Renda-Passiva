@@ -37,6 +37,17 @@ export function exportarComparacaoHtml(original,traducao,origem,destino){
  const escapar=(texto)=>String(texto).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
  return '<!doctype html>\n<html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Comparação de tradução — Ander Flow</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:900px;margin:2rem auto;padding:0 1rem;color:#202020}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1rem}section{border:1px solid #aaa;border-radius:12px;padding:1rem;overflow-wrap:anywhere}p{white-space:pre-wrap}@media print{body{margin:0}section{break-inside:avoid}}</style><h1>Comparação de tradução</h1><main><section><h2>'+escapar(IDIOMAS[origem])+'</h2><p>'+escapar(original)+'</p></section><section><h2>'+escapar(IDIOMAS[destino])+'</h2><p>'+escapar(traducao)+'</p></section></main><footer>Ander Flow · Revise a tradução automática antes de utilizar.</footer></html>\n';
 }
+/** Substitui termos na revisão sem expressões regulares e sem alterar o texto de origem. */
+export function substituirTermoTraduzido(texto,termo,substituto){
+ if(typeof texto!=='string'||typeof termo!=='string'||typeof substituto!=='string')throw new Error('Informe textos válidos.');
+ if(!termo.trim())throw new Error('Digite o termo que deseja substituir.');
+ if(contarCaracteres(termo)>100||contarCaracteres(substituto)>200)throw new Error('Termo muito longo para revisão.');
+ const ocorrencias=texto.split(termo).length-1;
+ if(!ocorrencias)return {texto,ocorrencias:0};
+ const revisado=texto.split(termo).join(substituto);
+ if(contarCaracteres(revisado)>20000)throw new Error('Revisão ultrapassa o limite de 20.000 caracteres.');
+ return {texto:revisado,ocorrencias};
+}
 export default {
  instruções:{
   passos:['Digite ou cole o texto.','Escolha o idioma de origem e o de destino.','Clique em Traduzir.','Revise o resultado antes de usar.'],
@@ -71,10 +82,15 @@ export default {
   const botoes=criar('div');botoes.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';botoes.append(executar,cancelar,copiar,baixar,baixarCsv,baixarJson,baixarHtml);
   const status=criar('p','suave','Pronto para traduzir');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   const resultado=criar('textarea');resultado.readOnly=true;resultado.rows=7;resultado.placeholder='A tradução aparecerá aqui. Você pode revisar e editar o resultado antes de exportar.';resultado.setAttribute('aria-label','Texto traduzido, editável para revisão');
-  painel.append(titulo,aviso,entrada,importar,limpar,contador,linha,botoes,status,resultado);raiz.append(painel);
+  const revisao=criar('div');revisao.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';
+  const termo=criar('input');termo.type='text';termo.maxLength=100;termo.placeholder='Termo na tradução';termo.setAttribute('aria-label','Termo a substituir na tradução');
+  const substituto=criar('input');substituto.type='text';substituto.maxLength=200;substituto.placeholder='Substituir por';substituto.setAttribute('aria-label','Novo termo na tradução');
+  const aplicarTermo=criar('button','botão','Substituir termo');aplicarTermo.type='button';aplicarTermo.disabled=true;
+  revisao.append(termo,substituto,aplicarTermo);
+  painel.append(titulo,aviso,entrada,importar,limpar,contador,linha,botoes,status,resultado,revisao);raiz.append(painel);
   let controlador=null,tradutor=null,geracao=0;
   const encerrar=(id)=>{if(id!==geracao)return;executar.disabled=false;cancelar.disabled=true;controlador=null;};
-  const invalidar=()=>{geracao++;controlador?.abort();tradutor?.destroy?.();tradutor=null;controlador=null;executar.disabled=false;cancelar.disabled=true;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=true;resultado.value='';resultado.readOnly=true;};
+  const invalidar=()=>{geracao++;controlador?.abort();tradutor?.destroy?.();tradutor=null;controlador=null;executar.disabled=false;cancelar.disabled=true;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=true;resultado.value='';resultado.readOnly=true;aplicarTermo.disabled=true;};
   limpar.addEventListener('click',()=>{invalidar();entrada.value='';importar.value='';atualizarContador();status.textContent='Texto limpo.';});
   importar.addEventListener('change',async()=>{
     const arquivo=importar.files?.[0];if(!arquivo)return;
@@ -110,12 +126,21 @@ export default {
     if(sinal.aborted)return;
     const traducao=await tradutor.translate(texto,{signal});
     if(sinal.aborted)return;
-    resultado.value=traducao;resultado.readOnly=false;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=false;
+    resultado.value=traducao;resultado.readOnly=false;aplicarTermo.disabled=false;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=false;
     status.textContent='Tradução concluída. Revise expressões e termos técnicos.';
    }catch(e){if((id===geracao||(id===geracao+1&&!controlador))&&e?.name!=='AbortError')status.textContent=e?.message||'Não foi possível traduzir.';}
    finally{if(id===geracao){tradutor?.destroy?.();tradutor=null;encerrar(id);}}
   });
-  resultado.addEventListener('input',()=>{const temTexto=Boolean(resultado.value.trim());copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=!temTexto;status.textContent=temTexto?'Tradução revisada manualmente. Exporte a versão editada.':'Resultado vazio. Traduza novamente ou escreva a revisão.';});
+  resultado.addEventListener('input',()=>{const temTexto=Boolean(resultado.value.trim());aplicarTermo.disabled=!temTexto;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=!temTexto;status.textContent=temTexto?'Tradução revisada manualmente. Exporte a versão editada.':'Resultado vazio. Traduza novamente ou escreva a revisão.';});
+  aplicarTermo.addEventListener('click',()=>{
+    try{
+      if(resultado.readOnly)throw new Error('Traduza antes de revisar os termos.');
+      const revisao=substituirTermoTraduzido(resultado.value,termo.value,substituto.value);
+      resultado.value=revisao.texto;
+      resultado.dispatchEvent(new Event('input',{bubbles:true}));
+      status.textContent=revisao.ocorrencias?`${revisao.ocorrencias} ocorrência(s) substituída(s). Exporte a revisão.`:'Termo não encontrado na tradução.';
+    }catch(erro){status.textContent=erro.message||'Não foi possível substituir o termo.';}
+  });
   copiar.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(resultado.value);status.textContent='Tradução copiada.';}catch{status.textContent='Não foi possível copiar automaticamente. Selecione o resultado.';}});
   baixarHtml.addEventListener('click',()=>{if(!resultado.value)return;const html=exportarComparacaoHtml(entrada.value,resultado.value,origem.value,destino.value);const url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));const a=criar('a');a.href=url;a.download='comparacao-traducao-ander-flow.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
   baixarJson.addEventListener('click',()=>{if(!resultado.value)return;const json=exportarComparacaoJson(entrada.value,resultado.value,origem.value,destino.value);const url=URL.createObjectURL(new Blob([json],{type:'application/json;charset=utf-8'}));const a=criar('a');a.href=url;a.download='comparacao-traducao-ander-flow.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
