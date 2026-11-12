@@ -25,3 +25,16 @@ Cada módulo tem CSV editável com dois exemplos, resultados por registro, indic
 - [ ] Promover status de planejada para pronta apenas após as verificações
 
 Não há backend Premium ou autenticação neste lote: os cálculos são locais e as ferramentas são gratuitas. Isso não substitui a validação de relatórios contábeis reais.
+
+## Evolução funcional de 12/11/2026
+
+- Importação direta de arquivos CSV e TSV de até 100 KB em cada uma das cinco interfaces.
+- F247 identifica SKUs com contribuição negativa e apresenta margem percentual.
+- F248 mostra pedidos analisados, devoluções esperadas e alerta para taxas acima de 20% (limiar ilustrativo, não norma).
+- F249 calcula também a receita bruta necessária para o ponto de equilíbrio.
+- F250 compara a contribuição antes/depois e sinaliza resultado negativo.
+- F251 calcula ROAS agregado ponderado por investimento, CPA agregado e campanhas abaixo da meta.
+- Alertas aparecem no resultado com limite de dez mensagens; exportação inclui todas as linhas.
+- Cabeçalhos precisam seguir os modelos; o importador atual aceita CSV simples com ponto e vírgula ou TSV simples, sem campos com delimitadores escapados por aspas.
+
+**Estado:** manter como planejada até CI e validação de integração/uso no navegador. Nenhum deploy ou upload Drive foi presumido.
