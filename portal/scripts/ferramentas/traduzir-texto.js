@@ -2,10 +2,20 @@
 export const IDIOMAS = Object.freeze({pt:'Português',en:'Inglês',es:'Espanhol'});
 export function validarTraducao(texto,origem,destino){
   if(typeof texto!=='string'||!texto.trim())throw new Error('Digite o texto que deseja traduzir.');
-  if(texto.length>10000)throw new Error('Limite de 10.000 caracteres por tradução.');
+  if(contarCaracteres(texto)>10000)throw new Error('Limite de 10.000 caracteres por tradução.');
   if(!IDIOMAS[origem]||!IDIOMAS[destino])throw new Error('Escolha um idioma válido.');
   if(origem===destino)throw new Error('Selecione idiomas diferentes.');
   return texto.trim();
+}
+export function validarArquivoTexto(arquivo){
+ if(!arquivo || !/\\.(txt|md)$/i.test(arquivo.name||''))throw new Error('Selecione um arquivo TXT ou Markdown.');
+ if(arquivo.size>40000)throw new Error('Arquivo muito grande. Limite de 40 KB.');
+ return true;
+}
+export function validarConteudoImportado(texto){
+ if(typeof texto!=='string'||!texto.trim())throw new Error('O arquivo está vazio.');
+ if(contarCaracteres(texto)>10000)throw new Error('O texto ultrapassa 10.000 caracteres.');
+ return texto.replace(/^\\uFEFF/,'');
 }
 export function obterDisponibilidade(api){
   return typeof api?.create==='function' && typeof api?.availability==='function';
@@ -30,6 +40,8 @@ export default {
   const aviso=criar('p','suave','Tradução no próprio navegador, sem enviar seu texto ao portal.');
   const entrada=criar('textarea');entrada.rows=7;entrada.maxLength=10000;entrada.placeholder='Cole aqui um texto para traduzir…';entrada.setAttribute('aria-label','Texto original');
   entrada.value='Olá! Gostaria de saber o prazo de entrega do meu pedido.';
+  const importar=criar('input');importar.type='file';importar.accept='.txt,.md,text/plain,text/markdown';importar.setAttribute('aria-label','Importar arquivo TXT ou Markdown');
+  const limpar=criar('button','botão','Limpar texto');limpar.type='button';
   const linha=criar('div');linha.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';
   const selecionar=(nome,valor)=>{const s=criar('select');s.setAttribute('aria-label',nome);for(const [id,rotulo] of Object.entries(IDIOMAS)){const o=criar('option','',rotulo);o.value=id;s.append(o);}s.value=valor;return s;};
   const origem=selecionar('Idioma de origem','pt'),destino=selecionar('Idioma de destino','en');
@@ -46,10 +58,21 @@ export default {
   const botoes=criar('div');botoes.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';botoes.append(executar,cancelar,copiar,baixar,baixarCsv);
   const status=criar('p','suave','Pronto para traduzir');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   const resultado=criar('textarea');resultado.readOnly=true;resultado.rows=7;resultado.placeholder='A tradução aparecerá aqui';resultado.setAttribute('aria-label','Texto traduzido');
-  painel.append(titulo,aviso,entrada,contador,linha,botoes,status,resultado);raiz.append(painel);
+  painel.append(titulo,aviso,entrada,importar,limpar,contador,linha,botoes,status,resultado);raiz.append(painel);
   let controlador=null,tradutor=null,geracao=0;
   const encerrar=(id)=>{if(id!==geracao)return;executar.disabled=false;cancelar.disabled=true;controlador=null;};
   const invalidar=()=>{geracao++;controlador?.abort();tradutor?.destroy?.();tradutor=null;controlador=null;executar.disabled=false;cancelar.disabled=true;copiar.disabled=baixar.disabled=baixarCsv.disabled=true;resultado.value='';};
+  limpar.addEventListener('click',()=>{invalidar();entrada.value='';importar.value='';atualizarContador();status.textContent='Texto limpo.';});
+  importar.addEventListener('change',async()=>{
+    const arquivo=importar.files?.[0];if(!arquivo)return;
+    invalidar();
+    try{
+      validarArquivoTexto(arquivo);
+      const texto=validarConteudoImportado(await arquivo.text());
+      entrada.value=texto;atualizarContador();status.textContent='Arquivo importado. Escolha os idiomas e traduza.';
+    }catch(erro){status.textContent=erro.message||'Falha ao importar arquivo.';}
+    finally{importar.value='';}
+  });
   cancelar.addEventListener('click',()=>{invalidar();status.textContent='Tradução cancelada.';});
   inverter.addEventListener('click',()=>{const anterior=resultado.value;invalidar();[origem.value,destino.value]=[destino.value,origem.value];if(anterior)entrada.value=anterior;status.textContent='Idiomas invertidos. Traduza novamente.';atualizarContador();});
   entrada.addEventListener('input',()=>{if(controlador)invalidar();copiar.disabled=baixar.disabled=true;resultado.value='';});
