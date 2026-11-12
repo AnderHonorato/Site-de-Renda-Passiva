@@ -72,12 +72,13 @@ export default {
   limpar.addEventListener('click',()=>{invalidar();entrada.value='';importar.value='';atualizarContador();status.textContent='Texto limpo.';});
   importar.addEventListener('change',async()=>{
     const arquivo=importar.files?.[0];if(!arquivo)return;
-    invalidar();
+    invalidar();const idImportacao=geracao;
     try{
       validarArquivoTexto(arquivo);
       const texto=validarConteudoImportado(await arquivo.text());
+      if(idImportacao!==geracao)return;
       entrada.value=texto;atualizarContador();status.textContent='Arquivo importado. Escolha os idiomas e traduza.';
-    }catch(erro){status.textContent=erro.message||'Falha ao importar arquivo.';}
+    }catch(erro){if(idImportacao===geracao)status.textContent=erro.message||'Falha ao importar arquivo.';}
     finally{importar.value='';}
   });
   cancelar.addEventListener('click',()=>{invalidar();status.textContent='Tradução cancelada.';});
