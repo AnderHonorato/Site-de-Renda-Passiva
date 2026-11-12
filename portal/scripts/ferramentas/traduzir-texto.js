@@ -8,14 +8,14 @@ export function validarTraducao(texto,origem,destino){
   return texto.trim();
 }
 export function validarArquivoTexto(arquivo){
- if(!arquivo || !/\\.(txt|md)$/i.test(arquivo.name||''))throw new Error('Selecione um arquivo TXT ou Markdown.');
+ if(!arquivo || !/\.(txt|md)$/i.test(arquivo.name||''))throw new Error('Selecione um arquivo TXT ou Markdown.');
  if(arquivo.size>40000)throw new Error('Arquivo muito grande. Limite de 40 KB.');
  return true;
 }
 export function validarConteudoImportado(texto){
  if(typeof texto!=='string'||!texto.trim())throw new Error('O arquivo está vazio.');
  if(contarCaracteres(texto)>10000)throw new Error('O texto ultrapassa 10.000 caracteres.');
- return texto.replace(/^\\uFEFF/,'');
+ return texto.replace(/^\uFEFF/,'');
 }
 export function obterDisponibilidade(api){
   return typeof api?.create==='function' && typeof api?.availability==='function';
