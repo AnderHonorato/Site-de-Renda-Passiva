@@ -1107,8 +1107,8 @@ export const ferramentas = [
       "coortes-retencao-ltv",
       "fluxo-de-caixa"
     ]
-  },,
-  {
+  },
+{
     id: 'F247', slug: 'auditoria-margem-marketplace', nome: 'Auditoria de margem por marketplace', cat: 'vendas',
     ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'planejada',
     resumo: 'Margem por SKU após comissões, tarifas, frete, Ads e tributos.', problema: 'Analisar decisões de operação de e-commerce com dados reais.',
