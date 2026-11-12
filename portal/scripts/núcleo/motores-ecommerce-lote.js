@@ -105,7 +105,12 @@ export function calcularLote(slug,entrada){
    case 'analise-ponto-equilibrio-canais':{
     const [preco,custo,fixo]=v;const margem=preco-custo;
     if(margem<=0)throw Error('Preço precisa superar custo variável para existir equilíbrio.');
-    resultado=Math.ceil(fixo/margem);detalhe='Margem unitária '+dinheiro(margem)+' · receita de equilíbrio '+dinheiro(resultado*preco);break;
+    resultado=Math.ceil(fixo/margem);
+    const cenarioMenos=Math.ceil(fixo*0.9/margem);
+    const cenarioMais=Math.ceil(fixo*1.1/margem);
+    detalhe='Margem unitária '+dinheiro(margem)+' · receita de equilíbrio '+dinheiro(resultado*preco)+
+      ' · cenários de custo fixo -10%: '+cenarioMenos+' pedidos / +10%: '+cenarioMais+' pedidos';
+    break;
    }
    case 'simulador-reajuste-fornecedor':{
     const [custo,reajuste,preco,taxas]=v;
@@ -118,7 +123,13 @@ export function calcularLote(slug,entrada){
    case 'planejamento-meta-roas':{
     const [investimento,receita,pedidos,meta]=v;
     if(investimento<=0||meta<=0||!Number.isInteger(pedidos))throw Error('Investimento e meta devem ser positivos; pedidos inteiros.');
-    resultado=receita/investimento;investimentoTotal+=investimento;receitaTotal+=receita;pedidosTotal+=pedidos;detalhe='CPA '+(pedidos?dinheiro(investimento/pedidos):'sem pedidos')+' · receita até meta '+dinheiro(Math.max(0,investimento*meta-receita));if(resultado<meta){abaixoMeta++;alertas.push(nome+': ROAS abaixo da meta '+meta);}break;
+    resultado=receita/investimento;investimentoTotal+=investimento;receitaTotal+=receita;pedidosTotal+=pedidos;
+    const receitaAlvo=investimento*meta;
+    const faltaReceita=Math.max(0,receitaAlvo-receita);
+    const pedidosAdicionais=pedidos>0&&receita>0?Math.ceil(faltaReceita/(receita/pedidos)):null;
+    detalhe='CPA '+(pedidos?dinheiro(investimento/pedidos):'sem pedidos')+
+      ' · receita até meta '+dinheiro(faltaReceita)+
+      ' · pedidos adicionais ao ticket atual '+(pedidosAdicionais===null?'não estimável':pedidosAdicionais);if(resultado<meta){abaixoMeta++;alertas.push(nome+': ROAS abaixo da meta '+meta);}break;
    }
   }
   if(!Number.isFinite(resultado))throw Error('Resultado fora do limite.');
