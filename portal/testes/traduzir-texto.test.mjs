@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {IDIOMAS,validarTraducao,obterDisponibilidade} from '../scripts/ferramentas/traduzir-texto.js';
+import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres} from '../scripts/ferramentas/traduzir-texto.js';
 test('aceita pares de idioma distintos e texto válido',()=>{
  assert.equal(validarTraducao(' Olá ','pt','en'),'Olá');
  assert.equal(Object.keys(IDIOMAS).length,3);
@@ -13,4 +13,10 @@ test('não finge disponibilidade sem API local completa',()=>{
  assert.equal(obterDisponibilidade(undefined),false);
  assert.equal(obterDisponibilidade({create(){}}),false);
  assert.equal(obterDisponibilidade({create(){},availability(){}}),true);
+});
+
+test('contador considera caracteres Unicode completos',()=>{
+ assert.equal(contarCaracteres('Olá'),3);
+ assert.equal(contarCaracteres('A😀'),2);
+ assert.equal(contarCaracteres(''),0);
 });
