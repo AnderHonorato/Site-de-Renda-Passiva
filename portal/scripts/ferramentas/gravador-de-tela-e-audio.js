@@ -2,6 +2,12 @@
 export function escolherFormato(tipos, suporta) {
   return tipos.find(tipo => suporta(tipo)) || '';
 }
+export function descreverErroCaptura(erro) {
+  if (erro?.name === 'NotAllowedError') return 'Permissão negada ou captura cancelada.';
+  if (erro?.name === 'NotFoundError') return 'Nenhum dispositivo de captura foi encontrado.';
+  if (erro?.name === 'NotReadableError') return 'O dispositivo está ocupado ou indisponível.';
+  return String(erro?.message || 'Não foi possível iniciar a gravação.');
+}
 export function extensaoParaTipo(tipo) { return /mp4/i.test(tipo) ? 'mp4' : /ogg/i.test(tipo) ? 'ogg' : 'webm'; }
 export default {
   instruções: {
@@ -10,7 +16,7 @@ export default {
     perguntas: [{p:'O site recebe a gravação?',r:'Não. A captura, a prévia e o download acontecem localmente no navegador.'}],
   },
   montar(raiz) {
-    let gravador=null, fluxo=null, audioExtra=null, partes=[], url='', iniciado=0, intervalo=0;
+    let gravador=null, fluxo=null, audioExtra=null, mistura=null, partes=[], url='', iniciado=0, intervalo=0, ocupado=false;
     raiz.replaceChildren();
     const criar=(tag,classe,conteudo)=>{const e=document.createElement(tag);if(classe)e.className=classe;if(conteudo)e.textContent=conteudo;return e;};
     const painel=criar('section','ferramenta-formulario');
@@ -30,11 +36,11 @@ export default {
     controles.append(iniciar,parar);
     painel.append(titulo,explicacao,rotulo,seletor,rotuloMic,controles,status,previa,ouvir,baixar);raiz.append(painel);
     const atualizar=()=>{rotuloMic.hidden=seletor.value!=='tela';};seletor.addEventListener('change',atualizar);atualizar();
-    const liberar=()=>{for(const t of fluxo?.getTracks()||[])t.stop();for(const t of audioExtra?.getTracks()||[])t.stop();fluxo=null;audioExtra=null;clearInterval(intervalo);intervalo=0;iniciar.disabled=false;parar.disabled=true;seletor.disabled=false;mic.disabled=false;};
+    const liberar=()=>{for(const t of fluxo?.getTracks()||[])t.stop();for(const t of audioExtra?.getTracks()||[])t.stop();void mistura?.close().catch(()=>{});mistura=null;fluxo=null;audioExtra=null;clearInterval(intervalo);intervalo=0;ocupado=false;iniciar.disabled=false;parar.disabled=true;seletor.disabled=false;mic.disabled=false;};
     const descartar=()=>{if(url){URL.revokeObjectURL(url);url='';}previa.removeAttribute('src');ouvir.removeAttribute('src');previa.hidden=ouvir.hidden=baixar.hidden=true;};
     const terminar=()=>{if(!gravador||gravador.state==='inactive')return;parar.disabled=true;gravador.stop();};
     iniciar.addEventListener('click',async()=>{
-      if(gravador?.state==='recording')return;
+      if(ocupado || gravador?.state==='recording')return;\n      ocupado=true;
       descartar();iniciar.disabled=true;seletor.disabled=true;mic.disabled=true;status.textContent='Solicitando permissão de captura…';
       try{
         if(!navigator.mediaDevices||!globalThis.MediaRecorder)throw Error('Este navegador não suporta gravação.');
@@ -43,8 +49,21 @@ export default {
         fluxo=tela?await navigator.mediaDevices.getDisplayMedia({video:true,audio:true}):await navigator.mediaDevices.getUserMedia({audio:true});
         if(tela&&mic.checked){
           audioExtra=await navigator.mediaDevices.getUserMedia({audio:true});
-          const trilhas=[...fluxo.getVideoTracks(),...fluxo.getAudioTracks(),...audioExtra.getAudioTracks()];
-          fluxo=new MediaStream(trilhas);
+          // Uma única trilha de áudio mixada: dois tracks de áudio em MediaStream
+          // não garantem mixagem no MediaRecorder (alguns navegadores ignoram um).
+          const telaOriginal=fluxo;
+          const contexto=new AudioContext();
+          mistura=contexto;
+          const destino=contexto.createMediaStreamDestination();
+          for(const origem of [telaOriginal,audioExtra]){
+            if(origem.getAudioTracks().length){
+              const fonte=contexto.createMediaStreamSource(origem);
+              fonte.connect(destino);
+            }
+          }
+          fluxo=new MediaStream([...telaOriginal.getVideoTracks(),...destino.stream.getAudioTracks()]);
+          // A captura original continua viva e será encerrada junto com a gravação.
+          audioExtra=new MediaStream([...telaOriginal.getAudioTracks(),...audioExtra.getAudioTracks()]);
         }
         const tipos=tela?['video/webm;codecs=vp8,opus','video/webm','video/mp4']:['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg'];
         const tipo=escolherFormato(tipos,t=>MediaRecorder.isTypeSupported(t));
@@ -64,7 +83,7 @@ export default {
         gravador.start(1000);iniciado=Date.now();parar.disabled=false;
         intervalo=setInterval(()=>{status.textContent='Gravando · '+Math.floor((Date.now()-iniciado)/1000)+' s';},1000);
         status.textContent='Gravando · 0 s';
-      }catch(e){liberar();status.textContent=e?.name==='NotAllowedError'?'Permissão negada ou captura cancelada.':String(e?.message||'Não foi possível iniciar.');}
+      }catch(e){liberar();status.textContent=e?.name==='NotAllowedError'?'Permissão negada ou captura cancelada.':descreverErroCaptura(e);}
     });
     parar.addEventListener('click',terminar);
     // Limpeza quando a página for fechada; nunca manter microfone ativo após sair.
