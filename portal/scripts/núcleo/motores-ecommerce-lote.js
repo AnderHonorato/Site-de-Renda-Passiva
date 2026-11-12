@@ -82,13 +82,17 @@ export function calcularLote(slug,entrada,opcoes={}){
  if(!Number.isFinite(margemPercentual)||margemPercentual<0||margemPercentual>99)throw Error('Meta de margem deve estar entre 0% e 99%.');
  if(!Number.isFinite(alertaDevolucao)||alertaDevolucao<0||alertaDevolucao>100)throw Error('Limite de devoluções deve estar entre 0% e 100%.');
  const variacaoCenario=opcoes.variacaoCenario===undefined?10:Number(String(opcoes.variacaoCenario).replace(',','.'));
+ const investimentoExtra=opcoes.investimentoExtra===undefined?0:numero(opcoes.investimentoExtra);
+ const roasMarginal=opcoes.roasMarginal===undefined?3:numero(opcoes.roasMarginal);
+ if(investimentoExtra>10000000)throw Error('Investimento adicional máximo de R$ 10 milhões.');
+ if(roasMarginal>100)throw Error('ROAS marginal deve ser no máximo 100.');
  if(!Number.isFinite(variacaoCenario)||variacaoCenario<0||variacaoCenario>100)throw Error('Variação do cenário deve estar entre 0% e 100%.');
  const colunas=COLUNAS[slug];if(!colunas)throw Error('Ferramenta desconhecida.');
  const linhas=lerTabelaOperacional(entrada);
  if(linhas.length<2||linhas.length>501)throw Error('Informe entre 1 e 500 registros.');
  const cab=linhas.shift().map(s=>s.trim().toLowerCase());
  if(cab.join('|')!==colunas.join('|'))throw Error('Cabeçalho inválido. Use o exemplo como modelo.');
- const vistos=new Set(),saida=[];let total=0;let investimentoTotal=0,receitaTotal=0;let pedidosTotal=0;let abaixoMeta=0;const alertas=[];
+ const vistos=new Set(),saida=[];let total=0;let investimentoTotal=0,receitaTotal=0;let pedidosTotal=0;let abaixoMeta=0;const alertas=[];let investimentoExtraDistribuido=0;
  for(const [i,linha] of linhas.entries()){
   const partes=linha;if(partes.length!==colunas.length)throw Error('Linha '+(i+2)+': quantidade incorreta de colunas.');
   const nome=partes[0].trim();if(!nome||nome.length>80||/^[=+@\-\t\r\n]/.test(nome)||/[\x00-\x1f]/.test(nome)||vistos.has(nome))throw Error('Identificador vazio, longo ou repetido na linha '+(i+2)+'.');
@@ -146,5 +150,9 @@ export function calcularLote(slug,entrada,opcoes={}){
   if(!Number.isFinite(resultado))throw Error('Resultado fora do limite.');
   total+=resultado;saida.push([nome,arred(resultado),detalhe]);
  }
- return {cabecalho:['Identificador',slug==='analise-ponto-equilibrio-canais'?'Pedidos para equilíbrio':slug==='planejamento-meta-roas'?'ROAS':'Resultado (R$)','Detalhe'],linhas:saida,total:arred(slug==='planejamento-meta-roas'?receitaTotal/investimentoTotal:total),unidade:slug==='analise-ponto-equilibrio-canais'?'pedidos':slug==='planejamento-meta-roas'?'ROAS agregado':'R$',observacao:slug==='planejamento-meta-roas'?'ROAS agregado calculado como receita total dividida pelo investimento total.':'Simulação gerencial com valores informados; confirme custos reais.',alertas,abaixoMeta,indicadores:slug==='planejamento-meta-roas'?[['Investimento total',dinheiro(investimentoTotal)],['Receita atribuída',dinheiro(receitaTotal)],['CPA agregado',pedidosTotal?dinheiro(investimentoTotal/pedidosTotal):'Sem pedidos']]:slug==='simulador-devolucoes'?[['Pedidos avaliados',String(pedidosTotal)],['Custo esperado',dinheiro(total)]]:[['Registros com alerta',String(abaixoMeta)]]};
+ const roasProjetado=slug==='planejamento-meta-roas'?
+   (receitaTotal+investimentoExtra*roasMarginal)/(investimentoTotal+investimentoExtra):null;
+ const receitaIncremental=investimentoExtra*roasMarginal;
+ const roasProjetadoTexto=roasProjetado===null?'—':arred(roasProjetado).toLocaleString('pt-BR');
+ return {cabecalho:['Identificador',slug==='analise-ponto-equilibrio-canais'?'Pedidos para equilíbrio':slug==='planejamento-meta-roas'?'ROAS':'Resultado (R$)','Detalhe'],linhas:saida,total:arred(slug==='planejamento-meta-roas'?receitaTotal/investimentoTotal:total),unidade:slug==='analise-ponto-equilibrio-canais'?'pedidos':slug==='planejamento-meta-roas'?'ROAS agregado':'R$',observacao:slug==='planejamento-meta-roas'?'ROAS agregado calculado como receita total dividida pelo investimento total.':'Simulação gerencial com valores informados; confirme custos reais.',alertas,abaixoMeta,indicadores:slug==='planejamento-meta-roas'?[['Investimento total',dinheiro(investimentoTotal)],['Receita atribuída',dinheiro(receitaTotal)],['CPA agregado',pedidosTotal?dinheiro(investimentoTotal/pedidosTotal):'Sem pedidos'],['Orçamento adicional simulado',dinheiro(investimentoExtra)],['Receita adicional projetada',dinheiro(receitaIncremental)],['ROAS agregado projetado',roasProjetadoTexto],['Variação de ROAS agregado',roasProjetado===null?'—':(arred(roasProjetado-receitaTotal/investimentoTotal)).toLocaleString('pt-BR')]]:slug==='simulador-devolucoes'?[['Pedidos avaliados',String(pedidosTotal)],['Custo esperado',dinheiro(total)]]:[['Registros com alerta',String(abaixoMeta)]]};
 }
