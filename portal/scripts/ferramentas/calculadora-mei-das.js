@@ -59,7 +59,7 @@ export default {
         { nome:'limiteAnual', rótulo:'Limite anual aplicável (R$)', exemplo:'81000', padrão:'81000' },
         { nome:'faturamento', rótulo:'Faturamento acumulado (R$)', exemplo:'40000', padrão:'40000' },
         { nome:'mesAbertura', rótulo:'Mês de abertura (1–12)', exemplo:'1', padrão:'1' },
-        { nome:'atividade', rótulo:'Atividade: comercio, servicos ou ambos', exemplo:'comercio', padrão:'comercio' },
+        { nome:'atividade', rótulo:'Atividade', tipo:'seleção', padrão:'comercio', opções:[{valor:'comercio',rótulo:'Comércio ou indústria'},{valor:'servicos',rótulo:'Serviços'},{valor:'ambos',rótulo:'Comércio e serviços'}] },
       ],
       calcular: calcularMeiNaTela,
     });
