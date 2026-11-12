@@ -100,6 +100,6 @@ export default {
     });
     parar.addEventListener('click',terminar);
     // Limpeza quando a página for fechada; nunca manter microfone ativo após sair.
-    window.addEventListener('pagehide',()=>{if(gravador?.state==='recording')gravador.stop();liberar();descartar();},{once:true});
+    window.addEventListener('pagehide',()=>{if(gravador && gravador.state!=='inactive')gravador.stop();liberar();descartar();},{once:true});
   },
 };
