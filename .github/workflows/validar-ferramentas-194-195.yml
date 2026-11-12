@@ -1,0 +1,26 @@
+name: Validar ferramentas F194 e F195
+on:
+  push:
+    branches: [ander-flow/v1]
+    paths:
+      - 'portal/scripts/ferramentas/gravador-de-tela-e-audio.js'
+      - 'portal/scripts/ferramentas/traduzir-texto.js'
+      - 'portal/testes/gravador-de-tela-e-audio.test.mjs'
+      - 'portal/testes/traduzir-texto.test.mjs'
+      - '.github/workflows/validar-ferramentas-194-195.yml'
+  workflow_dispatch:
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validar sintaxe
+        run: |
+          node --check portal/scripts/ferramentas/gravador-de-tela-e-audio.js
+          node --check portal/scripts/ferramentas/traduzir-texto.js
+      - name: Testar regras e limites
+        run: node --test portal/testes/gravador-de-tela-e-audio.test.mjs portal/testes/traduzir-texto.test.mjs
