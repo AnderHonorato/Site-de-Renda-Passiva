@@ -38,3 +38,11 @@ Não há backend Premium ou autenticação neste lote: os cálculos são locais 
 - Cabeçalhos precisam seguir os modelos; o importador atual aceita CSV simples com ponto e vírgula ou TSV simples, sem campos com delimitadores escapados por aspas.
 
 **Estado:** manter como planejada até CI e validação de integração/uso no navegador. Nenhum deploy ou upload Drive foi presumido.
+
+## Evolução de cálculos e importação — 12/11/2026
+
+- F247: preço mínimo para contribuição zero após percentuais e custos unitários; inviável quando a soma de comissões e impostos chega a 100%.
+- F248: custo esperado de devoluções por pedido.
+- F250: preço de venda necessário para preservar a contribuição anterior após reajuste, mantendo a alíquota de taxas.
+- Importação CSV/TSV: aspas duplas escapadas, campos com separadores, limite de 100 KB em UTF-8 e validação antes de substituir o formulário. Identificadores iniciados por caracteres de fórmula são rejeitados.
+- Testes novos para cálculos e importação; CI e navegador precisam ser confirmados antes de promover o catálogo para pronta.
