@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv,validarArquivoTexto,validarConteudoImportado} from '../scripts/ferramentas/traduzir-texto.js';
+import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv,validarArquivoTexto,validarConteudoImportado,exportarComparacaoJson} from '../scripts/ferramentas/traduzir-texto.js';
 test('aceita pares de idioma distintos e texto válido',()=>{
  assert.equal(validarTraducao(' Olá ','pt','en'),'Olá');
  assert.equal(Object.keys(IDIOMAS).length,3);
@@ -41,4 +41,11 @@ test('importação TXT/Markdown local valida extensão, tamanho e conteúdo',()=
 test('limite de tradução respeita caracteres Unicode',()=>{
  assert.equal(validarTraducao('😀'.repeat(10000),'pt','en').length,20000);
  assert.throws(()=>validarTraducao('😀'.repeat(10001),'pt','en'),/10.000/);
+});
+
+test('exportação JSON bilíngue mantém Unicode, quebras de linha e campos estruturados',()=>{
+ const dados=JSON.parse(exportarComparacaoJson('Olá 😀\\nPedido','Hello 😀\\nOrder','pt','en'));
+ assert.deepEqual(dados,{idioma_origem:'pt',idioma_destino:'en',texto_original:'Olá 😀\\nPedido',texto_traduzido:'Hello 😀\\nOrder'});
+ assert.throws(()=>exportarComparacaoJson('','Hello','pt','en'),/inválida/);
+ assert.throws(()=>exportarComparacaoJson('Olá','Hello','pt','pt'),/inválida/);
 });
