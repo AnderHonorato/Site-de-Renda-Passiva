@@ -9,6 +9,10 @@ export function descreverErroCaptura(erro) {
   return String(erro?.message || 'Não foi possível iniciar a gravação.');
 }
 export function extensaoParaTipo(tipo) { return /mp4/i.test(tipo) ? 'mp4' : /ogg/i.test(tipo) ? 'ogg' : 'webm'; }
+export function duracaoGravacaoMs(inicio, pausas, agora, pausaIniciada = 0) {
+  if (!Number.isFinite(inicio) || inicio <= 0) return 0;
+  return Math.max(0, agora - inicio - pausas - (pausaIniciada ? agora - pausaIniciada : 0));
+}
 export default {
   instruções: {
     passos: ['Escolha tela ou somente microfone.', 'Autorize a captura no navegador.', 'Pare a gravação e baixe o arquivo.'],
@@ -16,7 +20,7 @@ export default {
     perguntas: [{p:'O site recebe a gravação?',r:'Não. A captura, a prévia e o download acontecem localmente no navegador.'}],
   },
   montar(raiz) {
-    let gravador=null, fluxo=null, audioExtra=null, mistura=null, partes=[], url='', iniciado=0, intervalo=0, ocupado=false;
+    let gravador=null, fluxo=null, audioExtra=null, mistura=null, partes=[], url='', iniciado=0, intervalo=0, ocupado=false, pausas=0, pausaIniciada=0;
     raiz.replaceChildren();
     const criar=(tag,classe,conteudo)=>{const e=document.createElement(tag);if(classe)e.className=classe;if(conteudo)e.textContent=conteudo;return e;};
     const painel=criar('section','ferramenta-formulario');
@@ -27,18 +31,26 @@ export default {
     for(const [valor,nome] of [['tela','Tela com áudio opcional'],['voz','Somente microfone']]){const o=criar('option','',nome);o.value=valor;seletor.append(o);}
     const rotuloMic=criar('label');const mic=criar('input');mic.type='checkbox';mic.checked=false;rotuloMic.append(mic,document.createTextNode(' Incluir microfone na gravação da tela'));
     const iniciar=criar('button','botão botão--primário','Iniciar gravação');iniciar.type='button';
+    const pausar=criar('button','botão','Pausar');pausar.type='button';pausar.disabled=true;
     const parar=criar('button','botão','Parar gravação');parar.type='button';parar.disabled=true;
     const status=criar('p','suave','Pronto para gravar');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
     const previa=criar('video');previa.controls=true;previa.playsInline=true;previa.hidden=true;previa.style.width='100%';
     const ouvir=criar('audio');ouvir.controls=true;ouvir.hidden=true;
     const baixar=criar('a','botão','Baixar gravação');baixar.hidden=true;baixar.download='gravacao-ander-flow.webm';
     const controles=criar('div','');controles.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:16px 0';
-    controles.append(iniciar,parar);
+    controles.append(iniciar,pausar,parar);
     painel.append(titulo,explicacao,rotulo,seletor,rotuloMic,controles,status,previa,ouvir,baixar);raiz.append(painel);
     const atualizar=()=>{rotuloMic.hidden=seletor.value!=='tela';};seletor.addEventListener('change',atualizar);atualizar();
-    const liberar=()=>{for(const t of fluxo?.getTracks()||[])t.stop();for(const t of audioExtra?.getTracks()||[])t.stop();void mistura?.close().catch(()=>{});mistura=null;fluxo=null;audioExtra=null;clearInterval(intervalo);intervalo=0;ocupado=false;iniciar.disabled=false;parar.disabled=true;seletor.disabled=false;mic.disabled=false;};
+    const liberar=()=>{for(const t of fluxo?.getTracks()||[])t.stop();for(const t of audioExtra?.getTracks()||[])t.stop();void mistura?.close().catch(()=>{});mistura=null;fluxo=null;audioExtra=null;clearInterval(intervalo);intervalo=0;ocupado=false;iniciar.disabled=false;parar.disabled=true;pausar.disabled=true;pausar.textContent='Pausar';seletor.disabled=false;mic.disabled=false;};
     const descartar=()=>{if(url){URL.revokeObjectURL(url);url='';}previa.removeAttribute('src');ouvir.removeAttribute('src');previa.hidden=ouvir.hidden=baixar.hidden=true;};
-    const terminar=()=>{if(!gravador||gravador.state==='inactive')return;parar.disabled=true;gravador.stop();};
+    const terminar=()=>{if(!gravador||gravador.state==='inactive')return;parar.disabled=true;pausar.disabled=true;gravador.stop();};
+    pausar.addEventListener('click',()=>{
+      if(!gravador)return;
+      try {
+        if(gravador.state==='recording'){gravador.pause();pausaIniciada=Date.now();pausar.textContent='Retomar';status.textContent='Gravação pausada';}
+        else if(gravador.state==='paused'){gravador.resume();pausas+=Date.now()-pausaIniciada;pausaIniciada=0;pausar.textContent='Pausar';}
+      } catch(e){status.textContent='Não foi possível pausar ou retomar: '+descreverErroCaptura(e);}
+    });
     iniciar.addEventListener('click',async()=>{
       if(ocupado || gravador?.state==='recording')return;
       ocupado=true;
@@ -81,8 +93,8 @@ export default {
           status.textContent='Gravação concluída: '+(blob.size/1048576).toFixed(1)+' MB. Confira a prévia e baixe.';
         },{once:true});
         fluxo.getVideoTracks().forEach(t=>t.addEventListener('ended',terminar,{once:true}));
-        gravador.start(1000);iniciado=Date.now();parar.disabled=false;
-        intervalo=setInterval(()=>{status.textContent='Gravando · '+Math.floor((Date.now()-iniciado)/1000)+' s';},1000);
+        gravador.start(1000);iniciado=Date.now();pausas=0;pausaIniciada=0;parar.disabled=false;pausar.disabled=false;
+        intervalo=setInterval(()=>{if(gravador?.state==='recording')status.textContent='Gravando · '+Math.floor(duracaoGravacaoMs(iniciado,pausas,Date.now())/1000)+' s';},1000);
         status.textContent='Gravando · 0 s';
       }catch(e){liberar();status.textContent=e?.name==='NotAllowedError'?'Permissão negada ou captura cancelada.':descreverErroCaptura(e);}
     });
