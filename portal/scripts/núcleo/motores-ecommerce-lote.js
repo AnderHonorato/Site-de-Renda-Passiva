@@ -106,8 +106,8 @@ export function calcularLote(slug,entrada){
     const [preco,custo,fixo]=v;const margem=preco-custo;
     if(margem<=0)throw Error('Preço precisa superar custo variável para existir equilíbrio.');
     resultado=Math.ceil(fixo/margem);
-    const cenarioMenos=Math.ceil(fixo*0.9/margem);
-    const cenarioMais=Math.ceil(fixo*1.1/margem);
+    const cenarioMenos=Math.ceil(arred(fixo*0.9)/margem-1e-10);
+    const cenarioMais=Math.ceil(arred(fixo*1.1)/margem-1e-10);
     detalhe='Margem unitária '+dinheiro(margem)+' · receita de equilíbrio '+dinheiro(resultado*preco)+
       ' · cenários de custo fixo -10%: '+cenarioMenos+' pedidos / +10%: '+cenarioMais+' pedidos';
     break;
