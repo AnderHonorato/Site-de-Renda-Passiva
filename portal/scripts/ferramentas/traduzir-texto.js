@@ -32,6 +32,11 @@ export function exportarComparacaoJson(original,traducao,origem,destino){
   if(!original?.trim()||!traducao?.trim()||!IDIOMAS[origem]||!IDIOMAS[destino]||origem===destino)throw new Error('Tradução inválida para exportação.');
   return JSON.stringify({idioma_origem:origem,idioma_destino:destino,texto_original:original,texto_traduzido:traducao},null,2)+'\n';
 }
+export function exportarComparacaoHtml(original,traducao,origem,destino){
+ if(!original?.trim()||!traducao?.trim()||!IDIOMAS[origem]||!IDIOMAS[destino]||origem===destino)throw new Error('Tradução inválida para exportação.');
+ const escapar=(texto)=>String(texto).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+ return '<!doctype html>\\n<html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Comparação de tradução — Ander Flow</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:900px;margin:2rem auto;padding:0 1rem;color:#202020}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1rem}section{border:1px solid #aaa;border-radius:12px;padding:1rem;overflow-wrap:anywhere}p{white-space:pre-wrap}@media print{body{margin:0}section{break-inside:avoid}}</style><h1>Comparação de tradução</h1><main><section><h2>'+escapar(IDIOMAS[origem])+'</h2><p>'+escapar(original)+'</p></section><section><h2>'+escapar(IDIOMAS[destino])+'</h2><p>'+escapar(traducao)+'</p></section></main><footer>Ander Flow · Revise a tradução automática antes de utilizar.</footer></html>\\n';
+}
 export default {
  instruções:{
   passos:['Digite ou cole o texto.','Escolha o idioma de origem e o de destino.','Clique em Traduzir.','Revise o resultado antes de usar.'],
@@ -62,13 +67,14 @@ export default {
   const baixar=criar('button','botão','Baixar TXT');baixar.type='button';baixar.disabled=true;
   const baixarCsv=criar('button','botão','Exportar comparação CSV');baixarCsv.type='button';baixarCsv.disabled=true;
   const baixarJson=criar('button','botão','Exportar JSON');baixarJson.type='button';baixarJson.disabled=true;
-  const botoes=criar('div');botoes.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';botoes.append(executar,cancelar,copiar,baixar,baixarCsv,baixarJson);
+  const baixarHtml=criar('button','botão','Comparação para imprimir');baixarHtml.type='button';baixarHtml.disabled=true;
+  const botoes=criar('div');botoes.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';botoes.append(executar,cancelar,copiar,baixar,baixarCsv,baixarJson,baixarHtml);
   const status=criar('p','suave','Pronto para traduzir');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   const resultado=criar('textarea');resultado.readOnly=true;resultado.rows=7;resultado.placeholder='A tradução aparecerá aqui';resultado.setAttribute('aria-label','Texto traduzido');
   painel.append(titulo,aviso,entrada,importar,limpar,contador,linha,botoes,status,resultado);raiz.append(painel);
   let controlador=null,tradutor=null,geracao=0;
   const encerrar=(id)=>{if(id!==geracao)return;executar.disabled=false;cancelar.disabled=true;controlador=null;};
-  const invalidar=()=>{geracao++;controlador?.abort();tradutor?.destroy?.();tradutor=null;controlador=null;executar.disabled=false;cancelar.disabled=true;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=true;resultado.value='';};
+  const invalidar=()=>{geracao++;controlador?.abort();tradutor?.destroy?.();tradutor=null;controlador=null;executar.disabled=false;cancelar.disabled=true;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=true;resultado.value='';};
   limpar.addEventListener('click',()=>{invalidar();entrada.value='';importar.value='';atualizarContador();status.textContent='Texto limpo.';});
   importar.addEventListener('change',async()=>{
     const arquivo=importar.files?.[0];if(!arquivo)return;
@@ -104,12 +110,13 @@ export default {
     if(sinal.aborted)return;
     const traducao=await tradutor.translate(texto,{signal});
     if(sinal.aborted)return;
-    resultado.value=traducao;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=false;
+    resultado.value=traducao;copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=false;
     status.textContent='Tradução concluída. Revise expressões e termos técnicos.';
    }catch(e){if((id===geracao||(id===geracao+1&&!controlador))&&e?.name!=='AbortError')status.textContent=e?.message||'Não foi possível traduzir.';}
    finally{if(id===geracao){tradutor?.destroy?.();tradutor=null;encerrar(id);}}
   });
   copiar.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(resultado.value);status.textContent='Tradução copiada.';}catch{status.textContent='Não foi possível copiar automaticamente. Selecione o resultado.';}});
+  baixarHtml.addEventListener('click',()=>{if(!resultado.value)return;const html=exportarComparacaoHtml(entrada.value,resultado.value,origem.value,destino.value);const url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));const a=criar('a');a.href=url;a.download='comparacao-traducao-ander-flow.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
   baixarJson.addEventListener('click',()=>{if(!resultado.value)return;const json=exportarComparacaoJson(entrada.value,resultado.value,origem.value,destino.value);const url=URL.createObjectURL(new Blob([json],{type:'application/json;charset=utf-8'}));const a=criar('a');a.href=url;a.download='comparacao-traducao-ander-flow.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
   baixarCsv.addEventListener('click',()=>{if(!resultado.value)return;const csv=exportarComparacaoCsv(entrada.value,resultado.value,origem.value,destino.value);const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=criar('a');a.href=url;a.download='comparacao-traducao-ander-flow.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
   baixar.addEventListener('click',()=>{if(!resultado.value)return;const url=URL.createObjectURL(new Blob([resultado.value],{type:'text/plain;charset=utf-8'}));const a=criar('a');a.href=url;a.download='traducao-ander-flow.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
