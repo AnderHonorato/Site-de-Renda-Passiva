@@ -59,3 +59,21 @@ test('ponto de equilíbrio inclui receita necessária',()=>{
  const r=calcularLote('analise-ponto-equilibrio-canais','canal;preco_medio;custo_variavel;despesa_fixa\nSite;100;60;401');
  assert.match(r.linhas[0][2],/1.100,00/);
 });
+
+test('CSV aceita campos entre aspas, aspas escapadas e identificadores com separador',()=>{
+ const entrada='canal;preco_medio;custo_variavel;despesa_fixa\n"Loja; Centro";100;60;400\n"Loja ""B""";120;80;200';
+ const r=calcularLote('analise-ponto-equilibrio-canais',entrada);
+ assert.deepEqual(r.linhas.map(x=>x[0]),['Loja; Centro','Loja "B"']);
+ assert.equal(r.total,15);
+});
+test('CSV rejeita aspas quebradas, fórmulas em identificadores e tamanho por bytes',()=>{
+ const cab='canal;preco_medio;custo_variavel;despesa_fixa';
+ for(const linha of ['"Loja;100;60;400','=SOMA(1);100;60;400','+1;100;60;400','Loja;"100"0;60;400']){
+  assert.throws(()=>calcularLote('analise-ponto-equilibrio-canais',cab+'\n'+linha));
+ }
+ assert.throws(()=>calcularLote('analise-ponto-equilibrio-canais',cab+'\n'+'Á'.repeat(51000)));
+});
+test('CSV TSV permite cabeçalho e dados com tabulação',()=>{
+ const r=calcularLote('analise-ponto-equilibrio-canais','canal\tpreco_medio\tcusto_variavel\tdespesa_fixa\nSite\t100\t60\t400');
+ assert.equal(r.total,10);
+});
