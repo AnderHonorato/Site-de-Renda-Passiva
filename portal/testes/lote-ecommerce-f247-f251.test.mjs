@@ -122,3 +122,26 @@ test('F250 informa aumento de preço para preservar contribuição',()=>{
  const r=calcularLote('simulador-reajuste-fornecedor','sku;custo_atual;reajuste_pct;preco_venda;taxas_pct\nSKU;50;10;100;10');
  assert.match(r.linhas[0][2],/aumento mínimo do preço 5,56%|aumento mínimo do preço 5.56%/);
 });
+
+test('F247 aceita meta de margem editável e altera preço-alvo',()=>{
+ const csv='sku;preco;cmv;comissao_pct;tarifa_fixa;frete_subsidiado;ads;imposto_pct\nSKU;100;50;10;5;5;0;5';
+ const base=calcularLote('auditoria-margem-marketplace',csv);
+ const ajustado=calcularLote('auditoria-margem-marketplace',csv,{margemPercentual:'30,5'});
+ assert.match(base.linhas[0][2],/margem de 20%/);
+ assert.match(ajustado.linhas[0][2],/margem de 30.5%/);
+ assert.notEqual(base.linhas[0][2],ajustado.linhas[0][2]);
+});
+test('F248 alerta devoluções segundo limite personalizado',()=>{
+ const csv='sku;pedidos;taxa_devolucao_pct;frete_reverso;custo_inspecao;perda_produto\nSKU;100;8;12;3;5';
+ assert.equal(calcularLote('simulador-devolucoes',csv).abaixoMeta,0);
+ const custom=calcularLote('simulador-devolucoes',csv,{alertaDevolucao:'7,5'});
+ assert.equal(custom.abaixoMeta,1);
+ assert.match(custom.alertas[0],/7.5%/);
+});
+test('metas fora do intervalo são recusadas',()=>{
+ const csv=DEFINICOES['auditoria-margem-marketplace'].exemplo;
+ for(const margemPercentual of [-1,100,'abc','Infinity']){
+  assert.throws(()=>calcularLote('auditoria-margem-marketplace',csv,{margemPercentual}));
+ }
+ assert.throws(()=>calcularLote('simulador-devolucoes',DEFINICOES['simulador-devolucoes'].exemplo,{alertaDevolucao:101}));
+});
