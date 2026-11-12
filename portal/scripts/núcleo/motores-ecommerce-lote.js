@@ -77,8 +77,8 @@ export function lerTabelaOperacional(texto){
  return linhas;
 }
 export function calcularLote(slug,entrada,opcoes={}){
- const margemPercentual=opcoes.margemPercentual===undefined?20:Number(opcoes.margemPercentual);
- const alertaDevolucao=opcoes.alertaDevolucao===undefined?20:Number(opcoes.alertaDevolucao);
+ const margemPercentual=opcoes.margemPercentual===undefined?20:Number(String(opcoes.margemPercentual).replace(',','.'));
+ const alertaDevolucao=opcoes.alertaDevolucao===undefined?20:Number(String(opcoes.alertaDevolucao).replace(',','.'));
  if(!Number.isFinite(margemPercentual)||margemPercentual<0||margemPercentual>99)throw Error('Meta de margem deve estar entre 0% e 99%.');
  if(!Number.isFinite(alertaDevolucao)||alertaDevolucao<0||alertaDevolucao>100)throw Error('Limite de devoluções deve estar entre 0% e 100%.');
  const colunas=COLUNAS[slug];if(!colunas)throw Error('Ferramenta desconhecida.');
