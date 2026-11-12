@@ -3,7 +3,7 @@ import { montarFerramenta, texto, ErroDeEntrada } from '../núcleo/montador.js';
 
 export function validarCep(entrada) {
   const valor = String(entrada ?? '').trim();
-  if (!/^\\d{5}-?\\d{3}$/.test(valor)) throw new ErroDeEntrada('Informe 8 dígitos, com ou sem hífen.','cep');
+  if (!/^\d{5}-?\d{3}$/.test(valor)) throw new ErroDeEntrada('Informe 8 dígitos, com ou sem hífen.','cep');
   return valor.replace('-', '');
 }
 
@@ -22,7 +22,7 @@ export async function consultarCep(entrada, { buscar = globalThis.fetch, sinal }
   try { dados = await resposta.json(); }
   catch { throw new ErroDeEntrada('A resposta do serviço de CEP é inválida.', 'cep'); }
   if (dados?.erro === true) throw new ErroDeEntrada('CEP não encontrado. Confira os dígitos.', 'cep');
-  if (!dados || dados.cep?.replace(/\\D/g, '') !== cep || !dados.localidade || !/^[A-Z]{2}$/.test(dados.uf ?? ''))
+  if (!dados || dados.cep?.replace(/\D/g, '') !== cep || !dados.localidade || !/^[A-Z]{2}$/.test(dados.uf ?? ''))
     throw new ErroDeEntrada('O serviço retornou um endereço incompleto ou incompatível.', 'cep');
   const limpar = (v) => String(v ?? '').slice(0, 160).trim();
   return {
@@ -48,7 +48,7 @@ export async function consultarCepNaTela(dados, opções) {
   ];
   return {
     valor: r.cep, resumo: [r.logradouro,r.bairro,r.cidade + ' / ' + r.uf].filter(Boolean).join(' · '),
-    linhas, observações, texto: ['Consulta de CEP',...linhas.map(([k,v])=>k+': '+v),...observações].join('\\n'),
+    linhas, observações, texto: ['Consulta de CEP',...linhas.map(([k,v])=>k+': '+v),...observações].join('\n'),
   };
 }
 
