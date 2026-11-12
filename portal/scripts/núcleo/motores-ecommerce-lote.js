@@ -94,7 +94,10 @@ export function calcularLote(slug,entrada){
     if(comissao>100||imposto>100)throw Error('Percentuais não podem superar 100.');
     resultado=preco-cmv-preco*(comissao+imposto)/100-tarifa-frete-ads;
     const piso=100-comissao-imposto>0?(cmv+tarifa+frete+ads)/(1-(comissao+imposto)/100):null;
-    detalhe=(preco?arred(resultado/preco*100)+'% de margem':'Sem receita')+' · preço de equilíbrio '+(piso===null?'inviável':dinheiro(piso));if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição negativa');}break;
+    const margemAlvo=0.2;
+    const divisorAlvo=1-(comissao+imposto)/100-margemAlvo;
+    const precoMeta=divisorAlvo>0?(cmv+tarifa+frete+ads)/divisorAlvo:null;
+    detalhe=(preco?arred(resultado/preco*100)+'% de margem':'Sem receita')+' · preço de equilíbrio '+(piso===null?'inviável':dinheiro(piso))+' · preço para margem de 20% '+(precoMeta===null?'inviável':dinheiro(precoMeta));if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição negativa');}break;
    }
    case 'simulador-devolucoes':{
     const [pedidos,taxa,frete,inspecao,perda]=v;
@@ -118,7 +121,9 @@ export function calcularLote(slug,entrada){
     const antes=preco*(1-taxas/100)-custo;
     resultado=preco*(1-taxas/100)-custo*(1+reajuste/100);
     const precoParaPreservar=taxas<100?preco+(custo*reajuste/100)/(1-taxas/100):null;
-    detalhe='Antes '+dinheiro(antes)+' · variação '+dinheiro(resultado-antes)+' · preço para manter contribuição '+(precoParaPreservar===null?'inviável':dinheiro(precoParaPreservar));if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição após reajuste negativa');}break;
+    const reajusteAbsorvido=custo*reajuste/100;
+    const percentualAumentoPreco=preco>0&&precoParaPreservar!==null?(precoParaPreservar/preco-1)*100:null;
+    detalhe='Antes '+dinheiro(antes)+' · variação '+dinheiro(resultado-antes)+' · preço para manter contribuição '+(precoParaPreservar===null?'inviável':dinheiro(precoParaPreservar))+' · aumento mínimo do preço '+(percentualAumentoPreco===null?'não calculável':arred(percentualAumentoPreco)+'%')+' · custo adicional '+dinheiro(reajusteAbsorvido);if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição após reajuste negativa');}break;
    }
    case 'planejamento-meta-roas':{
     const [investimento,receita,pedidos,meta]=v;
