@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv,validarArquivoTexto,validarConteudoImportado,exportarComparacaoJson,exportarComparacaoHtml,substituirTermoTraduzido,importarComparacaoJson} from '../scripts/ferramentas/traduzir-texto.js';
+import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv,validarArquivoTexto,validarConteudoImportado,exportarComparacaoJson,exportarComparacaoHtml,substituirTermoTraduzido,importarComparacaoJson,escolherIdiomaDetectado,detectorLocalDisponivel} from '../scripts/ferramentas/traduzir-texto.js';
 test('aceita pares de idioma distintos e texto válido',()=>{
  assert.equal(validarTraducao(' Olá ','pt','en'),'Olá');
  assert.equal(Object.keys(IDIOMAS).length,3);
@@ -78,4 +78,17 @@ test('recusa importação JSON malformada, grande, incompleta e com idiomas inv�
   assert.throws(()=>importarComparacaoJson(texto));
  }
  assert.throws(()=>importarComparacaoJson(JSON.stringify({idioma_origem:'pt',idioma_destino:'en',texto_original:'a'.repeat(10001),texto_traduzido:'b'})),/limite/);
+});
+
+test('detecção local escolhe idioma suportado com confiança suficiente',()=>{
+ assert.deepEqual(escolherIdiomaDetectado([{detectedLanguage:'fr',confidence:0.99},{detectedLanguage:'en',confidence:0.91},{detectedLanguage:'pt',confidence:0.7}]),{idioma:'en',confianca:0.91});
+ assert.equal(escolherIdiomaDetectado([{detectedLanguage:'es',confidence:0.4}]),null);
+ assert.equal(escolherIdiomaDetectado([{detectedLanguage:'de',confidence:0.99}]),null);
+ assert.equal(escolherIdiomaDetectado([{detectedLanguage:'pt',confidence:NaN}]),null);
+ assert.throws(()=>escolherIdiomaDetectado(null),/inválida/);
+});
+test('detector só é anunciado quando possui os métodos nativos',()=>{
+ assert.equal(detectorLocalDisponivel(undefined),false);
+ assert.equal(detectorLocalDisponivel({create(){}}),false);
+ assert.equal(detectorLocalDisponivel({create(){},availability(){}}),true);
 });
