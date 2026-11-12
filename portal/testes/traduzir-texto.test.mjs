@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv,validarArquivoTexto,validarConteudoImportado,exportarComparacaoJson,exportarComparacaoHtml} from '../scripts/ferramentas/traduzir-texto.js';
+import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv,validarArquivoTexto,validarConteudoImportado,exportarComparacaoJson,exportarComparacaoHtml,substituirTermoTraduzido} from '../scripts/ferramentas/traduzir-texto.js';
 test('aceita pares de idioma distintos e texto válido',()=>{
  assert.equal(validarTraducao(' Olá ','pt','en'),'Olá');
  assert.equal(Object.keys(IDIOMAS).length,3);
@@ -58,4 +58,12 @@ test('HTML bilíngue imprimível preserva quebras e escapa conteúdo perigoso',(
  assert.match(html,/white-space:pre-wrap/);
  assert.match(html,/Ander Flow/);
  assert.throws(()=>exportarComparacaoHtml('Olá','Hello','pt','pt'),/inválida/);
+});
+
+test('revisão terminológica substitui todas as ocorrências literais sem regex',()=>{
+ assert.deepEqual(substituirTermoTraduzido('SKU A+B; SKU A+B','A+B','X'),{texto:'SKU X; SKU X',ocorrencias:2});
+ assert.deepEqual(substituirTermoTraduzido('Pedido confirmado','inexistente','novo'),{texto:'Pedido confirmado',ocorrencias:0});
+ assert.deepEqual(substituirTermoTraduzido('Preço R$ 10','R$','BRL'),{texto:'Preço BRL 10',ocorrencias:1});
+ assert.throws(()=>substituirTermoTraduzido('abc','','x'),/termo/);
+ assert.throws(()=>substituirTermoTraduzido('a'.repeat(20000),'a','bb'),/20.000/);
 });
