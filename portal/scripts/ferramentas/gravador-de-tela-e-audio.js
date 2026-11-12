@@ -40,7 +40,8 @@ export default {
     const descartar=()=>{if(url){URL.revokeObjectURL(url);url='';}previa.removeAttribute('src');ouvir.removeAttribute('src');previa.hidden=ouvir.hidden=baixar.hidden=true;};
     const terminar=()=>{if(!gravador||gravador.state==='inactive')return;parar.disabled=true;gravador.stop();};
     iniciar.addEventListener('click',async()=>{
-      if(ocupado || gravador?.state==='recording')return;\n      ocupado=true;
+      if(ocupado || gravador?.state==='recording')return;
+      ocupado=true;
       descartar();iniciar.disabled=true;seletor.disabled=true;mic.disabled=true;status.textContent='Solicitando permissão de captura…';
       try{
         if(!navigator.mediaDevices||!globalThis.MediaRecorder)throw Error('Este navegador não suporta gravação.');
@@ -90,3 +91,5 @@ export default {
     window.addEventListener('pagehide',()=>{if(gravador?.state==='recording')gravador.stop();liberar();descartar();},{once:true});
   },
 };
+
+[executed on device: Flow-PC (994e3963-1d28-4c1a-b550-68a9e2f0184b)]
