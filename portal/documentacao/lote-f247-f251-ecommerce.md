@@ -70,3 +70,13 @@ O status permanece **planejada** até CI verde e validação no navegador; nenhu
 - F248: campo editável de limite de alerta de devoluções entre 0% e 100%, padrão 20%. O alerta utiliza o limite escolhido, sem alterar a estimativa financeira.
 - Os dois campos aceitam vírgula decimal e rejeitam percentuais inválidos. Foram acrescentados testes de cenário e validação.
 - Status permanece planejada até CI verde e validação visual; não confundir commits com deploy público.
+
+## F251 — simulação de investimento adicional (12/11/2026)
+
+Campos editáveis: orçamento adicional (R$ 0 a R$ 10 milhões) e ROAS marginal esperado (0 a 100). O indicador de ROAS projetado usa a fórmula:
+
+`(receita atribuída atual + orçamento adicional × ROAS marginal) / (investimento atual + orçamento adicional)`.
+
+Exemplo: R$ 1.000 de investimento, R$ 2.300 de receita, mais R$ 500 com ROAS marginal 4: ROAS projetado = 4.300 / 1.500 = 2,87. O ROAS histórico continua 2,30 e não é sobrescrito pela simulação. A previsão é hipotética e não garante resultados de mídia; atribuição, saturação e custos podem mudar.
+
+Testes de cálculo e validação adicionados ao workflow do lote; confirmar execução verde antes de marcar F251 pronta.
