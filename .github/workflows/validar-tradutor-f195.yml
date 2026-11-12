@@ -1,0 +1,29 @@
+name: Validar tradutor F195
+on:
+  push:
+    branches: [ander-flow/v1]
+    paths:
+      - 'portal/scripts/ferramentas/traduzir-texto.js'
+      - 'portal/testes/traduzir-texto.test.mjs'
+      - '.github/workflows/validar-tradutor-f195.yml'
+  pull_request:
+    paths:
+      - 'portal/scripts/ferramentas/traduzir-texto.js'
+      - 'portal/testes/traduzir-texto.test.mjs'
+      - '.github/workflows/validar-tradutor-f195.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Testar F195
+        run: node --test portal/testes/traduzir-texto.test.mjs
+      - name: Validar sintaxe do modulo
+        run: node --check portal/scripts/ferramentas/traduzir-texto.js
