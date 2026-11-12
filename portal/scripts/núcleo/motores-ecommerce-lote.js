@@ -93,13 +93,14 @@ export function calcularLote(slug,entrada){
     const [preco,cmv,comissao,tarifa,frete,ads,imposto]=v;
     if(comissao>100||imposto>100)throw Error('Percentuais não podem superar 100.');
     resultado=preco-cmv-preco*(comissao+imposto)/100-tarifa-frete-ads;
-    detalhe=preco?arred(resultado/preco*100)+'% de margem':'Sem receita';if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição negativa');}break;
+    const piso=100-comissao-imposto>0?(cmv+tarifa+frete+ads)/(1-(comissao+imposto)/100):null;
+    detalhe=(preco?arred(resultado/preco*100)+'% de margem':'Sem receita')+' · preço de equilíbrio '+(piso===null?'inviável':dinheiro(piso));if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição negativa');}break;
    }
    case 'simulador-devolucoes':{
     const [pedidos,taxa,frete,inspecao,perda]=v;
     if(!Number.isInteger(pedidos)||taxa>100)throw Error('Pedidos devem ser inteiros e taxa até 100%.');
     resultado=pedidos*taxa/100*(frete+inspecao+perda);
-    detalhe=arred(pedidos*taxa/100)+' devoluções esperadas';pedidosTotal+=pedidos;if(taxa>20){abaixoMeta++;alertas.push(nome+': devolução acima de 20%');}break;
+    detalhe=arred(pedidos*taxa/100)+' devoluções esperadas · custo por pedido '+dinheiro(pedidos?resultado/pedidos:0);pedidosTotal+=pedidos;if(taxa>20){abaixoMeta++;alertas.push(nome+': devolução acima de 20%');}break;
    }
    case 'analise-ponto-equilibrio-canais':{
     const [preco,custo,fixo]=v;const margem=preco-custo;
@@ -111,7 +112,8 @@ export function calcularLote(slug,entrada){
     if(reajuste>1000||taxas>100)throw Error('Percentual fora do limite.');
     const antes=preco*(1-taxas/100)-custo;
     resultado=preco*(1-taxas/100)-custo*(1+reajuste/100);
-    detalhe='Antes '+dinheiro(antes)+' · variação '+dinheiro(resultado-antes);if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição após reajuste negativa');}break;
+    const precoParaPreservar=taxas<100?preco+(custo*reajuste/100)/(1-taxas/100):null;
+    detalhe='Antes '+dinheiro(antes)+' · variação '+dinheiro(resultado-antes)+' · preço para manter contribuição '+(precoParaPreservar===null?'inviável':dinheiro(precoParaPreservar));if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição após reajuste negativa');}break;
    }
    case 'planejamento-meta-roas':{
     const [investimento,receita,pedidos,meta]=v;
