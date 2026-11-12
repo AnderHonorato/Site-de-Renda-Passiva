@@ -14,8 +14,10 @@ export function validarArquivoTexto(arquivo){
 }
 export function validarConteudoImportado(texto){
  if(typeof texto!=='string'||!texto.trim())throw new Error('O arquivo está vazio.');
- if(contarCaracteres(texto)>10000)throw new Error('O texto ultrapassa 10.000 caracteres.');
- return texto.replace(/^\uFEFF/,'');
+ const limpo=texto.replace(/^\uFEFF/,'');
+ if(!limpo.trim())throw new Error('O arquivo está vazio.');
+ if(contarCaracteres(limpo)>10000)throw new Error('O texto ultrapassa 10.000 caracteres.');
+ return limpo;
 }
 export function obterDisponibilidade(api){
   return typeof api?.create==='function' && typeof api?.availability==='function';
@@ -58,7 +60,8 @@ export default {
   const cancelar=criar('button','botão','Cancelar');cancelar.type='button';cancelar.disabled=true;
   const copiar=criar('button','botão','Copiar tradução');copiar.type='button';copiar.disabled=true;
   const baixar=criar('button','botão','Baixar TXT');baixar.type='button';baixar.disabled=true;
-  const baixarCsv=criar('button','botão','Exportar comparação CSV');baixarCsv.type='button';baixarCsv.disabled=true;\n  const baixarJson=criar('button','botão','Exportar JSON');baixarJson.type='button';baixarJson.disabled=true;
+  const baixarCsv=criar('button','botão','Exportar comparação CSV');baixarCsv.type='button';baixarCsv.disabled=true;
+  const baixarJson=criar('button','botão','Exportar JSON');baixarJson.type='button';baixarJson.disabled=true;
   const botoes=criar('div');botoes.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';botoes.append(executar,cancelar,copiar,baixar,baixarCsv,baixarJson);
   const status=criar('p','suave','Pronto para traduzir');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   const resultado=criar('textarea');resultado.readOnly=true;resultado.rows=7;resultado.placeholder='A tradução aparecerá aqui';resultado.setAttribute('aria-label','Texto traduzido');
@@ -79,7 +82,8 @@ export default {
   });
   cancelar.addEventListener('click',()=>{invalidar();status.textContent='Tradução cancelada.';});
   inverter.addEventListener('click',()=>{const anterior=resultado.value;invalidar();[origem.value,destino.value]=[destino.value,origem.value];if(anterior)entrada.value=anterior;status.textContent='Idiomas invertidos. Traduza novamente.';atualizarContador();});
-  entrada.addEventListener('input',()=>{if(controlador)invalidar();copiar.disabled=baixar.disabled=true;resultado.value='';});
+  entrada.addEventListener('input',()=>{invalidar();resultado.value='';status.textContent='Texto alterado. Traduza novamente.';});
+  entrada.addEventListener('keydown',evento=>{if((evento.ctrlKey||evento.metaKey)&&evento.key==='Enter'){evento.preventDefault();if(!executar.disabled)executar.click();}});
   origem.addEventListener('change',invalidar);destino.addEventListener('change',invalidar);
   executar.addEventListener('click',async()=>{
    if(controlador)return;
