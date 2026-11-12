@@ -54,3 +54,12 @@ Não há backend Premium ou autenticação neste lote: os cálculos são locais 
 - Testes de limites e fórmulas adicionados em `portal/testes/lote-ecommerce-f247-f251.test.mjs`.
 
 O status permanece **planejada** até CI verde e validação no navegador; nenhuma mudança de identidade visual.
+
+## Melhorias desta rodada (12/11/2026)
+
+- F247: preço de equilíbrio e preço recomendado para margem de contribuição de 20%, respeitando comissão, impostos, custos variáveis e impossibilidade matemática quando a soma das taxas inviabiliza a meta.
+- F250: cálculo do percentual mínimo de reajuste do preço para preservar a contribuição antes do aumento de custo; mostra o custo adicional unitário.
+- F247–F251: botões para baixar modelo CSV preenchido e restaurar o exemplo editável, com alvos de toque de 44 px.
+- Testes novos para preço-alvo, impossibilidade da margem e percentual de repasse.
+
+**Critério de conclusão ainda aberto:** CI verde, interação real em navegador, verificação de exportações e publicação. Nenhum status foi promovido sem essas evidências.
