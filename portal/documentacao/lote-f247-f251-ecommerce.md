@@ -46,3 +46,11 @@ Não há backend Premium ou autenticação neste lote: os cálculos são locais 
 - F250: preço de venda necessário para preservar a contribuição anterior após reajuste, mantendo a alíquota de taxas.
 - Importação CSV/TSV: aspas duplas escapadas, campos com separadores, limite de 100 KB em UTF-8 e validação antes de substituir o formulário. Identificadores iniciados por caracteres de fórmula são rejeitados.
 - Testes novos para cálculos e importação; CI e navegador precisam ser confirmados antes de promover o catálogo para pronta.
+
+## Evolução de cenários — 2026-11-12
+
+- **F249:** além dos pedidos e receita de equilíbrio, apresenta cenários de despesa fixa 10% menor e 10% maior por canal, mantendo contribuição unitária constante. Valores de custo são arredondados para centavos antes do cálculo de unidades inteiras.
+- **F251:** mostra receita adicional para alcançar o ROAS-alvo e estima pedidos adicionais a partir do ticket médio histórico (receita/pedidos). Se não houver receita ou pedidos históricos, informa que não é possível estimar. Não promete crescimento real de conversões.
+- Testes de limites e fórmulas adicionados em `portal/testes/lote-ecommerce-f247-f251.test.mjs`.
+
+O status permanece **planejada** até CI verde e validação no navegador; nenhuma mudança de identidade visual.
