@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres} from '../scripts/ferramentas/traduzir-texto.js';
+import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv} from '../scripts/ferramentas/traduzir-texto.js';
 test('aceita pares de idioma distintos e texto válido',()=>{
  assert.equal(validarTraducao(' Olá ','pt','en'),'Olá');
  assert.equal(Object.keys(IDIOMAS).length,3);
@@ -19,4 +19,12 @@ test('contador considera caracteres Unicode completos',()=>{
  assert.equal(contarCaracteres('Olá'),3);
  assert.equal(contarCaracteres('A😀'),2);
  assert.equal(contarCaracteres(''),0);
+});
+
+test('exporta comparação CSV com aspas, Unicode e proteção contra fórmulas',()=>{
+ const csv=exportarComparacaoCsv('=1+1; "teste"','Olá\nMundo','pt','en');
+ assert.ok(csv.startsWith('\uFEFF'));
+ assert.match(csv,/"'=1\+1; ""teste"""/);
+ assert.match(csv,/"Olá\nMundo"/);
+ assert.throws(()=>exportarComparacaoCsv('','texto','pt','en'));
 });
