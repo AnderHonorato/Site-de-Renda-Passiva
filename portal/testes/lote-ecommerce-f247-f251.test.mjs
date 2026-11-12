@@ -43,3 +43,19 @@ test('rejeita percentuais inválidos, IDs repetidos, colunas incorretas e valore
   assert.throws(()=>calcularLote(slug,cab+'\n'+corpo));
  }
 });
+
+test('auditoria avisa contribuição negativa',()=>{
+ const r=calcularLote('auditoria-margem-marketplace','sku;preco;cmv;comissao_pct;tarifa_fixa;frete_subsidiado;ads;imposto_pct\nA;50;60;10;0;0;0;0');
+ assert.equal(r.abaixoMeta,1);
+ assert.match(r.alertas[0],/negativa/);
+});
+test('ROAS calcula CPA agregado por pedidos reais',()=>{
+ const r=calcularLote('planejamento-meta-roas','campanha;investimento;receita;pedidos;meta_roas\nA;100;200;2;3\nB;300;1200;6;3');
+ assert.equal(r.total,3.5);
+ assert.match(r.indicadores[2][1],/50,00/);
+ assert.equal(r.abaixoMeta,1);
+});
+test('ponto de equilíbrio inclui receita necessária',()=>{
+ const r=calcularLote('analise-ponto-equilibrio-canais','canal;preco_medio;custo_variavel;despesa_fixa\nSite;100;60;401');
+ assert.match(r.linhas[0][2],/1.100,00/);
+});
