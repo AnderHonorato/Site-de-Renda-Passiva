@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv} from '../scripts/ferramentas/traduzir-texto.js';
+import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv,validarArquivoTexto,validarConteudoImportado} from '../scripts/ferramentas/traduzir-texto.js';
 test('aceita pares de idioma distintos e texto válido',()=>{
  assert.equal(validarTraducao(' Olá ','pt','en'),'Olá');
  assert.equal(Object.keys(IDIOMAS).length,3);
@@ -27,4 +27,18 @@ test('exporta comparação CSV com aspas, Unicode e proteção contra fórmulas'
  assert.match(csv,/"'=1\+1; ""teste"""/);
  assert.match(csv,/"Olá\nMundo"/);
  assert.throws(()=>exportarComparacaoCsv('','texto','pt','en'));
+});
+
+test('importação TXT/Markdown local valida extensão, tamanho e conteúdo',()=>{
+ assert.equal(validarArquivoTexto({name:'pedido.TXT',size:500}),true);
+ assert.equal(validarArquivoTexto({name:'notas.md',size:0}),true);
+ assert.throws(()=>validarArquivoTexto({name:'dados.exe',size:100}),/TXT/);
+ assert.throws(()=>validarArquivoTexto({name:'grande.txt',size:40001}),/40 KB/);
+ assert.equal(validarConteudoImportado('\uFEFFOlá'), 'Olá');
+ assert.throws(()=>validarConteudoImportado('  '),/vazio/);
+ assert.throws(()=>validarConteudoImportado('😀'.repeat(10001)),/10.000/);
+});
+test('limite de tradução respeita caracteres Unicode',()=>{
+ assert.equal(validarTraducao('😀'.repeat(10000),'pt','en').length,20000);
+ assert.throws(()=>validarTraducao('😀'.repeat(10001),'pt','en'),/10.000/);
 });
