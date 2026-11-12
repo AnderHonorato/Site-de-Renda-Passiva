@@ -10,6 +10,7 @@ export function validarTraducao(texto,origem,destino){
 export function obterDisponibilidade(api){
   return typeof api?.create==='function' && typeof api?.availability==='function';
 }
+export function contarCaracteres(texto){return [...String(texto)].length;}
 export default {
  instruções:{
   passos:['Digite ou cole o texto.','Escolha o idioma de origem e o de destino.','Clique em Traduzir.','Revise o resultado antes de usar.'],
@@ -27,7 +28,11 @@ export default {
   const linha=criar('div');linha.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';
   const selecionar=(nome,valor)=>{const s=criar('select');s.setAttribute('aria-label',nome);for(const [id,rotulo] of Object.entries(IDIOMAS)){const o=criar('option','',rotulo);o.value=id;s.append(o);}s.value=valor;return s;};
   const origem=selecionar('Idioma de origem','pt'),destino=selecionar('Idioma de destino','en');
-  linha.append(origem,destino);
+  const inverter=criar('button','botão','Inverter idiomas');inverter.type='button';inverter.setAttribute('aria-label','Inverter idiomas de origem e destino');
+  linha.append(origem,inverter,destino);
+  const contador=criar('p','suave');contador.setAttribute('aria-live','polite');
+  const atualizarContador=()=>{contador.textContent=`${contarCaracteres(entrada.value).toLocaleString('pt-BR')} caracteres · máximo 10.000`;};
+  entrada.addEventListener('input',atualizarContador);atualizarContador();
   const executar=criar('button','botão botão--primário','Traduzir');executar.type='button';
   const cancelar=criar('button','botão','Cancelar');cancelar.type='button';cancelar.disabled=true;
   const copiar=criar('button','botão','Copiar tradução');copiar.type='button';copiar.disabled=true;
@@ -35,17 +40,22 @@ export default {
   const botoes=criar('div');botoes.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';botoes.append(executar,cancelar,copiar,baixar);
   const status=criar('p','suave','Pronto para traduzir');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   const resultado=criar('textarea');resultado.readOnly=true;resultado.rows=7;resultado.placeholder='A tradução aparecerá aqui';resultado.setAttribute('aria-label','Texto traduzido');
-  painel.append(titulo,aviso,entrada,linha,botoes,status,resultado);raiz.append(painel);
-  let controlador=null,tradutor=null;
-  const encerrar=()=>{executar.disabled=false;cancelar.disabled=true;controlador=null;};
-  cancelar.addEventListener('click',()=>{controlador?.abort();tradutor?.destroy?.();tradutor=null;status.textContent='Tradução cancelada.';encerrar();});
+  painel.append(titulo,aviso,entrada,contador,linha,botoes,status,resultado);raiz.append(painel);
+  let controlador=null,tradutor=null,geracao=0;
+  const encerrar=(id)=>{if(id!==geracao)return;executar.disabled=false;cancelar.disabled=true;controlador=null;};
+  const invalidar=()=>{geracao++;controlador?.abort();tradutor?.destroy?.();tradutor=null;controlador=null;executar.disabled=false;cancelar.disabled=true;copiar.disabled=baixar.disabled=true;resultado.value='';};
+  cancelar.addEventListener('click',()=>{invalidar();status.textContent='Tradução cancelada.';});
+  inverter.addEventListener('click',()=>{const anterior=resultado.value;invalidar();[origem.value,destino.value]=[destino.value,origem.value];if(anterior)entrada.value=anterior;status.textContent='Idiomas invertidos. Traduza novamente.';atualizarContador();});
+  entrada.addEventListener('input',()=>{if(controlador)invalidar();copiar.disabled=baixar.disabled=true;resultado.value='';});
+  origem.addEventListener('change',invalidar);destino.addEventListener('change',invalidar);
   executar.addEventListener('click',async()=>{
    if(controlador)return;
+   const id=geracao+1;
    try{
     const texto=validarTraducao(entrada.value,origem.value,destino.value);
     const api=globalThis.Translator;
     if(!obterDisponibilidade(api))throw new Error('Este navegador não oferece tradução local. Experimente uma versão atualizada do Chrome com Translator API.');
-    controlador=new AbortController();const sinal=controlador.signal;
+    controlador=new AbortController();const sinal=controlador.signal;geracao=id;
     executar.disabled=true;cancelar.disabled=false;copiar.disabled=true;baixar.disabled=true;resultado.value='';
     status.textContent='Verificando pacote de idioma…';
     const disponibilidade=await api.availability({sourceLanguage:origem.value,targetLanguage:destino.value});
@@ -59,7 +69,7 @@ export default {
     resultado.value=traducao;copiar.disabled=baixar.disabled=false;
     status.textContent='Tradução concluída. Revise expressões e termos técnicos.';
    }catch(e){if(e?.name!=='AbortError')status.textContent=e?.message||'Não foi possível traduzir.';}
-   finally{tradutor?.destroy?.();tradutor=null;encerrar();}
+   finally{if(id===geracao){tradutor?.destroy?.();tradutor=null;encerrar(id);}}
   });
   copiar.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(resultado.value);status.textContent='Tradução copiada.';}catch{status.textContent='Não foi possível copiar automaticamente. Selecione o resultado.';}});
   baixar.addEventListener('click',()=>{if(!resultado.value)return;const url=URL.createObjectURL(new Blob([resultado.value],{type:'text/plain;charset=utf-8'}));const a=criar('a');a.href=url;a.download='traducao-ander-flow.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
