@@ -63,3 +63,10 @@ O status permanece **planejada** até CI verde e validação no navegador; nenhu
 - Testes novos para preço-alvo, impossibilidade da margem e percentual de repasse.
 
 **Critério de conclusão ainda aberto:** CI verde, interação real em navegador, verificação de exportações e publicação. Nenhum status foi promovido sem essas evidências.
+
+## Atualização — 2026-11-12: metas personalizadas
+
+- F247: campo editável de meta de margem de 0% a 99%, padrão 20%. O preço sugerido é calculado a partir dos custos e taxas informados; meta inviável permanece identificada.
+- F248: campo editável de limite de alerta de devoluções entre 0% e 100%, padrão 20%. O alerta utiliza o limite escolhido, sem alterar a estimativa financeira.
+- Os dois campos aceitam vírgula decimal e rejeitam percentuais inválidos. Foram acrescentados testes de cenário e validação.
+- Status permanece planejada até CI verde e validação visual; não confundir commits com deploy público.
