@@ -91,5 +91,3 @@ export default {
     window.addEventListener('pagehide',()=>{if(gravador?.state==='recording')gravador.stop();liberar();descartar();},{once:true});
   },
 };
-
-[executed on device: Flow-PC (994e3963-1d28-4c1a-b550-68a9e2f0184b)]
