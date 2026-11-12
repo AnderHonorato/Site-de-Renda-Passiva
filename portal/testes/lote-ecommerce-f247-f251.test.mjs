@@ -158,3 +158,22 @@ test('F249 rejeita cenários fora de faixa',()=>{
  const csv='canal;preco_medio;custo_variavel;despesa_fixa\nSite;100;60;1000';
  for(const variacaoCenario of ['-1','101','infinito'])assert.throws(()=>calcularLote('analise-ponto-equilibrio-canais',csv,{variacaoCenario}));
 });
+
+test('F251 projeta ROAS agregado com orçamento incremental e retorno marginal',()=>{
+ const csv='campanha;investimento;receita;pedidos;meta_roas\nA;100;500;5;4\nB;900;1800;9;3';
+ const r=calcularLote('planejamento-meta-roas',csv,{investimentoExtra:'500',roasMarginal:'4'});
+ assert.equal(r.total,2.3);
+ assert.deepEqual(r.indicadores.slice(-4),[
+  ['Orçamento adicional simulado',new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2}).format(500)],
+  ['Receita adicional projetada',new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2}).format(2000)],
+  ['ROAS agregado projetado','2,87'],
+  ['Variação de ROAS agregado','0,57']
+ ]);
+});
+test('F251 orçamento zero preserva ROAS e rejeita cenários inválidos',()=>{
+ const csv=DEFINICOES['planejamento-meta-roas'].exemplo;
+ const base=calcularLote('planejamento-meta-roas',csv,{investimentoExtra:0,roasMarginal:3});
+ assert.equal(base.indicadores.at(-2)[1],base.total.toLocaleString('pt-BR'));
+ for(const options of [{investimentoExtra:-1},{investimentoExtra:10000001},{roasMarginal:-1},{roasMarginal:101},{roasMarginal:'abc'}])
+  assert.throws(()=>calcularLote('planejamento-meta-roas',csv,options));
+});
