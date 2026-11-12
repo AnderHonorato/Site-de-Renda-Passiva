@@ -90,3 +90,22 @@ test('devoluções mostram custo esperado por pedido',()=>{
  const r=calcularLote('simulador-devolucoes','sku;pedidos;taxa_devolucao_pct;frete_reverso;custo_inspecao;perda_produto\nA;100;10;12;3;5');
  assert.match(r.linhas[0][2],/R\\$\\s*2,00/);
 });
+
+test('F249 exibe sensibilidade a custo fixo em dois cenários',()=>{
+ const r=calcularLote('analise-ponto-equilibrio-canais',
+ 'canal;preco_medio;custo_variavel;despesa_fixa\nSite;100;60;400');
+ assert.equal(r.total,10);
+ assert.match(r.linhas[0][2],/-10%: 9 pedidos/);
+ assert.match(r.linhas[0][2],/\+10%: 12 pedidos/);
+});
+test('F251 calcula pedidos adicionais para alcançar ROAS alvo',()=>{
+ const r=calcularLote('planejamento-meta-roas',
+ 'campanha;investimento;receita;pedidos;meta_roas\nAds;100;200;4;3');
+ assert.equal(r.total,2);
+ assert.match(r.linhas[0][2],/pedidos adicionais ao ticket atual 2/);
+});
+test('F251 evita previsão de pedidos sem ticket histórico',()=>{
+ const r=calcularLote('planejamento-meta-roas',
+ 'campanha;investimento;receita;pedidos;meta_roas\nAds;100;0;0;3');
+ assert.match(r.linhas[0][2],/não estimável/);
+});
