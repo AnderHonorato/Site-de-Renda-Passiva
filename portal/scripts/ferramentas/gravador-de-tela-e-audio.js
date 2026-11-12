@@ -1,0 +1,73 @@
+/** F194 — gravação local por APIs nativas, sem upload nem servidor. */
+export function escolherFormato(tipos, suporta) {
+  return tipos.find(tipo => suporta(tipo)) || '';
+}
+export function extensaoParaTipo(tipo) { return /mp4/i.test(tipo) ? 'mp4' : /ogg/i.test(tipo) ? 'ogg' : 'webm'; }
+export default {
+  instruções: {
+    passos: ['Escolha tela ou somente microfone.', 'Autorize a captura no navegador.', 'Pare a gravação e baixe o arquivo.'],
+    limites: 'Gravação de tela requer navegador compatível e HTTPS; muitos celulares não permitem. O áudio do sistema depende do navegador. O arquivo fica apenas no dispositivo.',
+    perguntas: [{p:'O site recebe a gravação?',r:'Não. A captura, a prévia e o download acontecem localmente no navegador.'}],
+  },
+  montar(raiz) {
+    let gravador=null, fluxo=null, audioExtra=null, partes=[], url='', iniciado=0, intervalo=0;
+    raiz.replaceChildren();
+    const criar=(tag,classe,conteudo)=>{const e=document.createElement(tag);if(classe)e.className=classe;if(conteudo)e.textContent=conteudo;return e;};
+    const painel=criar('section','ferramenta-formulario');
+    const titulo=criar('h2','', 'Gravar tela ou voz');
+    const explicacao=criar('p','suave','A gravação fica neste aparelho. Nada é enviado ao portal.');
+    const rotulo=criar('label','','Tipo de captura');
+    const seletor=criar('select');seletor.setAttribute('aria-label','Tipo de captura');
+    for(const [valor,nome] of [['tela','Tela com áudio opcional'],['voz','Somente microfone']]){const o=criar('option','',nome);o.value=valor;seletor.append(o);}
+    const rotuloMic=criar('label');const mic=criar('input');mic.type='checkbox';mic.checked=false;rotuloMic.append(mic,document.createTextNode(' Incluir microfone na gravação da tela'));
+    const iniciar=criar('button','botão botão--primário','Iniciar gravação');iniciar.type='button';
+    const parar=criar('button','botão','Parar gravação');parar.type='button';parar.disabled=true;
+    const status=criar('p','suave','Pronto para gravar');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+    const previa=criar('video');previa.controls=true;previa.playsInline=true;previa.hidden=true;previa.style.width='100%';
+    const ouvir=criar('audio');ouvir.controls=true;ouvir.hidden=true;
+    const baixar=criar('a','botão','Baixar gravação');baixar.hidden=true;baixar.download='gravacao-ander-flow.webm';
+    const controles=criar('div','');controles.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:16px 0';
+    controles.append(iniciar,parar);
+    painel.append(titulo,explicacao,rotulo,seletor,rotuloMic,controles,status,previa,ouvir,baixar);raiz.append(painel);
+    const atualizar=()=>{rotuloMic.hidden=seletor.value!=='tela';};seletor.addEventListener('change',atualizar);atualizar();
+    const liberar=()=>{for(const t of fluxo?.getTracks()||[])t.stop();for(const t of audioExtra?.getTracks()||[])t.stop();fluxo=null;audioExtra=null;clearInterval(intervalo);intervalo=0;iniciar.disabled=false;parar.disabled=true;seletor.disabled=false;mic.disabled=false;};
+    const descartar=()=>{if(url){URL.revokeObjectURL(url);url='';}previa.removeAttribute('src');ouvir.removeAttribute('src');previa.hidden=ouvir.hidden=baixar.hidden=true;};
+    const terminar=()=>{if(!gravador||gravador.state==='inactive')return;parar.disabled=true;gravador.stop();};
+    iniciar.addEventListener('click',async()=>{
+      if(gravador?.state==='recording')return;
+      descartar();iniciar.disabled=true;seletor.disabled=true;mic.disabled=true;status.textContent='Solicitando permissão de captura…';
+      try{
+        if(!navigator.mediaDevices||!globalThis.MediaRecorder)throw Error('Este navegador não suporta gravação.');
+        const tela=seletor.value==='tela';
+        if(tela && !navigator.mediaDevices.getDisplayMedia)throw Error('Captura de tela indisponível neste navegador. Tente gravar somente a voz.');
+        fluxo=tela?await navigator.mediaDevices.getDisplayMedia({video:true,audio:true}):await navigator.mediaDevices.getUserMedia({audio:true});
+        if(tela&&mic.checked){
+          audioExtra=await navigator.mediaDevices.getUserMedia({audio:true});
+          const trilhas=[...fluxo.getVideoTracks(),...fluxo.getAudioTracks(),...audioExtra.getAudioTracks()];
+          fluxo=new MediaStream(trilhas);
+        }
+        const tipos=tela?['video/webm;codecs=vp8,opus','video/webm','video/mp4']:['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg'];
+        const tipo=escolherFormato(tipos,t=>MediaRecorder.isTypeSupported(t));
+        gravador=new MediaRecorder(fluxo,tipo?{mimeType:tipo}:undefined);
+        partes=[];const atual=gravador;
+        atual.addEventListener('dataavailable',e=>{if(e.data.size)partes.push(e.data);});
+        atual.addEventListener('error',()=>{status.textContent='Erro durante a gravação.';liberar();});
+        atual.addEventListener('stop',()=>{
+          const blob=new Blob(partes,{type:atual.mimeType||partes[0]?.type||'application/octet-stream'});
+          liberar();if(!blob.size){status.textContent='A gravação terminou sem conteúdo.';return;}
+          url=URL.createObjectURL(blob);
+          const player=tela?previa:ouvir;player.src=url;player.hidden=false;
+          baixar.href=url;baixar.download='gravacao-ander-flow.'+extensaoParaTipo(blob.type);baixar.hidden=false;
+          status.textContent='Gravação concluída: '+(blob.size/1048576).toFixed(1)+' MB. Confira a prévia e baixe.';
+        },{once:true});
+        fluxo.getVideoTracks().forEach(t=>t.addEventListener('ended',terminar,{once:true}));
+        gravador.start(1000);iniciado=Date.now();parar.disabled=false;
+        intervalo=setInterval(()=>{status.textContent='Gravando · '+Math.floor((Date.now()-iniciado)/1000)+' s';},1000);
+        status.textContent='Gravando · 0 s';
+      }catch(e){liberar();status.textContent=e?.name==='NotAllowedError'?'Permissão negada ou captura cancelada.':String(e?.message||'Não foi possível iniciar.');}
+    });
+    parar.addEventListener('click',terminar);
+    // Limpeza quando a página for fechada; nunca manter microfone ativo após sair.
+    window.addEventListener('pagehide',()=>{if(gravador?.state==='recording')gravador.stop();liberar();descartar();},{once:true});
+  },
+};
