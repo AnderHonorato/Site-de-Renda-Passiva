@@ -42,20 +42,20 @@ const dinheiro=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maxi
 const arred=n=>Math.round((n+Number.EPSILON)*100)/100;
 function numero(v){
  let s=String(v).trim();
- if(/^\\d{1,3}(?:\\.\\d{3})+(?:,\\d+)?$/.test(s))s=s.replace(/\\./g,'').replace(',','.');
+ if(/^\d{1,3}(?:\.\d{3})+(?:,\d+)?$/.test(s))s=s.replace(/\./g,'').replace(',','.');
  else s=s.replace(',','.');
- if(!/^(?:\\d+(?:\\.\\d+)?|\\.\\d+)$/.test(s))throw Error('Número inválido: '+String(v).slice(0,30));
+ if(!/^(?:\d+(?:\.\d+)?|\.\d+)$/.test(s))throw Error('Número inválido: '+String(v).slice(0,30));
  const n=Number(s);if(!Number.isFinite(n)||n<0||n>1e9)throw Error('Número fora do limite.');
  return n;
 }
 export function calcularLote(slug,entrada){
  const colunas=COLUNAS[slug];if(!colunas)throw Error('Ferramenta desconhecida.');
  if(typeof entrada!=='string'||entrada.length>100000)throw Error('Arquivo vazio ou maior que 100 KB.');
- const linhas=entrada.trim().split(/\\r?\\n/);
+ const linhas=entrada.trim().split(/\r?\n/);
  if(linhas.length<2||linhas.length>501)throw Error('Informe entre 1 e 500 registros.');
  const cab=linhas.shift().split(';').map(s=>s.trim().toLowerCase());
  if(cab.join('|')!==colunas.join('|'))throw Error('Cabeçalho inválido. Use o exemplo como modelo.');
- const vistos=new Set(),saida=[];let total=0;
+ const vistos=new Set(),saida=[];let total=0;let investimentoTotal=0,receitaTotal=0;
  for(const [i,linha] of linhas.entries()){
   const partes=linha.split(';');if(partes.length!==colunas.length)throw Error('Linha '+(i+2)+': quantidade incorreta de colunas.');
   const nome=partes[0].trim();if(!nome||nome.length>80||vistos.has(nome))throw Error('Identificador vazio, longo ou repetido na linha '+(i+2)+'.');
@@ -89,11 +89,11 @@ export function calcularLote(slug,entrada){
    case 'planejamento-meta-roas':{
     const [investimento,receita,pedidos,meta]=v;
     if(investimento<=0||meta<=0||!Number.isInteger(pedidos))throw Error('Investimento e meta devem ser positivos; pedidos inteiros.');
-    resultado=receita/investimento;detalhe='CPA '+(pedidos?dinheiro(investimento/pedidos):'sem pedidos')+' · receita até meta '+dinheiro(Math.max(0,investimento*meta-receita));break;
+    resultado=receita/investimento;investimentoTotal+=investimento;receitaTotal+=receita;detalhe='CPA '+(pedidos?dinheiro(investimento/pedidos):'sem pedidos')+' · receita até meta '+dinheiro(Math.max(0,investimento*meta-receita));break;
    }
   }
   if(!Number.isFinite(resultado))throw Error('Resultado fora do limite.');
   total+=resultado;saida.push([nome,arred(resultado),detalhe]);
  }
- return {cabecalho:['Identificador',slug==='analise-ponto-equilibrio-canais'?'Pedidos para equilíbrio':slug==='planejamento-meta-roas'?'ROAS':'Resultado (R$)','Detalhe'],linhas:saida,total:arred(total),unidade:slug==='analise-ponto-equilibrio-canais'?'pedidos':slug==='planejamento-meta-roas'?'ROAS somado (não agregado)':'R$',observacao:slug==='planejamento-meta-roas'?'ROAS total exige receita e investimento agregados; não some ROAS individuais.':'Simulação gerencial com valores informados; confirme custos reais.'};
+ return {cabecalho:['Identificador',slug==='analise-ponto-equilibrio-canais'?'Pedidos para equilíbrio':slug==='planejamento-meta-roas'?'ROAS':'Resultado (R$)','Detalhe'],linhas:saida,total:arred(slug==='planejamento-meta-roas'?receitaTotal/investimentoTotal:total),unidade:slug==='analise-ponto-equilibrio-canais'?'pedidos':slug==='planejamento-meta-roas'?'ROAS agregado':'R$',observacao:slug==='planejamento-meta-roas'?'ROAS agregado calculado como receita total dividida pelo investimento total.':'Simulação gerencial com valores informados; confirme custos reais.'};
 }
