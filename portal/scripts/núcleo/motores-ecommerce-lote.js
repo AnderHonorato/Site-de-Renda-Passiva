@@ -53,11 +53,12 @@ export function calcularLote(slug,entrada){
  if(typeof entrada!=='string'||entrada.length>100000)throw Error('Arquivo vazio ou maior que 100 KB.');
  const linhas=entrada.trim().split(/\r?\n/);
  if(linhas.length<2||linhas.length>501)throw Error('Informe entre 1 e 500 registros.');
- const cab=linhas.shift().split(';').map(s=>s.trim().toLowerCase());
+ const cabecalho=linhas.shift();const separador=cabecalho.includes('\t')?'\t':';';
+ const cab=cabecalho.split(separador).map(s=>s.trim().toLowerCase());
  if(cab.join('|')!==colunas.join('|'))throw Error('Cabeçalho inválido. Use o exemplo como modelo.');
  const vistos=new Set(),saida=[];let total=0;let investimentoTotal=0,receitaTotal=0;let pedidosTotal=0;let abaixoMeta=0;const alertas=[];
  for(const [i,linha] of linhas.entries()){
-  const partes=linha.split(';');if(partes.length!==colunas.length)throw Error('Linha '+(i+2)+': quantidade incorreta de colunas.');
+  const partes=linha.split(separador);if(partes.length!==colunas.length)throw Error('Linha '+(i+2)+': quantidade incorreta de colunas.');
   const nome=partes[0].trim();if(!nome||nome.length>80||vistos.has(nome))throw Error('Identificador vazio, longo ou repetido na linha '+(i+2)+'.');
   vistos.add(nome);
   const v=partes.slice(1).map(numero);let resultado,detalhe;
