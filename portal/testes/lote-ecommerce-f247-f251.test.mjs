@@ -96,7 +96,7 @@ test('F249 exibe sensibilidade a custo fixo em dois cenários',()=>{
  'canal;preco_medio;custo_variavel;despesa_fixa\nSite;100;60;400');
  assert.equal(r.total,10);
  assert.match(r.linhas[0][2],/-10%: 9 pedidos/);
- assert.match(r.linhas[0][2],/\+10%: 12 pedidos/);
+ assert.match(r.linhas[0][2],/\+10%: 11 pedidos/);
 });
 test('F251 calcula pedidos adicionais para alcançar ROAS alvo',()=>{
  const r=calcularLote('planejamento-meta-roas',
