@@ -81,6 +81,8 @@ export function calcularLote(slug,entrada,opcoes={}){
  const alertaDevolucao=opcoes.alertaDevolucao===undefined?20:Number(String(opcoes.alertaDevolucao).replace(',','.'));
  if(!Number.isFinite(margemPercentual)||margemPercentual<0||margemPercentual>99)throw Error('Meta de margem deve estar entre 0% e 99%.');
  if(!Number.isFinite(alertaDevolucao)||alertaDevolucao<0||alertaDevolucao>100)throw Error('Limite de devoluções deve estar entre 0% e 100%.');
+ const variacaoCenario=opcoes.variacaoCenario===undefined?10:Number(String(opcoes.variacaoCenario).replace(',','.'));
+ if(!Number.isFinite(variacaoCenario)||variacaoCenario<0||variacaoCenario>100)throw Error('Variação do cenário deve estar entre 0% e 100%.');
  const colunas=COLUNAS[slug];if(!colunas)throw Error('Ferramenta desconhecida.');
  const linhas=lerTabelaOperacional(entrada);
  if(linhas.length<2||linhas.length>501)throw Error('Informe entre 1 e 500 registros.');
@@ -113,10 +115,10 @@ export function calcularLote(slug,entrada,opcoes={}){
     const [preco,custo,fixo]=v;const margem=preco-custo;
     if(margem<=0)throw Error('Preço precisa superar custo variável para existir equilíbrio.');
     resultado=Math.ceil(fixo/margem);
-    const cenarioMenos=Math.ceil(arred(fixo*0.9)/margem-1e-10);
-    const cenarioMais=Math.ceil(arred(fixo*1.1)/margem-1e-10);
+    const cenarioMenos=Math.ceil((fixo*(1-variacaoCenario/100))/margem-1e-10);
+    const cenarioMais=Math.ceil((fixo*(1+variacaoCenario/100))/margem-1e-10);
     detalhe='Margem unitária '+dinheiro(margem)+' · receita de equilíbrio '+dinheiro(resultado*preco)+
-      ' · cenários de custo fixo -10%: '+cenarioMenos+' pedidos / +10%: '+cenarioMais+' pedidos';
+      ' · cenários de custo fixo -'+variacaoCenario+'%: '+cenarioMenos+' pedidos / +'+variacaoCenario+'%: '+cenarioMais+' pedidos';
     break;
    }
    case 'simulador-reajuste-fornecedor':{
