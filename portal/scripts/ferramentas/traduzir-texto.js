@@ -23,6 +23,15 @@ export function obterDisponibilidade(api){
   return typeof api?.create==='function' && typeof api?.availability==='function';
 }
 export function contarCaracteres(texto){return [...String(texto)].length;}
+/** Seleciona somente idiomas suportados e resultados confiáveis do detector local. */
+export function escolherIdiomaDetectado(resultados,limiar=0.65){
+ if(!Array.isArray(resultados))throw new Error('Resposta inválida do detector de idioma.');
+ const candidato=resultados.filter(item=>item&&Object.hasOwn(IDIOMAS,item.detectedLanguage)&&Number.isFinite(item.confidence))
+   .sort((a,b)=>b.confidence-a.confidence)[0];
+ return candidato&&candidato.confidence>=limiar?{idioma:candidato.detectedLanguage,confianca:candidato.confidence}:null;
+}
+export function detectorLocalDisponivel(api){return typeof api?.availability==='function'&&typeof api?.create==='function';}
+
 export function exportarComparacaoCsv(original,traducao,origem,destino){
   if(!traducao || !original || !IDIOMAS[origem] || !IDIOMAS[destino])throw new Error('Tradução inválida para exportação.');
   const celula=(valor)=>{const texto=String(valor).replace(/^[\s\uFEFF]*([=+@-])/u,'\'$1');return '"'+texto.replace(/"/g,'""')+'"';};
@@ -81,7 +90,8 @@ export default {
   const selecionar=(nome,valor)=>{const s=criar('select');s.setAttribute('aria-label',nome);for(const [id,rotulo] of Object.entries(IDIOMAS)){const o=criar('option','',rotulo);o.value=id;s.append(o);}s.value=valor;return s;};
   const origem=selecionar('Idioma de origem','pt'),destino=selecionar('Idioma de destino','en');
   const inverter=criar('button','botão','Inverter idiomas');inverter.type='button';inverter.setAttribute('aria-label','Inverter idiomas de origem e destino');
-  linha.append(origem,inverter,destino);
+  const detectar=criar('button','botão','Detectar idioma');detectar.type='button';detectar.setAttribute('aria-label','Detectar idioma do texto localmente');
+  linha.append(origem,inverter,destino,detectar);
   const contador=criar('p','suave');contador.setAttribute('aria-live','polite');
   const atualizarContador=()=>{contador.textContent=`${contarCaracteres(entrada.value).toLocaleString('pt-BR')} caracteres · máximo 10.000`;};
   entrada.addEventListener('input',atualizarContador);atualizarContador();
@@ -129,6 +139,33 @@ export default {
       atualizarContador();status.textContent='Comparação restaurada. Revise e exporte sem traduzir novamente.';
     }catch(erro){if(idImportacao===geracao)status.textContent=erro.message||'Não foi possível restaurar a comparação.';}
     finally{restaurar.value='';}
+  });
+  detectar.addEventListener('click',async()=>{
+    const api=globalThis.LanguageDetector;
+    if(!entrada.value.trim()){status.textContent='Digite um texto antes de detectar o idioma.';return;}
+    if(!detectorLocalDisponivel(api)){status.textContent='Este navegador não oferece detecção local de idioma.';return;}
+    const id=geracao;
+    detectar.disabled=true;
+    let detector;
+    try{
+      status.textContent='Detectando idioma no aparelho…';
+      const disponibilidade=await api.availability();
+      if(id!==geracao)return;
+      if(disponibilidade==='unavailable')throw new Error('Detecção local indisponível neste navegador.');
+      detector=await api.create();
+      if(id!==geracao)return;
+      const resultados=await detector.detect(entrada.value.slice(0,4000));
+      if(id!==geracao)return;
+      const escolha=escolherIdiomaDetectado(resultados);
+      if(!escolha){status.textContent='Idioma não identificado com segurança. Selecione manualmente.';return;}
+      if(escolha.idioma===destino.value){
+        status.textContent='Idioma detectado: '+IDIOMAS[escolha.idioma]+'. Altere o idioma de destino antes de traduzir.';
+        origem.value=escolha.idioma;invalidar();return;
+      }
+      origem.value=escolha.idioma;invalidar();
+      status.textContent='Idioma detectado: '+IDIOMAS[escolha.idioma]+' ('+Math.round(escolha.confianca*100)+'% de confiança).';
+    }catch(erro){if(id===geracao)status.textContent=erro.message||'Não foi possível detectar o idioma.';}
+    finally{detector?.destroy?.();detectar.disabled=false;}
   });
   cancelar.addEventListener('click',()=>{invalidar();status.textContent='Tradução cancelada.';});
   inverter.addEventListener('click',()=>{const anterior=resultado.value;invalidar();[origem.value,destino.value]=[destino.value,origem.value];if(anterior)entrada.value=anterior;status.textContent='Idiomas invertidos. Traduza novamente.';atualizarContador();});
