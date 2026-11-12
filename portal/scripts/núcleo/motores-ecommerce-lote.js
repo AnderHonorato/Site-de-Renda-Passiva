@@ -76,7 +76,11 @@ export function lerTabelaOperacional(texto){
  if(campo!==''||linha.length) {linha.push(campo);linhas.push(linha);}
  return linhas;
 }
-export function calcularLote(slug,entrada){
+export function calcularLote(slug,entrada,opcoes={}){
+ const margemPercentual=opcoes.margemPercentual===undefined?20:Number(opcoes.margemPercentual);
+ const alertaDevolucao=opcoes.alertaDevolucao===undefined?20:Number(opcoes.alertaDevolucao);
+ if(!Number.isFinite(margemPercentual)||margemPercentual<0||margemPercentual>99)throw Error('Meta de margem deve estar entre 0% e 99%.');
+ if(!Number.isFinite(alertaDevolucao)||alertaDevolucao<0||alertaDevolucao>100)throw Error('Limite de devoluções deve estar entre 0% e 100%.');
  const colunas=COLUNAS[slug];if(!colunas)throw Error('Ferramenta desconhecida.');
  const linhas=lerTabelaOperacional(entrada);
  if(linhas.length<2||linhas.length>501)throw Error('Informe entre 1 e 500 registros.');
@@ -94,16 +98,16 @@ export function calcularLote(slug,entrada){
     if(comissao>100||imposto>100)throw Error('Percentuais não podem superar 100.');
     resultado=preco-cmv-preco*(comissao+imposto)/100-tarifa-frete-ads;
     const piso=100-comissao-imposto>0?(cmv+tarifa+frete+ads)/(1-(comissao+imposto)/100):null;
-    const margemAlvo=0.2;
+    const margemAlvo=margemPercentual/100;
     const divisorAlvo=1-(comissao+imposto)/100-margemAlvo;
     const precoMeta=divisorAlvo>0?(cmv+tarifa+frete+ads)/divisorAlvo:null;
-    detalhe=(preco?arred(resultado/preco*100)+'% de margem':'Sem receita')+' · preço de equilíbrio '+(piso===null?'inviável':dinheiro(piso))+' · preço para margem de 20% '+(precoMeta===null?'inviável':dinheiro(precoMeta));if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição negativa');}break;
+    detalhe=(preco?arred(resultado/preco*100)+'% de margem':'Sem receita')+' · preço de equilíbrio '+(piso===null?'inviável':dinheiro(piso))+' · preço para margem de '+margemPercentual+'% '+(precoMeta===null?'inviável':dinheiro(precoMeta));if(resultado<0){abaixoMeta++;alertas.push(nome+': contribuição negativa');}break;
    }
    case 'simulador-devolucoes':{
     const [pedidos,taxa,frete,inspecao,perda]=v;
     if(!Number.isInteger(pedidos)||taxa>100)throw Error('Pedidos devem ser inteiros e taxa até 100%.');
     resultado=pedidos*taxa/100*(frete+inspecao+perda);
-    detalhe=arred(pedidos*taxa/100)+' devoluções esperadas · custo por pedido '+dinheiro(pedidos?resultado/pedidos:0);pedidosTotal+=pedidos;if(taxa>20){abaixoMeta++;alertas.push(nome+': devolução acima de 20%');}break;
+    detalhe=arred(pedidos*taxa/100)+' devoluções esperadas · custo por pedido '+dinheiro(pedidos?resultado/pedidos:0);pedidosTotal+=pedidos;if(taxa>alertaDevolucao){abaixoMeta++;alertas.push(nome+': devolução acima de '+alertaDevolucao+'%');}break;
    }
    case 'analise-ponto-equilibrio-canais':{
     const [preco,custo,fixo]=v;const margem=preco-custo;
