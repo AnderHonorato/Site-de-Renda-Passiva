@@ -1,0 +1,36 @@
+name: Validar ferramentas e-commerce F247-F251
+on:
+  push:
+    branches: [ander-flow/v1]
+    paths:
+      - 'portal/scripts/núcleo/motores-ecommerce-lote.js'
+      - 'portal/scripts/núcleo/ferramentas-ecommerce-lote.js'
+      - 'portal/scripts/ferramentas/auditoria-margem-marketplace.js'
+      - 'portal/scripts/ferramentas/simulador-devolucoes.js'
+      - 'portal/scripts/ferramentas/analise-ponto-equilibrio-canais.js'
+      - 'portal/scripts/ferramentas/simulador-reajuste-fornecedor.js'
+      - 'portal/scripts/ferramentas/planejamento-meta-roas.js'
+      - 'portal/testes/lote-ecommerce-f247-f251.test.mjs'
+      - 'portal/dados/catálogo/avançadas.js'
+      - 'portal/dados/traduções/en/catálogo-avançadas.js'
+      - '.github/workflows/validar-lote-ecommerce-f247-f251.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validar sintaxe
+        run: |
+          node --check portal/scripts/núcleo/motores-ecommerce-lote.js
+          node --check portal/scripts/núcleo/ferramentas-ecommerce-lote.js
+          node --check portal/dados/catálogo/avançadas.js
+          node --check portal/dados/traduções/en/catálogo-avançadas.js
+      - name: Executar testes matemáticos
+        run: node --test portal/testes/lote-ecommerce-f247-f251.test.mjs
