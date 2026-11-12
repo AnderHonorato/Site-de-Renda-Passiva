@@ -68,7 +68,7 @@ export default {
     if(sinal.aborted)return;
     resultado.value=traducao;copiar.disabled=baixar.disabled=false;
     status.textContent='Tradução concluída. Revise expressões e termos técnicos.';
-   }catch(e){if(id===geracao&&e?.name!=='AbortError')status.textContent=e?.message||'Não foi possível traduzir.';}
+   }catch(e){if((id===geracao||(id===geracao+1&&!controlador))&&e?.name!=='AbortError')status.textContent=e?.message||'Não foi possível traduzir.';}
    finally{if(id===geracao){tradutor?.destroy?.();tradutor=null;encerrar(id);}}
   });
   copiar.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(resultado.value);status.textContent='Tradução copiada.';}catch{status.textContent='Não foi possível copiar automaticamente. Selecione o resultado.';}});
