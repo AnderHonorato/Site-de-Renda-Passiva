@@ -70,7 +70,7 @@ export default {
   const baixarHtml=criar('button','botão','Comparação para imprimir');baixarHtml.type='button';baixarHtml.disabled=true;
   const botoes=criar('div');botoes.style.cssText='display:flex;flex-wrap:wrap;gap:12px;margin:12px 0';botoes.append(executar,cancelar,copiar,baixar,baixarCsv,baixarJson,baixarHtml);
   const status=criar('p','suave','Pronto para traduzir');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  const resultado=criar('textarea');resultado.readOnly=true;resultado.rows=7;resultado.placeholder='A tradução aparecerá aqui';resultado.setAttribute('aria-label','Texto traduzido');
+  const resultado=criar('textarea');resultado.readOnly=false;resultado.rows=7;resultado.placeholder='A tradução aparecerá aqui. Você pode revisar e editar o resultado antes de exportar.';resultado.setAttribute('aria-label','Texto traduzido, editável para revisão');
   painel.append(titulo,aviso,entrada,importar,limpar,contador,linha,botoes,status,resultado);raiz.append(painel);
   let controlador=null,tradutor=null,geracao=0;
   const encerrar=(id)=>{if(id!==geracao)return;executar.disabled=false;cancelar.disabled=true;controlador=null;};
@@ -115,6 +115,7 @@ export default {
    }catch(e){if((id===geracao||(id===geracao+1&&!controlador))&&e?.name!=='AbortError')status.textContent=e?.message||'Não foi possível traduzir.';}
    finally{if(id===geracao){tradutor?.destroy?.();tradutor=null;encerrar(id);}}
   });
+  resultado.addEventListener('input',()=>{const temTexto=Boolean(resultado.value.trim());copiar.disabled=baixar.disabled=baixarCsv.disabled=baixarJson.disabled=baixarHtml.disabled=!temTexto;status.textContent=temTexto?'Tradução revisada manualmente. Exporte a versão editada.':'Resultado vazio. Traduza novamente ou escreva a revisão.';});
   copiar.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(resultado.value);status.textContent='Tradução copiada.';}catch{status.textContent='Não foi possível copiar automaticamente. Selecione o resultado.';}});
   baixarHtml.addEventListener('click',()=>{if(!resultado.value)return;const html=exportarComparacaoHtml(entrada.value,resultado.value,origem.value,destino.value);const url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));const a=criar('a');a.href=url;a.download='comparacao-traducao-ander-flow.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
   baixarJson.addEventListener('click',()=>{if(!resultado.value)return;const json=exportarComparacaoJson(entrada.value,resultado.value,origem.value,destino.value);const url=URL.createObjectURL(new Blob([json],{type:'application/json;charset=utf-8'}));const a=criar('a');a.href=url;a.download='comparacao-traducao-ander-flow.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
