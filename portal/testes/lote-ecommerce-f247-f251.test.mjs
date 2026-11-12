@@ -112,7 +112,7 @@ test('F251 evita previsão de pedidos sem ticket histórico',()=>{
 
 test('F247 informa preço mínimo para atingir margem de 20%',()=>{
  const r=calcularLote('auditoria-margem-marketplace','sku;preco;cmv;comissao_pct;tarifa_fixa;frete_subsidiado;ads;imposto_pct\nSKU;100;50;10;5;5;0;5');
- assert.match(r.linhas[0][2],/preço para margem de 20% R\$ 100,00/);
+ assert.match(r.linhas[0][2],/preço para margem de 20% R\$ 92,31/);
 });
 test('F247 informa meta inviável quando taxas consomem a margem',()=>{
  const r=calcularLote('auditoria-margem-marketplace','sku;preco;cmv;comissao_pct;tarifa_fixa;frete_subsidiado;ads;imposto_pct\nSKU;100;20;80;0;0;0;5');
