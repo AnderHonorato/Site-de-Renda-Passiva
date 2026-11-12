@@ -88,7 +88,7 @@ test('reajuste informa preço necessário para preservar contribuição',()=>{
 });
 test('devoluções mostram custo esperado por pedido',()=>{
  const r=calcularLote('simulador-devolucoes','sku;pedidos;taxa_devolucao_pct;frete_reverso;custo_inspecao;perda_produto\nA;100;10;12;3;5');
- assert.match(r.linhas[0][2],/R\\$\\s*2,00/);
+ assert.match(r.linhas[0][2],/R\$\\s*2,00/);
 });
 
 test('F249 exibe sensibilidade a custo fixo em dois cenários',()=>{
@@ -108,4 +108,17 @@ test('F251 evita previsão de pedidos sem ticket histórico',()=>{
  const r=calcularLote('planejamento-meta-roas',
  'campanha;investimento;receita;pedidos;meta_roas\nAds;100;0;0;3');
  assert.match(r.linhas[0][2],/não estimável/);
+});
+
+test('F247 informa preço mínimo para atingir margem de 20%',()=>{
+ const r=calcularLote('auditoria-margem-marketplace','sku;preco;cmv;comissao_pct;tarifa_fixa;frete_subsidiado;ads;imposto_pct\nSKU;100;50;10;5;5;0;5');
+ assert.match(r.linhas[0][2],/preço para margem de 20% R\$ 100,00/);
+});
+test('F247 informa meta inviável quando taxas consomem a margem',()=>{
+ const r=calcularLote('auditoria-margem-marketplace','sku;preco;cmv;comissao_pct;tarifa_fixa;frete_subsidiado;ads;imposto_pct\nSKU;100;20;80;0;0;0;5');
+ assert.match(r.linhas[0][2],/preço para margem de 20% inviável/);
+});
+test('F250 informa aumento de preço para preservar contribuição',()=>{
+ const r=calcularLote('simulador-reajuste-fornecedor','sku;custo_atual;reajuste_pct;preco_venda;taxas_pct\nSKU;50;10;100;10');
+ assert.match(r.linhas[0][2],/aumento mínimo do preço 5,56%|aumento mínimo do preço 5.56%/);
 });
