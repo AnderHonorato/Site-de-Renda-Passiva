@@ -77,3 +77,16 @@ test('CSV TSV permite cabeçalho e dados com tabulação',()=>{
  const r=calcularLote('analise-ponto-equilibrio-canais','canal\tpreco_medio\tcusto_variavel\tdespesa_fixa\nSite\t100\t60\t400');
  assert.equal(r.total,10);
 });
+
+test('preço mínimo cobre comissão, tributos e custos fixos por unidade',()=>{
+ const r=calcularLote('auditoria-margem-marketplace','sku;preco;cmv;comissao_pct;tarifa_fixa;frete_subsidiado;ads;imposto_pct\nA;100;40;10;2;5;3;5');
+ assert.match(r.linhas[0][2],/58,82/);
+});
+test('reajuste informa preço necessário para preservar contribuição',()=>{
+ const r=calcularLote('simulador-reajuste-fornecedor','sku;custo_atual;reajuste_pct;preco_venda;taxas_pct\nA;50;10;100;10');
+ assert.match(r.linhas[0][2],/105,56/);
+});
+test('devoluções mostram custo esperado por pedido',()=>{
+ const r=calcularLote('simulador-devolucoes','sku;pedidos;taxa_devolucao_pct;frete_reverso;custo_inspecao;perda_produto\nA;100;10;12;3;5');
+ assert.match(r.linhas[0][2],/R\\$\\s*2,00/);
+});
