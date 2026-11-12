@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv,validarArquivoTexto,validarConteudoImportado,exportarComparacaoJson,exportarComparacaoHtml,substituirTermoTraduzido} from '../scripts/ferramentas/traduzir-texto.js';
+import {IDIOMAS,validarTraducao,obterDisponibilidade,contarCaracteres,exportarComparacaoCsv,validarArquivoTexto,validarConteudoImportado,exportarComparacaoJson,exportarComparacaoHtml,substituirTermoTraduzido,importarComparacaoJson} from '../scripts/ferramentas/traduzir-texto.js';
 test('aceita pares de idioma distintos e texto válido',()=>{
  assert.equal(validarTraducao(' Olá ','pt','en'),'Olá');
  assert.equal(Object.keys(IDIOMAS).length,3);
@@ -66,4 +66,16 @@ test('revisão terminológica substitui todas as ocorrências literais sem regex
  assert.deepEqual(substituirTermoTraduzido('Preço R$ 10','R$','BRL'),{texto:'Preço BRL 10',ocorrencias:1});
  assert.throws(()=>substituirTermoTraduzido('abc','','x'),/termo/);
  assert.throws(()=>substituirTermoTraduzido('a'.repeat(20000),'a','bb'),/20.000/);
+});
+
+test('reabre comparações JSON exportadas sem perder conteúdo e idiomas',()=>{
+ const exportado=exportarComparacaoJson('Olá 😀','Hello 😀','pt','en');
+ assert.deepEqual(importarComparacaoJson(exportado),{origem:'pt',destino:'en',original:'Olá 😀',traducao:'Hello 😀'});
+ assert.deepEqual(importarComparacaoJson('\uFEFF'+exportado),{origem:'pt',destino:'en',original:'Olá 😀',traducao:'Hello 😀'});
+});
+test('recusa importação JSON malformada, grande, incompleta e com idiomas inválidos',()=>{
+ for(const texto of ['{','[]','null','"abc"',JSON.stringify({idioma_origem:'pt',idioma_destino:'pt',texto_original:'a',texto_traduzido:'b'}),JSON.stringify({idioma_origem:'pt',idioma_destino:'en',texto_original:'a',texto_traduzido:''}),'x'.repeat(60001)]){
+  assert.throws(()=>importarComparacaoJson(texto));
+ }
+ assert.throws(()=>importarComparacaoJson(JSON.stringify({idioma_origem:'pt',idioma_destino:'en',texto_original:'a'.repeat(10001),texto_traduzido:'b'})),/limite/);
 });
