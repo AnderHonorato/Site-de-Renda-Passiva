@@ -14,7 +14,8 @@ export function renderizarContaTopo(fim, _sessao, { idioma = 'pt' } = {}) {
   const acessar = document.createElement('a');
   acessar.className = 'conta-topo__item conta-topo__entrar';
   acessar.href = (document.documentElement.dataset.raiz || './') + 'servidor-teste.html';
-  acessar.textContent = idioma === 'en' ? 'Open full site' : 'Abrir site completo';
+  // O texto curto cabe junto aos ícones também no cabeçalho de 390 px.
+  acessar.textContent = idioma === 'en' ? 'Full site' : 'Acessar';
   acessar.setAttribute('aria-label', idioma === 'en'
     ? 'Open the full site with login and account'
     : 'Abrir o site completo com login e conta');
