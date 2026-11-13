@@ -16,11 +16,15 @@ test('o catálogo respeita as próprias regras', () => {
   assert.deepEqual(conferirCatálogo(), []);
 });
 
-test('o catálogo tem 246 ferramentas únicas', () => {
-  assert.equal(ferramentas.length, 246);
-  assert.equal(new Set(ferramentas.map((f) => f.slug)).size, 246);
-  assert.equal(new Set(ferramentas.map((f) => f.id)).size, 246);
-  assert.equal(new Set(ferramentas.map((f) => f.nome.toLowerCase())).size, 246);
+test('o catálogo mantém todos os IDs e ferramentas únicos, sem teto fixo', () => {
+  const total = ferramentas.length;
+  assert.ok(total >= 251, 'o lote F247-F251 não pode desaparecer');
+  assert.equal(new Set(ferramentas.map((f) => f.slug)).size, total);
+  assert.equal(new Set(ferramentas.map((f) => f.id)).size, total);
+  assert.equal(new Set(ferramentas.map((f) => f.nome.toLowerCase())).size, total);
+  const numeros = ferramentas.map((f) => Number(/^F(\d+)$/.exec(f.id)?.[1]));
+  assert.ok(numeros.every(Number.isInteger), 'IDs devem seguir Fxxx');
+  assert.equal(Math.max(...numeros), total, 'IDs devem avançar sem lacunas');
 });
 
 test('nenhuma ferramenta usa nome de variação artificial', () => {
