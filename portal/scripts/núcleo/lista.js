@@ -1,6 +1,7 @@
 /** Desenho da lista de ferramentas — o componente mais reaproveitado do portal. */
 import { escapar } from './texto.js';
 import { ícone } from './ícones.js';
+import { insígniaDePlano } from './insígnia-plano.js';
 import { íconeVivo, imagemDoTema, conferirÍconesVivos } from './ícone-animado.js';
 import { lerFavoritos, lerVisualizadas, alternarFavorito } from './preferências.js';
 import { avisar } from './interface.js';
@@ -26,7 +27,7 @@ export function linhaDeFerramenta(f, { base = raizDoSite, favoritada = false, vi
   const planejada = f.status === 'planejada';
   const selo = planejada
     ? `<span class="etiqueta">${escapar(t('lista.planejada'))}</span>`
-    : f.plano === 'plus' ? `<span class="etiqueta etiqueta--info">${escapar(t('lista.plus'))}</span>` : '';
+    : insígniaDePlano(f);
   // As ferramentas ainda são só em português (Onda 9): na lista em inglês o link avisa disso.
   const idiomaDoLink = éInglês && !planejada;
   const avisoDeIdioma = idiomaDoLink ? `<span class="etiqueta">${escapar(t('lista.versãoSóEmPortuguês'))}</span>` : '';

@@ -12,6 +12,8 @@
 .profissional .botão { min-height:44px;white-space:normal;text-align:center; }
 .profissional :is(input,textarea,select) { min-height:44px;min-width:0;max-width:100%; }
 .profissional__entrada { min-width:0; }
+/* Ocultar a dica no blur movia o botão Executar entre pressionar e soltar o toque. */
+#ferramenta.profissional .campo > .campo__dica { display:block; }
 .profissional__entrada textarea { width:100%;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.875rem;tab-size:3; }
 .profissional__trecho { max-height:200px;overflow:auto;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.8125rem;color:var(--tinta-média); }
 .profissional__rolagem { max-width:100%;min-width:0;overflow:auto;border:1px solid var(--borda);border-radius:var(--raio-p);background:var(--superfície); }

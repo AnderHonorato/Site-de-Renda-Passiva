@@ -13,6 +13,7 @@ import { montarPágina, escapar } from './modelo-de-página.mjs';
 import { contextoPt, contextoEn } from './contexto-de-idioma.mjs';
 import { arteDaCategoria, páginaInicial, páginaDeCatálogo, páginaDeSalvos, páginasInstitucionais, página404 } from './páginas.mjs';
 import { ícone } from '../scripts/núcleo/ícones.js';
+import { insígniaDePlano } from '../scripts/núcleo/insígnia-plano.js';
 import { ferramentas, ferramentasProntas, conferirCatálogo } from '../dados/catálogo.js';
 import { categorias, tarefas } from '../dados/categorias.js';
 import { site } from '../dados/site.js';
@@ -56,7 +57,7 @@ function páginaDeFerramenta(f, instruções) {
     .slice(0, 5)
     .map((o) => `<a class="relacionadas__item" data-relacionada="${escapar(o.slug)}" data-visitada="nao" href="../${escapar(o.slug)}/">
        <span class="relacionadas__ícone">${ícone(o.ícone)}</span>
-       <span class="relacionadas__nome">${escapar(o.nome)}</span>
+       <span class="relacionadas__nome">${escapar(o.nome)}</span>${insígniaDePlano(o, true)}
        <span class="relacionadas__visto" data-visto hidden>${ícone('confere')} Já visualizada</span>
      </a>`)
     .join('');
@@ -75,7 +76,7 @@ function páginaDeFerramenta(f, instruções) {
       <header class="ferramenta-topo">
         <span class="ferramenta-topo__ícone">${íconeVivo(f.ícone, { base: '../../', tamanho: 22 })}</span>
         <div>
-          <h1>${escapar(f.nome)}</h1>
+          <h1>${escapar(f.nome)} ${insígniaDePlano(f)}</h1>
           <p>${escapar(f.resumo)}</p>
         </div>
         <div class="ferramenta-topo__ações">
@@ -87,9 +88,14 @@ function páginaDeFerramenta(f, instruções) {
 
       <div class="ferramenta-área">
         <div class="ferramenta-corpo">
-          <div class="painel" id="ferramenta" data-slug="${escapar(f.slug)}">
-            <noscript><p>Esta ferramenta precisa de JavaScript para calcular. As instruções e informações continuam disponíveis na página.</p></noscript>
-          </div>
+          <div class="painel" id="ferramenta" data-slug="${escapar(f.slug)}">${['plus', 'premium'].includes(f.plano)
+            ? `<section class="acesso-ferramenta" aria-labelledby="titulo-acesso-ferramenta">
+              <h2 id="titulo-acesso-ferramenta">Recurso exclusivo ${f.plano === 'premium' ? 'Premium' : 'Plus'}</h2>
+              <p>A execução exige uma conta com o plano ${f.plano === 'premium' ? 'Premium' : 'Plus ou Premium'} ativo.</p>
+              <p>Entre na sua conta para verificar o acesso.</p>
+              <p><a href="../../entrar.html">Entrar na conta</a> · <a href="../../planos.html">Ver planos</a></p>
+            </section>`
+            : '<noscript><p>Esta ferramenta precisa de JavaScript para calcular. As instruções e informações continuam disponíveis na página.</p></noscript>'}</div>
         </div>
       </div>
 
@@ -143,8 +149,11 @@ function páginaDeFerramenta(f, instruções) {
     atual: 'ferramentas',
     conteúdo,
     scripts: ['núcleo/página-de-ferramenta.js'],
-    estilos: f.slug === 'limpar-planilha' ? ['limpeza-planilha.css']
-      : f.slug === 'ficha-de-cliente' ? ['ficha-de-cliente.css'] : [],
+    estilos: [
+      ...(['plus', 'premium'].includes(f.plano) ? ['acesso-ferramenta.css'] : []),
+      ...(f.slug === 'limpar-planilha' ? ['limpeza-planilha.css']
+        : f.slug === 'ficha-de-cliente' ? ['ficha-de-cliente.css'] : []),
+    ],
     anunciosPermitidos: f.cat !== 'estudos',
   });
 }
@@ -171,8 +180,10 @@ function manifesto() {
 
 /** Números que a vitrine mostra. Saem do catálogo, nunca são digitados à mão. */
 function númerosDaVitrine() {
+  const porPlano = Object.fromEntries(['gratuito', 'plus', 'premium'].map(plano =>
+    [plano, ferramentasProntas.filter(f => f.plano === plano).length]));
   return `// Gerado por ferramentas/gerar.mjs a partir do catálogo. Não edite à mão.
-export const números = Object.freeze({ prontas: ${ferramentasProntas.length}, catálogo: ${ferramentas.length}, categorias: ${categorias.length} });
+export const números = Object.freeze({ prontas: ${ferramentasProntas.length}, catálogo: ${ferramentas.length}, categorias: ${categorias.length}, gratuitas: ${porPlano.gratuito}, plus: ${porPlano.plus}, premium: ${porPlano.premium} });
 `;
 }
 

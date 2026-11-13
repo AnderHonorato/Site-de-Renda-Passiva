@@ -24,7 +24,7 @@ const escapar = (valor) => String(valor ?? '').replace(/[&<>"']/g, (c) => ESCAPE
 
 /** Itens da navegação principal, usados no topo e na barra inferior. O nome vem do dicionário. */
 const NAVEGAÇÃO = [
-  { id: 'início', href: '', ícone: 'início' },
+  { id: 'início', href: './', ícone: 'início' },
   { id: 'ferramentas', href: 'ferramentas.html', ícone: 'grade' },
   { id: 'salvos', href: 'salvos.html', ícone: 'marcador' },
   { id: 'ajuda', href: 'ajuda.html', ícone: 'ajuda' },

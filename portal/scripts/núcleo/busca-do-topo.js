@@ -9,6 +9,7 @@ import { isolarBloco, carregarBloco } from './isolar-bloco.js';
 import { t, raizDoSite, raizDoIdioma } from './idioma.js';
 import { escapar } from './texto.js';
 import { ícone } from './ícones.js';
+import { insígniaDePlano } from './insígnia-plano.js';
 
 const aqui = (arquivo) => new URL(arquivo, import.meta.url).href;
 
@@ -80,8 +81,8 @@ export function ligarBuscaDoTopo() {
         + `<a href="${raizDoIdioma}ferramentas.html?busca=${encodeURIComponent(consulta)}">${escapar(t('início.verCatálogoCompleto'))}</a></p>`;
     } else {
       caixa.innerHTML = achados.map((f, i) => {
-        const selo = f.status === 'pronta' ? '' : `<span class="etiqueta">${escapar(t('lista.planejada'))}</span>`;
-        return `<a class="sugestões__item" role="option" id="sugestão-topo-${i}" aria-label="${escapar(f.nome)}" title="${escapar(f.nome)}" aria-selected="false" href="${escapar(destinoDe(f))}">`
+        const selo = f.status === 'pronta' ? insígniaDePlano(f) : `<span class="etiqueta">${escapar(t('lista.planejada'))}</span>`;
+        return `<a class="sugestões__item" role="option" id="sugestão-topo-${i}" title="${escapar(f.nome)}" aria-selected="false" href="${escapar(destinoDe(f))}">`
           + `${ícone(f.ícone)}<span><b>${escapar(f.nome)}</b><small>${escapar(f.resumo)}</small></span>${selo}</a>`;
       }).join('');
     }

@@ -11,6 +11,7 @@ import { escapar } from './texto.js';
 import { avisar } from './interface.js';
 import { isolarBloco, carregarBloco } from './isolar-bloco.js';
 import { pulsar } from './movimento.js';
+import { protegerFerramenta } from './acesso-ferramenta.js';
 
 const raiz = document.getElementById('ferramenta');
 const slug = raiz?.dataset.slug;
@@ -93,9 +94,11 @@ function sinalizarVisualizadas() {
     const selo = cartão.querySelector('[data-visto]');
     if (selo) selo.hidden = !visualizada;
     const nome = cartão.querySelector('.relacionadas__nome')?.textContent?.trim() ?? '';
+    const plano = ferramentaPorSlug[cartão.dataset.relacionada]?.plano;
+    const acesso = plano === 'premium' ? ' — plano Premium' : plano === 'plus' ? ' — plano Plus' : '';
     cartão.setAttribute('aria-label', visualizada
-      ? nome + ' — já visualizada neste aparelho'
-      : nome + ' — ainda não visualizada');
+      ? nome + acesso + ' — já visualizada neste aparelho'
+      : nome + acesso + ' — ainda não visualizada');
   }
   // Novas recomendações antes das vistas, mantendo a ordem de relevância de cada grupo.
   cartões.sort((a, b) => Number(a.dataset.visitada === 'sim') - Number(b.dataset.visitada === 'sim'));
@@ -114,13 +117,22 @@ async function iniciar() {
   window.addEventListener('pageshow', sinalizarVisualizadas);
   // A ferramenta é um bloco à parte: se o módulo dela não carregar ou quebrar ao montar, só a
   // área dela mostra a mensagem (com "Tentar de novo"); o cabeçalho e o resto da página seguem.
-  await isolarBloco('ferramenta', async (tentativa) => {
+  let tentativas = 0;
+  const montar = async (aindaPode = () => true) => {
+    const tentativa = ++tentativas;
     const módulo = await carregarBloco(new URL(`../ferramentas/${slug}.js`, import.meta.url).href, tentativa);
+    if (!aindaPode()) return false;
     const definição = módulo.default;
     raiz.replaceChildren();
     definição.montar(raiz, ferramenta);
     escreverInstruções(definição.instruções);
-  }, { alvo: raiz });
+    return true;
+  };
+  if (ferramenta.plano !== 'gratuito') {
+    await protegerFerramenta({ raiz, ferramenta, montar });
+  } else {
+    await isolarBloco('ferramenta', () => montar(), { alvo: raiz });
+  }
 }
 
 await iniciar();

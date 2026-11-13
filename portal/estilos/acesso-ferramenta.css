@@ -1,0 +1,13 @@
+.acesso-ferramenta {
+  display: grid; justify-items: start; gap: 10px;
+  padding: clamp(4px, 2vw, 18px); max-width: 640px;
+}
+.acesso-ferramenta__icone {
+  display: grid; place-items: center; width: 38px; height: 38px;
+  color: var(--marca); background: var(--marca-fraca); border-radius: var(--raio-p);
+}
+.acesso-ferramenta__icone svg { width: 20px; height: 20px; }
+.acesso-ferramenta h2 { font-size: var(--t-lg); }
+.acesso-ferramenta p { margin: 0; overflow-wrap: anywhere; }
+.acesso-ferramenta__acoes { margin-top: 6px; }
+.acesso-ferramenta__acoes .botão:disabled { cursor: not-allowed; }

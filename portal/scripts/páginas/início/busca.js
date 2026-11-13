@@ -3,6 +3,7 @@ import { ferramentas } from '../../../dados/catálogo.js';
 import { buscar } from '../../núcleo/busca.js';
 import { escapar } from '../../núcleo/texto.js';
 import { ícone } from '../../núcleo/ícones.js';
+import { insígniaDePlano } from '../../núcleo/insígnia-plano.js';
 import { t, lista, raizDoSite, raizDoIdioma } from '../../núcleo/idioma.js';
 
 export function montar() {
@@ -44,7 +45,7 @@ export function montar() {
     } else {
       caixaDeSugestões.innerHTML = achados.map((f, i) => {
         const destino = f.status === 'pronta' ? `${raizDoSite}f/${f.slug}/` : `${raizDoIdioma}ferramentas.html#${f.slug}`;
-        const selo = f.status === 'pronta' ? '' : `<span class="etiqueta">${escapar(t('lista.planejada'))}</span>`;
+        const selo = f.status === 'pronta' ? insígniaDePlano(f) : `<span class="etiqueta">${escapar(t('lista.planejada'))}</span>`;
         return `<a class="sugestões__item" role="option" id="sugestão-${i}" aria-selected="false" href="${destino}">
           ${ícone(f.ícone)}<span><b>${escapar(f.nome)}</b><small>${escapar(f.resumo)}</small></span>${selo}</a>`;
       }).join('');

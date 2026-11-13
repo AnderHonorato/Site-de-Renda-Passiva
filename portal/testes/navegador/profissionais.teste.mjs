@@ -7,7 +7,7 @@
  * Opcionais: PLAYWRIGHT_MODULO=/caminho/index.mjs e PLAYWRIGHT_EXECUTAVEL=/usr/bin/chromium.
  * Os relatórios e capturas ficam em .execucao/profissionais-e2e/ (ignorado pelo Git).
  */
-import { test, before, after } from 'node:test';
+import { test, before, after, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
@@ -26,6 +26,7 @@ import { compactarZip } from '../../scripts/comum/exportação/compactar-zip.js'
 import * as xlsx from '../../recursos/bibliotecas/xlsx-0.20.3.mjs';
 import { biblioteca } from '../auxiliares/pdf-de-teste.mjs';
 import { montarPágina } from '../../ferramentas/modelo-de-página.mjs';
+import { ferramentasProntas } from '../../dados/catálogo.js';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const ARTEFATOS = join(RAIZ, '.execucao', 'profissionais-e2e');
@@ -64,6 +65,17 @@ async function portaLivre() {
 before(async () => {
   if (!chromium) return;
   await mkdir(ARTEFATOS, { recursive: true });
+  const candidatos = [process.env.PLAYWRIGHT_EXECUTAVEL,
+    ...String(process.env.PATH || '').split(delimiter).flatMap(p => ['chromium', 'chromium-browser', 'google-chrome'].map(n => join(p, n)))];
+  const executavel = candidatos.find(p => p && existsSync(p));
+  navegador = await chromium.launch({ headless: true, ...(executavel ? { executablePath: executavel } : {}) });
+});
+
+// Cada cenário tem API/banco próprios: usuários diferentes não compartilham a cota da mesma rede de testes.
+beforeEach(async () => {
+  if (!chromium) return;
+  logs = '';
+  filhos.length = 0;
   pasta = await mkdtemp(join(tmpdir(), 'portal-profissionais-e2e-'));
   const porta = await portaLivre();
   let portaApi = await portaLivre();
@@ -85,14 +97,9 @@ before(async () => {
   }
   assert.ok(pronto, `Servidor/API não ficaram prontos:\n${logs}`);
   banco = new DatabaseSync(join(pasta, 'teste.sqlite'));
-  const candidatos = [process.env.PLAYWRIGHT_EXECUTAVEL,
-    ...String(process.env.PATH || '').split(delimiter).flatMap(p => ['chromium', 'chromium-browser', 'google-chrome'].map(n => join(p, n)))];
-  const executavel = candidatos.find(p => p && existsSync(p));
-  navegador = await chromium.launch({ headless: true, ...(executavel ? { executablePath: executavel } : {}) });
 });
 
-after(async () => {
-  await navegador?.close();
+afterEach(async t => {
   banco?.close();
   if (servidor && servidor.exitCode === null) {
     const acabou = new Promise(resolve => servidor.once('exit', resolve));
@@ -104,8 +111,9 @@ after(async () => {
   // Apenas PIDs reportados pelo nosso desenvolver.mjs; nunca encerra um portal já aberto.
   for (const pid of filhos) { try { process.kill(pid, 'SIGTERM'); } catch { /* filho já encerrado */ } }
   if (pasta) await rm(pasta, { recursive: true, force: true });
-  if (servidor) await writeFile(join(ARTEFATOS, 'servidor.log'), logs);
+  if (servidor) await writeFile(join(ARTEFATOS, `servidor-${t.name.replace(/[^a-z0-9]+/gi, '-').slice(0, 100)}.log`), logs);
 });
+after(async () => { await navegador?.close(); });
 
 async function post(contexto, caminho, dados) {
   const csrf = (await contexto.cookies(base)).find(c => c.name === 'csrf')?.value;
@@ -140,9 +148,10 @@ async function importar(pagina, nome, buffer, mimeType = 'application/octet-stre
 }
 
 async function executar(pagina, spec) {
-  const resposta = pagina.waitForResponse(r => r.url() === `${base}/api/profissionais/${spec.slug}` && r.request().method() === 'POST');
-  await pagina.getByRole('button', { name: 'Executar análise', exact: true }).click();
-  const r = await resposta;
+  const [r] = await Promise.all([
+    pagina.waitForResponse(r => r.url() === `${base}/api/profissionais/${spec.slug}` && r.request().method() === 'POST'),
+    pagina.getByRole('button', { name: 'Executar análise', exact: true }).click(),
+  ]);
   assert.equal(r.status(), 200, `${spec.id}: ${await r.text()}`);
   const { relatorio } = await r.json();
   await pagina.locator('.profissional__resultado:visible').waitFor();
@@ -283,6 +292,115 @@ test('barra inferior aparece na abertura, antes de baixar o conteúdo e sem rola
     await contexto.close();
     await new Promise(resolve => lento.close(resolve));
   }
+});
+
+test('Início volta à capa em português, inglês e páginas internas; animação mostra a contagem completa', { skip: pular, timeout: 60000 }, async () => {
+  const contexto = await navegador.newContext({ viewport: { width: 390, height: 844 } });
+  await contexto.addCookies([{ name: 'visto_novidades', value: '999999999999999', url: base }]);
+  const pagina = await contexto.newPage();
+  try {
+    for (const [origem, destino] of [['ferramentas.html', '/'], ['en/ferramentas.html', '/en/'], [`f/${specs.F277.slug}/`, '/']]) {
+      await pagina.goto(`${base}/${origem}`, { waitUntil: 'networkidle' });
+      const essencial = pagina.getByRole('button', { name: 'Só o essencial', exact: true });
+      if (await essencial.isVisible()) await essencial.click();
+      await Promise.all([
+        pagina.waitForURL(base + destino),
+        pagina.locator('.barra-inferior a').first().click(),
+      ]);
+      assert.equal(new URL(pagina.url()).pathname, destino);
+    }
+    await pagina.waitForLoadState('networkidle');
+    await pagina.locator('#busca').fill('regressao');
+    await pagina.locator('#sugestões .insígnia-plano--premium').first().waitFor();
+    await pagina.locator('#ir-para-busca').click();
+    await pagina.locator('#busca-topo-campo').fill('regressao');
+    await pagina.locator('#busca-topo-sugestões .insígnia-plano--premium').first().waitFor();
+    for (const formato of ['paisagem', 'retrato']) {
+      await pagina.goto(`${base}/vitrine/vitrine.html?formato=${formato}&render=${formato === 'retrato' ? '1080x1920' : '1920x1080'}`, { waitUntil: 'networkidle' });
+      await pagina.waitForFunction(() => window.vitrineRender);
+      await pagina.evaluate(async () => { await window.vitrineRender.pronto; window.vitrineRender.quadro(1.98); });
+      assert.match(await pagina.locator('canvas').getAttribute('aria-label'), new RegExp(`${ferramentasProntas.length} ferramentas prontas`));
+      await pagina.locator('canvas').screenshot({ path: join(ARTEFATOS, `contador-${formato}.png`) });
+    }
+  } finally { await contexto.close(); }
+});
+
+test('plano aparece antes de abrir e ferramentas pagas não carregam nem executam sem acesso', { skip: pular, timeout: 120000 }, async () => {
+  const contexto = await navegador.newContext({ viewport: { width: 390, height: 844 } });
+  await contexto.addCookies([{ name: 'visto_novidades', value: '999999999999999', url: base }]);
+  const pagina = await contexto.newPage();
+  const modulos = [], analises = [];
+  pagina.on('request', r => {
+    const caminho = new URL(r.url()).pathname;
+    if (caminho.startsWith('/scripts/ferramentas/')) modulos.push(caminho);
+    if (r.method() === 'POST' && caminho.startsWith('/api/profissionais/')) analises.push(caminho);
+  });
+  const protegido = async (spec, estado) => {
+    await pagina.goto(`${base}/f/${spec.slug}/`, { waitUntil: 'networkidle' });
+    const essencial = pagina.getByRole('button', { name: 'Só o essencial', exact: true });
+    if (await essencial.isVisible()) await essencial.click();
+    await pagina.locator(`.acesso-ferramenta[data-acesso="${estado}"]`).waitFor();
+    assert.match(await pagina.locator('.ferramenta-topo .insígnia-plano').innerText(), spec.plano === 'premium' ? /Premium/ : /Plus/);
+    assert.equal(await pagina.locator('#ferramenta form').count(), 0);
+    assert.equal(await pagina.locator('#ferramenta input[type=file]').count(), 0);
+    assert.equal(await pagina.getByRole('button', { name: 'Execução bloqueada', exact: true }).isDisabled(), true);
+    assert.equal(modulos.includes(`/scripts/ferramentas/${spec.slug}.js`), false, 'código pago não foi carregado antes de confirmar o plano');
+    await pagina.locator('#ferramenta').dispatchEvent('submit');
+  };
+  try {
+    await pagina.goto(`${base}/ferramentas.html`, { waitUntil: 'networkidle' });
+    for (const [spec, plano] of [[specs.F277, 'Premium'], [specs.F303, 'Plus']]) {
+      const card = pagina.locator(`.ferramenta-linha[data-slug="${spec.slug}"]`);
+      assert.equal(await card.locator('.insígnia-plano').innerText(), plano);
+    }
+    await protegido(specs.F277, 'visitante');
+    const entrar = pagina.locator('.acesso-ferramenta').getByRole('link', { name: 'Entrar na conta', exact: true });
+    assert.equal(new URL(await entrar.getAttribute('href'), pagina.url()).searchParams.get('volta'), `/f/${specs.F277.slug}/`);
+    const usuario = await novaConta(contexto, 'bloqueio');
+    await protegido(specs.F277, 'plano');
+    await protegido(specs.F303, 'plano');
+    assert.deepEqual(analises, [], 'visitante e plano gratuito não enviaram análise');
+    banco.prepare('UPDATE usuarios SET plano=? WHERE usuario=?').run('plus', usuario);
+    await protegido(specs.F277, 'plano');
+    await abrir(pagina, specs.F303);
+    await pagina.getByRole('button', { name: 'Usar exemplo', exact: true }).click();
+    assert.equal(await pagina.locator('#ferramenta').evaluate(n => n.inert), false, 'formulário autorizado está interativo');
+    assert.ok(await pagina.locator('.profissional__entrada textarea').inputValue());
+    await executar(pagina, specs.F303);
+    assert.equal(analises.length, 1, 'Plus executa sua análise autorizada');
+
+    banco.prepare('UPDATE usuarios SET plano=? WHERE usuario=?').run('gratuito', usuario);
+    await pagina.evaluate(() => window.dispatchEvent(new Event('focus')));
+    await pagina.locator('.acesso-ferramenta[data-acesso="plano"]').waitFor();
+    assert.equal(await pagina.locator('.profissional__formulario, .profissional__resultado').count(), 0, 'revogação remove controles e resultado');
+    assert.equal(analises.length, 1);
+
+    banco.prepare('UPDATE usuarios SET plano=? WHERE usuario=?').run('premium', usuario);
+    await pagina.evaluate(() => window.dispatchEvent(new Event('focus')));
+    await pagina.locator('.profissional__formulario').waitFor();
+    await abrir(pagina, specs.F277);
+    const falharSessao = rota => rota.abort('internetdisconnected');
+    await pagina.route('**/api/autenticacao/sessao', falharSessao);
+    await pagina.evaluate(() => window.dispatchEvent(new Event('focus')));
+    await pagina.locator('.acesso-ferramenta[data-acesso="indisponivel"]').waitFor();
+    assert.equal(await pagina.locator('#ferramenta form').count(), 0, 'falha de sessão não mantém o formulário liberado');
+    await pagina.unroute('**/api/autenticacao/sessao', falharSessao);
+    await pagina.locator('.acesso-ferramenta').getByRole('button', { name: 'Tentar novamente', exact: true }).click();
+    await pagina.locator('.profissional__formulario').waitFor();
+    banco.prepare('DELETE FROM sessoes WHERE usuario_id=(SELECT id FROM usuarios WHERE usuario=?)').run(usuario);
+    await pagina.evaluate(() => window.dispatchEvent(new Event('focus')));
+    await pagina.locator('.acesso-ferramenta[data-acesso="visitante"]').waitFor();
+    assert.equal(await pagina.locator('#ferramenta form').count(), 0, 'sessão expirada volta a bloquear');
+    assert.equal(analises.length, 1, 'nenhuma análise foi enviada nos estados bloqueados');
+
+    await pagina.goto(`${base}/f/imc/`, { waitUntil: 'networkidle' });
+    assert.equal(await pagina.locator('.acesso-ferramenta').count(), 0, 'ferramenta gratuita continua aberta');
+    assert.ok(await pagina.locator('#ferramenta form').count() > 0);
+  } catch (falha) {
+    await pagina.screenshot({ path: join(ARTEFATOS, 'falha-bloqueio.png'), fullPage: true }).catch(() => {});
+    await writeFile(join(ARTEFATOS, 'falha-bloqueio.html'), await pagina.content());
+    throw falha;
+  } finally { await contexto.close(); }
 });
 
 for (const largura of [390, 1280]) for (const tema of ['claro', 'escuro']) {

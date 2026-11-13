@@ -63,8 +63,14 @@ test('os números da vitrine saem do catálogo', () => {
   assert.equal(números.prontas, ferramentasProntas.length);
   assert.equal(números.catálogo, ferramentas.length);
   assert.equal(números.categorias, categorias.length);
+  assert.equal(números.gratuitas, ferramentasProntas.filter(f => f.plano === 'gratuito').length);
+  assert.equal(números.plus, ferramentasProntas.filter(f => f.plano === 'plus').length);
+  assert.equal(números.premium, ferramentasProntas.filter(f => f.plano === 'premium').length);
+  assert.equal(números.gratuitas + números.plus + números.premium, números.prontas);
   for (const idioma of Object.keys(textos)) {
     assert.equal(Number(textos[idioma].número), ferramentasProntas.length, `idioma ${idioma}`);
+    assert.ok(textos[idioma].anotaçãoGrátis.includes(String(números.gratuitas)), 'a animação distingue o total gratuito');
+    assert.ok(textos[idioma].anotaçãoGrátis.includes(String(números.plus + números.premium)), 'a animação distingue o total pago');
   }
 });
 

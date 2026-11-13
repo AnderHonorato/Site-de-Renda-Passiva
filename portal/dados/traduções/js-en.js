@@ -6,6 +6,7 @@ export default Object.freeze({
   lista: {
     planejada: 'Planned',
     plus: 'Plus',
+    premium: 'Premium',
     nenhuma: 'No tools found.',
     removerFavorito: 'Remove from favorites',
     salvarFavorito: 'Save to favorites',
@@ -52,7 +53,7 @@ export default Object.freeze({
   },
   boasVindas: {
     slides: [
-      'Welcome|Ready-made tools to calculate, create and organize. No sign-up, and what you type stays on your device.',
+      'Welcome|Free tools to calculate, create and organize, plus advanced features marked Plus or Premium. Paid features require an account with an active plan.',
       'Describe the task|Type what you want to solve in the search, like “how much should I charge”. It understands intent. Press / on any page to search.',
       'The catalog is growing|We are adding PDF tools and more advanced ones. Tools that are not open yet are marked as planned.',
     ],

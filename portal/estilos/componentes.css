@@ -36,6 +36,19 @@
 .etiqueta--info { background: var(--info-fraca); color: var(--info); border-color: transparent; }
 .etiqueta svg { width: 12px; height: 12px; }
 
+/* Identifica ferramentas que exigem um dos planos pagos, com texto e ícone. */
+.insígnia-plano {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 1px 6px; border: 1px solid color-mix(in srgb, var(--marca) 28%, var(--borda));
+  border-radius: 999px; background: var(--marca-fraca); color: var(--marca);
+  font-size: 11px; font-weight: 600; line-height: 1.45; white-space: nowrap;
+}
+.insígnia-plano svg { width: 11px; height: 11px; flex: 0 0 11px; }
+.insígnia-plano--premium { background: color-mix(in srgb, var(--marca-fraca) 70%, var(--superfície)); }
+.relacionadas .insígnia-plano svg { width: 10px; height: 10px; flex-basis: 10px; }
+.sugestões__item .insígnia-plano svg { width: 11px; height: 11px; }
+.busca-topo__sugestões .sugestões__item > .insígnia-plano { grid-column: 2; justify-self: start; }
+
 /* ---------- Filtros em pílula ---------- */
 /* min-width:0 é obrigatório: como item de grade, o padrão min-width:auto faz a
    faixa rolável empurrar a largura do documento inteiro, e o navegador do

@@ -12,6 +12,7 @@ import {
   cores, categorias, limitar, progresso, misturar, curva, mola, pêndulo,
   criarAleatório, caminhoArredondado, papel, traçar, fonte,
 } from './vitrine-motor.js';
+import { colunasDoContador } from './vitrine-contador.js';
 
 const VERMELHO = categorias[0].cor;
 const VERMELHO_SOMBRA = categorias[0].sombra;
@@ -321,7 +322,7 @@ function cenaAbertura(ctx, c, tx) {
     desenharSelo(ctx, { x, y, tamanho, giro, raio, letra, escalaX, escalaY, âncoraBase });
   }
 
-  // Contador 00 → 49 (odômetro)
+  // Odômetro: inclui todas as casas do total atual, inclusive centenas e milhares.
   const entrada = progresso(t, 1.08, 1.38);
   if (entrada > 0) {
     const saída = curva.entradaCubica(progresso(t, 2.08, 2.32));
@@ -332,18 +333,18 @@ function cenaAbertura(ctx, c, tx) {
     const n = L.número;
     fonte(ctx, 'titulo', n.tamanho);
     const larguraDígito = larguraTexto(ctx, '0');
-    const larguraTotal = larguraDígito * 2;
+    const colunas = colunasDoContador(valor, Number(tx.número));
+    const larguraTotal = larguraDígito * colunas.length;
     const x0 = n.alinhar === 'center' ? n.x - larguraTotal / 2 : n.x;
     ctx.translate(x0 + larguraTotal / 2, n.y - saída * 70);
     ctx.scale(escala, escala);
     ctx.translate(-larguraTotal / 2, 0);
     const alturaLinha = n.tamanho * 0.92;
-    const unidades = valor % 10;
-    const dezenas = Math.floor(valor / 10) + Math.max(0, (valor % 10) - 9);
-    [[dezenas, 0], [unidades, larguraDígito]].forEach(([contínuo, dx], coluna) => {
+    colunas.forEach(({ continuo: contínuo, opacidade }, coluna) => {
+      const dx = coluna * larguraDígito;
       const base = Math.floor(contínuo), fração = contínuo - base;
       ctx.save();
-      if (coluna === 0) ctx.globalAlpha *= limitar(contínuo * 1.4);
+      ctx.globalAlpha *= opacidade;
       ctx.beginPath();
       ctx.rect(dx - 10, -n.tamanho * 0.86, larguraDígito + 20, n.tamanho * 1.02);
       ctx.clip();
@@ -357,7 +358,7 @@ function cenaAbertura(ctx, c, tx) {
 
   // "ferramentas"
   const f = L.ferramentas;
-  const largura = textoPipocando(ctx, tx.ferramentas, f.x, f.y, t, 1.32, { tamanho: f.tamanho, alinhar: f.alinhar, passo: 0.042, saída: 2.05, semente: 11 });
+  const largura = textoPipocando(ctx, tx.ferramentas, f.x, f.y, t, 1.32, { tamanho: f.tamanho, alinhar: f.alinhar, passo: Math.min(0.042, 0.32 / tx.ferramentas.length), saída: 2.05, semente: 11 });
 
   // sublinhado e anotação à mão
   const saídaAnotação = progresso(t, 2.05, 2.3);
@@ -367,7 +368,7 @@ function cenaAbertura(ctx, c, tx) {
   rabisco(ctx, s0, s1, sy, curva.entradaSaidaCubica(progresso(t, 1.78, 2.12)), { espessura: 10, onda: 6, voltas: 6 });
   const a = L.anotação;
   ctx.translate(a.x, a.y); ctx.rotate(-0.025);
-  textoEscrito(ctx, [tx.anotaçãoGrátis], 0, 0, progresso(t, 1.86, 2.2), { tamanho: a.tamanho, alinhar: a.alinhar });
+  textoEscrito(ctx, [tx.anotaçãoGrátis], 0, 0, progresso(t, 1.65, 1.95), { tamanho: a.tamanho, alinhar: a.alinhar });
   ctx.restore();
 }
 

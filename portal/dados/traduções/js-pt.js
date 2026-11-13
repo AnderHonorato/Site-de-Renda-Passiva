@@ -10,6 +10,7 @@ export default Object.freeze({
   lista: {
     planejada: 'Planejada',
     plus: 'Plus',
+    premium: 'Premium',
     nenhuma: 'Nenhuma ferramenta encontrada.',
     removerFavorito: 'Remover dos favoritos',
     salvarFavorito: 'Salvar nos favoritos',
@@ -56,7 +57,7 @@ export default Object.freeze({
   },
   boasVindas: {
     slides: [
-      'Bem-vindo|Ferramentas prontas para calcular, criar e organizar. Sem cadastro, e o que você digita fica no seu aparelho.',
+      'Bem-vindo|Ferramentas gratuitas para calcular, criar e organizar, além de recursos avançados identificados com Plus ou Premium. Os recursos pagos exigem conta e plano ativo.',
       'Descreva a tarefa|Escreva na busca o que você quer resolver, como “quanto devo cobrar”. Ela entende intenção. Aperte / em qualquer página para buscar.',
       'O catálogo está crescendo|Estamos acrescentando ferramentas de PDF e outras mais avançadas. As que ainda não abriram aparecem marcadas como planejadas.',
     ],
