@@ -159,7 +159,7 @@ export function criarFerramentaProfissional(slug) {
       passos: ['Confira o exemplo e as colunas esperadas antes de inserir seus dados.', 'Importe um arquivo ou cole o conteúdo; revise os dados e as opções.', 'Execute a análise com sua conta e plano ativo. O conteúdo é enviado ao servidor para processamento.', 'Revise indicadores, método e limites. Baixe o relatório completo no formato necessário.'],
       exemplo: { texto: spec.problema },
       limites: `${spec.limites} Conteúdo de até 1 MB; tabelas com até 2.000 linhas de dados. Importações de até 10 MB.`,
-      perguntas: [{ p: 'Os dados do exemplo são reais?', r: 'Não. O exemplo é fictício e serve para demonstrar o formato de entrada.' }, { p: 'Posso analisar na prévia estática?', r: 'A interface e o exemplo estão disponíveis. A execução exige a API do portal, login e o plano indicado.' }],
+      perguntas: [{ p: 'Os dados do exemplo são reais?', r: 'Não. O exemplo é fictício e serve para demonstrar o formato de entrada.' }, { p: 'Preciso entrar na conta para executar?', r: 'A execução exige conexão com o servidor do portal, login e plano ativo. Os exemplos podem ser consultados sem entrar.' }],
     },
     montar(raiz, ferramenta) {
       carregarEstilos();
@@ -180,7 +180,7 @@ export function criarFerramentaProfissional(slug) {
       if (documento) exemplo.append(elemento('pre', 'profissional__trecho', spec.exemplo.slice(0, 1300) + (spec.exemplo.length > 1300 ? '\n…' : '')));
       else {
         const [cabecalho, ...linhas] = linhasDoExemplo(spec.exemplo);
-        exemplo.append(criarTabela(cabecalho || [], linhas, 'Prévia do exemplo · até 4 linhas').rolagem);
+        exemplo.append(criarTabela(cabecalho || [], linhas, 'Exemplo · primeiras 4 linhas').rolagem);
       }
       const campo = elemento('div', 'campo profissional__entrada');
       const rotulo = elemento('label', '', documento ? 'Conteúdo do documento' : 'Dados em CSV ou TSV');
@@ -526,7 +526,7 @@ export function criarFerramentaProfissional(slug) {
             const mensagem = codigo === 401 ? 'Entre na sua conta para executar esta análise.'
               : codigo === 403 ? `Esta ferramenta requer o plano ${spec.plano === 'premium' ? 'Premium' : 'Plus'} ativo.`
                 : codigo === 503 && falha.message ? falha.message
-                : falha.indisponivel ? 'A API de análise está indisponível nesta página. Em uma prévia estática, a execução exige o servidor do portal.'
+                : falha.indisponivel ? 'A análise está indisponível neste endereço. Abra o portal conectado ao servidor para executar.'
                   : falha.message || 'Não foi possível concluir. Tente novamente.';
             mostrarFalha(mensagem, codigo, codigo !== 400 ? () => formulario.requestSubmit() : null);
           }
