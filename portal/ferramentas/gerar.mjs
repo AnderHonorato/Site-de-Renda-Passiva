@@ -30,7 +30,7 @@ const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 const RÓTULO_DE_EXPORTAÇÃO = {
   copiar: 'copiar', baixar: 'baixar arquivo', pdf: 'PDF', xlsx: 'planilha Excel',
-  csv: 'CSV', json: 'JSON', png: 'PNG', svg: 'SVG', link: 'link para compartilhar', imprimir: 'impressão',
+  csv: 'CSV', json: 'JSON', txt: 'texto TXT', png: 'PNG', svg: 'SVG', link: 'link para compartilhar', imprimir: 'impressão',
 };
 
 /* --------------------------------------------------- página de ferramenta */

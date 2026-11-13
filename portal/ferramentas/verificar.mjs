@@ -160,7 +160,8 @@ for (const página of páginas) {
 const PROIBIDOS = [
   // Sem `i`: em português "todo" e "todos" são palavras comuns; só a forma
   // toda em maiúsculas é marcação de tarefa esquecida no código.
-  { padrão: /\b(TODO|FIXME|XXX|HACK)\b/, motivo: 'marcação de tarefa pendente' },
+  // Limites Unicode evitam interpretar o sufixo de "MÉTODO" como marcador TODO.
+  { padrão: /(?<![\p{L}\p{N}_])(TODO|FIXME|XXX|HACK)(?![\p{L}\p{N}_])/u, motivo: 'marcação de tarefa pendente' },
   { padrão: /\bem breve\b/i, motivo: 'promessa sem prazo' },
   { padrão: /\blorem ipsum\b/i, motivo: 'texto de preenchimento' },
   { padrão: /console\.log\(/, motivo: 'registro de depuração' },

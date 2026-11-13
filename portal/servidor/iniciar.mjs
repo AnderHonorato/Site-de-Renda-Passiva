@@ -349,6 +349,43 @@ async function rota(req,res){
   if(favorito&&m==='DELETE'){
     const u=exigir(req);banco.prepare('DELETE FROM favoritos WHERE usuario_id=? AND slug=?').run(u.id,favorito[1]);return json(res,200,{ok:true});
   }
+  // F252–F351: plano canônico, CSRF e cota antes do upload; cálculos isolados da API.
+  const rotaProfissional = p.match(/^\/api\/profissionais\/([a-z0-9-]{2,100})$/);
+  if (rotaProfissional && m === 'POST') {
+    const { especificacaoPorSlug, planoPermiteProfissional } = await import('../dados/profissionais.js');
+    const spec = especificacaoPorSlug[rotaProfissional[1]];
+    if (!spec) throw erro(404, 'nao_encontrado');
+    const autorizar = (id) => {
+      const usuario = exigir(req);
+      if (id !== undefined && usuario.id !== id) throw erro(401, 'sessao_necessaria');
+      if (usuario.papel !== 'admin' && !planoPermiteProfissional(usuario.plano, spec.plano)) {
+        throw erro(403, spec.plano === 'premium' ? 'plano_premium_necessario' : 'plano_plus_necessario');
+      }
+      return usuario;
+    };
+    const usuario = autorizar();
+    conferirLimite('ferramentas-profissionais:' + usuario.id, 12, 60000);
+    const dados = await corpo(req, 2200000);
+    autorizar(usuario.id);
+    const controle = new AbortController();
+    const aoDesconectar = () => controle.abort();
+    res.once('close', aoDesconectar);
+    try {
+      const { executarProfissional } = await import('./profissionais/executar.mjs');
+      const relatorio = await executarProfissional(spec.slug, dados, { usuario: usuario.id, signal: controle.signal });
+      // Um plano ou uma sessão revogados durante o cálculo não recebem o relatório.
+      autorizar(usuario.id);
+      if (!res.destroyed) return json(res, 200, { relatorio });
+      return;
+    } catch (e) {
+      if (res.destroyed) return;
+      if (e?.name === 'ErroProfissional') return json(res, 400, { erro: 'dados_invalidos', mensagem: e.message.slice(0, 400) });
+      if (e?.name === 'ErroExecucaoProfissional') return json(res, e.status, { erro: 'processamento_indisponivel', mensagem: e.message });
+      throw e;
+    } finally {
+      res.off('close', aoDesconectar);
+    }
+  }
   // A autorização ocorre no servidor, ANTES de ler CSV comercial.
   if(p==='/api/premium/previsao-de-vendas'&&m==='POST'){
     const u=exigir(req);

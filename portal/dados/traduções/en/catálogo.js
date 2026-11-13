@@ -160,4 +160,4 @@ const base = {
   F151: { nome: 'Contribution margin', resumo: 'What is left from each sale to pay fixed costs and become profit, per unit and for the month.', tags: ['contribution margin', 'contribution', 'profit per sale', 'variable cost', 'margin ratio', 'left per sale'], intenções: ['what is left per sale', 'does my sale make a profit', 'how much each product contributes', 'contribution margin'] },
 };
 
-export default Object.freeze({ ...base, ...pdf, ...avançadas });
+export default Object.freeze({ ...base, ...pdf, ...avançadas, ...(await import('./catálogo-profissionais.js')).default });

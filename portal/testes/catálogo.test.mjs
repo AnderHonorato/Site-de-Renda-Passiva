@@ -37,7 +37,7 @@ test('nenhuma ferramenta usa nome de variação artificial', () => {
 test('todo campo declarado usa valores conhecidos', () => {
   const idsDeCategoria = new Set(categorias.map((c) => c.id));
   const idsDeTarefa = new Set(tarefas.map((t) => t.id));
-  const exportaçõesVálidas = new Set(['copiar', 'baixar', 'pdf', 'xlsx', 'csv', 'json', 'png', 'svg', 'link', 'imprimir']);
+  const exportaçõesVálidas = new Set(['copiar', 'baixar', 'pdf', 'xlsx', 'csv', 'json', 'txt', 'png', 'svg', 'link', 'imprimir']);
 
   for (const f of ferramentas) {
     assert.ok(idsDeCategoria.has(f.cat), `${f.id}: categoria ${f.cat}`);
