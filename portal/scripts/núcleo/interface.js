@@ -1,4 +1,5 @@
 /** Peças de interface compartilhadas: aviso flutuante, progresso e erros de campo. */
+import { criarExecucaoVisual } from './execucao-visual.js';
 
 let tempoDoAviso;
 
@@ -27,38 +28,15 @@ export function avisar(mensagem, { duração = 3200 } = {}) {
  * Controla o bloco de progresso de uma operação.
  *
  * Só existe estado de progresso quando há trabalho de verdade: nada de barra
- * falsa para fingir demora. Operações instantâneas usam direto `concluir()`.
+ * falsa para fingir demora. Operações instantâneas concluem sem espera mínima.
  * @param {HTMLElement} elemento contêiner com a classe `progresso`
  */
 export function criarProgresso(elemento) {
-  const texto = elemento.querySelector('.progresso__texto');
-  const barra = elemento.querySelector('.progresso__barra');
-
-  function pintar(rótulo, porcentagem, estado) {
-    elemento.hidden = false;
-    elemento.dataset.estado = estado;
-    if (texto) texto.textContent = rótulo;
-    if (barra) {
-      barra.style.width = `${Math.max(0, Math.min(100, porcentagem))}%`;
-      barra.parentElement?.setAttribute('role', 'progressbar');
-      barra.parentElement?.setAttribute('aria-valuenow', String(Math.round(porcentagem)));
-    }
-  }
-
-  return {
-    /** @param {string} rótulo */
-    iniciar(rótulo = 'Preparando…') { pintar(rótulo, 5, 'processando'); },
-    /** @param {number} porcentagem @param {string} rótulo */
-    andar(porcentagem, rótulo = 'Processando…') { pintar(rótulo, porcentagem, 'processando'); },
-    /** @param {string} rótulo */
-    concluir(rótulo = 'Concluído') {
-      pintar(rótulo, 100, 'concluído');
-      setTimeout(() => { elemento.hidden = true; }, 1600);
-    },
-    /** @param {string} rótulo */
-    falhar(rótulo = 'Não foi possível concluir') { pintar(rótulo, 100, 'erro'); },
-    esconder() { elemento.hidden = true; },
-  };
+  return criarExecucaoVisual(elemento, {
+    titulo: elemento.hasAttribute('data-progresso-arquivo') ? 'Seu arquivo' : 'Seu resultado',
+    tipo: elemento.hasAttribute('data-progresso-arquivo') ? 'arquivo' : 'analise',
+    compacta: elemento.hasAttribute('data-progresso-arquivo'),
+  });
 }
 
 /**

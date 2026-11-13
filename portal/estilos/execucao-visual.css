@@ -1,0 +1,80 @@
+/* Papel e terracota, como na abertura. O estado vem da operação; a animação é decorativa. */
+.execucao-visual { display:grid;gap:12px;min-width:0;max-width:100%;padding:18px;border:1px solid var(--borda);border-radius:var(--raio);background:var(--superfície-2); }
+.execucao-visual[hidden],.execucao-visual [hidden] { display:none!important; }
+.execucao-visual__topo { display:flex;align-items:center;gap:10px;min-width:0; }
+.execucao-visual__titulo { flex:1;margin:0;font-size:var(--t-sm);font-weight:600;overflow-wrap:anywhere;color:var(--tinta); }
+.execucao-visual__selo { flex:none;padding:4px 9px;border:1px solid var(--borda);border-radius:99px;background:var(--superfície);color:var(--tinta-média);font-size:var(--t-xs); }
+.execucao-visual__pausar { display:grid;place-items:center;flex:none;width:44px;height:44px;min-height:44px;padding:10px;border:1px solid var(--borda);border-radius:50%;color:var(--tinta);background:var(--superfície);cursor:pointer; }
+.execucao-visual__pausar svg { width:18px;height:18px; }
+.execucao-visual__pausar:focus-visible { outline:2px solid var(--marca);outline-offset:3px; }
+.execucao-visual__palco { min-width:0;overflow:hidden;border:1px solid var(--borda);border-radius:var(--raio-p); }
+.execucao-visual__palco canvas { display:block;width:100%;height:150px; }
+.execucao-visual .progresso__texto { margin:0;font-size:var(--t-sm);line-height:1.5;overflow-wrap:anywhere;color:var(--tinta-média); }
+.execucao-visual .progresso__trilho { height:5px; }
+.execucao-visual .progresso__trilho[data-indeterminado=sim] .progresso__barra { width:28%;animation:execucao-fluxo 1.6s ease-in-out infinite; }
+.execucao-visual[data-animacao-pausada=sim] .progresso__barra { animation-play-state:paused!important; }
+.execucao-visual__resumo { margin:0;color:var(--tinta-média);font-size:var(--t-xs);overflow-wrap:anywhere; }
+.execucao-visual__etapas { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none;counter-reset:etapa; }
+.execucao-visual__etapas li { display:flex;align-items:center;gap:7px;min-width:0;color:var(--tinta-suave);font-size:var(--t-xs); }
+.execucao-visual__etapas li::before { content:counter(etapa);counter-increment:etapa;display:grid;place-items:center;flex:none;width:22px;height:22px;border:1px solid var(--borda-forte);border-radius:50%;font-size:11px;font-variant-numeric:tabular-nums; }
+.execucao-visual__etapas li[data-fase=ativa] { color:var(--marca);font-weight:600; }
+.execucao-visual__etapas li[data-fase=ativa]::before { border-color:var(--marca);background:var(--marca-fraca); }
+.execucao-visual__etapas li[data-fase=concluida]::before { color:var(--ok);border-color:var(--ok);background:var(--ok-fraca); }
+.execucao-visual[data-estado="concluído"] { border-color:color-mix(in srgb,var(--ok) 35%,var(--borda)); }
+.execucao-visual[data-estado="concluído"] .execucao-visual__selo { color:var(--ok);background:var(--ok-fraca);border-color:transparent; }
+.execucao-visual[data-estado="concluído"] .progresso__barra { background:var(--ok); }
+.execucao-visual[data-estado=erro] { border-color:var(--erro); }
+.execucao-visual[data-estado=erro] :is(.execucao-visual__selo,.progresso__texto) { color:var(--erro); }
+.execucao-visual[data-estado=cancelado] .execucao-visual__selo { color:var(--atenção);background:var(--atenção-fraca); }
+.execucao-visual[data-compacto=sim] { gap:8px;padding:14px 16px; }
+.execucao-visual[data-compacto=sim] :is(.execucao-visual__etapas,.progresso__trilho) { display:none; }
+.execucao-visual--compacta { margin-top:12px;padding:14px; }
+.execucao-visual--compacta .execucao-visual__palco canvas { height:100px; }
+.profissional__execucao-visual { grid-column:1/-1;width:100%; }
+
+/* Resultados locais: hierarquia e espaço próprios para números, detalhes e arquivos. */
+#ferramenta #resultado.resultado { padding:0;overflow:hidden;border:1px solid var(--borda-forte);border-radius:var(--raio-g);background:var(--superfície);box-shadow:var(--sombra-2);scroll-margin-top:90px; }
+#ferramenta .resultado__cabecalho { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-bottom:1px solid var(--borda);background:var(--superfície-2); }
+#ferramenta .resultado__cabecalho p { margin:0; }
+#ferramenta [data-estado-resultado] { display:inline-flex;align-items:center;gap:7px;color:var(--ok); }
+#ferramenta [data-estado-resultado]::before { content:"";width:7px;height:7px;border-radius:50%;background:currentColor; }
+#ferramenta [data-estado-resultado=processando] { color:var(--marca); }
+#ferramenta [data-estado-resultado=pausado],#ferramenta [data-estado-resultado=cancelado] { color:var(--atenção); }
+#ferramenta [data-estado-resultado=erro] { color:var(--erro); }
+#ferramenta .resultado__principal { padding:26px 22px 22px;background:linear-gradient(125deg,var(--marca-fraca),var(--superfície) 80%); }
+#ferramenta .resultado .resultado__valor { margin:0;color:var(--tinta);font-size:clamp(1.6rem,4vw,2.7rem);line-height:1.12;letter-spacing:-.04em;overflow-wrap:anywhere;font-variant-numeric:tabular-nums; }
+#ferramenta .resultado [data-formato-resultado=texto] .resultado__valor { max-height:24rem;overflow:auto;font-size:1rem;line-height:1.65;letter-spacing:normal;white-space:pre-wrap; }
+#ferramenta .resultado__principal>p+ p { margin:12px 0 0;color:var(--tinta-média);line-height:1.6; }
+#ferramenta :is(.resultado__detalhes,.resultado__tabela,.resultado__observações,.resultado__exportações) { padding:0 22px;margin:20px 0;min-width:0; }
+#ferramenta .resultado__linhas { margin:0;gap:0; }
+#ferramenta .resultado__linhas li { gap:18px;padding:12px 0;border-bottom:1px solid var(--borda);line-height:1.5; }
+#ferramenta .resultado__linhas li span { color:var(--tinta-média);overflow-wrap:anywhere; }
+#ferramenta .resultado__linhas li b { text-align:right;max-width:65%;overflow-wrap:anywhere; }
+#ferramenta .resultado__tabela .tabela-rolagem { margin:0;border:1px solid var(--borda);border-radius:var(--raio-p); }
+#ferramenta .resultado__tabela table { margin:0;width:100%; }
+#ferramenta .resultado__tabela :is(th,td) { padding:12px 14px;font-variant-numeric:tabular-nums; }
+#ferramenta .resultado__tabela th { background:var(--superfície-2); }
+#ferramenta .resultado__tabela tbody tr:nth-child(even) { background:var(--superfície-2); }
+#ferramenta .resultado__exportações { padding-top:20px;border-top:1px solid var(--borda); }
+#ferramenta .resultado__exportações>.ações { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));gap:9px; }
+#ferramenta .resultado__exportações .botão { min-height:48px;justify-content:flex-start;white-space:normal;text-align:left;background:var(--superfície-2);border-color:var(--borda-forte); }
+#ferramenta .resultado__exportações .botão:hover:not(:disabled) { border-color:var(--marca);background:var(--marca-fraca); }
+#ferramenta .resultado>.ações { margin:0;padding:16px 22px;border-top:1px solid var(--borda);background:var(--superfície-2); }
+@keyframes execucao-fluxo { from { transform:translateX(-110%); } to { transform:translateX(460%); } }
+@media(max-width:480px) {
+  .execucao-visual { padding:14px;gap:10px; }
+  .execucao-visual__topo { flex-wrap:wrap;gap:8px; }
+  .execucao-visual__titulo { flex-basis:calc(100% - 60px); }
+  .execucao-visual__pausar { margin-left:auto; }
+  .execucao-visual__etapas { gap:5px; }
+  .execucao-visual__etapas li { flex-direction:column;gap:5px;text-align:center;font-size:.6875rem; }
+  .execucao-visual__palco canvas { height:115px; }
+  #ferramenta #resultado.resultado { border-radius:var(--raio); }
+  #ferramenta .resultado__cabecalho,#ferramenta .resultado__principal,#ferramenta .resultado>.ações { padding:16px; }
+  #ferramenta :is(.resultado__detalhes,.resultado__tabela,.resultado__observações,.resultado__exportações) { padding-left:16px;padding-right:16px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .execucao-visual .progresso__trilho[data-indeterminado=sim] .progresso__barra { animation:none;width:28%;transform:translateX(120%);opacity:.6; }
+  .execucao-visual__pausar { display:none; }
+}
+@media(forced-colors:active) { .execucao-visual__selo { border-color:CanvasText; }.execucao-visual__palco { display:none; } }

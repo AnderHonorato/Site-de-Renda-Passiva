@@ -16,6 +16,7 @@ import { registrarUso } from './uso-ferramentas.js';
 import { registrarUso as registrarUsoRecente } from './preferências.js';
 import { api } from './api.js';
 import { caminhoDoIdioma, obterSessao } from './sessão.js';
+import { aguardarPintura } from './execucao-visual.js';
 
 /** Erro de entrada: a mensagem vai para o campo indicado, não para o console. */
 export class ErroDeEntrada extends Error {
@@ -163,17 +164,20 @@ function markupDeCampo(campo) {
  *     observações?: string[],
  *     texto?: string,
  *     tabela?: { cabeçalho: string[], linhas: (string|number)[][] },
- *     arquivos?: { rótulo: string, ícone?: string, gerar: () => void }[]
+ *     rotuloEstado?: string,
+ *     arquivos?: { rótulo: string, ícone?: string, tipo?: 'acao', gerar: () => void | Promise<void> }[]
  *   },
- *   demorada?: boolean,
+ *   demorada?: boolean, // mantido para compatibilidade; toda execução explícita mostra progresso
+ *   progressoExterno?: boolean, // ciclos contínuos, como fala, controlam seu próprio visual
  *   permitirSalvarTrabalho?: boolean,
  *   registrarUsoAtivo?: boolean,
+ *   aoResultado?: (raiz: HTMLElement, saída: object) => void,
  *   aoMontar?: (raiz: HTMLElement, recalcular: (opções?: {focar?: boolean}) => Promise<void>) => void
  * }} definição
  */
 export function montarFerramenta(raiz, ferramenta, definição) {
-  const { campos, calcular, rótuloDaAção = 'Calcular', demorada = false, aoMontar,
-    permitirSalvarTrabalho = true, registrarUsoAtivo = true } = definição;
+  const { campos, calcular, rótuloDaAção = 'Calcular', aoMontar, aoResultado,
+    permitirSalvarTrabalho = true, registrarUsoAtivo = true, progressoExterno = false } = definição;
 
   raiz.innerHTML = `<form id="formulário" novalidate>
   <div class="campos campos--2">${campos.map(markupDeCampo).join('')}</div>
@@ -193,8 +197,20 @@ export function montarFerramenta(raiz, ferramenta, definição) {
   const progresso = criarProgresso(raiz.querySelector('#progresso'));
   const emInglês = document.documentElement.lang === 'en';
   let dadosAtuais = null;
+  let execuçãoAtual = 0;
+  let execuçãoExplícitaAtual = null;
+  let exportaçãoEmGeração = false;
+  let controleExportaçãoAtivo = null;
+  let geraçãoExportação = 0;
+
+  function encerrarVisualizaçãoDeExportação() {
+    geraçãoExportação++;
+    controleExportaçãoAtivo?.destruir?.();
+    controleExportaçãoAtivo = null;
+  }
 
   function desenharResultado(saída) {
+    encerrarVisualizaçãoDeExportação();
     const linhas = (saída.linhas ?? [])
       .map(([r, v]) => `<li><span>${escapar(r)}</span><b>${escapar(v)}</b></li>`).join('');
     const observações = (saída.observações ?? [])
@@ -207,26 +223,41 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       : '';
 
     const botões = [];
+    const exportações = [];
     if (saída.texto ?? saída.valor) {
       botões.push(`<button class="botão botão--linha" type="button" data-copiar>${ícone('copiar')}Copiar</button>`);
     }
     for (const [i, arquivo] of (saída.arquivos ?? []).entries()) {
-      botões.push(`<button class="botão botão--linha" type="button" data-arquivo="${i}">${ícone(arquivo.ícone ?? 'baixar')}${escapar(arquivo.rótulo)}</button>`);
+      const ação = arquivo.tipo === 'acao';
+      (ação ? botões : exportações).push(`<button class="botão botão--linha" type="button" data-arquivo="${i}"${ação ? ' data-acao-externa' : ''}>${ícone(arquivo.ícone ?? 'baixar')}${escapar(arquivo.rótulo)}</button>`);
     }
     // A exportação automática da tabela é desligada quando a ferramenta oferece
     // arquivos próprios, para não entregar um recorte da tela como se fosse tudo.
     if (saída.tabela && !saída.tabela.semExportação) {
-      botões.push(`<button class="botão botão--linha" type="button" data-tabela="csv">${ícone('baixar')}CSV</button>`);
-      botões.push(`<button class="botão botão--linha" type="button" data-tabela="xlsx">${ícone('planilha')}Planilha</button>`);
+      exportações.push(`<button class="botão botão--linha" type="button" data-tabela="csv">${ícone('baixar')}CSV</button>`);
+      exportações.push(`<button class="botão botão--linha" type="button" data-tabela="xlsx">${ícone('planilha')}Planilha</button>`);
     }
     if (permitirSalvarTrabalho) botões.push(`<button class="botão botão--linha" type="button" data-salvar-trabalho>${ícone('confere')}${emInglês ? 'Save work' : 'Salvar trabalho'}</button>`);
 
-    caixaDeResultado.innerHTML = `<p class="rótulo">Resultado</p>
-      <p class="resultado__valor">${escapar(saída.valor)}</p>
-      ${saída.resumo ? `<p class="pequeno">${escapar(saída.resumo)}</p>` : ''}
-      ${linhas ? `<ul class="resultado__linhas">${linhas}</ul>` : ''}
-      ${tabela}
-      ${observações}
+    caixaDeResultado.innerHTML = `<div class="resultado__cabecalho">
+        <p class="rótulo">Resultado</p>
+        <p class="pequeno suave" data-estado-resultado="${saída.rotuloEstado ? 'processando' : 'concluído'}">${escapar(saída.rotuloEstado || (emInglês ? 'Ready' : 'Pronto'))}</p>
+      </div>
+      <section class="resultado__principal"${String(saída.valor).length > 70 || String(saída.valor).includes('\n') ? ' data-formato-resultado="texto"' : ''} aria-label="${emInglês ? 'Main result' : 'Resultado principal'}">
+        <p class="resultado__valor">${escapar(saída.valor)}</p>
+        ${saída.resumo ? `<p class="pequeno">${escapar(saída.resumo)}</p>` : ''}
+      </section>
+      ${linhas ? `<section class="resultado__detalhes"><ul class="resultado__linhas">${linhas}</ul></section>` : ''}
+      ${tabela ? `<section class="resultado__tabela">${tabela}</section>` : ''}
+      ${observações ? `<section class="resultado__observações">${observações}</section>` : ''}
+      ${exportações.length ? `<section class="resultado__exportações t-3" aria-label="${emInglês ? 'Export result' : 'Exportar resultado'}">
+        <p class="pequeno suave">${emInglês ? 'Export result' : 'Exportar resultado'}</p>
+        <div class="ações">${exportações.join('')}</div>
+        <div class="progresso t-2" data-progresso-arquivo hidden>
+          <p class="progresso__texto"></p>
+          <div class="progresso__trilho"><div class="progresso__barra"></div></div>
+        </div>
+      </section>` : ''}
       ${botões.length ? `<div class="ações t-3">${botões.join('')}</div>` : ''}`;
     const primeiraVez = caixaDeResultado.hidden;
     caixaDeResultado.hidden = false;
@@ -278,23 +309,51 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       }
     });
 
+    const progressoArquivo = caixaDeResultado.querySelector('[data-progresso-arquivo]');
+    const andamentoArquivo = progressoArquivo ? criarProgresso(progressoArquivo) : null;
+    const botõesDeExportação = [...caixaDeResultado.querySelectorAll('[data-arquivo]:not([data-acao-externa]), [data-tabela]')];
+    async function gerarExportação(botão, gerar) {
+      if (exportaçãoEmGeração || botão.disabled) return;
+      exportaçãoEmGeração = true;
+      const idDaGeração = ++geraçãoExportação;
+      controleExportaçãoAtivo = andamentoArquivo;
+      for (const botãoExportar of botõesDeExportação) botãoExportar.disabled = true;
+      botão.setAttribute('aria-busy', 'true');
+      andamentoArquivo?.iniciar(emInglês ? 'Generating file…' : 'Gerando arquivo…');
+      try {
+        await aguardarPintura();
+        await gerar();
+        if (idDaGeração === geraçãoExportação) andamentoArquivo?.concluir(emInglês ? 'File ready' : 'Arquivo pronto');
+      } catch (erro) {
+        console.error(erro);
+        if (idDaGeração === geraçãoExportação) andamentoArquivo?.falhar(emInglês ? 'Could not generate file' : 'Não foi possível gerar o arquivo');
+        if (idDaGeração === geraçãoExportação) avisar(emInglês ? 'Could not generate the file.' : 'Não foi possível gerar o arquivo.');
+      } finally {
+        exportaçãoEmGeração = false;
+        if (idDaGeração === geraçãoExportação) controleExportaçãoAtivo = null;
+        botão.removeAttribute('aria-busy');
+        for (const botãoExportar of botõesDeExportação) botãoExportar.disabled = false;
+      }
+    }
     for (const botão of caixaDeResultado.querySelectorAll('[data-arquivo]')) {
       botão.addEventListener('click', () => {
-        try {
-          saída.arquivos[Number(botão.dataset.arquivo)].gerar();
-        } catch (erro) {
-          console.error(erro);
-          avisar('Não foi possível gerar o arquivo.');
+        const arquivo = saída.arquivos[Number(botão.dataset.arquivo)];
+        if (arquivo.tipo === 'acao') {
+          try { arquivo.gerar(); } catch { avisar('Não foi possível abrir esta ação. Tente novamente.'); }
+          return;
         }
+        void gerarExportação(botão, () => arquivo.gerar());
       });
     }
 
     for (const botão of caixaDeResultado.querySelectorAll('[data-tabela]')) {
       botão.addEventListener('click', () => {
-        const linhasDoArquivo = [saída.tabela.cabeçalho, ...saída.tabela.linhas];
-        const nome = nomeDeArquivo(ferramenta.nome);
-        if (botão.dataset.tabela === 'csv') baixarCsv(linhasDoArquivo, nome);
-        else baixarPlanilha(linhasDoArquivo, nome, { aba: ferramenta.nome.slice(0, 28) });
+        void gerarExportação(botão, () => {
+          const linhasDoArquivo = [saída.tabela.cabeçalho, ...saída.tabela.linhas];
+          const nome = nomeDeArquivo(ferramenta.nome);
+          if (botão.dataset.tabela === 'csv') return baixarCsv(linhasDoArquivo, nome);
+          return baixarPlanilha(linhasDoArquivo, nome, { aba: ferramenta.nome.slice(0, 28) });
+        });
       });
     }
   }
@@ -306,23 +365,44 @@ export function montarFerramenta(raiz, ferramenta, definição) {
    * @param {{focar?: boolean}} [opções]
    */
   async function executar({ focar = true } = {}) {
+    const mostrarProgresso = focar && !progressoExterno;
+    if (focar && execuçãoExplícitaAtual !== null) return;
+    const idDaExecução = ++execuçãoAtual;
+    if (!focar && execuçãoExplícitaAtual !== null) {
+      execuçãoExplícitaAtual = null;
+      formulário.querySelector('[type="submit"]').disabled = false;
+      progresso.esconder();
+    }
+    if (focar) {
+      execuçãoExplícitaAtual = idDaExecução;
+      formulário.querySelector('[type="submit"]').disabled = true;
+    }
     limparErros(formulário);
-    const dados = lerFormulário(formulário);
-    if (demorada) progresso.iniciar('Calculando…');
+    if (mostrarProgresso) progresso.iniciar(emInglês ? 'Calculating…' : 'Calculando…');
     try {
+      // O navegador precisa pintar o estado antes de entrar no cálculo síncrono.
+      if (focar) await aguardarPintura();
+      if (idDaExecução !== execuçãoAtual) return;
+      const dados = lerFormulário(formulário);
       const saída = await calcular(dados);
+      if (idDaExecução !== execuçãoAtual) return;
       dadosAtuais = { ...dados };
       desenharResultado(saída);
+      aoResultado?.(raiz, saída);
       registrarUsoRecente(ferramenta.slug);
       // O uso recebe só o identificador; os valores só saem do aparelho quando a pessoa toca em "Salvar trabalho".
       if (registrarUsoAtivo) void registrarUso(ferramenta.slug);
-      if (demorada) progresso.concluir('Pronto');
-      else progresso.esconder();
+      if (mostrarProgresso) progresso.concluir(emInglês ? 'Ready' : 'Pronto');
       if (focar) caixaDeResultado.focus({ preventScroll: true });
     } catch (erro) {
+      if (idDaExecução !== execuçãoAtual) return;
+      encerrarVisualizaçãoDeExportação();
       caixaDeResultado.hidden = true;
-      if (erro instanceof ErroDeEntrada) {
-        progresso.esconder();
+      if (erro?.cancelado === true) {
+        if (mostrarProgresso) progresso.cancelar(erro.message || 'Operação cancelada.');
+        avisar(erro.message || 'Operação cancelada.');
+      } else if (erro instanceof ErroDeEntrada) {
+        if (mostrarProgresso) progresso.esconder();
         const campo = erro.campo && formulário.querySelector(`[data-campo="${CSS.escape(erro.campo)}"]`);
         if (campo) {
           mostrarErro(campo, erro.message);
@@ -334,16 +414,20 @@ export function montarFerramenta(raiz, ferramenta, definição) {
         // Recusa de regra de negócio vinda de um módulo de cálculo: ele não
         // conhece os campos da tela, mas a mensagem dele é útil e precisa
         // chegar a quem está usando, em vez de morrer no console.
-        progresso.esconder();
+        if (mostrarProgresso) progresso.esconder();
         avisar(erro.message);
       } else {
         // Defeito de programação (TypeError, ReferenceError e afins): a mensagem
         // não ajuda ninguém, então vai para o console e a pessoa recebe um aviso
         // honesto de que o problema é nosso.
         console.error(erro);
-        if (demorada) progresso.falhar('Não foi possível concluir');
-        else progresso.esconder();
+        if (mostrarProgresso) progresso.falhar(emInglês ? 'Could not complete' : 'Não foi possível concluir');
         avisar('Algo deu errado aqui dentro. Confira os valores e tente de novo.');
+      }
+    } finally {
+      if (focar && execuçãoExplícitaAtual === idDaExecução) {
+        execuçãoExplícitaAtual = null;
+        formulário.querySelector('[type="submit"]').disabled = false;
       }
     }
   }
@@ -375,6 +459,10 @@ export function montarFerramenta(raiz, ferramenta, definição) {
 
   formulário.addEventListener('submit', (evento) => { evento.preventDefault(); executar(); });
   formulário.addEventListener('reset', () => {
+    execuçãoAtual++;
+    encerrarVisualizaçãoDeExportação();
+    execuçãoExplícitaAtual = null;
+    formulário.querySelector('[type="submit"]').disabled = false;
     limparErros(formulário);
     dadosAtuais = null;
     caixaDeResultado.hidden = true;
