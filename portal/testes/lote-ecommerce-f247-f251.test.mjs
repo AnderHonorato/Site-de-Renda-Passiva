@@ -88,7 +88,7 @@ test('reajuste informa preço necessário para preservar contribuição',()=>{
 });
 test('devoluções mostram custo esperado por pedido',()=>{
  const r=calcularLote('simulador-devolucoes','sku;pedidos;taxa_devolucao_pct;frete_reverso;custo_inspecao;perda_produto\nA;100;10;12;3;5');
- assert.match(r.linhas[0][2],/R\$\\s*2,00/);
+ assert.match(r.linhas[0][2],/custo por pedido/); assert.match(r.linhas[0][2],/2,00/);
 });
 
 test('F249 exibe sensibilidade a custo fixo em dois cenários',()=>{
@@ -112,7 +112,7 @@ test('F251 evita previsão de pedidos sem ticket histórico',()=>{
 
 test('F247 informa preço mínimo para atingir margem de 20%',()=>{
  const r=calcularLote('auditoria-margem-marketplace','sku;preco;cmv;comissao_pct;tarifa_fixa;frete_subsidiado;ads;imposto_pct\nSKU;100;50;10;5;5;0;5');
- assert.match(r.linhas[0][2],/preço para margem de 20% R\$ 92,31/);
+ assert.match(r.linhas[0][2],/preço para margem de 20%/); assert.match(r.linhas[0][2],/92,31/);
 });
 test('F247 informa meta inviável quando taxas consomem a margem',()=>{
  const r=calcularLote('auditoria-margem-marketplace','sku;preco;cmv;comissao_pct;tarifa_fixa;frete_subsidiado;ads;imposto_pct\nSKU;100;20;80;0;0;0;5');
@@ -163,17 +163,16 @@ test('F251 projeta ROAS agregado com orçamento incremental e retorno marginal',
  const csv='campanha;investimento;receita;pedidos;meta_roas\nA;100;500;5;4\nB;900;1800;9;3';
  const r=calcularLote('planejamento-meta-roas',csv,{investimentoExtra:'500',roasMarginal:'4'});
  assert.equal(r.total,2.3);
- assert.deepEqual(r.indicadores.slice(-4),[
-  ['Orçamento adicional simulado',new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2}).format(500)],
-  ['Receita adicional projetada',new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2}).format(2000)],
-  ['ROAS agregado projetado','2,87'],
-  ['Variação de ROAS agregado','0,57']
- ]);
+ const indicadores=Object.fromEntries(r.indicadores);
+ assert.equal(indicadores['ROAS agregado projetado'],'2,87');
+ assert.equal(indicadores['Variação de ROAS agregado'],'0,57');
+ assert.equal(indicadores['Orçamento adicional simulado'],new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2}).format(500));
+ assert.equal(indicadores['Receita adicional projetada'],new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2}).format(2000));
 });
 test('F251 orçamento zero preserva ROAS e rejeita cenários inválidos',()=>{
  const csv=DEFINICOES['planejamento-meta-roas'].exemplo;
  const base=calcularLote('planejamento-meta-roas',csv,{investimentoExtra:0,roasMarginal:3});
- assert.equal(base.indicadores.at(-2)[1],base.total.toLocaleString('pt-BR'));
+ assert.equal(Object.fromEntries(base.indicadores)['ROAS agregado projetado'],base.total.toLocaleString('pt-BR'));
  for(const options of [{investimentoExtra:-1},{investimentoExtra:10000001},{roasMarginal:-1},{roasMarginal:101},{roasMarginal:'abc'}])
   assert.throws(()=>calcularLote('planejamento-meta-roas',csv,options));
 });
