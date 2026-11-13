@@ -177,3 +177,23 @@ test('F251 orçamento zero preserva ROAS e rejeita cenários inválidos',()=>{
  for(const options of [{investimentoExtra:-1},{investimentoExtra:10000001},{roasMarginal:-1},{roasMarginal:101},{roasMarginal:'abc'}])
   assert.throws(()=>calcularLote('planejamento-meta-roas',csv,options));
 });
+
+test('F251 meta ponderada e investimento adicional mínimo por ROAS marginal',()=>{
+ const entrada='campanha;investimento;receita;pedidos;meta_roas\nA;100;200;4;3\nB;300;600;6;4';
+ const r=calcularLote('planejamento-meta-roas',entrada,{investimentoExtra:300,roasMarginal:5});
+ const indicadores=Object.fromEntries(r.indicadores);
+ assert.equal(indicadores['Meta ROAS ponderada'],'3,75');
+ assert.match(indicadores['Receita faltante para meta atual'],/700,00/);
+ assert.match(indicadores['Investimento adicional para atingir meta'],/560,00/);
+ assert.match(indicadores['Receita faltante após simulação'],/325,00/);
+});
+test('F251 sinaliza inviabilidade quando ROAS marginal não supera a meta',()=>{
+ const entrada='campanha;investimento;receita;pedidos;meta_roas\nA;100;200;4;4';
+ const r=calcularLote('planejamento-meta-roas',entrada,{investimentoExtra:100,roasMarginal:4});
+ assert.equal(Object.fromEntries(r.indicadores)['Investimento adicional para atingir meta'],'Inviável com ROAS marginal informado');
+});
+test('F251 meta já atingida não requer investimento adicional',()=>{
+ const entrada='campanha;investimento;receita;pedidos;meta_roas\nA;100;500;4;4';
+ const r=calcularLote('planejamento-meta-roas',entrada);
+ assert.match(Object.fromEntries(r.indicadores)['Investimento adicional para atingir meta'],/0,00/);
+});
