@@ -232,12 +232,12 @@ ${módulos}
 <body>
   <a class="pular" href="#conteúdo">${escapar(ctx.t('moldura.pular'))}</a>
 ${cabeçalho(ctx, base, atual, todas)}
+${barraInferior(ctx, base, atual)}
   <main id="conteúdo">
 ${conteúdo}
 ${anunciosPermitidos ? '    <div class="largura"><div data-anuncio-posicao="rodape" class="publicidade-vazia"></div></div>' : ''}
   </main>
 ${rodapé(ctx, base, todas)}
-${barraInferior(ctx, base, atual)}
   <div class="notificação" id="aviso" role="status" aria-live="polite"></div>
   <script type="module" src="${raiz}scripts/núcleo/cabeçalho.js"></script>
   <script type="module" src="${raiz}scripts/núcleo/consentimento.js"></script>

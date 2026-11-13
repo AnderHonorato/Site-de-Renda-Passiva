@@ -12,6 +12,7 @@ import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { createServer } from 'node:net';
+import { createServer as criarServidorHttp } from 'node:http';
 import { DatabaseSync } from 'node:sqlite';
 import { existsSync } from 'node:fs';
 import { readFile, writeFile, mkdir, mkdtemp, rm } from 'node:fs/promises';
@@ -24,6 +25,7 @@ import { lerCsv } from '../../scripts/cálculos/tabular.js';
 import { compactarZip } from '../../scripts/comum/exportação/compactar-zip.js';
 import * as xlsx from '../../recursos/bibliotecas/xlsx-0.20.3.mjs';
 import { biblioteca } from '../auxiliares/pdf-de-teste.mjs';
+import { montarPágina } from '../../ferramentas/modelo-de-página.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const ARTEFATOS = join(RAIZ, '.execucao', 'profissionais-e2e');
@@ -227,6 +229,62 @@ function docxDe(texto) {
 }
 
 let indice = 0;
+test('barra inferior aparece na abertura, antes de baixar o conteúdo e sem rolagem ou JavaScript', { skip: pular, timeout: 30000 }, async () => {
+  const html = montarPágina({
+    título: 'Abertura móvel', descrição: 'Teste da navegação inicial', atual: 'início',
+    base: `${base}/`, raiz: `${base}/`,
+    conteúdo: '<section style="min-height:3000px">Conteúdo ainda em transferência</section>',
+  });
+  const corte = html.indexOf('<main id="conteúdo">');
+  let liberar;
+  const restante = new Promise(resolve => { liberar = resolve; });
+  const lento = criarServidorHttp(async (_req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
+    res.write(html.slice(0, corte));
+    await restante;
+    res.end(html.slice(corte));
+  });
+  await new Promise(resolve => lento.listen(0, '127.0.0.1', resolve));
+  const contexto = await navegador.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, javaScriptEnabled: false });
+  const pagina = await contexto.newPage();
+  try {
+    await pagina.goto(`http://127.0.0.1:${lento.address().port}/`, { waitUntil: 'commit' });
+    await pagina.locator('.topo').waitFor({ state: 'visible' });
+    await pagina.locator('.barra-inferior').waitFor({ state: 'visible', timeout: 3000 });
+    const conferir = async () => {
+      const visivel = await pagina.locator('.barra-inferior').evaluate(nav => {
+        const r = nav.getBoundingClientRect();
+        return { topo: r.top, fundo: r.bottom, altura: innerHeight, alvos: [...nav.querySelectorAll('a')].every(a => {
+          const b = a.getBoundingClientRect();
+          return a.contains(document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2));
+        }) };
+      });
+      assert.ok(visivel.topo >= 0 && Math.abs(visivel.fundo - visivel.altura) <= 1, JSON.stringify(visivel));
+      assert.equal(visivel.alvos, true, 'os quatro menus ficam visíveis e recebem toque');
+    };
+    assert.equal(await pagina.evaluate(() => scrollY), 0);
+    assert.equal(await pagina.locator('main').count(), 0, 'o restante do documento ainda não chegou');
+    await conferir();
+    await pagina.screenshot({ path: join(ARTEFATOS, 'barra-abertura-lenta.png') });
+    liberar();
+    await pagina.waitForLoadState('load');
+    for (const altura of [650, 844]) {
+      await pagina.setViewportSize({ width: 390, height: altura });
+      await conferir();
+      await pagina.evaluate(() => window.scrollTo(0, 500));
+      assert.ok(await pagina.evaluate(() => scrollY > 0), 'a página realmente rolou');
+      await conferir();
+      await pagina.evaluate(() => window.scrollTo(0, 0));
+    }
+    await pagina.setViewportSize({ width: 1280, height: 900 });
+    assert.equal(await pagina.locator('.barra-inferior').isVisible(), false, 'desktop mantém a navegação do topo');
+  } finally {
+    liberar();
+    await contexto.close();
+    await new Promise(resolve => lento.close(resolve));
+  }
+});
+
 for (const largura of [390, 1280]) for (const tema of ['claro', 'escuro']) {
   const primeiro = ++indice === 1;
   const conta = indice;
