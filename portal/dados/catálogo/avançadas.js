@@ -1,7 +1,7 @@
 /**
  * Catálogo: ferramentas avançadas — as mais usadas e mais completas fora do PDF.
  *
- * São todas `planejada`. A escolha do motor (navegador ou servidor), as bibliotecas, as licenças, o
+ * Ferramentas em desenvolvimento permanecem `planejada`; as concluídas são `pronta`. A escolha do motor (navegador ou servidor), as bibliotecas, as licenças, o
  * tamanho do download e a dificuldade de cada uma estão em `documentação/catalogo-ampliado.md`.
  * `local: true` só quando tudo roda no navegador; `local: false` mostra "exige servidor" ao visitante.
  */
@@ -1110,7 +1110,7 @@ export const ferramentas = [
   },
 {
     id: 'F247', slug: 'auditoria-margem-marketplace', nome: 'Auditoria de margem por marketplace', cat: 'vendas',
-    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'planejada',
+    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'pronta',
     resumo: 'Margem por SKU após comissões, tarifas, frete, Ads e tributos.', problema: 'Analisar decisões de operação de e-commerce com dados reais.',
     entra: 'Tabela CSV editável com exemplos e validação de campos.',
     processa: 'Calcula indicadores determinísticos por registro, sem envio para servidor.',
@@ -1121,7 +1121,7 @@ export const ferramentas = [
   },
   {
     id: 'F248', slug: 'simulador-devolucoes', nome: 'Simulador de custos de devoluções', cat: 'operações',
-    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'planejada',
+    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'pronta',
     resumo: 'Estima custos de logística reversa, inspeção e perdas por devoluções.', problema: 'Analisar decisões de operação de e-commerce com dados reais.',
     entra: 'Tabela CSV editável com exemplos e validação de campos.',
     processa: 'Calcula indicadores determinísticos por registro, sem envio para servidor.',
@@ -1132,7 +1132,7 @@ export const ferramentas = [
   },
   {
     id: 'F249', slug: 'analise-ponto-equilibrio-canais', nome: 'Ponto de equilíbrio por canal de vendas', cat: 'dinheiro',
-    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'planejada',
+    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'pronta',
     resumo: 'Calcula vendas necessárias para cobrir despesas fixas por canal.', problema: 'Analisar decisões de operação de e-commerce com dados reais.',
     entra: 'Tabela CSV editável com exemplos e validação de campos.',
     processa: 'Calcula indicadores determinísticos por registro, sem envio para servidor.',
@@ -1143,7 +1143,7 @@ export const ferramentas = [
   },
   {
     id: 'F250', slug: 'simulador-reajuste-fornecedor', nome: 'Simulador de reajuste de fornecedores', cat: 'operações',
-    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'planejada',
+    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'pronta',
     resumo: 'Compara contribuição antes e depois do reajuste do custo de compra.', problema: 'Analisar decisões de operação de e-commerce com dados reais.',
     entra: 'Tabela CSV editável com exemplos e validação de campos.',
     processa: 'Calcula indicadores determinísticos por registro, sem envio para servidor.',
@@ -1154,7 +1154,7 @@ export const ferramentas = [
   },
   {
     id: 'F251', slug: 'planejamento-meta-roas', nome: 'Planejamento de ROAS e CPA de campanhas', cat: 'vendas',
-    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'planejada',
+    ícone: 'gráfico', tarefas: ['analisar','calcular'], status: 'pronta',
     resumo: 'Analisa ROAS agregado, CPA e receita necessária para alcançar a meta.', problema: 'Analisar decisões de operação de e-commerce com dados reais.',
     entra: 'Tabela CSV editável com exemplos e validação de campos.',
     processa: 'Calcula indicadores determinísticos por registro, sem envio para servidor.',
