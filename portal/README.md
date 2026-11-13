@@ -127,6 +127,8 @@ A indexação não é garantida. Ainda é preciso validar cobertura no Search Co
 
 ## Servidor completo na nuvem — testes isolados
 
+Veja o [comparativo de hospedagens gratuitas](documentacao/hospedagem-gratuita.md) e o [guia Oracle Always Free](documentacao/implantacao-oracle.md), com limites, cadastro necessário e persistência do banco.
+
 A prévia estática do GitHub Pages continua independente. Para testar a API em uma hospedagem Node 22+, configure a pasta raiz `portal` e execute `npm run gerar` durante a construção. Na inicialização use `npm run nuvem`, com as variáveis:
 
 - `NODE_ENV=production` e `PORT` fornecida pela plataforma.
