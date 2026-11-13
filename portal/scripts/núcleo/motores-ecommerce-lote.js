@@ -92,7 +92,7 @@ export function calcularLote(slug,entrada,opcoes={}){
  if(linhas.length<2||linhas.length>501)throw Error('Informe entre 1 e 500 registros.');
  const cab=linhas.shift().map(s=>s.trim().toLowerCase());
  if(cab.join('|')!==colunas.join('|'))throw Error('Cabeçalho inválido. Use o exemplo como modelo.');
- const vistos=new Set(),saida=[];let total=0;let investimentoTotal=0,receitaTotal=0;let pedidosTotal=0;let abaixoMeta=0;const alertas=[];let investimentoExtraDistribuido=0;
+ const vistos=new Set(),saida=[];let total=0;let investimentoTotal=0,receitaTotal=0;let pedidosTotal=0;let receitaMetaTotal=0;let abaixoMeta=0;const alertas=[];let investimentoExtraDistribuido=0;
  for(const [i,linha] of linhas.entries()){
   const partes=linha;if(partes.length!==colunas.length)throw Error('Linha '+(i+2)+': quantidade incorreta de colunas.');
   const nome=partes[0].trim();if(!nome||nome.length>80||/^[=+@\-\t\r\n]/.test(nome)||/[\x00-\x1f]/.test(nome)||vistos.has(nome))throw Error('Identificador vazio, longo ou repetido na linha '+(i+2)+'.');
@@ -139,7 +139,7 @@ export function calcularLote(slug,entrada,opcoes={}){
     const [investimento,receita,pedidos,meta]=v;
     if(investimento<=0||meta<=0||!Number.isInteger(pedidos))throw Error('Investimento e meta devem ser positivos; pedidos inteiros.');
     resultado=receita/investimento;investimentoTotal+=investimento;receitaTotal+=receita;pedidosTotal+=pedidos;
-    const receitaAlvo=investimento*meta;
+    const receitaAlvo=investimento*meta;receitaMetaTotal+=receitaAlvo;
     const faltaReceita=Math.max(0,receitaAlvo-receita);
     const pedidosAdicionais=pedidos>0&&receita>0?Math.ceil(faltaReceita/(receita/pedidos)):null;
     detalhe='CPA '+(pedidos?dinheiro(investimento/pedidos):'sem pedidos')+
@@ -153,6 +153,14 @@ export function calcularLote(slug,entrada,opcoes={}){
  const roasProjetado=slug==='planejamento-meta-roas'?
    (receitaTotal+investimentoExtra*roasMarginal)/(investimentoTotal+investimentoExtra):null;
  const receitaIncremental=investimentoExtra*roasMarginal;
+ const metaRoasAgregada=slug==='planejamento-meta-roas'?receitaMetaTotal/investimentoTotal:null;
+ const deficitMeta=Math.max(0,receitaMetaTotal-receitaTotal);
+ const diferencaMarginal=roasMarginal-metaRoasAgregada;
+ const investimentoParaMeta=slug!=='planejamento-meta-roas'||deficitMeta===0?0:
+   diferencaMarginal>0?deficitMeta/diferencaMarginal:null;
+ const receitaMetaProjetada=receitaMetaTotal+investimentoExtra*metaRoasAgregada;
+ const deficitProjetado=slug==='planejamento-meta-roas'?
+   Math.max(0,receitaMetaProjetada-(receitaTotal+receitaIncremental)):0;
  const roasProjetadoTexto=roasProjetado===null?'—':arred(roasProjetado).toLocaleString('pt-BR');
- return {cabecalho:['Identificador',slug==='analise-ponto-equilibrio-canais'?'Pedidos para equilíbrio':slug==='planejamento-meta-roas'?'ROAS':'Resultado (R$)','Detalhe'],linhas:saida,total:arred(slug==='planejamento-meta-roas'?receitaTotal/investimentoTotal:total),unidade:slug==='analise-ponto-equilibrio-canais'?'pedidos':slug==='planejamento-meta-roas'?'ROAS agregado':'R$',observacao:slug==='planejamento-meta-roas'?'ROAS agregado calculado como receita total dividida pelo investimento total.':'Simulação gerencial com valores informados; confirme custos reais.',alertas,abaixoMeta,indicadores:slug==='planejamento-meta-roas'?[['Investimento total',dinheiro(investimentoTotal)],['Receita atribuída',dinheiro(receitaTotal)],['CPA agregado',pedidosTotal?dinheiro(investimentoTotal/pedidosTotal):'Sem pedidos'],['Orçamento adicional simulado',dinheiro(investimentoExtra)],['Receita adicional projetada',dinheiro(receitaIncremental)],['ROAS agregado projetado',roasProjetadoTexto],['Variação de ROAS agregado',roasProjetado===null?'—':(arred(roasProjetado-receitaTotal/investimentoTotal)).toLocaleString('pt-BR')]]:slug==='simulador-devolucoes'?[['Pedidos avaliados',String(pedidosTotal)],['Custo esperado',dinheiro(total)]]:[['Registros com alerta',String(abaixoMeta)]]};
+ return {cabecalho:['Identificador',slug==='analise-ponto-equilibrio-canais'?'Pedidos para equilíbrio':slug==='planejamento-meta-roas'?'ROAS':'Resultado (R$)','Detalhe'],linhas:saida,total:arred(slug==='planejamento-meta-roas'?receitaTotal/investimentoTotal:total),unidade:slug==='analise-ponto-equilibrio-canais'?'pedidos':slug==='planejamento-meta-roas'?'ROAS agregado':'R$',observacao:slug==='planejamento-meta-roas'?'ROAS agregado calculado como receita total dividida pelo investimento total.':'Simulação gerencial com valores informados; confirme custos reais.',alertas,abaixoMeta,indicadores:slug==='planejamento-meta-roas'?[['Investimento total',dinheiro(investimentoTotal)],['Receita atribuída',dinheiro(receitaTotal)],['CPA agregado',pedidosTotal?dinheiro(investimentoTotal/pedidosTotal):'Sem pedidos'],['Orçamento adicional simulado',dinheiro(investimentoExtra)],['Receita adicional projetada',dinheiro(receitaIncremental)],['ROAS agregado projetado',roasProjetadoTexto],['Meta ROAS ponderada',arred(metaRoasAgregada).toLocaleString('pt-BR')],['Receita faltante para meta atual',dinheiro(deficitMeta)],['Investimento adicional para atingir meta',investimentoParaMeta===null?'Inviável com ROAS marginal informado':dinheiro(investimentoParaMeta)],['Receita faltante após simulação',dinheiro(deficitProjetado)],['Variação de ROAS agregado',roasProjetado===null?'—':(arred(roasProjetado-receitaTotal/investimentoTotal)).toLocaleString('pt-BR')]]:slug==='simulador-devolucoes'?[['Pedidos avaliados',String(pedidosTotal)],['Custo esperado',dinheiro(total)]]:[['Registros com alerta',String(abaixoMeta)]]};
 }
