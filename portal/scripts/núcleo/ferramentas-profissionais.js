@@ -5,6 +5,7 @@ import { baixar } from './exportar.js';
 import { caminhoDoIdioma } from './sessão.js';
 import { registrarUso as registrarRecente } from './preferências.js';
 import { importarArquivo, arquivosDoRelatorio } from '../comum/profissionais/arquivos.js';
+import { criarExecucaoVisual, aguardarPintura } from './execucao-visual.js';
 
 const LIMITE_TEXTO = 1_000_000;
 const POR_PAGINA = 25;
@@ -140,7 +141,7 @@ function graficoDeBarras(series, id) {
   };
   consultaMovel.addEventListener('change', redesenhar);
   figura.append(svg);
-  return figura;
+  return { figura, destruir: () => consultaMovel.removeEventListener('change', redesenhar) };
 }
 function validarRelatorio(relatorio) {
   if (!relatorio || typeof relatorio.titulo !== 'string' || !Array.isArray(relatorio.indicadores)
@@ -255,6 +256,12 @@ export function criarFerramentaProfissional(slug) {
       estado.setAttribute('role', 'status');
       estado.setAttribute('aria-live', 'polite');
       estado.hidden = true;
+      const visualAnaliseNo = elemento('div', 'profissional__execucao-visual');
+      const visualAnalise = criarExecucaoVisual(visualAnaliseNo, { titulo: spec.nome, tipo: 'analise' });
+      visualAnaliseNo.hidden = true;
+      const visualImportacaoNo = elemento('div', 'profissional__execucao-visual');
+      const visualImportacao = criarExecucaoVisual(visualImportacaoNo, { titulo: 'Importação de arquivo', tipo: 'importacao', compacta: true });
+      visualImportacaoNo.hidden = true;
       const erro = elemento('div', 'profissional__erro');
       erro.setAttribute('role', 'alert');
       erro.hidden = true;
@@ -266,11 +273,13 @@ export function criarFerramentaProfissional(slug) {
       resultado.id = `${id}-resultado`;
       resultado.tabIndex = -1;
       resultado.hidden = true;
-      formulario.append(introducao, exemplo, campo, esquema, importacao, opcoes, acoes, estado, erro);
+      importacao.append(visualImportacaoNo);
+      formulario.append(introducao, exemplo, campo, esquema, importacao, opcoes, acoes, estado, visualAnaliseNo, erro);
       raiz.replaceChildren(formulario, resultado);
       let controlador = null, ocupado = false, ultimaImportacao = null, exportacaoAtual = null;
+      let limparGrafico = () => {};
 
-      function terminarExportacao(mensagem) {
+      function terminarExportacao(mensagem, final = 'cancelar') {
         if (!exportacaoAtual) return;
         const atual = exportacaoAtual;
         exportacaoAtual = null;
@@ -283,6 +292,9 @@ export function criarFerramentaProfissional(slug) {
         atual.cancelar.remove();
         atual.exportacoes.setAttribute('aria-busy', 'false');
         if (mensagem) atual.status.textContent = mensagem;
+        if (final === 'concluir') atual.visual.concluir('Arquivo pronto', mensagem);
+        else if (final === 'falhar') atual.visual.falhar(mensagem || 'A geração do arquivo falhou.');
+        else atual.visual.cancelar(mensagem || 'Exportação cancelada.');
       }
 
       function situacao(texto, ativa = false) {
@@ -308,6 +320,8 @@ export function criarFerramentaProfissional(slug) {
       }
       function invalidarRelatorio(mensagem) {
         terminarExportacao('Exportação cancelada porque os dados foram alterados.');
+        limparGrafico(); limparGrafico = () => {};
+        visualAnalise.esconder();
         if (!resultado.hidden) situacao(mensagem);
         resultado.hidden = true;
       }
@@ -352,9 +366,12 @@ export function criarFerramentaProfissional(slug) {
         if (ocupado || !file) return;
         invalidarRelatorio('');
         limparErro(); bloquear(true); ultimaImportacao = file;
+        importacao.setAttribute('aria-busy', 'true');
         situacao(`Lendo ${file.name}…`, true);
+        visualImportacao.iniciar(`Lendo ${file.name}…`);
         statusArquivo.textContent = '';
         try {
+          await aguardarPintura();
           if (file.size > 10 * 1024 * 1024) throw new Error('O arquivo excede 10 MB. Reduza o arquivo e tente novamente.');
           const extensao = file.name.split('.').pop().toLowerCase();
           if (!(documento ? ['txt', 'md', 'json', 'srt', 'vtt', 'pdf', 'docx'] : ['csv', 'tsv', 'xlsx', 'json']).includes(extensao)) throw new Error('Formato não aceito. Escolha um dos formatos indicados.');
@@ -363,18 +380,23 @@ export function criarFerramentaProfissional(slug) {
           conteudo.value = importado.conteudo;
           statusArquivo.textContent = `${file.name} importado.${importado.aviso ? ` ${importado.aviso}` : ''}`;
           situacao('Arquivo lido. Revise o conteúdo antes de executar a análise.');
+          visualImportacao.concluir('Arquivo importado', `${file.name} está pronto para revisão.`);
         } catch (falha) {
           situacao('Não foi possível importar o arquivo.');
+          visualImportacao.falhar(falha.message || 'Não foi possível ler o arquivo.');
           mostrarFalha(falha.message || 'Não foi possível ler o arquivo.', 0, () => importar(ultimaImportacao));
-        } finally { bloquear(false); arquivo.value = ''; }
+        } finally { importacao.setAttribute('aria-busy', 'false'); bloquear(false); arquivo.value = ''; }
       }
       arquivo.addEventListener('change', () => importar(arquivo.files?.[0]));
 
       function desenharRelatorio(relatorio) {
-        const titulo = elemento('h2', '', relatorio.titulo);
+        const titulo = elemento('h2', '', spec.nome);
         titulo.id = `${id}-titulo-resultado`;
         resultado.setAttribute('aria-labelledby', titulo.id);
-        resultado.replaceChildren(elemento('p', 'profissional__selo', 'Análise concluída'), titulo);
+        const topoResultado = elemento('header', 'profissional__resultado-topo');
+        topoResultado.append(elemento('p', 'profissional__selo', 'Análise concluída'), titulo);
+        if (relatorio.titulo && relatorio.titulo !== spec.nome) topoResultado.append(elemento('p', 'profissional__resultado-resumo', relatorio.titulo));
+        resultado.replaceChildren(topoResultado);
         const indicadores = elemento('dl', 'profissional__indicadores');
         for (const [rotulo, valor] of relatorio.indicadores) {
           const bloco = elemento('div', 'profissional__indicador');
@@ -383,7 +405,7 @@ export function criarFerramentaProfissional(slug) {
         }
         resultado.append(indicadores);
         const grafico = graficoDeBarras(relatorio.series || [], id);
-        if (grafico) resultado.append(grafico);
+        if (grafico) { resultado.append(grafico.figura); limparGrafico = grafico.destruir; }
         const buscaCampo = elemento('div', 'campo profissional__busca');
         const label = elemento('label', '', 'Buscar no relatório');
         const busca = elemento('input');
@@ -428,11 +450,14 @@ export function criarFerramentaProfissional(slug) {
         }
         const exportacoes = elemento('div', 'profissional__exportacoes');
         exportacoes.append(elemento('h3', '', 'Baixar relatório completo'), elemento('p', 'pequeno suave', `Os arquivos incluem todas as ${relatorio.linhas.length} linhas, independentemente da busca e da página exibida.`));
-        const botoes = elemento('div', 'ações');
+        const botoes = elemento('div', 'ações profissional__formatos-exportacao');
         const statusExportacao = elemento('p', 'pequeno profissional__situacao'); statusExportacao.setAttribute('role', 'status');
+        const visualExportacaoNo = elemento('div', 'profissional__execucao-visual');
+        const visualExportacao = criarExecucaoVisual(visualExportacaoNo, { titulo: 'Seu relatório', tipo: 'arquivo', compacta: true });
         for (const item of arquivosDoRelatorio(relatorio, slug)) {
           const botaoArquivo = botao(item.rótulo);
-          botaoArquivo.addEventListener('click', () => {
+          botaoArquivo.classList.add('profissional__formato-exportacao');
+          botaoArquivo.addEventListener('click', async () => {
             if (exportacaoAtual) return;
             if (typeof Worker === 'undefined') {
               statusExportacao.textContent = 'Este navegador não oferece processamento de arquivos em segundo plano. Abra em um navegador atualizado e compatível para baixar o relatório.';
@@ -443,43 +468,51 @@ export function criarFerramentaProfissional(slug) {
               const cancelarExportacao = botao('Cancelar exportação');
               cancelarExportacao.addEventListener('click', () => terminarExportacao('Exportação cancelada. Você pode escolher um formato novamente.'));
               const atual = { worker, temporizador: null, botoes, cancelar: cancelarExportacao, exportacoes, status: statusExportacao };
+              atual.visual = visualExportacao;
               exportacaoAtual = atual;
               for (const botao of botoes.querySelectorAll('button')) botao.disabled = true;
               botoes.after(cancelarExportacao);
               statusExportacao.textContent = `Gerando ${item.rótulo} em segundo plano…`;
+              visualExportacao.iniciar(`Gerando ${item.rótulo} em segundo plano…`);
               exportacoes.setAttribute('aria-busy', 'true');
               atual.temporizador = setTimeout(() => {
-                if (exportacaoAtual === atual) terminarExportacao('A geração ultrapassou 30 segundos e foi interrompida. Tente outro formato ou uma análise menor.');
+                if (exportacaoAtual === atual) terminarExportacao('A geração ultrapassou 30 segundos e foi interrompida. Tente outro formato ou uma análise menor.', 'falhar');
               }, 30000);
               worker.onmessage = ({ data }) => {
                 if (exportacaoAtual !== atual) return;
                 if (!data?.ok) {
-                  terminarExportacao(`Não foi possível gerar o arquivo: ${typeof data?.mensagem === 'string' ? data.mensagem : 'tente novamente.'}`);
+                  terminarExportacao(`Não foi possível gerar o arquivo: ${typeof data?.mensagem === 'string' ? data.mensagem : 'tente novamente.'}`, 'falhar');
                   return;
                 }
                 try {
                   const saida = data.arquivo;
                   if (!(saida?.bytes instanceof Uint8Array) || typeof saida.nome !== 'string' || typeof saida.tipo !== 'string') throw new Error('Resposta de arquivo inválida.');
-                  if (!resultado.hidden && botaoArquivo.isConnected) baixar(saida.bytes, saida.nome, saida.tipo);
-                  terminarExportacao(`${saida.nome} pronto para download.`);
-                } catch { terminarExportacao('Não foi possível iniciar o download. Tente novamente.'); }
+                  if (!resultado.hidden && botaoArquivo.isConnected) {
+                    baixar(saida.bytes, saida.nome, saida.tipo);
+                    terminarExportacao(`${saida.nome} pronto para download.`, 'concluir');
+                  } else terminarExportacao('Relatório alterado antes do download. Execute a análise novamente para exportar.', 'cancelar');
+                } catch { terminarExportacao('Não foi possível iniciar o download. Tente novamente.', 'falhar'); }
               };
               worker.onerror = evento => {
                 evento.preventDefault();
-                if (exportacaoAtual === atual) terminarExportacao('Não foi possível carregar o gerador de arquivos. Verifique a conexão e tente novamente em um navegador atualizado.');
+                if (exportacaoAtual === atual) terminarExportacao('Não foi possível carregar o gerador de arquivos. Verifique a conexão e tente novamente em um navegador atualizado.', 'falhar');
               };
               worker.onmessageerror = () => {
-                if (exportacaoAtual === atual) terminarExportacao('Não foi possível receber o arquivo gerado. Tente novamente.');
+                if (exportacaoAtual === atual) terminarExportacao('Não foi possível receber o arquivo gerado. Tente novamente.', 'falhar');
               };
+              await aguardarPintura();
+              if (exportacaoAtual !== atual) return;
               worker.postMessage({ relatorio, slug, rotulo: item.rótulo });
             } catch {
-              terminarExportacao();
-              statusExportacao.textContent = 'Não foi possível iniciar o processamento em segundo plano. Tente novamente em um navegador atualizado e compatível.';
+              const mensagem = 'Não foi possível iniciar o processamento em segundo plano. Tente novamente em um navegador atualizado e compatível.';
+              terminarExportacao(mensagem, 'falhar');
+              visualExportacao.falhar(mensagem);
+              statusExportacao.textContent = mensagem;
             }
           });
           botoes.append(botaoArquivo);
         }
-        exportacoes.append(botoes, statusExportacao);
+        exportacoes.append(botoes, visualExportacaoNo, statusExportacao);
         resultado.append(detalhes, exportacoes);
         resultado.hidden = false;
         resultado.focus();
@@ -508,20 +541,26 @@ export function criarFerramentaProfissional(slug) {
         }
         controlador = new AbortController(); bloquear(true); cancelar.hidden = false;
         invalidarRelatorio('');
-        situacao('Dados enviados. Aguardando a análise do servidor…', true);
+        situacao('Preparando a análise…', true);
+        visualAnalise.iniciar('Preparando a análise…');
         try {
+          await aguardarPintura();
+          situacao('Enviando dados. Aguardando a análise do servidor…', true);
+          visualAnalise.andar(undefined, 'Enviando dados. Aguardando a análise do servidor…');
           const resposta = await api(`/api/profissionais/${encodeURIComponent(slug)}`, {
             metodo: 'POST', dados: { [documento ? 'texto' : 'csv']: texto, opcoes: valoresOpcoes }, signal: controlador.signal, prazoMs: 45000,
           });
-          if (controlador.signal.aborted) { situacao('Análise cancelada. Seus dados foram preservados.'); return; }
+          if (controlador.signal.aborted) { situacao('Análise cancelada. Seus dados foram preservados.'); visualAnalise.cancelar('Análise cancelada. Seus dados foram preservados.'); return; }
           const relatorio = validarRelatorio(resposta.relatorio);
           situacao('Análise concluída. Relatório completo disponível abaixo.');
           desenharRelatorio(relatorio);
+          visualAnalise.concluir('Análise concluída', 'O relatório completo está disponível.');
           registrarRecente(ferramenta?.slug || slug);
         } catch (falha) {
-          if (controlador.signal.aborted) situacao('Análise cancelada. Seus dados foram preservados.');
+          if (controlador.signal.aborted) { situacao('Análise cancelada. Seus dados foram preservados.'); visualAnalise.cancelar('Análise cancelada. Seus dados foram preservados.'); }
           else {
             situacao('A análise não foi concluída.');
+            visualAnalise.falhar(falha.message || 'A análise não foi concluída.');
             const codigo = falha instanceof ErroApi ? falha.status : 0;
             const mensagem = codigo === 401 ? 'Entre na sua conta para executar esta análise.'
               : codigo === 403 ? `Esta ferramenta requer o plano ${spec.plano === 'premium' ? 'Premium' : 'Plus'} ativo.`

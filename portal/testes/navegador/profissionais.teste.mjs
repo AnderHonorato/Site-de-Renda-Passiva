@@ -144,7 +144,10 @@ async function importar(pagina, nome, buffer, mimeType = 'application/octet-stre
   await pagina.waitForFunction(() => !document.querySelector('.profissional__entrada textarea').disabled);
   const erro = pagina.locator('.profissional__erro');
   assert.equal(await erro.isVisible(), false, await erro.textContent());
-  assert.match(await pagina.locator('.profissional__importacao [role=status]').innerText(), /importado/);
+  assert.match(await pagina.locator('.profissional__importacao .profissional__situacao[role=status]').innerText(), /importado/);
+  const visual = pagina.locator('.execucao-visual[data-tipo-execucao="importacao"]');
+  assert.equal(await visual.getAttribute('data-execucao-estado'), 'concluído', 'a leitura real do arquivo conclui sua região visual');
+  assert.equal(await visual.locator('[role=progressbar]').getAttribute('aria-valuenow'), '100', '100% só aparece após importação concluída');
 }
 
 async function executar(pagina, spec) {
@@ -155,6 +158,10 @@ async function executar(pagina, spec) {
   assert.equal(r.status(), 200, `${spec.id}: ${await r.text()}`);
   const { relatorio } = await r.json();
   await pagina.locator('.profissional__resultado:visible').waitFor();
+  await pagina.waitForFunction(() => document.querySelector('.execucao-visual[data-tipo-execucao="analise"]')?.dataset.execucaoEstado === 'concluído');
+  const visual = pagina.locator('.execucao-visual[data-tipo-execucao="analise"]');
+  assert.equal(await visual.getAttribute('data-execucao-estado'), 'concluído', 'a resposta real conclui a análise');
+  assert.equal(await visual.locator('[role=progressbar]').getAttribute('aria-valuenow'), '100', 'a conclusão real é o único estado da análise com valor 100');
   assert.equal(await pagina.locator('.profissional__resultado h2').innerText(), spec.nome);
   assert.deepEqual(await pagina.locator('.profissional__indicador').evaluateAll(nos => nos.map(n => [n.querySelector('dt').textContent, n.querySelector('dd').textContent])), relatorio.indicadores.map(([k, v]) => [k, legivel(v)]));
   const detalhes = pagina.locator('.profissional__resultado details');
@@ -176,6 +183,10 @@ async function baixar(pagina, rotulo, slug, extensao) {
     const bytes = await readFile(await download.path());
     assert.ok(bytes.length > 0);
     assert.ok(workers.some(u => u.endsWith('/profissionais/exportar-trabalhador.js')), `${rotulo} foi gerado por Worker real`);
+    const visual = pagina.locator('.execucao-visual[data-tipo-execucao="arquivo"]');
+    await pagina.waitForFunction(() => document.querySelector('.execucao-visual[data-tipo-execucao="arquivo"]')?.dataset.execucaoEstado === 'concluído');
+    assert.equal(await visual.getAttribute('data-execucao-estado'), 'concluído', `${rotulo}: arquivo real concluído`);
+    assert.equal(await visual.locator('[role=progressbar]').getAttribute('aria-valuenow'), '100', `${rotulo}: 100% somente após o download disponível`);
     await writeFile(join(ARTEFATOS, download.suggestedFilename()), bytes);
     return bytes;
   } finally { pagina.off('worker', observar); }
@@ -550,11 +561,15 @@ for (const largura of [390, 1280]) for (const tema of ['claro', 'escuro']) {
       const anterior = await entrada.inputValue();
       await entrada.fill(anterior + '\n6;6');
       assert.equal(await pagina.locator('.profissional__resultado').isVisible(), false, 'editar invalida o relatório');
+      assert.equal(await pagina.locator('.execucao-visual[data-tipo-execucao="analise"]').isVisible(), false, 'editar também esconde o estado de conclusão obsoleto');
       assert.equal(await pagina.locator('.profissional__exportacoes:visible').count(), 0);
       const antesInvalido = await entrada.inputValue();
       await pagina.locator('.profissional__importacao input[type=file]').setInputFiles({ name: 'invalido.json', mimeType: 'application/json', buffer: Buffer.from('{ invalido') });
       await pagina.locator('.profissional__erro:visible').waitFor();
       assert.match(await pagina.locator('.profissional__erro').innerText(), /JSON inválido/);
+      const importacaoFalha = pagina.locator('.execucao-visual[data-tipo-execucao="importacao"]');
+      assert.equal(await importacaoFalha.getAttribute('data-execucao-estado'), 'erro');
+      assert.equal(await importacaoFalha.locator('[role=progressbar]').getAttribute('aria-valuenow'), null, 'falha de importação não recebe progresso ou sucesso fictício');
       assert.equal(await entrada.inputValue(), antesInvalido, 'importação inválida preserva o conteúdo editado');
 
       await abrir(pagina, specs.F303);
@@ -580,7 +595,7 @@ for (const largura of [390, 1280]) for (const tema of ['claro', 'escuro']) {
         paginaPdf.drawText('Texto selecionavel para importacao real de PDF.', { x: 40, y: 700, size: 12 });
         await importar(pagina, 'texto.pdf', await pdf.save(), 'application/pdf');
         assert.match(await entrada.inputValue(), /Texto selecionavel para importacao real de PDF/);
-        assert.match(await pagina.locator('.profissional__importacao [role=status]').innerText(), /não há OCR/);
+        assert.match(await pagina.locator('.profissional__importacao .profissional__situacao[role=status]').innerText(), /não há OCR/);
 
         await abrir(pagina, specs.F252);
         await pagina.getByRole('button', { name: 'Usar exemplo', exact: true }).click();
@@ -617,3 +632,77 @@ for (const largura of [390, 1280]) for (const tema of ['claro', 'escuro']) {
     }
   });
 }
+
+test('estado visual da análise real é indeterminado, pausa só a decoração e ignora resposta cancelada', { skip: pular, timeout: 60000 }, async () => {
+  const contexto = await navegador.newContext({ viewport: { width: 390, height: 900 } });
+  await contexto.addCookies([{ name: 'visto_novidades', value: '999999999999999', url: base }]);
+  const pagina = await contexto.newPage();
+  const usuario = await novaConta(contexto, 'visual');
+  banco.prepare('UPDATE usuarios SET plano=? WHERE usuario=?').run('premium', usuario);
+  const spec = specs.F277;
+  const endpoint = `**/api/profissionais/${spec.slug}`;
+  let liberarResposta, sinalizarResposta, sinalizarConclusao;
+  const respostaLiberada = new Promise(resolve => { liberarResposta = resolve; });
+  const respostaRealPronta = new Promise(resolve => { sinalizarResposta = resolve; });
+  const interceptacaoConcluida = new Promise(resolve => { sinalizarConclusao = resolve; });
+  let respostaDoServidor;
+  const interceptarRespostaReal = async route => {
+    try {
+      const resposta = await route.fetch();
+      respostaDoServidor = resposta.status();
+      sinalizarResposta();
+      await respostaLiberada;
+      await route.fulfill({ response: resposta });
+    } catch { /* o fetch de página pode ser cancelado antes de liberar a resposta retida */ }
+    finally { sinalizarConclusao(); }
+  };
+  try {
+    await abrir(pagina, spec);
+    await pagina.getByRole('button', { name: 'Usar exemplo', exact: true }).click();
+    await pagina.route(endpoint, interceptarRespostaReal);
+    const pedido = pagina.waitForRequest(r => r.url() === `${base}/api/profissionais/${spec.slug}` && r.method() === 'POST');
+    await pagina.getByRole('button', { name: 'Executar análise', exact: true }).click();
+    await pedido;
+    await respostaRealPronta;
+    assert.equal(respostaDoServidor, 200, 'a resposta retida veio da API real');
+    const visual = pagina.locator('.execucao-visual[data-tipo-execucao="analise"]');
+    await visual.waitFor({ state: 'visible' });
+    assert.equal(await visual.getAttribute('data-execucao-estado'), 'processando');
+    assert.equal(await visual.locator('[role=progressbar]').getAttribute('aria-valuenow'), null, 'a API não informa porcentagem; o andamento fica indeterminado');
+    assert.equal(await visual.locator('[role=progressbar]').getAttribute('data-indeterminado'), 'sim');
+    assert.equal(await visual.locator('.execucao-visual__palco canvas').getAttribute('aria-hidden'), 'true', 'a animação é decorativa');
+    await visual.getByRole('button', { name: /Pausar animação visual/ }).click();
+    assert.equal(await visual.getByRole('button', { name: /Retomar animação visual/ }).getAttribute('aria-pressed'), 'true');
+    assert.equal(await visual.getAttribute('data-execucao-estado'), 'processando', 'pausar o canvas não pausa a requisição');
+    assert.equal(await pagina.locator('.profissional__formulario').getAttribute('aria-busy'), 'true');
+    assert.equal(await pagina.getByRole('button', { name: 'Executar análise', exact: true }).isDisabled(), true);
+
+    const pedidoAbortado = pagina.waitForEvent('requestfailed', r => r.url() === `${base}/api/profissionais/${spec.slug}`);
+    await pagina.getByRole('button', { name: 'Cancelar análise', exact: true }).click();
+    await pedidoAbortado;
+    await pagina.waitForFunction(() => document.querySelector('.execucao-visual[data-tipo-execucao="analise"]')?.dataset.execucaoEstado === 'cancelado' && document.querySelector('.profissional__formulario')?.getAttribute('aria-busy') === 'false');
+    assert.equal(await visual.getAttribute('data-execucao-estado'), 'cancelado');
+    assert.equal(await visual.locator('[role=progressbar]').getAttribute('aria-valuenow'), null, 'cancelamento não declara 100%');
+    assert.equal(await pagina.locator('.profissional__formulario').getAttribute('aria-busy'), 'false');
+    assert.equal(await pagina.getByRole('button', { name: 'Executar análise', exact: true }).isEnabled(), true);
+    assert.equal(await pagina.locator('.profissional__resultado').isVisible(), false);
+    liberarResposta();
+    await interceptacaoConcluida;
+    await esperar(100);
+    assert.equal(await visual.getAttribute('data-execucao-estado'), 'cancelado', 'resposta obsoleta liberada após o cancelamento não declara sucesso');
+    assert.equal(await pagina.locator('.profissional__resultado').isVisible(), false);
+    await pagina.unroute(endpoint, interceptarRespostaReal);
+
+    await pagina.route(endpoint, route => route.abort('internetdisconnected'));
+    const requisicaoFalha = pagina.waitForEvent('requestfailed', r => r.url() === `${base}/api/profissionais/${spec.slug}`);
+    await pagina.getByRole('button', { name: 'Executar análise', exact: true }).click();
+    await requisicaoFalha;
+    await pagina.waitForFunction(() => document.querySelector('.execucao-visual[data-tipo-execucao="analise"]')?.dataset.execucaoEstado === 'erro' && document.querySelector('.profissional__formulario')?.getAttribute('aria-busy') === 'false');
+    assert.equal(await visual.getAttribute('data-execucao-estado'), 'erro');
+    assert.equal(await visual.locator('[role=progressbar]').getAttribute('aria-valuenow'), null, 'falha de rede não declara 100%');
+    assert.equal(await visual.locator('[role=progressbar]').isHidden(), true);
+    assert.equal(await pagina.locator('.profissional__formulario').getAttribute('aria-busy'), 'false');
+    assert.equal(await pagina.getByRole('button', { name: 'Executar análise', exact: true }).isEnabled(), true);
+    assert.equal(await pagina.locator('.profissional__resultado').isVisible(), false);
+  } finally { await contexto.close(); }
+});
