@@ -18,6 +18,6 @@ export async function api(caminho, { metodo = 'GET' } = {}) {
   }
   const en = globalThis.document?.documentElement?.lang === 'en';
   throw new ErroApi(en
-    ? 'This preview supports local tools only. Sign-in, accounts and chat require the full server.'
-    : 'Esta prévia permite usar ferramentas locais. Login, conta e chat precisam do servidor completo.');
+    ? 'This feature requires the account server, which is unavailable at this address.'
+    : 'Esta função precisa do servidor de conta, indisponível neste endereço.');
 }

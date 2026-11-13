@@ -11,7 +11,7 @@ test('prévia estática permite visitar ferramentas sem consultar servidor ou cr
     });
     assert.deepEqual(await api('/api/anuncios'), { permitido: false });
     await assert.rejects(api('/api/autenticacao/entrar', { metodo: 'POST', dados: {} }),
-      erro => erro instanceof ErroApi && erro.status === 503 && /prévia/.test(erro.message));
+      erro => erro instanceof ErroApi && erro.status === 503 && /servidor/.test(erro.message));
     await assert.rejects(api('/api/trabalhos'), ErroApi);
   } finally { globalThis.fetch = anterior; }
 });

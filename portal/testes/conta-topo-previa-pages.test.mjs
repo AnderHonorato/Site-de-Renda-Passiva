@@ -23,7 +23,7 @@ test('prévia estática mostra somente acesso ao site real, sem exigir novo logi
     renderizarContaTopo(fim,{usuario:null},{idioma:'pt'});
     assert.equal(raiz.children.length,1);
     assert.equal(raiz.children[0].href,'../../servidor-teste.html');
-    assert.equal(raiz.children[0].textContent,'Acessar');
+    assert.match(raiz.children[0].innerHTML, /<svg[^>]*aria-hidden/);
     assert.equal(raiz.children[0]['aria-label'],'Abrir o site completo com login e conta');
     assert.equal(raiz.children[0].getAttribute,undefined);
   }finally{globalThis.document=anterior}

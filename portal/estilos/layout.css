@@ -519,3 +519,20 @@ a.idioma__item:hover { color: var(--tinta); background: var(--superfície-3); tr
 @media (max-width:560px) {
   .conta-topo__gatilho > .avatar-foto.conta-topo__avatar { width:30px;height:30px; }
 }
+
+/* Evita sobreposição de rótulos e botões no cabeçalho de celulares. */
+@media (max-width: 560px) {
+  .topo__interior { min-width: 0; gap: 6px; }
+  .topo .marca { flex: 0 0 34px; min-width: 34px; }
+  .topo .marca__nome { display: none; }
+  .topo__espaço { min-width: 0; }
+  .topo__fim { min-width: 0; flex: 0 0 auto; gap: 4px; }
+  .topo__fim > .busca-topo, .topo__fim > .notificações { width: 36px; flex: 0 0 36px; }
+  .topo__fim .conta-topo--visitante { padding: 0; gap: 0; }
+  .topo__fim .conta-topo--visitante .conta-topo__item {
+    display: inline-grid; place-items: center;
+    width: 36px; min-width: 36px; height: 36px; min-height: 36px;
+    padding: 0; overflow: hidden; font-size: 0; line-height: 1;
+  }
+  .topo__fim .conta-topo__item svg { width: 19px; height: 19px; }
+}

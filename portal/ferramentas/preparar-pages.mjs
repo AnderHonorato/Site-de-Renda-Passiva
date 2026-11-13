@@ -37,28 +37,7 @@ for (const idioma of ['', 'en/']) {
     await writeFile(caminho, redirecionarAutenticacaoPages(html, destino, Boolean(idioma)), 'utf8');
   }
 }
-// Aviso no lugar dos anúncios administrados pela API, que não existe no Pages.
-await writeFile(join(portal, 'scripts', 'núcleo', 'banner-prioritario.js'), `
-export function iniciarBannerPrioritario() {
-  if (document.querySelector('[data-previa-pages]')) return;
-  const cabecalho = document.querySelector('.cabeçalho, header');
-  if (!cabecalho) return;
-  const aviso = document.createElement('aside');
-  aviso.className = 'largura';
-  aviso.dataset.previaPages = 'sim';
-  aviso.setAttribute('aria-label', document.documentElement.lang === 'en' ? 'Preview' : 'Prévia');
-  const texto = document.createElement('p');
-  texto.className = 'pequeno suave';
-  texto.textContent = document.documentElement.lang === 'en'
-    ? 'Preview: local tools are available. Sign-in, accounts and chat require the full server.'
-    : 'Prévia: as ferramentas locais estão disponíveis. Login, conta e chat precisam do servidor completo.';
-  aviso.append(texto);
-  const acessar = document.createElement('a');
-  acessar.href = (document.documentElement.dataset.raiz || './') + 'servidor-teste.html';
-  acessar.textContent = document.documentElement.lang === 'en'
-    ? 'Open the complete site with your account' : 'Abrir site completo com minha conta';
-  aviso.append(document.createTextNode(' · '), acessar);
-  cabecalho.insertAdjacentElement('afterend', aviso);
-}
-`, 'utf8');
+// Interface pública sem faixa de demonstração. Falhas de API são informadas apenas no fluxo afetado.
+await writeFile(join(portal, 'scripts', 'núcleo', 'banner-prioritario.js'),
+  'export function iniciarBannerPrioritario() {}\n', 'utf8');
 console.log(`Prévia estática pronta em ${destino}`);
