@@ -150,6 +150,13 @@
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .ferramenta-linha__fim { display: flex; align-items: center; gap: 6px; }
+.demonstracao-card { position:relative;z-index:1;display:grid;place-items:center;width:38px;height:38px;padding:0;border:0;border-radius:12px;background:transparent;color:var(--marca);cursor:pointer; }
+.ferramenta-linha__ícone:has(.demonstracao-card) { position:relative;z-index:1; }
+.demonstracao-card::before { content:"";position:absolute;inset:-3px; }
+.demonstracao-card__play { position:absolute;right:-3px;bottom:-3px;display:grid;place-items:center;width:17px;height:17px;border-radius:50%;border:2px solid var(--superfície);background:var(--marca);color:var(--superfície); }
+.demonstracao-card .demonstracao-card__play svg { width:9px;height:9px; }
+.demonstracao-card:hover { background:var(--superfície-3); }
+.demonstracao-card[disabled] { opacity:.5;cursor:wait; }
 .ferramenta-linha__seta { color: var(--tinta-suave); }
 .ferramenta-linha__seta svg { width: 16px; height: 16px; }
 .ferramenta-linha:hover .ferramenta-linha__seta { color: var(--marca); }

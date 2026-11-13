@@ -33,6 +33,10 @@ export function linhaDeFerramenta(f, { base = raizDoSite, favoritada = false, vi
   const avisoDeIdioma = idiomaDoLink ? `<span class="etiqueta">${escapar(t('lista.versãoSóEmPortuguês'))}</span>` : '';
   const seloVisualizada = visualizada && !planejada
     ? `<span class="ferramenta-linha__visto">${ícone('confere')} Visto</span>` : '';
+  const desenho = planejada ? ícone(f.ícone) : íconeVivo(f.ícone, { base, tamanho: 23 });
+  const iconeDaLinha = !planejada && ['plus','premium'].includes(f.plano)
+    ? `<button class="demonstracao-card" type="button" data-demonstracao-slug="${escapar(f.slug)}" data-demonstracao-base="${escapar(base)}" aria-haspopup="dialog" title="${escapar(t('lista.verExemplo', { nome:f.nome }))}" aria-label="${escapar(t('lista.verExemplo', { nome:f.nome }))}">${desenho}<span class="demonstracao-card__play">${ícone('reproduzir', { tamanho:10 })}</span></button>`
+    : desenho;
 
   const alvo = planejada
     ? `<button type="button" class="ferramenta-linha__nome ferramenta-linha__alvo" data-ficha="${escapar(f.slug)}"
@@ -40,7 +44,7 @@ export function linhaDeFerramenta(f, { base = raizDoSite, favoritada = false, vi
     : `<a class="ferramenta-linha__nome ferramenta-linha__alvo" href="${escapar(`${base}f/${f.slug}/`)}"${idiomaDoLink ? ' hreflang="pt-BR"' : ''}>${escapar(f.nome)}${selo}${avisoDeIdioma}${seloVisualizada}</a>`;
 
   return `<div class="ferramenta-linha" data-status="${f.status}" data-visitada="${visualizada && !planejada ? 'sim' : 'nao'}" data-slug="${escapar(f.slug)}">
-  <span class="ferramenta-linha__ícone">${planejada ? ícone(f.ícone) : íconeVivo(f.ícone, { base, tamanho: 23 })}</span>
+  <span class="ferramenta-linha__ícone">${iconeDaLinha}</span>
   <span class="ferramenta-linha__texto">
     ${alvo}
     <span class="ferramenta-linha__resumo">${escapar(f.resumo)}</span>
@@ -128,6 +132,16 @@ export function ligarLista(contêiner, catálogo, aoMudar) {
   contêiner.addEventListener('click', (evento) => {
     const alvo = evento.target instanceof Element ? evento.target : null;
     if (!alvo) return;
+
+    const exemplo = alvo.closest('[data-demonstracao-slug]');
+    if (exemplo) {
+      evento.preventDefault();
+      exemplo.disabled = true;
+      import('./demonstracoes.js').then(m => m.abrirDemonstracao(exemplo.dataset.demonstracaoSlug, { base: exemplo.dataset.demonstracaoBase, gatilho: exemplo }))
+        .catch(() => avisar(t('lista.exemploIndisponivel')))
+        .finally(() => { exemplo.disabled = false; });
+      return;
+    }
 
     const favorito = alvo.closest('[data-favorito]');
     if (favorito) {

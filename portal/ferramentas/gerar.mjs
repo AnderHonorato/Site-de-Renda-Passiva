@@ -14,6 +14,8 @@ import { contextoPt, contextoEn } from './contexto-de-idioma.mjs';
 import { arteDaCategoria, páginaInicial, páginaDeCatálogo, páginaDeSalvos, páginasInstitucionais, página404 } from './páginas.mjs';
 import { ícone } from '../scripts/núcleo/ícones.js';
 import { insígniaDePlano } from '../scripts/núcleo/insígnia-plano.js';
+import { htmlDemonstracao } from '../scripts/núcleo/demonstracao-html.js';
+import { gerarDemonstracoes } from './dados-demonstracoes.mjs';
 import { ferramentas, ferramentasProntas, conferirCatálogo } from '../dados/catálogo.js';
 import { categorias, tarefas } from '../dados/categorias.js';
 import { site } from '../dados/site.js';
@@ -36,7 +38,7 @@ const RÓTULO_DE_EXPORTAÇÃO = {
 
 /* --------------------------------------------------- página de ferramenta */
 
-function páginaDeFerramenta(f, instruções) {
+function páginaDeFerramenta(f, instruções, demonstracao) {
   const categoria = categorias.find((c) => c.id === f.cat);
   const exporta = f.exporta.length
     ? f.exporta.map((e) => RÓTULO_DE_EXPORTAÇÃO[e] ?? e).join(', ')
@@ -88,6 +90,7 @@ function páginaDeFerramenta(f, instruções) {
 
       <div class="ferramenta-área">
         <div class="ferramenta-corpo">
+          ${demonstracao ? htmlDemonstracao(demonstracao) : ''}
           <div class="painel" id="ferramenta" data-slug="${escapar(f.slug)}">${['plus', 'premium'].includes(f.plano)
             ? `<section class="acesso-ferramenta" aria-labelledby="titulo-acesso-ferramenta">
               <h2 id="titulo-acesso-ferramenta">Recurso exclusivo ${f.plano === 'premium' ? 'Premium' : 'Plus'}</h2>
@@ -148,9 +151,9 @@ function páginaDeFerramenta(f, instruções) {
     alternativas: { 'pt-BR': '', en: null },
     atual: 'ferramentas',
     conteúdo,
-    scripts: ['núcleo/página-de-ferramenta.js'],
+    scripts: ['núcleo/página-de-ferramenta.js', ...(demonstracao ? ['núcleo/demonstracoes-iniciar.js'] : [])],
     estilos: [
-      ...(['plus', 'premium'].includes(f.plano) ? ['acesso-ferramenta.css'] : []),
+      ...(['plus', 'premium'].includes(f.plano) ? ['acesso-ferramenta.css', 'demonstracoes.css'] : []),
       ...(f.slug === 'limpar-planilha' ? ['limpeza-planilha.css']
         : f.slug === 'ficha-de-cliente' ? ['ficha-de-cliente.css'] : []),
     ],
@@ -293,9 +296,10 @@ async function principal() {
     en: (nome) => contextoEn.t('notificações.novaFerramenta', { item: nome }),
   }, hoje);
 
+  const demonstracoes = await gerarDemonstracoes();
   const ferramentasGeradas=[];
   for(const f of ferramentasProntas) {
-    ferramentasGeradas.push([`f/${f.slug}/index.html`,páginaDeFerramenta(f,definicoes.get(f.slug))]);
+    ferramentasGeradas.push([`f/${f.slug}/index.html`,páginaDeFerramenta(f,definicoes.get(f.slug),demonstracoes.get(f.slug))]);
   }
   const arquivos = [
     ...páginasDoIdioma(contextoPt),

@@ -21,6 +21,9 @@ const FORMAS = {
   chevron: '<path d="m9 6 6 6-6 6"/>',
   'chevron-baixo': '<path d="m6 9.5 6 6 6-6"/>',
   voltar: '<path d="M19 12H6"/><path d="m11.5 6.5-5.5 5.5 5.5 5.5"/>',
+  reproduzir: '<path d="m8 5 11 7-11 7V5Z"/>',
+  pausar: '<path d="M8 5v14M16 5v14"/>',
+  repetir: '<path d="M4 10a8 8 0 1 1 1.5 7"/><path d="M4 4v6h6"/>',
 
   // Estados
   marcador: '<path d="M6.5 4.5h11a1 1 0 0 1 1 1V20l-6.5-3.8L5.5 20V5.5a1 1 0 0 1 1-1Z"/>',

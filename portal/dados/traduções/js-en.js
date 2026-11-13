@@ -7,6 +7,8 @@ export default Object.freeze({
     planejada: 'Planned',
     plus: 'Plus',
     premium: 'Premium',
+    verExemplo: 'Watch an animated example of {nome}',
+    exemploIndisponivel: 'Unable to open the example. Please try again.',
     nenhuma: 'No tools found.',
     removerFavorito: 'Remove from favorites',
     salvarFavorito: 'Save to favorites',

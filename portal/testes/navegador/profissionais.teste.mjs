@@ -403,6 +403,85 @@ test('plano aparece antes de abrir e ferramentas pagas não carregam nem executa
   } finally { await contexto.close(); }
 });
 
+test('demonstrações animadas abrem no card e na ferramenta, com pausa, cenas e acesso protegido', { skip:pular, timeout:120000 }, async () => {
+  await mkdir(join(ARTEFATOS,'demonstracoes'),{recursive:true});
+  const contexto=await navegador.newContext({viewport:{width:390,height:900}});
+  await contexto.addCookies([{name:'visto_novidades',value:'999999999999999',url:base}]);
+  const pagina=await contexto.newPage();
+  const analises=[],privados=[],erros=[];
+  pagina.on('request',r=>{const u=new URL(r.url());if(r.method()==='POST'&&u.pathname.startsWith('/api/'))analises.push(u.pathname);if(u.pathname.includes('/servidor/'))privados.push(u.pathname);});
+  pagina.on('pageerror',e=>erros.push(String(e)));
+  try {
+    await pagina.goto(`${base}/ferramentas.html?busca=regressao`,{waitUntil:'networkidle'});
+    const essencial=pagina.getByRole('button',{name:'Só o essencial',exact:true});if(await essencial.isVisible())await essencial.click();
+    const url=pagina.url();
+    const gatilho=pagina.locator(`.ferramenta-linha[data-slug="${specs.F277.slug}"] [data-demonstracao-slug]`);
+    await gatilho.click();
+    const dialogo=pagina.locator('dialog.demonstracao-modal');
+    await dialogo.locator('[data-demonstracao][data-pronta="sim"]').waitFor();
+    assert.equal(pagina.url(),url,'ver o exemplo não sai do catálogo');
+    const amostra=JSON.parse(await dialogo.locator('template[data-demonstracao-dados]').evaluate(n=>n.content.textContent));
+    assert.equal(amostra.slug,specs.F277.slug);
+    const quadros=[];
+    for(const cena of ['1.8','6','12']){
+      await dialogo.locator(`[data-demo-cena="${cena}"]`).click();
+      assert.equal(await dialogo.locator(`[data-demo-cena="${cena}"]`).getAttribute('aria-pressed'),'true');
+      quadros.push(await dialogo.locator('canvas').evaluate(c=>c.toDataURL()));
+      await dialogo.locator('canvas').screenshot({path:join(ARTEFATOS,'demonstracoes',`regressao-390-${cena}.png`)});
+    }
+    assert.equal(new Set(quadros).size,3,'entrada, análise e resultado desenham cenas diferentes');
+    const posicao=dialogo.locator('input[type=range]');
+    const pausado=await posicao.inputValue();await esperar(150);assert.equal(await posicao.inputValue(),pausado,'selecionar cena pausa a reprodução');
+    await posicao.focus();await posicao.press('End');
+    assert.equal(await posicao.inputValue(),'15','o fim da barra mantém o resultado, sem voltar à entrada');
+    assert.equal(await dialogo.locator('[data-demo-cena="12"]').getAttribute('aria-pressed'),'true');
+    await posicao.press('Home');assert.equal(await posicao.inputValue(),'0','a barra funciona também por teclado');
+    await dialogo.locator('[data-demo-repetir]').click();
+    assert.ok(Number(await posicao.inputValue())<1,'repetir volta ao início');
+    await dialogo.locator('[data-demo-tocar]').click();
+    const detalhes=dialogo.locator('.demonstracao__dados');await detalhes.locator('summary').click();
+    assert.deepEqual(await detalhes.locator('.demonstracao__indicadores>div').evaluateAll(ns=>ns.map(n=>[n.querySelector('dt').textContent,n.querySelector('dd').textContent])),amostra.indicadores.map(([k,v])=>[k,legivel(v)]));
+    await pagina.keyboard.press('Escape');await dialogo.waitFor({state:'detached'});
+    assert.equal(await gatilho.evaluate(n=>n===document.activeElement),true,'fechar retorna o foco ao card');
+
+    for(const largura of [320,768,1280]){
+      await pagina.setViewportSize({width:largura,height:900});
+      await pagina.goto(`${base}/f/${specs.F252.slug}/`,{waitUntil:'networkidle'});
+      const demo=pagina.locator('[data-demonstracao][data-pronta="sim"]');await demo.waitFor();
+      await demo.locator('[data-demo-cena="12"]').click();
+      assert.equal(await pagina.locator('#ferramenta form').count(),0);
+      assert.equal(await pagina.getByRole('button',{name:'Execução bloqueada',exact:true}).isDisabled(),true);
+      assert.equal(await pagina.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+      await demo.locator('canvas').evaluate(n=>n.scrollIntoView({block:'center'}));
+      await demo.locator('canvas').screenshot({path:join(ARTEFATOS,'demonstracoes',`financeiro-${largura}.png`)});
+    }
+    for(const slug of [specs.F303.slug,specs.F330.slug,'redimensionar-imagens-em-lote']){
+      await pagina.setViewportSize({width:390,height:900});
+      await pagina.goto(`${base}/f/${slug}/`,{waitUntil:'networkidle'});
+      const demo=pagina.locator('[data-demonstracao][data-pronta="sim"]');await demo.waitFor();
+      await demo.locator('[data-demo-cena="12"]').click();
+      assert.equal(await pagina.locator('#ferramenta form').count(),0);
+      await demo.locator('canvas').evaluate(n=>n.scrollIntoView({block:'center'}));
+      await demo.locator('canvas').screenshot({path:join(ARTEFATOS,'demonstracoes',`${slug}.png`)});
+    }
+    assert.deepEqual(analises,[],'a animação não chama a API de processamento');
+    assert.deepEqual(privados,[],'nenhum motor privado é entregue ao navegador');
+    assert.deepEqual(erros,[]);
+  } finally {await contexto.close();}
+
+  const reduzido=await navegador.newContext({viewport:{width:390,height:900},reducedMotion:'reduce'});
+  await reduzido.addCookies([{name:'visto_novidades',value:'999999999999999',url:base}]);
+  try{
+    const p=await reduzido.newPage();await p.goto(`${base}/f/${specs.F277.slug}/`,{waitUntil:'networkidle'});
+    const essencial=p.getByRole('button',{name:'Só o essencial',exact:true});if(await essencial.isVisible())await essencial.click();
+    const demo=p.locator('[data-demonstracao][data-pronta="sim"]');await demo.waitFor();
+    assert.equal(await demo.locator('input[type=range]').inputValue(),'12');
+    assert.equal(await demo.locator('[data-demo-tocar]').isDisabled(),true);
+    await demo.locator('[data-demo-cena="1.8"]').click();
+    assert.equal(await demo.locator('input[type=range]').inputValue(),'1.8','cenas continuam acessíveis sem animação');
+  }finally{await reduzido.close();}
+});
+
 for (const largura of [390, 1280]) for (const tema of ['claro', 'escuro']) {
   const primeiro = ++indice === 1;
   const conta = indice;

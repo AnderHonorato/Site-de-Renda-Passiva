@@ -11,6 +11,8 @@ export default Object.freeze({
     planejada: 'Planejada',
     plus: 'Plus',
     premium: 'Premium',
+    verExemplo: 'Ver exemplo animado de {nome}',
+    exemploIndisponivel: 'Não foi possível abrir o exemplo. Tente novamente.',
     nenhuma: 'Nenhuma ferramenta encontrada.',
     removerFavorito: 'Remover dos favoritos',
     salvarFavorito: 'Salvar nos favoritos',
