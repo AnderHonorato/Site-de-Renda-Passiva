@@ -50,7 +50,10 @@ jobs:
             sleep 2
           done
           curl --fail --silent http://127.0.0.1:18080/api/saude | grep -q '"estado":"ok"'
-          curl --fail --silent http://127.0.0.1:18080/ | grep -qi '<html'
+          # grep -q fecha o pipe cedo; em HTML grande isso causa curl 23 mesmo com HTTP 200.
+          curl --fail --silent --show-error http://127.0.0.1:18080/ \
+            --output "$RUNNER_TEMP/sites-ads-ci-index.html"
+          grep -qi '<html' "$RUNNER_TEMP/sites-ads-ci-index.html"
       - name: Logs sem dados do banco, apenas quando necessário
         if: failure()
         run: docker logs --tail 60 sites-ads-ci || true
