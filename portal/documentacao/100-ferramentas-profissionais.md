@@ -17,7 +17,7 @@ As referências técnicas específicas de cada método aparecem na última colun
 ## Fluxo e formatos
 
 - Plus: 32 novas ferramentas. Premium: 68 novas ferramentas, com herança das 32 Plus. Liberação manual já existente; nenhuma cobrança automática foi ativada.
-- Tabelas: CSV, TSV, JSON e XLSX. Documentos: TXT, Markdown, PDF com texto selecionável e DOCX. A importação extrai valores/texto, sem OCR ou preservação de layout.
+- Tabelas: CSV, TSV, JSON e XLSX. Documentos: TXT, Markdown, JSON técnico, SRT, VTT, PDF com texto selecionável e DOCX. A importação extrai valores/texto, sem OCR ou preservação de layout.
 - Até 10 MiB de arquivo; até 1.000.000 bytes após conversão, 2.000 registros, 80 colunas e 160.080 células incluindo cabeçalho. ZIP Office: até 30 MiB expandidos e 1.500 entradas; PDF: até 100 páginas. Métodos podem ter tetos menores declarados.
 - XLSX importa primeira aba e resultados de fórmulas já salvos, sem executar macros/fórmulas. Datas numéricas do Excel permanecem números: os avisos pedem conversão para ISO quando o método exige datas.
 - Saídas completas: PDF paginado em painéis com todas as colunas/linhas; Excel com abas Dados, Indicadores e Método; TXT, CSV e JSON. SVG disponível quando o relatório contém séries numéricas. CSV contém tabela; método/indicadores estão em PDF, Excel, TXT e JSON.

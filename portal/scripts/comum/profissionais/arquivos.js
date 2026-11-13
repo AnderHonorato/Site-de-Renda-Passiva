@@ -175,7 +175,7 @@ export async function importarArquivo(file, { entrada = 'tabela', colunas = [] }
   if (!file || typeof file.arrayBuffer !== 'function') falhar('Escolha um arquivo para importar.');
   if (!['tabela', 'documento'].includes(entrada)) falhar('Tipo de entrada inválido.');
   const extensao = /\.([a-z0-9]+)$/i.exec(file.name || '')?.[1]?.toLowerCase();
-  const permitidas = entrada === 'tabela' ? ['csv', 'tsv', 'txt', 'json', 'xlsx'] : ['txt', 'md', 'pdf', 'docx'];
+  const permitidas = entrada === 'tabela' ? ['csv', 'tsv', 'txt', 'json', 'xlsx'] : ['txt', 'md', 'json', 'srt', 'vtt', 'pdf', 'docx'];
   if (!permitidas.includes(extensao)) falhar(`Formato não suportado. Escolha ${permitidas.map((e) => e.toUpperCase()).join(', ')}.`);
   if (!Number.isInteger(file.size) || file.size <= 0) falhar('O arquivo está vazio ou tem tamanho inválido.');
   if (file.size > LIMITES_ARQUIVOS.bytes) falhar('O limite por arquivo é 10 MB. Divida o arquivo.');

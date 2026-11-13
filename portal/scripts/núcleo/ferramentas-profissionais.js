@@ -216,8 +216,8 @@ export function criarFerramentaProfissional(slug) {
       const arquivo = elemento('input');
       arquivo.id = `${id}-arquivo`;
       arquivo.type = 'file';
-      arquivo.accept = documento ? '.txt,.md,.pdf,.docx' : '.csv,.tsv,.xlsx,.json';
-      const dicaArquivo = elemento('p', 'campo__dica', `${documento ? 'TXT, Markdown, PDF com texto ou DOCX' : 'CSV, TSV, XLSX ou JSON'} · até 10 MB. O conteúdo importado fica editável acima.`);
+      arquivo.accept = documento ? '.txt,.md,.json,.srt,.vtt,.pdf,.docx' : '.csv,.tsv,.xlsx,.json';
+      const dicaArquivo = elemento('p', 'campo__dica', `${documento ? 'TXT, Markdown, JSON, SRT, VTT, PDF com texto ou DOCX' : 'CSV, TSV, XLSX ou JSON'} · até 10 MB. O conteúdo importado fica editável acima.`);
       dicaArquivo.id = `${id}-arquivo-dica`;
       arquivo.setAttribute('aria-describedby', dicaArquivo.id);
       const statusArquivo = elemento('p', 'profissional__situacao pequeno');
@@ -357,7 +357,7 @@ export function criarFerramentaProfissional(slug) {
         try {
           if (file.size > 10 * 1024 * 1024) throw new Error('O arquivo excede 10 MB. Reduza o arquivo e tente novamente.');
           const extensao = file.name.split('.').pop().toLowerCase();
-          if (!(documento ? ['txt', 'md', 'pdf', 'docx'] : ['csv', 'tsv', 'xlsx', 'json']).includes(extensao)) throw new Error('Formato não aceito. Escolha um dos formatos indicados.');
+          if (!(documento ? ['txt', 'md', 'json', 'srt', 'vtt', 'pdf', 'docx'] : ['csv', 'tsv', 'xlsx', 'json']).includes(extensao)) throw new Error('Formato não aceito. Escolha um dos formatos indicados.');
           const importado = await importarArquivo(file, { entrada: spec.entrada, colunas: spec.colunas });
           if (new TextEncoder().encode(importado.conteudo).length > LIMITE_TEXTO) throw new Error('O conteúdo extraído excede 1 MB. Divida o arquivo em partes menores.');
           conteudo.value = importado.conteudo;

@@ -6,7 +6,7 @@ export const ferramentas = especificacoes.map(s => ({
   status: 'pronta', local: false, tarefas: ['analisar', 'exportar'],
   resumo: s.resumo, problema: s.problema,
   entra: s.entrada === 'documento'
-    ? 'Texto editável ou upload TXT, Markdown, PDF com texto selecionável ou DOCX; até 1 MB após extração.'
+    ? 'Texto editável ou upload TXT, Markdown, JSON, SRT, VTT, PDF com texto selecionável ou DOCX; até 1 MB após extração.'
     : 'Tabela editável ou upload CSV, TSV, JSON ou XLSX; até 2.000 registros e 1 MB após conversão.',
   processa: s.processa, sai: s.sai,
   exporta: ['pdf', 'xlsx', 'csv', 'json', 'txt'],

@@ -2,7 +2,7 @@
 
 O lote **F252–F351** acrescenta 100 ferramentas profissionais: 32 Plus e 68 Premium (Premium inclui Plus). O catálogo passa a 351 entradas, com 250 ferramentas implementadas. O histórico abaixo preserva as entregas anteriores; a referência deste lote é [100 ferramentas profissionais](documentacao/100-ferramentas-profissionais.md).
 
-As novas ferramentas recebem arquivos CSV/TSV/JSON/XLSX ou documentos TXT/Markdown/PDF com texto/DOCX, conforme o tipo de análise. Os relatórios completos exportam PDF, Excel com três abas, TXT, CSV e JSON, além de SVG quando há série numérica. Exemplos editáveis, pesquisa, paginação, etapas de execução e cancelamento seguem os componentes do portal.
+As novas ferramentas recebem arquivos CSV/TSV/JSON/XLSX ou documentos TXT/Markdown/JSON/SRT/VTT/PDF com texto/DOCX, conforme o tipo de análise. Os relatórios completos exportam PDF, Excel com três abas, TXT, CSV e JSON, além de SVG quando há série numérica. Exemplos editáveis, pesquisa, paginação, etapas de execução e cancelamento seguem os componentes do portal.
 
 Execute `npm run gerar`, `npm run testar`, `npm run testar:api` e `npm run verificar`. A suíte `testes/navegador/profissionais.teste.mjs` exercita navegador e API reais com banco temporário; requer Playwright e Chromium. Os motores pagos rodam na API Node com autorização por plano, limite de corpo, cota, memória, concorrência e prazo. O GitHub Pages publica somente a interface; conta, assinatura e execução exigem servidor persistente na mesma origem. A liberação de planos continua manual, sem gateway de cobrança.
 

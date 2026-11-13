@@ -13,6 +13,12 @@ const file = (name, conteudo) => { const bytes = typeof conteudo === 'string' ? 
 const relatorio = (extra = {}) => ({ titulo: 'Análise de São João', indicadores: [['Soma', 32.5]], colunas: ['grupo', 'valor'], linhas: [['Ação', 12.5], ['São João', 20]], series: [{ nome: 'Ação', valor: 12.5 }], notas: ['Premissa explícita: valores informados.'], metodo: 'Soma aritmética dos valores.', ...extra });
 const gerar = (r, rotulo) => arquivosDoRelatorio(r, 'analise-segura').find((a) => a.rótulo === rotulo).gerar();
 
+for (const [ext, texto] of [['json', '{"bomFormat":"CycloneDX","components":[]}'], ['srt', '1\n00:00:01,000 --> 00:00:02,000\nOlá.'], ['vtt', 'WEBVTT\n\n00:01.000 --> 00:02.000\nOlá.']]) {
+  test(`documento ${ext} preserva texto técnico para o motor, sem converter em tabela`, async () => {
+    assert.equal((await importarArquivo(file(`documento.${ext}`, texto), { entrada: 'documento' })).conteudo, texto);
+  });
+}
+
 test('upload CSV recusa aspas malformadas sem remover caracteres da entrada', async () => {
   for (const conteudo of ['nome;valor\nO "produto" A;1', 'nome;valor\n"produto"A;1', 'nome;valor\n"produto;1']) {
     await assert.rejects(importarArquivo(file('dados.csv', conteudo)), /CSV inválido/);

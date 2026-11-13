@@ -27,7 +27,7 @@ import { biblioteca } from '../auxiliares/pdf-de-teste.mjs';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const ARTEFATOS = join(RAIZ, '.execucao', 'profissionais-e2e');
-const specs = Object.fromEntries(['F252', 'F269', 'F277', 'F303', 'F330'].map(id => [id, especificacoes.find(s => s.id === id)]));
+const specs = Object.fromEntries(['F252', 'F269', 'F277', 'F303', 'F330', 'F334', 'F336'].map(id => [id, especificacoes.find(s => s.id === id)]));
 const numero = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 6 });
 const legivel = v => v === null ? '—' : typeof v === 'number' ? numero.format(v) : String(v);
 const tabelaTexto = tabela => tabela.map(l => l.map(v => v === null ? '' : String(v)));
@@ -340,9 +340,19 @@ for (const largura of [390, 1280]) for (const tema of ['claro', 'escuro']) {
         assert.equal(grafico.titulo, financeiro.titulo);
         assert.equal(grafico.barras, financeiro.series.length);
         for (const serie of financeiro.series) assert.ok(grafico.texto.includes(String(serie.valor)), 'SVG preserva todas as séries');
+
+        await abrir(pagina, specs.F334);
+        await importar(pagina, 'legendas.srt', Buffer.from(specs.F334.exemplo), 'application/x-subrip');
+        assert.equal(await entrada.inputValue(), specs.F334.exemplo, 'SRT chega ao validador sem renomear o arquivo');
+        assert.ok((await executar(pagina, specs.F334)).linhas.length > 0);
+
+        await abrir(pagina, specs.F336);
+        await importar(pagina, 'inventario.cdx.json', Buffer.from(specs.F336.exemplo), 'application/json');
+        assert.equal(await entrada.inputValue(), specs.F336.exemplo, 'SBOM JSON permanece documento e não vira tabela');
+        assert.ok((await executar(pagina, specs.F336)).linhas.length > 0);
       }
       assert.deepEqual(erros, [], 'nenhum pageerror durante módulos, importadores, motores ou workers');
-      assert.equal(chamadas.length, primeiro ? 5 : 4, 'somente os cálculos esperados são enviados; cada conta permanece abaixo da cota de 12/minuto');
+      assert.equal(chamadas.length, primeiro ? 7 : 4, 'somente os cálculos esperados são enviados; cada conta permanece abaixo da cota de 12/minuto');
       t.diagnostic(`${chamadas.length} cálculos reais; quatro domínios; sem overflow/pageerror. Artefatos: .execucao/profissionais-e2e`);
     } catch (falha) {
       await pagina.screenshot({ path: join(ARTEFATOS, `falha-${largura}-${tema}.png`), fullPage: true }).catch(() => {});
