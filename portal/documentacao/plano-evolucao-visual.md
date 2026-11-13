@@ -32,7 +32,7 @@ As fábricas compartilhadas são `premium-lote.js`, `estrategia-premium.js`, `op
 
 1. O estado indeterminado acompanha um trabalho iniciado. Não há percentual inventado por tempo. As contagens disponíveis vêm de páginas, arquivos ou linhas realmente processados; ao mudar para uma fase sem contagem, o estado volta a ser indeterminado.
 2. O componente `execucao-visual.js` usa a mesma família de papel e cores da abertura. O relógio anima apenas a cena decorativa; a operação determina início, sucesso, erro e cancelamento. Dados dos exemplos públicos nunca alimentam o resultado real.
-3. Não existe duração mínima para exibir a animação. A pintura anterior ao cálculo permite mostrar atividade sem atrasar artificialmente a entrega. Após concluir, a confirmação se recolhe em 650 ms; o resultado e o download já estão disponíveis durante esse tempo.
+3. Conforme o ajuste solicitado em 13/11/2026, a apresentação visual tem duração mínima de **10 segundos** em ferramentas rápidas e importações, **15 segundos** em análises profissionais e geradores de documentos e **20 segundos** em geração de arquivos, PDF e entradas de imagem/arquivo. A contagem começa no início da operação; resultados e downloads ficam disponíveis assim que realmente terminam, enquanto a cena de conclusão continua até completar o tempo. Trabalhos mais longos continuam animados até o fim real. Erro, cancelamento e movimento reduzido encerram a apresentação sem impor essa duração mínima.
 4. Pausar a decoração não cancela o trabalho. Botões de cancelamento das operações que suportam interrupção permanecem separados. Movimento reduzido mostra a cena estática e status em texto; motores param fora da tela, em aba oculta e ao encerrar.
 5. Recalcular automaticamente não abre painel nem move o foco. Um reset ou resultado novo invalida a conclusão anterior e encerra a visualização de exportação obsoleta. Exportações simultâneas da mesma interface ficam bloqueadas.
 6. Números ganham destaque; textos longos recebem tipografia e rolagem adequadas. Detalhes, observações e ações têm áreas próprias. Tabelas permanecem roláveis e os dados completos continuam nos arquivos, independentemente do filtro da tela.
@@ -50,6 +50,8 @@ As fábricas compartilhadas são `premium-lote.js`, `estrategia-premium.js`, `op
 - Integridade: **316 saídas geradas**, catálogo com **351 entradas**, sem problema no verificador. Checagens de publicação/servidor: **14 testes passaram**. Os dois avisos de ferramentas ainda planejadas são anteriores a esta entrega.
 
 Os cenários de navegador e os testes de inventário integram o workflow, que executa novamente o conjunto final antes de publicar. Capturas locais ficam em `portal/.execucao/execucao-visual-e2e/` e `portal/.execucao/profissionais-e2e/`, fora do pacote público.
+
+O ajuste posterior de duração acrescenta quatro testes de seleção de perfil e um cenário de navegador com relógio controlado: a cena continua animada depois da resposta real e se recolhe ao completar 10, 15 ou 20 segundos. Também verifica que o resultado é anunciado como concluído imediatamente, sem manter a operação falsamente ocupada.
 
 ## Limites atuais do ambiente público
 

@@ -8,6 +8,49 @@ import { ícone } from './ícones.js';
 
 const controles = new WeakMap();
 
+const DURACAO_RÁPIDA_MS = 10_000;
+const DURACAO_ANALISE_MS = 15_000;
+const DURACAO_ARQUIVO_MS = 20_000;
+
+function normalizarTipo(valor) {
+  return String(valor ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+/** Escolhe quanto a cena decorativa permanece visível, sem atrasar o resultado real. */
+export function resolverDuracaoApresentacao({
+  tipo = 'analise',
+  demorada = false,
+  profissional = false,
+  campos = [],
+  exporta = [],
+  cat,
+} = {}) {
+  const tipoNormalizado = normalizarTipo(tipo);
+  if (tipoNormalizado === 'arquivo') return DURACAO_ARQUIVO_MS;
+  if (tipoNormalizado === 'importacao') return DURACAO_RÁPIDA_MS;
+
+  const camposLista = Array.isArray(campos) ? campos : Object.values(campos ?? {});
+  const temArquivo = camposLista.some((campo) => {
+    const tipoCampo = normalizarTipo(typeof campo === 'string' ? campo : campo?.tipo ?? campo?.type);
+    return ['file', 'arquivo', 'ficheiro'].includes(tipoCampo);
+  });
+  const categorias = (Array.isArray(cat) ? cat : [cat]).map(normalizarTipo);
+  const categoriaPesada = categorias.some((categoria) =>
+    ['pdf', 'imagem', 'imagens', 'image', 'images'].includes(categoria),
+  );
+  if (temArquivo || categoriaPesada) return DURACAO_ARQUIVO_MS;
+
+  const formatos = (Array.isArray(exporta) ? exporta : [exporta]).map(normalizarTipo);
+  if (profissional || demorada || formatos.some((formato) => ['pdf', 'xlsx'].includes(formato))) {
+    return DURACAO_ANALISE_MS;
+  }
+  return DURACAO_RÁPIDA_MS;
+}
+
 /** Dá ao navegador uma oportunidade de pintar, sem impor duração mínima ao trabalho. */
 export function aguardarPintura() {
   return new Promise((resolve) => {
@@ -72,9 +115,26 @@ function desenhar(ctx, t, p, estado, cores) {
       ctx.fillRect(-4, -4, 8, 8);
       ctx.restore();
     }
+  if (estado === 'concluído') {
+    for (let i = 0; i < 8; i++) {
+      const ângulo = (Math.PI * 2 * i) / 8 + t * 0.7;
+      const distância = 46 + 8 * Math.sin(t * 2 + i);
+      ctx.save();
+      ctx.globalAlpha = 0.35 + 0.45 * (0.5 + 0.5 * Math.sin(t * 3 + i));
+      ctx.fillStyle = cores.ok;
+      ctx.translate(xs[2] + Math.cos(ângulo) * distância, y + Math.sin(ângulo) * distância);
+      ctx.rotate(ângulo);
+      ctx.fillRect(-2.5, -2.5, 5, 5);
+      ctx.restore();
+    }
+  }
   xs.forEach((x, i) => {
     const giro =
-      estado === 'processando' && i === 1 ? Math.sin(t * 2.8) * 0.035 : 0;
+      estado === 'processando' && i === 1
+        ? Math.sin(t * 2.8) * 0.035
+        : estado === 'concluído' && i === 2
+          ? Math.sin(t * 2.4) * 0.012
+          : 0;
     papel(ctx, {
       cx: x,
       cy: y,
@@ -90,6 +150,10 @@ function desenhar(ctx, t, p, estado, cores) {
     });
     ctx.save();
     ctx.translate(x, y);
+    if (final && i === 2) {
+      const escala = 1 + Math.sin(t * 2.8) * 0.035;
+      ctx.scale(escala, escala);
+    }
     ctx.strokeStyle = i === 2 && erro ? cores.erro : cores.marca;
     ctx.lineWidth = 4;
     ctx.lineCap = 'round';
@@ -133,7 +197,12 @@ function desenhar(ctx, t, p, estado, cores) {
 /** O alvo pertence à ferramenta; não são lidos dados dos campos nem resultados de demonstração. */
 export function criarExecucaoVisual(
   elemento,
-  { titulo = 'Resultado da operação', tipo = 'analise', compacta = false } = {},
+  {
+    titulo = 'Resultado da operação',
+    tipo = 'analise',
+    compacta = false,
+    duracaoMinimaMs = resolverDuracaoApresentacao({ tipo }),
+  } = {},
 ) {
   if (controles.has(elemento)) return controles.get(elemento);
   elemento.hidden = true;
@@ -179,7 +248,49 @@ export function criarExecucaoVisual(
     token = 0,
     estado = 'oculto',
     semMovimento = false,
+    inícioDaOperação = null,
     cores;
+  const reduzirMovimento = matchMedia('(prefers-reduced-motion: reduce)');
+  const duraçãoDaApresentação = Number.isFinite(duracaoMinimaMs)
+    ? Math.max(0, Math.round(duracaoMinimaMs))
+    : resolverDuracaoApresentacao({ tipo });
+
+  function agora() {
+    return globalThis.performance?.now?.() ?? Date.now();
+  }
+
+  function tempoRestanteDaApresentação() {
+    if (inícioDaOperação === null) return duraçãoDaApresentação;
+    return Math.max(0, duraçãoDaApresentação - (agora() - inícioDaOperação));
+  }
+
+  function sincronizarRótuloDePausa() {
+    const apresentaçãoPronta = estado === 'concluído';
+    const rótulo = semMovimento
+      ? apresentaçãoPronta ? 'Retomar apresentação visual' : 'Retomar animação visual'
+      : apresentaçãoPronta
+        ? 'Pausar animação visual; resultado já disponível'
+        : 'Pausar animação visual; o processamento continua';
+    pausar.setAttribute('aria-label', rótulo);
+  }
+
+  function programarFimDaApresentação(mensagem) {
+    clearTimeout(timer);
+    const atual = token;
+    const falhouOuCancelou = estado === 'erro' || estado === 'cancelado';
+    const tempo = falhouOuCancelou || reduzirMovimento.matches
+      ? 650
+      : tempoRestanteDaApresentação();
+    timer = setTimeout(() => {
+      if (token !== atual) return;
+      parar();
+      palco.hidden = true;
+      pausar.hidden = true;
+      elemento.dataset.compacto = 'sim';
+      if (estado === 'concluído') texto.textContent = mensagem;
+      inícioDaOperação = null;
+    }, tempo);
+  }
 
   function paleta() {
     const s = getComputedStyle(document.documentElement),
@@ -196,9 +307,22 @@ export function criarExecucaoVisual(
   function parar() {
     motor?.destruir();
     motor = null;
+    if (ouvinteMovimentoAtivo) {
+      reduzirMovimento.removeEventListener?.('change', aoTrocarPreferênciaDeMovimento);
+      reduzirMovimento.removeListener?.(aoTrocarPreferênciaDeMovimento);
+      ouvinteMovimentoAtivo = false;
+    }
+  }
+  let ouvinteMovimentoAtivo = false;
+  function observarPreferênciaDeMovimento() {
+    if (ouvinteMovimentoAtivo) return;
+    if (reduzirMovimento.addEventListener) reduzirMovimento.addEventListener('change', aoTrocarPreferênciaDeMovimento);
+    else reduzirMovimento.addListener?.(aoTrocarPreferênciaDeMovimento);
+    ouvinteMovimentoAtivo = true;
   }
   function iniciarMotor() {
     if (!elemento.isConnected || !canvas.getContext('2d')) return;
+    observarPreferênciaDeMovimento();
     cores = paleta();
     if (!motor)
       motor = criarVitrine(canvas, {
@@ -232,6 +356,7 @@ export function criarExecucaoVisual(
           : novo === 'erro'
             ? 'Falhou'
             : 'Cancelado';
+    sincronizarRótuloDePausa();
     etapas
       .querySelectorAll('li')
       .forEach(
@@ -264,33 +389,30 @@ export function criarExecucaoVisual(
     }
     resumo.hidden = true;
     pausar.hidden =
-      novo !== 'processando' ||
-      matchMedia('(prefers-reduced-motion: reduce)').matches;
+      !['processando', 'concluído'].includes(novo) || reduzirMovimento.matches;
     palco.hidden = false;
     delete elemento.dataset.compacto;
     iniciarMotor();
     motor?.repintar();
-    if (novo !== 'processando') {
-      const atual = token;
-      timer = setTimeout(() => {
-        if (token === atual) {
-          parar();
-          palco.hidden = true;
-          elemento.dataset.compacto = 'sim';
-        }
-      }, 650);
+    if (novo === 'concluído') {
+      programarFimDaApresentação(mensagem);
+    } else if (novo === 'erro' || novo === 'cancelado') {
+      programarFimDaApresentação(mensagem);
+    }
+  }
+
+  function aoTrocarPreferênciaDeMovimento() {
+    pausar.hidden =
+      !(estado === 'processando' || (estado === 'concluído' && !palco.hidden)) || reduzirMovimento.matches;
+    if (estado === 'concluído' && !palco.hidden) {
+      programarFimDaApresentação(texto.textContent);
     }
   }
   pausar.addEventListener('click', () => {
     semMovimento = !semMovimento;
     pausar.setAttribute('aria-pressed', String(semMovimento));
     elemento.dataset.animacaoPausada = semMovimento ? 'sim' : 'nao';
-    pausar.setAttribute(
-      'aria-label',
-      semMovimento
-        ? 'Retomar animação visual'
-        : 'Pausar animação visual; o processamento continua',
-    );
+    sincronizarRótuloDePausa();
     pausar.innerHTML = ícone(semMovimento ? 'reproduzir' : 'pausar');
     if (semMovimento) motor?.pausar();
     else motor?.tocar();
@@ -298,12 +420,15 @@ export function criarExecucaoVisual(
   const controle = {
     iniciar(mensagem = 'Preparando…') {
       resumo.hidden = true;
+      inícioDaOperação = agora();
       pintar('processando', mensagem);
     },
     andar(porcentagem, mensagem = 'Processando…') {
+      if (inícioDaOperação === null) inícioDaOperação = agora();
       pintar('processando', mensagem, porcentagem);
     },
     concluir(mensagem = 'Resultado pronto', detalhe) {
+      if (inícioDaOperação === null) inícioDaOperação = agora();
       pintar('concluído', mensagem, 100);
       if (detalhe) {
         resumo.textContent = String(detalhe);
@@ -320,6 +445,7 @@ export function criarExecucaoVisual(
       clearTimeout(timer);
       token++;
       estado = 'oculto';
+      inícioDaOperação = null;
       elemento.hidden = true;
       palco.setAttribute('aria-busy', 'false');
       parar();

@@ -322,6 +322,44 @@ test('criador de gráficos: a Promise do PNG gera imagem válida e conclui sua f
   } finally { await contexto.close(); }
 });
 
+test('a apresentação dura 10, 15 ou 20 segundos e o sucesso real fica disponível imediatamente', { skip: pular, timeout: 20000 }, async () => {
+  const { contexto, página } = await abrirFerramenta('porcentagem', { reducedMotion: 'no-preference' });
+  try {
+    await página.clock.install({ time: new Date('2026-11-13T12:00:00Z') });
+    await página.clock.pauseAt(new Date('2026-11-13T12:00:01Z'));
+    await página.evaluate(async () => {
+      const { criarExecucaoVisual } = await import('/scripts/núcleo/execucao-visual.js');
+      for (const duracao of [10000, 15000, 20000]) {
+        const alvo = document.createElement('div');
+        alvo.id = `duracao-${duracao}`;
+        Object.assign(alvo.style, { position: 'fixed', top: '80px', left: '20px', width: '500px', zIndex: '1000' });
+        document.body.append(alvo);
+        const controle = criarExecucaoVisual(alvo, { duracaoMinimaMs: duracao });
+        controle.iniciar('Calculando');
+        controle.concluir('Resultado pronto para usar');
+        if (alvo.dataset.execucaoEstado !== 'concluído') throw new Error('O estado real não pode esperar pela apresentação');
+        if (alvo.querySelector('.execucao-visual__palco').getAttribute('aria-busy') !== 'false') throw new Error('Resultado pronto não é processamento pendente');
+        if (alvo.querySelector('.execucao-visual__palco').hidden) throw new Error('A apresentação terminou cedo demais');
+      }
+    });
+    const palco = ms => página.locator(`#duracao-${ms} .execucao-visual__palco`);
+    const quadro = await palco(20000).locator('canvas').evaluate(c => c.toDataURL());
+    await página.clock.runFor(150);
+    assert.notEqual(await palco(20000).locator('canvas').evaluate(c => c.toDataURL()), quadro, 'a apresentação continua animada após o cálculo');
+    await página.clock.fastForward(9800);
+    for (const ms of [10000, 15000, 20000]) assert.equal(await palco(ms).isHidden(), false, `a cena de ${ms}ms ainda está visível antes de 10s`);
+    await página.clock.fastForward(100);
+    assert.equal(await palco(10000).isHidden(), true);
+    assert.equal(await palco(15000).isHidden(), false);
+    assert.equal(await palco(20000).isHidden(), false);
+    await página.clock.fastForward(5000);
+    assert.equal(await palco(15000).isHidden(), true);
+    assert.equal(await palco(20000).isHidden(), false);
+    await página.clock.fastForward(5000);
+    assert.equal(await palco(20000).isHidden(), true);
+  } finally { await contexto.close(); }
+});
+
 test('helper visual: transições terminais antigas, pausa, percentual e estados de falha/cancelamento', { skip: pular, timeout: 15000 }, async () => {
   const contexto = await navegador.newContext({ viewport: { width: 900, height: 700 }, reducedMotion: 'no-preference' });
   const página = await contexto.newPage();

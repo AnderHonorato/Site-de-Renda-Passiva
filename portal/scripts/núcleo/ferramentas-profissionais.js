@@ -5,7 +5,7 @@ import { baixar } from './exportar.js';
 import { caminhoDoIdioma } from './sessão.js';
 import { registrarUso as registrarRecente } from './preferências.js';
 import { importarArquivo, arquivosDoRelatorio } from '../comum/profissionais/arquivos.js';
-import { criarExecucaoVisual, aguardarPintura } from './execucao-visual.js';
+import { criarExecucaoVisual, aguardarPintura, resolverDuracaoApresentacao } from './execucao-visual.js';
 
 const LIMITE_TEXTO = 1_000_000;
 const POR_PAGINA = 25;
@@ -257,10 +257,16 @@ export function criarFerramentaProfissional(slug) {
       estado.setAttribute('aria-live', 'polite');
       estado.hidden = true;
       const visualAnaliseNo = elemento('div', 'profissional__execucao-visual');
-      const visualAnalise = criarExecucaoVisual(visualAnaliseNo, { titulo: spec.nome, tipo: 'analise' });
+      const visualAnalise = criarExecucaoVisual(visualAnaliseNo, {
+        titulo: spec.nome, tipo: 'analise',
+        duracaoMinimaMs: resolverDuracaoApresentacao({ tipo: 'analise', profissional: true }),
+      });
       visualAnaliseNo.hidden = true;
       const visualImportacaoNo = elemento('div', 'profissional__execucao-visual');
-      const visualImportacao = criarExecucaoVisual(visualImportacaoNo, { titulo: 'Importação de arquivo', tipo: 'importacao', compacta: true });
+      const visualImportacao = criarExecucaoVisual(visualImportacaoNo, {
+        titulo: 'Importação de arquivo', tipo: 'importacao', compacta: true,
+        duracaoMinimaMs: resolverDuracaoApresentacao({ tipo: 'importacao' }),
+      });
       visualImportacaoNo.hidden = true;
       const erro = elemento('div', 'profissional__erro');
       erro.setAttribute('role', 'alert');
@@ -453,7 +459,10 @@ export function criarFerramentaProfissional(slug) {
         const botoes = elemento('div', 'ações profissional__formatos-exportacao');
         const statusExportacao = elemento('p', 'pequeno profissional__situacao'); statusExportacao.setAttribute('role', 'status');
         const visualExportacaoNo = elemento('div', 'profissional__execucao-visual');
-        const visualExportacao = criarExecucaoVisual(visualExportacaoNo, { titulo: 'Seu relatório', tipo: 'arquivo', compacta: true });
+        const visualExportacao = criarExecucaoVisual(visualExportacaoNo, {
+          titulo: 'Seu relatório', tipo: 'arquivo', compacta: true,
+          duracaoMinimaMs: resolverDuracaoApresentacao({ tipo: 'arquivo' }),
+        });
         for (const item of arquivosDoRelatorio(relatorio, slug)) {
           const botaoArquivo = botao(item.rótulo);
           botaoArquivo.classList.add('profissional__formato-exportacao');
@@ -515,7 +524,7 @@ export function criarFerramentaProfissional(slug) {
         exportacoes.append(botoes, visualExportacaoNo, statusExportacao);
         resultado.append(detalhes, exportacoes);
         resultado.hidden = false;
-        resultado.focus();
+        resultado.focus({ preventScroll: true });
       }
       formulario.addEventListener('submit', async evento => {
         evento.preventDefault();

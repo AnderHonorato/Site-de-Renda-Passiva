@@ -7,7 +7,7 @@
 import { montarFerramenta, ErroDeEntrada } from '../núcleo/montador.js';
 import { mostrarErro, limparErros } from '../núcleo/interface.js';
 import { ícone } from '../núcleo/ícones.js';
-import { criarExecucaoVisual } from '../núcleo/execucao-visual.js';
+import { criarExecucaoVisual, resolverDuracaoApresentacao } from '../núcleo/execucao-visual.js';
 import { formatarDuração } from '../cálculos/textos.js';
 import {
   LIMITE_DE_CARACTERES, VELOCIDADES, TONS, PALAVRAS_POR_MINUTO, TAMANHO_DO_TRECHO,
@@ -177,6 +177,7 @@ export default {
         progressoNaTela.className = 'progresso t-2';
         progressoDaLeitura = criarExecucaoVisual(progressoNaTela, {
           titulo: 'Leitura em voz alta', tipo: 'voz', compacta: true,
+          duracaoMinimaMs: resolverDuracaoApresentacao({ tipo: 'voz' }),
         });
 
         const situaçãoNaTela = document.createElement('p');

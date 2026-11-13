@@ -177,7 +177,8 @@ function markupDeCampo(campo) {
  */
 export function montarFerramenta(raiz, ferramenta, definição) {
   const { campos, calcular, rótuloDaAção = 'Calcular', aoMontar, aoResultado,
-    permitirSalvarTrabalho = true, registrarUsoAtivo = true, progressoExterno = false } = definição;
+    permitirSalvarTrabalho = true, registrarUsoAtivo = true, progressoExterno = false,
+    demorada = false } = definição;
 
   raiz.innerHTML = `<form id="formulário" novalidate>
   <div class="campos campos--2">${campos.map(markupDeCampo).join('')}</div>
@@ -194,7 +195,9 @@ export function montarFerramenta(raiz, ferramenta, definição) {
 
   const formulário = raiz.querySelector('#formulário');
   const caixaDeResultado = raiz.querySelector('#resultado');
-  const progresso = criarProgresso(raiz.querySelector('#progresso'));
+  const progresso = criarProgresso(raiz.querySelector('#progresso'), {
+    demorada, campos, exporta: ferramenta.exporta, cat: ferramenta.cat,
+  });
   const emInglês = document.documentElement.lang === 'en';
   let dadosAtuais = null;
   let execuçãoAtual = 0;
@@ -310,7 +313,9 @@ export function montarFerramenta(raiz, ferramenta, definição) {
     });
 
     const progressoArquivo = caixaDeResultado.querySelector('[data-progresso-arquivo]');
-    const andamentoArquivo = progressoArquivo ? criarProgresso(progressoArquivo) : null;
+    const andamentoArquivo = progressoArquivo ? criarProgresso(progressoArquivo, {
+      tipo: 'arquivo', exporta: ferramenta.exporta, cat: ferramenta.cat,
+    }) : null;
     const botõesDeExportação = [...caixaDeResultado.querySelectorAll('[data-arquivo]:not([data-acao-externa]), [data-tabela]')];
     async function gerarExportação(botão, gerar) {
       if (exportaçãoEmGeração || botão.disabled) return;

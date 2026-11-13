@@ -1,5 +1,5 @@
 /** Peças de interface compartilhadas: aviso flutuante, progresso e erros de campo. */
-import { criarExecucaoVisual } from './execucao-visual.js';
+import { criarExecucaoVisual, resolverDuracaoApresentacao } from './execucao-visual.js';
 
 let tempoDoAviso;
 
@@ -28,14 +28,26 @@ export function avisar(mensagem, { duração = 3200 } = {}) {
  * Controla o bloco de progresso de uma operação.
  *
  * Só existe estado de progresso quando há trabalho de verdade: nada de barra
- * falsa para fingir demora. Operações instantâneas concluem sem espera mínima.
+ * falsa para fingir demora. A cena pode permanecer decorativa após a conclusão,
+ * sem atrasar o resultado ou os arquivos reais.
  * @param {HTMLElement} elemento contêiner com a classe `progresso`
  */
-export function criarProgresso(elemento) {
+export function criarProgresso(elemento, opções = {}) {
+  const tipo = opções.tipo || (elemento.hasAttribute('data-progresso-arquivo') ? 'arquivo' : 'analise');
+  const formulário = elemento.closest('form');
+  const campos = opções.campos || [...(formulário?.elements || [])].map(campo => ({
+    nome: campo.name,
+    tipo: campo.type || campo.tagName?.toLowerCase(),
+    accept: campo.accept || '',
+  }));
+  const cat = opções.cat || elemento.closest('[data-cat]')?.dataset.cat;
+  const exporta = opções.exporta || [];
+  const demorada = opções.demorada === true;
   return criarExecucaoVisual(elemento, {
     titulo: elemento.hasAttribute('data-progresso-arquivo') ? 'Seu arquivo' : 'Seu resultado',
-    tipo: elemento.hasAttribute('data-progresso-arquivo') ? 'arquivo' : 'analise',
+    tipo,
     compacta: elemento.hasAttribute('data-progresso-arquivo'),
+    duracaoMinimaMs: resolverDuracaoApresentacao({ tipo, demorada, campos, exporta, cat }),
   });
 }
 

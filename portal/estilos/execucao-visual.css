@@ -23,6 +23,7 @@
 .execucao-visual[data-estado="concluído"] { border-color:color-mix(in srgb,var(--ok) 35%,var(--borda)); }
 .execucao-visual[data-estado="concluído"] .execucao-visual__selo { color:var(--ok);background:var(--ok-fraca);border-color:transparent; }
 .execucao-visual[data-estado="concluído"] .progresso__barra { background:var(--ok); }
+.execucao-visual[data-estado="concluído"]:not([data-compacto="sim"]) .execucao-visual__palco { border-color:color-mix(in srgb,var(--ok) 30%,var(--borda)); }
 .execucao-visual[data-estado=erro] { border-color:var(--erro); }
 .execucao-visual[data-estado=erro] :is(.execucao-visual__selo,.progresso__texto) { color:var(--erro); }
 .execucao-visual[data-estado=cancelado] .execucao-visual__selo { color:var(--atenção);background:var(--atenção-fraca); }
