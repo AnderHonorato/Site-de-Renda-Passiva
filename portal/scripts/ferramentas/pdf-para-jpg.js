@@ -95,16 +95,16 @@ export default {
 
         return execução.executar(async () => {
           const { progresso } = execução;
-          progresso.andar(4, 'Preparando o leitor de PDF…');
+          progresso.andar(undefined, 'Preparando o leitor de PDF…');
           const { nome, arquivo } = itens[0];
-          progresso.andar(8, 'Lendo o arquivo…');
+          progresso.andar(undefined, 'Lendo o arquivo…');
           const bytes = new Uint8Array(await arquivo.arrayBuffer());
 
-          progresso.andar(12, 'Abrindo o PDF…');
+          progresso.andar(undefined, 'Abrindo o PDF…');
           const r = await converterPdfEmImagens({ nome, bytes }, {
             abrir: abrirComPdfjs, formato: dados.formato, dpi, qualidade: Number(dados.qualidade), páginas: dados.páginas ?? '',
             cancelado: execução.cancelado,
-            aoProgredir: ({ página, total }) => progresso.andar(15 + (80 * página) / total, `Página ${número(página)} de ${número(total)}`),
+            aoProgredir: ({ página, total }) => progresso.andar(100 * página / total, `Página ${número(página)} de ${número(total)}`),
           });
 
           if (!r.ok) {

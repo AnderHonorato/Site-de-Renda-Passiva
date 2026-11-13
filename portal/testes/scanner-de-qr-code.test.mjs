@@ -425,6 +425,7 @@ test('a tela de um link bom: tipo, conteúdo, frase honesta e botão de abrir', 
   assert.match(saída.observações.join(' '), /Nada foi aberto/);
   assert.match(saída.observações.join(' '), /não saiu do seu aparelho/);
   assert.equal(saída.arquivos.length, 1);
+  assert.equal(saída.arquivos[0].tipo, 'acao', 'abrir um endereço não é exportar um arquivo');
   assert.equal(saída.texto, 'https://exemplo.com.br/cardapio');
   // Descrever o código NUNCA abre nada; só o clique no botão.
   assert.deepEqual(abertos, []);

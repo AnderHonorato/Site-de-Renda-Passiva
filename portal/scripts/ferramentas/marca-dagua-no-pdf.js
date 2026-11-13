@@ -143,7 +143,7 @@ export default {
 
         return execução.executar(async () => {
           const { progresso } = execução;
-          progresso.andar(4, 'Preparando o leitor de PDF…');
+          progresso.andar(undefined, 'Preparando o leitor de PDF…');
           let biblioteca;
           try {
             biblioteca = await carregarBiblioteca();
@@ -151,18 +151,18 @@ export default {
             throw new Error(ERRO_DE_BIBLIOTECA);
           }
 
-          progresso.andar(8, 'Lendo os arquivos…');
+          progresso.andar(undefined, 'Lendo os arquivos…');
           const { nome, arquivo } = itens[0];
           const bytes = new Uint8Array(await arquivo.arrayBuffer());
           const imagem = éImagem ? { nome: itemDaImagem.nome, bytes: new Uint8Array(await itemDaImagem.arquivo.arrayBuffer()) } : undefined;
 
-          progresso.andar(15, 'Abrindo o PDF…');
+          progresso.andar(undefined, 'Abrindo o PDF…');
           const r = await marcarPdf({ nome, bytes }, {
             biblioteca, tipo: éImagem ? 'imagem' : 'texto', texto: dados.texto ?? '', fonte: dados.fonte, tamanho, cor: dados.cor,
             imagem, escala, converter: converterImagemPelaTela, opacidade, rotação,
             posição: dados.posição ?? 'meio-centro', mosaico: dados.mosaico === 'sim', camada: dados.camada, páginas: dados.páginas ?? '',
             cancelado: execução.cancelado,
-            aoProgredir: ({ página, total }) => progresso.andar(20 + (75 * página) / total, `Página ${número(página)} de ${número(total)}`),
+            aoProgredir: ({ página, total }) => progresso.andar(100 * página / total, `Página ${número(página)} de ${número(total)}`),
           });
 
           if (!r.ok) {

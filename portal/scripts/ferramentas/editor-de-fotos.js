@@ -100,7 +100,7 @@ const esperar = () => new Promise((resolver) => setTimeout(resolver, 0));
  * Desenha a foto final e a grava no formato pedido.
  * @param {ImageBitmap} bitmap
  * @param {ReturnType<typeof normalizarAjustes>} a
- * @param {(porcentagem: number, texto: string) => void} aoProgredir
+ * @param {(porcentagem: number | undefined, texto: string) => void} aoProgredir
  * @returns {Promise<Blob>}
  */
 async function gerarArquivo(bitmap, a, aoProgredir) {
@@ -115,7 +115,7 @@ async function gerarArquivo(bitmap, a, aoProgredir) {
       contexto.fillStyle = '#fff';
       contexto.fillRect(0, 0, saída.largura, saída.altura);
     }
-    aoProgredir(20, 'Desenhando a foto…');
+    aoProgredir(undefined, 'Desenhando a foto…');
     contexto.imageSmoothingEnabled = true;
     contexto.imageSmoothingQuality = 'high';
     contexto.setTransform(...a.matriz);
@@ -129,12 +129,12 @@ async function gerarArquivo(bitmap, a, aoProgredir) {
         const imagem = contexto.getImageData(0, y, saída.largura, altura);
         ajustarPixels(imagem.data, a);
         contexto.putImageData(imagem, 0, y);
-        aoProgredir(35 + (50 * (y + altura)) / saída.altura, 'Aplicando as cores…');
+        aoProgredir(100 * (y + altura) / saída.altura, `Aplicando as cores: ${y + altura} de ${saída.altura} linhas…`);
         await esperar();
       }
     }
 
-    aoProgredir(90, 'Gravando o arquivo…');
+    aoProgredir(undefined, 'Gravando o arquivo…');
     const blob = await new Promise((resolver) => {
       tela.toBlob(resolver, formato.tipo, formato.comQualidade ? a.qualidade / 100 : undefined);
     });

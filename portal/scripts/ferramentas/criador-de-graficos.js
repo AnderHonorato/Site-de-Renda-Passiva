@@ -160,10 +160,13 @@ export default {
           arquivos: [
             {
               rótulo: 'Baixar PNG', ícone: 'imagem',
-              gerar: () => {
-                svgParaPng(r.svgParaArquivo, r.largura, r.altura, fundo)
-                  .then((png) => baixar(png, nome('png'), 'image/png'))
-                  .catch((erro) => { console.error(erro); avisar('Não foi possível gerar o PNG neste navegador. Baixe o SVG.'); });
+              gerar: async () => {
+                try {
+                  const png = await svgParaPng(r.svgParaArquivo, r.largura, r.altura, fundo);
+                  baixar(png, nome('png'), 'image/png');
+                } catch {
+                  throw new Error('Não foi possível gerar o PNG neste navegador. Baixe o SVG.');
+                }
               },
             },
             { rótulo: 'Baixar SVG', ícone: 'baixar', gerar: () => baixar(r.svgParaArquivo, nome('svg'), 'image/svg+xml') },

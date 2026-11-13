@@ -110,7 +110,7 @@ export default {
         botãoCancelar.hidden = false;
         travarLista(true);
         try {
-          progresso.andar(4, 'Preparando o leitor de PDF…');
+          progresso.andar(undefined, 'Preparando o leitor de PDF…');
           let biblioteca;
           try {
             biblioteca = await carregarBiblioteca();
@@ -118,22 +118,27 @@ export default {
             throw new Error('Não foi possível carregar o leitor de PDF. Confira a conexão e tente de novo.');
           }
 
-          progresso.andar(8, 'Lendo os arquivos…');
+          progresso.andar(undefined, 'Lendo os arquivos…');
           const arquivos = [];
-          for (const { nome, arquivo } of escolhidos) {
+          for (const [i, { nome, arquivo }] of escolhidos.entries()) {
             arquivos.push({ nome, bytes: new Uint8Array(await arquivo.arrayBuffer()) });
+            progresso.andar(100 * (i + 1) / escolhidos.length, `Arquivos lidos: ${número(i + 1)} de ${número(escolhidos.length)}`);
           }
 
           const r = await juntarPdfs(arquivos, {
             biblioteca,
             limiteDeArquivos: LIMITE_DE_ARQUIVOS,
             cancelado: () => cancelar,
-            aoProgredir: ({ página, total }) => progresso.andar(10 + (85 * página) / total, `Página ${número(página)} de ${número(total)}`),
+            aoProgredir: ({ página, total }) => progresso.andar(100 * página / total, `Página ${número(página)} de ${número(total)}`),
           });
 
           if (!r.ok) {
             // Cancelar não é engano de ninguém: vira aviso, não erro no campo.
-            if (r.erro === 'cancelado') throw new Error(mensagemDeErroDoPdf('cancelado'));
+            if (r.erro === 'cancelado') {
+              const erro = new Error(mensagemDeErroDoPdf('cancelado'));
+              erro.cancelado = true;
+              throw erro;
+            }
             throw new ErroDeEntrada(mensagemDeErroDoPdf(r.erro, { nome: r.extras?.nome }), 'arquivos');
           }
 

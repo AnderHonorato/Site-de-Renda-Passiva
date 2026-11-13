@@ -96,7 +96,7 @@ export default {
 
         escolha.travar(true);
         try {
-          progresso.andar(10, 'Girando as páginas…');
+          progresso.andar(undefined, 'Girando as páginas…');
           await folga();
           let biblioteca;
           try {
@@ -106,7 +106,7 @@ export default {
           }
           const r = await girarPdf(pdf, plano.páginas, ângulo, { biblioteca });
           if (!r.ok) throw new ErroDeEntrada(r.mensagem, 'arquivo');
-          progresso.andar(90, 'Gravando o arquivo…');
+          progresso.andar(undefined, 'Gravando o arquivo…');
           await folga();
 
           const lista = r.giradas.length === r.total ? 'todas' : condensarPáginas(r.giradas);

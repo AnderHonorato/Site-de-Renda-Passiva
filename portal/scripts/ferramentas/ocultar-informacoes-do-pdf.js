@@ -132,14 +132,14 @@ export default {
 
         return execução.executar(async () => {
           const { progresso } = execução;
-          progresso.andar(4, 'Preparando os leitores de PDF…');
+          progresso.andar(undefined, 'Preparando os leitores de PDF…');
           let biblioteca;
           try {
             biblioteca = await carregarBiblioteca();
           } catch {
             throw new Error(ERRO_DE_BIBLIOTECA);
           }
-          progresso.andar(8, 'Lendo o arquivo…');
+          progresso.andar(undefined, 'Lendo o arquivo…');
           const { nome, arquivo } = itens[0];
           const bytes = new Uint8Array(await arquivo.arrayBuffer());
 
@@ -147,7 +147,7 @@ export default {
           if (temCritério && achados === null) {
             const busca = await procurarNoPdf({ nome, bytes }, {
               abrir: abrirComPdfjsParaTexto, ...critério, cancelado: execução.cancelado,
-              aoProgredir: ({ página, total }) => progresso.andar(10 + (25 * página) / total, `Procurando: página ${número(página)} de ${número(total)}`),
+              aoProgredir: ({ página, total }) => progresso.andar(100 * página / total, `Procurando: página ${número(página)} de ${número(total)}`),
             });
             if (!busca.ok) lançar(busca, nome);
             achados = busca.achados;
@@ -159,11 +159,11 @@ export default {
             ...(achados ?? []).filter((a) => selecionados.has(a.id)).flatMap((a) => a.retângulos.map((r) => ({ página: a.página, ...r }))),
             ...áreas,
           ];
-          progresso.andar(36, 'Desenhando as páginas com a tarja…');
+          progresso.andar(undefined, 'Desenhando as páginas com a tarja…');
           const r = await ocultarInformações({ nome, bytes }, {
             abrir: abrirComPdfjsParaTexto, biblioteca, retângulos, páginasInteiras: dados.inteiras ?? '', cor: dados.cor, dpi,
             cancelado: execução.cancelado,
-            aoProgredir: ({ página, total }) => progresso.andar(36 + (58 * página) / total, `Página ${número(página)} de ${número(total)} ocultada`),
+            aoProgredir: ({ página, total }) => progresso.andar(100 * página / total, `Página ${número(página)} de ${número(total)} ocultada`),
           });
           if (!r.ok) lançar(r, nome);
 
@@ -339,7 +339,7 @@ export default {
               const { nome, arquivo } = itens[0];
               const busca = await procurarNoPdf({ nome, bytes: new Uint8Array(await arquivo.arrayBuffer()) }, {
                 abrir: abrirComPdfjsParaTexto, ...critério, cancelado: execução.cancelado,
-                aoProgredir: ({ página, total }) => progresso.andar(5 + (90 * página) / total, `Procurando: página ${número(página)} de ${número(total)}`),
+                aoProgredir: ({ página, total }) => progresso.andar(100 * página / total, `Procurando: página ${número(página)} de ${número(total)}`),
               });
               if (!busca.ok) lançar(busca, nome);
               achados = busca.achados;

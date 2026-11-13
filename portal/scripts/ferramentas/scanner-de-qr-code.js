@@ -110,12 +110,13 @@ async function lerComJsQr(bitmap, aoProgredir) {
   }
   try {
     for (const [i, escala] of escalas.entries()) {
-      aoProgredir(30 + (60 * i) / escalas.length, `Procurando o QR Code (${i + 1} de ${escalas.length})…`);
-      // Deixa o navegador pintar o progresso antes do trabalho pesado.
+      aoProgredir(undefined, `Procurando o QR Code na escala ${i + 1} de ${escalas.length}…`);
+      // Deixa o navegador pintar o estado antes do trabalho pesado.
       await new Promise((resolver) => setTimeout(resolver, 0));
       let achados;
       try {
         achados = await perguntarAoTrabalhador(trabalhador, pixelsDaImagem(bitmap, escala), prazoFinal);
+        aoProgredir(100 * (i + 1) / escalas.length, `Escalas verificadas: ${i + 1} de ${escalas.length}`);
       } catch (erro) {
         if (erro.semTrabalhador) return lerNaPágina(bitmap);
         throw erro;
@@ -134,7 +135,7 @@ async function lerComJsQr(bitmap, aoProgredir) {
  */
 async function lerImagem(escolhida, aoProgredir) {
   const { bytes, tipo, largura, altura } = escolhida.dados;
-  aoProgredir(10, 'Abrindo a imagem…');
+  aoProgredir(undefined, 'Abrindo a imagem…');
   let bitmap;
   try {
     // Foto grande é reduzida já na abertura (lado máximo de 4000 px, o dobro do maior tamanho que a leitura usa):
@@ -147,7 +148,7 @@ async function lerImagem(escolhida, aoProgredir) {
     throw new ErroDeEntrada('Não foi possível abrir esta imagem: o arquivo parece corrompido ou o navegador não o reconhece. Tente salvar de novo como PNG ou JPG.', 'arquivo');
   }
   try {
-    aoProgredir(20, 'Lendo o QR Code…');
+    aoProgredir(undefined, 'Lendo o QR Code…');
     const nativo = await lerComLeitorNativo(bitmap);
     if (nativo?.length) return { textos: nativo, leitor: 'leitor nativo do navegador' };
     const textos = await lerComJsQr(bitmap, aoProgredir);
@@ -210,6 +211,7 @@ export function descreverCódigos(textos, { abrir = () => {}, leitor = '' } = {}
 
   const botões = análises.flatMap((a, i) => (a.endereço ? [{
     rótulo: vários ? `Abrir o link ${i + 1}` : 'Abrir o link',
+    tipo: 'acao',
     ícone: 'seta-diagonal',
     gerar: () => abrir(a.endereço, a.nível),
   }] : []));

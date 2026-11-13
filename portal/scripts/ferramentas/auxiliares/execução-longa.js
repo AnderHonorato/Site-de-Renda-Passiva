@@ -5,6 +5,12 @@
 import { criarProgresso } from '../../núcleo/interface.js';
 import { ícone } from '../../núcleo/ícones.js';
 
+function erroCancelado(erro) {
+  const resultado = new Error(erro instanceof Error ? erro.message : 'Operação cancelada.');
+  resultado.cancelado = true;
+  return resultado;
+}
+
 /**
  * @param {HTMLElement} elemento raiz da ferramenta, já montada por `montarFerramenta`
  * @param {{escolha?: {travar: (travada: boolean) => void}[] | {travar: (travada: boolean) => void}, aoLimpar?: () => void}} [opções]
@@ -40,7 +46,16 @@ export function prepararExecução(elemento, { escolha } = {}) {
       botãoCancelar.hidden = false;
       for (const e of escolhas) e.travar(true);
       try {
-        return await trabalho();
+        const resultado = await trabalho();
+        // A função pode concluir entre duas checagens cooperativas; não transforme
+        // um cancelamento tardio em resultado concluído.
+        if (cancelar) throw erroCancelado();
+        return resultado;
+      } catch (erro) {
+        // Preserve a mensagem específica do operador (por exemplo, GIF) e passe o
+        // estado por propriedade, nunca inferindo cancelamento pelo texto.
+        if (cancelar) throw erroCancelado(erro);
+        throw erro;
       } finally {
         botãoPrincipal.disabled = false;
         botãoCancelar.hidden = true;

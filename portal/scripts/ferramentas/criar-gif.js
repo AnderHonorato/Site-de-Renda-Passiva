@@ -43,7 +43,7 @@ async function prepararQuadros(itens, plano, aoProgredir, cancelado) {
   const quadros = [];
   for (const [i, item] of itens.entries()) {
     if (cancelado()) throw new Error(CANCELADO);
-    aoProgredir(i / itens.length, `Preparando a imagem ${i + 1} de ${itens.length}…`);
+    aoProgredir(undefined, `Preparando a imagem ${i + 1} de ${itens.length}…`);
     const bitmap = await abrirImagem(item.arquivo);
     try {
       contexto.clearRect(0, 0, plano.largura, plano.altura);
@@ -54,6 +54,7 @@ async function prepararQuadros(itens, plano, aoProgredir, cancelado) {
       const r = retânguloDeDesenho({ largura: bitmap.width, altura: bitmap.height }, plano, plano.ajuste);
       contexto.drawImage(bitmap, r.x, r.y, r.largura, r.altura);
       quadros.push(contexto.getImageData(0, 0, plano.largura, plano.altura).data);
+      aoProgredir(100 * (i + 1) / itens.length, `Imagens preparadas: ${i + 1} de ${itens.length}`);
     } finally {
       bitmap.close?.();
     }
@@ -182,21 +183,25 @@ export default {
         soltarPrévia();
         return execução.executar(async () => {
           const { progresso } = execução;
-          progresso.andar(3, 'Preparando as imagens…');
-          let quadros = await prepararQuadros(itens, plano, (f, texto) => progresso.andar(3 + 27 * f, texto), execução.cancelado);
+          progresso.andar(undefined, 'Preparando as imagens…');
+          let quadros = await prepararQuadros(itens, plano, (porcentagem, texto) => progresso.andar(porcentagem, texto), execução.cancelado);
 
           const pedido = {
             largura: plano.largura, altura: plano.altura, sequência: plano.sequência, atrasoCs: plano.atrasoCs,
             repetições: plano.repetições, transparência: plano.fundo === 'transparente', suavizar: dados.suavizar === 'sim',
           };
-          const andar = (f, texto) => progresso.andar(30 + 65 * f, texto);
+          const andar = (_fração, texto) => {
+            // O codificador só expõe frações ponderadas entre etapas internas; sem contagem
+            // verificável, mantém o andamento indeterminado. A conclusão vem com o retorno dos bytes.
+            if (texto !== 'Pronto') progresso.andar(undefined, texto);
+          };
           let feito;
           try {
             feito = await converterNoTrabalhador({ ...pedido, quadros }, andar, execução.cancelado);
           } catch (erro) {
             if (!erro.semTrabalhador) throw erro;
             // Sem Web Worker (navegador antigo ou bloqueado): converte na própria página, cedendo a vez entre as etapas.
-            quadros = await prepararQuadros(itens, plano, (f, texto) => progresso.andar(3 + 27 * f, texto), execução.cancelado);
+            quadros = await prepararQuadros(itens, plano, (porcentagem, texto) => progresso.andar(porcentagem, texto), execução.cancelado);
             try {
               feito = await gerarGif({ ...pedido, quadros }, {
                 aoProgredir: andar, cancelado: execução.cancelado, ceder: () => new Promise((resolver) => { setTimeout(resolver, 0); }),

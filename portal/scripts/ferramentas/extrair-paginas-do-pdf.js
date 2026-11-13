@@ -75,7 +75,7 @@ export default {
 
         escolha.travar(true);
         try {
-          progresso.andar(10, 'Montando o PDF novo…');
+          progresso.andar(undefined, 'Montando o PDF novo…');
           await folga();
           let biblioteca;
           try {
@@ -85,7 +85,7 @@ export default {
           }
           const r = await extrairPáginas(pdf, dados.páginas, { biblioteca });
           if (!r.ok) throw new ErroDeEntrada(r.mensagem, r.campo);
-          progresso.andar(90, 'Gravando o arquivo…');
+          progresso.andar(undefined, 'Gravando o arquivo…');
           await folga();
 
           const lista = condensarPáginas(r.extraídas);

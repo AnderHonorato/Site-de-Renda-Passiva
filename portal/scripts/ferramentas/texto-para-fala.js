@@ -7,6 +7,7 @@
 import { montarFerramenta, ErroDeEntrada } from '../núcleo/montador.js';
 import { mostrarErro, limparErros } from '../núcleo/interface.js';
 import { ícone } from '../núcleo/ícones.js';
+import { criarExecucaoVisual } from '../núcleo/execucao-visual.js';
 import { formatarDuração } from '../cálculos/textos.js';
 import {
   LIMITE_DE_CARACTERES, VELOCIDADES, TONS, PALAVRAS_POR_MINUTO, TAMANHO_DO_TRECHO,
@@ -58,6 +59,7 @@ export function iniciarLeitura(dados, { sintetizador, criarFala, vozes, aoMudar 
     leitor,
     saída: {
       valor: 'Lendo em voz alta',
+      rotuloEstado: 'Leitura iniciada',
       resumo: `${leitura.parágrafos.length === 1 ? '1 parágrafo' : `${número(leitura.parágrafos.length)} parágrafos`}, ${número(leitura.palavras)} palavras. Use os botões abaixo para pausar, parar ou pular de parágrafo.`,
       linhas: [
         ['Voz', voz.name],
@@ -108,9 +110,12 @@ export default {
     const sintetizador = suportado ? window.speechSynthesis : null;
     let leitor = null;
     let atualizarSituação = () => {};
+    let progressoDaLeitura = null;
+    let estadoVisualAtual = null;
 
     montarFerramenta(raiz, ferramenta, {
       rótuloDaAção: 'Ler em voz alta',
+      progressoExterno: true,
       campos: [
         { nome: 'texto', rótulo: 'Texto para ler', tipo: 'área', linhas: 8, exemplo: TEXTO_DE_EXEMPLO, dica: `Até ${número(LIMITE_DE_CARACTERES)} caracteres. Cada linha vira um parágrafo.` },
         { nome: 'voz', rótulo: 'Voz', tipo: 'seleção', padrão: '', opções: [{ valor: '', rótulo: 'Carregando as vozes…' }], dica: 'Carregando as vozes do aparelho…' },
@@ -133,6 +138,10 @@ export default {
         });
         leitor = novo;
         return saída;
+      },
+
+      aoResultado(elemento) {
+        if (leitor) atualizarSituação(leitor.situação);
       },
 
       aoMontar(elemento) {
@@ -164,12 +173,18 @@ export default {
         const botãoSeguinte = criarBotão('Parágrafo seguinte', 'seta');
         controles.append(botãoPausar, botãoParar, botãoAnterior, botãoSeguinte);
 
+        const progressoNaTela = document.createElement('div');
+        progressoNaTela.className = 'progresso t-2';
+        progressoDaLeitura = criarExecucaoVisual(progressoNaTela, {
+          titulo: 'Leitura em voz alta', tipo: 'voz', compacta: true,
+        });
+
         const situaçãoNaTela = document.createElement('p');
         situaçãoNaTela.className = 'pequeno t-2';
         situaçãoNaTela.id = 'situação-da-leitura';
         situaçãoNaTela.setAttribute('role', 'status');
         situaçãoNaTela.hidden = true;
-        formulário.after(controles, situaçãoNaTela);
+        formulário.after(progressoNaTela, controles, situaçãoNaTela);
 
         const rótuloDoPausar = (texto) => { botãoPausar.querySelector('span').textContent = texto; };
         let parágrafos = [];
@@ -181,12 +196,38 @@ export default {
           rótuloDoPausar(s.estado === 'pausado' ? 'Continuar' : 'Pausar');
           botãoDeLer.disabled = false;
           const trecho = parágrafos[s.parágrafo] ? `: “${resumir(parágrafos[s.parágrafo])}”` : '';
-          if (s.estado === 'lendo') situaçãoNaTela.textContent = `Lendo o parágrafo ${s.parágrafo + 1} de ${s.totalDeParágrafos}${trecho}`;
+          const mensagemLendo = `Lendo o parágrafo ${s.parágrafo + 1} de ${s.totalDeParágrafos}${trecho}`;
+          if (s.estado === 'lendo') situaçãoNaTela.textContent = mensagemLendo;
           else if (s.estado === 'pausado') situaçãoNaTela.textContent = `Pausado no parágrafo ${s.parágrafo + 1} de ${s.totalDeParágrafos}.`;
           else if (s.estado === 'fim') situaçãoNaTela.textContent = 'Leitura concluída.';
+          else if (s.estado === 'parado') situaçãoNaTela.textContent = 'Leitura interrompida.';
           else if (s.estado === 'erro') {
             situaçãoNaTela.textContent = s.mensagem;
             mostrarErro(campoDaVoz, s.mensagem);
+          }
+
+          const estadoDoBadge = {
+            lendo: ['Lendo', 'processando'],
+            pausado: ['Pausada', 'pausado'],
+            fim: ['Concluída', 'concluído'],
+            parado: ['Interrompida', 'cancelado'],
+            erro: ['Erro', 'erro'],
+          }[s.estado];
+          const badge = elemento.querySelector('#resultado [data-estado-resultado]');
+          if (estadoDoBadge && badge) {
+            badge.textContent = estadoDoBadge[0];
+            badge.dataset.estadoResultado = estadoDoBadge[1];
+          }
+
+          if (s.estado === 'lendo' && estadoVisualAtual === 'lendo') {
+            progressoDaLeitura?.andar(undefined, mensagemLendo);
+          } else if (s.estado !== estadoVisualAtual) {
+            estadoVisualAtual = s.estado;
+            if (s.estado === 'lendo') progressoDaLeitura?.iniciar(mensagemLendo);
+            else if (s.estado === 'pausado') progressoDaLeitura?.esconder();
+            else if (s.estado === 'fim') progressoDaLeitura?.concluir('Leitura concluída.');
+            else if (s.estado === 'parado') progressoDaLeitura?.cancelar('Leitura interrompida.');
+            else if (s.estado === 'erro') progressoDaLeitura?.falhar(s.mensagem || 'A leitura falhou.');
           }
           botãoAnterior.disabled = s.parágrafo === 0 && !ativo;
           botãoSeguinte.disabled = s.parágrafo >= s.totalDeParágrafos - 1;
@@ -207,6 +248,8 @@ export default {
           leitor?.parar();
           controles.hidden = true;
           situaçãoNaTela.hidden = true;
+          progressoDaLeitura?.esconder();
+          estadoVisualAtual = 'parado';
         });
         // Sair da página (ou recarregar) não deixa a voz falando sozinha.
         window.addEventListener('pagehide', () => { sintetizador?.cancel(); });

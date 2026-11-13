@@ -153,14 +153,14 @@ export default {
 
         return execução.executar(async () => {
           const { progresso } = execução;
-          progresso.andar(4, 'Preparando a biblioteca de PDF…');
+          progresso.andar(undefined, 'Preparando a biblioteca de PDF…');
           let biblioteca;
           try {
             biblioteca = await carregarBiblioteca();
           } catch {
             throw new Error(ERRO_DE_BIBLIOTECA);
           }
-          progresso.andar(8, 'Lendo os arquivos…');
+          progresso.andar(undefined, 'Lendo os arquivos…');
           const { nome, arquivo } = itens[0];
           const bytes = new Uint8Array(await arquivo.arrayBuffer());
           let assinatura;
@@ -173,13 +173,13 @@ export default {
             };
           }
 
-          progresso.andar(15, 'Abrindo o PDF…');
+          progresso.andar(undefined, 'Abrindo o PDF…');
           const páginas = (dados.páginas ?? '').trim() || String(prévia ? Math.min(páginaPrévia, prévia.total) : páginaPrévia);
           const r = await assinarPdf({ nome, bytes }, {
             biblioteca, assinatura, cor: dados.cor, esquerda, topo, largura, páginas, legenda: dados.legenda ?? '',
             data: dados.data === 'sim' ? new Date().toLocaleDateString('pt-BR') : '',
             cancelado: execução.cancelado,
-            aoProgredir: ({ página, total }) => progresso.andar(20 + (75 * página) / total, `Página ${número(página)} de ${número(total)}`),
+            aoProgredir: ({ página, total }) => progresso.andar(100 * página / total, `Página ${número(página)} de ${número(total)}`),
           });
 
           if (!r.ok) {

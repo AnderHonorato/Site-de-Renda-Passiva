@@ -202,19 +202,39 @@ export default {
         botãoPrincipal.disabled = true;
         botãoCancelar.hidden = false;
         try {
-          progresso.andar(5, 'Lendo os arquivos…');
+          progresso.andar(undefined, 'Lendo os arquivos…');
           const arquivos = [];
           for (const [i, item] of lista.entries()) {
-            if (cancelar) throw new ErroDeEntrada('Cancelado.', 'arquivo');
-            progresso.andar(5 + (30 * i) / lista.length, `Lendo ${item.nome}…`);
+            if (cancelar) {
+              const erro = new Error('Operação cancelada.');
+              erro.cancelado = true;
+              throw erro;
+            }
+            progresso.andar(undefined, `Lendo ${item.nome}…`);
             arquivos.push({ nome: item.nome, bytes: new Uint8Array(await item.arquivo.arrayBuffer()), data: new Date(item.arquivo.lastModified) });
+            progresso.andar(100 * (i + 1) / lista.length, `Arquivos lidos: ${i + 1} de ${lista.length}`);
           }
-          return await compactarNaTela(arquivos, {
-            nomeDoZip: (dados.nomeDoZip ?? '').trim(),
-            comprimir: dados.comprimir !== 'não',
-            aoProgredir: (feitos, total) => progresso.andar(35 + (60 * feitos) / total, `Compactando ${feitos} de ${total}…`),
-            cancelado: () => cancelar,
-          });
+          try {
+            const saída = await compactarNaTela(arquivos, {
+              nomeDoZip: (dados.nomeDoZip ?? '').trim(),
+              comprimir: dados.comprimir !== 'não',
+              aoProgredir: (feitos, total) => progresso.andar(100 * feitos / total, `Compactando ${feitos} de ${total}…`),
+              cancelado: () => cancelar,
+            });
+            if (cancelar) {
+              const erro = new Error('Operação cancelada.');
+              erro.cancelado = true;
+              throw erro;
+            }
+            return saída;
+          } catch (erro) {
+            if (cancelar && erro?.cancelado !== true) {
+              const cancelamento = new Error(erro instanceof Error ? erro.message : 'Operação cancelada.');
+              cancelamento.cancelado = true;
+              throw cancelamento;
+            }
+            throw erro;
+          }
         } finally {
           escolha.travar(false);
           botãoPrincipal.disabled = false;

@@ -221,21 +221,21 @@ export default {
 
         return execução.executar(async () => {
           const { progresso } = execução;
-          progresso.andar(4, 'Preparando a biblioteca de PDF…');
+          progresso.andar(undefined, 'Preparando a biblioteca de PDF…');
           let biblioteca;
           try {
             biblioteca = await carregarBiblioteca();
           } catch {
             throw new Error(ERRO_DE_BIBLIOTECA);
           }
-          progresso.andar(10, 'Lendo o arquivo…');
+          progresso.andar(undefined, 'Lendo o arquivo…');
           const { nome, arquivo } = itens[0];
           const bytes = new Uint8Array(await arquivo.arrayBuffer());
 
-          progresso.andar(20, 'Gravando os valores…');
+          progresso.andar(undefined, 'Gravando os valores…');
           const r = await preencherFormulário({ nome, bytes }, {
             biblioteca, valores, achatar: dados.achatar === 'sim', cancelado: execução.cancelado,
-            aoProgredir: ({ campo, total }) => progresso.andar(20 + (70 * campo) / total, `Campo ${número(campo)} de ${número(total)}`),
+            aoProgredir: ({ campo, total }) => progresso.andar(100 * campo / total, `Campo ${número(campo)} de ${número(total)}`),
           });
 
           if (!r.ok) {

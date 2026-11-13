@@ -100,7 +100,7 @@ export default {
         botãoCancelar.hidden = false;
         escolha.travar(true);
         try {
-          progresso.andar(4, 'Preparando o leitor de PDF…');
+          progresso.andar(undefined, 'Preparando o leitor de PDF…');
           let biblioteca;
           try {
             biblioteca = await carregarBiblioteca();
@@ -111,12 +111,16 @@ export default {
           const r = await dividirPdf(pdf, plano.partes, {
             biblioteca,
             cancelado: () => cancelar,
-            aoProgredir: ({ parte, partes }) => progresso.andar(8 + (87 * (parte - 1)) / partes, `Arquivo ${número(parte)} de ${número(partes)}`),
+            aoProgredir: ({ parte, partes }) => progresso.andar(undefined, `Gerando arquivo ${número(parte)} de ${número(partes)}…`),
           });
           // Cancelar não é engano de ninguém: vira aviso, não erro no campo.
-          if (!r.ok) throw new Error(r.mensagem);
+          if (!r.ok) {
+            const erro = new Error(r.mensagem);
+            if (r.erro === 'cancelado') erro.cancelado = true;
+            throw erro;
+          }
 
-          progresso.andar(96, 'Reunindo os arquivos…');
+          progresso.andar(undefined, 'Reunindo os arquivos…');
           await folga();
           const base = nomeBase(pdf.nome);
           const vários = r.arquivos.length > 1;

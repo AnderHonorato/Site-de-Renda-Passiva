@@ -148,17 +148,17 @@ export default {
 
         return execução.executar(async () => {
           const { progresso } = execução;
-          progresso.andar(4, 'Preparando o leitor de PDF…');
-          progresso.andar(8, 'Lendo os arquivos…');
+          progresso.andar(undefined, 'Preparando o leitor de PDF…');
+          progresso.andar(undefined, 'Lendo os arquivos…');
           const bytesA = new Uint8Array(await a.arquivo.arrayBuffer());
           const bytesB = new Uint8Array(await b.arquivo.arrayBuffer());
 
           const r = await compararPdfs({ nome: a.nome, bytes: bytesA }, { nome: b.nome, bytes: bytesB }, {
             abrir: abrirComPdfjsParaTexto, ignorarCaixa: dados.caixa === 'sim', cancelado: execução.cancelado,
             aoProgredir: ({ etapa, página, total }) => {
-              if (etapa === 'original') progresso.andar(10 + (35 * página) / total, `Lendo o original: página ${número(página)} de ${número(total)}`);
-              else if (etapa === 'novo') progresso.andar(45 + (35 * página) / total, `Lendo o novo: página ${número(página)} de ${número(total)}`);
-              else progresso.andar(85, 'Comparando as páginas…');
+              if (etapa === 'original') progresso.andar(100 * página / total, `Lendo o original: página ${número(página)} de ${número(total)}`);
+              else if (etapa === 'novo') progresso.andar(100 * página / total, `Lendo o novo: página ${número(página)} de ${número(total)}`);
+              else progresso.andar(undefined, 'Comparando as páginas…');
             },
           });
 

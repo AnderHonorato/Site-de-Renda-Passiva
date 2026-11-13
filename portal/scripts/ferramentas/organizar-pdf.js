@@ -98,7 +98,7 @@ export default {
         escolha.travar(true);
         travarEdição(true);
         try {
-          progresso.andar(10, 'Montando o PDF novo…');
+          progresso.andar(undefined, 'Montando o PDF novo…');
           await folga();
           let biblioteca;
           try {
@@ -108,7 +108,7 @@ export default {
           }
           const r = await organizarPdf(pdf, itens, { biblioteca });
           if (!r.ok) throw new Error(r.mensagem);
-          progresso.andar(90, 'Gravando o arquivo…');
+          progresso.andar(undefined, 'Gravando o arquivo…');
           await folga();
 
           const resumo = resumoDaLista(itens, pdf.total);

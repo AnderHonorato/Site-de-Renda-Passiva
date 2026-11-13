@@ -113,7 +113,7 @@ export default {
         botãoCancelar.hidden = false;
         escolha.travar(true);
         try {
-          progresso.andar(4, 'Preparando o conversor de PDF…');
+          progresso.andar(undefined, 'Preparando o conversor de PDF…');
           let biblioteca;
           try {
             biblioteca = await carregarBiblioteca();
@@ -121,7 +121,7 @@ export default {
             throw new Error(ERRO_DE_BIBLIOTECA);
           }
 
-          progresso.andar(8, 'Lendo as imagens…');
+          progresso.andar(undefined, 'Lendo as imagens…');
           const arquivos = [];
           for (const { nome, arquivo } of imagens) {
             arquivos.push({ nome, bytes: new Uint8Array(await arquivo.arrayBuffer()) });
@@ -136,12 +136,16 @@ export default {
             juntar,
             converter: converterImagemPelaTela,
             cancelado: () => cancelar,
-            aoProgredir: ({ imagem, total }) => progresso.andar(10 + (85 * imagem) / total, `Imagem ${número(imagem)} de ${número(total)}`),
+            aoProgredir: ({ imagem, total }) => progresso.andar(100 * imagem / total, `Imagem ${número(imagem)} de ${número(total)}`),
           });
 
           if (!r.ok) {
             // Cancelar não é engano de ninguém: vira aviso, não erro no campo.
-            if (r.erro === 'cancelado') throw new Error(mensagemDeErroDeJpgParaPdf('cancelado'));
+            if (r.erro === 'cancelado') {
+              const erro = new Error(mensagemDeErroDeJpgParaPdf('cancelado'));
+              erro.cancelado = true;
+              throw erro;
+            }
             throw new ErroDeEntrada(mensagemDeErroDeJpgParaPdf(r.erro, r.extras), 'arquivos');
           }
 

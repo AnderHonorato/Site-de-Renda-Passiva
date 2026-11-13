@@ -70,17 +70,9 @@ export default {
         const { default: qrcode } = await import('../../recursos/qrcode.mjs');
         const { svg, módulos } = gerarSvgQr(conteúdo, qrcode, { escala: 8 });
 
-        // Mostra o código já na área de resultado, acima dos botões.
-        queueMicrotask(() => {
-          const alvo = raiz.querySelector('#resultado .resultado__valor');
-          if (alvo) {
-            alvo.innerHTML = svg;
-            alvo.classList.add('qr-prévia');
-          }
-        });
-
         return {
           valor: 'QR Code gerado',
+          previaSvg: svg,
           resumo: `${módulos} × ${módulos} módulos · ${conteúdo.length} caracteres codificados.`,
           texto: conteúdo,
           arquivos: [
@@ -92,30 +84,55 @@ export default {
             {
               rótulo: 'Baixar PNG',
               ícone: 'imagem',
-              gerar: () => {
+              gerar: () => new Promise((resolver, rejeitar) => {
                 const imagem = new Image();
-                const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-                const url = URL.createObjectURL(blob);
+                const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
+                const liberarUrl = () => URL.revokeObjectURL(url);
+                imagem.addEventListener('error', () => {
+                  liberarUrl();
+                  rejeitar(new Error('Não foi possível preparar o PNG neste navegador.'));
+                }, { once: true });
                 imagem.addEventListener('load', () => {
-                  const tela = document.createElement('canvas');
-                  tela.width = 1024;
-                  tela.height = 1024;
-                  const pincel = tela.getContext('2d');
-                  pincel.fillStyle = '#ffffff';
-                  pincel.fillRect(0, 0, 1024, 1024);
-                  pincel.imageSmoothingEnabled = false;
-                  pincel.drawImage(imagem, 0, 0, 1024, 1024);
-                  tela.toBlob((png) => {
-                    if (png) baixar(png, `${nomeDeArquivo('qr-code')}.png`, 'image/png');
-                    URL.revokeObjectURL(url);
-                  }, 'image/png');
-                });
+                  try {
+                    const tela = document.createElement('canvas');
+                    tela.width = 1024;
+                    tela.height = 1024;
+                    const pincel = tela.getContext('2d');
+                    if (!pincel) throw new Error('O navegador não conseguiu criar a imagem PNG.');
+                    pincel.fillStyle = '#ffffff';
+                    pincel.fillRect(0, 0, 1024, 1024);
+                    pincel.imageSmoothingEnabled = false;
+                    pincel.drawImage(imagem, 0, 0, 1024, 1024);
+                    tela.toBlob((png) => {
+                      liberarUrl();
+                      if (!png) {
+                        rejeitar(new Error('Não foi possível gravar o PNG neste navegador.'));
+                        return;
+                      }
+                      try {
+                        baixar(png, `${nomeDeArquivo('qr-code')}.png`, 'image/png');
+                        resolver();
+                      } catch (erro) {
+                        rejeitar(erro);
+                      }
+                    }, 'image/png');
+                  } catch (erro) {
+                    liberarUrl();
+                    rejeitar(erro);
+                  }
+                }, { once: true });
                 imagem.src = url;
-              },
+              }),
             },
           ],
           observações: ['Confira o código com a câmera do celular antes de imprimir ou publicar.'],
         };
+      },
+      aoResultado(elemento, saída) {
+        const alvo = elemento.querySelector('#resultado .resultado__valor');
+        alvo.innerHTML = saída.previaSvg;
+        alvo.querySelector('svg')?.setAttribute('aria-label', 'QR Code do conteúdo informado');
+        alvo.classList.add('qr-prévia');
       },
       aoMontar(elemento) {
         // Os rótulos dos campos acompanham o tipo escolhido.
