@@ -52,7 +52,7 @@ test('exportação JSON bilíngue mantém Unicode, quebras de linha e campos est
 
 test('HTML bilíngue imprimível preserva quebras e escapa conteúdo perigoso',()=>{
  const html=exportarComparacaoHtml('<script>alert(1)</script>\\nOlá','Hello & welcome','pt','en');
- assert.match(html,/&lt;script&gt;alert\\(1\\)&lt;\\/script&gt;/);
+ assert.ok(html.includes('&lt;script&gt;alert(1)&lt;/script&gt;'));
  assert.doesNotMatch(html,/<script>/);
  assert.match(html,/Hello &amp; welcome/);
  assert.match(html,/white-space:pre-wrap/);
