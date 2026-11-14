@@ -17,6 +17,7 @@ import { registrarUso as registrarUsoRecente } from './preferências.js';
 import { api } from './api.js';
 import { caminhoDoIdioma, obterSessao } from './sessão.js';
 import { aguardarPintura } from './execucao-visual.js';
+import { montarPreviaPdf } from './previa-pdf.js';
 
 /** Erro de entrada: a mensagem vai para o campo indicado, não para o console. */
 export class ErroDeEntrada extends Error {
@@ -165,10 +166,12 @@ function markupDeCampo(campo) {
  *     texto?: string,
  *     tabela?: { cabeçalho: string[], linhas: (string|number)[][] },
  *     rotuloEstado?: string,
+ *     previaPdf?: { bytes: Uint8Array, nome: string },
  *     arquivos?: { rótulo: string, ícone?: string, tipo?: 'acao', gerar: () => void | Promise<void> }[]
  *   },
  *   demorada?: boolean, // mantido para compatibilidade; toda execução explícita mostra progresso
  *   progressoExterno?: boolean, // ciclos contínuos, como fala, controlam seu próprio visual
+ *   invalidarAoEditar?: boolean,
  *   permitirSalvarTrabalho?: boolean,
  *   registrarUsoAtivo?: boolean,
  *   aoResultado?: (raiz: HTMLElement, saída: object) => void,
@@ -178,7 +181,7 @@ function markupDeCampo(campo) {
 export function montarFerramenta(raiz, ferramenta, definição) {
   const { campos, calcular, rótuloDaAção = 'Calcular', aoMontar, aoResultado,
     permitirSalvarTrabalho = true, registrarUsoAtivo = true, progressoExterno = false,
-    demorada = false } = definição;
+    demorada = false, invalidarAoEditar = false } = definição;
 
   raiz.innerHTML = `<form id="formulário" novalidate>
   <div class="campos campos--2">${campos.map(markupDeCampo).join('')}</div>
@@ -205,6 +208,14 @@ export function montarFerramenta(raiz, ferramenta, definição) {
   let exportaçãoEmGeração = false;
   let controleExportaçãoAtivo = null;
   let geraçãoExportação = 0;
+  let controlePreviaPdf = null;
+  let resultadoTemPdf = false;
+
+  function encerrarPreviaPdf() {
+    controlePreviaPdf?.destruir();
+    controlePreviaPdf = null;
+    resultadoTemPdf = false;
+  }
 
   function encerrarVisualizaçãoDeExportação() {
     geraçãoExportação++;
@@ -213,6 +224,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
   }
 
   function desenharResultado(saída) {
+    encerrarPreviaPdf();
     encerrarVisualizaçãoDeExportação();
     const linhas = (saída.linhas ?? [])
       .map(([r, v]) => `<li><span>${escapar(r)}</span><b>${escapar(v)}</b></li>`).join('');
@@ -253,6 +265,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       ${linhas ? `<section class="resultado__detalhes"><ul class="resultado__linhas">${linhas}</ul></section>` : ''}
       ${tabela ? `<section class="resultado__tabela">${tabela}</section>` : ''}
       ${observações ? `<section class="resultado__observações">${observações}</section>` : ''}
+      ${saída.previaPdf ? '<section data-pdf-previa></section>' : ''}
       ${exportações.length ? `<section class="resultado__exportações t-3" aria-label="${emInglês ? 'Export result' : 'Exportar resultado'}">
         <p class="pequeno suave">${emInglês ? 'Export result' : 'Exportar resultado'}</p>
         <div class="ações">${exportações.join('')}</div>
@@ -265,6 +278,10 @@ export function montarFerramenta(raiz, ferramenta, definição) {
     const primeiraVez = caixaDeResultado.hidden;
     caixaDeResultado.hidden = false;
     marcarResultado(caixaDeResultado, primeiraVez);
+    if (saída.previaPdf) {
+      resultadoTemPdf = true;
+      controlePreviaPdf = montarPreviaPdf(caixaDeResultado.querySelector('[data-pdf-previa]'), saída.previaPdf);
+    }
 
     caixaDeResultado.querySelector('[data-copiar]')?.addEventListener('click', async (evento) => {
       const conteúdo = saída.texto ?? [saída.valor, ...(saída.linhas ?? []).map(([r, v]) => `${r}: ${v}`)].join('\n');
@@ -327,6 +344,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       andamentoArquivo?.iniciar(emInglês ? 'Generating file…' : 'Gerando arquivo…');
       try {
         await aguardarPintura();
+        if (idDaGeração !== geraçãoExportação || !botão.isConnected || caixaDeResultado.hidden) return;
         await gerar();
         if (idDaGeração === geraçãoExportação) andamentoArquivo?.concluir(emInglês ? 'File ready' : 'Arquivo pronto');
       } catch (erro) {
@@ -344,7 +362,14 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       botão.addEventListener('click', () => {
         const arquivo = saída.arquivos[Number(botão.dataset.arquivo)];
         if (arquivo.tipo === 'acao') {
-          try { arquivo.gerar(); } catch { avisar('Não foi possível abrir esta ação. Tente novamente.'); }
+          if (botão.disabled) return;
+          botão.disabled = true;
+          try {
+            // Invocar no clique preserva permissões de abrir link e copiar; ações podem ser assíncronas.
+            Promise.resolve(arquivo.gerar())
+              .catch(() => avisar('Não foi possível concluir esta ação. Tente novamente.'))
+              .finally(() => { botão.disabled = false; });
+          } catch { botão.disabled = false; avisar('Não foi possível concluir esta ação. Tente novamente.'); }
           return;
         }
         void gerarExportação(botão, () => arquivo.gerar());
@@ -401,6 +426,7 @@ export function montarFerramenta(raiz, ferramenta, definição) {
       if (focar) caixaDeResultado.focus({ preventScroll: true });
     } catch (erro) {
       if (idDaExecução !== execuçãoAtual) return;
+      encerrarPreviaPdf();
       encerrarVisualizaçãoDeExportação();
       caixaDeResultado.hidden = true;
       if (erro?.cancelado === true) {
@@ -410,6 +436,8 @@ export function montarFerramenta(raiz, ferramenta, definição) {
         if (mostrarProgresso) progresso.esconder();
         const campo = erro.campo && formulário.querySelector(`[data-campo="${CSS.escape(erro.campo)}"]`);
         if (campo) {
+          const detalhes = campo.closest('details');
+          if (detalhes) detalhes.open = true;
           mostrarErro(campo, erro.message);
           if (focar) campo.querySelector('input, select, textarea')?.focus();
         } else {
@@ -463,8 +491,25 @@ export function montarFerramenta(raiz, ferramenta, definição) {
   }
 
   formulário.addEventListener('submit', (evento) => { evento.preventDefault(); executar(); });
+  // Um PDF pronto pertence aos valores usados para gerá-lo. Editar exige uma nova geração.
+  const invalidarPdfEditado = () => {
+    const pendente = invalidarAoEditar && execuçãoExplícitaAtual !== null;
+    if (!resultadoTemPdf && !pendente) return;
+    if (pendente) {
+      execuçãoAtual++;
+      execuçãoExplícitaAtual = null;
+      formulário.querySelector('[type="submit"]').disabled = false;
+    }
+    encerrarPreviaPdf();
+    encerrarVisualizaçãoDeExportação();
+    caixaDeResultado.hidden = true;
+    progresso.esconder();
+  };
+  formulário.addEventListener('input', invalidarPdfEditado);
+  formulário.addEventListener('change', invalidarPdfEditado);
   formulário.addEventListener('reset', () => {
     execuçãoAtual++;
+    encerrarPreviaPdf();
     encerrarVisualizaçãoDeExportação();
     execuçãoExplícitaAtual = null;
     formulário.querySelector('[type="submit"]').disabled = false;

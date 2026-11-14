@@ -3,13 +3,14 @@ import {
   montarFerramenta, número, texto, ErroDeEntrada,
   baixar, baixarPlanilha, nomeDeArquivo, copiar, avisar,
 } from '../núcleo/montador.js';
-import { montarDocumentoPdf } from '../comum/documentos/montar-documento-pdf.js';
 import { emCentavos } from '../cálculos/dinheiro.js';
 import { paraNúmero } from '../núcleo/texto.js';
 import { formatarMoeda } from '../comum/formatação/formatar-moeda.js';
 import { gravar, ler } from '../núcleo/armazenamento.js';
 import { mostrarOrçamentoCompartilhado } from './auxiliares/orcamento-compartilhado.js';
 import { LIMITE_DE_ITENS, LIMITE_DO_LINK } from './auxiliares/limites-do-orçamento.js';
+import { gerarPdfOrcamento } from '../comum/documentos/modelos-comerciais.js';
+import { camposPersonalizacao, ligarPersonalizacao, lerPersonalizacao } from '../comum/documentos/personalizacao.js';
 
 /**
  * Lê as linhas de item: "descrição; quantidade; valor unitário".
@@ -45,11 +46,14 @@ function lerItens(valor) {
     }
 
     const unitárioCentavos = emCentavos(unitário);
+    if (!Number.isSafeInteger(unitárioCentavos)) throw new ErroDeEntrada(`Valor unitário inválido na linha ${índice + 1}: excede a precisão de centavos.`, 'itens');
+    const totalCentavos = Math.round(unitárioCentavos * quantidade);
+    if (!Number.isSafeInteger(totalCentavos)) throw new ErroDeEntrada(`Total inválido na linha ${índice + 1}: excede a precisão de centavos.`, 'itens');
     return {
       descrição,
       quantidade,
       unitárioCentavos,
-      totalCentavos: Math.round(unitárioCentavos * quantidade),
+      totalCentavos,
     };
   });
 }
@@ -119,8 +123,10 @@ export default {
         { nome: 'desconto', rótulo: 'Desconto (%)', tipo: 'número', padrão: '0' },
         { nome: 'validade', rótulo: 'Validade da proposta (dias)', tipo: 'número', padrão: '7' },
         { nome: 'condições', rótulo: 'Condições de pagamento e entrega', tipo: 'área', linhas: 3, exemplo: '50% na encomenda, 50% na entrega. Prazo de 5 dias úteis.' },
+        ...camposPersonalizacao,
       ],
-      calcular(dados) {
+      invalidarAoEditar: true,
+      async calcular(dados) {
         const emissor = texto(dados, 'emissor', { rótulo: 'Seu nome', máximo: 120 });
         const contato = texto(dados, 'contato', { rótulo: 'Seu contato', obrigatório: false, máximo: 160 });
         const cliente = texto(dados, 'cliente', { rótulo: 'Nome do cliente', máximo: 120 });
@@ -133,9 +139,9 @@ export default {
         const subtotal = itens.reduce((soma, i) => soma + i.totalCentavos, 0);
         const descontoCentavos = Math.round(subtotal * (desconto / 100));
         const total = subtotal - descontoCentavos;
-
-        // Guarda os dados do emissor e avança o número, para o próximo orçamento.
-        gravar('orçamento.emissor', { emissor, contato, próximo: númeroDoOrçamento + 1 });
+        if (![subtotal, descontoCentavos, total].every(Number.isSafeInteger)) {
+          throw new ErroDeEntrada('O total ultrapassa a precisão de centavos. Reduza os valores dos itens.', 'itens');
+        }
 
         const emitidoEm = new Date().toLocaleDateString('pt-BR');
         const válidoAté = validade > 0
@@ -149,34 +155,16 @@ export default {
           formatarMoeda(i.totalCentavos / 100),
         ]);
 
-        const gerarPdf = () => {
-          const documento = montarDocumentoPdf({
-            título: `Orçamento nº ${númeroDoOrçamento}`,
-            subtítulo: emitidoEm,
-            marca: emissor,
-          });
-          documento.seção('Dados');
-          documento.campo('Cliente', cliente);
-          if (contato) documento.campo('Contato', contato);
-          documento.campo('Emitido em', emitidoEm);
-          if (válidoAté) documento.campo('Válido até', válidoAté);
-          documento.espaço(4);
-          documento.seção('Itens');
-          documento.tabela(['Descrição', 'Qtd.', 'Unitário', 'Total'], linhasDaTabela, [52, 12, 18, 18]);
-          if (descontoCentavos > 0) {
-            documento.campo('Subtotal', formatarMoeda(subtotal / 100));
-            documento.campo(`Desconto (${desconto}%)`, `− ${formatarMoeda(descontoCentavos / 100)}`);
-          }
-          documento.destaque('Total', formatarMoeda(total / 100));
-          if (condições) {
-            documento.seção('Condições');
-            documento.parágrafo(condições);
-          }
-          documento.espaço(4);
-          documento.parágrafo('Este orçamento é uma proposta de preço e não constitui documento fiscal.',
-            { tamanho: 8.5, cor: '#5c6270' });
-          baixar(documento.gerarBytes(), `${nomeDeArquivo(`orcamento-${númeroDoOrçamento}-${cliente}`)}.pdf`, 'application/pdf');
-        };
+        const personalização = await lerPersonalizacao(raiz, dados, { marca: emissor });
+        const pdfBytes = gerarPdfOrcamento({
+          número: númeroDoOrçamento, emissão: emitidoEm, validade: válidoAté || '', emissor, contato, cliente,
+          itens, subtotalCentavos: subtotal, descontoPercentual: desconto, descontoCentavos, totalCentavos: total,
+          condições, ...personalização,
+        });
+        const nomePdf = `${nomeDeArquivo(`orcamento-${númeroDoOrçamento}-${cliente}`)}.pdf`;
+
+        // Os campos do emissor só avançam após validar a personalização e montar o PDF.
+        gravar('orçamento.emissor', { emissor, contato, próximo: númeroDoOrçamento + 1 });
 
         const gerarPlanilha = () => baixarPlanilha(
           [
@@ -224,15 +212,38 @@ export default {
             semExportação: true,
           },
           arquivos: [
-            { rótulo: 'Baixar PDF', ícone: 'documento', gerar: gerarPdf },
+            { rótulo: 'Baixar PDF', ícone: 'documento', gerar: () => baixar(pdfBytes, nomePdf, 'application/pdf') },
             { rótulo: 'Baixar planilha', ícone: 'planilha', gerar: gerarPlanilha },
-            { rótulo: 'Copiar link para o cliente', ícone: 'compartilhar', gerar: gerarLink },
+            { rótulo: 'Copiar link para o cliente', ícone: 'compartilhar', tipo: 'acao', gerar: gerarLink },
           ],
+          previaPdf: { bytes: pdfBytes, nome: nomePdf },
           observações: [
             'Seus dados de emissor ficaram salvos neste navegador para o próximo orçamento.',
             'O orçamento é uma proposta de preço: não é documento fiscal nem contrato.',
           ],
         };
+      },
+      aoMontar(raiz) {
+        ligarPersonalizacao(raiz);
+        const formulário = raiz.querySelector('#formulário');
+        const ações = formulário.querySelector('.ações');
+        const botão = document.createElement('button');
+        botão.type = 'button'; botão.className = 'botão botão--linha'; botão.textContent = 'Preencher exemplo';
+        botão.addEventListener('click', () => {
+          const exemplo = {
+            emissor: 'Ateliê da Ana', contato: 'ana@example.com · (11) 90000-0000', cliente: 'Maria Souza',
+            itens: 'Bolo de chocolate; 2; 85,00\nDocinhos; 100; 1,80\nEntrega especial; 1; 35,00',
+            desconto: '10', validade: '7', condições: '50% na aprovação e 50% na entrega. Prazo de 5 dias úteis.',
+          };
+          for (const [nome, valor] of Object.entries(exemplo)) {
+            const controle = formulário.querySelector(`[name="${CSS.escape(nome)}"]`);
+            if (!controle) continue;
+            controle.value = valor;
+            controle.dispatchEvent(new Event('input', { bubbles: true }));
+            controle.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+        ações.insertBefore(botão, ações.querySelector('[type="submit"]'));
       },
     });
   },

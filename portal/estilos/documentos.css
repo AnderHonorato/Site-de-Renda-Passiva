@@ -1,0 +1,35 @@
+/* Personalização e prévia: controles do portal ao redor do documento de impressão. */
+.documento-personalizacao { grid-column:1/-1;min-width:0;border:1px solid var(--borda);border-radius:var(--raio);background:var(--superfície-2); }
+.documento-personalizacao>summary { display:list-item;min-height:48px;padding:15px 18px;cursor:pointer;font-size:var(--t-sm);font-weight:600;color:var(--tinta); }
+.documento-personalizacao__campos { display:grid;grid-template-columns:minmax(120px,.5fr) minmax(0,1fr);gap:16px;padding:4px 18px 18px; }
+.documento-personalizacao .campo { min-width:0; }
+#ferramenta .documento-personalizacao .campo__dica { display:block;font-size:.75rem;line-height:1.5; }
+.documento-personalizacao input[type=color] { width:100%;max-width:180px;height:48px;padding:5px;border:1px solid var(--borda-forte);border-radius:var(--raio-p);background:var(--superfície);cursor:pointer; }
+.documento-personalizacao input[type=file] { width:100%;min-width:0;font-size:.8125rem; }
+.documento-personalizacao input::file-selector-button { min-height:44px;padding:8px 12px;margin-right:8px;border:1px solid var(--borda-forte);border-radius:var(--raio-p);background:var(--superfície);color:var(--tinta);font:inherit;cursor:pointer; }
+#ferramenta .pdf-previa { min-width:0;max-width:100%;margin:22px;padding:18px;border:1px solid var(--borda);border-radius:var(--raio);background:var(--superfície-2); }
+.pdf-previa [hidden] { display:none!important; }
+.pdf-previa__topo { display:flex;align-items:flex-start;justify-content:space-between;gap:16px; }
+.pdf-previa__topo h3 { margin:0 0 6px;font-size:var(--t-md);color:var(--tinta); }
+.pdf-previa__topo p { margin:0;line-height:1.5; }
+.pdf-previa__zoom { display:grid;gap:5px;flex:none;font-size:var(--t-xs);color:var(--tinta-média); }
+.pdf-previa__zoom select { min-height:44px;max-width:170px;padding:7px 10px;border:1px solid var(--borda-forte);border-radius:var(--raio-p);background:var(--superfície);color:var(--tinta);font:inherit;font-size:.8125rem; }
+.pdf-previa__estado { margin:12px 0;font-size:var(--t-xs);color:var(--tinta-suave); }
+.pdf-previa__area { max-width:100%;min-width:0;max-height:70vh;max-height:min(70vh,calc(100dvh - 180px));overflow:auto;padding:16px;border:1px solid var(--borda);border-radius:var(--raio-p);background:var(--fundo-fundo);overscroll-behavior-x:contain; }
+.pdf-previa__papel { max-width:none;margin:0 auto;background:#fff;box-shadow:0 8px 25px rgba(0,0,0,.13); }
+.pdf-previa__papel canvas { display:block;width:100%;height:auto; }
+.pdf-previa__navegacao { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px; }
+.pdf-previa__navegacao p { margin:0;text-align:center;font-variant-numeric:tabular-nums;color:var(--tinta-média); }
+.pdf-previa__navegacao .botão { min-height:44px;white-space:normal; }
+.pdf-previa[data-pdf-estado=erro] .pdf-previa__estado { color:var(--erro); }
+@media(max-width:560px) {
+  .documento-personalizacao__campos { grid-template-columns:1fr; }
+  #ferramenta .pdf-previa { margin:16px;padding:12px; }
+  .pdf-previa__topo { flex-direction:column;gap:10px; }
+  .pdf-previa__zoom { display:flex;align-items:center;gap:10px;width:100%; }
+  .pdf-previa__zoom select { flex:1;max-width:none; }
+  .pdf-previa__area { padding:10px; }
+  .pdf-previa__navegacao { flex-wrap:wrap; }
+  .pdf-previa__navegacao p { order:3;flex-basis:100%; }
+  .pdf-previa__navegacao .botão { flex:1; }
+}

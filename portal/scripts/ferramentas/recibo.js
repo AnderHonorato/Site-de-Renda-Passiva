@@ -1,9 +1,10 @@
 /** Recibo de pagamento em PDF, com valor por extenso. */
-import { montarFerramenta, número, texto, comCampo, baixar, nomeDeArquivo } from '../núcleo/montador.js';
-import { montarDocumentoPdf } from '../comum/documentos/montar-documento-pdf.js';
+import { montarFerramenta, número, texto, comCampo, ErroDeEntrada, baixar, nomeDeArquivo } from '../núcleo/montador.js';
 import { reaisPorExtenso } from '../cálculos/por-extenso.js';
 import { emCentavos } from '../cálculos/dinheiro.js';
 import { formatarMoeda } from '../comum/formatação/formatar-moeda.js';
+import { gerarPdfRecibo } from '../comum/documentos/modelos-comerciais.js';
+import { camposPersonalizacao, ligarPersonalizacao, lerPersonalizacao } from '../comum/documentos/personalizacao.js';
 
 const hoje = () => new Date().toISOString().slice(0, 10);
 
@@ -40,6 +41,7 @@ export default {
       rótuloDaAção: 'Gerar recibo',
       campos: [
         { nome: 'recebedor', rótulo: 'Quem recebeu (nome completo)', exemplo: 'João da Silva' },
+        { nome: 'identificação', rótulo: 'Número ou identificação do recibo (opcional)', exemplo: 'REC-2026-0042' },
         { nome: 'documentoRecebedor', rótulo: 'CPF ou CNPJ de quem recebeu', exemplo: '000.000.000-00' },
         { nome: 'pagador', rótulo: 'Quem pagou (nome completo)', exemplo: 'Maria Souza' },
         { nome: 'documentoPagador', rótulo: 'CPF ou CNPJ de quem pagou' },
@@ -48,10 +50,13 @@ export default {
         { nome: 'cidade', rótulo: 'Cidade', exemplo: 'São Paulo' },
         { nome: 'data', rótulo: 'Data', tipo: 'date', padrão: hoje() },
         { nome: 'duasVias', rótulo: 'Gerar em duas vias na mesma folha', tipo: 'caixa' },
+        ...camposPersonalizacao,
       ],
-      calcular(dados) {
+      invalidarAoEditar: true,
+      async calcular(dados) {
         const recebedor = texto(dados, 'recebedor', { rótulo: 'Quem recebeu', máximo: 120 });
         const pagador = texto(dados, 'pagador', { rótulo: 'Quem pagou', máximo: 120 });
+        const identificação = texto(dados, 'identificação', { rótulo: 'Identificação do recibo', obrigatório: false, máximo: 40 });
         const referência = texto(dados, 'referência', { rótulo: 'A que se refere', máximo: 600 });
         const cidade = texto(dados, 'cidade', { rótulo: 'Cidade', máximo: 80 });
         const documentoRecebedor = texto(dados, 'documentoRecebedor', { rótulo: 'Documento de quem recebeu', obrigatório: false, máximo: 40 });
@@ -60,42 +65,23 @@ export default {
         const data = dados.data || hoje();
 
         const centavos = emCentavos(valor);
+        if (!Number.isSafeInteger(centavos)) throw new ErroDeEntrada('O valor não cabe com precisão em centavos. Reduza o valor e tente novamente.', 'valor');
+        const valorFormatado = formatarMoeda(centavos / 100);
         const extenso = comCampo('valor', () => reaisPorExtenso(centavos));
         const corpo = `Recebi de ${pagador}${documentoPagador ? `, inscrito(a) sob o nº ${documentoPagador},` : ''} `
-          + `a quantia de ${formatarMoeda(valor)} (${extenso}), referente a ${referência}. `
+          + `a quantia de ${valorFormatado} (${extenso}), referente a ${referência}. `
           + 'Para clareza, firmo o presente recibo, dando plena e geral quitação do valor acima.';
 
-        const gerarPdf = () => {
-          const documento = montarDocumentoPdf({
-            título: 'Recibo de pagamento',
-            subtítulo: formatarMoeda(valor),
-          });
-
-          const escreverVia = (rótuloDaVia) => {
-            if (rótuloDaVia) documento.seção(rótuloDaVia);
-            documento.campo('Valor', formatarMoeda(valor));
-            documento.campo('Recebedor', recebedor);
-            if (documentoRecebedor) documento.campo('Documento', documentoRecebedor);
-            documento.campo('Pagador', pagador);
-            if (documentoPagador) documento.campo('Documento', documentoPagador);
-            documento.espaço(4);
-            documento.parágrafo(corpo, { tamanho: 10.5 });
-            documento.espaço(4);
-            documento.parágrafo(`${cidade}, ${formatarDataBr(data)}.`, { tamanho: 10 });
-            documento.assinatura(recebedor);
-          };
-
-          escreverVia(dados.duasVias === 'sim' ? '1ª via — recebedor' : '');
-          if (dados.duasVias === 'sim') {
-            documento.espaço(6);
-            escreverVia('2ª via — pagador');
-          }
-
-          baixar(documento.gerarBytes(), `${nomeDeArquivo(`recibo-${recebedor}`)}.pdf`, 'application/pdf');
-        };
+        const personalização = await lerPersonalizacao(raiz, dados, { marca: recebedor });
+        const bytes = gerarPdfRecibo({
+          identificação, recebedor, documentoRecebedor, pagador, documentoPagador,
+          valorCentavos: centavos, valorExtenso: extenso, referência, cidade,
+          data: formatarDataBr(data), duasVias: dados.duasVias === 'sim', ...personalização,
+        });
+        const nome = `${nomeDeArquivo(`recibo-${identificação || recebedor}`)}.pdf`;
 
         return {
-          valor: formatarMoeda(valor),
+          valor: valorFormatado,
           resumo: `${extenso}.`,
           texto: `${corpo}\n\n${cidade}, ${formatarDataBr(data)}.\n\n____________________________\n${recebedor}`,
           linhas: [
@@ -104,9 +90,33 @@ export default {
             ['Valor por extenso', extenso],
             ['Data', formatarDataBr(data)],
           ],
-          arquivos: [{ rótulo: 'Baixar recibo em PDF', ícone: 'documento', gerar: gerarPdf }],
+          previaPdf: { bytes, nome },
+          arquivos: [{ rótulo: 'Baixar recibo em PDF', ícone: 'documento', gerar: () => baixar(bytes, nome, 'application/pdf') }],
           observações: ['O recibo é comprovante particular de pagamento e não substitui nota fiscal.'],
         };
+      },
+      aoMontar(raiz) {
+        ligarPersonalizacao(raiz);
+        const formulário = raiz.querySelector('#formulário');
+        const ações = formulário.querySelector('.ações');
+        const botão = document.createElement('button');
+        botão.type = 'button'; botão.className = 'botão botão--linha'; botão.textContent = 'Preencher exemplo';
+        botão.addEventListener('click', () => {
+          const exemplo = {
+            recebedor: 'João da Silva', identificação: 'REC-2026-0042', pagador: 'Maria Souza',
+            valor: '1250,99', referência: 'Serviço de manutenção elétrica preventiva',
+            cidade: 'São Paulo', data: hoje(), duasVias: 'sim',
+          };
+          for (const [nome, valor] of Object.entries(exemplo)) {
+            const controle = formulário.querySelector(`[name="${CSS.escape(nome)}"]`);
+            if (!controle) continue;
+            if (controle.type === 'checkbox') controle.checked = valor === 'sim';
+            else controle.value = valor;
+            controle.dispatchEvent(new Event('input', { bubbles: true }));
+            controle.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+        ações.insertBefore(botão, ações.querySelector('[type="submit"]'));
       },
     });
   },
