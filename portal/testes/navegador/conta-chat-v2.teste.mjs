@@ -289,7 +289,9 @@ test('notificação da conquista aponta para a insígnia e detalhes param o bril
     });
     assert.ok(geometria && geometria.seloFim <= geometria.tituloInicio, 'a insígnia ocupa coluna própria, sem cobrir o texto');
     await página.screenshot({path:join(RAIZ,'.execucao/notificacoes-colunas-2026-10-08.png')});
-    await página.locator('.notificações__item--conquista').click();await página.waitForSelector('.insignia-detalhe:popover-open');
+    const urlAntes=página.url();await página.locator('.notificações__item--conquista').click();await página.waitForSelector('.notificações__detalhe[role="dialog"]:not([hidden])');
+    assert.equal(página.url(),urlAntes,'o clique no item abre detalhes sem navegar');
+    await página.getByRole('link',{name:'Ir para página'}).click();await página.waitForSelector('.insignia-detalhe:popover-open');
     assert.equal(new URL(página.url()).searchParams.get('conquista'),'explorador:2');
     const alvo=página.locator('.perfil-comunidade__medalhas [data-conquista="explorador"]');assert.equal(await alvo.evaluate(el=>el.classList.contains('conquista-destacada')),true);
     const caixa=await página.locator('.insignia-detalhe').boundingBox();assert.ok(caixa.x>=0&&caixa.x+caixa.width<=390&&caixa.y>=0&&caixa.y+caixa.height<=844);
@@ -352,7 +354,9 @@ test('conquistas ficam em fila, têm feixes de luz, cabem no celular e não repe
   assert.equal(await página.locator('.conquista[open]').count(),1);assert.match(await página.locator('#conquista-titulo').textContent(),/15/);
   const caixa=await página.locator('.conquista').boundingBox();assert.ok(caixa.x>=0&&caixa.y>=0&&caixa.x+caixa.width<=390&&caixa.y+caixa.height<=844);
   assert.equal(await página.locator('.conquista__luz').count(),1);
-  assert.equal(await página.locator('.conquista').evaluate(el=>getComputedStyle(el).overflow),'clip');
+  // O conteúdo do modal pode rolar; quem recorta os feixes decorativos é a camada de luz.
+  assert.deepEqual(await página.locator('.conquista').evaluate(el=>[getComputedStyle(el).overflowX,getComputedStyle(el).overflowY]),['hidden','auto']);
+  assert.equal(await página.locator('.conquista__luz').evaluate(el=>getComputedStyle(el).overflow),'clip');
   await página.screenshot({path:join(RAIZ,'.execucao/conquista-2026-10-07.png')});
   await página.locator('.conquista button').click();await página.waitForFunction(()=>document.querySelector('#conquista-titulo')?.textContent==='Explorador');assert.equal(await página.locator('.conquista .emblema').count(),1);
   await página.locator('.conquista button').click();await página.reload();await página.waitForSelector('#conta-conteudo:not([hidden])');assert.equal(await página.locator('.conquista').count(),0);

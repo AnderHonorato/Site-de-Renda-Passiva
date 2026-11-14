@@ -4,11 +4,12 @@ import { compactarZip } from '../exportação/compactar-zip.js';
 import { escaparXml } from '../validação/escapar-xml.js';
 import { lerZip, extrairEntrada } from '../../cálculos/zip.js';
 
-export async function gerarExcelComAbas({ titulo, autor = 'Ander Flow', abas }) {
+export async function gerarExcelComAbas({ titulo, autor = 'Ander Flow', abas, corDoCabeçalho = '#d97757', casasDecimais = 2 }) {
   const arquivos = new Map();
   const decodificar = (bytes) => new TextDecoder().decode(bytes);
   for (let i = 0; i < abas.length; i++) {
-    const bytes = gerarPlanilhaXlsx({ título: titulo, autor, nomeDaAba: abas[i].nome, linhas: abas[i].linhas });
+    const bytes = gerarPlanilhaXlsx({ título: titulo, autor, nomeDaAba: abas[i].nome, linhas: abas[i].linhas,
+      largurasDasColunas: abas[i].largurasDasColunas || [], corDoCabeçalho, casasDecimais });
     for (const entrada of lerZip(bytes).entradas) {
       if (i > 0 && entrada.nome !== 'xl/worksheets/sheet1.xml') continue;
       const nome = entrada.nome === 'xl/worksheets/sheet1.xml' ? `xl/worksheets/sheet${i + 1}.xml` : entrada.nome;

@@ -58,7 +58,9 @@ for(const [viewport,tema,en]of [[{width:1280,height:900},'light',false],[{width:
     const r=await pagina.locator('dialog.conquista').boundingBox();assert.ok(r.x>=0&&r.x+r.width<=viewport.width+1&&r.y>=0&&r.y+r.height<=viewport.height+1,'a celebração cabe na tela');
     await pagina.screenshot({path:join(RAIZ,`.execucao/missao-celebracao-${viewport.width}-v1.3.5.png`)});await pagina.getByRole('button',{name:en?'Continue':'Continuar',exact:true}).click();
     await pagina.waitForSelector('.recompensas__missao [disabled]');assert.equal(await pagina.getByRole('button',{name:en?'Received':'Recebido',exact:true}).isDisabled(),true);
-    await pagina.click('#abrir-notificações');assert.ok(await pagina.locator('.notificações__item').filter({hasText:en?'Two challenges solved':'Dois desafios resolvidos'}).count()>0);
+    await pagina.click('#abrir-notificações');const aviso=pagina.locator('.notificações__item').filter({hasText:en?'Two challenges solved':'Dois desafios resolvidos'});assert.ok(await aviso.count()>0);
+    const urlAntes=pagina.url();await aviso.click();await pagina.waitForSelector('.notificações__detalhe[role="dialog"]:not([hidden])');assert.equal(pagina.url(),urlAntes,'abrir a missão não navega antes do CTA');
+    await pagina.getByRole('link',{name:en?'Go to page':'Ir para página',exact:true}).click();await pagina.waitForURL(/perfil\.html\?usuario=demo&missao=1#missoes/);
     assert.deepEqual(erros,[]);
   }finally{await c.close();}
 });

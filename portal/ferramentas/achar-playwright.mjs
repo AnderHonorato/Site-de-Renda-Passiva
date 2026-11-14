@@ -33,6 +33,7 @@ export function acharChromium() {
  * com `{ edgePrimeiro: true }` a ordem se inverte (as medições de desempenho usam o Edge).
  */
 export async function abrirNavegador(chromium, { edgePrimeiro = false } = {}) {
+  if (process.env.PLAYWRIGHT_EXECUTAVEL) return chromium.launch({ executablePath: process.env.PLAYWRIGHT_EXECUTAVEL });
   const abrir = [() => chromium.launch(), () => chromium.launch({ channel: 'msedge' })];
   if (edgePrimeiro) abrir.reverse();
   try { return await abrir[0](); } catch { return abrir[1](); }

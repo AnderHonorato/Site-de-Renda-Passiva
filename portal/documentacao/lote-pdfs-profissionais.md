@@ -55,3 +55,9 @@ Validação local final: **1.792 testes de código aprovados**, nove cenários p
 3. Depois: melhorar a apresentação dos arquivos Excel e as amostras visuais no catálogo, medindo abertura, geração e download para orientar a seleção das ferramentas em destaque.
 
 O endereço público continua em GitHub Pages. As análises que usam API dependem da hospedagem Node já documentada; o novo exportador não altera esse requisito nem as regras dos planos.
+
+### Continuação em 14/11/2026
+
+A base XLSX recebeu cores com contraste no cabeçalho, linhas alternadas, bordas discretas, ajuste de colunas, quebra de texto e congelamento dos cabeçalhos. Relatórios com várias abas oferecem filtro na aba Dados, preservando valores e posições. Valores pequenos continuam visíveis com formato científico quando necessário. Os testes conferem os dados, não apenas a aparência; a abertura no openpyxl também foi verificada sem avisos.
+
+O lote inclui o editor de metadados e a extração de imagens incorporadas ao PDF, ambos com arquivos processados no navegador. O primeiro reutiliza a prévia do PDF final; o segundo mostra miniaturas e entrega PNGs e manifesto em ZIP. Os dois usam o fluxo compartilhado de execução e integram o inventário visual. A página de atualizações e o sininho permitem consultar as mudanças publicadas.

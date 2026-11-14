@@ -6,6 +6,7 @@ import { painelEventos } from './painel-eventos.mjs';
 import { painelEditorial,painelOperacao } from './painel-editorial.mjs';
 import { editorial } from '../dados/editorial-publicado.js';
 import { planosPublicos } from '../servidor/trabalhos.mjs';
+import { gerarConteudoAdminAtualizacoes } from './pagina-atualizacoes.mjs';
 
 const textos = {
   'pt-BR': {
@@ -22,6 +23,7 @@ const textos = {
     usuarios: ['Usuários', 'Gerencie contas e planos pelo painel administrativo.'],
     adminSuporte: ['Suporte', 'Responda às mensagens enviadas pelos usuários.'],
     novidades: ['Novidades', 'Edite a apresentação de novidades, sua ordem e as datas de publicação.'],
+    atualizacoes: ['Publicar atualizações', 'Escreva sobre as melhorias, confira a prévia e publique no blog e no sininho.'],
     publicidade: ['Publicidade', 'Configure os blocos de anúncios e confira as posições na prévia local.'],
     banners: ['Avisos prioritários', 'Crie avisos abaixo do cabeçalho, com imagem, textos, links e carrossel.'],
     eventos: ['Eventos e missões', 'Publique desafios de ferramentas diferentes e acompanhe sua programação.'],
@@ -42,6 +44,7 @@ const textos = {
     usuarios: ['Users', 'Manage accounts and plans in the admin panel.'],
     adminSuporte: ['Support', 'Reply to messages sent by users.'],
     novidades: ['News', 'Edit news, their order and publication dates.'],
+    atualizacoes: ['Publish updates', 'Write about improvements, preview them, and publish to the blog and notification bell.'],
     publicidade: ['Advertising', 'Configure ad units and inspect their positions in the local preview.'],
     banners: ['Priority announcements', 'Create announcements below the header with images, text, links, and a carousel.'],
     eventos: ['Events and missions', 'Publish challenges using different tools and manage their schedule.'],
@@ -332,6 +335,7 @@ export function paginasConta(ctx) {
     ['admin/eventos/index.html','eventos',quadro(t.eventos[0],t.eventos[1],painelEventos(en),'eventos')],
     ['admin/editorial/index.html','editorial',quadro(t.editorial[0],t.editorial[1],painelEditorial(en),'editorial')],
     ['admin/operacao/index.html','operacao',quadro(t.operacao[0],t.operacao[1],painelOperacao(en),'operacao')],
+    ['admin/atualizacoes/index.html','atualizacoes',quadro(t.atualizacoes[0],t.atualizacoes[1],gerarConteudoAdminAtualizacoes(ctx),'atualizacoes-admin')],
   ];
   return paginas.map(([arquivo, chave, conteúdoOriginal]) => {
     const conteúdo = arquivo === 'conta/index.html' ? separarCadastro(conteúdoOriginal, en) : conteúdoOriginal;
@@ -344,6 +348,6 @@ export function paginasConta(ctx) {
       : { 'pt-BR': atualNoIdioma, en: `${'../'.repeat(profundidade)}en/${arquivo}` };
     const titulo=arquivo==='conta/perfil.html'?(en?'Edit profile':'Editar perfil'):t[chave][0];
     return [`${prefixo}${arquivo}`, montarPágina({ctx, título: `${titulo} — ${site.nome}`, descrição: t[chave][1], base, raiz: raizSite, conteúdo,
-      scripts: [`páginas/conta/${chave === 'adminSuporte' ? 'admin-suporte' : chave}.js`], estilos: ['conta.css', ...(['editorial','operacao'].includes(chave)?['editorial.css']:[]), ...(['perfil','eventos'].includes(chave)?['recompensas.css']:[])], semÍndice: true, alternativas})];
+      scripts: [`páginas/conta/${chave === 'adminSuporte' ? 'admin-suporte' : chave}.js`], estilos: ['conta.css', ...(['editorial','operacao'].includes(chave)?['editorial.css']:[]), ...(chave==='atualizacoes'?['atualizacoes.css']:[]), ...(['perfil','eventos'].includes(chave)?['recompensas.css']:[])], semÍndice: true, alternativas})];
   });
 }

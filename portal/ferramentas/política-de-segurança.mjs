@@ -35,7 +35,7 @@ export const ARQUIVOS_DA_RAIZ = Object.freeze([
   '404.html', 'manifesto.webmanifest', 'robots.txt', 'sitemap.xml',
   'entrar.html', 'criar-conta.html', 'recuperar-senha.html', 'redefinir-senha.html', 'cookies.html',
   'servidor-teste.html',
-  'perfil.html', 'planos.html', 'niveis.html',
+  'perfil.html', 'planos.html', 'niveis.html', 'atualizacoes.html',
 ]);
 
 /** Pastas inteiras que vão para o ar (com os filtros de extensão e de subpasta abaixo). */

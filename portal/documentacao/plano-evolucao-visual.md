@@ -1,8 +1,8 @@
-# Plano de evolução visual das 250 ferramentas
+# Plano de evolução visual das ferramentas
 
 **Implementação concluída em quatro lotes; validação local concluída.** A publicação deste conjunto é feita pelo workflow `Publicar prévia do portal`, na branch `ander-flow/v1`. O resultado do workflow determina a disponibilidade pública. Este documento não declara hospedagem de API nem ativação de pagamentos.
 
-O [inventário por ferramenta](./inventario-evolucao-visual.json) registra as 250 entradas, seus adaptadores, lote, plano, processamento e evidência. `INTEGRADA_E_VALIDADA_POR_FAMILIA` significa que a montagem de cada ferramenta foi conferida e o comportamento compartilhado foi testado por família. Não significa que 250 telas foram testadas manualmente, uma a uma.
+O [inventário por ferramenta](./inventario-evolucao-visual.json) registra as 252 entradas atuais, seus adaptadores, lote, plano, processamento e evidência. Os quatro lotes originais cobriram 250 ferramentas; o lote seguinte acrescenta os dois utilitários PDF. `INTEGRADA_E_VALIDADA_POR_FAMILIA` significa que a montagem de cada ferramenta foi conferida e o comportamento compartilhado foi testado por família. Não significa que todas as telas foram testadas manualmente, uma a uma.
 
 ## Lotes executados
 

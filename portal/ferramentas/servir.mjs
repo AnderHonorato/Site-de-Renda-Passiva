@@ -104,6 +104,12 @@ function encaminharApi(requisição, resposta) {
     resposta.writeHead(200, { ...CABEÇALHOS, 'Content-Type': 'application/json; charset=utf-8' });
     return resposta.end(JSON.stringify({ permitido: false }));
   }
+  if (préviaNoNavegador && requisição.method === 'GET' && rotaLocal === '/api/atualizacoes') {
+    let feed = { itens: [] };
+    try { feed = JSON.parse(fs.readFileSync(path.join(raiz, 'dados/atualizacoes.json'), 'utf8')); } catch { /* prévia sem blog */ }
+    resposta.writeHead(200, { ...CABEÇALHOS, 'Content-Type': 'application/json; charset=utf-8' });
+    return resposta.end(JSON.stringify(feed));
+  }
   const remoto = requisição.socket.remoteAddress || '127.0.0.1';
   const proxyLocal = process.env.PORTAL_PROXY_CONFIAVEL === '1' && ['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(remoto);
   const ipEncaminhado = String(requisição.headers['x-forwarded-for'] || '').trim();

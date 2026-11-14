@@ -1,8 +1,8 @@
 {
-  "total": 250,
+  "total": 252,
   "contagens": {
     "profissionais": 100,
-    "montadorCompartilhado": 150
+    "montadorCompartilhado": 152
   },
   "estados": "INTEGRADA_E_VALIDADA_POR_FAMILIA: montagem conferida para cada entrada; execução em navegador por cenários representativos, sem alegar teste manual individual.",
   "ferramentas": [
@@ -6509,6 +6509,55 @@
       "familia": "profissional",
       "commitImplementacao": "d58c70b",
       "evidencia": "Montagem individual conferida no catálogo; estados, dados e exports validados pelo adaptador em profissionais.teste.mjs e pelas suítes dos quatro motores."
+    },
+    {
+      "slug": "editar-metadados-do-pdf",
+      "nome": "Editar metadados do PDF",
+      "cat": "pdf",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo/PDF"
+      ],
+      "entrada": "Um PDF sem senha de até 100 MB e as propriedades que você quer alterar ou remover.",
+      "processamento": "Lê e regrava o dicionário de informações com pdf-lib no navegador. Remove o pacote XMP antigo para evitar propriedades conflitantes. Limpar todos também remove entradas personalizadas do dicionário Info; não é uma limpeza forense de anexos e conteúdo.",
+      "moduloPagina": "portal/scripts/ferramentas/editar-metadados-do-pdf.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/montador.js",
+      "modoMontagem": "montador.js (uso direto)",
+      "worker": "Gravação com pdf-lib no navegador; prévia com PDF.js em worker local.",
+      "lotePrincipal": 5,
+      "lotes": [
+        3,
+        4,
+        5
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/montador",
+      "evidencia": "Cálculo real e reabertura dos arquivos nas suítes Node; fluxo de upload e resultado em editar-metadados-do-pdf.teste.mjs. Interface compartilhada preserva os controles de execução e movimento reduzido."
+    },
+    {
+      "slug": "extrair-imagens-do-pdf",
+      "nome": "Extrair imagens do PDF",
+      "cat": "pdf",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo/PDF",
+        "imagem/mídia"
+      ],
+      "entrada": "Um PDF sem senha de até 20 MB, com até 100 páginas e 100 ocorrências de imagem.",
+      "processamento": "Lê os objetos de imagem com PDF.js local, converte os pixels em PNG e reúne cópias idênticas em uma entrada com suas páginas. Limita cada imagem a 8 milhões de pixels, o conjunto a 40 milhões e a saída a 100 MB. Não extrai desenhos vetoriais, padrões ou máscaras.",
+      "moduloPagina": "portal/scripts/ferramentas/extrair-imagens-do-pdf.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/montador.js",
+      "modoMontagem": "montador.js (uso direto)",
+      "worker": "Leitura com PDF.js em worker local.",
+      "lotePrincipal": 5,
+      "lotes": [
+        3,
+        4,
+        5
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/montador",
+      "evidencia": "Cálculo real e reabertura dos arquivos nas suítes Node; fluxo de upload e resultado em pdf-extrair-imagens.teste.mjs. Interface compartilhada preserva os controles de execução e movimento reduzido."
     }
   ],
   "referenciaCatalogo": "HEAD b921497474d46a2b9e35b8cc6450375c79210fda",

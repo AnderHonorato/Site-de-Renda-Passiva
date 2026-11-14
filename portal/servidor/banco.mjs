@@ -29,6 +29,22 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
     );
     CREATE TABLE IF NOT EXISTS novidades_publicacoes (id INTEGER PRIMARY KEY AUTOINCREMENT);
     INSERT OR IGNORE INTO novidades_publicacoes(id) VALUES(1);
+    CREATE TABLE IF NOT EXISTS atualizacoes (
+      id TEXT PRIMARY KEY CHECK(length(id) BETWEEN 1 AND 80),
+      slug TEXT NOT NULL UNIQUE CHECK(length(slug) BETWEEN 1 AND 80),
+      categoria TEXT NOT NULL CHECK(categoria IN ('novo','melhoria','correcao')),
+      versao TEXT NOT NULL,
+      publicado_em TEXT NOT NULL,
+      atualizado_em TEXT NOT NULL,
+      pt TEXT NOT NULL,
+      en TEXT,
+      estado TEXT NOT NULL CHECK(estado IN ('rascunho','publicado')),
+      revisao INTEGER NOT NULL DEFAULT 1 CHECK(revisao > 0)
+    );
+    CREATE INDEX IF NOT EXISTS atualizacoes_feed ON atualizacoes(estado,publicado_em DESC);
+    CREATE TABLE IF NOT EXISTS atualizacoes_migracoes (
+      chave TEXT PRIMARY KEY, aplicado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
     CREATE TABLE IF NOT EXISTS publicidade_config (id INTEGER PRIMARY KEY CHECK(id=1),dados TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS usuarios (
       id INTEGER PRIMARY KEY, email TEXT NOT NULL UNIQUE COLLATE NOCASE,

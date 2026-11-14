@@ -50,8 +50,9 @@
 .ferramenta-área { gap: 9px; }
 #ferramenta .campos--2 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 #ferramenta .campo:has(textarea), #ferramenta .campo:has(input[type="file"]) { grid-column: 1 / -1; }
-#ferramenta .campo__dica { display: none; }
-#ferramenta .campo:focus-within > .campo__dica { display: block; }
+/* As dicas participam do fluxo desde o início. Escondê-las no blur deslocava o
+   botão entre pointerdown e pointerup e impedia o primeiro toque de enviar. */
+#ferramenta .campo__dica { display: block; }
 #ferramenta .ações { margin-top: 10px; }
 #ferramenta .resultado { margin-top: 12px; }
 

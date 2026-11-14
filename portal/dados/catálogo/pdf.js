@@ -4,8 +4,8 @@
  * Juntar PDF (F060), Dividir (F061), Girar (F062), Proteger (F063), Comprimir (F064) e Extrair texto (F065)
  * ficam em `conteúdo.js` porque nasceram lá; todas pertencem à categoria `pdf`.
  *
- * Todas são `planejada`: a decisão técnica de cada uma (biblioteca, licença, tamanho, dificuldade)
- * está em `documentação/catalogo-ampliado.md`. `local: true` só quando tudo roda no navegador.
+ * A situação funcional está em cada entrada. As decisões iniciais estão em
+ * `documentação/catalogo-ampliado.md`. `local: true` só quando tudo roda no navegador.
  */
 export const ferramentas = [
   // ---------------------------------------------------------------- organizar
@@ -384,5 +384,31 @@ export const ferramentas = [
     tags: ['pdf para markdown', 'pdf para md', 'markdown', 'texto estruturado'],
     intenções: ['converter pdf em markdown', 'extrair o texto do pdf com títulos', 'preparar pdf para colar em uma ia'],
     relacionadas: ['extrair-texto-de-pdf', 'ocr-pdf', 'resumir-pdf'],
+  },
+  {
+    id: 'F352', slug: 'editar-metadados-do-pdf', nome: 'Editar metadados do PDF', cat: 'pdf',
+    ícone: 'documento', tarefas: ['organizar'], status: 'pronta',
+    resumo: 'Leia, edite ou remova título, autoria, palavras-chave e datas do PDF, com uma prévia antes de baixar.',
+    problema: 'Corrigir as propriedades de um documento ou retirar informações de autoria antes de compartilhar.',
+    entra: 'Um PDF sem senha de até 100 MB e as propriedades que você quer alterar ou remover.',
+    processa: 'Lê e regrava o dicionário de informações com pdf-lib no navegador. Remove o pacote XMP antigo para evitar propriedades conflitantes. Limpar todos também remove entradas personalizadas do dicionário Info; não é uma limpeza forense de anexos e conteúdo.',
+    sai: 'PDF com as propriedades revisadas e prévia do documento final.',
+    exporta: ['pdf'], plano: 'gratuito', local: true,
+    tags: ['metadados pdf', 'autor pdf', 'título pdf', 'propriedades', 'limpar metadados', 'xmp'],
+    intenções: ['mudar o autor do pdf', 'editar propriedades do pdf', 'remover metadados do pdf'],
+    relacionadas: ['ocultar-informacoes-do-pdf', 'extrair-texto-de-pdf', 'pdf-para-jpg'],
+  },
+  {
+    id: 'F353', slug: 'extrair-imagens-do-pdf', nome: 'Extrair imagens do PDF', cat: 'pdf',
+    ícone: 'imagem', tarefas: ['organizar'], status: 'pronta',
+    resumo: 'Extraia as imagens incorporadas ao PDF em PNG, com miniaturas e um ZIP que identifica suas páginas.',
+    problema: 'Recuperar fotos e imagens de um documento sem transformar a página inteira em uma captura.',
+    entra: 'Um PDF sem senha de até 20 MB, com até 100 páginas e 100 ocorrências de imagem.',
+    processa: 'Lê os objetos de imagem com PDF.js local, converte os pixels em PNG e reúne cópias idênticas em uma entrada com suas páginas. Limita cada imagem a 8 milhões de pixels, o conjunto a 40 milhões e a saída a 100 MB. Não extrai desenhos vetoriais, padrões ou máscaras.',
+    sai: 'Miniaturas e ZIP com os PNGs e um manifesto JSON de dimensões, páginas e quantidade de usos. Não preserva os bytes comprimidos originais.',
+    exporta: ['baixar'], plano: 'gratuito', local: true,
+    tags: ['extrair imagens pdf', 'fotos do pdf', 'png', 'imagens incorporadas', 'zip', 'manifesto'],
+    intenções: ['tirar as fotos de um pdf', 'extrair as imagens sem converter páginas', 'recuperar imagens incorporadas no pdf'],
+    relacionadas: ['pdf-para-jpg', 'editar-metadados-do-pdf', 'extrair-texto-de-pdf'],
   },
 ];

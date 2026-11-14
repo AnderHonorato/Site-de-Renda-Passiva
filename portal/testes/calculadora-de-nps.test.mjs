@@ -520,7 +520,7 @@ test('a planilha baixada traz as notas, os grupos e o NPS, com texto e número d
   // Nota 10: 3 respostas, 30%.
   assert.ok(xml.includes('<c r="A12" s="4"><v>10</v></c><c r="B12" s="4"><v>3</v></c><c r="C12" s="4"><v>30</v></c>'));
   // NPS 30 na célula B19: cabeçalho, 11 notas, linha em branco, total, 3 grupos, linha em branco.
-  assert.ok(xml.includes('<c r="B19" s="4"><v>30</v></c>'));
+  assert.match(xml, /<c r="B19" s="\d+"><v>30<\/v><\/c>/, 'o NPS permanece numérico após aplicar o tema da linha');
   assert.ok(xml.includes('<c r="A1" s="5"'), 'o cabeçalho usa o estilo de cabeçalho');
 });
 

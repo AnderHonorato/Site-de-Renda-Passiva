@@ -1,0 +1,94 @@
+{
+  "itens": [
+    {
+      "id": "blog-e-central-de-notificacoes",
+      "slug": "blog-e-central-de-notificacoes",
+      "categoria": "novo",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-14T09:15:00.000Z",
+      "atualizado_em": "2026-11-14T09:15:00.000Z",
+      "pt": {
+        "titulo": "Um lugar para acompanhar o que mudou",
+        "resumo": "O portal ganhou um histórico de atualizações e uma central de notificações com mais detalhes.",
+        "conteudo": "Veja as novidades, melhorias e correções nesta página. Use os filtros para encontrar o tipo de mudança que procura e abra cada publicação para ler os detalhes.\n\nNo sininho, uma notificação abre os detalhes antes de levar à página. Você pode marcar todas como lidas, limpar o histórico atual ou desativar as notificações. Essas preferências ficam salvas neste aparelho."
+      },
+      "en": {
+        "titulo": "A place to follow what changed",
+        "resumo": "The portal now has an update history and a notification center with more details.",
+        "conteudo": "Follow new features, improvements, and fixes here. Use the category filters and open an entry for the details.\n\nA notification opens its details before taking you to the page. You can mark everything as read, clear current notifications, or turn notifications off. These preferences are saved on this device."
+      }
+    },
+    {
+      "id": "excel-com-apresentacao-profissional",
+      "slug": "excel-com-apresentacao-profissional",
+      "categoria": "melhoria",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-14T09:10:00.000Z",
+      "atualizado_em": "2026-11-14T09:10:00.000Z",
+      "pt": {
+        "titulo": "Planilhas Excel mais fáceis de consultar",
+        "resumo": "Cabeçalhos legíveis, linhas alternadas e colunas ajustadas ajudam a revisar os dados exportados.",
+        "conteudo": "As planilhas geradas pelo portal agora usam uma apresentação mais organizada: contraste no cabeçalho, linhas alternadas, bordas discretas e quebra de texto em células longas.\n\nNos relatórios profissionais, a aba Dados traz filtros, e os cabeçalhos ficam visíveis ao rolar as abas. Números, fórmulas e posições das células são preservados. Valores muito pequenos podem aparecer em notação científica para continuarem visíveis."
+      },
+      "en": {
+        "titulo": "Excel spreadsheets that are easier to review",
+        "resumo": "Readable headers, alternating rows, and adjusted columns help you review exported data.",
+        "conteudo": "Spreadsheets now use clear header contrast, alternating rows, light borders, and wrapping for longer text.\n\nProfessional reports offer filters on the Data sheet and frozen headers. Numeric values, formulas, and cell positions are preserved. Very small values may use scientific notation to stay visible."
+      }
+    },
+    {
+      "id": "pdf-recibos-propostas-identidade-visual",
+      "slug": "pdf-recibos-propostas-identidade-visual",
+      "categoria": "melhoria",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-14T09:00:00.000Z",
+      "atualizado_em": "2026-11-14T09:00:00.000Z",
+      "pt": {
+        "titulo": "Recibos e propostas em PDF com a sua identidade visual",
+        "resumo": "Personalize os documentos com a identidade do seu negócio e confira o resultado antes de baixar.",
+        "conteudo": "Agora você pode incluir a identidade visual do seu negócio nos recibos e nas propostas em PDF.\n\nA prévia mostra como o documento ficará antes do download, para você conferir as informações e a apresentação com calma."
+      },
+      "en": {
+        "titulo": "Receipts and proposals with your visual identity",
+        "resumo": "Add your business identity to documents and review them before downloading.",
+        "conteudo": "You can now add your business visual identity to PDF receipts and proposals.\n\nThe preview shows the document before download so you can review its details and presentation."
+      }
+    },
+    {
+      "id": "relatorio-financeiro-indicadores-graficos",
+      "slug": "relatorio-financeiro-indicadores-graficos",
+      "categoria": "novo",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-14T09:00:00.000Z",
+      "atualizado_em": "2026-11-14T09:00:00.000Z",
+      "pt": {
+        "titulo": "Análise financeira com VPL, TIR e sensibilidade",
+        "resumo": "Veja os indicadores calculados a partir dos seus fluxos e compare cenários de sensibilidade.",
+        "conteudo": "A análise financeira calcula VPL e TIR a partir dos fluxos informados e apresenta cenários de sensibilidade.\n\nOs resultados refletem os dados e as premissas que você fornecer, para que possa comparar alternativas com os cálculos à vista."
+      },
+      "en": {
+        "titulo": "Financial analysis with NPV, IRR, and sensitivity",
+        "resumo": "Review metrics calculated from your cash flows and compare sensitivity scenarios.",
+        "conteudo": "The financial analysis calculates NPV and IRR from the cash flows you provide and presents sensitivity scenarios.\n\nResults reflect your inputs and assumptions so you can compare alternatives with the calculations in view."
+      }
+    },
+    {
+      "id": "animacoes-geracao-10-15-20-segundos",
+      "slug": "animacoes-geracao-10-15-20-segundos",
+      "categoria": "melhoria",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-14T09:00:00.000Z",
+      "atualizado_em": "2026-11-14T09:00:00.000Z",
+      "pt": {
+        "titulo": "Geração com animações de 10 a 20 segundos",
+        "resumo": "A apresentação dura 10, 15 ou 20 segundos conforme a ferramenta, respeita movimento reduzido e deixa o resultado pronto para baixar assim que a geração termina.",
+        "conteudo": "A apresentação visual da geração tem duração mínima de 10, 15 ou 20 segundos, conforme a ferramenta, e respeita a preferência do dispositivo por movimento reduzido.\n\nO resultado e o download ficam disponíveis assim que o processamento termina. A cena de conclusão pode continuar até completar a duração prevista, sem atrasar o acesso ao arquivo."
+      },
+      "en": {
+        "titulo": "Generation animations lasting 10 to 20 seconds",
+        "resumo": "The presentation lasts 10, 15, or 20 seconds depending on the tool, respects reduced motion, and makes results available as soon as generation finishes.",
+        "conteudo": "The generation presentation has a minimum duration of 10, 15, or 20 seconds depending on the tool, and respects the device's reduced motion preference.\n\nThe result and download are available as soon as processing finishes. The completion scene may continue until its planned duration ends, without delaying access to the file."
+      }
+    }
+  ]
+}

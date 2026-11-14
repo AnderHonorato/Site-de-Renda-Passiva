@@ -6,7 +6,7 @@
  *
  * Uso: node portal/ferramentas/gerar.mjs
  */
-import { mkdir, writeFile, rm, rename } from 'node:fs/promises';
+import { mkdir, writeFile, rm, rename, readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { montarPágina, escapar } from './modelo-de-página.mjs';
@@ -28,8 +28,11 @@ import { editorial } from '../dados/editorial-publicado.js';
 import { paginasErros } from './paginas-erros.mjs';
 import { instrucoesEmHtml } from '../scripts/núcleo/instruções.js';
 import { basePublica, completarSeo } from './seo.mjs';
+import { gerarPaginaAtualizacoes } from './pagina-atualizacoes.mjs';
+import { validarFeedAtualizacoes } from '../scripts/núcleo/atualizacoes.js';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
+const atualizacoes = validarFeedAtualizacoes(JSON.parse(await readFile(join(RAIZ, 'dados/atualizacoes.json'), 'utf8')));
 
 const RÓTULO_DE_EXPORTAÇÃO = {
   copiar: 'copiar', baixar: 'baixar arquivo', pdf: 'PDF', xlsx: 'planilha Excel',
@@ -219,7 +222,7 @@ function robots(base = basePublica()) {
 
 function sitemap(base = basePublica()) {
   if (!base) return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>\n';
-  const páginasDoIdioma = ['', 'ferramentas.html', 'ajuda.html', 'privacidade.html', 'termos.html'];
+  const páginasDoIdioma = ['', 'ferramentas.html', 'ajuda.html', 'atualizacoes.html', 'privacidade.html', 'termos.html'];
   const urls = [...páginasDoIdioma, ...páginasDoIdioma.map((u) => `en/${u}`),
     ...ferramentasProntas.map((f) => `f/${f.slug}/`)];
   const corpo = urls.map((u) => `  <url><loc>${base}${u}</loc></url>`).join('\n');
@@ -249,6 +252,8 @@ function páginasDoIdioma(ctx) {
     [`${pasta}index.html`, páginaInicial(ctx)],
     [`${pasta}ferramentas.html`, páginaDeCatálogo(ctx)],
     [`${pasta}salvos.html`, páginaDeSalvos(ctx)],
+    [`${pasta}atualizacoes.html`, montarPágina({ ctx, ...gerarPaginaAtualizacoes(ctx, atualizacoes), base: '', raiz: en ? '../' : '', atual: 'atualizacoes',
+      alternativas: { 'pt-BR': en ? '../atualizacoes.html' : 'atualizacoes.html', en: en ? 'atualizacoes.html' : 'en/atualizacoes.html' } })],
     [`${pasta}404.html`, página404(ctx)],
     ...paginasErros(ctx),
     ...páginasInstitucionais(ctx).map((p) => [`${pasta}${p.arquivo}`, p.html]),

@@ -245,7 +245,7 @@ function excelRelatorio(r) {
   adicionar('Relatório', 1, r.titulo);
   adicionar('Método', 1, r.metodo);
   (r.notas || []).forEach((nota, i) => adicionar('Premissa', i + 1, nota));
-  const tipar = (linhas) => linhas.map((linha, indice) => linha.map((v) => typeof v === 'number' ? { número: v } : { texto: textoExcel(v), ...(indice === 0 ? { estilo: 'cabeçalho' } : {}) }));
+  const tipar = (linhas) => linhas.map((linha, indice) => linha.map((v) => typeof v === 'number' ? { número: v, formato: 'decimal' } : { texto: textoExcel(v), ...(indice === 0 ? { estilo: 'cabeçalho' } : {}) }));
   return gerarExcelComAbas({ titulo: r.titulo, autor: 'Ander Flow', abas: [
     { nome: 'Dados', linhas: tipar([r.colunas, ...r.linhas]) },
     { nome: 'Indicadores', linhas: tipar(indicadores) },

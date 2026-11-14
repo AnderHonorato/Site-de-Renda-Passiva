@@ -318,6 +318,7 @@
 .rodapé__arte:not([data-visível]) * { animation-play-state: paused; }
 
 /* ---------- Sino de notificações ---------- */
+.topo:has(.notificações__painel:not([hidden])) { z-index: 110; }
 .notificações { position: relative; display: inline-flex; }
 .notificações__botão { position: relative; }
 .notificações__contador {
@@ -338,8 +339,8 @@
 .notificações__topo b { min-width:0;font-size:.9rem; }
 .notificações__topo button { flex:none;max-width:65%;white-space:normal;text-align:right;line-height:1.3; }
 .notificações__lista { list-style:none;margin:0;padding:6px;display:grid;gap:2px;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable; }
-.notificações__item { position: relative; display: grid; gap: 2px; padding: 10px 12px 10px 22px; border-radius: var(--raio); color: inherit; text-decoration: none; }
-a.notificações__item:hover { background: var(--superfície-3); }
+.notificações__item { position: relative; width:100%;display: grid;gap: 2px;padding: 10px 12px 10px 22px;border:0;border-radius: var(--raio);background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer; }
+.notificações__item:hover { background: var(--superfície-3); }
 .notificações__item b { font-size: var(--t-sm); font-weight: 600; }
 .notificações__item span { font-size: var(--t-sm); color: var(--tinta-média); }
 .notificações__item small { font-size: var(--t-xs); color: var(--tinta-suave); }
@@ -351,9 +352,24 @@ a.notificações__item:hover { background: var(--superfície-3); }
 .notificações__insignia > svg { display:block;width:36px;height:42px; }
 .notificações__item--conquista[data-nova="sim"]::before { left:auto;right:10px;top:16px; }
 .notificações__vazio { margin: 0; padding: 22px 16px; text-align: center; color: var(--tinta-suave); font-size: var(--t-sm); }
+.notificações__rodapé { flex:none;display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:8px 12px;border-top:1px solid var(--borda); }
+.notificações__rodapé button { min-width:0;white-space:normal; }
+.notificações__ver-todas { grid-column:1/-1;text-align:center;text-decoration:none; }
+.notificações__aparelho { min-width:0;grid-column:1/-1;color:var(--tinta-suave);font-size:var(--t-xs);text-align:center;overflow-wrap:anywhere; }
+.notificações__detalhe { min-height:0;flex:1;display:flex;flex-direction:column;overflow:hidden;padding:0 16px 12px; }
+.notificações__detalhe[hidden] { display:none; }
+.notificações__topo--detalhe { flex:none;margin:0 -16px 14px; }
+.notificações__topo--detalhe button:first-child { margin-right:auto; }
+.notificações__fechar { width:34px;height:34px;border:0;border-radius:50%;background:var(--superfície-3);color:var(--tinta);font-size:1.4rem;line-height:1;cursor:pointer; }
+.notificações__detalhe-título { flex:none;margin:0 0 10px;font-size:1.1rem;line-height:1.35;overflow-wrap:anywhere; }
+.notificações__detalhe-corpo { min-height:0;flex:1;display:grid;align-content:start;gap:12px;overflow-y:auto;overscroll-behavior:contain;overflow-wrap:anywhere;white-space:pre-wrap;scrollbar-gutter:stable; }
+.notificações__detalhe-resumo { margin:0;color:var(--tinta-média);font-size:var(--t-sm); }
+.notificações__detalhe-texto { line-height:1.65; }
+.notificações__metadados { color:var(--tinta-suave);font-size:var(--t-xs); }
+.notificações__sem-link { margin:0;color:var(--tinta-suave);font-size:var(--t-sm); }
+.notificações__ir { flex:none;align-self:flex-start;margin-top:14px;text-decoration:none; }
 @media (max-width: 720px) {
-  .notificações { position: static; }
-  .notificações__painel { position: fixed; left: 12px; right: 12px; top: 62px; width: auto; }
+  .notificações__painel { position: fixed;left:auto;right:auto;top:auto;width:min(380px,calc(100vw - 24px));max-height:min(70svh,520px); }
 }
 @media (prefers-reduced-motion: reduce) { .notificações__botão[data-novas="sim"] svg { animation: none; } }
 

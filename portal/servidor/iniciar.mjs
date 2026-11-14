@@ -10,6 +10,7 @@ import { aplicarLimitesPublicados, limitesDoPlano, limiteDadosDoPlano, limiteArm
 import { AVATARES, medalhasDoUsuario, nivelDePontos, personalizacoesDoNivel, progressoDeNivel, validarPersonalizacao, validarSociais } from './perfil.mjs';
 import { progressoDeRank } from '../dados/recompensas.js';
 import { MAX_IMAGEM, itemAdmin, novidadesPublicas, removerNovidade, salvarImagem, salvarNovidade } from './novidades.mjs';
+import { criarAtualizacao, editarAtualizacao, excluirAtualizacao, feedAtualizacoes, inicializarAtualizacoes, listarAtualizacoesAdmin } from './atualizacoes.mjs';
 import { configuracaoPublicidade, salvarPublicidade } from './publicidade.mjs';
 import { iniciarBanners, tratarBanners } from './banners.mjs';
 import { tratarRecompensas, registrarAtividadeRecompensa } from './recompensas.mjs';
@@ -28,6 +29,7 @@ if(process.env.NODE_ENV==='development'&&process.env.PORTAL_CHAT_LOCAL==='1'&&or
   for(const lista of Object.values(networkInterfaces()))for(const rede of lista||[])if(rede.family==='IPv4')origensPermitidas.add(`http://${rede.address}:4400`);
 }
 const banco = abrirBanco();
+inicializarAtualizacoes(banco);
 iniciarBanners(banco);
 for(const c of categorias)banco.prepare("INSERT OR IGNORE INTO salas(id,tipo,nome) VALUES(?,'categoria',?)").run(`categoria-${c.id}`,c.nome);
 for(const f of ferramentasProntas)banco.prepare("INSERT OR IGNORE INTO salas(id,tipo,nome) VALUES(?,'ferramenta',?)").run(`ferramenta-${f.slug}`,f.nome);
@@ -219,6 +221,20 @@ async function rota(req,res){
   proteger(req);
   if(await tratarRecompensas(req,res,{db:banco,json,exigir,admin,corpo,registrarAdmin,nivelDoUsuario,pontos:()=>regrasPontos}))return;
   if(p==='/api/regras-pontos'&&m==='GET')return json(res,200,{pontos:regrasPontos});
+  if(p==='/api/atualizacoes'&&m==='GET')return json(res,200,feedAtualizacoes(banco));
+  if(p==='/api/admin/atualizacoes'&&m==='GET'){
+    admin(req);return json(res,200,listarAtualizacoesAdmin(banco));
+  }
+  if(p==='/api/admin/atualizacoes'&&m==='POST'){
+    const u=admin(req),item=criarAtualizacao(banco,await corpo(req,262144));registrarAdmin(u,'criar_atualizacao',item.id,{slug:item.slug,estado:item.estado,revisao:item.revisao});return json(res,201,{item});
+  }
+  const atualizacao=p.match(/^\/api\/admin\/atualizacoes\/([a-z0-9-]{1,80})$/);
+  if(atualizacao&&m==='PUT'){
+    const u=admin(req),item=editarAtualizacao(banco,atualizacao[1],await corpo(req,262144));registrarAdmin(u,'editar_atualizacao',item.id,{slug:item.slug,estado:item.estado,revisao:item.revisao});return json(res,200,{item});
+  }
+  if(atualizacao&&m==='DELETE'){
+    const u=admin(req),b=await corpo(req);excluirAtualizacao(banco,atualizacao[1],b.revisao);registrarAdmin(u,'excluir_atualizacao',atualizacao[1],{revisao:b.revisao});return json(res,200,{ok:true});
+  }
   if(p==='/api/admin/editorial'&&m==='GET'){admin(req);return json(res,200,editor.painel());}
   if(p==='/api/admin/editorial'&&m==='PUT'){admin(req);const b=await corpo(req,262144),u=admin(req);const r=editor.salvar(b.dados,b.versao);registrarAdmin(u,'salvar_editorial',null,{versao:r.versao});return json(res,200,r);}
   if(p==='/api/admin/editorial/historico'&&m==='GET'){admin(req);return json(res,200,{revisoes:editor.historico()});}

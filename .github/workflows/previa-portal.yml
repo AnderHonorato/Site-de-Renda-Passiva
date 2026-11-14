@@ -44,8 +44,8 @@ jobs:
         run: npm run verificar --prefix portal
       - name: Instalar Chromium para validar uploads e relatórios
         run: portal/node_modules/.bin/playwright install --with-deps chromium
-      - name: Validar documentos, geração local e ferramentas profissionais com API real no navegador
-        run: node --test --test-concurrency=1 portal/testes/navegador/documentos.teste.mjs portal/testes/navegador/execucao-visual.teste.mjs portal/testes/navegador/profissionais.teste.mjs
+      - name: Validar documentos, uploads PDF, atualizações, notificações e ferramentas profissionais no navegador
+        run: node --test --test-concurrency=1 portal/testes/navegador/documentos.teste.mjs portal/testes/navegador/execucao-visual.teste.mjs portal/testes/navegador/profissionais.teste.mjs portal/testes/navegador/atualizacoes.teste.mjs portal/testes/navegador/notificações.teste.mjs portal/testes/navegador/editar-metadados-do-pdf.teste.mjs portal/testes/navegador/pdf-extrair-imagens.teste.mjs
       - run: node --test portal/testes/previa-pages.test.mjs portal/testes/publicação-e-servidor.test.mjs portal/testes/indexacao-pages.test.mjs
       - run: node portal/ferramentas/preparar-pages.mjs
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3

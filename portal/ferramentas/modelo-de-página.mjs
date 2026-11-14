@@ -87,6 +87,7 @@ function cabeçalho(ctx, base, atual, alternativas) {
         </div>
       </span>
       ${links}
+      <a href="${base}atualizacoes.html"${atual === 'atualizacoes' ? ' aria-current="page"' : ''}>${ctx.código === 'en' ? 'Updates' : 'Atualizações'}</a>
     </nav>
     <span class="topo__espaço"></span>
     <div class="topo__fim">
@@ -163,6 +164,7 @@ function rodapé(ctx, base, alternativas) {
       <li><a href="${base}salvos.html">${escapar(t('moldura.rodapéSalvos'))}</a></li>
       <li><a href="${base}ajuda.html">${escapar(t('moldura.rodapéComoUsar'))}</a></li>
       <li><a href="${base}planos.html">${ctx.código === 'en' ? 'Plans' : 'Planos'}</a></li>
+      <li><a href="${base}atualizacoes.html">${ctx.código === 'en' ? 'Updates' : 'Atualizações'}</a></li>
     </ul></div>
     <div><h4>${escapar(t('moldura.rodapéLegal'))}</h4><ul>
       <li><a href="${base}privacidade.html">${escapar(t('moldura.rodapéPrivacidade'))}</a></li>
