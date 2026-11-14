@@ -45,8 +45,41 @@ function textoUtf16Hexadecimal(texto) {
   return `<${resultado.toUpperCase()}>`;
 }
 
+function bytesJpegValidos(entrada, largura, altura) {
+  const bytes = entrada instanceof Uint8Array ? entrada : entrada instanceof ArrayBuffer ? new Uint8Array(entrada) : null;
+  if (!bytes || bytes.length < 4 || bytes.length > 20 * 1024 * 1024 || bytes[0] !== 0xff || bytes[1] !== 0xd8 || bytes.at(-2) !== 0xff || bytes.at(-1) !== 0xd9) {
+    throw new TypeError('A imagem deve ser um JPEG válido em bytes.');
+  }
+  if (!Number.isInteger(largura) || !Number.isInteger(altura) || largura < 1 || altura < 1 || largura > 16000 || altura > 16000 || largura * altura > 100_000_000) {
+    throw new RangeError('As dimensões do JPEG são inválidas.');
+  }
+  // Confere as dimensões declaradas no frame JPEG, sem decodificar nem alterar os bytes.
+  let índice = 2;
+  let dimensõesEncontradas = false;
+  while (índice + 3 < bytes.length) {
+    if (bytes[índice] !== 0xff) { índice += 1; continue; }
+    while (bytes[índice] === 0xff) índice += 1;
+    const marcador = bytes[índice++];
+    if (marcador === 0xd9 || marcador === 0xda) break;
+    if (marcador === 0x01 || (marcador >= 0xd0 && marcador <= 0xd7)) continue;
+    if (índice + 1 >= bytes.length) break;
+    const tamanho = bytes[índice] * 256 + bytes[índice + 1];
+    if (tamanho < 2 || índice + tamanho > bytes.length) break;
+    if ([0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf].includes(marcador)) {
+      const alturaReal = bytes[índice + 3] * 256 + bytes[índice + 4];
+      const larguraReal = bytes[índice + 5] * 256 + bytes[índice + 6];
+      dimensõesEncontradas = larguraReal === largura && alturaReal === altura;
+      break;
+    }
+    índice += tamanho;
+  }
+  if (!dimensõesEncontradas) throw new TypeError('As dimensões informadas não correspondem ao JPEG.');
+  return bytes;
+}
+
 export function criarDocumentoPdf({ título = 'Documento', autor = site.autor, largura = 210, altura = 297 } = {}) {
   const páginas = [];
+  const imagens = [];
   let atual = null;
   let substituídos = 0;
   const x = (mm) => número(mm * PONTOS_POR_MM);
@@ -98,6 +131,17 @@ export function criarDocumentoPdf({ título = 'Documento', autor = site.autor, l
       atual.push(`q ${traço(estilo)} ${cheio}${x(xMm)} ${y(yMm + alturaMm)} ${número(larguraMm * PONTOS_POR_MM)} ${número(alturaMm * PONTOS_POR_MM)} re ${operação} Q`);
       return api;
     },
+    imagemJpeg(xMm, yMm, larguraMm, alturaMm, entrada, { larguraPixels, alturaPixels } = {}) {
+      if (!atual) api.novaPágina();
+      if (![xMm, yMm, larguraMm, alturaMm].every(Number.isFinite) || larguraMm <= 0 || alturaMm <= 0) {
+        throw new RangeError('A posição e o tamanho da imagem são inválidos.');
+      }
+      const bytes = bytesJpegValidos(entrada, larguraPixels, alturaPixels);
+      const nome = `Im${imagens.length + 1}`;
+      imagens.push({ nome, bytes, larguraPixels, alturaPixels });
+      atual.push(`q ${número(larguraMm * PONTOS_POR_MM)} 0 0 ${número(alturaMm * PONTOS_POR_MM)} ${x(xMm)} ${y(yMm + alturaMm)} cm /${nome} Do Q`);
+      return api;
+    },
     caracteresSubstituídos() {
       return substituídos;
     },
@@ -106,6 +150,7 @@ export function criarDocumentoPdf({ título = 'Documento', autor = site.autor, l
       const objetos = [];
       const totalDePáginas = páginas.length;
       const primeiroObjetoDePágina = 6;
+      const primeiroObjetoDeImagem = primeiroObjetoDePágina + totalDePáginas * 2;
       const referênciasDePáginas = páginas.map((_, índice) => `${primeiroObjetoDePágina + índice * 2} 0 R`).join(' ');
       objetos[1] = '<< /Type /Catalog /Pages 2 0 R >>';
       objetos[2] = `<< /Type /Pages /Kids [${referênciasDePáginas}] /Count ${totalDePáginas} >>`;
@@ -115,8 +160,15 @@ export function criarDocumentoPdf({ título = 'Documento', autor = site.autor, l
       páginas.forEach((comandos, índice) => {
         const númeroDaPágina = primeiroObjetoDePágina + índice * 2;
         const conteúdo = comandos.join('\n');
-        objetos[númeroDaPágina] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${número(largura * PONTOS_POR_MM)} ${número(altura * PONTOS_POR_MM)}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${númeroDaPágina + 1} 0 R >>`;
+        const nomesUsados = new Set(comandos.flatMap((comando) => [...comando.matchAll(/\/(Im\d+) Do/g)].map((correspondência) => correspondência[1])));
+        const recursosImagem = imagens.filter((imagem) => nomesUsados.has(imagem.nome)).map((imagem) => `/${imagem.nome} ${primeiroObjetoDeImagem + imagens.indexOf(imagem)} 0 R`).join(' ');
+        objetos[númeroDaPágina] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${número(largura * PONTOS_POR_MM)} ${número(altura * PONTOS_POR_MM)}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >>${recursosImagem ? ` /XObject << ${recursosImagem} >>` : ''} >> /Contents ${númeroDaPágina + 1} 0 R >>`;
         objetos[númeroDaPágina + 1] = `<< /Length ${conteúdo.length} >>\nstream\n${conteúdo}\nendstream`;
+      });
+      imagens.forEach((imagem, índice) => {
+        let fluxo = '';
+        for (const byte of imagem.bytes) fluxo += String.fromCharCode(byte);
+        objetos[primeiroObjetoDeImagem + índice] = `<< /Type /XObject /Subtype /Image /Width ${imagem.larguraPixels} /Height ${imagem.alturaPixels} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${imagem.bytes.length} >>\nstream\n${fluxo}\nendstream`;
       });
 
       let saída = '%PDF-1.4\n%âãÏÓ\n';
