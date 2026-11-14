@@ -263,7 +263,7 @@ export function arquivosDoRelatorio(relatorio, slug = 'relatorio') {
   const nomeBase = String(slug).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 100) || 'relatorio';
   const arquivo = (extensao, tipo, gerar) => async () => ({ nome: `${nomeBase}.${extensao}`, tipo, bytes: await gerar() });
   const arquivos = [
-    { rótulo: 'PDF', ícone: 'arquivo', gerar: arquivo('pdf', 'application/pdf', () => gerarPdfRelatorio(r)) },
+    { rótulo: 'PDF', ícone: 'arquivo', gerar: arquivo('pdf', 'application/pdf', () => gerarPdfRelatorio(r, { slug })) },
     { rótulo: 'Excel', ícone: 'planilha', gerar: arquivo('xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', () => excelRelatorio(r)) },
     { rótulo: 'TXT', ícone: 'arquivo', gerar: arquivo('txt', 'text/plain;charset=utf-8', () => utf8.encode(textoRelatorio(r))) },
     { rótulo: 'CSV', ícone: 'planilha', gerar: arquivo('csv', 'text/csv;charset=utf-8', () => utf8.encode(csvSeguro([r.colunas, ...r.linhas]))) },
