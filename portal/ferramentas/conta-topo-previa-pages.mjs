@@ -20,6 +20,21 @@ export function renderizarContaTopo(fim, _sessao, { idioma = 'pt' } = {}) {
   acessar.setAttribute('aria-label', idioma === 'en'
     ? 'Open the full site with login and account'
     : 'Abrir o site completo com login e conta');
+  const caminho = typeof location === 'undefined' ? '' : location.pathname;
+  const raizSite = document.documentElement.dataset.raiz || '';
+  const inicio = /\/(?:index\.html)?$/u.test(caminho) && (idioma === 'en'
+    ? raizSite === '../' && /(?:^|\/)en\/?(?:index\.html)?$/u.test(caminho)
+    : raizSite === '');
+  if (inicio) {
+    raiz.className += ' conta-topo--inicio';
+    acessar.className = 'conta-topo__item conta-topo__login-cadastro';
+    const rotulo = idioma === 'en' ? 'Sign in/register' : 'Login/cadastro';
+    const label = document.createElement('span'); label.textContent = rotulo;
+    acessar.append(label);
+    acessar.title = rotulo;
+    acessar.setAttribute('aria-label', idioma === 'en' ? 'Sign in or register' : 'Login ou cadastro');
+    acessar.href += '?abrir=entrar';
+  }
   raiz.append(acessar);
   fim.append(raiz);
 }
