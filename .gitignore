@@ -15,6 +15,8 @@ modelo/_ds/nocturne-*/
 portal/vitrine/midia/
 portal/servidor/.execucao/
 portal/.execucao/
+portal/recursos/midia/
+portal/scripts/terceiros/midia/
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm

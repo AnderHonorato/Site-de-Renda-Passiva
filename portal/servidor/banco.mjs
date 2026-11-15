@@ -46,6 +46,13 @@ export function abrirBanco(caminho = process.env.PORTAL_BANCO || resolve(import.
       chave TEXT PRIMARY KEY, aplicado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
     CREATE TABLE IF NOT EXISTS publicidade_config (id INTEGER PRIMARY KEY CHECK(id=1),dados TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS flower_config (
+      id INTEGER PRIMARY KEY CHECK(id=1), provider TEXT NOT NULL DEFAULT 'openai',
+      model TEXT NOT NULL DEFAULT '', base_url TEXT NOT NULL DEFAULT '', enabled INTEGER NOT NULL DEFAULT 0,
+      key_ciphertext TEXT, key_iv TEXT, key_tag TEXT, revision INTEGER NOT NULL DEFAULT 1,
+      updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+    INSERT OR IGNORE INTO flower_config(id) VALUES(1);
     CREATE TABLE IF NOT EXISTS usuarios (
       id INTEGER PRIMARY KEY, email TEXT NOT NULL UNIQUE COLLATE NOCASE,
       usuario TEXT NOT NULL UNIQUE COLLATE NOCASE, nome TEXT NOT NULL,

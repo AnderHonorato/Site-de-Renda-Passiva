@@ -171,6 +171,8 @@ for (const arquivo of [...scripts, ...dados, ...páginas]) {
   if (éBundleVerificado(arquivo)) continue;
   const conteúdo = await readFile(arquivo, 'utf8');
   for (const { padrão, motivo } of PROIBIDOS) {
+    // Comentários originais do wrapper fixado; seus imports continuam conferidos.
+    if (motivo === 'marcação de tarefa pendente' && relative(RAIZ, arquivo).replaceAll('\\', '/').startsWith('scripts/terceiros/midia/')) continue;
     if (padrão.test(conteúdo)) {
       reclamar(`${relative(RAIZ, arquivo).replace(/\\/g, '/')} contém ${motivo}.`);
     }

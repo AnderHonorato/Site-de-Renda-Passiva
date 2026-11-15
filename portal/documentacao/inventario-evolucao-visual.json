@@ -1,8 +1,9 @@
 {
-  "total": 252,
+  "total": 258,
   "contagens": {
     "profissionais": 100,
-    "montadorCompartilhado": 152
+    "montadorCompartilhado": 154,
+    "editoresCustomizados": 4
   },
   "estados": "INTEGRADA_E_VALIDADA_POR_FAMILIA: montagem conferida para cada entrada; execução em navegador por cenários representativos, sem alegar teste manual individual.",
   "ferramentas": [
@@ -6558,6 +6559,156 @@
       "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
       "familia": "local/montador",
       "evidencia": "Cálculo real e reabertura dos arquivos nas suítes Node; fluxo de upload e resultado em pdf-extrair-imagens.teste.mjs. Interface compartilhada preserva os controles de execução e movimento reduzido."
+    },
+    {
+      "slug": "editar-pdf",
+      "nome": "Editar PDF",
+      "cat": "pdf",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "arquivo/PDF"
+      ],
+      "entrada": "Um PDF de até 20 MB e 100 páginas; na página, você insere texto, imagens PNG/JPG, retângulos e linhas.",
+      "processamento": "Mostra a página com o PDF.js e grava cada elemento por cima dela com pdf-lib, no navegador. Para trocar o texto original, o PDF teria de ser reconstruído.",
+      "moduloPagina": "portal/scripts/ferramentas/editar-pdf.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/montador.js",
+      "modoMontagem": "montador.js (uso direto)",
+      "worker": "Leitor PDF.js local",
+      "lotePrincipal": 6,
+      "lotes": [
+        3,
+        4,
+        6
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/montador",
+      "evidencia": "Upload, edição e arquivo exportado reaberto no teste de navegador editar-pdf.teste.mjs; progresso compartilhado respeita movimento reduzido e permite baixar assim que o arquivo termina."
+    },
+    {
+      "slug": "cortar-video-e-audio",
+      "nome": "Editor de vídeo",
+      "cat": "imagens",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "vídeo"
+      ],
+      "entrada": "Um vídeo de até 60 MB e três minutos, com trecho, resolução, giro, recorte, áudio e texto opcionais.",
+      "processamento": "Reencoda com FFmpeg WebAssembly single-thread local. O arquivo fica no aparelho; o motor é carregado no primeiro uso. A prévia original depende dos codecs do navegador e o processamento tem prazo de dois minutos.",
+      "moduloPagina": "portal/scripts/ferramentas/cortar-video-e-audio.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/montador.js",
+      "modoMontagem": "montador.js (uso direto)",
+      "worker": "FFmpeg WebAssembly single-thread local",
+      "lotePrincipal": 6,
+      "lotes": [
+        3,
+        4,
+        6
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/montador",
+      "evidencia": "Upload, edição e arquivo exportado reaberto no teste de navegador cortar-video-e-audio.teste.mjs; progresso compartilhado respeita movimento reduzido e permite baixar assim que o arquivo termina."
+    },
+    {
+      "slug": "converter-audio",
+      "nome": "Editor de áudio",
+      "cat": "imagens",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "áudio"
+      ],
+      "entrada": "Um áudio de até 30 MB e as opções de trecho, volume, fades, velocidade, canais e taxa de amostragem.",
+      "processamento": "Desenha a forma de onda com Web Audio quando o navegador reconhece o arquivo e reencoda com FFmpeg WebAssembly local. O áudio fica no aparelho; o primeiro uso carrega o motor e cada edição tem prazo de três minutos.",
+      "moduloPagina": "portal/scripts/ferramentas/converter-audio.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/execucao-visual.js",
+      "modoMontagem": "Editor com execução visual compartilhada",
+      "worker": "FFmpeg WebAssembly single-thread local",
+      "lotePrincipal": 6,
+      "lotes": [
+        3,
+        4,
+        6
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/editor-audio",
+      "evidencia": "Upload, edição e arquivo exportado reaberto no teste de navegador converter-audio.teste.mjs; progresso compartilhado respeita movimento reduzido e permite baixar assim que o arquivo termina."
+    },
+    {
+      "slug": "editor-de-documentos",
+      "nome": "Editor de documentos",
+      "cat": "documentos",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "Office/OOXML"
+      ],
+      "entrada": "DOCX ou TXT de até 20 MB; o DOCX pode conter até mil parágrafos.",
+      "processamento": "Apresenta uma prévia simplificada e altera o texto dos parágrafos escolhidos no pacote OOXML, preservando os outros componentes. DOC antigo, macros e arquivos cifrados não são suportados.",
+      "moduloPagina": "portal/scripts/ferramentas/editor-de-documentos.js",
+      "adaptadorCompartilhado": "portal/scripts/comum/office/pacote.js",
+      "modoMontagem": "Editor com base OOXML e progresso compartilhado",
+      "worker": "Processamento OOXML local",
+      "lotePrincipal": 6,
+      "lotes": [
+        3,
+        4,
+        6
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/editor-office",
+      "evidencia": "Upload, edição e arquivo exportado reaberto no teste de navegador editores-office.teste.mjs; progresso compartilhado respeita movimento reduzido e permite baixar assim que o arquivo termina."
+    },
+    {
+      "slug": "editor-de-apresentacoes",
+      "nome": "Editor de apresentações",
+      "cat": "documentos",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "Office/OOXML"
+      ],
+      "entrada": "PPTX de até 20 MB e cem slides, sem senha ou macros.",
+      "processamento": "Lê o pacote OOXML e oferece edição dos textos em uma prévia simplificada. Grava as alterações e mantém as outras partes da apresentação; não reproduz animações nem o layout exato do PowerPoint.",
+      "moduloPagina": "portal/scripts/ferramentas/editor-de-apresentacoes.js",
+      "adaptadorCompartilhado": "portal/scripts/comum/office/pacote.js",
+      "modoMontagem": "Editor com base OOXML e progresso compartilhado",
+      "worker": "Processamento OOXML local",
+      "lotePrincipal": 6,
+      "lotes": [
+        3,
+        4,
+        6
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/editor-office",
+      "evidencia": "Upload, edição e arquivo exportado reaberto no teste de navegador editores-office.teste.mjs; progresso compartilhado respeita movimento reduzido e permite baixar assim que o arquivo termina."
+    },
+    {
+      "slug": "editor-de-planilhas",
+      "nome": "Editor de planilhas",
+      "cat": "planilhas",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "Office/OOXML"
+      ],
+      "entrada": "XLSX ou CSV de até 20 MB e cinco mil células editáveis, sem macros ou senha.",
+      "processamento": "Edita os valores no navegador e grava o arquivo. As fórmulas são preservadas ou alteradas como fórmulas, mas são recalculadas ao abrir no Office; não simula seu resultado no navegador.",
+      "moduloPagina": "portal/scripts/ferramentas/editor-de-planilhas.js",
+      "adaptadorCompartilhado": "portal/scripts/comum/office/pacote.js",
+      "modoMontagem": "Editor com base OOXML e progresso compartilhado",
+      "worker": "Processamento OOXML local",
+      "lotePrincipal": 6,
+      "lotes": [
+        3,
+        4,
+        6
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/editor-office",
+      "evidencia": "Upload, edição e arquivo exportado reaberto no teste de navegador editores-office.teste.mjs; progresso compartilhado respeita movimento reduzido e permite baixar assim que o arquivo termina."
     }
   ],
   "referenciaCatalogo": "HEAD b921497474d46a2b9e35b8cc6450375c79210fda",

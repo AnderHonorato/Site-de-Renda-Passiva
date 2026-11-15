@@ -244,6 +244,7 @@ function carregarContaEChat() {
   }, { alvo: conta, preservar: true, discreto: true });
 }
 carregarContaEChat();
+isolarBloco('flower', tentativa => modulo('./flower.js', tentativa).then(m => m.iniciarFlower()), { preservar: true, discreto: true });
 // O aviso de bloqueador só é baixado nas páginas geradas com anúncios ativos.
 if (document.documentElement.dataset.anuncios === 'sim') {
   isolarBloco('anti-bloqueador', () => carregarBloco(new URL('./anti-bloqueador.js', import.meta.url).href).then((m) => m.ligarAntiBloqueador()));

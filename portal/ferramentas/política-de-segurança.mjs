@@ -13,7 +13,7 @@
 /** Política de conteúdo estrita: nada de script ou estilo embutido, tudo da própria origem. */
 export const CABEÇALHOS_DE_SEGURANÇA = Object.freeze({
   'Content-Security-Policy':
-    "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+    "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'X-Frame-Options': 'DENY',
@@ -43,7 +43,7 @@ export const PASTAS_PUBLICADAS = Object.freeze(['estilos', 'scripts', 'dados', '
 
 /** Extensões que o navegador precisa. Documentação (.md), mapas e testes ficam de fora. */
 export const EXTENSÕES_PUBLICÁVEIS = Object.freeze([
-  '.html', '.css', '.js', '.mjs', '.json', '.svg', '.woff2', '.png', '.jpg', '.webp', '.ico', '.txt', '.xml', '.pdf', '.webmanifest',
+  '.html', '.css', '.js', '.mjs', '.json', '.svg', '.woff2', '.png', '.jpg', '.webp', '.ico', '.txt', '.xml', '.pdf', '.webmanifest', '.wasm',
 ]);
 
 /** Normaliza para barras e sem "./" no início, e devolve também as partes do caminho. */

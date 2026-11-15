@@ -156,6 +156,7 @@ function páginaDeFerramenta(f, instruções, demonstracao) {
     conteúdo,
     scripts: ['núcleo/página-de-ferramenta.js', ...(demonstracao ? ['núcleo/demonstracoes-iniciar.js'] : [])],
     estilos: [
+      ...({ 'editar-pdf': ['editor-pdf.css'], 'editor-de-fotos': ['editor-imagem.css'], 'converter-audio': ['editor-audio.css'], 'cortar-video-e-audio': ['editor-video.css'], 'editor-de-documentos': ['editores-office.css'], 'editor-de-apresentacoes': ['editores-office.css'], 'editor-de-planilhas': ['editores-office.css'] }[f.slug] || []),
       ...(['plus', 'premium'].includes(f.plano) ? ['acesso-ferramenta.css', 'demonstracoes.css'] : []),
       ...(f.slug === 'limpar-planilha' ? ['limpeza-planilha.css']
         : f.slug === 'ficha-de-cliente' ? ['ficha-de-cliente.css'] : []),

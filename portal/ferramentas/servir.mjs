@@ -44,6 +44,7 @@ const TIPOS = {
   '.txt': 'text/plain; charset=utf-8',
   '.xml': 'application/xml; charset=utf-8',
   '.pdf': 'application/pdf',
+  '.wasm': 'application/wasm',
 };
 
 // Os mesmos cabeçalhos da publicação; no servidor local, sem cache para ver cada edição.
@@ -61,7 +62,7 @@ async function responder(resposta, status, arquivo, método, requisição) {
       }).then(r => r.ok ? r.json() : null);
       if (anuncios?.permitido && /^ca-pub-\d{16}$/.test(anuncios.editor) && Object.values(anuncios.blocos || {}).some(v => /^\d{6,20}$/.test(v))) {
         const nonce = randomBytes(24).toString('base64');
-        const csp = `default-src 'self'; script-src 'nonce-${nonce}' 'strict-dynamic'; style-src 'self'; img-src 'self' data: blob: https://*.google.com https://*.googleusercontent.com https://*.googlesyndication.com https://*.doubleclick.net; font-src 'self'; connect-src 'self' https://*.googlesyndication.com https://*.google.com https://*.doubleclick.net; frame-src https://*.googlesyndication.com https://*.google.com https://*.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`;
+        const csp = `default-src 'self'; script-src 'nonce-${nonce}' 'strict-dynamic' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self'; img-src 'self' data: blob: https://*.google.com https://*.googleusercontent.com https://*.googlesyndication.com https://*.doubleclick.net; media-src 'self' blob:; font-src 'self'; connect-src 'self' https://*.googlesyndication.com https://*.google.com https://*.doubleclick.net; frame-src https://*.googlesyndication.com https://*.google.com https://*.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`;
         const html = fs.readFileSync(arquivo, 'utf8').replace(/<script\b/g, `<script nonce="${nonce}"`);
         resposta.writeHead(status, { ...CABEÇALHOS, 'Content-Security-Policy': csp, 'Content-Type': tipo });
         return resposta.end(método === 'HEAD' ? undefined : html);
@@ -103,6 +104,10 @@ function encaminharApi(requisição, resposta) {
   if (préviaNoNavegador && requisição.method === 'GET' && rotaLocal === '/api/anuncios') {
     resposta.writeHead(200, { ...CABEÇALHOS, 'Content-Type': 'application/json; charset=utf-8' });
     return resposta.end(JSON.stringify({ permitido: false }));
+  }
+  if (préviaNoNavegador && requisição.method === 'GET' && rotaLocal === '/api/flower/status') {
+    resposta.writeHead(200, { ...CABEÇALHOS, 'Content-Type': 'application/json; charset=utf-8' });
+    return resposta.end(JSON.stringify({ online: false, provider: '', model: '' }));
   }
   if (préviaNoNavegador && requisição.method === 'GET' && rotaLocal === '/api/atualizacoes') {
     let feed = { itens: [] };

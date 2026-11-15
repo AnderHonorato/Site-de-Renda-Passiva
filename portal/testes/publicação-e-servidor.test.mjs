@@ -42,9 +42,11 @@ test('a lista de publicação é branca: só entra o que foi permitido', () => {
 
 test('os cabeçalhos de segurança proíbem script e estilo embutidos e quadros externos', () => {
   const csp = CABEÇALHOS_DE_SEGURANÇA['Content-Security-Policy'];
-  assert.match(csp, /script-src 'self'(;|$)/);
+  assert.match(csp, /script-src 'self' 'wasm-unsafe-eval'(;|$)/);
   assert.match(csp, /style-src 'self'(;|$)/);
-  assert.doesNotMatch(csp, /unsafe-inline|unsafe-eval/);
+  assert.doesNotMatch(csp, /'(?:unsafe-inline|unsafe-eval)'/);
+  assert.match(csp, /media-src 'self' blob:/);
+  assert.match(csp, /worker-src 'self'/);
   assert.match(csp, /frame-ancestors 'none'/);
   assert.ok(arquivoDeCabeçalhos().includes('Content-Security-Policy'));
 });

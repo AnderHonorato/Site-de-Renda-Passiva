@@ -1,0 +1,37 @@
+/* Camadas e prévia do editor de fotos; usa apenas os tokens do portal. */
+.editor-imagem__quadro {
+  max-width: 100%;
+  overflow: auto;
+  padding: .75rem;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio, 14px);
+  background: var(--superfície-2);
+  overscroll-behavior: contain;
+}
+.editor-imagem__quadro canvas { max-width: 100%; }
+.editor-imagem__camadas {
+  display: grid;
+  gap: .75rem;
+  margin-block: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio, 14px);
+  background: var(--superfície);
+}
+.editor-imagem__camadas h3 { margin: 0; font-size: 1rem; }
+.editor-imagem__linha { display: grid; grid-template-columns: minmax(5rem, .35fr) minmax(0, 1fr); align-items: center; gap: .75rem; }
+.editor-imagem__linha input[type="color"] { width: 3rem; min-height: 2.5rem; padding: .2rem; }
+.editor-imagem__ações { display: flex; flex-wrap: wrap; gap: .5rem; }
+.editor-imagem__arquivo { display: inline-flex; align-items: center; position: relative; overflow: hidden; cursor: pointer; min-width: 0; max-width: 100%; box-sizing: border-box; }
+.editor-imagem__arquivo input { position: absolute; inset: 0; width: auto; max-width: 100%; height: auto; opacity: 0; cursor: pointer; }
+.editor-imagem__lista { display: grid; gap: .4rem; }
+.editor-imagem__camada { display: flex; justify-content: space-between; align-items: center; gap: .5rem; min-width: 0; padding: .35rem .5rem; border-radius: 8px; background: var(--superfície-2); }
+.editor-imagem__camada button:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.editor-imagem__zoom { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+.editor-imagem__zoom input { flex: 1 1 9rem; min-width: 7rem; }
+.editor-imagem__zoom output { min-width: 3.5rem; text-align: end; font-variant-numeric: tabular-nums; }
+@media (max-width: 520px) {
+  .editor-imagem__camadas { padding: .75rem; }
+  .editor-imagem__linha { grid-template-columns: 1fr; gap: .3rem; }
+  .editor-imagem__ações > * { flex: 1 1 8rem; }
+}

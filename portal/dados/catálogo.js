@@ -13,6 +13,7 @@ import { ferramentas as ofícioEEstudos } from './catálogo/ofício-e-estudos.js
 import { ferramentas as pdf } from './catálogo/pdf.js';
 import { ferramentas as avançadas } from './catálogo/avançadas.js';
 import { ferramentas as profissionais } from './catálogo/profissionais.js';
+import { ferramentas as editoresOffice } from './catálogo/editores-office.js';
 import { categoriaPorId as categoriaPorIdAtiva, categoriasDoIdioma } from './categorias.js';
 import { normalizarIdioma } from './idiomas.js';
 import { editorial } from './editorial-publicado.js';
@@ -26,6 +27,7 @@ const BRUTAS = [
   ...pdf,
   ...avançadas,
   ...profissionais,
+  ...editoresOffice,
 ];
 
 /**

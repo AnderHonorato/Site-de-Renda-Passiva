@@ -26,6 +26,16 @@ test('cada ferramenta inventariada realmente monta uma das interfaces integradas
   }
   for (const item of inventario.ferramentas) {
     const pagina = await fonte(item.moduloPagina);
+    if (item.familia === 'local/editor-office') {
+      assert.match(pagina, /\bmountBase\(/, item.slug);
+      assert.match(await fonte(item.adaptadorCompartilhado), /\bcriarProgresso\(/, item.slug);
+      continue;
+    }
+    if (item.familia === 'local/editor-audio') {
+      assert.match(pagina, /\bcriarExecucaoVisual\(/, item.slug);
+      assert.match(await fonte(item.adaptadorCompartilhado), /duracaoMinimaMs/, item.slug);
+      continue;
+    }
     if (item.familia === 'profissional') {
       assert.match(pagina, /export default criarFerramentaProfissional\(/, item.slug);
       assert.ok(pagina.includes(`'${item.slug}'`), item.slug);

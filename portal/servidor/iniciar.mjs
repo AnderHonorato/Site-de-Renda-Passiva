@@ -13,6 +13,7 @@ import { MAX_IMAGEM, itemAdmin, novidadesPublicas, removerNovidade, salvarImagem
 import { criarAtualizacao, editarAtualizacao, excluirAtualizacao, feedAtualizacoes, inicializarAtualizacoes, listarAtualizacoesAdmin } from './atualizacoes.mjs';
 import { configuracaoPublicidade, salvarPublicidade } from './publicidade.mjs';
 import { iniciarBanners, tratarBanners } from './banners.mjs';
+import { flowerConfigAdmin, flowerStatus, responderFlower, salvarConfigFlower } from './flower.mjs';
 import { tratarRecompensas, registrarAtividadeRecompensa } from './recompensas.mjs';
 import { criarEditorial,catalogoOriginal } from './editorial.mjs';
 import { criarProtecao } from './trafego.mjs';
@@ -214,11 +215,32 @@ async function rota(req,res){
     catch{return json(res,503,{estado:'indisponivel'});}
   }
   if(await tratarBanners(req,res,{banco,json,admin,proteger,corpo,corpoBinario,registrarAdmin}))return;
+  if(m==='GET'&&p==='/api/flower/status'){
+    if(!(/^[A-Za-z0-9_-]{43}$/.test(cookies(req)[nomeCsrf]||'')))setCookie(res,nomeCsrf,token());
+    return json(res,200,flowerStatus(banco));
+  }
   if(m==='GET'&&p==='/api/autenticacao/sessao'){
     if(!(/^[A-Za-z0-9_-]{43}$/.test(cookies(req)[nomeCsrf]||'')))setCookie(res,nomeCsrf,token());
     const u=sessao(req);return json(res,200,{usuario:usuarioPublico(u),chat_habilitado:chatAtivo(),chat_aceito:!!u?.chat_aceito_em});
   }
   proteger(req);
+  if(m==='POST'&&p==='/api/flower/chat'){
+    const usuario=sessao(req),limite=await corpo(req,196608),messages=limite?.messages;
+    if(!Array.isArray(messages)||messages.length<1||messages.length>30)throw erro(400,'flower_mensagens_invalidas');
+    const validas=messages.map(x=>x&&typeof x==='object'&&!Array.isArray(x)&&['user','assistant'].includes(x.role)&&typeof x.content==='string'&&x.content.trim().length>0&&x.content.length<=1500?{role:x.role,content:x.content.trim()}:null);
+    if(validas.some((x,i)=>!x||(i===0&&x.role!=='user')||(i>0&&x.role===validas[i-1]?.role))||validas.at(-1)?.role!=='user'||!validas.some(x=>x.role==='user'))throw erro(400,'flower_mensagens_invalidas');
+    conferirLimite(`flower:ip:${ip(req)}`,12,60000);
+    if(usuario)conferirLimite(`flower:user:${usuario.id}`,12,60000);
+    return json(res,200,await responderFlower(banco,validas));
+  }
+  if(m==='GET'&&p==='/api/admin/flower'){
+    admin(req);return json(res,200,flowerConfigAdmin(banco));
+  }
+  if(m==='PUT'&&p==='/api/admin/flower'){
+    const u=admin(req),config=salvarConfigFlower(banco,await corpo(req,8192));
+    registrarAdmin(u,'configurar_flower',null,{provider:config.provider,model:config.model,enabled:config.enabled,hasKey:config.hasKey,revision:config.revision});
+    return json(res,200,config);
+  }
   if(await tratarRecompensas(req,res,{db:banco,json,exigir,admin,corpo,registrarAdmin,nivelDoUsuario,pontos:()=>regrasPontos}))return;
   if(p==='/api/regras-pontos'&&m==='GET')return json(res,200,{pontos:regrasPontos});
   if(p==='/api/atualizacoes'&&m==='GET')return json(res,200,feedAtualizacoes(banco));

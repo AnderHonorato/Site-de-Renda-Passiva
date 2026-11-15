@@ -1,5 +1,22 @@
 # Portal — versão 1.4.0
 
+Estado atual: **356 entradas, 258 ferramentas prontas e 98 planejadas**. O lote de [editores e Flower](documentacao/lote-editores-e-flower.md) acrescenta edição local de PDF, áudio, vídeo, DOCX/TXT, PPTX e XLSX/CSV; amplia o editor de imagens e oferece o chat Flower, com respostas padrão sem API e configuração de provedores em `/admin/flower/` quando o servidor está online.
+
+Para preparar todos os motores locais antes de gerar/publicar, na raiz do repositório:
+
+```sh
+npm ci --prefix portal --ignore-scripts
+npm install --prefix portal --no-save --no-package-lock --ignore-scripts prettier@3.9.10 sql-formatter@15.9.0 esbuild@0.25.12 mermaid@11.17.2 playwright@1.62.0 @ffmpeg/ffmpeg@0.12.15 @ffmpeg/core@0.12.10
+npm run montar:formatadores --prefix portal
+npm run montar:diagramas --prefix portal
+npm run montar:midias --prefix portal
+npm run gerar --prefix portal
+```
+
+As chaves dos provedores Flower são cifradas no servidor. Preserve o banco e a chave mestra privada; instruções e limites estão no documento do lote. O GitHub Pages executa os editores locais e o FAQ Flower, mas a conversa com modelos externos exige a API Node e uma chave configurada pelo administrador.
+
+O restante desta página registra os lotes anteriores.
+
 O lote **F252–F351** acrescenta 100 ferramentas profissionais: 32 Plus e 68 Premium (Premium inclui Plus). O catálogo passa a 351 entradas, com 250 ferramentas implementadas. O histórico abaixo preserva as entregas anteriores; a referência deste lote é [100 ferramentas profissionais](documentacao/100-ferramentas-profissionais.md).
 
 As novas ferramentas recebem arquivos CSV/TSV/JSON/XLSX ou documentos TXT/Markdown/JSON/SRT/VTT/PDF com texto/DOCX, conforme o tipo de análise. Os relatórios completos exportam PDF, Excel com três abas, TXT, CSV e JSON, além de SVG quando há série numérica. Exemplos editáveis, pesquisa, paginação, etapas de execução e cancelamento seguem os componentes do portal.

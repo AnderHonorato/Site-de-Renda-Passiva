@@ -1,0 +1,17 @@
+.editor-pdf{--ed-terracotta:#a94f3d;--ed-ink:#292723;--ed-paper:#fffdf9;color:var(--ed-ink)}
+.editor-pdf__barra{display:grid;gap:.65rem;padding:.8rem;border:1px solid #dfd1c8;border-radius:14px;background:#fbf4ed}
+.editor-pdf__grupo{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.editor-pdf__grupo button,.editor-pdf__grupo select,.editor-pdf__grupo input:not([type=file]){font:inherit;min-height:40px;border:1px solid #c9b6ab;border-radius:9px;background:#fff;padding:.45rem .65rem;color:inherit}
+.editor-pdf__grupo button{cursor:pointer}.editor-pdf__grupo button[aria-pressed=true]{background:var(--ed-terracotta);border-color:var(--ed-terracotta);color:#fff}
+.editor-pdf__grupo button:disabled{opacity:.48;cursor:not-allowed}.editor-pdf__grupo label{display:flex;align-items:center;gap:.35rem;font-size:.88rem}
+.editor-pdf__grupo [data-text]{width:min(220px,42vw)}.editor-pdf__grupo [data-size]{width:74px}.editor-pdf__grupo [data-color]{width:50px;padding:3px!important}
+.editor-pdf__nota{font-size:.92rem;line-height:1.5;padding:.7rem .85rem;border-left:4px solid var(--ed-terracotta);background:#f8eee7;border-radius:0 8px 8px 0}
+.editor-pdf__viewport{width:100%;overflow:auto;overscroll-behavior:contain;padding:12px;background:#ece4dd;border-radius:12px;max-height:75vh}
+.editor-pdf__frame{position:relative;width:max-content;max-width:100%;margin:0 auto;line-height:0;box-shadow:0 3px 18px #38251f30;background:white}
+.editor-pdf__frame canvas{display:block;max-width:100%;height:auto;background:#fff;border:1px solid #c9b6ab}
+.editor-pdf__frame svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none;overflow:visible}
+.editor-pdf__frame svg [data-i]:focus{outline:none}.editor-pdf__frame svg [data-i]:focus rect{stroke:#212121;stroke-width:3}
+.editor-pdf__links{display:flex;gap:.55rem;flex-wrap:wrap;align-items:center;font-size:.92rem;padding:.5rem 0}.editor-pdf__links a{color:#8f3f31;text-underline-offset:3px}
+.editor-pdf [data-status]{min-height:1.5em}
+@media(max-width:600px){.editor-pdf__barra{padding:.55rem}.editor-pdf__grupo{gap:.35rem}.editor-pdf__grupo button{min-height:44px}.editor-pdf__grupo label{flex-wrap:wrap}.editor-pdf__viewport{max-height:65vh;padding:7px}.editor-pdf__frame{max-width:none}.editor-pdf__links{gap:.4rem}}
+@media(prefers-reduced-motion:reduce){.editor-pdf *{scroll-behavior:auto!important}}

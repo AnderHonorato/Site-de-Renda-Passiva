@@ -1,6 +1,42 @@
 {
   "itens": [
     {
+      "id": "flower-sua-assistente-no-portal",
+      "slug": "flower-sua-assistente-no-portal",
+      "categoria": "novo",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-15T09:15:00.000Z",
+      "atualizado_em": "2026-11-15T09:15:00.000Z",
+      "pt": {
+        "titulo": "Conheça a Flower, a assistente do portal",
+        "resumo": "Um chat no canto da tela, com personagem animado e respostas padrão disponíveis sem API.",
+        "conteudo": "Abra o botão da Flower no canto inferior direito para conversar. Sem IA online configurada, ela identifica suas respostas como padrão e ajuda com as perguntas frequentes do portal. Quando não conhece a resposta, explica que precisa ficar online.\n\nO administrador pode configurar provedor, modelo e chave em Configurar Flower. A chave fica cifrada no servidor. A conversa com modelos externos só funciona quando há servidor e configuração válida; na prévia estática, a Flower usa a base local."
+      },
+      "en": {
+        "titulo": "Meet Flower, your portal assistant",
+        "resumo": "A corner chat with an animated character and standard replies available without an AI API.",
+        "conteudo": "Open Flower in the lower-right corner to chat. When online AI is not configured, she labels standard replies and helps with known portal questions. For other questions, she explains that online AI is needed.\n\nAn administrator can set a provider, model, and key in Flower settings. The key is encrypted on the server. External model replies require a server and valid configuration; the static preview uses the local FAQ."
+      }
+    },
+    {
+      "id": "editores-pdf-imagens-audio-video-office",
+      "slug": "editores-pdf-imagens-audio-video-office",
+      "categoria": "novo",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-15T09:10:00.000Z",
+      "atualizado_em": "2026-11-15T09:10:00.000Z",
+      "pt": {
+        "titulo": "Edite seus arquivos e confira o resultado",
+        "resumo": "PDF, imagem, áudio, vídeo, documentos, apresentações e planilhas ganharam recursos de edição.",
+        "conteudo": "O editor PDF permite adicionar e posicionar texto, imagens, linhas e retângulos. O editor de imagens ganhou camadas de texto, formas, marca d’água e imagens, com desfazer e refazer.\n\nÁudio e vídeo permitem editar trechos, velocidade, volume e outros ajustes, exportar em formatos disponíveis e reproduzir o resultado. O motor de mídia é carregado na primeira exportação; arquivos maiores podem exigir mais tempo ou um aparelho com mais memória.\n\nOs novos editores Office recebem DOCX/TXT, PPTX e XLSX/CSV. Você pode alterar textos, aplicar formatação básica, organizar slides e editar células ou fórmulas. A prévia Office é simplificada; fórmulas são recalculadas ao abrir em um programa compatível. Formatos antigos e macros não são suportados.\n\nTodos esses editores processam os arquivos no navegador. Busque “editor” na página Ferramentas para encontrá-los."
+      },
+      "en": {
+        "titulo": "Edit your files and review the result",
+        "resumo": "PDF, image, audio, video, document, presentation, and spreadsheet editors are now available.",
+        "conteudo": "The PDF editor adds and positions text, images, lines, and rectangles. The image editor now offers text, shape, watermark, and image layers, with undo and redo.\n\nAudio and video editors support trimming, speed, volume, other adjustments, export, and playback of the edited result. The media engine loads on first export; larger files may need more time or memory.\n\nThe Office editors open DOCX/TXT, PPTX, and XLSX/CSV. Change text, apply basic formatting, organize slides, and edit cells or formulas. Office previews are simplified; formulas recalculate in compatible applications. Legacy formats and macros are not supported.\n\nThese editors process files in your browser. Search “editor” on the Tools page to find them."
+      }
+    },
+    {
       "id": "blog-e-central-de-notificacoes",
       "slug": "blog-e-central-de-notificacoes",
       "categoria": "novo",

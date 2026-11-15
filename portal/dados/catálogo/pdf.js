@@ -227,14 +227,14 @@ export const ferramentas = [
   // ------------------------------------------------------------------- editar
   {
     id: 'F168', slug: 'editar-pdf', nome: 'Editar PDF', cat: 'pdf',
-    ícone: 'martelo', tarefas: ['criar'], status: 'planejada',
+    ícone: 'martelo', tarefas: ['criar'], status: 'pronta',
     resumo: 'Acrescenta texto, imagens, formas e desenhos sobre as páginas. O texto que já está no PDF não é alterado.',
     problema: 'Escrever em cima de um PDF, completar um campo, carimbar ou acrescentar uma observação.',
-    entra: 'Um PDF; na página, você insere texto, imagem, retângulo, linha ou desenho à mão livre.',
+    entra: 'Um PDF de até 20 MB e 100 páginas; na página, você insere texto, imagens PNG/JPG, retângulos e linhas.',
     processa: 'Mostra a página com o PDF.js e grava cada elemento por cima dela com pdf-lib, no navegador. Para trocar o texto original, o PDF teria de ser reconstruído.',
     sai: 'PDF com as inclusões gravadas nas páginas.',
     exporta: ['baixar'], plano: 'gratuito', local: true,
-    tags: ['editar pdf', 'escrever no pdf', 'adicionar texto ao pdf', 'inserir imagem no pdf'],
+    tags: ['editar pdf', 'editor', 'escrever no pdf', 'adicionar texto ao pdf', 'inserir imagem no pdf'],
     intenções: ['escrever em cima de um pdf', 'adicionar texto ao pdf', 'editar pdf sem programa'],
     relacionadas: ['preencher-formulario-pdf', 'assinar-pdf', 'marca-dagua-no-pdf'],
   },

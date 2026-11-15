@@ -20,7 +20,7 @@ const número = (valor) => valor.toLocaleString('pt-BR');
 const TIPOS_MIME = { png: 'image/png', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif', bmp: 'image/bmp', avif: 'image/avif' };
 const EXTENSÃO_DO_TIPO = { 'image/jpeg': 'JPG', 'image/png': 'PNG', 'image/webp': 'WebP' };
 /** Lado maior da cópia usada na prévia. */
-const LADO_DA_PRÉVIA = 1100;
+const LADO_DA_PRÉVIA = 2800; // até 7,84 MP; exportação continua usando o original inteiro.
 /** Quantos pixels as cores processam por vez no arquivo final (4 bytes cada). */
 const PIXELS_POR_FAIXA = 1_000_000;
 const PASSOS_NO_HISTÓRICO = 60;
@@ -103,7 +103,7 @@ const esperar = () => new Promise((resolver) => setTimeout(resolver, 0));
  * @param {(porcentagem: number | undefined, texto: string) => void} aoProgredir
  * @returns {Promise<Blob>}
  */
-async function gerarArquivo(bitmap, a, aoProgredir) {
+async function gerarArquivo(bitmap, a, aoProgredir, camadas = []) {
   const { saída } = a;
   const formato = FORMATOS_DE_SAÍDA[a.formato];
   const tela = criarTela(saída.largura, saída.altura);
@@ -134,6 +134,10 @@ async function gerarArquivo(bitmap, a, aoProgredir) {
       }
     }
 
+    // Camadas são posicionadas sobre a área final, em proporções do quadro para
+    // manter a posição ao trocar o tamanho de exportação.
+    desenharCamadas(contexto, camadas, saída.largura, saída.altura);
+
     aoProgredir(undefined, 'Gravando o arquivo…');
     const blob = await new Promise((resolver) => {
       tela.toBlob(resolver, formato.tipo, formato.comQualidade ? a.qualidade / 100 : undefined);
@@ -144,6 +148,28 @@ async function gerarArquivo(bitmap, a, aoProgredir) {
     // Solta a memória do canvas grande já.
     tela.width = 1;
     tela.height = 1;
+  }
+}
+
+function desenharCamadas(contexto, camadas, largura, altura) {
+  for (const camada of camadas) {
+    if (camada.visível === false) continue;
+    const x = camada.x * largura, y = camada.y * altura;
+    const w = camada.largura * largura, h = camada.altura * altura;
+    contexto.save();
+    contexto.globalAlpha = camada.opacidade ?? 1;
+    if (camada.tipo === 'texto' || camada.tipo === 'marca') {
+      contexto.fillStyle = camada.cor;
+      contexto.font = `700 ${Math.max(10, h)}px ${camada.fonte || 'sans-serif'}`;
+      contexto.textAlign = 'center'; contexto.textBaseline = 'middle';
+      contexto.shadowColor = 'rgba(0,0,0,.35)'; contexto.shadowBlur = Math.max(1, h * .08);
+      contexto.fillText(camada.texto, x + w / 2, y + h / 2, w);
+    } else if (camada.tipo === 'retângulo' || camada.tipo === 'círculo') {
+      contexto.fillStyle = camada.cor;
+      if (camada.tipo === 'círculo') { contexto.beginPath(); contexto.ellipse(x + w / 2, y + h / 2, w / 2, h / 2, 0, 0, Math.PI * 2); contexto.fill(); }
+      else contexto.fillRect(x, y, w, h);
+    } else if (camada.bitmap) contexto.drawImage(camada.bitmap, x, y, w, h);
+    contexto.restore();
   }
 }
 
@@ -158,10 +184,10 @@ export default {
       'Toque em "Gerar foto editada" e depois em "Baixar". Para voltar atrás, use "Desfazer" ou "Restaurar tudo". A foto original no seu aparelho não é alterada.',
     ],
     exemplo: {
-      texto: 'Uma foto de celular de 4000 × 3000 pixels, cortada em 16:9, vira 4000 × 2250. Redimensionada para largura 1280 (a altura acompanha), sai com 1280 × 720 pixels, '
+      texto: 'Uma foto de celular de 3000 × 2000 pixels, cortada em 16:9, vira 3000 × 1688. Redimensionada para largura 1280 (a altura acompanha), sai com 1280 × 720 pixels, '
         + 'pronta para um post ou um slide. Com brilho +10 e saturação +20, os tons ficam um pouco mais claros e vivos; em JPG com qualidade 85, o arquivo costuma ficar bem menor que o original.',
     },
-    limites: `Fotos JPG, PNG, WebP, GIF, BMP ou AVIF de até ${LIMITES.bytes / 1024 / 1024} MB e ${LIMITES.megapixels} megapixels (por exemplo, 8000 × 6000); o tamanho final também vai até ${LIMITES.megapixelsDaSaída} megapixels e ${número(LIMITES.ladoMáximo)} pixels de lado. `
+    limites: `Fotos JPG, PNG, WebP, GIF, BMP ou AVIF de até ${LIMITES.bytes / 1024 / 1024} MB e ${LIMITES.megapixels} megapixels; o tamanho final também vai até ${LIMITES.megapixelsDaSaída} megapixels e ${número(LIMITES.ladoMáximo)} pixels de lado. A prévia é reduzida para no máximo 7,84 megapixels quando necessário; a exportação usa a resolução original. `
       + 'O tipo é conferido pelo conteúdo do arquivo, não pela extensão. HEIC (iPhone) não abre: salve como JPG antes. GIF animado e AVIF animado entram só com o primeiro quadro. '
       + 'A ordem das operações é fixa: girar, espelhar, cortar, redimensionar e, por fim, as cores. A rotação gravada pela câmera (EXIF) é respeitada, então a foto abre em pé. '
       + 'A foto gerada não leva os metadados da original (data, localização, modelo da câmera): é um arquivo novo. JPG não guarda transparência, e as áreas transparentes saem brancas; use PNG ou WebP para mantê-las. '
@@ -190,6 +216,8 @@ export default {
     let posição = -1;
     let comparar = false;
     let desenhandoCorte = false;
+    let camadas = [];
+    let camadaSelecionada = null;
 
     montarFerramenta(raiz, ferramenta, {
       rótuloDaAção: 'Gerar foto editada',
@@ -233,7 +261,7 @@ export default {
         if (!foto) throw new ErroDeEntrada('Escolha uma foto primeiro.', 'arquivo');
         const ajustes = lerAjustesDaTela(dados);
         const nome = nomeDaSaída(foto.nome, ajustes.formato);
-        const blob = await gerarArquivo(foto.bitmap, ajustes, (p, texto) => progresso.andar(p, texto));
+        const blob = await gerarArquivo(foto.bitmap, ajustes, (p, texto) => progresso.andar(p, texto), camadas);
         const esperado = FORMATOS_DE_SAÍDA[ajustes.formato];
         const gravado = EXTENSÃO_DO_TIPO[blob.type] ?? esperado.nome;
         const nomeFinal = nome.replace(/\.[^.]+$/, `.${gravado.toLowerCase()}`);
@@ -353,11 +381,42 @@ export default {
           </div>
           <div class="campo campo--linha b-2"><input type="checkbox" id="campo-original"><label for="campo-original">Mostrar a foto original (sem ajustes)</label></div>
           <canvas data-prévia role="img" aria-label="Prévia da foto"></canvas>
+          <section class="editor-imagem__camadas" aria-labelledby="editor-camadas-título">
+            <h3 id="editor-camadas-título">Texto, formas e marca d’água</h3>
+            <div class="editor-imagem__linha"><label for="editor-texto">Texto</label><input id="editor-texto" maxlength="120" placeholder="Seu texto"></div>
+            <div class="editor-imagem__linha"><label for="editor-cor">Cor</label><input id="editor-cor" type="color" value="#fff2df"></div>
+            <div class="editor-imagem__linha"><label for="editor-forma">Forma</label><select id="editor-forma"><option value="retângulo">Retângulo</option><option value="círculo">Elipse</option></select></div>
+            <div class="editor-imagem__ações">
+              <button class="botão botão--linha" type="button" data-camada="texto">Adicionar texto</button>
+              <button class="botão botão--linha" type="button" data-camada="forma">Adicionar forma</button>
+              <button class="botão botão--linha" type="button" data-camada="marca">Marca d’água</button>
+              <label class="botão botão--linha editor-imagem__arquivo">Adicionar imagem<input data-camada-imagem type="file" accept="image/png,image/jpeg,image/webp"></label>
+            </div>
+            <div class="editor-imagem__lista" data-lista-camadas aria-label="Camadas da edição"></div>
+            <p class="campo__dica">Arraste a camada no quadro para posicionar. O conteúdo é aplicado ao arquivo exportado.</p>
+          </section>
+          <div class="editor-imagem__zoom"><label for="editor-zoom">Zoom da prévia</label><input id="editor-zoom" type="range" min="50" max="200" value="100"><output data-zoom>100%</output></div>
           <p class="pequeno suave t-1" role="status" data-informação></p>`;
         camposOriginais.before(prévia);
         const tela = prévia.querySelector('canvas');
+        const quadroVisual = document.createElement('div'); quadroVisual.className = 'editor-imagem__quadro'; quadroVisual.dataset.préviaQuadro = 'sim';
+        tela.before(quadroVisual); quadroVisual.append(tela);
         Object.assign(tela.style, { maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto', borderRadius: '8px', background: 'var(--superfície-2)' });
         const informação = prévia.querySelector('[data-informação]');
+        const corDeSeleção = getComputedStyle(document.documentElement).getPropertyValue('--marca').trim() || '#a8472a';
+        const listaCamadas = prévia.querySelector('[data-lista-camadas]');
+        const atualizarListaCamadas = () => {
+          listaCamadas.replaceChildren();
+          camadas.forEach((camada, i) => {
+            const linha = document.createElement('div'); linha.className = 'editor-imagem__camada';
+            const nome = document.createElement('button'); nome.type = 'button'; nome.className = 'botão botão--texto';
+            nome.textContent = camada.tipo === 'imagem' ? `Imagem ${i + 1}` : camada.tipo === 'marca' ? 'Marca d’água' : camada.tipo === 'texto' ? camada.texto : camada.tipo;
+            nome.setAttribute('aria-pressed', String(camada.id === camadaSelecionada)); nome.addEventListener('click', () => { camadaSelecionada = camada.id; atualizarListaCamadas(); });
+            const remover = document.createElement('button'); remover.type = 'button'; remover.className = 'botão botão--texto'; remover.textContent = 'Remover'; remover.setAttribute('aria-label', `Remover camada ${nome.textContent}`);
+            remover.addEventListener('click', () => { camadas = camadas.filter((c) => c !== camada); camadaSelecionada = camadas.at(-1)?.id ?? null; confirmar(); atualizarListaCamadas(); agendarPrévia(); });
+            linha.append(nome, remover); listaCamadas.append(linha);
+          });
+        };
 
         const girar = novoGrupo('girar', 'Girar e espelhar', camposOriginais);
         girar.className = 'ações';
@@ -437,6 +496,7 @@ export default {
 
         let cache = { geometria: '', girada: null, cores: '', colorida: null };
         let quadroDaPrévia = { largura: 1, altura: 1 };
+        let corteDaPrévia = { x: 0, y: 0, largura: 1, altura: 1 };
         let pendente = 0;
 
         function atualizarRótulos() {
@@ -482,6 +542,7 @@ export default {
           const semCorte = normalizarAjustes({ ...a, recorte: { esquerda: 0, topo: 0, direita: 0, base: 0 }, tamanho: { modo: 'original' } }, { largura: base.width, altura: base.height });
           const comCorte = normalizarAjustes({ ...a, tamanho: { modo: 'original' } }, { largura: base.width, altura: base.height });
           quadroDaPrévia = semCorte.trabalho;
+          corteDaPrévia = comCorte.corte;
 
           const geometria = `${base.width}|${visão.giro}|${visão.espelharH}|${visão.espelharV}`;
           if (cache.geometria !== geometria) {
@@ -521,8 +582,16 @@ export default {
             contexto.strokeStyle = '#fff';
             contexto.strokeRect(x, y, largura, altura);
           }
+          contexto.save(); contexto.beginPath(); contexto.rect(x, y, largura, altura); contexto.clip(); contexto.translate(x, y);
+          desenharCamadas(contexto, camadas, largura, altura);
+          if (camadaSelecionada) {
+            const selecionada = camadas.find((c) => c.id === camadaSelecionada);
+            if (selecionada) { contexto.strokeStyle = corDeSeleção; contexto.lineWidth = Math.max(2, largura / 500); contexto.setLineDash([8, 5]); contexto.strokeRect(selecionada.x * largura, selecionada.y * altura, selecionada.largura * largura, selecionada.altura * altura); }
+          }
+          contexto.restore();
           const mp = (a.saída.largura * a.saída.altura) / 1_000_000;
-          informação.textContent = `Original: ${número(foto.largura)} × ${número(foto.altura)} px. Resultado: ${número(a.saída.largura)} × ${número(a.saída.altura)} px (${mp.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} MP).`;
+          const reduzida = foto.largura > LADO_DA_PRÉVIA || foto.altura > LADO_DA_PRÉVIA;
+          informação.textContent = `Original: ${número(foto.largura)} × ${número(foto.altura)} px. Resultado: ${número(a.saída.largura)} × ${número(a.saída.altura)} px (${mp.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} MP).${reduzida ? ' Esta prévia foi reduzida para caber na memória; o arquivo final usa a resolução original.' : ''}`;
           tela.setAttribute('aria-label', `Prévia da foto editada, ${a.saída.largura} por ${a.saída.altura} pixels`);
         }
         const agendarPrévia = () => {
@@ -530,11 +599,43 @@ export default {
           pendente = requestAnimationFrame(() => { pendente = 0; desenharPrévia(); });
         };
 
+        const novaCamada = (camada) => {
+          if (camadas.length >= 30) { avisar('O limite é 30 camadas por foto. Remova uma para continuar.'); return; }
+          camada.id = crypto.randomUUID(); camada.x ??= .1; camada.y ??= .82; camada.largura ??= .8; camada.altura ??= .1;
+          camadas.push(camada); camadaSelecionada = camada.id; atualizarListaCamadas(); resultado.hidden = true; desenharPrévia(); confirmar();
+        };
+        prévia.querySelector('[data-camada="texto"]').addEventListener('click', () => {
+          const texto = prévia.querySelector('#editor-texto').value.trim(); if (!texto) { avisar('Escreva o texto da camada primeiro.'); return; }
+          novaCamada({ tipo: 'texto', texto, cor: prévia.querySelector('#editor-cor').value, largura: .8, altura: .1 });
+        });
+        prévia.querySelector('[data-camada="marca"]').addEventListener('click', () => {
+          const texto = prévia.querySelector('#editor-texto').value.trim() || '© Sua marca';
+          novaCamada({ tipo: 'marca', texto, cor: prévia.querySelector('#editor-cor').value, x: .62, y: .88, largura: .34, altura: .07, opacidade: .75 });
+        });
+        prévia.querySelector('[data-camada="forma"]').addEventListener('click', () => novaCamada({ tipo: prévia.querySelector('#editor-forma').value, cor: prévia.querySelector('#editor-cor').value, largura: .25, altura: .18 }));
+        prévia.querySelector('[data-camada-imagem]').addEventListener('change', async (evento) => {
+          const arquivo = evento.target.files?.[0]; if (!arquivo) return;
+          const imagensMantidas = [...bitmapsAbertos].filter((bitmap) => bitmap !== foto?.bitmap).length;
+          if (imagensMantidas >= 4) { avisar('O limite é quatro imagens sobrepostas por foto. Escolha outra foto para liberar espaço.'); evento.target.value = ''; return; }
+          if (!['image/png', 'image/jpeg', 'image/webp'].includes(arquivo.type) || arquivo.size > 25 * 1024 * 1024) { avisar('Escolha uma imagem PNG, JPG ou WebP de até 25 MB.'); evento.target.value = ''; return; }
+          try {
+            const bitmap = await createImageBitmap(arquivo);
+            if (bitmap.width * bitmap.height > 8_000_000) { bitmap.close(); throw new Error('A imagem da camada passa de 8 megapixels.'); }
+            bitmapsAbertos.add(bitmap); novaCamada({ tipo: 'imagem', bitmap, largura: .25, altura: .2, origem: arquivo.name });
+          } catch (erro) { avisar(erro.message || 'Não foi possível abrir essa imagem.'); }
+          evento.target.value = '';
+        });
+        prévia.querySelector('#editor-zoom').addEventListener('input', (evento) => {
+          const valor = Number(evento.target.value); const saída = prévia.querySelector('[data-zoom]'); saída.value = `${valor}%`; saída.textContent = `${valor}%`;
+          tela.style.width = `${valor}%`; tela.style.maxWidth = 'none';
+        });
+
         /* ---------------------------------------------- histórico */
 
         const capturar = () => ({
           valores: Object.fromEntries(CAMPOS_GUARDADOS.map((nome) => [nome, campo(nome).value])),
           visão: { ...visão },
+          camadas: camadas.map((camada) => ({ ...camada })),
         });
         const igual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
         const botão = (ação) => prévia.querySelector(`[data-ação="${ação}"]`);
@@ -554,6 +655,9 @@ export default {
         function aplicarEstado(estado) {
           for (const [nome, valor] of Object.entries(estado.valores)) campo(nome).value = valor;
           visão = { ...estado.visão };
+          camadas = (estado.camadas ?? []).map((camada) => ({ ...camada }));
+          camadaSelecionada = camadas.at(-1)?.id ?? null;
+          atualizarListaCamadas();
           atualizarRótulos();
           atualizarVisibilidade();
           limparErros(formulário);
@@ -563,6 +667,7 @@ export default {
         function reiniciar() {
           visão = { giro: 0, espelharH: false, espelharV: false };
           comparar = false;
+          camadas = []; camadaSelecionada = null; atualizarListaCamadas();
           prévia.querySelector('#campo-original').checked = false;
           for (const nome of CAMPOS_GUARDADOS) campo(nome).value = PADRÃO_DOS_CAMPOS[nome];
           cache = { geometria: '', girada: null, cores: '', colorida: null };
@@ -643,6 +748,25 @@ export default {
         const soltar = () => { if (!arrasto) return; arrasto = null; resultado.hidden = true; desenharPrévia({ mostrarErros: true }); confirmar(); };
         tela.addEventListener('pointerup', soltar);
         tela.addEventListener('pointercancel', soltar);
+        let arrastoCamada = null;
+        tela.addEventListener('pointerdown', (evento) => {
+          if (desenhandoCorte || comparar || !camadas.length || evento.button > 0) return;
+          const ponto = pontoNaFoto(evento); const { x, y, largura, altura } = corteDaPrévia;
+          const px = (ponto.x - x) / largura, py = (ponto.y - y) / altura;
+          const encontrada = [...camadas].reverse().find((c) => px >= c.x && px <= c.x + c.largura && py >= c.y && py <= c.y + c.altura);
+          if (!encontrada) return;
+          evento.preventDefault(); tela.setPointerCapture(evento.pointerId); camadaSelecionada = encontrada.id;
+          arrastoCamada = { camada: encontrada, x: px, y: py, inícioX: encontrada.x, inícioY: encontrada.y }; atualizarListaCamadas();
+        });
+        tela.addEventListener('pointermove', (evento) => {
+          if (!arrastoCamada) return;
+          const ponto = pontoNaFoto(evento); const c = corteDaPrévia;
+          const px = (ponto.x - c.x) / c.largura, py = (ponto.y - c.y) / c.altura;
+          arrastoCamada.camada.x = Math.max(0, Math.min(1 - arrastoCamada.camada.largura, arrastoCamada.inícioX + px - arrastoCamada.x));
+          arrastoCamada.camada.y = Math.max(0, Math.min(1 - arrastoCamada.camada.altura, arrastoCamada.inícioY + py - arrastoCamada.y)); agendarPrévia();
+        });
+        const soltarCamada = () => { if (!arrastoCamada) return; arrastoCamada = null; resultado.hidden = true; desenharPrévia(); confirmar(); };
+        tela.addEventListener('pointerup', soltarCamada); tela.addEventListener('pointercancel', soltarCamada);
 
         /* ---------------------------------------------- eventos dos campos */
 
@@ -664,6 +788,8 @@ export default {
         });
         formulário.addEventListener('reset', () => {
           setTimeout(() => {
+            for (const bitmap of bitmapsAbertos) bitmap.close?.();
+            bitmapsAbertos.clear(); camadas = []; camadaSelecionada = null; atualizarListaCamadas();
             foto = null;
             visão = { giro: 0, espelharH: false, espelharV: false };
             comparar = false;

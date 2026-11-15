@@ -1,0 +1,98 @@
+.editor-video {
+  --ev-fundo: #f4eee8;
+  --ev-tinta: #3d302a;
+  --ev-terracota: #a94f38;
+  --ev-linha: #dec9ba;
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: clamp(0.75rem, 3vw, 1.25rem);
+  color: var(--ev-tinta);
+  background: var(--ev-fundo);
+  border: 1px solid var(--ev-linha);
+  border-radius: 1rem;
+}
+.editor-video[hidden] {
+  display: none;
+}
+.editor-video__meta {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.editor-video video,
+.editor-video audio {
+  display: block;
+  width: 100%;
+  max-height: min(56vw, 420px);
+  background: #201b19;
+  border-radius: 0.6rem;
+  object-fit: contain;
+}
+.editor-video__nota {
+  margin: 0;
+  font-size: 0.875rem;
+}
+.editor-video__timeline {
+  display: grid;
+  grid-template-columns: auto minmax(100px, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+.editor-video__timeline label {
+  font-weight: 600;
+}
+.editor-video__timeline input {
+  accent-color: var(--ev-terracota);
+  min-width: 0;
+}
+.editor-video__timeline output {
+  min-width: 5.5rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.editor-video__cancelar {
+  border-color: var(--ev-terracota);
+  color: var(--ev-terracota);
+}
+.editor-video__cancelar[hidden] {
+  display: none;
+}
+.editor-video__resultado {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+  padding: 0.8rem;
+  border: 1px solid var(--ev-linha, #dec9ba);
+  border-radius: 0.8rem;
+  background: var(--superfície-2, #fffaf5);
+}
+.editor-video__resultado h3 {
+  margin: 0;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+.editor-video__arquivo {
+  display: block;
+  width: 100%;
+  max-height: min(62vh, 520px);
+  border-radius: 0.55rem;
+  background: #201b19;
+  object-fit: contain;
+}
+.editor-video__resultado .editor-video__nota {
+  margin: 0;
+}
+@media (max-width: 520px) {
+  .editor-video__timeline {
+    grid-template-columns: 1fr auto;
+  }
+  .editor-video__timeline label {
+    grid-column: 1 / -1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .editor-video,
+  .editor-video * {
+    scroll-behavior: auto !important;
+  }
+}

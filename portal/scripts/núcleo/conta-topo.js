@@ -117,6 +117,7 @@ export function renderizarContaTopo(fim, sessao, { base = './', idioma = 'pt' } 
   if(sessao.usuario.papel==='admin')navegacao.append(link(txt(idioma,'Eventos e missões','Events and missions'),`${base}admin/eventos/`,'estrela'));
   if(sessao.usuario.papel==='admin')navegacao.append(link(txt(idioma,'Catálogo e regras','Catalog and rules'),`${base}admin/editorial/`,'grade'),link(txt(idioma,'Tráfego e registros','Traffic and logs'),`${base}admin/operacao/`,'escudo'));
   if(sessao.usuario.papel==='admin')navegacao.append(link(txt(idioma,'Publicar atualizações','Publish updates'),`${base}admin/atualizacoes/`,'balão'));
+  if(sessao.usuario.papel==='admin')navegacao.append(link(txt(idioma,'Configurar Flower','Configure Flower'),`${base}admin/flower/`,'estrela'));
   sair.type = 'button';
   sair.className = 'conta-topo__item conta-topo__sair';
   sair.innerHTML = ícone('seta');

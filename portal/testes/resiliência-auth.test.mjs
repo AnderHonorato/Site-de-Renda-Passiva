@@ -36,7 +36,7 @@ test('API desligada: JSON 503 só na API, ferramentas e página continuam dispon
     for (const caminho of ['/', '/entrar.html', '/f/porcentagem/']) assert.equal((await fetch(base + caminho)).status, 200);
     for (const privado of ['/servidor/iniciar.mjs', '/servidor/.execucao/portal.sqlite', '/scripts-admin/conceder-admin.mjs', '/banco/dados.json']) assert.equal((await fetch(base + privado)).status, 404);
     const pagina = await fetch(base); const csp = pagina.headers.get('content-security-policy');
-    assert.match(csp, /script-src 'self';/); assert.doesNotMatch(csp, /googlesyndication|unsafe-inline|unsafe-eval/);
+    assert.match(csp, /script-src 'self' 'wasm-unsafe-eval';/); assert.doesNotMatch(csp, /googlesyndication|'unsafe-inline'|'unsafe-eval'/);
     assert.equal((await fetch(base + '/ads.txt')).status, 404);
   } finally { await parar(processo); }
 });
@@ -63,10 +63,10 @@ test('proxy preserva método, Origin, CSRF e cookies; CSP usa nonce único só q
     const a = await fetch(base); const b = await fetch(base);
     assert.notEqual(a.headers.get('content-security-policy'), b.headers.get('content-security-policy'));
     assert.match(a.headers.get('content-security-policy'), /'nonce-[^']+' 'strict-dynamic'/);
-    assert.doesNotMatch(a.headers.get('content-security-policy'), /unsafe-inline|unsafe-eval/);
+    assert.doesNotMatch(a.headers.get('content-security-policy'), /'unsafe-inline'|'unsafe-eval'/);
     const html = await a.text(); const nonce = /'nonce-([^']+)'/.exec(a.headers.get('content-security-policy'))[1];
     assert.ok([...html.matchAll(/<script\b[^>]*>/g)].every(m => m[0].includes(`nonce="${nonce}"`)));
-    const entrar = await fetch(base + '/entrar.html'); assert.match(entrar.headers.get('content-security-policy'), /script-src 'self';/);
+    const entrar = await fetch(base + '/entrar.html'); assert.match(entrar.headers.get('content-security-policy'), /script-src 'self' 'wasm-unsafe-eval';/);
     assert.equal(await (await fetch(base + '/ads.txt')).text(), 'google.com, pub-1234567890123456, DIRECT, f08c47fec0942fa0\n');
     const confiavel = await subir(backend.address().port, { PORTAL_PROXY_CONFIAVEL: '1' });
     try {
