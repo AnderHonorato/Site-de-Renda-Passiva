@@ -100,3 +100,14 @@ test('Flower: mudar destino apaga a chave antiga e exige chave nova para reabili
     fixed('example.org',{all:true},(...args)=>{value=args;});assert.deepEqual(value,[null,[{address:'203.0.113.9',family:4}]]);
   } finally {db.close();if(anterior===undefined)delete process.env.PORTAL_IA_CHAVE_MESTRA_FILE;else process.env.PORTAL_IA_CHAVE_MESTRA_FILE=anterior;rmSync(pasta,{recursive:true,force:true});}
 });
+
+test('Flower: chave mestra acompanha a pasta persistente do banco por padrão',()=>{
+  const pasta=mkdtempSync(join(tmpdir(),'portal-flower-volume-'));
+  const saved=Object.fromEntries(['PORTAL_BANCO','PORTAL_IA_CHAVE_MESTRA','PORTAL_IA_CHAVE_MESTRA_FILE'].map(k=>[k,process.env[k]]));
+  delete process.env.PORTAL_IA_CHAVE_MESTRA;delete process.env.PORTAL_IA_CHAVE_MESTRA_FILE;process.env.PORTAL_BANCO=join(pasta,'portal.sqlite');
+  const db=dbFlower();
+  try {
+    const config=salvarConfigFlower(db,{provider:'openai',model:'modelo-teste',apiKey:'segredo-ficticio-de-teste',enabled:true,revision:1});
+    assert.equal(config.online,true);const key=statSync(join(pasta,'flower-master.key'));assert.equal(key.size,32);assert.equal(key.mode&0o777,0o600);assert.equal(flowerStatus(db).online,true);
+  } finally {db.close();for(const [k,v]of Object.entries(saved))if(v===undefined)delete process.env[k];else process.env[k]=v;rmSync(pasta,{recursive:true,force:true});}
+});

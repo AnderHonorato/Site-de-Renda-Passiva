@@ -83,9 +83,9 @@ function chaveMestra() {
       );
     return createHash("sha256").update(env).digest();
   }
-  const caminho =
-    process.env.PORTAL_IA_CHAVE_MESTRA_FILE ||
-    resolve(import.meta.dirname, ".execucao", "flower-master.key");
+  const bancoPersistente = process.env.PORTAL_BANCO && process.env.PORTAL_BANCO !== ':memory:'
+    ? resolve(process.env.PORTAL_BANCO) : resolve(import.meta.dirname, '.execucao', 'portal.sqlite');
+  const caminho = process.env.PORTAL_IA_CHAVE_MESTRA_FILE || resolve(dirname(bancoPersistente), 'flower-master.key');
   mkdirSync(dirname(caminho), { recursive: true, mode: 0o700 });
   try {
     const fd = openSync(caminho, "wx", 0o600);
