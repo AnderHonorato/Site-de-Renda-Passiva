@@ -50,11 +50,27 @@ export function renderizarContaTopo(fim, sessao, { base = './', idioma = 'pt' } 
 
   if (!sessao?.usuario) {
     raiz.classList.add('conta-topo--visitante');
-    const entrar = link(txt(idioma, 'Entrar', 'Sign in'), `${base}entrar.html?volta=${encodeURIComponent(location.pathname + location.search)}`, 'pessoas');
-    entrar.classList.add('conta-topo__entrar');
-    const criar = link(txt(idioma, 'Criar conta', 'Create account'), `${base}criar-conta.html`, 'mais');
-    criar.classList.add('conta-topo__criar');
-    raiz.append(entrar, criar);
+    const caminho = location.pathname;
+    const raizSite = document.documentElement.dataset.raiz || '';
+    const indice = /\/(?:index\.html)?$/u.test(caminho);
+    const inicio = indice && (idioma === 'en'
+      ? raizSite === '../' && /(?:^|\/)en\/?(?:index\.html)?$/u.test(caminho)
+      : raizSite === '');
+    if (inicio) {
+      raiz.classList.add('conta-topo--inicio');
+      const rotulo = txt(idioma, 'Login/cadastro', 'Sign in/register');
+      const entrar = link(rotulo, `${base}entrar.html?volta=${encodeURIComponent(location.pathname + location.search)}`, 'pessoas');
+      entrar.classList.add('conta-topo__login-cadastro');
+      entrar.setAttribute('aria-label', txt(idioma, 'Login ou cadastro', 'Sign in or register'));
+      entrar.title = rotulo;
+      raiz.append(entrar);
+    } else {
+      const entrar = link(txt(idioma, 'Entrar', 'Sign in'), `${base}entrar.html?volta=${encodeURIComponent(location.pathname + location.search)}`, 'pessoas');
+      entrar.classList.add('conta-topo__entrar');
+      const criar = link(txt(idioma, 'Criar conta', 'Create account'), `${base}criar-conta.html`, 'mais');
+      criar.classList.add('conta-topo__criar');
+      raiz.append(entrar, criar);
+    }
     fim.append(raiz);
     return;
   }

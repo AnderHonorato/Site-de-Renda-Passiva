@@ -2,13 +2,140 @@ import { carregarAtualizacoes } from '../núcleo/atualizacoes.js';
 
 const en = document.documentElement.lang === 'en';
 const nomes = en
-  ? { novo: 'New', melhoria: 'Improvement', correcao: 'Fix', ler: 'Read update', fechar: 'Close', link: 'Copy link', copiado: 'Link copied', selecione: 'Copy this link from the address bar:', erro: 'Updates could not be loaded right now.' }
-  : { novo: 'Novidade', melhoria: 'Melhoria', correcao: 'Correção', ler: 'Ler atualização', fechar: 'Fechar', link: 'Copiar link', copiado: 'Link copiado', selecione: 'Copie este link na barra de endereço:', erro: 'Não foi possível carregar as atualizações agora.' };
+  ? { novo: 'New', melhoria: 'Improvement', correcao: 'Fix', ler: 'Read update', fechar: 'Close', link: 'Copy link', copiado: 'Link copied', selecione: 'Copy this link from the address bar:', erro: 'Updates could not be loaded right now.', destaques: 'What changed', ferramentas: 'Related tools', abrirFerramenta: 'Open tool', conversar: 'Chat with Flower', verFerramentas: 'Browse all tools', noSite: 'On this portal', destaqueSemApi: 'Standard answers are available without an online AI connection.' }
+  : { novo: 'Novidade', melhoria: 'Melhoria', correcao: 'Correção', ler: 'Ler atualização', fechar: 'Fechar', link: 'Copiar link', copiado: 'Link copiado', selecione: 'Copie este link na barra de endereço:', erro: 'Não foi possível carregar as atualizações agora.', destaques: 'O que mudou', ferramentas: 'Ferramentas relacionadas', abrirFerramenta: 'Abrir ferramenta', conversar: 'Conversar com a Flower', verFerramentas: 'Ver todas as ferramentas', noSite: 'Neste portal', destaqueSemApi: 'Respostas padrão disponíveis sem uma conexão de IA online.' };
 const lista = document.getElementById('lista-atualizacoes');
 const status = document.getElementById('estado-atualizacoes');
 const vazio = document.getElementById('vazio-atualizacoes');
 const tentar = document.getElementById('tentar-atualizacoes');
 let itens = [], filtro = 'todas';
+
+// Metadados de apresentação permanecem na página: o schema do CMS continua enxuto.
+// Os slugs abaixo são resolvidos contra o catálogo oficial antes de virar link.
+const enriquecimentos = {
+  'flower-sua-assistente-no-portal': {
+    visual: 'flower', etiqueta: 'FLOWER', flor: true,
+    destaques: en
+      ? ['Open the chat from the floating Flower button.', 'Standard replies work without an AI provider.', 'Online replies need a configured server and provider.']
+      : ['Abra o chat pelo botão flutuante da Flower.', 'Respostas padrão funcionam sem provedor de IA.', 'Respostas online dependem de servidor e provedor configurados.'],
+  },
+  'flower-interativa-e-ajuda-guiada': {
+    visual: 'flower', etiqueta: 'FLOWER', flor: true,
+    destaques: en
+      ? ['Tap or open Flower’s orange avatar to start.', 'Typing feedback and a guided help path make the chat easier to follow.', 'Browse the 12 help topics or open the full tool catalog.']
+      : ['Toque no avatar laranja da Flower para começar.', 'A indicação de digitação e a ajuda guiada deixam o chat mais claro.', 'Explore os 12 assuntos de ajuda ou abra o catálogo de ferramentas.'],
+  },
+  'editores-pdf-imagens-audio-video-office': {
+    visual: 'arquivos', etiqueta: '7 EDITORES',
+    destaques: en
+      ? ['Edit PDF and image layers in the browser.', 'Trim and adjust audio or video, then preview the result.', 'Revise DOCX/TXT, PPTX, and XLSX/CSV files.']
+      : ['Edite PDF e camadas de imagem no navegador.', 'Corte e ajuste áudio ou vídeo e confira o resultado.', 'Revise arquivos DOCX/TXT, PPTX e XLSX/CSV.'],
+    ferramentas: ['editar-pdf', 'editor-de-fotos', 'cortar-video-e-audio', 'converter-audio', 'editor-de-documentos', 'editor-de-apresentacoes', 'editor-de-planilhas'],
+  },
+  'blog-e-central-de-notificacoes': {
+    visual: 'registro', etiqueta: 'BLOG',
+    destaques: en
+      ? ['Filter updates by type.', 'Open a post to read its details.', 'Notification preferences stay on this device.']
+      : ['Filtre as publicações por tipo.', 'Abra um post para ler os detalhes.', 'As preferências do sino ficam salvas neste aparelho.'],
+  },
+  'excel-com-apresentacao-profissional': {
+    visual: 'planilha', etiqueta: 'XLSX',
+    destaques: en
+      ? ['Headers and long cells are easier to read.', 'Professional reports include filters and frozen headers.', 'Values, formulas, and cell positions stay intact.']
+      : ['Cabeçalhos e textos longos ficam mais fáceis de ler.', 'Relatórios profissionais trazem filtros e cabeçalhos fixos.', 'Valores, fórmulas e posições das células são preservados.'],
+    ferramentas: ['editor-de-planilhas'],
+  },
+  'pdf-recibos-propostas-identidade-visual': {
+    visual: 'documento', etiqueta: 'PDF',
+    destaques: en
+      ? ['Add your business identity to a receipt or proposal.', 'Review the PDF preview before downloading.']
+      : ['Inclua a identidade do negócio no recibo ou na proposta.', 'Confira a prévia do PDF antes de baixar.'],
+    ferramentas: ['recibo', 'orcamento'],
+  },
+  'relatorio-financeiro-indicadores-graficos': {
+    visual: 'grafico', etiqueta: 'VPL · TIR',
+    destaques: en
+      ? ['Calculate NPV from the cash flows you enter.', 'Review IRR when the cash-flow pattern supports it.', 'Compare sensitivity scenarios based on your assumptions.']
+      : ['Calcule VPL com os fluxos que você informar.', 'Consulte a TIR quando o padrão dos fluxos permitir.', 'Compare cenários de sensibilidade com as premissas usadas.'],
+    ferramentas: ['orcamento-capital-vpl-tir'],
+  },
+  'animacoes-geracao-10-15-20-segundos': {
+    visual: 'progresso', etiqueta: '10—20 S',
+    destaques: en
+      ? ['Presentation timing depends on the tool.', 'Reduced-motion preferences are respected.', 'Downloads become available when processing finishes.']
+      : ['A duração depende da ferramenta usada.', 'A preferência por movimento reduzido é respeitada.', 'O download fica disponível quando o processamento termina.'],
+  },
+};
+
+const raizDoSite = document.documentElement.dataset.raiz || '';
+let catálogoPromise;
+function obterCatálogo() {
+  catálogoPromise ||= import('../../dados/catálogo.js').then((módulo) => módulo.ferramentas);
+  return catálogoPromise;
+}
+const textosDoItem = (item) => [item?.pt?.titulo, item?.pt?.resumo, item?.pt?.conteudo, item?.en?.titulo, item?.en?.resumo, item?.en?.conteudo].filter((v) => typeof v === 'string').join('\n').toLocaleLowerCase();
+async function ferramentasDoItem(item) {
+  const conhecido = enriquecimentos[item.slug]?.ferramentas || [];
+  // O catálogo oficial é a única fonte de slugs e nomes que podem virar links.
+  const catálogo = await obterCatálogo();
+  const texto = textosDoItem(item);
+  const slugsDetectados = conhecido.length ? conhecido : catálogo
+    .filter((ferramenta) => ferramenta.status === 'pronta' && ferramenta.nome && texto.includes(ferramenta.nome.toLocaleLowerCase()))
+    .slice(0, 3).map((ferramenta) => ferramenta.slug);
+  const porSlug = new Map(catálogo.filter((ferramenta) => ferramenta.status === 'pronta').map((ferramenta) => [ferramenta.slug, ferramenta]));
+  return [...new Set(slugsDetectados)].map((slug) => porSlug.get(slug)).filter(Boolean).slice(0, 8);
+}
+
+function fazerVisual(item, configuração) {
+  const visual = document.createElement('div');
+  visual.className = `atualizacoes__visual atualizacoes__visual--${configuração?.visual || 'geral'}`;
+  visual.setAttribute('aria-hidden', 'true');
+  const quadro = document.createElement('span'); quadro.className = 'atualizacoes__visual-quadro';
+  const etiqueta = document.createElement('b'); etiqueta.className = 'atualizacoes__visual-etiqueta'; etiqueta.textContent = configuração?.etiqueta || (en ? 'UPDATE' : 'NOVIDADE');
+  const linha1 = document.createElement('i'), linha2 = document.createElement('i');
+  linha1.className = 'atualizacoes__visual-linha'; linha2.className = 'atualizacoes__visual-linha atualizacoes__visual-linha--curta';
+  quadro.append(etiqueta, linha1, linha2);
+  const selo = document.createElement('span'); selo.className = 'atualizacoes__visual-selo';
+  selo.textContent = configuração?.visual === 'flower' ? '✿' : configuração?.visual === 'grafico' ? '↗' : configuração?.visual === 'planilha' ? '▦' : configuração?.visual === 'documento' ? 'PDF' : configuração?.visual === 'arquivos' ? '✦' : configuração?.visual === 'registro' ? '≋' : '＋';
+  visual.append(quadro, selo);
+  return visual;
+}
+
+function montarEnriquecimento(item, ferramentas) {
+  const configuração = enriquecimentos[item.slug] || {};
+  const seção = document.createElement('section'); seção.className = 'atualizacoes__enriquecimento';
+  seção.setAttribute('aria-label', nomes.destaques);
+  const grade = document.createElement('div'); grade.className = 'atualizacoes__conteudo-visual';
+  grade.append(fazerVisual(item, configuração));
+  const conteúdo = document.createElement('div'); conteúdo.className = 'atualizacoes__destaques';
+  const título = document.createElement('h4'); título.textContent = nomes.destaques;
+  const lista = document.createElement('ul');
+  for (const destaque of configuração.destaques || ferramentas.slice(0, 2).map(f => f.resumo)) { const linha = document.createElement('li'); linha.textContent = destaque; lista.append(linha); }
+  conteúdo.append(título, lista);
+  grade.append(conteúdo); seção.append(grade);
+
+  if (configuração.flor) {
+    const açõesFlower = document.createElement('div'); açõesFlower.className = 'atualizacoes__flower-acoes';
+    const conversar = document.createElement('button'); conversar.className = 'atualizacoes__cta atualizacoes__cta--flower'; conversar.type = 'button'; conversar.textContent = nomes.conversar;
+    conversar.addEventListener('click', () => window.dispatchEvent(new CustomEvent('portal:flower-abrir')));
+    const verFerramentas = document.createElement('a'); verFerramentas.className = 'atualizacoes__cta atualizacoes__cta--secundario'; verFerramentas.href = `${raizDoSite}${en ? 'en/' : ''}ferramentas.html`; verFerramentas.textContent = nomes.verFerramentas;
+    açõesFlower.append(conversar, verFerramentas); seção.append(açõesFlower);
+  }
+  if (ferramentas.length) {
+    const ferramentasBox = document.createElement('div'); ferramentasBox.className = 'atualizacoes__ferramentas';
+    const subtítulo = document.createElement('h4'); subtítulo.textContent = nomes.ferramentas;
+    const cartões = document.createElement('ul'); cartões.className = 'atualizacoes__ferramentas-lista';
+    for (const ferramenta of ferramentas) {
+      const itemFerramenta = document.createElement('li');
+      const link = document.createElement('a'); link.className = 'atualizacoes__ferramenta'; link.href = `${raizDoSite}f/${encodeURIComponent(ferramenta.slug)}/`;
+      const nome = document.createElement('span'); nome.textContent = ferramenta.nome;
+      const chamada = document.createElement('b'); chamada.textContent = nomes.abrirFerramenta;
+      link.append(nome, chamada); itemFerramenta.append(link); cartões.append(itemFerramenta);
+    }
+    ferramentasBox.append(subtítulo, cartões); seção.append(ferramentasBox);
+  }
+  return seção;
+}
 
 const escaparSlug = (valor) => String(valor || '').trim();
 const dataFormatada = (valor) => {
@@ -59,6 +186,8 @@ function renderizar() {
     for (const paragrafo of textoDo(item, 'conteudo').split(/\n\s*\n|\r?\n/u).map((s) => s.trim()).filter(Boolean)) {
       const p = document.createElement('p'); p.textContent = paragrafo; texto.append(p);
     }
+    const ferramentas = item.__ferramentasRelacionadas || [];
+    if (enriquecimentos[item.slug] || ferramentas.length) artigo.append(montarEnriquecimento(item, ferramentas));
     const acoes = document.createElement('div'); acoes.className = 'atualizacoes__acoes';
     const permalink = document.createElement('a');
     permalink.className = 'atualizacoes__permalink';
@@ -88,7 +217,8 @@ function renderizar() {
       }
       else if (location.hash === `#${item.slug}`) history.replaceState(null, '', location.pathname + location.search);
     });
-    artigo.append(topo, data, titulo, resumo, abrir, detalhes);
+    artigo.prepend(topo, data, titulo, resumo);
+    artigo.append(abrir, detalhes);
     li.append(artigo); lista.append(li);
   }
 }
@@ -132,10 +262,13 @@ async function carregar({ atualizar = false } = {}) {
   try {
     const feed = await carregarAtualizacoes({ atualizar });
     itens = Array.isArray(feed) ? feed : Array.isArray(feed?.itens) ? feed.itens : [];
+    const relacionados = await Promise.all(itens.map((item) => ferramentasDoItem(item)));
+    itens.forEach((item, índice) => { item.__ferramentasRelacionadas = relacionados[índice]; });
     status.textContent = itens.length ? '' : (en ? 'There are no published updates yet.' : 'Ainda não há atualizações publicadas.');
     renderizar();
     abrirHash();
-  } catch {
+  } catch (erro) {
+    console.error('Falha ao renderizar atualizações.', erro);
     status.textContent = nomes.erro;
     tentar.hidden = false;
   }

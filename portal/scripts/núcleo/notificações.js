@@ -22,15 +22,31 @@ let abrirDetalhe = () => {};
 const inglês = idioma === 'en';
 const textos = inglês ? {
   limpar: 'Clear all',
-  desligar: 'Turn off notifications', ligar: 'Turn on notifications', aparelho: 'Read status, clearing, and this setting are saved on this device.',
+  marcar: 'Mark all as read', desligar: 'Turn off notifications', ligar: 'Turn on notifications',
   voltar: 'Back to notifications', fechar: 'Close details', ir: 'Go to page', semLink: 'No page available for this notification.',
   detalhe: 'Notification details', data: 'Date', categoria: 'Category', versão: 'Version', verTodas: 'View all updates',
 } : {
   limpar: 'Limpar todas',
-  desligar: 'Desativar notificações', ligar: 'Ativar notificações', aparelho: 'Leituras, limpeza e esta preferência ficam salvas neste aparelho.',
+  marcar: 'Marcar todas como lidas', desligar: 'Desativar notificações', ligar: 'Ativar notificações',
   voltar: 'Voltar às notificações', fechar: 'Fechar detalhes', ir: 'Ir para página', semLink: 'Não há uma página disponível para esta notificação.',
   detalhe: 'Detalhes da notificação', data: 'Data', categoria: 'Categoria', versão: 'Versão', verTodas: 'Ver todas as atualizações',
 };
+
+const íconesAção = {
+  marcar: '<path d="m5 12 4 4L19 6"/>',
+  limpar: '<path d="M4 7h16M10 11v6M14 11v6M5.5 7l1 13h11l1-13M9 7V4h6v3"/>',
+  notificações: '<path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14l1.5-2Z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
+  desativar: '<path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14l1.5-2Z"/><path d="M10 20.5a2 2 0 0 0 4 0M4 4l16 16"/>',
+  todas: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/>',
+};
+
+function aplicarÍcone(el, ação, rótulo) {
+  for (const nome of Object.keys(íconesAção)) el.classList.remove(`notificações__ação--${nome}`);
+  el.classList.add('notificações__ação', `notificações__ação--${ação}`);
+  el.setAttribute('aria-label', rótulo);
+  el.title = rótulo;
+  el.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${íconesAção[ação]}</svg>`;
+}
 
 function lerLista(chave) {
   try {
@@ -155,7 +171,7 @@ function desenhar(botão, contador, lista, vazio, marcarTodas, limparTodas, alte
     ? t('notificações.rótuloComNovas', { n: nãoLidas.length }) : t('notificações.rótulo'));
   marcarTodas.hidden = nãoLidas.length === 0;
   limparTodas.hidden = visíveis.length === 0;
-  alternar.textContent = ligada ? textos.desligar : textos.ligar;
+  aplicarÍcone(alternar, ligada ? 'desativar' : 'notificações', ligada ? textos.desligar : textos.ligar);
   alternar.setAttribute('aria-pressed', String(ligada));
   vazio.hidden = visíveis.length > 0;
   lista.replaceChildren(...visíveis.map((item) => {
@@ -210,14 +226,19 @@ export function ligarNotificações() {
   const irPara = document.createElement('a'); irPara.className = 'botão botão--primário notificações__ir'; irPara.textContent = textos.ir;
   detalhe.append(detalheTopo, detalheTítulo, detalheCorpo, irPara);
 
-  const rodapé = document.createElement('div'); rodapé.className = 'notificações__rodapé';
   const limparTodas = document.createElement('button'); limparTodas.type = 'button'; limparTodas.className = 'botão botão--texto'; limparTodas.textContent = textos.limpar; limparTodas.dataset.notificações = 'limpar-todas';
   const alternar = document.createElement('button'); alternar.type = 'button'; alternar.className = 'botão botão--texto'; alternar.dataset.notificações = 'alternar';
   const verTodas = document.createElement('a'); verTodas.className = 'botão botão--texto notificações__ver-todas'; verTodas.textContent = textos.verTodas;
   verTodas.href = linkSeguro(`${inglês ? 'en/' : ''}atualizacoes.html`);
-  const aparelho = texto('small', 'notificações__aparelho', textos.aparelho);
-  rodapé.append(limparTodas, alternar, verTodas, aparelho);
-  painel.append(detalhe, rodapé);
+  const topo = painel.querySelector('.notificações__topo');
+  const ações = document.createElement('div'); ações.className = 'notificações__ações';
+  aplicarÍcone(marcarTodas, 'marcar', textos.marcar);
+  aplicarÍcone(limparTodas, 'limpar', textos.limpar);
+  aplicarÍcone(alternar, 'notificações', textos.desligar);
+  aplicarÍcone(verTodas, 'todas', textos.verTodas);
+  ações.append(marcarTodas, limparTodas, alternar, verTodas);
+  topo.append(ações);
+  painel.append(detalhe);
 
   const voltarLista = () => { itemAberto = null; detalhe.hidden = true; lista.hidden = false; vazio.hidden = itens.filter(i => !lerLista(CHAVE_LIMPAS).has(i.id)).length > 0; painel.querySelector('.notificações__topo').hidden = false; marcarTodas.hidden = !itens.some(i => !lerLista(CHAVE_LIMPAS).has(i.id) && !éLida(i, lerLista(CHAVE_DAS_LIDAS))); (lista.querySelector('.notificações__item') || lista).focus(); };
   abrirDetalhe = (item) => {

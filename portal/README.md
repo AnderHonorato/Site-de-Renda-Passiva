@@ -15,6 +15,8 @@ npm run gerar --prefix portal
 
 As chaves dos provedores Flower são cifradas no servidor. Preserve o banco e a chave mestra privada; instruções e limites estão no documento do lote. O GitHub Pages executa os editores locais e o FAQ Flower, mas a conversa com modelos externos exige a API Node e uma chave configurada pelo administrador.
 
+Interações da Flower, ajuda local, convites, sino compacto e novidades visuais: [guia desta melhoria](documentacao/flower-ajuda-e-interface.md).
+
 O restante desta página registra os lotes anteriores.
 
 O lote **F252–F351** acrescenta 100 ferramentas profissionais: 32 Plus e 68 Premium (Premium inclui Plus). O catálogo passa a 351 entradas, com 250 ferramentas implementadas. O histórico abaixo preserva as entregas anteriores; a referência deste lote é [100 ferramentas profissionais](documentacao/100-ferramentas-profissionais.md).

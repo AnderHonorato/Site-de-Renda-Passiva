@@ -1,5 +1,10 @@
 import { api } from "./api.js";
 import { respostaFAQ } from "./flower-faq.js";
+import { consultarCatalogo } from "./flower-catalogo.js";
+import { consultarFAQ, topicosFAQ } from "./flower-conhecimento.js";
+import { animarResposta } from "./flower-digitacao.js";
+import { criarMovimentoFlower } from "./flower-movimento.js";
+import { criarConvitesFlower } from "./flower-convite.js";
 
 const tr = (pt, en) =>
   document.documentElement.lang?.startsWith("en") ? en : pt;
@@ -22,7 +27,8 @@ function make(tag, className, text) {
 function addMessage(list, role, text) {
   const row = make("div", `flower__message flower__message--${role}`);
   row.setAttribute("role", "listitem");
-  row.textContent = text;
+  const conteudo = make("span", "flower__message-text", text);
+  row.append(conteudo);
   list.append(row);
   list.scrollTop = list.scrollHeight;
   return row;
@@ -51,7 +57,12 @@ export function iniciarFlower() {
   modal.setAttribute("aria-modal", "true");
   modal.setAttribute("aria-labelledby", "flower-title");
   const header = make("header", "flower__header");
-  const face = make("div", "flower__avatar");
+  const face = make("button", "flower__avatar");
+  face.type = "button";
+  face.setAttribute(
+    "aria-label",
+    tr("Interagir com Flower pelo toque", "Interact with Flower by touch"),
+  );
   face.innerHTML = svgRosto("flower-modal");
   const titleWrap = make("div", "flower__identity");
   const title = make("h2", "", "Flower");
@@ -91,8 +102,128 @@ export function iniciarFlower() {
   const send = make("button", "flower__send", tr("Enviar", "Send"));
   send.type = "submit";
   form.append(input, send);
-  modal.append(header, messages, form);
+  const acoes = make("div", "flower__actions");
+  const assuntos = make(
+    "button",
+    "flower__topics-toggle",
+    tr("Explorar assuntos", "Browse topics"),
+  );
+  assuntos.type = "button";
+  acoes.append(assuntos);
+  const anuncio = make("p", "flower__sr");
+  anuncio.setAttribute("role", "status");
+  anuncio.setAttribute("aria-live", "polite");
+  anuncio.setAttribute("aria-atomic", "true");
+  modal.append(header, messages, acoes, form, anuncio);
   document.body.append(fab, modal);
+  fab.dataset.state = modal.dataset.state = "idle";
+  const movimento = criarMovimentoFlower({ fab, modal, avatar: face, input });
+  let convite, escrita, ultimoTopico;
+  const basePortal = new URL("../../", import.meta.url);
+  function rolar() {
+    messages.scrollTop = messages.scrollHeight;
+  }
+  function renderizarSugestoes(alvo, sugestoes) {
+    if (!sugestoes?.length) return;
+    const grupo = make("div", "flower__suggestions");
+    grupo.setAttribute("role", "group");
+    grupo.setAttribute(
+      "aria-label",
+      tr("Continuar a conversa", "Continue the conversation"),
+    );
+    for (const item of sugestoes.slice(0, 6)) {
+      const botao = make("button", "flower__suggestion", item.rotulo);
+      botao.type = "button";
+      botao.dataset.faqId = item.id;
+      botao.addEventListener("click", () =>
+        enviar(item.pergunta || item.rotulo, { faqId: item.id }),
+      );
+      grupo.append(botao);
+    }
+    alvo.append(grupo);
+  }
+  function mostrarAssuntos() {
+    const anterior = messages.querySelector(".flower__topics");
+    anterior?.remove();
+    const grupo = make("div", "flower__topics");
+    grupo.append(
+      make(
+        "p",
+        "flower__topics-title",
+        tr("Sobre o que você precisa de ajuda?", "What do you need help with?"),
+      ),
+    );
+    renderizarSugestoes(grupo, topicosFAQ);
+    // A lista completa fica disponível, mesmo quando há mais de seis temas.
+    const restante = topicosFAQ.slice(6);
+    if (restante.length) renderizarSugestoes(grupo, restante);
+    messages.append(grupo);
+    rolar();
+  }
+  function renderizarLinks(alvo, links) {
+    if (!links?.length) return;
+    const grupo = make("div", "flower__tool-links");
+    for (const item of links.slice(0, 4)) {
+      let url;
+      try {
+        url = new URL(item.href, basePortal);
+      } catch {
+        continue;
+      }
+      if (
+        url.origin !== basePortal.origin ||
+        !url.pathname.startsWith(basePortal.pathname)
+      )
+        continue;
+      const link = make("a", "flower__tool-link", item.rotulo);
+      link.href = url.pathname + url.search + url.hash;
+      grupo.append(link);
+    }
+    if (grupo.childElementCount) alvo.append(grupo);
+  }
+  async function exibirResposta(linha, texto, local) {
+    const span = linha.querySelector(".flower__message-text");
+    linha.setAttribute("aria-busy", "true");
+    const fonte = make(
+      "small",
+      "flower__source",
+      local
+        ? tr("Resposta local · guia do portal", "Local reply · portal guide")
+        : tr("IA online", "Online AI"),
+    );
+    const pular = make(
+      "button",
+      "flower__skip",
+      tr("Mostrar resposta completa", "Show full reply"),
+    );
+    pular.type = "button";
+    linha.append(fonte, pular);
+    modal.dataset.state = fab.dataset.state = "speaking";
+    anuncio.textContent = tr(
+      "Flower está digitando a resposta.",
+      "Flower is typing a reply.",
+    );
+    escrita = animarResposta({
+      elemento: span,
+      texto,
+      visivel: () => !modal.hidden,
+      aoAtualizar: (elemento) => {
+        rolar();
+        movimento.resposta(elemento);
+      },
+    });
+    const atual = escrita;
+    pular.addEventListener("click", atual.concluir);
+    await atual.pronto;
+    if (escrita === atual) escrita = null;
+    const focado = document.activeElement === pular;
+    pular.remove();
+    linha.removeAttribute("aria-busy");
+    anuncio.textContent = texto;
+    if (focado && !modal.hidden) input.focus({ preventScroll: true });
+  }
+  assuntos.addEventListener("click", mostrarAssuntos);
+  mostrarAssuntos();
   let online = false,
     loading = false,
     checking = false,
@@ -198,13 +329,17 @@ export function iniciarFlower() {
     if (!modal.hidden) return;
     modal.hidden = false;
     fab.setAttribute("aria-expanded", "true");
+    convite?.aberto();
     isolarFundo();
+    movimento.abrir();
     stopViewportTracking = acompanharTeclado();
     close.focus();
     void atualizarStatus({ forcar: true });
   }
   function shut() {
     if (modal.hidden) return;
+    escrita?.concluir();
+    movimento.fechar();
     stopViewportTracking();
     stopViewportTracking = () => {};
     modal.hidden = true;
@@ -212,6 +347,18 @@ export function iniciarFlower() {
     liberarFundo();
     fab.focus();
   }
+  convite = criarConvitesFlower({ fab, modal, abrir: open });
+  window.addEventListener("portal:flower-abrir", open);
+  window.addEventListener(
+    "pagehide",
+    () => {
+      escrita?.concluir();
+      movimento.destruir();
+      convite.destruir();
+      stopViewportTracking();
+    },
+    { once: true },
+  );
   fab.addEventListener("click", open);
   close.addEventListener("click", shut);
   retry.addEventListener("click", () => void atualizarStatus({ forcar: true }));
@@ -241,104 +388,97 @@ export function iniciarFlower() {
       }
     }
   });
-  modal.addEventListener("pointermove", (e) => {
-    if (modal.hidden || matchMedia("(prefers-reduced-motion: reduce)").matches)
-      return;
-    const rect = modal.querySelector(".flower__avatar").getBoundingClientRect();
-    const vx = e.clientX - (rect.left + rect.width / 2),
-      vy = e.clientY - (rect.top + rect.height / 2),
-      magnitude = Math.hypot(vx, vy) || 1;
-    const dx = (vx / magnitude) * 2.8,
-      dy = (vy / magnitude) * 2.4;
-    for (const id of ["flower-modal-left", "flower-modal-right"]) {
-      const pupil = document.getElementById(id);
-      if (pupil) pupil.style.transform = `translate(${dx}px,${dy}px)`;
-    }
-  });
-  modal.addEventListener("pointerleave", () => {
-    for (const eye of modal.querySelectorAll(".flower__pupil"))
-      eye.style.transform = "";
-  });
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const text = input.value.trim();
+  async function enviar(texto, { faqId } = {}) {
+    const text = texto.trim();
     if (!text || loading) return;
-    input.value = "";
+    if (!faqId) input.value = "";
+    messages.querySelector(".flower__topics")?.remove();
+    for (const botao of messages.querySelectorAll(".flower__suggestion"))
+      botao.disabled = true;
     addMessage(messages, "user", text);
-    chat.push({ role: "user", content: text });
-    while (chat.length > 30) chat.splice(0, 2);
     loading = true;
-    modal.dataset.state = fab.dataset.state = "thinking";
+    if (document.activeElement === send) input.focus({ preventScroll: true });
     send.disabled = true;
-    input.disabled = true;
+    assuntos.disabled = true;
+    modal.dataset.state = fab.dataset.state = "thinking";
     const typing = addMessage(
       messages,
       "assistant",
       tr("Pensando…", "Thinking…"),
     );
+    const privado =
+      /\b(ler|analisar|ver|consultar|abrir|acessar)\b.{0,45}\b(meu|minha|meus|minhas)\b.{0,35}\b(arquivo|pdf|foto|imagem|conta|dados|perfil|documento)\b/u.test(
+        text
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/gu, "")
+          .toLowerCase(),
+      );
+    let resposta,
+      local =
+        (privado ? consultarFAQ("", { id: "privacidade-conta" }) : null) ||
+        consultarFAQ(text, { topico: ultimoTopico, id: faqId }) ||
+        consultarCatalogo(text, { topico: ultimoTopico, id: faqId }),
+      contextoOnline = false;
     try {
-      await atualizarStatus();
-      if (!online) throw Object.assign(new Error("offline"), { offline: true });
-      const result = await api("/api/flower/chat", {
-        metodo: "POST",
-        dados: { messages: chat },
-        prazoMs: 20000,
-      });
-      const reply = String(result.reply || "").trim() || msgOffline();
-      typing.textContent = reply;
-      chat.push({ role: "assistant", content: reply.slice(0, 1500) });
+      if (local) resposta = local.texto;
+      else if (faqId)
+        resposta = tr(
+          "Escolha um assunto para continuar.",
+          "Choose a topic to continue.",
+        );
+      else {
+        await atualizarStatus();
+        if (!online)
+          throw Object.assign(new Error("offline"), { offline: true });
+        chat.push({ role: "user", content: text });
+        while (chat.length > 29) chat.splice(0, 2);
+        contextoOnline = true;
+        const result = await api("/api/flower/chat", {
+          metodo: "POST",
+          dados: { messages: chat },
+          prazoMs: 20000,
+        });
+        resposta = String(result.reply || "").trim() || msgOffline();
+        chat.push({ role: "assistant", content: resposta.slice(0, 1500) });
+      }
     } catch (error) {
+      if (contextoOnline && chat.at(-1)?.role === "user") chat.pop();
       if (!error.offline) {
         online = false;
         lastStatusAt = Date.now();
         updateBadge();
       }
-      const reply = respostaFAQ(text) || msgOffline();
-      typing.textContent = reply;
-      if (!error.offline) {
-        const reason =
-          {
-            flower_credencial_invalida: tr(
-              "A chave de IA foi recusada. A Flower continuará com respostas padrão; peça ao administrador para conferir a configuração.",
-              "The AI key was rejected. Flower will use standard replies; ask the administrator to check the configuration.",
-            ),
-            flower_limite_provedor: tr(
-              "O provedor atingiu um limite temporário. Sua mensagem não será reenviada automaticamente; tente conectar novamente mais tarde.",
-              "The provider reached a temporary limit. Your message will not be resubmitted automatically; try connecting again later.",
-            ),
-            flower_tempo_esgotado: tr(
-              "A IA demorou demais para responder. Sua mensagem não será reenviada automaticamente; tente conectar novamente.",
-              "The AI took too long to respond. Your message will not be resubmitted automatically; try connecting again.",
-            ),
-            flower_config_provedor: tr(
-              "A configuração da IA parece inválida. Peça ao administrador para conferir o provedor e o modelo.",
-              "The AI configuration appears invalid. Ask the administrator to check the provider and model.",
-            ),
-            flower_provedor_indisponivel: tr(
-              "O provedor de IA está indisponível. Sua mensagem não será reenviada automaticamente; tente conectar novamente.",
-              "The AI provider is unavailable. Your message will not be resubmitted automatically; try connecting again.",
-            ),
-          }[error.message] ||
+      resposta = respostaFAQ(text) || msgOffline();
+      if (!error.offline)
+        resposta +=
+          "\n\n" +
           tr(
-            "A IA online não respondeu. Sua mensagem não será reenviada automaticamente; tente conectar novamente.",
-            "The online AI did not respond. Your message will not be resubmitted automatically; try connecting again.",
+            "A IA online não respondeu. Você pode tentar conectar novamente; sua mensagem não será reenviada automaticamente.",
+            "Online AI did not respond. Try connecting again; your message will not be resubmitted automatically.",
           );
-        typing.textContent += `\n\n${reason}`;
-      }
-      // Keep history local to this open page and discard the unsent turn after transport failure.
-      chat = chat.filter(
-        (item, index) => !(item.role === "user" && index === chat.length - 1),
-      );
+    }
+    try {
+      await exibirResposta(typing, resposta, !!local || !contextoOnline);
+      if (local) {
+        ultimoTopico = local.topico;
+        renderizarLinks(typing, local.links);
+        renderizarSugestoes(typing, local.sugestoes);
+      } else if (!online) renderizarSugestoes(typing, topicosFAQ.slice(0, 4));
+      rolar();
     } finally {
       loading = false;
-      modal.dataset.state = fab.dataset.state = "idle";
       send.disabled = false;
-      input.disabled = false;
-      if (!modal.hidden) input.focus();
+      assuntos.disabled = false;
+      modal.dataset.state = fab.dataset.state = "idle";
+      movimento.concluir();
     }
+  }
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    void enviar(input.value);
   });
   input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing) {
       e.preventDefault();
       form.requestSubmit();
     }

@@ -1,6 +1,24 @@
 {
   "itens": [
     {
+      "id": "flower-interativa-e-ajuda-guiada",
+      "slug": "flower-interativa-e-ajuda-guiada",
+      "categoria": "melhoria",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-15T23:30:24.049Z",
+      "atualizado_em": "2026-11-15T23:30:24.049Z",
+      "pt": {
+        "titulo": "A Flower ficou mais interativa e ganhou ajuda guiada",
+        "resumo": "Avatar laranja, toque no celular, respostas animadas e perguntas de continuidade para usar melhor as ferramentas.",
+        "conteudo": "A Flower agora reage ao toque, olha ao redor quando está em repouso e acompanha o texto enquanto você digita. Ao responder, acompanha a própria mensagem, que aparece aos poucos. Você pode usar Mostrar resposta completa para avançar a animação; a preferência de movimento reduzido mostra o texto imediatamente.\n\nA ajuda local ganhou mais de 70 respostas em 12 assuntos, perguntas de continuidade e botões para abrir as ferramentas. Você também pode pedir orientações sobre as fichas do catálogo. Sem IA online, a Flower informa quando não conhece a resposta.\n\nMinimizada, ela pode convidar para conversar por um balão discreto. O convite tem intervalo, limite de repetições e opção de dispensar. O sininho ganhou ações compactas no cabeçalho, e a página de atualizações agora mostra destaques visuais e acesso às ferramentas relacionadas."
+      },
+      "en": {
+        "titulo": "Flower is more interactive, with guided help",
+        "resumo": "An orange touch-friendly avatar, animated replies, and follow-up questions for portal tools.",
+        "conteudo": "Flower reacts to touch, looks around while idle, and follows your typing. Replies appear progressively with a Show full reply option; reduced motion displays them immediately.\n\nLocal help includes more than 70 answers across 12 topics, follow-up questions, and links to tools. Unknown questions still require online AI. While minimized, Flower can show an occasional dismissible invitation. Notifications now have compact header controls, and updates include visual highlights and related tool links."
+      }
+    },
+    {
       "id": "flower-sua-assistente-no-portal",
       "slug": "flower-sua-assistente-no-portal",
       "categoria": "novo",

@@ -126,8 +126,8 @@ test('limpar oculta os IDs atuais, preferência persiste e fica sincronizada ent
   await outraAba.waitForFunction(() => !document.querySelector('.notificações__contador:not([hidden])'));
   await página.getByRole('button', { name: /Desativar notificações/ }).click();
   assert.equal(await página.locator('.notificações__contador:not([hidden])').count(), 0);
-  await outraAba.waitForFunction(() => document.querySelector('[data-notificações="alternar"]')?.textContent === 'Ativar notificações');
-  assert.equal(await outraAba.locator('[data-notificações="alternar"]').textContent(), 'Ativar notificações');
+  await outraAba.waitForFunction(() => document.querySelector('[data-notificações="alternar"]')?.getAttribute('aria-label') === 'Ativar notificações');
+  assert.equal(await outraAba.locator('[data-notificações="alternar"]').getAttribute('aria-label'), 'Ativar notificações');
   await feedFalso(página, [item('limpar-1', 'Primeira'), item('limpar-2', 'Segunda'), item('limpar-futura', 'Futura')]);
   await página.evaluate(async () => {
     const m = await import(new URL('scripts/núcleo/notificações.js', location.origin + '/').href);
@@ -169,6 +169,45 @@ test('topo das notificações permanece separado durante a rolagem, com barras n
   }
 });
 
+test('ações do sino usam ícones acessíveis no cabeçalho com áreas de toque de 44px em 320px e 390px', {skip:pular}, async()=>{
+  for(const width of [320,390]){
+    const {contexto,página}=await abrir({viewport:{width,height:568}});
+    try{
+      await contexto.addInitScript(()=>localStorage.setItem('portal.tema',JSON.stringify('escuro')));
+      await feedFalso(página,[item('acao-a','Ação A'),item('acao-b','Ação B')]);
+      await página.goto(`${BASE}/`,{waitUntil:'networkidle'});
+      await página.click('#abrir-notificações');
+      const painel=página.locator('#painel-notificações');
+      const cabeçalho=painel.locator('.notificações__topo:not(.notificações__topo--detalhe)');
+      const nomes=['Marcar todas como lidas','Limpar todas','Desativar notificações'];
+      for(const nome of nomes) await página.getByRole('button',{name:nome,exact:true}).waitFor();
+      await página.getByRole('link',{name:'Ver todas as atualizações',exact:true}).waitFor();
+      assert.equal(await painel.locator('.notificações__rodapé,.notificações__aparelho').count(),0,'rodapé textual e ações fora do cabeçalho foram removidos');
+      const medidas=await cabeçalho.locator('.notificações__ação').evaluateAll(es=>es.map(el=>{
+        const caixa=el.getBoundingClientRect(),ícone=el.querySelector('svg').getBoundingClientRect();
+        return {label:el.getAttribute('aria-label'),title:el.title,largura:caixa.width,altura:caixa.height,ícone:Math.max(ícone.width,ícone.height)};
+      }));
+      assert.equal(medidas.length,4,'as quatro ações estão agrupadas no topo');
+      assert.ok(medidas.every(x=>x.label&&x.title===x.label&&x.largura>=44&&x.altura>=44&&x.ícone<=18),'ícones compactos preservam rótulo, title e área de toque');
+      const geometry=await cabeçalho.evaluate(el=>{
+        const title=el.querySelector('b').getBoundingClientRect();
+        const actions=el.querySelector('.notificações__ações').getBoundingClientRect();
+        return {right:el.getBoundingClientRect().right,actionsRight:actions.right,titleRight:title.right,actionsLeft:actions.left};
+      });
+      assert.ok(geometry.titleRight<=geometry.actionsLeft&&geometry.actionsRight<=geometry.right,'título e ações cabem sem se sobrepor no cabeçalho');
+      const caixa=await painel.boundingBox();
+      assert.ok(caixa.x>=0&&caixa.x+caixa.width<=width,`painel cabe em ${width}px`);
+      assert.equal(await cabeçalho.evaluate(el=>getComputedStyle(el).backgroundColor!=='rgba(0, 0, 0, 0)'),true,'cabeçalho tem fundo opaco no tema escuro');
+      await página.keyboard.press('Tab');
+      assert.equal(await página.evaluate(()=>document.activeElement?.getAttribute('aria-label')),'Marcar todas como lidas','ações continuam acessíveis pelo teclado');
+      await página.getByRole('button',{name:'Desativar notificações',exact:true}).click();
+      assert.equal(await página.getByRole('button',{name:'Ativar notificações',exact:true}).getAttribute('aria-pressed'),'false','alternância mantém rótulo e estado persistentes');
+      await página.getByRole('button',{name:'Ativar notificações',exact:true}).click();
+      assert.equal(await página.getByRole('button',{name:'Desativar notificações',exact:true}).getAttribute('aria-pressed'),'true','reativar atualiza o mesmo controle do cabeçalho');
+    }finally{await contexto.close();}
+  }
+});
+
 test('em inglês o sino mostra os textos em inglês', { skip: pular }, async () => {
   const { contexto, página } = await abrir();
   await feedFalso(página, [item('juros', 'Juros')]);
@@ -176,6 +215,9 @@ test('em inglês o sino mostra os textos em inglês', { skip: pular }, async () 
   await página.waitForSelector('.notificações__contador:not([hidden])');
   await página.click('#abrir-notificações');
   assert.match(await página.locator('.notificações__item b').first().textContent(), /New tool/);
+  await página.getByRole('button',{name:'Clear all',exact:true}).waitFor();
+  await página.getByRole('button',{name:'Turn off notifications',exact:true}).waitFor();
+  await página.getByRole('link',{name:'View all updates',exact:true}).waitFor();
   await contexto.close();
 });
 

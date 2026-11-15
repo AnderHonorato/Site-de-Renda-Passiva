@@ -196,6 +196,8 @@ test('admin cria, publica e edita; blog e sino abrem a atualização e API restr
     assert.equal(feed.itens.some(registro => registro.slug === slug), true);
 
     // A atualização publicada chega à lista do sino. Abrir a notificação mostra detalhe sem trocar de página.
+    // O onboarding tem cobertura própria; este cenário verifica publicação e sino.
+    await pagina.context().addCookies([{name:'visto_novidades',value:'999999999999999',url:base}]);
     await pagina.goto(`${base}/`, { waitUntil: 'networkidle' });
     const fecharBoasVindas = pagina.locator('dialog.boas-vindas[open] .boas-vindas__fechar');
     if (await fecharBoasVindas.isVisible()) await fecharBoasVindas.click();

@@ -8,7 +8,7 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: #7d3de0;
+  background: #a6401c;
   color: #fff;
   box-shadow: var(--sombra-3);
   cursor: pointer;
@@ -35,7 +35,7 @@
 .flower__fab {
   background: transparent;
   box-shadow: none;
-  filter: drop-shadow(0 5px 9px #4b208430);
+  filter: drop-shadow(0 5px 9px #9b411d30);
 }
 .flower__body {
   transform-box: view-box;
@@ -43,7 +43,7 @@
   animation: flower-float 4.8s ease-in-out infinite;
 }
 .flower__skin {
-  fill: #9855ff;
+  fill: #ff8b3d;
 }
 .flower__eyes {
   transform-box: fill-box;
@@ -51,7 +51,7 @@
   animation: flower-blink 5.4s infinite;
 }
 .flower__pupil {
-  fill: #1c122c;
+  fill: #2b1d12;
   transition: transform 100ms ease-out;
 }
 .flower__fab:hover .flower__body {
@@ -163,7 +163,7 @@
 .flower__message--user {
   align-self: flex-end;
   border-bottom-right-radius: 0.3rem;
-  background: #7d3de0;
+  background: #a6401c;
   color: #fff;
 }
 .flower__form {
@@ -192,7 +192,7 @@
   padding: 0.55rem 0.9rem;
   border: 0;
   border-radius: 0.8rem;
-  background: #7d3de0;
+  background: #a6401c;
   color: #fff;
   font: inherit;
   font-weight: 650;
@@ -336,5 +336,235 @@
   }
   .flower__pupil {
     transition: none;
+  }
+}
+
+.flower__avatar {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.flower__avatar:focus-visible,
+.flower__suggestion:focus-visible,
+.flower__tool-link:focus-visible,
+.flower__invite button:focus-visible,
+.flower__skip:focus-visible,
+.flower__topics-toggle:focus-visible {
+  outline: 3px solid var(--atenção);
+  outline-offset: 2px;
+}
+.flower__message-text {
+  display: block;
+}
+.flower__source {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.65rem;
+  line-height: 1.4;
+  color: var(--tinta-suave);
+}
+.flower__skip {
+  display: block;
+  background: transparent;
+  border: 0;
+  margin-top: 0.25rem;
+  padding: 0.3rem 0;
+  color: var(--tinta);
+  font: inherit;
+  font-size: 0.72rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.flower__message-text[data-typing]::after {
+  content: "▍";
+  color: #a6401c;
+  animation: flower-cursor 0.8s steps(2, end) infinite;
+}
+.flower__topics {
+  padding: 0.5rem 0;
+}
+.flower__topics-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--tinta-suave);
+}
+.flower__suggestions,
+.flower__tool-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+.flower__suggestion {
+  max-width: 100%;
+  padding: 0.5rem 0.65rem;
+  min-height: 2.5rem;
+  font: inherit;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  text-align: left;
+  border: 1px solid var(--borda-forte);
+  border-radius: 0.75rem;
+  color: var(--tinta);
+  background: var(--superfície);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.flower__suggestion:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.flower__suggestion:hover:not(:disabled) {
+  border-color: #c36336;
+  background: var(--superfície-3);
+}
+.flower__tool-link {
+  display: inline-block;
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.65rem;
+  font-size: 0.76rem;
+  color: var(--tinta);
+  border: 1px solid var(--borda-forte);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.flower__actions {
+  flex-shrink: 0;
+  padding: 0.25rem 0.8rem;
+  border-top: 1px solid var(--borda);
+}
+.flower__topics-toggle {
+  border: 0;
+  padding: 0.4rem 0;
+  background: transparent;
+  color: var(--tinta-suave);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.flower__caret-mirror {
+  position: fixed;
+  left: -20000px;
+  top: 0;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  border-style: solid;
+}
+.flower__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.flower__invite {
+  position: fixed;
+  z-index: 119;
+  right: var(--flower-invite-right);
+  bottom: var(--flower-invite-bottom);
+  width: min(15rem, calc(100vw - 100px));
+  display: flex;
+  align-items: flex-start;
+  gap: 0.15rem;
+  background: var(--superfície);
+  color: var(--tinta);
+  border: 1px solid var(--borda-forte);
+  border-radius: 1rem 1rem 0.3rem 1rem;
+  box-shadow: var(--sombra-3);
+  animation: flower-invite 0.24s ease-out;
+}
+.flower__invite[hidden] {
+  display: none;
+}
+.flower__invite-open {
+  flex: 1;
+  min-width: 0;
+  padding: 0.8rem 0.3rem 0.8rem 0.85rem;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  text-align: left;
+  cursor: pointer;
+}
+.flower__invite-close {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2.3rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--tinta-suave);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+.flower__invite-open::before {
+  content: "Flower";
+  display: block;
+  color: #b24b20;
+  font-weight: 700;
+  font-size: 0.72rem;
+  margin-bottom: 0.2rem;
+}
+[data-reaction="touch"] .flower__body {
+  animation: flower-tap 0.7s ease both;
+}
+[data-state="speaking"] .flower__body {
+  animation: flower-speak 1.2s ease-in-out infinite;
+}
+@keyframes flower-tap {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  30% {
+    transform: translateY(-6px) rotate(-12deg) scale(1.08, 0.92);
+  }
+  65% {
+    transform: rotate(8deg) scale(0.97, 1.04);
+  }
+}
+@keyframes flower-speak {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(3deg);
+  }
+}
+@keyframes flower-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes flower-invite {
+  from {
+    opacity: 0;
+    transform: translateX(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flower__invite,
+  [data-state="speaking"] .flower__body,
+  [data-reaction="touch"] .flower__body,
+  .flower__message-text[data-typing]::after {
+    animation: none;
   }
 }

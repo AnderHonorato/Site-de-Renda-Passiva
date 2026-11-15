@@ -108,7 +108,7 @@ function cabeçalho(ctx, base, atual, alternativas) {
         </div>
       </span>
       <div class="preferencias-topo" id="preferencias-visitante">
-        <button type="button" class="conta-topo__gatilho" id="abrir-preferencias" aria-expanded="false" aria-controls="preferencias-painel">${ícone('pessoas')}<span>${ctx.código === 'en' ? 'Visitor' : 'Visitante'}</span>${ícone('chevron-baixo',{tamanho:14})}</button>
+        <button type="button" class="conta-topo__gatilho" id="abrir-preferencias" aria-expanded="false" aria-controls="preferencias-painel" aria-label="${ctx.código === 'en' ? 'Theme and language' : 'Tema e idioma'}" title="${ctx.código === 'en' ? 'Theme and language' : 'Tema e idioma'}">${ícone('engrenagem')}<span>${ctx.código === 'en' ? 'Theme and language' : 'Tema e idioma'}</span>${ícone('chevron-baixo',{tamanho:14})}</button>
         <div class="preferencias-topo__painel" id="preferencias-painel" hidden>
           <div class="preferencias-topo__conteudo">
             <div class="preferencias-topo__linha"><span>${ctx.código === 'en' ? 'Theme' : 'Tema'}</span>      <button class="tema-pílula" type="button" id="alternar-tema" role="switch" aria-checked="false" aria-label="${escapar(t('moldura.temaRótulo'))}">
