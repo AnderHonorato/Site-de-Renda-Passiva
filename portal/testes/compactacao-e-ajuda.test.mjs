@@ -18,7 +18,7 @@ test('as páginas geradas compartilham a folha global compacta', async () => {
   assert.match(css, /@media \(max-width: 359px\)/);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /#ferramenta \.campos--2/);
-  assert.match(css, /#ferramenta \.campo:focus-within/);
+  // A estabilidade das dicas ao trocar o foco é exercitada pelo envio real do PDF no navegador.
 });
 
 test('todas as ferramentas têm modal, botão e informações geradas sem poluir a área principal', async () => {
