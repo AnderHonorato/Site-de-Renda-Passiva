@@ -111,15 +111,6 @@
   font-size: 1rem;
   line-height: 1.25;
 }
-.flower__status {
-  display: inline-block;
-  margin-top: 0.2rem;
-  color: var(--tinta-suave);
-  font-size: 0.75rem;
-}
-.flower__status--online {
-  color: var(--ok);
-}
 .flower__close {
   display: grid;
   place-items: center;
@@ -266,22 +257,6 @@
   }
 }
 
-.flower__retry {
-  display: block;
-  margin-top: 0.25rem;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--tinta);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  font: inherit;
-  font-size: 0.72rem;
-  cursor: pointer;
-}
-.flower__retry[hidden] {
-  display: none;
-}
 .flower__messages {
   min-height: 0;
 }
@@ -358,13 +333,6 @@
 }
 .flower__message-text {
   display: block;
-}
-.flower__source {
-  display: block;
-  margin-top: 0.5rem;
-  font-size: 0.65rem;
-  line-height: 1.4;
-  color: var(--tinta-suave);
 }
 .flower__skip {
   display: block;
@@ -566,5 +534,24 @@
   [data-reaction="touch"] .flower__body,
   .flower__message-text[data-typing]::after {
     animation: none;
+  }
+}
+
+/* Durante a escrita, o corpo respira e os olhos indicam a direção da leitura. */
+@media (prefers-reduced-motion: no-preference) {
+  .flower__dialog[data-state="idle"][data-gaze="typing"]
+    .flower__avatar
+    .flower__body,
+  .flower__dialog[data-gaze="reply"] .flower__avatar .flower__body {
+    animation: flower-focus 3.2s ease-in-out infinite;
+  }
+}
+@keyframes flower-focus {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(1px);
   }
 }

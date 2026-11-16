@@ -173,3 +173,41 @@ test('Flower: convite espera por outro diálogo e pausa enquanto o usuário pree
  await page.evaluate(()=>document.getElementById('campo-teste').remove());await page.clock.fastForward(6000);await page.locator('.flower__invite').waitFor({state:'visible'});
  await context.close();
 });
+
+
+test('Flower olha abaixo do centro do rosto para o cursor e mantém esse olhar durante a edição', {skip:pular,timeout:60000}, async()=>{
+  for (const largura of [320,1280]) {
+    const context=await navegador.newContext({viewport:{width:largura,height:844},hasTouch:largura===320,isMobile:largura===320});
+    await context.addInitScript(()=>{
+      const vv=new EventTarget();Object.assign(vv,{height:844,width:innerWidth,offsetTop:0,offsetLeft:0});
+      Object.defineProperty(window,'visualViewport',{value:vv,configurable:true});window.__gazeViewport=vv;
+    });
+    const page=await context.newPage();await page.clock.install();
+    await page.route('**/api/flower/status',r=>r.fulfill({json:{online:false}}));
+    await page.goto(`${BASE}/404.html`);await page.locator('.flower__fab').click();
+    const campo=page.locator('.flower__input');await campo.fill('ABCDEFGHIJKLMN');
+    const olhos=()=>page.evaluate(()=>{
+      const skin=document.querySelector('.flower__avatar .flower__skin').getBoundingClientRect();
+      const eyes=[...document.querySelectorAll('.flower__avatar .flower__pupil')].map(e=>e.getBoundingClientRect());
+      return {x:eyes.reduce((n,e)=>n+e.x+e.width/2,0)/eyes.length-(skin.x+skin.width/2),y:eyes.reduce((n,e)=>n+e.y+e.height/2,0)/eyes.length-(skin.y+skin.height/2)};
+    });
+    await campo.evaluate(e=>{e.setSelectionRange(0,0);e.dispatchEvent(new Event('select'));});await page.waitForTimeout(180);
+    const inicio=await olhos();assert.ok(inicio.y>3,`olhos devem ficar visivelmente abaixo do centro do rosto em ${largura}px: ${JSON.stringify(inicio)}`);
+    await campo.evaluate(e=>{e.setSelectionRange(e.value.length,e.value.length);e.dispatchEvent(new Event('select'));});await page.waitForTimeout(180);
+    const fim=await olhos();assert.ok(fim.x-inicio.x>1.5,`o olhar deve seguir a linha de texto: ${JSON.stringify({inicio,fim})}`);
+    await page.clock.fastForward(6500);await page.waitForTimeout(180);
+    assert.equal(await page.locator('.flower__dialog').getAttribute('data-gaze'),'typing','repouso não desvia o olhar enquanto o campo está em edição');
+    assert.ok((await olhos()).y>3);
+    if(largura===320){
+      await page.evaluate(()=>{Object.assign(window.__gazeViewport,{height:320,offsetTop:150});window.__gazeViewport.dispatchEvent(new Event('resize'));});
+      await page.clock.runFor(200);await page.waitForTimeout(150);
+      assert.ok((await olhos()).y>3,'olhar permanece para baixo quando o teclado reduz a janela');
+      const caixa=await campo.boundingBox();assert.ok(caixa.y>=150&&caixa.y+caixa.height<=470);
+    }
+    await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true})));
+    await campo.evaluate(e=>{e.setSelectionRange(0,0);e.dispatchEvent(new Event('select'));});await page.waitForTimeout(180);
+    assert.ok(fim.x-(await olhos()).x>1.5,'olhar continua funcionando quando a página fica no histórico do navegador');
+    assert.equal(await page.locator('.flower__status,.flower__retry,.flower__source').count(),0);
+    await context.close();
+  }
+});

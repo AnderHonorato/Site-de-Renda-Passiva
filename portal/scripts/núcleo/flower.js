@@ -10,8 +10,8 @@ const tr = (pt, en) =>
   document.documentElement.lang?.startsWith("en") ? en : pt;
 const msgOffline = () =>
   tr(
-    "Não sei responder a isso com as respostas padrão. Esta pergunta precisa da IA online.",
-    "I can’t answer that from the standard replies. This question needs the online AI.",
+    "Preciso estar online para responder a essa pergunta.",
+    "I need to be online to answer that question.",
   );
 let ready = false;
 
@@ -33,12 +33,6 @@ function addMessage(list, role, text) {
   list.scrollTop = list.scrollHeight;
   return row;
 }
-function statusCopy(online) {
-  return online
-    ? tr("IA online", "Online AI")
-    : tr("Respostas padrão", "Standard replies");
-}
-
 export function iniciarFlower() {
   if (ready || !document.body) return;
   ready = true;
@@ -67,16 +61,7 @@ export function iniciarFlower() {
   const titleWrap = make("div", "flower__identity");
   const title = make("h2", "", "Flower");
   title.id = "flower-title";
-  const badge = make("span", "flower__status", statusCopy(false));
-  badge.id = "flower-status";
-  const retry = make(
-    "button",
-    "flower__retry",
-    tr("Tentar conectar novamente", "Try connecting again"),
-  );
-  retry.type = "button";
-  retry.hidden = true;
-  titleWrap.append(title, badge, retry);
+  titleWrap.append(title);
   const close = make("button", "flower__close", "×");
   close.type = "button";
   close.setAttribute("aria-label", tr("Fechar conversa", "Close chat"));
@@ -181,23 +166,16 @@ export function iniciarFlower() {
     }
     if (grupo.childElementCount) alvo.append(grupo);
   }
-  async function exibirResposta(linha, texto, local) {
+  async function exibirResposta(linha, texto) {
     const span = linha.querySelector(".flower__message-text");
     linha.setAttribute("aria-busy", "true");
-    const fonte = make(
-      "small",
-      "flower__source",
-      local
-        ? tr("Resposta local · guia do portal", "Local reply · portal guide")
-        : tr("IA online", "Online AI"),
-    );
     const pular = make(
       "button",
       "flower__skip",
       tr("Mostrar resposta completa", "Show full reply"),
     );
     pular.type = "button";
-    linha.append(fonte, pular);
+    linha.append(pular);
     modal.dataset.state = fab.dataset.state = "speaking";
     anuncio.textContent = tr(
       "Flower está digitando a resposta.",
@@ -232,20 +210,11 @@ export function iniciarFlower() {
     chat = [],
     restoreInert = [];
   let stopViewportTracking = () => {};
-  const updateBadge = () => {
-    badge.textContent = checking
-      ? tr("Verificando conexão…", "Checking connection…")
-      : statusCopy(online);
-    badge.classList.toggle("flower__status--online", online);
-    retry.hidden = online;
-    retry.disabled = checking;
-  };
   function atualizarStatus({ forcar = false } = {}) {
     if (checking) return statusCheck;
     if (!forcar && Date.now() - lastStatusAt < 30000)
       return Promise.resolve(online);
     checking = true;
-    updateBadge();
     statusCheck = api("/api/flower/status", { prazoMs: 2500 })
       .then((s) => {
         online = !!s.online;
@@ -258,7 +227,6 @@ export function iniciarFlower() {
       .finally(() => {
         lastStatusAt = Date.now();
         checking = false;
-        updateBadge();
       });
     return statusCheck;
   }
@@ -349,19 +317,16 @@ export function iniciarFlower() {
   }
   convite = criarConvitesFlower({ fab, modal, abrir: open });
   window.addEventListener("portal:flower-abrir", open);
-  window.addEventListener(
-    "pagehide",
-    () => {
-      escrita?.concluir();
-      movimento.destruir();
-      convite.destruir();
-      stopViewportTracking();
-    },
-    { once: true },
-  );
+  window.addEventListener("pagehide", (evento) => {
+    escrita?.concluir();
+    // O navegador pode guardar esta página para o botão Voltar.
+    if (evento.persisted) return;
+    movimento.destruir();
+    convite.destruir();
+    stopViewportTracking();
+  });
   fab.addEventListener("click", open);
   close.addEventListener("click", shut);
-  retry.addEventListener("click", () => void atualizarStatus({ forcar: true }));
   window.addEventListener(
     "portal:flower-configurada",
     () => void atualizarStatus({ forcar: true }),
@@ -427,7 +392,7 @@ export function iniciarFlower() {
           "Choose a topic to continue.",
         );
       else {
-        await atualizarStatus();
+        await atualizarStatus({ forcar: !online });
         if (!online)
           throw Object.assign(new Error("offline"), { offline: true });
         chat.push({ role: "user", content: text });
@@ -446,19 +411,18 @@ export function iniciarFlower() {
       if (!error.offline) {
         online = false;
         lastStatusAt = Date.now();
-        updateBadge();
       }
-      resposta = respostaFAQ(text) || msgOffline();
-      if (!error.offline)
-        resposta +=
-          "\n\n" +
-          tr(
-            "A IA online não respondeu. Você pode tentar conectar novamente; sua mensagem não será reenviada automaticamente.",
-            "Online AI did not respond. Try connecting again; your message will not be resubmitted automatically.",
-          );
+      resposta =
+        respostaFAQ(text) ||
+        (error.offline
+          ? msgOffline()
+          : tr(
+              "Não consegui responder agora. Posso ajudar você a encontrar uma ferramenta ou explicar como usá-la.",
+              "I couldn’t reply just now. I can help you find a tool or explain how to use it.",
+            ));
     }
     try {
-      await exibirResposta(typing, resposta, !!local || !contextoOnline);
+      await exibirResposta(typing, resposta);
       if (local) {
         ultimoTopico = local.topico;
         renderizarLinks(typing, local.links);

@@ -34,12 +34,14 @@ export function criarMovimentoFlower({ fab, modal, avatar, input }) {
     const quadro = aberto
       ? modal.getBoundingClientRect()
       : { width: 320, height: 400 };
+    const vertical = Math.tanh(
+      (y - rosto.top - rosto.height * 0.45) / (quadro.height * 0.24),
+    );
+    // Os olhos começam acima do centro do rosto. Quatro unidades SVG só os
+    // deslocavam dois pixels na tela e ainda pareciam olhar para a frente.
     mover(
-      Math.tanh((x - rosto.left - rosto.width / 2) / (quadro.width * 0.34)) *
-        5.5,
-      Math.tanh(
-        (y - rosto.top - rosto.height * 0.45) / (quadro.height * 0.24),
-      ) * 4,
+      Math.tanh((x - rosto.left - rosto.width / 2) / (quadro.width * 0.3)) * 7,
+      vertical * (vertical >= 0 ? 17 : 9),
       modo,
     );
   }
@@ -49,6 +51,12 @@ export function criarMovimentoFlower({ fab, modal, avatar, input }) {
     timer = setTimeout(
       () => {
         if (
+          aberto &&
+          document.activeElement === input &&
+          !["speaking", "thinking"].includes(modal.dataset.state)
+        ) {
+          digitando();
+        } else if (
           performance.now() - ultimaAcao >= 3000 &&
           modal.dataset.state !== "speaking" &&
           modal.dataset.state !== "thinking"
@@ -122,6 +130,7 @@ export function criarMovimentoFlower({ fab, modal, avatar, input }) {
   }
   function digitando() {
     if (!aberto || document.activeElement !== input) return;
+    cancelAnimationFrame(frame);
     ultimaAcao = ultimaTecla = performance.now();
     toqueAte = 0;
     const posicao = caret();
@@ -130,24 +139,24 @@ export function criarMovimentoFlower({ fab, modal, avatar, input }) {
   function seguirPonteiro(e) {
     if (
       !aberto ||
-      performance.now() - ultimaTecla < 700 ||
+      document.activeElement === input ||
       performance.now() < toqueAte
     )
       return;
     ultimaAcao = performance.now();
     cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() =>
+    frame = requestAnimationFrame(() => {
+      if (document.activeElement === input) return;
       mirar(
         e.clientX,
         e.clientY,
         e.pointerType === "touch" ? "touch" : "pointer",
-      ),
-    );
+      );
+    });
   }
   function toque(e) {
     ultimaAcao = performance.now();
     toqueAte = ultimaAcao + 650;
-    const ret = (aberto ? avatar : fab).getBoundingClientRect();
     if (
       e?.pointerType === "touch" &&
       !e.target.closest(".flower__avatar,.flower__fab")
@@ -177,6 +186,23 @@ export function criarMovimentoFlower({ fab, modal, avatar, input }) {
   ouvir(document, "selectionchange", () => {
     if (document.activeElement === input) digitando();
   });
+  ouvir(input, "blur", () => {
+    if (
+      performance.now() >= toqueAte &&
+      !["speaking", "thinking"].includes(modal.dataset.state)
+    )
+      centro();
+  });
+  const atualizarGeometria = () => {
+    if (!aberto || document.activeElement !== input) return;
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(digitando);
+  };
+  ouvir(window, "resize", atualizarGeometria);
+  if (window.visualViewport) {
+    ouvir(window.visualViewport, "resize", atualizarGeometria);
+    ouvir(window.visualViewport, "scroll", atualizarGeometria);
+  }
   ouvir(modal, "pointermove", seguirPonteiro, { passive: true });
   ouvir(
     modal,
@@ -226,7 +252,8 @@ export function criarMovimentoFlower({ fab, modal, avatar, input }) {
       agendar();
     },
     concluir() {
-      centro();
+      if (aberto && document.activeElement === input) digitando();
+      else centro();
       ultimaAcao = performance.now();
     },
     resposta(elemento) {

@@ -19,3 +19,10 @@ As respostas curadas ficam em `scripts/núcleo/flower-conhecimento.js`; `flower-
 ## Validação
 
 Testes Node cobrem intenções, contexto, limites, disponibilidade, links e proteção de dados privados. Testes Chromium exercitam toque real simulado, cursor, texto incremental, pular, movimento reduzido, convite com relógio controlado, diálogos, reconexão, teclado virtual e temas. A interface é conferida em 320, 390, 768 e 1280 px. Isso não substitui verificação em um Android físico.
+
+
+## Ajuste de 16/11
+
+O cabeçalho da Flower mostra apenas nome, avatar e fechar. Foram retirados os rótulos de conexão, o botão de reconexão e a identificação de origem sob as respostas. A conexão é verificada em segundo plano quando necessário.
+
+O olhar durante a edição tem deslocamento vertical suficiente para ficar abaixo do centro do rosto, acompanha o cursor e permanece no campo enquanto ele tem foco. O corpo usa um movimento discreto sem giro nesse estado. O olhar é atualizado após mudanças de tamanho da janela visual do teclado e preservado quando a página fica no histórico do navegador.
