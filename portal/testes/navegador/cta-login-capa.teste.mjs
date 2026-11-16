@@ -23,6 +23,8 @@ after(async()=>{await navegador?.close();servidor?.kill();});
 
 async function abrir(url,{width=390,dark=false,logado=false}={}){
   const context=await navegador.newContext({viewport:{width,height:844},colorScheme:dark?'dark':'light'});
+  // Este cenário mede o cabeçalho; o modal inicial de novidades tem testes próprios.
+  await context.addCookies([{name:'visto_novidades',value:'999999999999999',url:BASE}]);
   await context.route('**/api/autenticacao/sessao',r=>r.fulfill({contentType:'application/json',body:JSON.stringify(logado?{usuario:{id:7,nome:'Pessoa Teste',usuario:'pessoa',avatar:'sol',plano:'free',papel:'usuario'}}:{usuario:null})}));
   const page=await context.newPage();
   await page.goto(BASE+url,{waitUntil:'domcontentloaded'});

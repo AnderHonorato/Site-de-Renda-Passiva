@@ -6,10 +6,11 @@ Para preparar todos os motores locais antes de gerar/publicar, na raiz do reposi
 
 ```sh
 npm ci --prefix portal --ignore-scripts
-npm install --prefix portal --no-save --no-package-lock --ignore-scripts prettier@3.9.10 sql-formatter@15.9.0 esbuild@0.25.12 mermaid@11.17.2 playwright@1.62.0 @ffmpeg/ffmpeg@0.12.15 @ffmpeg/core@0.12.10
+npm install --prefix portal --no-save --no-package-lock --ignore-scripts prettier@3.9.10 sql-formatter@15.9.0 esbuild@0.25.12 mermaid@11.17.2 playwright@1.62.0 @ffmpeg/ffmpeg@0.12.15 @ffmpeg/core@0.12.10 tesseract.js@6.0.1 tesseract.js-core@6.1.2 @tesseract.js-data/por@1.0.0 @tesseract.js-data/eng@1.0.0 @tesseract.js-data/spa@1.0.0
 npm run montar:formatadores --prefix portal
 npm run montar:diagramas --prefix portal
 npm run montar:midias --prefix portal
+npm run montar:ocr --prefix portal
 npm run gerar --prefix portal
 ```
 

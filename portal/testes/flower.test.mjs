@@ -1,3 +1,4 @@
+import { ferramentasProntas } from "../dados/catálogo.js";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, statSync } from 'node:fs';
@@ -12,7 +13,7 @@ function dbFlower(){const db=new DatabaseSync(':memory:');db.exec(`CREATE TABLE 
 test('Flower: FAQ offline responde cumprimentos, planos, editores e FAQ real e sinaliza dúvidas desconhecidas',()=>{
   assert.match(respostaFAQ('Olá!'),/sou a Flower/u);
   assert.match(respostaFAQ('Qual é o seu nome?'),/Flower/u);
-  assert.match(respostaFAQ('Quantas ferramentas prontas existem?'),/258 ferramentas prontas/u);
+  assert.match(respostaFAQ('Quantas ferramentas prontas existem?'),new RegExp(`${ferramentasProntas.length} ferramentas prontas`, "u"));
   assert.match(respostaFAQ('As ferramentas são grátis?'),/públicas gratuitas.*Plus ou Premium/u);
   assert.match(respostaFAQ('Como editar um PDF?'),/não altera o texto que já existe/u);
   assert.match(respostaFAQ('Como editar uma imagem?'),/navegador.*original fica intacto/u);

@@ -114,7 +114,7 @@ add(
   "pdf-texto",
   "Como extrair texto de PDF?",
   ["extrair texto pdf", "copiar texto pdf", "texto de pdf"],
-  "Use “Extrair texto de PDF” e carregue um PDF que contenha texto selecionável. Documentos que são apenas fotos ou páginas digitalizadas precisam de OCR, e OCR não está disponível no portal.",
+  "Use “Extrair texto de PDF” e carregue um PDF que contenha texto selecionável. Documentos que são apenas fotos ou páginas digitalizadas podem ser reconhecidos em OCR de PDF, com português, inglês ou espanhol.",
   ["f/extrair-texto-de-pdf/"],
 );
 add(
@@ -122,8 +122,8 @@ add(
   "pdf-ocr",
   "A Flower consegue ler PDF escaneado ou fazer OCR?",
   ["ocr pdf", "pdf escaneado", "ler pdf imagem", "reconhecer texto pdf"],
-  "Não. A extração disponível funciona quando o PDF já contém texto selecionável. OCR (reconhecimento de texto em imagem) não está disponível neste portal; não consigo ler nem analisar seu arquivo.",
-  ["f/extrair-texto-de-pdf/"],
+  "A ferramenta OCR de PDF reconhece páginas escaneadas em português, inglês ou espanhol e gera PDF pesquisável e TXT. Carregue o arquivo na ferramenta; ele será processado no navegador. Revise as letras reconhecidas, sobretudo em fotos escuras, tortas ou manuscritas. Eu posso orientar os passos, mas não leio seus arquivos no chat.",
+  ["f/ocr-pdf/", "f/ocr-de-imagem/"],
 );
 add(
   "pdf",
@@ -220,8 +220,8 @@ add(
   "imagem-ocr",
   "Tem OCR para copiar texto de uma foto?",
   ["ocr imagem", "texto da imagem", "copiar texto foto", "ler imagem"],
-  "O catálogo mostra “Texto da imagem (OCR)” como recurso planejado, mas ele não está disponível entre as ferramentas prontas. Não consigo ler a imagem por você. Você pode buscar no catálogo por alternativas prontas.",
-  ["ferramentas.html?busca=OCR"],
+  "Sim. Abra Texto da imagem (OCR), escolha uma foto JPG, PNG ou WebP e selecione português, inglês ou espanhol. O reconhecimento acontece no navegador. Você pode revisar, copiar e baixar o texto em TXT. Use uma foto nítida e com as linhas retas; a ferramenta não garante leitura de manuscritos.",
+  ["f/ocr-de-imagem/", "f/ocr-pdf/"],
 );
 add(
   "imagens",
@@ -757,8 +757,8 @@ add(
   "indisponivel-ferramenta",
   "Tem OCR, transcrição ou geração de IA?",
   ["ocr ferramenta", "transcricao automatica", "gerar imagem ia", "ia local"],
-  "OCR e transcrição automática não estão disponíveis entre as ferramentas prontas confirmadas. Não vou fingir que analisei texto de uma imagem, áudio ou arquivo. Confira o catálogo para identificar recursos marcados como planejados.",
-  ["ferramentas.html?busca=OCR"],
+  "O portal tem OCR de imagem e OCR de PDF em português, inglês e espanhol, com processamento no navegador. Abra a ferramenta correspondente para carregar seu arquivo e revisar o texto. Transcrição automática de áudio e geração de imagens por IA ainda não estão prontas.",
+  ["f/ocr-de-imagem/", "f/ocr-pdf/"],
 );
 add(
   "disponibilidade",
@@ -914,7 +914,7 @@ function resultado(item) {
 const introducoes = {
   pdf: "Posso orientar sobre edição, organização, assinatura, conversão e extração de texto em PDF. Escolha uma tarefa para ver passos e limites.",
   imagens:
-    "Posso indicar edição e conversão de imagens. OCR aparece no catálogo como planejado, mas ainda não está pronto.",
+    "Posso orientar edição, conversão e reconhecimento de texto em imagens. Escolha uma dúvida abaixo ou abra Texto da imagem (OCR) para reconhecer uma foto.",
   "audio-video":
     "Há editores para áudio e vídeo, com formatos e limites descritos em cada página. Escolha uma tarefa para continuar.",
   office:

@@ -1,8 +1,8 @@
 {
-  "total": 258,
+  "total": 262,
   "contagens": {
     "profissionais": 100,
-    "montadorCompartilhado": 154,
+    "montadorCompartilhado": 158,
     "editoresCustomizados": 4
   },
   "estados": "INTEGRADA_E_VALIDADA_POR_FAMILIA: montagem conferida para cada entrada; execução em navegador por cenários representativos, sem alegar teste manual individual.",
@@ -6709,6 +6709,106 @@
       "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
       "familia": "local/editor-office",
       "evidencia": "Upload, edição e arquivo exportado reaberto no teste de navegador editores-office.teste.mjs; progresso compartilhado respeita movimento reduzido e permite baixar assim que o arquivo termina."
+    },
+    {
+      "slug": "digitalizar-para-pdf",
+      "nome": "Digitalizar e transformar em PDF",
+      "cat": "pdf",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "assíncrono"
+      ],
+      "entrada": "Até 20 fotos JPG, PNG ou WebP; 10 MB/20 MP por foto e 60 MB somados. Câmera depende do aparelho.",
+      "processamento": "Aplica corte retangular manual, giro de 90°, contraste, cinza ou preto e branco; reduz o maior lado a até 3.000 px e monta o PDF local com pdf-lib. Não detecta cantos nem corrige perspectiva.",
+      "moduloPagina": "portal/scripts/ferramentas/digitalizar-para-pdf.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/montador.js",
+      "modoMontagem": "montador.js (uso direto)",
+      "worker": "nenhum worker dedicado identificado",
+      "lotePrincipal": 5,
+      "lotes": [
+        4,
+        5
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/montador",
+      "commitImplementacao": "lote-documentos-digitalizados",
+      "evidencia": "Exportação e interface exercitadas em digitalizar-para-pdf.teste.mjs; cálculos puros cobertos em Node."
+    },
+    {
+      "slug": "ocr-de-imagem",
+      "nome": "Texto da imagem (OCR)",
+      "cat": "imagens",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "assíncrono"
+      ],
+      "entrada": "Uma imagem JPG, PNG ou WebP de até 10 MB/20 MP e o idioma: português, inglês ou espanhol. Reconhecimento em até 8 MP.",
+      "processamento": "Reconhece as letras com o Tesseract, em WebAssembly, no navegador. Letra manuscrita e foto torta ou escura têm resultado fraco.",
+      "moduloPagina": "portal/scripts/ferramentas/ocr-de-imagem.js",
+      "adaptadorCompartilhado": "portal/scripts/ferramentas/auxiliares/ocr-interface.js",
+      "modoMontagem": "montarOCR → montador.js",
+      "worker": "Tesseract.js local; PDF.js no OCR PDF",
+      "lotePrincipal": 5,
+      "lotes": [
+        4,
+        5
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/ocr",
+      "commitImplementacao": "lote-documentos-digitalizados",
+      "evidencia": "OCR motor e interfaces exercitados com reconhecimento e PDF pesquisável reais em navegador."
+    },
+    {
+      "slug": "ocr-pdf",
+      "nome": "OCR de PDF",
+      "cat": "pdf",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "assíncrono"
+      ],
+      "entrada": "Um PDF de até 20 MB/20 páginas e o idioma: português, inglês ou espanhol.",
+      "processamento": "Desenha cada página, reconhece as letras com o Tesseract e grava o texto invisível sobre a imagem, no navegador. É lento e depende da qualidade do scan.",
+      "moduloPagina": "portal/scripts/ferramentas/ocr-pdf.js",
+      "adaptadorCompartilhado": "portal/scripts/ferramentas/auxiliares/ocr-interface.js",
+      "modoMontagem": "montarOCR → montador.js",
+      "worker": "Tesseract.js local; PDF.js no OCR PDF",
+      "lotePrincipal": 5,
+      "lotes": [
+        4,
+        5
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/ocr",
+      "commitImplementacao": "lote-documentos-digitalizados",
+      "evidencia": "OCR motor e interfaces exercitados com reconhecimento e PDF pesquisável reais em navegador."
+    },
+    {
+      "slug": "pdf-para-markdown",
+      "nome": "PDF para Markdown",
+      "cat": "pdf",
+      "plano": "gratuito",
+      "tipoProcessamento": [
+        "arquivo",
+        "assíncrono"
+      ],
+      "entrada": "Um PDF com texto selecionável de até 20 MB/100 páginas e as páginas desejadas.",
+      "processamento": "Lê o texto e o tamanho das fontes com o PDF.js, deduz títulos, listas e parágrafos e escreve o Markdown, no navegador. PDF escaneado precisa de OCR antes.",
+      "moduloPagina": "portal/scripts/ferramentas/pdf-para-markdown.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/montador.js",
+      "modoMontagem": "montador.js (uso direto)",
+      "worker": "PDF.js local",
+      "lotePrincipal": 5,
+      "lotes": [
+        4,
+        5
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "local/montador",
+      "commitImplementacao": "lote-documentos-digitalizados",
+      "evidencia": "Exportação e interface exercitadas em pdf-para-markdown.teste.mjs; cálculos puros cobertos em Node."
     }
   ],
   "referenciaCatalogo": "HEAD b921497474d46a2b9e35b8cc6450375c79210fda",

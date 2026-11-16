@@ -11,6 +11,7 @@ on:
       - 'portal/servidor/flower.mjs'
       - 'portal/scripts/comum/**'
       - 'portal/ferramentas/montar-midias.mjs'
+      - 'portal/ferramentas/montar-ocr.mjs'
       - 'portal/package*.json'
       - 'portal/testes/flower.test.mjs'
       - 'portal/testes/modelos-comerciais.test.mjs'

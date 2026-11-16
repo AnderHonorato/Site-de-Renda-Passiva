@@ -1,3 +1,4 @@
+import { ferramentasProntas } from "../../dados/catálogo.js";
 import { consultarFAQ } from "./flower-conhecimento.js";
 
 function limpar(texto) {
@@ -35,11 +36,11 @@ export function respostaFAQ(texto) {
     return "Eu sou a Flower, assistente do portal. Posso responder perguntas frequentes e apontar ferramentas; não abro arquivos nem acesso sua conta.";
   // Mantido por compatibilidade com o FAQ legado e seu contrato público existente.
   if (
-    /\b(quantas?|numero de).{0,35}\b(ferramentas|ferramentas prontas|opcoes)\b|\b258 ferramentas\b/u.test(
+    /\b(quantas?|numero de).{0,35}\b(ferramentas|ferramentas prontas|opcoes)\b|\b\d+ ferramentas\b/u.test(
       q,
     )
   )
-    return "O catálogo tem 258 ferramentas prontas no momento. A página Ferramentas permite buscar por nome e navegar pelas categorias; os selos mostram o nível de acesso.";
+    return `O catálogo tem ${ferramentasProntas.length} ferramentas prontas no momento. A página Ferramentas permite buscar por nome e navegar pelas categorias; os selos mostram o nível de acesso.`;
   if (
     /\b(gratis|gratuita|gratuitas|gratuito|preco|custo|pagar|plus|premium|plano)\b/u.test(
       q,

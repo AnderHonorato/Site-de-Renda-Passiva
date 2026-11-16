@@ -22,10 +22,10 @@ export const ferramentas = [
   },
   {
     id: 'F181', slug: 'ocr-de-imagem', nome: 'Texto da imagem (OCR)', cat: 'imagens',
-    ícone: 'busca', tarefas: ['converter'], status: 'planejada',
+    ícone: 'busca', tarefas: ['converter'], status: 'pronta',
     resumo: 'Lê o texto de uma foto ou print e entrega para copiar. Funciona melhor com texto impresso, reto e bem iluminado.',
     problema: 'Copiar o texto de uma foto, de um print ou de um documento fotografado, sem digitar.',
-    entra: 'Uma imagem (JPG, PNG, WebP) e o idioma do texto.',
+    entra: 'Uma imagem JPG, PNG ou WebP de até 10 MB/20 MP e o idioma: português, inglês ou espanhol. Reconhecimento em até 8 MP.',
     processa: 'Reconhece as letras com o Tesseract, em WebAssembly, no navegador. Letra manuscrita e foto torta ou escura têm resultado fraco.',
     sai: 'Texto reconhecido, para revisar, copiar ou baixar em .txt.',
     exporta: ['copiar', 'baixar'], plano: 'gratuito', local: true,

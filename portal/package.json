@@ -29,6 +29,7 @@
     "nuvem": "node ferramentas/iniciar-nuvem.mjs",
     "montar:formatadores": "node ferramentas/montar-formatadores.mjs",
     "montar:diagramas": "node ferramentas/montar-diagramas.mjs",
-    "montar:midias": "node ferramentas/montar-midias.mjs"
+    "montar:midias": "node ferramentas/montar-midias.mjs",
+    "montar:ocr": "node ferramentas/montar-ocr.mjs"
   }
 }

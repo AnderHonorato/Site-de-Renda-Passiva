@@ -1,0 +1,21 @@
+.ocr-documentos { min-width: 0; }
+.ocr-stage { margin-bottom: 1.5rem; padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid var(--borda, #d9d4cc); border-radius: 1rem; background: var(--superfície, var(--fundo, #fff)); overflow: hidden; }
+.ocr-stage__titulo { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.ocr-stage__titulo h2 { margin: .3rem 0 0; font-size: 1.15rem; line-height: 1.35; }
+.ocr-etiqueta { color: var(--marca, #a4482c); font-size: .65rem; font-weight: 750; letter-spacing: .12em; }
+.ocr-stage__titulo .botão { font-size: .8rem; min-height: 44px; white-space: normal; }
+.ocr-stage__papel { position: relative; display: grid; place-items: center; min-height: 180px; max-height: 410px; overflow: hidden; padding: 1rem; border-radius: .6rem; background: var(--superfície-2, #ece9e3); }
+.ocr-stage__papel canvas { display: block; width: auto; height: auto; max-width: 100%; max-height: 375px; box-shadow: 0 8px 28px #0002; background: #fff; }
+.ocr-stage__papel canvas[hidden] { display: none; }
+.ocr-stage__legenda { margin: .85rem 0 0; font-size: .82rem; line-height: 1.55; color: var(--tinta-suave, #6d6a65); overflow-wrap: anywhere; }
+.ocr-stage__feixe { display: none; position: absolute; left: 8%; right: 8%; height: 2px; top: 15%; background: #e67535; box-shadow: 0 0 20px 5px #e6753544; pointer-events: none; }
+.ocr-em-execucao .ocr-stage__feixe { display: block; animation: ocr-varrer 2.8s ease-in-out infinite alternate; }
+.ocr-stage--exemplo .ocr-stage__feixe { display: block; opacity: .55; animation: ocr-varrer 5s ease-in-out infinite alternate; }
+.ocr-revisao { padding: 1.25rem; border: 1px solid var(--borda, #d9d4cc); border-radius: 1rem; background: var(--superfície, var(--fundo, #fff)); }
+.resultado > .ocr-revisao { margin: 0; border: 0; border-bottom: 1px solid var(--borda); border-radius: 0; background: transparent; }
+.ocr-revisao > label { display: block; margin-bottom: .7rem; font-weight: 700; }
+.ocr-texto { display: block; box-sizing: border-box; width: 100%; max-width: 100%; min-height: 200px; resize: vertical; font: .92rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; }
+.ocr-revisao .campo__dica { display: block; margin: .8rem 0 0; }
+@keyframes ocr-varrer { from { top: 12%; } to { top: 88%; } }
+@media (max-width: 450px) { .ocr-stage__titulo { display: block; } .ocr-stage__titulo .botão { margin-top: .8rem; width: 100%; } .ocr-stage__papel { padding: .6rem; } .ocr-revisao { padding: .85rem; } }
+@media (prefers-reduced-motion: reduce) { .ocr-em-execucao .ocr-stage__feixe, .ocr-stage--exemplo .ocr-stage__feixe { animation: none; top: 50%; } }

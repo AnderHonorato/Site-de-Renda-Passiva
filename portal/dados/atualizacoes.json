@@ -1,6 +1,24 @@
 {
   "itens": [
     {
+      "id": "ocr-scanner-e-markdown",
+      "slug": "ocr-scanner-e-markdown",
+      "categoria": "novo",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-16T02:05:32.000Z",
+      "atualizado_em": "2026-11-16T02:05:32.000Z",
+      "pt": {
+        "titulo": "Das fotos ao texto: OCR, scanner e Markdown",
+        "resumo": "Reconheça texto de imagens e PDFs, organize fotos em um documento e leve PDFs com texto para Markdown. Quatro ferramentas locais com exemplos para experimentar.",
+        "conteudo": "Texto da imagem (OCR) reconhece letras impressas em fotos JPG, PNG e WebP, em português, inglês ou espanhol. Confira a imagem, experimente um documento de exemplo e revise o texto antes de copiar ou baixar o TXT. O reconhecimento pode trocar letras e números, especialmente em fotos inclinadas ou escuras.\n\nOCR de PDF transforma até 20 páginas escaneadas em um PDF pesquisável, com TXT separado para revisão. As dimensões visíveis são mantidas; cada página é convertida em imagem com texto invisível. Links, formulários e assinaturas digitais do original não são preservados. Editar o TXT não altera a camada de texto do PDF.\n\nDigitalizar e transformar em PDF reúne até 20 fotos. Você pode ordenar as páginas, girar, cortar bordas manualmente e ajustar contraste, cinza ou preto e branco. Confira a prévia antes de gerar o PDF. O corte não detecta os cantos da folha nem corrige a perspectiva automaticamente.\n\nPDF para Markdown aproveita texto selecionável e sugere títulos, listas e parágrafos. A prévia é simplificada: tabelas, imagens e colunas exigem revisão. Copie ou baixe o MD e o TXT.\n\nAs quatro ferramentas processam os arquivos neste navegador. O motor OCR e seus idiomas são carregados do próprio site quando necessários; não é preciso cadastrar uma chave de IA."
+      },
+      "en": {
+        "titulo": "From photos to text: OCR, scanning and Markdown",
+        "resumo": "Recognize text from images and PDFs, organize photos into a document, and export text PDFs to Markdown. Four local tools with working examples.",
+        "conteudo": "Image OCR recognizes printed text in JPG, PNG and WebP images in Portuguese, English or Spanish. Review and edit the recognized text before copying or downloading TXT. OCR may misread characters or numbers.\n\nPDF OCR turns up to 20 scanned pages into a searchable PDF and a separate editable TXT. Pages are rasterized and receive an invisible text layer; links, forms and digital signatures are not preserved. TXT corrections do not change the PDF text layer.\n\nScan to PDF organizes up to 20 photos, with manual rectangular cropping, 90-degree rotation, contrast and grayscale or black-and-white adjustments. There is no automatic corner detection or perspective correction.\n\nPDF to Markdown extracts selectable text and suggests headings, lists and paragraphs, with MD/TXT downloads and a simplified preview. Complex columns, tables and images need manual review.\n\nFiles are processed in the browser. The OCR engine and language models load from this site as needed, without an AI API key."
+      }
+    },
+    {
       "id": "flower-interativa-e-ajuda-guiada",
       "slug": "flower-interativa-e-ajuda-guiada",
       "categoria": "melhoria",

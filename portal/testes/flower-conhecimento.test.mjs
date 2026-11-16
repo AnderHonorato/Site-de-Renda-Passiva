@@ -45,7 +45,10 @@ test('Flower offline: tópico mantém contexto de perguntas curtas e id selecion
 test('Flower offline: limites reais, recursos planejados, contas e privacidade',()=>{
   assert.equal(consultarFAQ('A Flower pode ler meu arquivo?'),null);
   assert.equal(consultarFAQ('Pode consultar minha conta e ver meus dados?'),null);
-  assert.match(consultarFAQ('PDF escaneado precisa de OCR?')?.texto,/OCR.*não está disponível/u);
+  assert.match(consultarFAQ('PDF escaneado precisa de OCR?')?.texto,/OCR de PDF.*PDF pesquisável/u);
+  assert.match(consultarFAQ('',{id:'imagem-ocr'})?.texto,/Abra Texto da imagem.*TXT/u);
+  assert.match(consultarFAQ('',{id:'indisponivel-ferramenta'})?.texto,/tem OCR de imagem e OCR de PDF/u);
+  assert.doesNotMatch(consultarFAQ('',{topico:'imagens'})?.texto,/planejad|não está pronto/u);
   assert.match(consultarFAQ('O portal transcreve áudio ou vídeo?')?.texto,/não encontrei.*transcrição/iu);
   assert.match(consultarFAQ('Quais são os planos e preços?')?.texto,/podem mudar/u);
   assert.match(consultarFAQ('Quantas ferramentas estão prontas?')?.texto,new RegExp(`${ferramentas.length} ferramentas.*${ferramentasProntas.length} ferramentas prontas`, 'u'));
@@ -69,7 +72,7 @@ test('Flower offline: links internos relativos apontam para páginas existentes 
 
 test('Flower offline: wrapper legado conserva respostas cobertas pelo teste anterior',()=>{
   assert.match(respostaFAQ('Olá!'),/sou a Flower/u);
-  assert.match(respostaFAQ('Quantas ferramentas prontas existem?'),/258 ferramentas prontas/u);
+  assert.match(respostaFAQ('Quantas ferramentas prontas existem?'),new RegExp(`${ferramentasProntas.length} ferramentas prontas`, "u"));
   assert.match(respostaFAQ('As ferramentas são grátis?'),/públicas gratuitas.*Plus ou Premium/u);
   assert.match(respostaFAQ('Como editar um PDF?'),/não altera o texto que já existe/u);
   assert.match(respostaFAQ('Como editar uma imagem?'),/navegador.*original fica intacto/u);

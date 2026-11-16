@@ -74,6 +74,9 @@ export function deveSerPublicado(relativo) {
   if (partes.length === 1) return ARQUIVOS_DA_RAIZ.includes(partes[0]);
   if (!PASTAS_PUBLICADAS.includes(partes[0])) return false;
   if (/\.test\.[cm]?js$/.test(limpo)) return false;
+  // Somente os três modelos OCR fixados no build. Outros arquivos compactados
+  // continuam fora da publicação, incluindo backups e arquivos enviados.
+  if (/^recursos\/ocr\/(por|eng|spa)\.traineddata\.gz$/u.test(limpo)) return true;
   const ponto = limpo.lastIndexOf('.');
   return ponto > 0 && EXTENSÕES_PUBLICÁVEIS.includes(limpo.slice(ponto).toLowerCase());
 }

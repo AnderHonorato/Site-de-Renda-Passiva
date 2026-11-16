@@ -104,6 +104,9 @@ test('cards de atualização mostram detalhes, CTAs reais e permanecem seguros e
 
     await página.unroute('**/api/atualizacoes');
     await página.goto(`${base}/atualizacoes.html`, { waitUntil: 'networkidle' });
+    const documentos = página.locator('#ocr-scanner-e-markdown');
+    assert.equal(await documentos.locator('.atualizacoes__visual--documento').count(), 1);
+    assert.equal(await documentos.locator('.atualizacoes__ferramenta').count(), 4, 'as quatro ferramentas do lote podem ser abertas no post');
     assert.equal(await página.locator('#editores-pdf-imagens-audio-video-office .atualizacoes__ferramenta').count(),7,'todos os sete editores mencionados têm acesso direto');
     const linksDeFerramenta = await página.locator('.atualizacoes__ferramenta').evaluateAll(links => links.map(link => link.getAttribute('href')));
     assert.ok(linksDeFerramenta.length >= 8, 'posts atuais expõem os atalhos de ferramenta relacionados');

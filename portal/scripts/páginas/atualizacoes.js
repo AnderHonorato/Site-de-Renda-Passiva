@@ -13,6 +13,13 @@ let itens = [], filtro = 'todas';
 // Metadados de apresentação permanecem na página: o schema do CMS continua enxuto.
 // Os slugs abaixo são resolvidos contra o catálogo oficial antes de virar link.
 const enriquecimentos = {
+  'ocr-scanner-e-markdown': {
+    visual: 'documento', etiqueta: 'OCR · PDF · MD',
+    destaques: en
+      ? ['Recognize Portuguese, English or Spanish text and review it before downloading.', 'Organize, crop and adjust photos before creating a PDF.', 'Export selectable PDF text as Markdown, with a structured preview.']
+      : ['Reconheça português, inglês ou espanhol e revise o texto antes de baixar.', 'Organize, corte e trate as fotos antes de criar um PDF.', 'Leve o texto selecionável de PDFs para Markdown, com prévia estruturada.'],
+    ferramentas: ['ocr-de-imagem', 'ocr-pdf', 'digitalizar-para-pdf', 'pdf-para-markdown'],
+  },
   'flower-sua-assistente-no-portal': {
     visual: 'flower', etiqueta: 'FLOWER', flor: true,
     destaques: en

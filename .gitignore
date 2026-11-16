@@ -20,3 +20,4 @@ portal/scripts/terceiros/midia/
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm
+portal/recursos/ocr/

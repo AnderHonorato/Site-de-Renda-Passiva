@@ -26,6 +26,11 @@ test('cada ferramenta inventariada realmente monta uma das interfaces integradas
   }
   for (const item of inventario.ferramentas) {
     const pagina = await fonte(item.moduloPagina);
+    if (item.familia === 'local/ocr') {
+      assert.match(pagina, /\bmontarOCR\(/, item.slug);
+      assert.match(await fonte(item.adaptadorCompartilhado), /\bmontarFerramenta\(/, item.slug);
+      continue;
+    }
     if (item.familia === 'local/editor-office') {
       assert.match(pagina, /\bmountBase\(/, item.slug);
       assert.match(await fonte(item.adaptadorCompartilhado), /\bcriarProgresso\(/, item.slug);

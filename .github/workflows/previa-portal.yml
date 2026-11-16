@@ -27,13 +27,15 @@ jobs:
           node-version: '22'
       - run: npm ci --prefix portal --ignore-scripts
       - name: Instalar motores fixados apenas para compilação
-        run: npm install --prefix portal --no-save --no-package-lock --ignore-scripts prettier@3.9.10 sql-formatter@15.9.0 esbuild@0.25.12 mermaid@11.17.2 playwright@1.62.0 @ffmpeg/ffmpeg@0.12.15 @ffmpeg/core@0.12.10
+        run: npm install --prefix portal --no-save --no-package-lock --ignore-scripts prettier@3.9.10 sql-formatter@15.9.0 esbuild@0.25.12 mermaid@11.17.2 playwright@1.62.0 @ffmpeg/ffmpeg@0.12.15 @ffmpeg/core@0.12.10 tesseract.js@6.0.1 tesseract.js-core@6.1.2 @tesseract.js-data/por@1.0.0 @tesseract.js-data/eng@1.0.0 @tesseract.js-data/spa@1.0.0
       - name: Empacotar motores locais de formatação
         run: npm run montar:formatadores --prefix portal
       - name: Empacotar Mermaid local para os diagramas
         run: npm run montar:diagramas --prefix portal
       - name: Preparar motor local de áudio e vídeo
         run: npm run montar:midias --prefix portal
+      - name: Preparar OCR local e idiomas
+        run: npm run montar:ocr --prefix portal
       - name: Gerar URLs públicas da prévia
         run: npm run gerar --prefix portal
         env:
@@ -47,7 +49,7 @@ jobs:
       - name: Instalar Chromium para validar uploads e relatórios
         run: portal/node_modules/.bin/playwright install --with-deps chromium
       - name: Validar documentos, editores, Flower, atualizações e ferramentas profissionais no navegador
-        run: node --test --test-concurrency=1 portal/testes/navegador/documentos.teste.mjs portal/testes/navegador/execucao-visual.teste.mjs portal/testes/navegador/profissionais.teste.mjs portal/testes/navegador/atualizacoes.teste.mjs portal/testes/navegador/notificações.teste.mjs portal/testes/navegador/editar-metadados-do-pdf.teste.mjs portal/testes/navegador/pdf-extrair-imagens.teste.mjs portal/testes/navegador/editar-pdf.teste.mjs portal/testes/navegador/editor-imagem.teste.mjs portal/testes/navegador/converter-audio.teste.mjs portal/testes/navegador/cortar-video-e-audio.teste.mjs portal/testes/navegador/editores-office.teste.mjs portal/testes/navegador/flower.teste.mjs portal/testes/navegador/flower-interacoes.teste.mjs portal/testes/navegador/atualizacoes-enriquecidas.teste.mjs portal/testes/navegador/cta-login-capa.teste.mjs
+        run: node --test --test-concurrency=1 portal/testes/navegador/documentos.teste.mjs portal/testes/navegador/execucao-visual.teste.mjs portal/testes/navegador/profissionais.teste.mjs portal/testes/navegador/atualizacoes.teste.mjs portal/testes/navegador/notificações.teste.mjs portal/testes/navegador/editar-metadados-do-pdf.teste.mjs portal/testes/navegador/pdf-extrair-imagens.teste.mjs portal/testes/navegador/editar-pdf.teste.mjs portal/testes/navegador/editor-imagem.teste.mjs portal/testes/navegador/converter-audio.teste.mjs portal/testes/navegador/cortar-video-e-audio.teste.mjs portal/testes/navegador/editores-office.teste.mjs portal/testes/navegador/flower.teste.mjs portal/testes/navegador/flower-interacoes.teste.mjs portal/testes/navegador/atualizacoes-enriquecidas.teste.mjs portal/testes/navegador/cta-login-capa.teste.mjs portal/testes/navegador/ocr-motor.teste.mjs portal/testes/navegador/ocr-interfaces.teste.mjs portal/testes/navegador/digitalizar-para-pdf.teste.mjs portal/testes/navegador/pdf-para-markdown.teste.mjs
       - run: node --test portal/testes/previa-pages.test.mjs portal/testes/publicação-e-servidor.test.mjs portal/testes/indexacao-pages.test.mjs
       - run: node portal/ferramentas/preparar-pages.mjs
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
