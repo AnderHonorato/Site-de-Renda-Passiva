@@ -1,0 +1,43 @@
+name: Validar estúdios FFmpeg F357-F358
+on:
+  push:
+    branches: ['ander-flow/v1']
+    paths:
+      - 'portal/servidor/estudio-midia-*'
+      - 'portal/testes/estudio-*.test.mjs'
+      - 'portal/scripts/núcleo/estudio-midia-visual.js'
+      - 'portal/scripts/ferramentas/estudio-*'
+      - 'portal/estilos/estudio-midia-servidor.css'
+      - 'portal/dados/catálogo/avançadas.js'
+      - 'portal/dados/traduções/en/catálogo-avançadas.js'
+      - '.github/workflows/validar-estudios-ffmpeg.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar renderizadores reais
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Sintaxe de editor e backend
+        run: |
+          node --check portal/scripts/núcleo/estudio-midia-visual.js
+          node --check portal/servidor/estudio-midia-processamento.mjs
+          node --check portal/servidor/estudio-midia-sessoes.mjs
+          node --check portal/servidor/iniciar.mjs
+      - name: Processar vídeos, podcast e validar sessões privadas
+        env:
+          PORTAL_TEST_FFMPEG_REQUIRED: '1'
+        run: |
+          cd portal
+          node --test testes/estudio-midia-servidor.test.mjs testes/estudio-midia-gerenciador.test.mjs testes/estudio-ffmpeg-real.test.mjs
