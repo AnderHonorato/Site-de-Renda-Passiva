@@ -1,4 +1,6 @@
 import { createServer } from 'node:http';
+import { createReadStream } from 'node:fs';
+import { criarGerenciadorEstudio } from './estudio-midia-sessoes.mjs';
 import { appendFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { networkInterfaces } from 'node:os';
@@ -41,6 +43,7 @@ function aplicarConfiguracao(config){regrasPontos=config.pontos;aplicarLimitesPu
 const editor=criarEditorial(banco,{aoPublicar:aplicarConfiguracao});
 aplicarConfiguracao(editor.publicado());
 const ouvintes = new Set();
+const estudio = criarGerenciadorEstudio();
 const reservados = new Set(['admin','administrador','suporte','moderador','sistema','root','api','conta','perfil','chat','null','undefined']);
 
 function json(res, status, data, headers={}) {
@@ -224,6 +227,66 @@ async function rota(req,res){
     const u=sessao(req);return json(res,200,{usuario:usuarioPublico(u),chat_habilitado:chatAtivo(),chat_aceito:!!u?.chat_aceito_em});
   }
   proteger(req);
+  // F357/F358: sessão Premium, arquivos temporários privados, renderização FFmpeg real.
+  if(p==='/api/estudio/sessoes'&&m==='POST'){
+    const u=exigir(req);
+    if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
+    conferirLimite('estudio:criar:'+u.id,6,3600000);
+    const dados=await corpo(req,2048);
+    try{return json(res,201,{projeto:await estudio.criar(u.id,dados.tipo)});}
+    catch(e){if(e.name==='ErroEstudio')return json(res,e.status,{erro:e.message});throw e;}
+  }
+  const rotaEstudio=p.match(/^\/api\/estudio\/sessoes\/([a-f0-9-]{36})(?:\/(arquivos|renderizar|cancelar|resultado|arquivos\/[a-f0-9-]{36}))?$/);
+  if(rotaEstudio){
+    const u=exigir(req);
+    if(u.plano!=='premium'&&u.papel!=='admin')throw erro(403,'plano_premium_necessario');
+    const id=rotaEstudio[1],acao=rotaEstudio[2]||'';
+    try{
+      if(!acao&&m==='GET')return json(res,200,{projeto:await estudio.obter(u.id,id)});
+      if(!acao&&m==='DELETE'){await estudio.excluir(u.id,id);return json(res,200,{ok:true});}
+      if(acao==='arquivos'&&m==='POST'){
+        conferirLimite('estudio:upload:'+u.id,24,3600000);
+        const mime=String(req.headers['content-type']||'').split(';')[0].trim().toLowerCase();
+        const bytes=await corpoBinario(req,25*1024*1024);
+        return json(res,201,{arquivo:await estudio.anexar(u.id,id,bytes,mime)});
+      }
+      if(acao==='renderizar'&&m==='POST'){
+        conferirLimite('estudio:renderizar:'+u.id,8,3600000);
+        const dados=await corpo(req,8192);
+        return json(res,202,{projeto:await estudio.renderizar(u.id,id,dados.trechos)});
+      }
+      if(acao==='cancelar'&&m==='POST')return json(res,200,{projeto:await estudio.cancelar(u.id,id)});
+      const midia=acao==='resultado'&&m==='GET'
+        ?await estudio.resultado(u.id,id)
+        :m==='GET'&&acao.startsWith('arquivos/')
+          ?await estudio.arquivo(u.id,id,acao.slice(9)):null;
+      if(midia){
+        const cabecalhos={'Content-Type':midia.mime,'Content-Disposition':
+          (acao==='resultado'?'attachment':'inline')+"; filename*=UTF-8''"+encodeURIComponent(midia.nome),
+          'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff',
+          'Accept-Ranges':'bytes'};
+        let inicio=0,fim=midia.tamanho-1,status=200;
+        const faixa=String(req.headers.range||'').match(/^bytes=(\d+)-(\d*)$/);
+        if(faixa){
+          inicio=Number(faixa[1]);fim=faixa[2]?Number(faixa[2]):fim;
+          if(!Number.isSafeInteger(inicio)||inicio>fim||fim>=midia.tamanho){
+            res.writeHead(416,{...cabecalhos,'Content-Range':'bytes */'+midia.tamanho});res.end();return;
+          }
+          status=206;cabecalhos['Content-Range']='bytes '+inicio+'-'+fim+'/'+midia.tamanho;
+        }
+        cabecalhos['Content-Length']=fim-inicio+1;
+        res.writeHead(status,cabecalhos);
+        const leitura=createReadStream(midia.caminho,{start:inicio,end:fim});
+        leitura.on('error',()=>res.destroy());
+        req.on('close',()=>leitura.destroy());
+        leitura.pipe(res);return;
+      }
+    }catch(e){
+      if(e.name==='ErroEstudio')return json(res,e.status,{erro:e.message});
+      throw e;
+    }
+    throw erro(404,'nao_encontrado');
+  }
   if(m==='POST'&&p==='/api/flower/chat'){
     const usuario=sessao(req),limite=await corpo(req,196608),messages=limite?.messages;
     if(!Array.isArray(messages)||messages.length<1||messages.length>30)throw erro(400,'flower_mensagens_invalidas');
@@ -951,7 +1014,7 @@ export async function iniciar({porta=Number(process.env.PORTAL_API_PORTA||4870),
       banco.prepare('DELETE FROM redefinicoes WHERE expira_em<?').run(agora());
     }catch(e){process.stderr.write(`Falha na limpeza da API: ${e.message}\n`);}
   },3600000);
-  limpar.unref();servidor.on('close',()=>clearInterval(limpar));
+  limpar.unref();servidor.on('close',()=>{clearInterval(limpar);void estudio.fechar();});
   return new Promise((ok,fail)=>{servidor.once('error',fail);servidor.listen(porta,host,()=>ok(servidor));});
 }
 export function fecharBanco(){banco.close();}
