@@ -77,7 +77,7 @@ F247: {nome: 'Marketplace margin audit', resumo: 'Margem por SKU após comissõe
   F248: {nome: 'Returns cost simulator', resumo: 'Estima custos de logística reversa, inspeção e perdas por devoluções.', tags: ['ecommerce','analytics'], intenções: ['analyze ecommerce performance']},
   F249: {nome: 'Sales channel break-even', resumo: 'Calcula vendas necessárias para cobrir despesas fixas por canal.', tags: ['ecommerce','analytics'], intenções: ['analyze ecommerce performance']},
   F250: {nome: 'Supplier price increase simulator', resumo: 'Compara contribuição antes e depois do reajuste do custo de compra.', tags: ['ecommerce','analytics'], intenções: ['analyze ecommerce performance']},
-  F251: {nome: 'Campaign ROAS and CPA planner', resumo: 'Analisa ROAS agregado, CPA e receita necessária para alcançar a meta.', tags: ['ecommerce','analytics'], intenções: ['analyze ecommerce performance']}
+  F251: {nome: 'Campaign ROAS and CPA planner', resumo: 'Analisa ROAS agregado, CPA e receita necessária para alcançar a meta.', tags: ['ecommerce','analytics'], intenções: ['analyze ecommerce performance']},
 
   F357:{nome:'Server video editing studio',
     resumo:'Edit up to eight clips on a visual timeline and render a final MP4 using server-side FFmpeg.',
