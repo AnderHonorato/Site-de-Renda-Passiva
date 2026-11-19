@@ -78,4 +78,13 @@ F247: {nome: 'Marketplace margin audit', resumo: 'Margem por SKU após comissõe
   F249: {nome: 'Sales channel break-even', resumo: 'Calcula vendas necessárias para cobrir despesas fixas por canal.', tags: ['ecommerce','analytics'], intenções: ['analyze ecommerce performance']},
   F250: {nome: 'Supplier price increase simulator', resumo: 'Compara contribuição antes e depois do reajuste do custo de compra.', tags: ['ecommerce','analytics'], intenções: ['analyze ecommerce performance']},
   F251: {nome: 'Campaign ROAS and CPA planner', resumo: 'Analisa ROAS agregado, CPA e receita necessária para alcançar a meta.', tags: ['ecommerce','analytics'], intenções: ['analyze ecommerce performance']}
+
+  F357:{nome:'Server video editing studio',
+    resumo:'Edit up to eight clips on a visual timeline and render a final MP4 using server-side FFmpeg.',
+    tags:['video editor','timeline','ffmpeg server','video composer'],
+    intenções:['create a video from multiple trimmed clips using a server']},
+  F358:{nome:'Server-side podcast editing studio',
+    resumo:'Reorder audio clips, trim them and apply fades, gain and loudness normalization to export MP3.',
+    tags:['podcast editor','audio normalization','mp3 mixing','server processing'],
+    intenções:['edit a podcast with cuts fades and normalized audio on a server']},
 });

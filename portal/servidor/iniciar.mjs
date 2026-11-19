@@ -278,7 +278,7 @@ async function rota(req,res){
         res.writeHead(status,cabecalhos);
         const leitura=createReadStream(midia.caminho,{start:inicio,end:fim});
         leitura.on('error',()=>res.destroy());
-        req.on('close',()=>leitura.destroy());
+        res.on('close',()=>leitura.destroy());
         leitura.pipe(res);return;
       }
     }catch(e){

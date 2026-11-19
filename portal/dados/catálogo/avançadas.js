@@ -1163,4 +1163,30 @@ export const ferramentas = [
     tags: ['ecommerce','análise','operações','planejamento meta roas'],
     intenções: ['analisa roas agregado, cpa e receita necessária para alcançar a meta.'], relacionadas: [],
   }
+,
+  {
+    id:'F357',slug:'estudio-video-servidor',nome:'Estúdio profissional de vídeo no servidor',
+    cat:'imagens',ícone:'imagem',tarefas:['criar','organizar'],status:'pronta',plano:'premium',local:false,
+    resumo:'Edite até 8 trechos numa linha do tempo e renderize vídeo MP4 no FFmpeg do servidor.',
+    problema:'Montar um vídeo com várias cenas, cortes, volume, cores e exportação final sem depender do processamento do celular.',
+    entra:'Até 4 vídeos MP4/WebM de 25 MB cada, cortes, ordem, volume e filtros por trecho.',
+    processa:'Transcodifica e concatena vídeo e áudio com FFmpeg no servidor, preservando trechos mudos como silêncio.',
+    sai:'Vídeo MP4 720p com prévia, progresso real e download privado; arquivos temporários expiram.',
+    exporta:['mp4'],tags:['editor de vídeo online','linha do tempo','ffmpeg','montar vídeos','renderizar'],
+    intenções:['editar vários vídeos em linha do tempo com cortes e exportar MP4'],
+    relacionadas:['cortar-video-e-audio','editor-de-fotos','criar-gif']
+  },
+  {
+    id:'F358',slug:'estudio-podcast-servidor',nome:'Estúdio de podcast com renderização de áudio',
+    cat:'imagens',ícone:'imagem',tarefas:['criar','organizar'],status:'pronta',plano:'premium',local:false,
+    resumo:'Monte episódios com cortes e fades, ajuste volumes e normalize o MP3 no servidor.',
+    problema:'Editar um episódio com múltiplos trechos, prévia e saída com volume padronizado.',
+    entra:'Até 4 áudios MP3/WAV/OGG de 25 MB cada, cortes, ordem e volume por segmento.',
+    processa:'Normaliza taxa de amostragem, concatena e aplica loudnorm, fades e MP3 com FFmpeg no backend.',
+    sai:'Arquivo MP3 com processamento assíncrono, progresso verdadeiro e download seguro.',
+    exporta:['mp3'],tags:['podcast','editor de áudio online','normalização loudness','ffmpeg','mixar podcast'],
+    intenções:['montar um podcast com cortes, fades e volume normalizado no servidor'],
+    relacionadas:['cortar-video-e-audio','converter-audio','texto-para-fala']
+  }
+
 ];
