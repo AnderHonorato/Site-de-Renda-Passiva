@@ -411,4 +411,17 @@ export const ferramentas = [
     intenções: ['tirar as fotos de um pdf', 'extrair as imagens sem converter páginas', 'recuperar imagens incorporadas no pdf'],
     relacionadas: ['pdf-para-jpg', 'editar-metadados-do-pdf', 'extrair-texto-de-pdf'],
   },
+  {
+    id: 'F359', slug: 'central-pdf-em-lote', nome: 'Central de PDF em lote', cat: 'pdf',
+    ícone: 'documento', tarefas: ['organizar', 'converter'], status: 'pronta', plano: 'premium', local: false,
+    resumo: 'Prepare vários PDFs para distribuição, ajuste a qualidade e baixe os documentos e o relatório em um ZIP.',
+    problema: 'Preparar um conjunto de PDFs para envio e verificar como a regravação afetou o tamanho de cada arquivo.',
+    entra: 'Arquivos PDF em ordem de saída e opções de qualidade, tons de cinza, metadados e união.',
+    processa: 'O servidor regrava os PDFs com Ghostscript e compara os tamanhos dos arquivos de entrada e saída.',
+    sai: 'Documentos processados, PDF unido opcional e relatórios para download. A redução de tamanho varia conforme o conteúdo.',
+    exporta: ['zip', 'pdf', 'xlsx', 'txt', 'csv', 'json'],
+    tags: ['processar PDF em lote', 'compactar vários PDFs', 'tons de cinza', 'Ghostscript'],
+    intenções: ['otimizar lote de PDFs e baixar relatório de tamanhos', 'preparar vários PDFs para envio em um ZIP'],
+    relacionadas: ['comprimir-pdf', 'juntar-pdf', 'editar-metadados-do-pdf'],
+  },
 ];

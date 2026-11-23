@@ -133,6 +133,30 @@ function sanitizarDemo(demo) {
   };
 }
 
+const amostrasDeArquivos = {
+  'central-pdf-em-lote': {
+    arquivo: 'caderno.pdf',
+    entradas: [['caderno.pdf', 'Primeiro no lote'], ['anexos.pdf', 'Segundo no lote']],
+    saidas: [['PDFs', 'Documentos processados'], ['PDF unido', 'Caderno seguido dos anexos'], ['ZIP', 'Documentos e relatório do lote']],
+    metodo: 'O servidor regrava cada documento no perfil escolhido, mede seu tamanho e reúne o lote para download.',
+    nota: 'A redução depende das imagens, fontes e compressão que cada PDF já utiliza.',
+  },
+  'estudio-video-servidor': {
+    arquivo: 'abertura.mp4',
+    entradas: [['abertura.mp4', 'Cortar a espera inicial'], ['demonstração.webm', 'Aplicar filtro de cor']],
+    saidas: [['Vídeo MP4', 'Abertura seguida da demonstração'], ['Áudio AAC', 'Som dos trechos na ordem da montagem']],
+    metodo: 'O FFmpeg aplica os cortes e filtros da linha do tempo e renderiza um MP4 em 720p.',
+    nota: 'Os nomes e trechos desta demonstração são fictícios.',
+  },
+  'estudio-podcast-servidor': {
+    arquivo: 'vinheta.wav',
+    entradas: [['vinheta.wav', 'Introdução com fade'], ['entrevista.mp3', 'Ajustar corte e volume']],
+    saidas: [['Episódio MP3', 'Vinheta seguida da entrevista'], ['Volume', 'Normalização na renderização']],
+    metodo: 'O FFmpeg ajusta o ganho por trecho, une os cortes e aplica os fades e a normalização ao episódio.',
+    nota: 'Os nomes e trechos desta demonstração são fictícios.',
+  },
+};
+
 export async function gerarDemonstracoes() {
   const demos = new Map();
   for (const [slug, demo] of await demonstracoesLegadas()) demos.set(slug, sanitizarDemo(demo));
@@ -145,6 +169,15 @@ export async function gerarDemonstracoes() {
     } catch (erro) {
       throw new Error(`Exemplo profissional inválido em ${spec.slug}: ${erro.message}`, { cause: erro });
     }
+  }
+  for (const [slug, amostra] of Object.entries(amostrasDeArquivos)) {
+    const ferramenta = ferramentasProntas.find(f => f.slug === slug);
+    demos.set(slug, sanitizarDemo({
+      ...ferramenta, tipo: 'ilustrativo',
+      entrada: { rotulo: 'Arquivos de exemplo', arquivo: amostra.arquivo, colunas: ['Arquivo', 'Configuração'], linhas: amostra.entradas },
+      tabela: { colunas: ['Saída', 'Conteúdo'], linhas: amostra.saidas },
+      metodo: amostra.metodo, notas: [amostra.nota],
+    }));
   }
   return demos;
 }

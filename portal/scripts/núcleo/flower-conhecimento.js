@@ -54,6 +54,18 @@ const buscar = "ferramentas.html?busca=";
 
 // PDF
 add(
+  "pdf", "pdf-lote-servidor", "Como otimizar vários PDFs de uma vez?",
+  ["central de pdf em lote", "otimizar varios pdf", "comprimir documentos em lote"],
+  "Na Central de PDF em lote, envie os documentos, escolha um perfil de qualidade e selecione se deseja juntá-los. Compare os tamanhos no relatório e baixe o pacote ZIP. A execução exige acesso Premium e o servidor online.",
+  ["f/central-pdf-em-lote/"],
+);
+add(
+  "audio-video", "estudios-de-midia", "Como montar um podcast ou um vídeo com vários trechos?",
+  ["estudio de podcast", "estudio profissional de video", "montar episodio em mp3", "renderizar varios clipes"],
+  "Abra o estúdio de vídeo ou de podcast com sua conta Premium. Importe até quatro arquivos, escolha os cortes e ordene os trechos. O servidor exporta a sequência em MP4 para vídeo ou MP3 para podcast.",
+  ["f/estudio-podcast-servidor/", "f/estudio-video-servidor/"],
+);
+add(
   "pdf",
   "pdf-editar",
   "Como editar um PDF?",

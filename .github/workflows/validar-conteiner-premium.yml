@@ -9,6 +9,8 @@ on:
       - 'portal/ferramentas/iniciar-nuvem.mjs'
       - 'portal/servidor/iniciar.mjs'
       - 'portal/servidor/flower.mjs'
+      - 'portal/servidor/central-pdf*.mjs'
+      - 'portal/servidor/estudio-midia*.mjs'
       - 'portal/scripts/comum/**'
       - 'portal/ferramentas/montar-midias.mjs'
       - 'portal/ferramentas/montar-ocr.mjs'

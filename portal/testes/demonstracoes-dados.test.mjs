@@ -29,14 +29,19 @@ function inclinacaoOls(pares) {
   return cov / variancia;
 }
 
-test('gera demonstração para exatamente as 140 ferramentas pagas prontas', async () => {
+test('gera demonstração para todas as ferramentas pagas prontas', async () => {
   const demos = await demosPromise;
   const pagas = ferramentasProntas.filter(f => f.plano === 'plus' || f.plano === 'premium');
-  assert.equal(pagas.length, 140);
-  assert.equal(demos.size, 140);
+  assert.equal(demos.size, pagas.length);
   assert.deepEqual([...demos.keys()].sort(), pagas.map(f => f.slug).sort());
   assert.equal([...demos.values()].filter(d => d.tipo === 'calculado').length, 139);
-  assert.equal([...demos.values()].filter(d => d.tipo === 'ilustrativo').length, 1);
+  for (const slug of ['central-pdf-em-lote', 'estudio-video-servidor', 'estudio-podcast-servidor']) {
+    const demo = demos.get(slug);
+    assert.equal(demo.tipo, 'ilustrativo');
+    assert.ok(demo.entrada.arquivo);
+    assert.deepEqual(demo.indicadores, []);
+    assert.deepEqual(demo.series, []);
+  }
 });
 
 test('demonstração da regressão concorda com cálculo independente; fixture conhecido tem inclinação 0,6', async () => {

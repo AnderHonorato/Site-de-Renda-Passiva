@@ -87,4 +87,10 @@ F247: {nome: 'Marketplace margin audit', resumo: 'Margem por SKU após comissõe
     resumo:'Reorder audio clips, trim them and apply fades, gain and loudness normalization to export MP3.',
     tags:['podcast editor','audio normalization','mp3 mixing','server processing'],
     intenções:['edit a podcast with cuts fades and normalized audio on a server']},
+  F359: {
+    nome: 'Batch PDF processing',
+    resumo: 'Prepare a batch of PDFs for distribution, choose compression quality, and download the documents and reports in one ZIP.',
+    tags: ['batch PDF processing', 'PDF compression', 'grayscale PDF', 'Ghostscript'],
+    intenções: ['optimize multiple PDFs and compare file sizes', 'package processed PDFs with a report'],
+  },
 });

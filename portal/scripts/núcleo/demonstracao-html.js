@@ -6,7 +6,7 @@ const numeros = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 6 });
 export const formatoDemo = v => v === null || v === undefined ? '—' : typeof v === 'number'
   ? (v !== 0 && Math.abs(v) < 0.000001 ? v.toExponential(2) : numeros.format(v))
   : String(v);
-const formatos = { xlsx: 'Excel', txt: 'TXT', pdf: 'PDF', csv: 'CSV', json: 'JSON', svg: 'SVG', png: 'PNG', baixar: 'Arquivo', imprimir: 'Impressão' };
+const formatos = { mp3: 'MP3', mp4: 'MP4', zip: 'ZIP', xlsx: 'Excel', txt: 'TXT', pdf: 'PDF', csv: 'CSV', json: 'JSON', svg: 'SVG', png: 'PNG', baixar: 'Arquivo', imprimir: 'Impressão' };
 
 function tabela({ colunas = [], linhas = [] } = {}) {
   if (!colunas.length) return '';

@@ -1,5 +1,6 @@
 import { createServer } from 'node:http';
 import { createReadStream } from 'node:fs';
+import { criarCentralPdf } from './central-pdf-api.mjs';
 import { criarGerenciadorEstudio } from './estudio-midia-sessoes.mjs';
 import { appendFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -206,7 +207,7 @@ function imagemValida(buffer,mime){
   return false;
 }
 
-async function rota(req,res){
+async function rota(req,res,centralPdf){
   const url=new URL(req.url,'http://localhost');const p=url.pathname;const m=req.method;
   if(!p.startsWith('/api/'))throw erro(404,'nao_encontrado');
   // Um administrador autenticado ainda pode consultar e desfazer bloqueios da própria rede.
@@ -227,6 +228,7 @@ async function rota(req,res){
     const u=sessao(req);return json(res,200,{usuario:usuarioPublico(u),chat_habilitado:chatAtivo(),chat_aceito:!!u?.chat_aceito_em});
   }
   proteger(req);
+  if(p.startsWith('/api/central-pdf/'))return centralPdf.tratar(req,res,p,{exigir,revalidarPremium,conferirLimite,json,corpo,corpoBinario});
   // F357/F358: sessão Premium, arquivos temporários privados, renderização FFmpeg real.
   if(p==='/api/estudio/sessoes'&&m==='POST'){
     const u=exigir(req);
@@ -993,7 +995,8 @@ async function rota(req,res){
 
 export async function iniciar({porta=Number(process.env.PORTAL_API_PORTA||4870),host='127.0.0.1'}={}){
   void editor.recuperar().catch(()=>{try{protecao.registrarErro('OUTRO');}catch{}});
-  const servidor=createServer({maxHeaderSize:16384,headersTimeout:10000,requestTimeout:30000},(req,res)=>{Promise.resolve(rota(req,res)).catch(e=>{
+  const centralPdf=criarCentralPdf({premiumAtivo:id=>!!banco.prepare("SELECT 1 FROM usuarios WHERE id=? AND situacao='ativo' AND (plano='premium' OR papel='admin')").get(id)});
+  const servidor=createServer({maxHeaderSize:16384,headersTimeout:10000,requestTimeout:30000},(req,res)=>{Promise.resolve(rota(req,res,centralPdf)).catch(e=>{
     if(res.headersSent){res.end();return;}const status=e.status||500,headers=status===429?{'Retry-After':String(e.retryAfter||2)}:{};
     if(status>=500)try{protecao.registrarErro(req.method);}catch{}
     if([429,500].includes(status)&&req.headers.accept?.includes('text/html')){
@@ -1014,10 +1017,28 @@ export async function iniciar({porta=Number(process.env.PORTAL_API_PORTA||4870),
       banco.prepare('DELETE FROM redefinicoes WHERE expira_em<?').run(agora());
     }catch(e){process.stderr.write(`Falha na limpeza da API: ${e.message}\n`);}
   },3600000);
-  limpar.unref();servidor.on('close',()=>{clearInterval(limpar);void estudio.fechar();});
+  limpar.unref();
+  servidor.finalizacao = new Promise(resolve => servidor.once('close', () => {
+    clearInterval(limpar);
+    resolve(Promise.all([estudio.fechar(), centralPdf.fechar()]));
+  }));
+  servidor.finalizacao.catch(() => {});
   return new Promise((ok,fail)=>{servidor.once('error',fail);servidor.listen(porta,host,()=>ok(servidor));});
 }
 export function fecharBanco(){banco.close();}
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename)){
-  iniciar().then(s=>process.stdout.write(`Portal API em http://127.0.0.1:${s.address().port}\n`)).catch(e=>{process.stderr.write(`${e.message}\n`);process.exitCode=1;});
+  iniciar().then(s => {
+    process.stdout.write(`Portal API em http://127.0.0.1:${s.address().port}\n`);
+    let encerrando = false;
+    const encerrar = async () => {
+      if (encerrando) return;
+      encerrando = true;
+      s.close();
+      s.closeAllConnections();
+      try { await s.finalizacao; } catch { process.exitCode = 1; }
+      fecharBanco();
+    };
+    process.once('SIGTERM', encerrar);
+    process.once('SIGINT', encerrar);
+  }).catch(e=>{process.stderr.write(`${e.message}\n`);process.exitCode=1;});
 }

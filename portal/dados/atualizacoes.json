@@ -1,6 +1,24 @@
 {
   "itens": [
     {
+      "id": "edicao-premium-no-servidor",
+      "slug": "edicao-premium-no-servidor",
+      "categoria": "novo",
+      "versao": "2026.11",
+      "publicado_em": "2026-11-23T16:53:53.661Z",
+      "atualizado_em": "2026-11-23T16:53:53.661Z",
+      "pt": {
+        "titulo": "Prepare um lote de PDFs ou monte um episódio no servidor",
+        "resumo": "Compare o tamanho dos PDFs após a otimização, monte vídeos em 720p e ajuste o volume de cada trecho de um podcast.",
+        "conteudo": "Na Central de PDF em lote, escolha os documentos na ordem em que devem aparecer, selecione o perfil de qualidade e decida se quer uma cópia unificada. O relatório compara os tamanhos de entrada e saída. Um PDF já comprimido pode ficar maior. Guarde o original se o documento contiver assinaturas ou formulários.\n\nNos estúdios de vídeo e podcast, importe até quatro arquivos, ajuste o início e o fim dos trechos e monte uma sequência de até três minutos. O vídeo sai em MP4 720p. O podcast sai em MP3, com ajustes de volume e suavização nas transições.\n\nAs três ferramentas usam processamento no servidor e exigem uma conta com acesso Premium. Na prévia do GitHub Pages você pode conhecer os recursos e consultar os exemplos."
+      },
+      "en": {
+        "titulo": "Prepare a PDF batch or edit an episode on the server",
+        "resumo": "Compare PDF sizes after optimization, assemble a 720p video or adjust the volume of individual podcast clips.",
+        "conteudo": "Choose a quality profile and optionally combine your PDFs in upload order. The report compares input and output sizes. An already compressed document may grow. Keep the original for signatures and forms.\n\nThe video and podcast studios accept up to four source files. Trim and arrange clips into a sequence of up to three minutes and export a 720p MP4 or an MP3 with volume adjustments and short fades.\n\nThese tools require a Premium account on the processing server. The GitHub Pages preview presents the tools and their examples."
+      }
+    },
+    {
       "id": "ocr-scanner-e-markdown",
       "slug": "ocr-scanner-e-markdown",
       "categoria": "novo",

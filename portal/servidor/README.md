@@ -40,3 +40,11 @@ Exige volume persistente em `/data` e banco configurado em
 
 ## blitz.cloud gratuito
 Consulte portal/documentacao/implantacao-blitz.md. Importar a branch ander-flow/v1, pasta portal, Dockerfile, manter /data em "kept folders" e configurar URL_PUBLICA com o HTTPS exato da aplicação. A imagem já usa /data/portal.sqlite. O plano grátis hiberna e não faz backups desse SQLite.
+
+## Central de PDF e estúdios de mídia
+
+A imagem Docker inclui Ghostscript para otimizar PDFs e FFmpeg com FFprobe para editar vídeo e podcast. Para rodar diretamente no Debian ou Ubuntu, instale os pacotes `ghostscript` e `ffmpeg` no host da API. As ferramentas exigem conta com acesso Premium. No GitHub Pages ficam disponíveis as fichas e demonstrações públicas.
+
+A Central aceita de um a seis PDFs, até 10 MiB e 100 páginas por documento, com limite total de 40 MiB e 200 páginas. Processa um lote por vez. A resolução escolhida afeta as imagens incorporadas. A opção de limpeza retira os campos Info e o XMP do catálogo, e a regravação invalida assinaturas digitais. O ZIP contém os PDFs, a união opcional e o relatório em PDF, XLSX, TXT, CSV e JSON. A tabela informa também quando uma saída ficou maior.
+
+Cada lote usa uma pasta temporária privada no host, fora da raiz publicada. Somente o dono autenticado com acesso Premium pode consultar o lote e baixar arquivos. A exclusão cancela o processamento. Os lotes expiram após 15 minutos da criação. A API verifica periodicamente o vencimento e remove pastas antigas de execuções interrompidas na inicialização. O banco de contas continua no volume persistente configurado para o portal.

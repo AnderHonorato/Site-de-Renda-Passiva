@@ -55,6 +55,33 @@ function imagem(ctx, x, y, l, a, c) {
   ctx.globalAlpha=.55;ctx.beginPath();ctx.moveTo(x,y+a);ctx.lineTo(x+l*.35,y+a*.26);ctx.lineTo(x+l*.75,y+a);ctx.fill();
   ctx.globalAlpha=.85;ctx.beginPath();ctx.moveTo(x+l*.3,y+a);ctx.lineTo(x+l*.7,y+a*.4);ctx.lineTo(x+l*1.1,y+a);ctx.fill();ctx.restore();
 }
+const exemplosDeArquivo = {
+  'central-pdf-em-lote': { tipo: 'pdf', etapas: ['PDFs', 'Qualidade', 'Pacote ZIP'] },
+  'estudio-video-servidor': { tipo: 'video', etapas: ['Clipes', 'Montagem', 'Vídeo MP4'] },
+  'estudio-podcast-servidor': { tipo: 'audio', etapas: ['Trechos', 'Volume', 'Episódio MP3'] },
+};
+
+function faixaDeExemplo(ctx, tipo, x, y, largura, altura, c, andamento) {
+  caixa(ctx, x, y, largura, altura, c.alternada, 8);
+  if (tipo === 'pdf') {
+    const pagina = altura * .62;
+    for (let i = 0; i < 3; i++) {
+      const esquerda = x + largura * (.18 + i * .30), topo = y + altura * .12;
+      folha(ctx, esquerda, topo, pagina, altura * .75, c);
+      for (let linha = 0; linha < 3; linha++)
+        caixa(ctx, esquerda + pagina * .16, topo + altura * (.16 + linha * .12), pagina * (linha === 2 ? .4 : .68), 3, c.marca, 1);
+    }
+  } else if (tipo === 'video') {
+    for (let i = 0; i < 5; i++) imagem(ctx, x + i * largura / 5 + 4, y + 4, largura / 5 - 8, altura - 8, c);
+  } else {
+    for (let i = 0; i < 48; i++) {
+      const barra = altura * (.15 + Math.abs(Math.sin(i * .49) * Math.cos(i * .19)) * .73);
+      caixa(ctx, x + (i + .2) * largura / 48, y + (altura - barra) / 2, largura / 72, barra, c.marca, 2);
+    }
+  }
+  if (tipo !== 'pdf') caixa(ctx, x + andamento * (largura - 3), y, 3, altura, c.tinta, 1);
+}
+
 function cabecalho(ctx, W, nome, fase, c) {
   texto(ctx, 'ANDER FLOW  /  EXEMPLO', 32, 38, W - 64, 18, c.marca, 600);
   texto(ctx, nome, 32, 80, W - 64, W < 800 ? 28 : 34, c.tinta, 600);
@@ -80,14 +107,21 @@ function entrada(ctx, t, W, H, demo, c) {
   cabecalho(ctx, W, demo.nome, '01  /  Um arquivo, uma pergunta.', c);
   const l = W * .82, a = H * .64, x = (W - l) / 2, y = H * .23;
   const p = Math.max(0, mola(t - .1));
+  const arquivo = exemplosDeArquivo[demo.slug];
   const imagemLocal=demo.slug==='redimensionar-imagens-em-lote';
   ctx.save(); ctx.translate(W / 2, H * .55); ctx.scale(p, p); ctx.translate(-W / 2, -H * .55);
   folha(ctx, x, y, l, a, c, 1, -.018 * (1 - progresso(t, .4, 2)));
   caixa(ctx, x + 22, y + 22, 86, 38, c.marca, 9);
-  texto(ctx, imagemLocal?'IMG':demo.entrada.colunas?.length ? 'CSV' : (demo.entrada.arquivo?.split('.').pop() || 'TXT').toUpperCase(), x + 35, y + 48, 62, 20, c.sobre, 600);
+  texto(ctx, imagemLocal?'IMG':arquivo ? demo.entrada.arquivo.split('.').pop().toUpperCase() : demo.entrada.colunas?.length ? 'CSV' : (demo.entrada.arquivo?.split('.').pop() || 'TXT').toUpperCase(), x + 35, y + 48, 62, 20, c.sobre, 600);
   texto(ctx, 'TRECHO DO EXEMPLO', x + 128, y + 48, l - 152, 18, c.suave, 600);
   texto(ctx, imagemLocal?'Imagens de exemplo':demo.entrada.arquivo || 'documento-de-exemplo.txt', x + 24, y + 100, l - 48, 24, c.tinta, 600);
   if(imagemLocal)imagem(ctx,x+24,y+128,l-48,a-190,c);
+  else if (arquivo) {
+    const faixa = Math.max(40, Math.min(a * .26, a - 200));
+    faixaDeExemplo(ctx, arquivo.tipo, x + 24, y + 120, l - 48, faixa, c, progresso(t, .8, 3.8));
+    const nomes = demo.entrada.linhas.map(linha => linha[0]).join('  +  ');
+    texto(ctx, nomes, x + 24, y + 148 + faixa, l - 48, 20, c.suave);
+  }
   else if (demo.entrada.colunas?.length) tabela(ctx, demo.entrada, x + 24, y + 132, l - 48, c, { tamanho: W < 800 ? 20 : 24, revelar:progresso(t, .8, 2.8) });
   else linhas(ctx, demo.entrada.texto || demo.entrada.rotulo, x + 24, y + 150, l - 48, W < 800 ? 25 : 30, c.tinta, W < 800 ? 7 : 5);
   texto(ctx, 'Dados fictícios. O exemplo não usa arquivos seus.', x + 24, y + a - 28, l - 48, 18, c.suave);
@@ -106,7 +140,7 @@ function analise(ctx, t, W, H, demo, c) {
     const y = pts[seg][1] + (pts[seg+1][1] - pts[seg][1]) * r - Math.sin(r * Math.PI) * 35;
     ctx.save();ctx.translate(x,y);ctx.rotate(q*4);caixa(ctx,-5,-5,10,10,c.marca,2);ctx.restore();
   }
-  (demo.slug==='redimensionar-imagens-em-lote'?['Imagens','Ajustes','Arquivos']:['Dados','Análise','Relatório']).forEach((titulo,i) => {
+  (exemplosDeArquivo[demo.slug]?.etapas || (demo.slug==='redimensionar-imagens-em-lote'?['Imagens','Ajustes','Arquivos']:['Dados','Análise','Relatório'])).forEach((titulo,i) => {
     const [x,y] = pts[i], l = mobile ? 150 : 220, a = mobile ? 130 : 170;
     const pop = Math.max(0,mola(t - 4.4 - i * .18));
     folha(ctx,x-l/2,y-a/2,l,a,c,pop,(i-1)*.025);
@@ -154,7 +188,7 @@ function resultado(ctx, t, W, H, demo, c) {
     proximo+=altura+82;
   }
   tabela(ctx,demo.tabela,x+22,proximo,l-44,c,{linhasMaximas:demo.series.length?2:5,tamanho:mobile?17:21,revelar:progresso(t,9.4,10.6)});
-  const formatos=demo.exporta.filter(f=>['pdf','xlsx','txt','csv','json','svg','png'].includes(f)).slice(0,5);
+  const formatos=demo.exporta.filter(f=>['pdf','xlsx','txt','csv','json','svg','png','zip','mp3','mp4'].includes(f)).slice(0,5);
   let xx=x+22;const fy=y+a-42;
   formatos.forEach((f,i)=>{const p=progresso(t,10.2+i*.12,10.7+i*.12);ctx.save();ctx.globalAlpha=p;caixa(ctx,xx,fy+(1-p)*12,f==='xlsx'?79:62,29,c.fraca,6);texto(ctx,f==='xlsx'?'Excel':f.toUpperCase(),xx+9,fy+21+(1-p)*12,70,15,c.marca,600);ctx.restore();xx+=f==='xlsx'?87:70;});
   ctx.restore();

@@ -1,0 +1,21 @@
+.pdf-lote [hidden] { display: none !important; }
+.pdf-lote .campos > .lista-ferramentas, .pdf-lote .campos > .vazio { grid-column: 1 / -1; }
+.pdf-lote .ferramenta-linha, .pdf-lote .campo, .pdf-lote .pdf-lote__leitor > * { min-width: 0; }
+.pdf-lote .resultado .botão { white-space: normal; overflow-wrap: anywhere; }
+.pdf-lote__comparacao, .pdf-lote__leitor { margin: var(--espaço-4, 1rem); }
+.pdf-lote__comparacao { display: grid; gap: .75rem; }
+.pdf-lote__comparacao h3, .pdf-lote__comparacao h4, .pdf-lote__comparacao p { margin: 0; }
+.pdf-lote__comparativo { display: grid; gap: .45rem; padding: 1rem; background: var(--superfície-2); border: 1px solid var(--borda); border-radius: var(--raio); overflow-wrap: anywhere; }
+.pdf-lote__medida { display: grid; grid-template-columns: 5.5em minmax(0, 1fr) auto; align-items: center; gap: .5rem; font-size: var(--t-xs); font-variant-numeric: tabular-nums; }
+.pdf-lote__medida meter { width: 100%; max-width: 100%; height: .8rem; accent-color: var(--marca); }
+.pdf-lote__medida meter::-webkit-meter-optimum-value { background: var(--marca); }
+.pdf-lote__medida:first-of-type meter::-webkit-meter-optimum-value { background: var(--tinta-média); }
+.pdf-lote__leitor { display: flex; align-items: flex-end; flex-wrap: wrap; gap: .75rem; }
+.pdf-lote__leitor label { flex: 1 1 220px; }
+.pdf-lote__leitor select { max-width: 100%; width: 100%; }
+@media (max-width: 480px) {
+  .pdf-lote .ferramenta-linha { flex-wrap: wrap; }
+  .pdf-lote .ferramenta-linha__fim { margin-inline-start: auto; }
+  .pdf-lote__leitor { align-items: stretch; flex-direction: column; }
+  .pdf-lote__leitor label { flex-basis: auto; }
+}

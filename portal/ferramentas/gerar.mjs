@@ -35,7 +35,7 @@ const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const atualizacoes = validarFeedAtualizacoes(JSON.parse(await readFile(join(RAIZ, 'dados/atualizacoes.json'), 'utf8')));
 
 const RÓTULO_DE_EXPORTAÇÃO = {
-  copiar: 'copiar', baixar: 'baixar arquivo', pdf: 'PDF', xlsx: 'planilha Excel',
+  mp3: 'MP3', mp4: 'MP4', zip: 'ZIP', copiar: 'copiar', baixar: 'baixar arquivo', pdf: 'PDF', xlsx: 'planilha Excel',
   csv: 'CSV', json: 'JSON', txt: 'texto TXT', png: 'PNG', svg: 'SVG', link: 'link para compartilhar', imprimir: 'impressão',
 };
 
@@ -156,7 +156,7 @@ function páginaDeFerramenta(f, instruções, demonstracao) {
     conteúdo,
     scripts: ['núcleo/página-de-ferramenta.js', ...(demonstracao ? ['núcleo/demonstracoes-iniciar.js'] : [])],
     estilos: [
-      ...({ 'digitalizar-para-pdf': ['digitalizar-para-pdf.css'], 'ocr-de-imagem': ['ocr-documentos.css'], 'ocr-pdf': ['ocr-documentos.css'], 'pdf-para-markdown': ['pdf-para-markdown.css'], 'editar-pdf': ['editor-pdf.css'], 'editor-de-fotos': ['editor-imagem.css'], 'converter-audio': ['editor-audio.css'], 'cortar-video-e-audio': ['editor-video.css'], 'editor-de-documentos': ['editores-office.css'], 'editor-de-apresentacoes': ['editores-office.css'], 'editor-de-planilhas': ['editores-office.css'] }[f.slug] || []),
+      ...({ 'central-pdf-em-lote': ['central-pdf-em-lote.css'], 'digitalizar-para-pdf': ['digitalizar-para-pdf.css'], 'ocr-de-imagem': ['ocr-documentos.css'], 'ocr-pdf': ['ocr-documentos.css'], 'pdf-para-markdown': ['pdf-para-markdown.css'], 'editar-pdf': ['editor-pdf.css'], 'editor-de-fotos': ['editor-imagem.css'], 'converter-audio': ['editor-audio.css'], 'cortar-video-e-audio': ['editor-video.css'], 'editor-de-documentos': ['editores-office.css'], 'editor-de-apresentacoes': ['editores-office.css'], 'editor-de-planilhas': ['editores-office.css'] }[f.slug] || []),
       ...(['plus', 'premium'].includes(f.plano) ? ['acesso-ferramenta.css', 'demonstracoes.css'] : []),
       ...(f.slug === 'limpar-planilha' ? ['limpeza-planilha.css']
         : f.slug === 'ficha-de-cliente' ? ['ficha-de-cliente.css'] : []),

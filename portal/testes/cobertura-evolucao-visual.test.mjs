@@ -26,6 +26,12 @@ test('cada ferramenta inventariada realmente monta uma das interfaces integradas
   }
   for (const item of inventario.ferramentas) {
     const pagina = await fonte(item.moduloPagina);
+    if (item.familia === 'servidor/estudio-midia') {
+      const tipo = item.slug === 'estudio-video-servidor' ? 'video' : 'audio';
+      assert.ok(pagina.includes(`criarEstudioVisual('${tipo}')`), item.slug);
+      assert.match(await fonte(item.adaptadorCompartilhado), /montar\(raiz,\s*ferramenta\)/, item.slug);
+      continue;
+    }
     if (item.familia === 'local/ocr') {
       assert.match(pagina, /\bmontarOCR\(/, item.slug);
       assert.match(await fonte(item.adaptadorCompartilhado), /\bmontarFerramenta\(/, item.slug);

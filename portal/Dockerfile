@@ -1,6 +1,6 @@
 # Build context: portal/
 FROM node:22.16.0-bookworm-slim AS build
-RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg ghostscript && rm -rf /var/lib/apt/lists/*
 WORKDIR /app/portal
 COPY . .
 RUN npm ci --ignore-scripts \
@@ -14,7 +14,7 @@ RUN npm ci --ignore-scripts \
  && npm run verificar
 
 FROM node:22.16.0-bookworm-slim
-RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg ghostscript && rm -rf /var/lib/apt/lists/*
 ENV NODE_ENV=production PORT=8080 PORTAL_BANCO=/data/portal.sqlite PORTAL_IA_CHAVE_MESTRA_FILE=/data/flower-master.key PORTAL_API_PORTA=4870 PORTAL_CHAT_LOCAL=0 PORTAL_CHAT_PUBLICO=0 PORTAL_ADS_ATIVO=0 PORTAL_ADS_TESTE=0
 WORKDIR /app/portal
 COPY --from=build --chown=node:node /app/portal /app/portal

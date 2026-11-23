@@ -13,6 +13,13 @@ let itens = [], filtro = 'todas';
 // Metadados de apresentação permanecem na página: o schema do CMS continua enxuto.
 // Os slugs abaixo são resolvidos contra o catálogo oficial antes de virar link.
 const enriquecimentos = {
+  'edicao-premium-no-servidor': {
+    visual: 'arquivos', etiqueta: 'PDF · MP4 · MP3',
+    destaques: en
+      ? ['Compare file sizes and download the optimized PDFs together.', 'Trim and arrange video clips on a timeline and export in 720p.', 'Adjust clip levels and listen to the exported podcast.']
+      : ['Compare os tamanhos e baixe os PDFs otimizados em conjunto.', 'Corte e ordene as cenas na linha do tempo para exportar em 720p.', 'Ajuste o volume dos trechos e ouça o podcast exportado.'],
+    ferramentas: ['central-pdf-em-lote', 'estudio-video-servidor', 'estudio-podcast-servidor'],
+  },
   'ocr-scanner-e-markdown': {
     visual: 'documento', etiqueta: 'OCR · PDF · MD',
     destaques: en

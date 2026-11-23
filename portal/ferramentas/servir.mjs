@@ -125,7 +125,8 @@ function encaminharApi(requisição, resposta) {
     resposta.writeHead(origem.statusCode || 502, { ...origem.headers, 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
     origem.pipe(resposta);
   });
-  const prazo = requisição.url?.startsWith('/api/chat/eventos') ? 0 : (requisição.url?.includes('/midias') ? 60000 : 10000);
+  const transferencia = /^\/api\/(central-pdf|estudio)\//.test(rotaLocal) || rotaLocal.includes('/midias');
+  const prazo = rotaLocal === '/api/chat/eventos' ? 0 : (transferencia ? 120000 : 10000);
   destino.setTimeout(prazo, () => destino.destroy());
   destino.on('error', () => {
     if (resposta.headersSent) return resposta.end();

@@ -1,9 +1,9 @@
 {
-  "total": 262,
+  "total": 265,
   "contagens": {
     "profissionais": 100,
-    "montadorCompartilhado": 158,
-    "editoresCustomizados": 4
+    "montadorCompartilhado": 159,
+    "editoresCustomizados": 6
   },
   "estados": "INTEGRADA_E_VALIDADA_POR_FAMILIA: montagem conferida para cada entrada; execução em navegador por cenários representativos, sem alegar teste manual individual.",
   "ferramentas": [
@@ -6809,6 +6809,81 @@
       "familia": "local/montador",
       "commitImplementacao": "lote-documentos-digitalizados",
       "evidencia": "Exportação e interface exercitadas em pdf-para-markdown.teste.mjs; cálculos puros cobertos em Node."
+    },
+    {
+      "slug": "estudio-video-servidor",
+      "nome": "Estúdio profissional de vídeo no servidor",
+      "cat": "imagens",
+      "plano": "premium",
+      "tipoProcessamento": [
+        "arquivo",
+        "assíncrono"
+      ],
+      "entrada": "Até 4 vídeos MP4/WebM de 25 MB cada, cortes, ordem, volume e filtros por trecho.",
+      "processamento": "Transcodifica e concatena vídeo e áudio com FFmpeg no servidor, preservando trechos mudos como silêncio.",
+      "moduloPagina": "portal/scripts/ferramentas/estudio-video-servidor.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/estudio-midia-visual.js",
+      "modoMontagem": "criarEstudioVisual",
+      "worker": "FFmpeg no servidor",
+      "lotePrincipal": 6,
+      "lotes": [
+        4,
+        6
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "servidor/estudio-midia",
+      "commitImplementacao": "8daf381",
+      "evidencia": "Interface de linha do tempo; renderização coberta na suíte de estúdio."
+    },
+    {
+      "slug": "estudio-podcast-servidor",
+      "nome": "Estúdio de podcast com renderização de áudio",
+      "cat": "imagens",
+      "plano": "premium",
+      "tipoProcessamento": [
+        "arquivo",
+        "assíncrono"
+      ],
+      "entrada": "Até 4 áudios MP3/WAV/OGG de 25 MB cada, cortes, ordem e volume por segmento.",
+      "processamento": "Normaliza taxa de amostragem, concatena e aplica loudnorm, fades e MP3 com FFmpeg no backend.",
+      "moduloPagina": "portal/scripts/ferramentas/estudio-podcast-servidor.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/estudio-midia-visual.js",
+      "modoMontagem": "criarEstudioVisual",
+      "worker": "FFmpeg no servidor",
+      "lotePrincipal": 6,
+      "lotes": [
+        4,
+        6
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "servidor/estudio-midia",
+      "commitImplementacao": "8daf381",
+      "evidencia": "Interface de linha do tempo; renderização coberta na suíte de estúdio."
+    },
+    {
+      "slug": "central-pdf-em-lote",
+      "nome": "Central de PDF em lote",
+      "cat": "pdf",
+      "plano": "premium",
+      "tipoProcessamento": [
+        "arquivo",
+        "assíncrono"
+      ],
+      "entrada": "Arquivos PDF em ordem de saída e opções de qualidade, tons de cinza, metadados e união.",
+      "processamento": "O servidor regrava os PDFs com Ghostscript e compara os tamanhos dos arquivos de entrada e saída.",
+      "moduloPagina": "portal/scripts/ferramentas/central-pdf-em-lote.js",
+      "adaptadorCompartilhado": "portal/scripts/núcleo/montador.js",
+      "modoMontagem": "montador.js (uso direto)",
+      "worker": "Ghostscript no servidor",
+      "lotePrincipal": 6,
+      "lotes": [
+        4,
+        6
+      ],
+      "estado": "INTEGRADA_E_VALIDADA_POR_FAMILIA",
+      "familia": "servidor/pdf-em-lote",
+      "commitImplementacao": "lote-pdf-em-lote",
+      "evidencia": "Montagem e exemplo público conferidos na suíte de cobertura visual."
     }
   ],
   "referenciaCatalogo": "HEAD b921497474d46a2b9e35b8cc6450375c79210fda",

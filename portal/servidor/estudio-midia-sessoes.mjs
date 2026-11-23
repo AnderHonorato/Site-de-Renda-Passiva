@@ -4,7 +4,7 @@
 import { randomUUID } from 'node:crypto';
 import { mkdtemp, mkdir, writeFile, stat, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { join } from 'node:path';
 import { execFile, spawn } from 'node:child_process';
 import { promisify } from 'node:util';
 import { ErroEstudio, normalizarEdicao, montarArgumentosFFmpeg } from './estudio-midia-processamento.mjs';
@@ -31,7 +31,7 @@ export async function sondarComFFprobe(caminho){
  try{
   const result=await exec(process.env.PORTAL_FFPROBE_BIN||'ffprobe',[
    '-v','error','-protocol_whitelist','file,pipe',
-   '-show_entries','format=duration:stream=codec_type,width,height',
+   '-show_entries','format=duration:stream=codec_type,width,height:stream_disposition=attached_pic',
    '-of','json',caminho
   ],{timeout:13000,maxBuffer:256000,windowsHide:true});
   stdout=result.stdout;
@@ -40,9 +40,10 @@ export async function sondarComFFprobe(caminho){
  try{meta=JSON.parse(stdout)}catch{throw new ErroEstudio('A mídia não foi reconhecida.',422)}
  const duracao=Number(meta.format?.duration);
  const streams=meta.streams||[];
- const video=streams.some(s=>s.codec_type==='video');
+ const imagens=streams.filter(s=>s.codec_type==='video'&&!s.disposition?.attached_pic);
+ const video=imagens.length>0;
  const audio=streams.some(s=>s.codec_type==='audio');
- const pixels=streams.filter(s=>s.codec_type==='video')
+ const pixels=imagens
   .some(s=>Number(s.width)*Number(s.height)>3840*2160||!Number(s.width)||!Number(s.height));
  if(!Number.isFinite(duracao)||duracao<0.25||duracao>240||pixels||(!video&&!audio))
   throw new ErroEstudio('Mídia fora do limite: 4 minutos e até 4K.',422);
@@ -54,26 +55,27 @@ export async function renderizarComFFmpeg(plano,saida,{signal,progresso}={}){
   const proc=spawn(process.env.PORTAL_FFMPEG_BIN||'ffmpeg',args,{
    windowsHide:true,stdio:['ignore','pipe','pipe'],signal
   });
-  let finalizado=false,stdout='',erro='';
-  const timeout=setTimeout(()=>{proc.kill('SIGKILL');terminar(new ErroEstudio('Tempo máximo de processamento excedido.',503));},180000);
+  let stdout='',falha;
+  const timeout=setTimeout(()=>{falha=new ErroEstudio('Tempo máximo de processamento excedido.',503);proc.kill('SIGKILL');},180000);
   timeout.unref();
-  function terminar(error){
-   if(finalizado)return;finalizado=true;clearTimeout(timeout);
-   error?reject(error):resolve();
-  }
   proc.stdout.on('data',bloco=>{
    stdout=(stdout+String(bloco)).slice(-2048);
    const regex=/out_time_ms=(\d+)/g;let match,ms=0;
    while((match=regex.exec(stdout)))ms=Number(match[1]);
    if(ms&&plano.duracao>0)progresso?.(Math.min(0.98,ms/1000000/plano.duracao));
   });
-  proc.stderr.on('data',bloco=>{erro=(erro+String(bloco)).slice(-2500);});
-  proc.once('error',e=>terminar(signal?.aborted
-   ?new ErroEstudio('Renderização cancelada.',409)
-   :new ErroEstudio(e.code==='ENOENT'?'FFmpeg não instalado no servidor.':'Falha ao iniciar o FFmpeg.',503)));
-  proc.once('close',code=>terminar(signal?.aborted
-   ?new ErroEstudio('Renderização cancelada.',409)
-   :code===0?null:new ErroEstudio('Não foi possível renderizar. Verifique codecs e arquivos.',422)));
+  proc.stderr.resume();
+  proc.once('error',e=>{
+   falha=new ErroEstudio(e.code==='ENOENT'?'FFmpeg não instalado no servidor.':'Falha ao iniciar o FFmpeg.',503);
+   if(signal?.aborted)proc.kill('SIGKILL');
+  });
+  proc.once('close',code=>{
+   clearTimeout(timeout);
+   if(signal?.aborted)return reject(new ErroEstudio('Renderização cancelada.',409));
+   if(falha)return reject(falha);
+   if(code!==0)return reject(new ErroEstudio('Não foi possível renderizar. Verifique codecs e arquivos.',422));
+   resolve();
+  });
  });
 }
 export function criarGerenciadorEstudio({
@@ -101,6 +103,7 @@ export function criarGerenciadorEstudio({
  async function excluir(dono,id){
   const s=encontrar(dono,id);
   sessoes.delete(id);s.cancelador?.abort();
+  await s.renderizacao;
   await rm(s.diretorio,{recursive:true,force:true});
  }
  async function criar(dono,tipo){
@@ -108,34 +111,40 @@ export function criarGerenciadorEstudio({
    throw new ErroEstudio('Tipo de projeto inválido.');
   if(sessoes.size>=16||[...sessoes.values()].filter(s=>s.dono===dono).length>=2)
    throw new ErroEstudio('Limite temporário de projetos atingido. Exclua um projeto anterior.',429);
-  await mkdir(baseDir,{recursive:true});
-  const diretorio=await mkdtemp(join(baseDir,'sitesads-estudio-'));
-  const s={id:randomUUID(),dono,tipo,diretorio,arquivos:new Map(),
+  const s={id:randomUUID(),dono,tipo,diretorio:null,arquivos:new Map(),enviosPendentes:0,
    estado:'editando',progresso:0,totalBytes:0,expiraEm:agora()+TTL};
   sessoes.set(s.id,s);
-  return publico(s);
+  try{
+   await mkdir(baseDir,{recursive:true});
+   s.diretorio=await mkdtemp(join(baseDir,'sitesads-estudio-'));
+   if(!sessoes.has(s.id)){await rm(s.diretorio,{recursive:true,force:true});throw new ErroEstudio('Projeto encerrado.',409);}
+   return publico(s);
+  }catch(e){sessoes.delete(s.id);throw e;}
  }
  async function anexar(dono,id,bytes,mime){
   const s=encontrar(dono,id);
+  if(mime==='audio/x-wav'||mime==='audio/wave')mime='audio/wav';
   const cfg=VALIDOS[mime];
   if(!cfg||cfg.tipo!==s.tipo||!assinaturaValida(bytes,mime)||
      bytes.length>25*1024*1024||bytes.length<20)
    throw new ErroEstudio('Formato inválido ou arquivo maior que 25 MB.');
-  if(s.arquivos.size>=4||s.totalBytes+bytes.length>75*1024*1024||s.estado==='processando')
+  if(s.arquivos.size+s.enviosPendentes>=4||s.totalBytes+bytes.length>75*1024*1024||s.cancelador)
    throw new ErroEstudio('Limite de arquivos do projeto atingido.',429);
   const arquivoId=randomUUID();
   const caminho=join(s.diretorio,arquivoId+cfg.ext);
-  await writeFile(caminho,bytes,{flag:'wx',mode:0o600});
-  let info;
+  s.enviosPendentes++;s.totalBytes+=bytes.length;
   try{
-   info=await sondar(caminho);
+   await writeFile(caminho,bytes,{flag:'wx',mode:0o600});
+   const info=await sondar(caminho);
+   encontrar(dono,id);
    if(!info||!Number.isFinite(info.duracao)||info.duracao<0.25||
       info.duracao>240||(s.tipo==='video'?!info.video:!info.audio||info.video))
     throw new ErroEstudio('Mídia sem trilha compatível ou duração incorreta.',422);
-  }catch(e){await rm(caminho,{force:true});throw e;}
-  const a={id:arquivoId,caminho,mime,tamanho:bytes.length,...info};
-  s.arquivos.set(arquivoId,a);s.totalBytes+=bytes.length;
-  return publico(s).arquivos.at(-1);
+   const a={id:arquivoId,caminho,mime,tamanho:bytes.length,...info};
+   s.arquivos.set(arquivoId,a);
+   return publico(s).arquivos.at(-1);
+  }catch(e){s.totalBytes-=bytes.length;await rm(caminho,{force:true});throw e;}
+  finally{s.enviosPendentes--;}
  }
  async function arquivo(dono,id,arquivoId){
   const s=encontrar(dono,id),a=s.arquivos.get(arquivoId);
@@ -144,16 +153,18 @@ export function criarGerenciadorEstudio({
  }
  async function renderizar(dono,id,trechos){
   const s=encontrar(dono,id);
-  if(s.estado==='processando'||trabalhos>=2)
+  if(s.cancelador||s.enviosPendentes||trabalhos>=2)
    throw new ErroEstudio('Serviço ocupado. Tente novamente após esta renderização.',429);
   const plano=normalizarEdicao(s.tipo,trechos,s.arquivos);
-  if(s.saida)await rm(s.saida,{force:true});
+  const anterior=s.saida;
   s.saida=join(s.diretorio,'resultado-'+randomUUID()+(s.tipo==='video'?'.mp4':'.mp3'));
   s.estado='processando';s.progresso=0;s.duracao=plano.duracao;s.mensagem=null;
   const cancelador=new AbortController();
   s.cancelador=cancelador;trabalhos++;
-  void (async()=>{
+  s.renderizacao=(async()=>{
    try{
+    if(anterior)await rm(anterior,{force:true});
+    cancelador.signal.throwIfAborted();
     await renderizador(plano,s.saida,{signal:cancelador.signal,progresso:valor=>{
      if(s.estado==='processando'&&Number.isFinite(valor))
       s.progresso=Math.min(99,Math.round(Math.max(0,valor)*100));
@@ -167,7 +178,7 @@ export function criarGerenciadorEstudio({
     s.estado=cancelador.signal.aborted?'cancelado':'erro';
     s.mensagem=cancelador.signal.aborted?'Renderização cancelada.':'Não foi possível renderizar esta combinação de mídias.';
     await rm(s.saida,{force:true}).catch(()=>{});
-   }finally{trabalhos--;s.cancelador=null;}
+   }finally{trabalhos--;s.cancelador=null;s.renderizacao=null;}
   })();
   return publico(s);
  }
@@ -184,6 +195,7 @@ export function criarGerenciadorEstudio({
   if(s.estado!=='processando')throw new ErroEstudio('Não existe renderização em andamento.',409);
   s.estado='cancelado';s.mensagem='Renderização cancelada.';
   s.cancelador.abort();
+  await s.renderizacao;
   return publico(s);
  }
  const intervalo=setInterval(()=>{
@@ -197,7 +209,7 @@ export function criarGerenciadorEstudio({
   async fechar(){
    clearInterval(intervalo);
    for(const s of sessoes.values()){s.cancelador?.abort();}
-   await Promise.all([...sessoes.values()].map(s=>rm(s.diretorio,{recursive:true,force:true}).catch(()=>{})));
+   await Promise.all([...sessoes.values()].map(async s=>{await s.renderizacao;if(s.diretorio)await rm(s.diretorio,{recursive:true,force:true});}));
    sessoes.clear();
   }
  };

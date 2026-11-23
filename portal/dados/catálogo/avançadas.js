@@ -1162,8 +1162,7 @@ export const ferramentas = [
     exporta: ['copiar','csv','xlsx'], plano: 'gratuito', local: true,
     tags: ['ecommerce','análise','operações','planejamento meta roas'],
     intenções: ['analisa roas agregado, cpa e receita necessária para alcançar a meta.'], relacionadas: [],
-  }
-,
+  },
   {
     id:'F357',slug:'estudio-video-servidor',nome:'Estúdio profissional de vídeo no servidor',
     cat:'imagens',ícone:'imagem',tarefas:['criar','organizar'],status:'pronta',plano:'premium',local:false,

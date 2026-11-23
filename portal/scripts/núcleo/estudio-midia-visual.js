@@ -26,10 +26,6 @@ function rotulo(texto,controle){
  const l=no('label','estudio__rotulo',texto);l.append(controle);return l;
 }
 function bloquear(el,valor){if(el)el.disabled=valor;}
-function csrf(){
- const k=document.cookie.split('; ').find(s=>s.startsWith('__Host-csrf=')||s.startsWith('csrf='));
- try{return decodeURIComponent(k?.split('=').slice(1).join('=')||'');}catch{return '';}
-}
 function carregarCSS(){
  const href=new URL('../../estilos/estudio-midia-servidor.css',import.meta.url).href;
  if([...document.querySelectorAll('link[rel=stylesheet]')].some(l=>l.href===href))return;
@@ -71,7 +67,7 @@ export function criarEstudioVisual(tipo){
    envio.append(no('h3','','1. Adicione mídias'));
    const entrada=no('input');entrada.type='file';entrada.multiple=true;entrada.accept=config.aceita;
    entrada.setAttribute('aria-label','Selecionar arquivos para edição');
-   envio.append(entrada,no('p','estudio__dica','Até 4 arquivos · 25 MB cada · uso exclusivo de teste'));
+   envio.append(entrada,no('p','estudio__dica','Até 4 arquivos · 25 MB por arquivo · 75 MB no total'));
    const linhaTopo=no('div','estudio__secao-topo');
    linhaTopo.append(no('h3','','2. Linha do tempo'));
    const contador=no('span','estudio__contador','0 trechos · 0 s');
@@ -128,7 +124,7 @@ export function criarEstudioVisual(tipo){
     contador.textContent=estado.trechos.length+' trechos · '+exibirTempo(total());
     vazio.hidden=estado.trechos.length>0;
     executar.disabled=estado.ocupado||!estado.trechos.length;
-    limpar.hidden=!estado.projeto;
+    limpar.hidden=!estado.projeto;limpar.disabled=estado.ocupado;entrada.disabled=estado.ocupado;
     estado.trechos.forEach((t,i)=>{
      const arquivo=estado.arquivos.find(f=>f.id===t.arquivo);
      const item=no('li','estudio__clipe');
@@ -173,6 +169,7 @@ export function criarEstudioVisual(tipo){
       selecao.onchange=()=>{t.filtro=selecao.value;mensagem('Filtro aplicado na próxima renderização.');};
       campos.append(rotulo('Cor do clipe',selecao));
      }
+     if(estado.ocupado)item.inert=true;
      item.append(cab,campos);lista.append(item);
     });
    }
@@ -197,12 +194,10 @@ export function criarEstudioVisual(tipo){
     estado.projeto=data.projeto;limpar.hidden=false;
    }
    async function upload(arquivo){
-    const response=await fetch(endereco('/arquivos'),{
-     method:'POST',headers:{'Content-Type':arquivo.type,'X-CSRF-Token':csrf()},
-     credentials:'same-origin',body:arquivo
-    });
-    const dados=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(dados.erro||'Falha no envio.');return dados.arquivo;
+    const tipos={mp4:'video/mp4',webm:'video/webm',wav:'audio/wav',ogg:'audio/ogg',mp3:'audio/mpeg'};
+    const mime=arquivo.type||tipos[arquivo.name.split('.').pop().toLowerCase()]||'application/octet-stream';
+    const dados=await api(endereco('/arquivos'),{metodo:'POST',tipoBinario:mime,binario:arquivo,prazoMs:90000});
+    return dados.arquivo;
    }
    entrada.onchange=async()=>{
     const escolhidos=[...entrada.files];entrada.value='';
@@ -210,6 +205,7 @@ export function criarEstudioVisual(tipo){
     if(escolhidos.length+estado.arquivos.length>4){
       mensagem('Limite de quatro arquivos por projeto.',true);return;
     }
+    if(escolhidos.length+estado.trechos.length>8){mensagem('Remova um trecho para adicionar mais mídias à linha do tempo.',true);return;}
     estado.ocupado=true;renderLista();bloquear(entrada,true);
     try{
      await criarProjeto();
@@ -220,7 +216,7 @@ export function criarEstudioVisual(tipo){
       const info=await upload(f);
       estado.arquivos.push({...info,nome:f.name});
       const fim=Math.min(info.duracao,25);
-      estado.trechos.push({arquivo:info.id,inicio:0,fim:Math.round(fim*10)/10,
+      estado.trechos.push({arquivo:info.id,inicio:0,fim,
        volume:1,filtro:'neutro'});
       if(estado.selecionado===null){estado.selecionado=0;mostrarPrevia(info.id);}
      }
@@ -253,7 +249,14 @@ export function criarEstudioVisual(tipo){
       cancelar.hidden=true;andamento.hidden=true;
       mensagem(x.mensagem||'Renderização não concluída.',true);return;
      }
-    }catch(e){mensagem('Conexão com o servidor interrompida. Tentando verificar o progresso…',true);}
+    }catch(e){
+     if([401,403,404].includes(e.status)){
+      estado.renderizando=false;estado.ocupado=false;cancelar.hidden=true;andamento.hidden=true;
+      if(e.status===404){estado.projeto=null;estado.arquivos=[];estado.trechos=[];estado.selecionado=null;tocando?.pause();caixaPrevia.replaceChildren(placeholder);}
+      renderLista();mensagem(e.status===404?'O projeto expirou. Selecione as mídias para começar novamente.':'Entre com uma conta Premium para continuar.',true);return;
+     }
+     mensagem('Conexão interrompida. Verificando o progresso novamente…',true);
+    }
     estado.timer=setTimeout(acompanhar,1200);
    }
    executar.onclick=async()=>{

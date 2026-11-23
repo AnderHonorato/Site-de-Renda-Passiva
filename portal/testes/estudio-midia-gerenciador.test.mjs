@@ -63,3 +63,35 @@ test('renderização é assíncrona, mostra progresso medido e entrega mídia ao
   await assert.rejects(estudio.resultado(6,sess.id),e=>e.status===404);
  }finally{await estudio.fechar();await rm(base,{recursive:true,force:true});}
 });
+test('sessões e uploads simultâneos respeitam as cotas antes de gravar',async()=>{
+ const base=await mkdtemp(join(tmpdir(),'studio-concorrencia-'));
+ const estudio=criarGerenciadorEstudio({baseDir:base,sondar:async()=>({duracao:1,video:false,audio:true})});
+ try{
+  const sessoes=await Promise.allSettled(Array.from({length:3},()=>estudio.criar(1,'audio')));
+  assert.deepEqual(sessoes.map(s=>s.reason?.status??201),[201,201,429]);
+  const id=sessoes[0].value.id;
+  const envios=await Promise.allSettled(Array.from({length:5},()=>estudio.anexar(1,id,wav(),'audio/x-wav')));
+  assert.deepEqual(envios.map(a=>a.reason?.status??201),[201,201,201,201,429]);
+  assert.ok((await estudio.obter(1,id)).arquivos.every(a=>a.mime==='audio/wav'));
+ }finally{await estudio.fechar();await rm(base,{recursive:true,force:true});}
+});
+
+test('cancelamento termina a escrita anterior antes de permitir nova exportação',async()=>{
+ const base=await mkdtemp(join(tmpdir(),'studio-cancelamento-'));
+ const encerramento=Promise.withResolvers();
+ const estudio=criarGerenciadorEstudio({baseDir:base,
+  sondar:async()=>({duracao:1,video:false,audio:true}),
+  renderizador:()=>encerramento.promise
+ });
+ try{
+  const {id}=await estudio.criar(2,'audio');
+  const a=await estudio.anexar(2,id,wav(),'audio/wav');
+  const trechos=[{arquivo:a.id,inicio:0,fim:1}];
+  await estudio.renderizar(2,id,trechos);
+  const cancelamento=estudio.cancelar(2,id);
+  await assert.rejects(estudio.renderizar(2,id,trechos),e=>e.status===429);
+  encerramento.resolve();
+  assert.equal((await cancelamento).estado,'cancelado');
+  assert.equal((await estudio.renderizar(2,id,trechos)).estado,'processando');
+ }finally{encerramento.resolve();await estudio.fechar();await rm(base,{recursive:true,force:true});}
+});
