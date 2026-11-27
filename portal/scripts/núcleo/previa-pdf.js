@@ -27,7 +27,7 @@ export function montarPreviaPdf(raiz, { bytes, nome = 'documento.pdf' }) {
   estado.setAttribute('role', 'status'); estado.setAttribute('aria-live', 'polite');
   const area = criar('div', 'pdf-previa__area');
   const papel = criar('div', 'pdf-previa__papel');
-  const tela = criar('canvas'); tela.setAttribute('role', 'img'); tela.setAttribute('aria-label', 'Prévia do PDF em preparação');
+  let tela = criar('canvas'); tela.setAttribute('role', 'img'); tela.setAttribute('aria-label', 'Prévia do PDF em preparação');
   papel.append(tela); area.append(papel);
   const navegacao = criar('div', 'pdf-previa__navegacao');
   const anterior = criar('button', 'botão botão--linha', 'Página anterior'); anterior.type = 'button';
@@ -57,10 +57,15 @@ export function montarPreviaPdf(raiz, { bytes, nome = 'documento.pdf' }) {
       const largura = zoom.value === 'ajustar'
         ? Math.max(160, Math.min(900, area.clientWidth - 32))
         : Math.min(1800, medida.largura * 96 / 72 * Number(zoom.value));
-      papel.style.width = `${largura}px`;
       const densidade = Math.min(2, window.devicePixelRatio || 1);
-      await leitor.desenharNaTela(pagina, tela, Math.round(largura * densidade));
+      const novaTela = criar('canvas');
+      await leitor.desenharNaTela(pagina, novaTela, Math.round(largura * densidade));
       if (!ativo || pedido !== versao || !raiz.isConnected) return;
+      papel.style.width = `${largura}px`;
+      tela.replaceWith(novaTela);
+      tela.width = tela.height = 0;
+      tela = novaTela;
+      tela.setAttribute('role', 'img');
       tela.setAttribute('aria-label', `Prévia da página ${pagina} de ${leitor.páginas} de ${nome}. O PDF para download contém o texto completo.`);
       contagem.textContent = `Página ${pagina} de ${leitor.páginas}`;
       estado.textContent = leitor.páginas === 1 ? 'Prévia pronta · 1 página' : `Prévia pronta · ${leitor.páginas} páginas`;
